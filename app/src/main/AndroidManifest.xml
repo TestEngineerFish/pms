@@ -59,8 +59,8 @@
     <application
         android:name="com.einyun.app.common.application.CommonApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@mipmap/logo"
+        android:label="${APP_NAME}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBarAppTheme">
@@ -73,7 +73,7 @@
         </activity>
         <activity android:name="com.einyun.app.pms.main.ui.HomeTabViewModelActivity"/>
         <activity android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
-        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
+<!--        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>-->
         <activity android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
         <activity android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
@@ -81,7 +81,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.einyun.app.pms"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

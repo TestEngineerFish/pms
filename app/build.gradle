@@ -7,7 +7,7 @@ android {
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
@@ -40,11 +40,22 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            versionNameSuffix "-dev"
+            applicationIdSuffix '.dev'
+            manifestPlaceholders=[APP_NAME:app_name+"Dev"]
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
+            versionNameSuffix "-test"
+            applicationIdSuffix '.test'
+            manifestPlaceholders=[APP_NAME:app_name+"Test"]
         }
+        //请勿删除，提测uat环境，上线开启
+
         uat {
+            versionNameSuffix "-uat"
+            applicationIdSuffix '.uat'
+            manifestPlaceholders=[APP_NAME:app_name+"Uat"]
             minifyEnabled true   //开启混淆
             zipAlignEnabled true  //压缩优化
             shrinkResources true  //移出无用资源
@@ -53,7 +64,7 @@ android {
         }
         release.initWith(uat)
         release {
-
+            manifestPlaceholders=[APP_NAME:app_name]
         }
     }
 
@@ -74,7 +85,8 @@ android {
 
     //多渠道打包支持
     productFlavors {
-
+        //请勿删除，上线提交多渠道开启
+        /**
         Tencent {//投放应用宝市场
             manifestPlaceholders=[UMENG_CHANNEL_VALUE:"tencent"]
         }
@@ -99,7 +111,7 @@ android {
         AnZhi {//投放安智市场
             manifestPlaceholders=[UMENG_CHANNEL_VALUE:"anzhi"]
         }
-
+        **/
     }
     //注意我注释掉的，可以去掉注释，那样的话，下面这句就可以不用了
     productFlavors.all {

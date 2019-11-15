@@ -25,7 +25,7 @@ public class UserRepository extends CommonRepository {
      * @return
      */
     public LiveData<UserModel> localUser() {
-        return new MutableLiveData<>(new UserModel("", "", "", "admin","1"));
+        return new MutableLiveData<>(new UserModel("", "", "", "admin","A@1234cn"));
     }
 
 
