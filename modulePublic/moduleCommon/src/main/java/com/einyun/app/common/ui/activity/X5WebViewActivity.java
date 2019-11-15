@@ -120,6 +120,18 @@ public class X5WebViewActivity extends BaseViewModelActivity<ActivityX5WebViewBi
             binding.webview.loadUrl(webUrl);
         }
         Logger.d("X5WebView load->"+webUrl);
+        binding.webview.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView webView, int progress) {
+                super.onProgressChanged(webView, progress);
+                binding.progressBar.setProgress(progress);
+                if(progress!=100){
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                }else{
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
         binding.webview.setWebViewClient(new WebViewClient(){
 
             // 设置不用系统浏览器打开,直接显示在当前 webview
@@ -140,6 +152,8 @@ public class X5WebViewActivity extends BaseViewModelActivity<ActivityX5WebViewBi
                 return false;
 //                return super.shouldOverrideUrlLoading(view, url);
             }
+
+
 
             @Override
             public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {

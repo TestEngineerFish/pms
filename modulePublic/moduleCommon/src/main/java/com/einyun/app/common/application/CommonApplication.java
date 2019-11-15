@@ -1,5 +1,6 @@
 package com.einyun.app.common.application;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.net.CommonHttpService;
@@ -21,12 +22,16 @@ import com.tencent.smtt.sdk.QbSdk;
  */
 public class CommonApplication extends BasicApplication {
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         CommonHttpService.Companion.setNeedTenantId(true);
         EinyunSDK.Companion.init(this, BuildConfig.BASE_URL);
+        if (com.einyun.app.base.BuildConfig.DEBUG) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
+
         preinitX5WebCore();
     }
 

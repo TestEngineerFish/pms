@@ -20,13 +20,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="Paging"
             android:onClick="@{()->callBack.onPagingButtonClick()}"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paging"
+            android:text="X5WebView"
+            android:textAllCaps="false"
             android:onClick="@{()->callBack.onX5WebViewButtonClick()}"
             />
     </LinearLayout>

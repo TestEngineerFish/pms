@@ -22,7 +22,7 @@ import com.einyun.app.pms.repairs.viewmodel.RepairsViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 
 /**
- * 报修已完结列表
+ * Paging Demo
  * Paging Component
  */
 public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding,RepairsViewModel> {
@@ -50,7 +50,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     protected void setUpView() {
-        binding.swipeRefresh.setColorSchemeColors(Color.parseColor("#D1B26A"));
+        binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
             viewModel.refresh();

@@ -1,39 +1,41 @@
 package com.einyun.app.base;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.Context;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
 import com.einyun.app.base.db.AppDatabase;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BasicApplication extends Application {
     private static BasicApplication app;
     private List<Activity> activityList = new ArrayList<>();
+    private final String TAG="einyun";
+
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
         //在init之前打开日志和调试
-        if (BuildConfig.DEBUG) {
-            ARouter.openLog();
-            ARouter.openDebug();
-        }
         ARouter.init(this);
 
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
+                .methodCount(2)// (Optional) How many method line to show. Default 2
+                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
+                .tag(TAG)   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build();
 
-        Logger.addLogAdapter(new AndroidLogAdapter());
-        Logger.addLogAdapter(new AndroidLogAdapter() {
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
             @Override
             public boolean isLoggable(int priority, String tag) {
-                return BuildConfig.DEBUG;
+                return com.einyun.app.base.BuildConfig.DEBUG;
             }
         });
         if (BuildConfig.DEBUG) {
