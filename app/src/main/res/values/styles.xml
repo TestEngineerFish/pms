@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="NoActionBarAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ca9e2d</item>
+        <item name="colorPrimaryDark">#00ca9e2d</item>
+        <item name="colorAccent">#ca9e2d</item>
+        <!-- 隐藏状态栏 -->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    </style>
+</resources>

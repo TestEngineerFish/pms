@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grayTextColor">#9DB4B4</color>
+    <color name="NoneActiveTextColor">#9DB4B4</color>
+    <color name="grayBgColor">#f8f7fb</color>
+
+    <color name="whiteTextColor">#ffffff</color>
+    <color name="blackTextColor">#111111</color>
+    <color name="grayItemColor">#555555</color>
+    <color name="main_color">#ca9e2d</color>
+    <color name="main_color_dark">#B88F29</color>
+    <color name="whiteListColor">#f9f9f9</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="divider">#EEEEEE</color>
+    <color name="container">#f6f6f6</color>
+
+
+
+    <color name="white">#ffffff</color>
+    <color name="red">#ff0000</color>
+</resources>

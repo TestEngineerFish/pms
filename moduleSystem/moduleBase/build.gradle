@@ -1,0 +1,130 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+
+android {
+    compileSdkVersion deps.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion deps.android.minSdkVersion
+        targetSdkVersion deps.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                includeCompileClasspath = true
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        debugTest.initWith(buildTypes.debug)
+        debugTest {
+        }
+        uat {
+//            minifyEnabled true   //开启混淆
+//            zipAlignEnabled true  //压缩优化
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release.initWith(uat)
+        release {
+
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        targetCompatibility = '1.8'
+        sourceCompatibility = '1.8'
+    }
+
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://maven.hypersmart.cc/nexus/content/repositories/releases/') {
+                authentication(userName: 'huyuezheng', password: '123qweASDZXC')
+            }
+            pom.project {
+                version '1.0.0'
+                artifactId 'einyun-base'
+                groupId 'com.einyun.app'
+                packaging 'aar'
+                description 'update version 1.0.0'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //third libraies
+    api deps.multidex
+    api deps.live_event_bus
+    api deps.loger
+    api deps.status_bar    //全面屏、刘海屏状态栏
+    api deps.arouter_api
+    annotationProcessor deps.arouter_compiler
+
+    // Support libraries
+    api deps.support.app_compat
+    api deps.support.fragment_runtime
+    api deps.support.design
+    api deps.support.cardview
+
+    // Architecture components
+    api deps.lifecycle.runtime
+    api deps.lifecycle.extensions
+//    annotationProcessor deps.lifecycle.compiler
+
+    //androidx.paging
+    api deps.paging
+
+    //workmanager
+    api deps.work.runtime
+
+    //glide
+    api deps.glide.runtime
+    annotationProcessor deps.glide.compiler
+
+    //dagger2
+    api deps.dagger.runtime
+    api deps.dagger.android
+    api deps.dagger.android_support
+    annotationProcessor  deps.dagger.compiler
+    annotationProcessor  deps.dagger.android_support_compiler
+
+    // Android Testing Support Library's runner and rules
+    api deps.atsl.core
+    api deps.atsl.runner
+    api deps.atsl.rules
+    api deps.room.testing
+    api deps.arch_core.testing
+    api deps.benchmark
+    api deps.junit
+    api deps.atsl.ext_junit
+
+    // Espresso UI Testing
+    api deps.espresso.core
+    api deps.espresso.contrib
+    api deps.espresso.intents
+
+    // Resolve conflicts between main and test APK:
+    api deps.support.annotations
+    api deps.support.app_compat
+    api deps.support.design
+
+    //project
+    api project(deps.project.module_http)
+    api project(deps.project.module_db)
+//    api deps.einyun.http
+//    api deps.einyun.db
+}

@@ -1,0 +1,73 @@
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.benchmark'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion deps.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion deps.android.minSdkVersion
+        targetSdkVersion deps.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.benchmark.junit4.AndroidBenchmarkRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        //打包测试用（内部非混淆打包测试服务器）
+        debugTest.initWith(buildTypes.debug)
+        debugTest {
+        }
+        uat {
+//            minifyEnabled true   //开启混淆
+//            zipAlignEnabled true  //压缩优化
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release.initWith(uat)
+        release {
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://maven.hypersmart.cc/nexus/content/repositories/releases/') {
+                authentication(userName: 'huyuezheng', password: '123qweASDZXC')
+            }
+            pom.project {
+                version '1.0.0'
+                artifactId 'einyun-core'
+                groupId 'com.einyun.app'
+                packaging 'aar'
+                description 'update version 1.0.0'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(deps.project.module_base)
+    kapt deps.room.compiler
+}

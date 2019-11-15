@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">moduleHealth</string>
+    <string name="title_activity_health">HealthActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>

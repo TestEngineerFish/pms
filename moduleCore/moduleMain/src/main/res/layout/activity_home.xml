@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.main.ui.HomeTabViewModelActivity" />
+    </data>
+
+
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.HomeTabViewModelActivity">
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_work_bench"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:onClick="@{()->callBack.onWorkBenchItemClick()}"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_work_bench"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/select_tab_work" />
+
+                    <TextView
+                        android:id="@+id/tv_work_bench"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/tv_tab_work_bench"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_mine"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:onClick="@{()->callBack.onMineItemClick()}"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_mine"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/select_tab_mine" />
+
+                    <TextView
+                        android:id="@+id/tv_mine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/tv_tab_mine"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/work_iv_status"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/working_icon" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

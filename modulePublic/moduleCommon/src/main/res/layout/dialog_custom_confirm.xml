@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#00000000"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="314dp"
+        android:layout_height="200dp"
+        android:background="@drawable/custom_confirm_dialog_background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:textColor="#333"
+            android:text="提示" />
+
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_below="@id/title"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:layout_above="@id/actionParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/grayTextColor"
+            tools:text="提示信息"/>
+
+        <RelativeLayout
+            android:id="@+id/actionParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true">
+            
+            <TextView
+                android:id="@+id/cancelButton"
+                android:layout_width="96dp"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:background="@drawable/confirm_cancel_button"
+                android:textSize="17sp"
+                android:textColor="@color/NoneActiveTextColor"
+                android:layout_marginLeft="46dp"
+                android:text="取消"/>
+
+            <Button
+                android:id="@+id/sureButton"
+                android:layout_width="96dp"
+                android:layout_height="34dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/confirm_sure_button"
+                android:textSize="17sp"
+                android:textColor="#fff"
+                android:layout_marginRight="46dp"
+                android:text="确定"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

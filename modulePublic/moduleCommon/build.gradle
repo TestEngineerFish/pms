@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+android {
+    compileSdkVersion deps.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion deps.android.minSdkVersion
+        targetSdkVersion deps.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+
+        dataBinding {
+            enabled = true
+        }
+
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", deps.server.debug)
+            minifyEnabled false
+        }
+        debugTest.initWith(buildTypes.debug)
+        debugTest {
+            buildConfigField("String", "BASE_URL",deps.server.debug_test)
+        }
+        uat {
+            buildConfigField("String", "BASE_URL",deps.server.uat)
+            minifyEnabled true   //开启混淆
+            zipAlignEnabled true  //压缩优化
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release.initWith(uat)
+        release {
+            buildConfigField("String", "BASE_URL",deps.server.release)
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(deps.project.module_base)
+    api project(deps.project.einyun_library)
+//    api deps.einyun.http
+//    api deps.einyun.db
+//    api deps.einyun.base
+//    api deps.einyun.core
+
+    api deps.photo_view    //图片显示
+    api deps.matisse       //知乎图片选择器
+    api deps.smartrefresh  //上拉下拉刷新
+    api deps.mpchat        //图表
+    api deps.pickerview    //菜单选择
+    api deps.x5            //腾讯x5浏览器内核
+    //页面路由ARouter
+    implementation (deps.arouter_api) {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor deps.arouter_compiler
+
+}

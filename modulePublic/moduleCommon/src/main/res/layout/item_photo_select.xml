@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="80dp"
+    android:layout_height="80dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/img_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ccc"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+
+        <FrameLayout
+            android:id="@+id/layout_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edit_box">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:background="#ccc" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="#ccc" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/img_remove"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="right"
+        app:srcCompat="@mipmap/ic_photo_remove"
+        android:visibility="gone" />
+
+</FrameLayout>

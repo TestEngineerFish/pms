@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.einyun.app.pms.health">
+
+    <application>
+        <activity
+            android:name=".ui.HealthActivity"
+            android:label="@string/title_activity_health"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

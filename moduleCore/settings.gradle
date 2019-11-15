@@ -1,0 +1,3 @@
+include ':moduleUser', ':moduleMain', ':moduleRepairs', ':moduleComplain', ':modulePayment', ':moduleHealth', ':moduleMine', ':patrolModule', ':modulePatrol'
+
+

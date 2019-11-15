@@ -1,0 +1,8 @@
+include ':app',
+        ':moduleCore',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
+        ':moduleCore:moduleComplain',':moduleCore:moduleMine',':moduleCore:modulePatrol',
+
+
+        ':modulePublic',':modulePublic:moduleCommon',
+        ':modulePublic:einyunLibrary',
+        ':moduleSystem',':moduleSystem:moduleBase',':moduleSystem:moduleDB',':moduleSystem:moduleHttp'
