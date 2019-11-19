@@ -39,7 +39,7 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_X5_WEBVIEW)
-public class X5WebViewActivity extends BaseViewModelActivity<ActivityX5WebViewBinding,BaseViewModel> {
+public class X5WebViewActivity extends BaseSkinViewModelActivity<ActivityX5WebViewBinding,BaseViewModel> {
     @Autowired(name = RouteKey.KEY_WEB_URL)
     String webUrl;
 

@@ -8,6 +8,7 @@ import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.library.EinyunSDK
+import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.portal.dictdata.db.DictDataDao
 import com.einyun.app.library.portal.dictdata.db.DictDatabase
 import com.einyun.app.library.portal.dictdata.model.DictDataModel
@@ -183,14 +184,16 @@ class DictRepository {
      */
     fun getDataDictByTypeId(typeId: String, callBack: CallBack<List<DictDataModel>>?): LiveData<List<DictDataModel>> {
         var liveData = MutableLiveData<List<DictDataModel>>()
-        var request=DictTypeIdRequest()
-        request.typeId=typeId
+        var request = DictTypeIdRequest()
+        request.typeId = typeId
         serviceApi?.getDataDictByTypeId(request)
                 ?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({ response ->
                     if (response.isState) {
                         liveData.postValue(response.data)
                         callBack?.call(response.data)
+                    } else {
+                        callBack?.onFaild(EinyunHttpException(response))
                     }
                 }, {
                     callBack?.onFaild(it)

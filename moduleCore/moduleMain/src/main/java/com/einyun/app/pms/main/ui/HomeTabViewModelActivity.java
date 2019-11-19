@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.BaseViewModelActivity;
+import com.einyun.app.common.skin.SkinUtil;
+import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.pms.main.databinding.ActivityHomeBinding;
 import com.orhanobut.logger.Logger;
 import com.einyun.app.base.BaseViewModelFragment;
@@ -31,7 +33,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 @Route(path = RouterUtils.ACTIVITY_MAIN_HOME)
-public class HomeTabViewModelActivity extends BaseViewModelActivity<ActivityHomeBinding,HomeTabViewModel> {
+public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<ActivityHomeBinding,HomeTabViewModel> {
 
     WorkBenchViewModelFragment mWorkBenchFragment;//工作台
     MineViewModelFragment mMineFragment;//我的

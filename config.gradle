@@ -80,6 +80,7 @@ versions.pickerview    ="4.1.9"
 versions.x5            ="43697"
 versions.permission_dispatcher ="4.6.0"
 versions.permission_dispatcher_processor ="4.6.0"
+versions.skin ="4.0.4"
 ext.versions = versions
 
 def deps = [:]
@@ -236,6 +237,13 @@ navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 navigation.safe_args_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
 deps.navigation = navigation
 
+def skin = [:]
+skin.support = "skin.support:skin-support:$versions.skin"// skin-support 基础控件支持
+skin.appcompat = "skin.support:skin-support-appcompat:$versions.skin"// skin-support 基础控件支持
+skin.design = "skin.support:skin-support-design:$versions.skin" // skin-support-design material design 控件支持[可选]
+skin.cardview = "skin.support:skin-support-cardview:$versions.skin" // skin-support-cardview CardView 控件支持[可选]
+skin.constraint = "skin.support:skin-support-constraint-layout:$versions.skin" // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
+deps.skin = skin
 
 //project config
 def project =[:]

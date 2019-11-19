@@ -23,7 +23,7 @@ import com.einyun.app.common.databinding.IncludeLayoutActivityHeadBinding;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends BaseViewModelActivity<V,VM>{
+public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends BaseSkinViewModelActivity<V,VM>{
     /**
      * 创建ViewModel
      *
