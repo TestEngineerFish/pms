@@ -13,9 +13,25 @@
     <color name="alertdialog_line">#c6c6c6</color>
     <color name="divider">#EEEEEE</color>
     <color name="container">#f6f6f6</color>
-
-
-
     <color name="white">#ffffff</color>
     <color name="red">#ff0000</color>
+
+    <!-- 用于普通文字和箭头图标颜色 -->
+    <color name="normal_main_txt_icon_color">#9da3b4</color>
+    <!-- 用于背景是#f8f9fb时,灰色文字颜色 -->
+    <color name="activity_bg_gray_txt_color">#8d9abf</color>
+    <!-- 用于重要级文字信息，内容标题信息以及部分icon -->
+    <color name="title_txt_icon_color">#023c69</color>
+    <!-- 主要辅助颜色，起到高亮作用，增加页面活力 -->
+    <color name="highlight_txt_color">#fcbc0c</color>
+    <!-- 小面积使用，用于特别需要和强调的文案、按钮和icon -->
+    <color name="stress_txt_btn_icon_color">#185cc7</color>
+    <!-- 细分割线 -->
+    <color name="thin_divider_color">#f5f5f5</color>
+    <!-- 部分页面主背景色 -->
+    <color name="activity_bg_color">#f8f9fb</color>
+    <!-- 粗分割线 -->
+    <color name="thick_divider_color">#f8f9fb</color>
+    <!-- 输入框提示颜色 -->
+    <color name="edit_hint_color">#d8d8d8</color>
 </resources>
