@@ -18,7 +18,7 @@ class URLs {
     companion object{
         const val DOMAIN="resource-workorder"
 
-        //2.6待办统计-计划、巡查、派工单 GET
+        //2.6待办统计-计划、巡查、派工单 GETres-order/plan/waitCount
         const val URL_RESOURCE_WORKORDER_WIAIT_COUNT="/$DOMAIN/res-order/plan/waitCount"
         //2.7计划工单-待办
         const val URL_RESOURCE_WORKORDER_WAIT_PROCESS_LIST="/$DOMAIN/res-order/plan/wait-process-list"

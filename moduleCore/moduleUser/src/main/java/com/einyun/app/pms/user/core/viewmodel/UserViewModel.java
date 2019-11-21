@@ -3,6 +3,7 @@ package com.einyun.app.pms.user.core.viewmodel;
 import androidx.lifecycle.LiveData;
 
 import com.einyun.app.base.BaseViewModel;
+import com.einyun.app.base.db.entity.User;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.net.CommonHttpService;
@@ -13,6 +14,8 @@ import com.einyun.app.library.uc.user.model.UserModel;
 import com.orhanobut.logger.Logger;
 import com.einyun.app.pms.user.core.UserServiceManager;
 import com.einyun.app.pms.user.core.repository.UserRepository;
+
+import java.util.List;
 
 /**
  * 业务逻辑处理，UI交互
@@ -28,8 +31,12 @@ public class UserViewModel extends BaseViewModel {
         mUCService= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_UC);
     }
 
-    public LiveData<UserModel> localUser() {
-        return mUsersRepo.localUser();
+    public LiveData<List<UserModel>> localUser() {
+        return mUsersRepo.loadUsers();
+    }
+
+    public LiveData<UserModel> getLastUser(){
+        return mUsersRepo.getLastUser();
     }
 
     /**
@@ -39,7 +46,7 @@ public class UserViewModel extends BaseViewModel {
      * @param password
      * @return
      */
-    public LiveData<UserModel> login(String username, String password) {
+    public LiveData<UserModel> login(String username, String password,boolean isLoginPage) {
         //网络数据交互，显示Loading
         showLoading();
         mUserModel = mUCService.login(username, password, new CallBack<UserModel>() {
@@ -47,6 +54,7 @@ public class UserViewModel extends BaseViewModel {
             public void call(UserModel data) {
                 //关闭Loading
                 hideLoading();
+                mUsersRepo.saveOrUpdateUser(data);
                 UserServiceManager.getInstance().saveUserModel(data);
                 CommonHttpService.getInstance().authorToken(data.getToken());
             }

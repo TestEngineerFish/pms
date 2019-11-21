@@ -4,7 +4,7 @@
     <data>
         <variable
             name="callBack"
-            type="com.einyun.app.pms.main.ui.HomeTabViewModelActivity" />
+            type="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity" />
     </data>
 
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.HomeTabViewModelActivity">
+        tools:context=".core.ui.HomeTabViewModelActivity">
 
 
         <androidx.viewpager.widget.ViewPager

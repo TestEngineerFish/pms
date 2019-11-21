@@ -1,5 +1,5 @@
 include ':app',
-        ':moduleCore',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
+        ':moduleCore',':moduleCore:moduleExtra',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
         ':moduleCore:moduleComplain',':moduleCore:moduleMine',':moduleCore:modulePatrol',
 
 

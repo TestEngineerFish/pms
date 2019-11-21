@@ -255,6 +255,7 @@ project.module_http   = ":moduleSystem:moduleHttp"
 project.module_user = ":moduleCore:moduleUser"
 project.module_main = ":moduleCore:moduleMain"
 project.module_repairs = ":moduleCore:moduleRepairs"
+project.module_extra = ":moduleCore:moduleExtra"
 deps.project = project
 
 def server =[:]

@@ -46,4 +46,10 @@
         <item name="vertical_Space">20dp</item>
         <item name="isFull">false</item>
     </style>
+    
+    <style name="gallery_layout_style">
+        <item name="android:paddingLeft">@dimen/px_30</item>
+        <item name="android:paddingRight">@dimen/px_30</item>
+        <item name="android:background">@color/activity_bg_color</item>
+    </style>
 </resources>

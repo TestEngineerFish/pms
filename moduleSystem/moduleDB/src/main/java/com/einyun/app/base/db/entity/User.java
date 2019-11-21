@@ -3,13 +3,15 @@ package com.einyun.app.base.db.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Date;
 
-@Entity(tableName = "users")
+@Entity(tableName = "users", indices = {@Index(value = {"user_name"}, unique = true)})
 public class User implements Serializable {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @ColumnInfo(name = "user_name")
@@ -18,10 +20,14 @@ public class User implements Serializable {
     @ColumnInfo(name = "password")
     private String password;
 
-    public User(int id, String userName, String password){
-        this.id=id;
-        this.userName=userName;
-        this.password=password;
+    @ColumnInfo(name = "update_time")
+    private Date updateTime;
+
+    public User(String userName, String password) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.updateTime = new Date();
     }
 
     public int getId() {
@@ -46,5 +52,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

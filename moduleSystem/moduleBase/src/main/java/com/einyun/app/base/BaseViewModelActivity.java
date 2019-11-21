@@ -1,7 +1,13 @@
 package com.einyun.app.base;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -21,13 +27,22 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
-        StatusBarCompat.setStatusBarColor(this, getColorPrimary());
+
         BasicApplication.getInstance().addActivity(this);
         viewModel = initViewModel();
         initViews(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //需要设置这个flag contentView才能延伸到状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            //状态栏覆盖在contentView上面，设置透明使contentView的背景透出来
+            getWindow().setStatusBarColor(getColorPrimary());
+        }
         initData();
         initListener();
     }
+
 
 
     /**

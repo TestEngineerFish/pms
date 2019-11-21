@@ -3,12 +3,20 @@ package com.einyun.app.pms.user.core.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import androidx.work.impl.utils.LiveDataUtils;
+
 import com.einyun.app.base.BasicApplication;
+import com.einyun.app.base.db.dao.UserDao;
 import com.einyun.app.base.db.entity.User;
+import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.repository.CommonRepository;
 import com.einyun.app.library.uc.user.model.UserModel;
 
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 数据处理类，网络、数据库、本地数据等
@@ -24,8 +32,15 @@ public class UserRepository extends CommonRepository {
      *
      * @return
      */
-    public LiveData<UserModel> localUser() {
-        return new MutableLiveData<>(new UserModel("", "", "", "admin","A@1234cn"));
+    public LiveData<UserModel> getLastUser() {
+        MutableLiveData data = new MutableLiveData();
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            User user = BasicApplication.getInstance().getDatabase().userDao().selectUserLastUpdate();
+            if (user != null){
+                data.postValue(new UserModel("", "", "", user.getUserName(), user.getPassword()));
+            }
+        });
+        return data;
     }
 
 
@@ -34,10 +49,27 @@ public class UserRepository extends CommonRepository {
      *
      * @return
      */
-    public LiveData<List<User>> loadUsers() {
+    public LiveData<List<UserModel>> loadUsers() {
         MutableLiveData list = new MutableLiveData();
-        BasicApplication.getInstance().getDatabase().userDao().loadAllUsers();
-        list.postValue(list);
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            list.postValue(BasicApplication.getInstance().getDatabase().userDao().loadAllUsers());
+        });
+
         return list;
+    }
+
+    /**
+     * 保存用户数据并更新数据库顺序
+     */
+    public void saveOrUpdateUser(UserModel userModel) {
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            UserDao userDao = BasicApplication.getInstance().getDatabase().userDao();
+            User user = new User(userModel.getUsername(), userModel.getPassword());
+            if (userDao.selectUserByName(userModel.getUsername()) == null) {
+                userDao.insertUsers(user);
+            } else {
+                userDao.updateUser(user);
+            }
+        });
     }
 }
