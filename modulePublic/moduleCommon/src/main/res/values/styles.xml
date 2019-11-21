@@ -52,4 +52,10 @@
         <item name="android:paddingRight">@dimen/px_30</item>
         <item name="android:background">@color/activity_bg_color</item>
     </style>
+
+    <style name="base_underline">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px_2</item>
+        <item name="android:background">@color/thin_divider_color</item>
+    </style>
 </resources>

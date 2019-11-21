@@ -53,11 +53,8 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/ll_org_code"
-                    android:layout_marginTop="10dp"
-                    android:background="#F3F4F9" />
+                    style="@style/login_input_ll_underline"
+                    android:layout_below="@id/ll_org_code" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -89,14 +86,12 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25dp"
                     android:visibility="invisible"
-                    app:srcCompat="@mipmap/editdelete" />
+                    app:srcCompat="@mipmap/img_login_edit_delete" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                <View
+                    style="@style/login_input_ll_underline"
                     android:layout_below="@id/ll_user"
-                    android:layout_marginTop="10dp"
-                    android:background="#F3F4F9" />
+                     />
 
             </RelativeLayout>
 
@@ -128,21 +123,18 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25dp"
                     android:visibility="invisible"
-                    app:srcCompat="@mipmap/img_passshow3" />
+                    app:srcCompat="@mipmap/img_login_password_show" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/ll_password"
-                    android:layout_marginTop="10dp"
-                    android:background="#F3F4F9" />
+                <View
+                    style="@style/login_input_ll_underline"
+                    android:layout_below="@id/ll_password" />
             </RelativeLayout>
 
             <Button
                 android:id="@+id/bt_login"
                 style="@style/login_submit_btn"
-                android:layout_marginTop="30dp"
-                android:text="确定" />
+                android:layout_marginTop="@dimen/px_160"
+                android:text="登录" />
 
         </LinearLayout>
 

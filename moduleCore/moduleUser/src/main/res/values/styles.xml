@@ -38,7 +38,12 @@
     <style name="login_input_ll_img" parent="base_style">
         <item name="android:layout_width">@dimen/px_44</item>
         <item name="android:layout_height">@dimen/px_44</item>
-        <item name="android:layout_marginRight">@dimen/px_40</item>
+        <item name="android:layout_marginRight">@dimen/px_30</item>
+    </style>
 
+    <style name="login_input_ll_underline" parent="base_underline">
+        <item name="android:layout_marginTop">@dimen/px_20</item>
+        <item name="android:layout_marginLeft">@dimen/px_60</item>
+        <item name="android:layout_marginRight">@dimen/px_60</item>
     </style>
 </resources>
