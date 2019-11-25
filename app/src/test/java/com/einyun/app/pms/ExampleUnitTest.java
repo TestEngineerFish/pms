@@ -1,4 +1,4 @@
-package com.yykj.app.pms;
+package com.einyun.app.pms.pms;
 
 import org.junit.Test;
 
