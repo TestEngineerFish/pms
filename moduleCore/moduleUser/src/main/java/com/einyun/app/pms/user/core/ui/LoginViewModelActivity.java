@@ -1,27 +1,21 @@
 package com.einyun.app.pms.user.core.ui;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelActivity;
-import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
-import com.githang.statusbar.StatusBarCompat;
-import com.yykj.app.pms.user.R;
-import com.yykj.app.pms.user.databinding.ActivityLoginBinding;
+import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
+
 
 @Route(path = RouterUtils.ACTIVITY_USER_LOGIN)
 public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLoginBinding, UserViewModel> {
