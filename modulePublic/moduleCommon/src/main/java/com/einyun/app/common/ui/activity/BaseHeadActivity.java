@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.einyun.app.base.BaseActivity;
+
 import com.einyun.app.common.R;
 
 
@@ -22,7 +22,7 @@ import com.einyun.app.common.R;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class BaseHeadActivity extends BaseActivity {
+public class BaseHeadActivity extends BaseSkinActivity {
 
     protected ImageView btnBack;
     protected TextView tvTitle;

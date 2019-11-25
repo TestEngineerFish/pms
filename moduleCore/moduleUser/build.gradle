@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion deps.android.compileSdkVersion
 
@@ -52,5 +51,7 @@ dependencies {
     implementation (deps.arouter_api) {
         exclude group: 'com.android.support'
     }
+    annotationProcessor deps.lifecycle.compiler
+    annotationProcessor deps.room.compiler
     annotationProcessor deps.arouter_compiler
 }

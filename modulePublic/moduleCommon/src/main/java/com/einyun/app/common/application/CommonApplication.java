@@ -1,7 +1,5 @@
 package com.einyun.app.common.application;
 
-import android.util.TypedValue;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
@@ -9,6 +7,12 @@ import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.QbSdk;
+
+import skin.support.SkinCompatManager;
+import skin.support.app.SkinAppCompatViewInflater;
+import skin.support.app.SkinCardViewInflater;
+import skin.support.constraint.app.SkinConstraintViewInflater;
+import skin.support.design.app.SkinMaterialViewInflater;
 
 /**
  * @ProjectName: android-framework
@@ -35,6 +39,7 @@ public class CommonApplication extends BasicApplication {
         }
 
         preinitX5WebCore();
+        initSkin();
     }
 
     /**
@@ -58,15 +63,18 @@ public class CommonApplication extends BasicApplication {
         }
     }
 
-
     /**
-     * 获取主题颜色
-     * @return
+     * 初始化换肤框架
      */
-    public int getColorPrimary(){
-        TypedValue typedValue = new  TypedValue();
-        getTheme().resolveAttribute(com.einyun.app.base.R.attr.colorPrimary, typedValue, true);
-        return typedValue.data;
+    private void initSkin(){
+        SkinCompatManager.withoutActivity(this)
+                .addInflater(new SkinAppCompatViewInflater())           // 基础控件换肤初始化
+                .addInflater(new SkinMaterialViewInflater())            // material design 控件换肤初始化[可选]
+                .addInflater(new SkinConstraintViewInflater())          // ConstraintLayout 控件换肤初始化[可选]
+                .addInflater(new SkinCardViewInflater())                // CardView v7 控件换肤初始化[可选]
+                .setSkinStatusBarColorEnable(true)                     // 关闭状态栏换肤，默认打开[可选]
+                .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
+                .loadSkin();
     }
 
 }

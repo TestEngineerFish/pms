@@ -5,13 +5,13 @@
 
         <variable
             name="workBenchViewModel"
-            type="com.einyun.app.pms.main.viewmodel.WorkBenchViewModel" />
+            type="com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel" />
     </data>
 
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.MineViewModelFragment">
+        tools:context=".core.ui.fragment.MineViewModelFragment">
 
         <TextView
             android:layout_width="match_parent"

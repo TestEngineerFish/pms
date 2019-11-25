@@ -39,7 +39,7 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_X5_WEBVIEW)
-public class X5WebViewActivity extends BaseViewModelActivity<ActivityX5WebViewBinding,BaseViewModel> {
+public class X5WebViewActivity extends BaseSkinViewModelActivity<ActivityX5WebViewBinding,BaseViewModel> {
     @Autowired(name = RouteKey.KEY_WEB_URL)
     String webUrl;
 
@@ -125,7 +125,7 @@ public class X5WebViewActivity extends BaseViewModelActivity<ActivityX5WebViewBi
             public void onProgressChanged(WebView webView, int progress) {
                 super.onProgressChanged(webView, progress);
                 binding.progressBar.setProgress(progress);
-                if(progress!=100){//
+                if(progress!=100){
                     binding.progressBar.setVisibility(View.VISIBLE);
                 }else{
                     binding.progressBar.setVisibility(View.GONE);

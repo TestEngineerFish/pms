@@ -3,4 +3,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="tv_tab_work_bench">工作台</string>
     <string name="tv_tab_mine">我的</string>
+    <string name="tv_second_title_pending">待审批</string>
 </resources>

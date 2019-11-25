@@ -47,7 +47,11 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res-night']
+        }
+    }
 
 }
 
@@ -59,7 +63,11 @@ dependencies {
 //    api deps.einyun.db
 //    api deps.einyun.base
 //    api deps.einyun.core
-
+    api deps.skin.support
+    api deps.skin.appcompat
+    api deps.skin.design
+    api deps.skin.cardview
+    api deps.skin.constraint
     api deps.photo_view    //图片显示
     api deps.matisse       //知乎图片选择器
     api deps.smartrefresh  //上拉下拉刷新

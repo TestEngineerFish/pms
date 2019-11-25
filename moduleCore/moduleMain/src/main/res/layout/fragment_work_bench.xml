@@ -5,40 +5,65 @@
 
         <variable
             name="workBenchViewModel"
-            type="com.einyun.app.pms.main.viewmodel.WorkBenchViewModel" />
+            type="com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel" />
 
         <variable
             name="callBack"
-            type="com.einyun.app.pms.main.ui.fragment.WorkBenchViewModelFragment" />
+            type="com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment" />
     </data>
 
     <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Paging"
-            android:onClick="@{()->callBack.onPagingButtonClick()}"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="X5WebView"
-            android:textAllCaps="false"
-            android:onClick="@{()->callBack.onX5WebViewButtonClick()}"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PointCheck"
-            android:textAllCaps="false"
-            android:onClick="@{()->callBack.onPointCheckButtonClick()}"
-            />
+        style="@style/gallery_layout_style">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_64">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title_text_icon_color"
+                android:text="@string/tv_second_title_pending"
+                android:textSize="@dimen/font_size23"/>
+
+            <ImageView
+                android:layout_width="@dimen/px_34"
+                android:layout_height="@dimen/px_34"/>
+        </RelativeLayout>
+
+        <ViewSwitcher
+            android:id="@+id/main_vs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/main_rl_word_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </GridView>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/main_rl_approve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </GridView>
+            </RelativeLayout>
+
+        </ViewSwitcher>
     </LinearLayout>
 
 </layout>

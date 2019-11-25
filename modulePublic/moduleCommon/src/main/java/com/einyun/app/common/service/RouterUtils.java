@@ -15,10 +15,13 @@ package com.einyun.app.common.service;
 public class RouterUtils {
     /**********************Service API******************************/
     public static final String SERVICE_USER="/user/service";
+    public static final String SERVICE_MAIN="/main/service";
+    public static final String SERVICE_EXTRA="/extra/service";
 
     /**********************Activity*********************************/
+    public static final String ACTIVITY_USER_SPLASH="/user/splashActivity";
     public static final String ACTIVITY_MAIN_HOME="/main/home";
-    public static final String ACTIVITY_USER_LOGIN="/user/LoginActivity";
+    public static final String ACTIVITY_USER_LOGIN="/user/loginActivity";
     public static final String ACTIVITY_REPAIRS_PAGING="/repairs/RepairsActivity";
     public static final String ACTIVITY_HEALTH_WORK="/health/HealthActivity";
     public static final String ACTIVITY_BLOCK_CHOOSE="/choose/BlockChooseActivity";
