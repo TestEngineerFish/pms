@@ -61,9 +61,9 @@ public class UserViewModel extends BaseViewModel {
             public void call(UserModel data) {
                 //关闭Loading
                 hideLoading();
-                mUsersRepo.saveOrUpdateUser(data);
                 UserServiceManager.getInstance().saveUserModel(data);
                 CommonHttpService.getInstance().authorToken(data.getToken());
+                mUsersRepo.saveOrUpdateUser(data);
             }
 
             @Override

@@ -57,8 +57,6 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         //本地用户信息展示
         viewModel.getLastUser().observe(this,
                 user -> binding.setUserModel(user));
-        viewModel.getTenantId("ccpg").observe(this,
-                tenantModel -> ToastUtil.show(this, "tentantId:" + tenantModel.getId()));
         binding.setCallBack(this);
         setUserList();
         initEvent();
@@ -168,24 +166,36 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      * 登陆事件
      */
     public void onLoginClick() {
-        UserModel model = binding.getUserModel();
-        //判断用户名是否为空
-        if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
-            ToastUtil.show(this, R.string.login_username_null_tip);
-            return;
-        }
-        //判断密码是否为空
-        if (!StringUtil.isNullStr(model.getPassword())) {
-            ToastUtil.show(this, R.string.login_password_null_tip);
-            return;
-        }
-        viewModel.login(model.getUsername(), model.getPassword())
-                .observe(LoginViewModelActivity.this,
-                        user -> {
-                            ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                    .navigation();
-                            finish();
-                        });
+        viewModel.getTenantId(binding.etOrgCode.getText().toString()).observe(this,
+                tenantModel -> {
+                    ToastUtil.show(this, "tentantId:" + tenantModel.getId());
+                    UserModel model = binding.getUserModel();
+                    //判断用户名是否为空
+                    if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
+                        ToastUtil.show(this, R.string.login_username_null_tip);
+                        return;
+                    }
+                    //判断密码是否为空
+                    if (!StringUtil.isNullStr(model.getPassword())) {
+                        ToastUtil.show(this, R.string.login_password_null_tip);
+                        return;
+                    }
+                    viewModel.login(binding.etUser.getText().toString(), model.getPassword())
+                            .observe(LoginViewModelActivity.this,
+                                    user -> {
+                                        ARouter.getInstance()
+                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                .navigation();
+                                        finish();
+                                    });
+                });
+
+    }
+
+    /**
+     * 清除用户信息
+     */
+    public void deleteUserName() {
+        binding.etUser.setText("");
     }
 }

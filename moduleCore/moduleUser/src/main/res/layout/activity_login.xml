@@ -87,6 +87,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25dp"
                     android:visibility="invisible"
+                    android:onClick="@{()->callBack.deleteUserName()}"
                     android:src="@mipmap/img_login_edit_delete" />
 
                 <View

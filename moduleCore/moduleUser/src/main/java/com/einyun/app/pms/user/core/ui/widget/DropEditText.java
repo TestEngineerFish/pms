@@ -28,7 +28,6 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
     private PopupWindow mPopupWindow; // 点击图片弹出的popWindow对象
     private ListView mPopListView; // popWindow的布局
     private int mDropDrawableResId; // 下拉图标
-    private int mRiseDrawableResID; // 上拉图标
 
     public DropEditText(Context context) {
         this(context, null);
@@ -98,7 +97,6 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
     }
 
     private void showRiseDrawable() {
-        mDrawable = getResources().getDrawable(mRiseDrawableResID);
         mDrawable.setBounds(0, 0, mDrawable.getIntrinsicWidth() - 50, mDrawable.getIntrinsicHeight() - 26);
         setCompoundDrawables(getCompoundDrawables()[0], getCompoundDrawables()[1], mDrawable, getCompoundDrawables()[3]);
     }
