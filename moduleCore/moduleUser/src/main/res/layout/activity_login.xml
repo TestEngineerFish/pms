@@ -112,6 +112,7 @@
                         android:id="@+id/et_password"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入密码"
+                        android:text="@={userModel.password}"
                         android:inputType="textPassword" />
                 </LinearLayout>
 

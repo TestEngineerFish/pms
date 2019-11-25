@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -52,6 +53,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         super.initData();
         //隐私页展示
         viewModel.showPrivacy(this);
+        binding.setUserModel(new UserModel("", "", "", ""));
         //本地用户信息展示
         viewModel.getLastUser().observe(this,
                 user -> binding.setUserModel(user));
@@ -167,8 +169,15 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     public void onLoginClick() {
         UserModel model = binding.getUserModel();
-        if (model.getUsername() == null){
-
+        //判断用户名是否为空
+        if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
+            ToastUtil.show(this, R.string.login_username_null_tip);
+            return;
+        }
+        //判断密码是否为空
+        if (!StringUtil.isNullStr(model.getPassword())) {
+            ToastUtil.show(this, R.string.login_password_null_tip);
+            return;
         }
         viewModel.login(model.getUsername(), model.getPassword())
                 .observe(LoginViewModelActivity.this,
