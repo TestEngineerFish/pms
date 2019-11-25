@@ -26,6 +26,9 @@ public class RouterUtils {
     public static final String ACTIVITY_HEALTH_WORK="/health/HealthActivity";
     public static final String ACTIVITY_BLOCK_CHOOSE="/choose/BlockChooseActivity";
     public static final String ACTIVITY_X5_WEBVIEW="/webview/X5WebViewActivity";
+    public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
+    public static final String ACTIVITY_POINT_CHECK_DETIAL="/pointCheck/PointCheckDetialActivity";
+    public static final String ACTIVITY_POINT_CHECK_CREATE="/pointCheck/PointCheckCreatActivity";
 
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

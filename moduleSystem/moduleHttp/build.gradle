@@ -70,4 +70,5 @@ dependencies {
 
     //Gson
     api deps.gson
+    implementation 'com.android.support:appcompat-v7'
 }

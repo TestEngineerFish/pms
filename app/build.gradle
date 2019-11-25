@@ -41,20 +41,20 @@ android {
         debug {
             minifyEnabled false
             versionNameSuffix "-dev"
-            applicationIdSuffix '.dev'
+//            applicationIdSuffix '.dev'
             manifestPlaceholders=[APP_NAME:app_name+"Dev"]
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
             versionNameSuffix "-test"
-            applicationIdSuffix '.test'
+//            applicationIdSuffix '.test'
             manifestPlaceholders=[APP_NAME:app_name+"Test"]
         }
         //请勿删除，提测uat环境，上线开启
 
         uat {
             versionNameSuffix "-uat"
-            applicationIdSuffix '.uat'
+//            applicationIdSuffix '.uat'
             manifestPlaceholders=[APP_NAME:app_name+"Uat"]
             minifyEnabled true   //开启混淆
             zipAlignEnabled true  //压缩优化
@@ -64,6 +64,7 @@ android {
         }
         release.initWith(uat)
         release {
+            versionNameSuffix ""
             manifestPlaceholders=[APP_NAME:app_name]
         }
     }
@@ -78,7 +79,7 @@ android {
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            def createTime = new Date().format("YYYY-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
+            def createTime = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
             outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${createTime}.apk"
         }
     }
@@ -126,4 +127,6 @@ dependencies {
     implementation project(deps.project.module_user)
     implementation project(deps.project.module_main)
     implementation project(deps.project.module_repairs)
+    implementation project(deps.project.point_check)
+    
 }

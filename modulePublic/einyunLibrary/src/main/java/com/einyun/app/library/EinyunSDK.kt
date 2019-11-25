@@ -3,6 +3,8 @@ package com.einyun.app.library
 import android.content.Context
 import android.text.TextUtils
 import com.einyun.app.library.core.EinyunException
+import com.einyun.app.library.core.api.EinyunService
+import com.einyun.app.library.core.net.EinyunHttpService
 
 /**
  *

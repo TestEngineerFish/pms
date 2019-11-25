@@ -4,7 +4,10 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
+
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.paging.bean.PageBean;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.einyun.app.base.event.ErrorMessage;
 import com.einyun.app.base.event.SingleLiveEvent;
@@ -25,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * @Version: 1.0
  */
 public class BaseViewModel extends ViewModel implements IActivityLifecycle{
+
     protected SingleLiveEvent<Status> singleLiveEvent =new SingleLiveEvent();
 
     public SingleLiveEvent<Status> getSingleLiveEvent() {

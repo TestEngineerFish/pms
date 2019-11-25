@@ -1,7 +1,6 @@
 package com.einyun.app.common.ui.dialog;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.einyun.app.common.R;
 
@@ -58,13 +58,13 @@ public class CustomProgressDialog extends Dialog implements DialogInterface.OnCa
             sDialog.dismiss();
         }
 
-        if (context == null || !(context instanceof Activity)) {
+        if (context == null || !(context instanceof AppCompatActivity)) {
             return;
         }
         sDialog = new CustomProgressDialog(context, message);
         sDialog.setCancelable(false);
 
-        if (sDialog != null && !sDialog.isShowing() && !((Activity) context).isFinishing()) {
+        if (sDialog != null && !sDialog.isShowing() && !((AppCompatActivity) context).isFinishing()) {
             sDialog.show();
         }
     }

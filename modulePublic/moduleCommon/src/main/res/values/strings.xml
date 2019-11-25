@@ -6,4 +6,6 @@
     <string name="title_org_list">组织列表</string>
     <string name="toast_error_http">服务器忙，请稍后重试</string>
     <string name="toast_error_net">当前网络连接不可用</string>
+    <string name="upload_pic_max">最多可上传4张照片</string>
+    <string name="upload_pic_failed">图片上传失败</string>
 </resources>

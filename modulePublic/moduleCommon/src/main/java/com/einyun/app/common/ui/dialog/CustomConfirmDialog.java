@@ -1,6 +1,5 @@
 package com.einyun.app.common.ui.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.einyun.app.common.R;
 
@@ -97,7 +97,7 @@ public class CustomConfirmDialog extends Dialog implements DialogInterface.OnCan
         sDialog.m_interface = custInterface;
 
         if (sDialog != null && !sDialog.isShowing()) {
-            if(context instanceof Activity && !((Activity) context).isFinishing()) {
+            if(context instanceof AppCompatActivity && !((AppCompatActivity) context).isFinishing()) {
                 sDialog.show();
             }
             else{

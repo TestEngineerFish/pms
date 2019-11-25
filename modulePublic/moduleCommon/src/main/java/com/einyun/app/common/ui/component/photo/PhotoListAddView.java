@@ -15,11 +15,13 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
@@ -29,6 +31,7 @@ import com.einyun.app.common.utils.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
 import java.util.List;
 
 /**
@@ -48,7 +51,7 @@ public class PhotoListAddView extends LinearLayout {
     PhotoListAdapter listAdapter;
     LayoutLinearPhotoBinding binding;
     private  int MAX_PHOTO_SIZE=999;
-    public PhotoListAddView(Activity context, @Nullable AttributeSet attrs) {
+    public PhotoListAddView(AppCompatActivity context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_linear_photo, this);
         binding= DataBindingUtil.getBinding(this);

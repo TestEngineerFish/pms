@@ -81,6 +81,7 @@ versions.x5            ="43697"
 versions.permission_dispatcher ="4.6.0"
 versions.permission_dispatcher_processor ="4.6.0"
 versions.skin ="4.0.4"
+versions.luban ="1.1.8"
 ext.versions = versions
 
 def deps = [:]
@@ -212,6 +213,8 @@ deps.pickerview       ="com.contrarywind:Android-PickerView:$versions.pickerview
 deps.x5               ="com.tencent.tbs.tbssdk:sdk:$versions.x5"
 deps.permission_dispatcher ="org.permissionsdispatcher:permissionsdispatcher:$versions.permission_dispatcher"
 deps.permission_dispatcher_processor ="org.permissionsdispatcher:permissionsdispatcher-processor:$versions.permission_dispatcher_processor"
+//图片压缩
+deps.luban            ="top.zibin:Luban:$versions.luban"
 ext.deps = deps
 
 def build_versions = [:]
@@ -256,6 +259,7 @@ project.module_user = ":moduleCore:moduleUser"
 project.module_main = ":moduleCore:moduleMain"
 project.module_repairs = ":moduleCore:moduleRepairs"
 project.module_extra = ":moduleCore:moduleExtra"
+project.point_check= ":moduleCore:pointCheck"
 deps.project = project
 
 def server =[:]

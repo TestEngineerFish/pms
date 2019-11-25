@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">pointCheck</string>
+    <string name="title_point_check_create">新增点检</string>
+    <string name="title_point_check_detial">点检详情</string>
+    <string name="title_sign_check_detial">巡更工单</string>
+    <string name="title_point_check_list">点检记录</string>
+    <string name="alert_choose_massif">请选择地块</string>
+    <string name="alert_choose_project">请选择点检事项</string>
+    <string name="alert_choose_pic">请上传图片</string>
+    <string name="alert_submit_error">提交失败</string>
+    <string name="alert_input">请输入</string>
+    <string name="alert_input_result">请输入检查结果</string>
+    <string name="item_qualified">合格</string>
+    <string name="item_no_qualified">不合格</string>
+    <string name="name_project">检查项目</string>
+    <string name="check_object_address">对象地址</string>
+    <string name="check_type_judge">判断型</string>
+    <string name="check_type_range">读数型</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="state_ok">正常</string>
+    <string name="state_error">异常</string>
+    <string name="sign_upload_photo">拍照上传</string>
+    <string name="text_submmit">提交</string>
+</resources>

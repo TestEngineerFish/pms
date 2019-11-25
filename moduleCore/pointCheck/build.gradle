@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion deps.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion deps.android.minSdkVersion
+        targetSdkVersion deps.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+        }
+        debugTest.initWith(buildTypes.debug)
+        debugTest {
+        }
+        uat {
+            minifyEnabled true   //开启混淆
+            zipAlignEnabled true  //压缩优化
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release.initWith(uat)
+        release {
+
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        targetCompatibility = '1.8'
+        sourceCompatibility = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(deps.project.module_common)
+    //页面路由ARouter
+    implementation (deps.arouter_api) {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor deps.arouter_compiler
+}

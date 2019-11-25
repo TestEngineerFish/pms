@@ -81,6 +81,8 @@ public class UserViewModel extends BaseViewModel {
      * @return
      */
     public LiveData<TenantModel> getTenantId(String code) {
+        //temp code for tenantid
+        CommonHttpService.getInstance().tenantId("55614223698362369");
         return mUCService.getTenantId(code, new CallBack<TenantModel>() {
             @Override
             public void call(TenantModel data) {

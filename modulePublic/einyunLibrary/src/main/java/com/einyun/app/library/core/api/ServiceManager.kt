@@ -2,6 +2,7 @@ package com.einyun.app.library.core.api
 
 import com.einyun.app.library.core.api.impl.DictServiceImpl
 import com.einyun.app.library.core.api.impl.UCServiceImpl
+import com.einyun.app.library.core.api.impl.UploadServiceImpl
 import com.einyun.app.library.core.api.impl.UserCenterServiceImpl
 
 /**
@@ -26,12 +27,14 @@ class ServiceManager {
         addService(SERVICE_DICT,DictServiceImpl())//添加数据字典服务
         addService(SERVICE_UC,UCServiceImpl())//添加UC服务
         addService(SERVICE_USER_CENTER,UserCenterServiceImpl())
+        addService(SERVICE_UPLOAD,UploadServiceImpl())
     }
 
     companion object{
         const val SERVICE_DICT:String="dict"
         const val SERVICE_UC:String="uc"
         const val SERVICE_USER_CENTER:String="user-center"
+        const val SERVICE_UPLOAD:String="upload"
 
         private val services: HashMap<String,EinyunService>?=HashMap()
         private var instance:ServiceManager?=null

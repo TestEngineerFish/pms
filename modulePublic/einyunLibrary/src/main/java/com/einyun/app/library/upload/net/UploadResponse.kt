@@ -16,6 +16,6 @@ import com.einyun.app.library.upload.model.ResourceModel
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class UploadResponse:BaseResponse<ResourceModel>(
+class UploadResponse:BaseResponse<String>(
 
 )

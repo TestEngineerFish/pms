@@ -28,17 +28,24 @@ public class HttpService {
     /**
      * 基础业务地址
      */
-    protected  String BASE_URL = "https://smcloud.shimaowy.com";
+    protected static String BASE_URL = "https://smcloud.shimaowy.com";
 
     protected static HttpService netWorkManager;
     protected static boolean DEBUG= BuildConfig.DEBUG;
-    protected Map<String,String> headMap =new HashMap<>();
-    protected Map<String,String> filter =new HashMap<>();
-    protected ServiceApi serviceApi;
+    protected static Map<String,String> headMap =new HashMap<>();
+    protected static Map<String,String> filter =new HashMap<>();
+    protected  ServiceApi serviceApi;
 
+    public String getBaseUrl(){
+        return BASE_URL;
+    }
     public static HttpService getInstance() {
-        if (netWorkManager == null) {
-            netWorkManager = new HttpService();
+        if(netWorkManager==null){
+            synchronized (HttpService.class){
+                if (netWorkManager == null) {
+                    netWorkManager = new HttpService();
+                }
+            }
         }
         return netWorkManager;
     }
