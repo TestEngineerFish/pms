@@ -63,7 +63,7 @@ public class UserViewModel extends BaseViewModel {
                 hideLoading();
                 UserServiceManager.getInstance().saveUserModel(data);
                 CommonHttpService.getInstance().authorToken(data.getToken());
-                mUsersRepo.saveOrUpdateUser(data);
+                mUsersRepo.saveOrUpdateUser(new UserModel("", data.getUserId(), "", username, password));
             }
 
             @Override
@@ -89,6 +89,7 @@ public class UserViewModel extends BaseViewModel {
             public void call(TenantModel data) {
                 CommonHttpService.getInstance().tenantId(data.getId());
                 Logger.d(TAG, "tentantId:" + data.getId());
+                SPUtils.put(BasicApplication.getInstance(), "tenantCode", code);
             }
 
             @Override

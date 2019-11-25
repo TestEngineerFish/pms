@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
@@ -58,6 +59,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         viewModel.getLastUser().observe(this,
                 user -> binding.setUserModel(user));
         binding.setCallBack(this);
+        binding.etOrgCode.setText(SPUtils.get(this, "tenantCode", "").toString());
         setUserList();
         initEvent();
     }

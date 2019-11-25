@@ -24,7 +24,6 @@ public class User implements Serializable {
     private Date updateTime;
 
     public User(String userName, String password) {
-        this.id = id;
         this.userName = userName;
         this.password = password;
         this.updateTime = new Date();
@@ -60,5 +59,15 @@ public class User implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

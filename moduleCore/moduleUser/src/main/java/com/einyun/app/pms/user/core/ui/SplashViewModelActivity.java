@@ -15,6 +15,7 @@ import com.einyun.app.base.BaseActivity;
 import com.einyun.app.base.BaseViewModelActivity;
 import com.einyun.app.base.db.entity.User;
 import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
@@ -44,27 +45,34 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        LiveData<UserModel> lastLoginUser = viewModel.getLastUser();
-        if (lastLoginUser == null || lastLoginUser.getValue() == null || lastLoginUser.getValue().getUsername() == null) {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
-            finish();
-            return;
-        }
-        //企业编码校验
-        viewModel.getTenantId("ccpg").observe(this,
-                tenantModel -> {
-                    //拿取最后一个user登陆
-                    viewModel.login(lastLoginUser.getValue().getUsername(), lastLoginUser.getValue().getPassword())
-                            .observe(this,
-                                    userModel -> {
-                                        ARouter.getInstance()
-                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                                .navigation();
-                                        finish();
-                                    });
-                });
+        viewModel.getLastUser().observe(this, userModel -> {
+            Log.e("usrModel","" + userModel);
+            if (userModel == null || !StringUtil.isNullStr(userModel.getUsername())) {
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                finish();
+                return;
+            }
+            //企业编码校验
+            viewModel.getTenantId("ccpg").observe(this,
+                    tenantModel -> {
+                        //拿取最后一个user登陆
+                        viewModel.login(userModel.getUsername(), userModel.getPassword())
+                                .observe(this,
+                                        currentUserModel -> {
+                                            ARouter.getInstance()
+                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                    .navigation();
+                                            finish();
+                                        });
+                    });
+        });
+
     }
 
+    @Override
+    protected int getColorPrimary() {
+        return Color.TRANSPARENT;
+    }
 
     @Override
     protected void initData() {

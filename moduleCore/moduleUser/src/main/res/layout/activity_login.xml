@@ -75,6 +75,7 @@
                     <com.einyun.app.pms.user.core.ui.widget.DropEditText
                         android:id="@+id/et_user"
                         style="@style/login_input_ll_edit"
+                        android:text="@={userModel.username}"
                         android:hint="请输入用户名" />
 
                 </LinearLayout>
