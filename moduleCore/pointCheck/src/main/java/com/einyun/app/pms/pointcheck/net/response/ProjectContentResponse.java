@@ -1,8 +1,8 @@
-package com.example.shimaostaff.pointcheck.net.response;
+package com.einyun.app.pms.pointcheck.net.response;
 
-import com.example.shimaostaff.http.BaseResponse;
-import com.example.shimaostaff.pointcheck.model.ProjectContentModel;
 
+import com.einyun.app.base.http.BaseResponse;
+import com.einyun.app.pms.pointcheck.model.ProjectContentModel;
 
 /**
  * @ProjectName: pms_old

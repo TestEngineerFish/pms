@@ -1,4 +1,4 @@
-package com.example.shimaostaff.pointcheck.net;
+package com.einyun.app.pms.pointcheck.net;
 
 /**
  * @ProjectName: pms_old

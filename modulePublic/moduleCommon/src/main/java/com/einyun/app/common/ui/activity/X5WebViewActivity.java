@@ -125,7 +125,7 @@ public class X5WebViewActivity extends BaseViewModelActivity<ActivityX5WebViewBi
             public void onProgressChanged(WebView webView, int progress) {
                 super.onProgressChanged(webView, progress);
                 binding.progressBar.setProgress(progress);
-                if(progress!=100){
+                if(progress!=100){//
                     binding.progressBar.setVisibility(View.VISIBLE);
                 }else{
                     binding.progressBar.setVisibility(View.GONE);

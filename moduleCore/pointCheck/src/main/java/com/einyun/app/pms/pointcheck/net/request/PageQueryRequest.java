@@ -1,6 +1,6 @@
-package com.example.shimaostaff.pointcheck.net.request;
+package com.einyun.app.pms.pointcheck.net.request;
 
-import com.example.shimaostaff.pointcheck.model.PageModel;
+import com.einyun.app.base.paging.bean.PageBean;
 
 /**
  * @ProjectName: pms_old
@@ -15,13 +15,13 @@ import com.example.shimaostaff.pointcheck.model.PageModel;
  * @Version: 1.0
  */
 public class PageQueryRequest {
-    private PageModel pageBean;
+    private PageBean pageBean;
 
-    public PageModel getPageBean() {
+    public PageBean getPageBean() {
         return pageBean;
     }
 
-    public void setPageBean(PageModel pageBean) {
+    public void setPageBean(PageBean pageBean) {
         this.pageBean = pageBean;
     }
 }

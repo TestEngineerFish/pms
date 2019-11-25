@@ -72,6 +72,7 @@ dependencies {
     api deps.loger
     api deps.status_bar    //全面屏、刘海屏状态栏
     api deps.arouter_api
+    api deps.luban
     annotationProcessor deps.arouter_compiler
 
     // Support libraries

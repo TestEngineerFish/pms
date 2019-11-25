@@ -1,9 +1,8 @@
-package com.einyun.app.base.paging.bean;
+package com.einyun.app.base.paging.datasource;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PositionalDataSource;
-
-import com.orhanobut.logger.Logger;
+import com.einyun.app.base.paging.bean.PageBean;
 
 /**
  * @ProjectName: pms
@@ -27,10 +26,13 @@ public abstract class BaseDataSource<M> extends PositionalDataSource<M> {
     @Override
     public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<M> callback) {
         int page=params.startPosition/params.loadSize+1;
+        if(params.startPosition<params.loadSize){
+            page=params.startPosition/params.loadSize+2;
+        }
         loadData(new PageBean(page,params.loadSize),callback);
     }
 
     //根据页数获取数据
-    public abstract   <T> void loadData(PageBean pageBean,@NonNull T callback);
+    public abstract <T> void loadData(PageBean pageBean,@NonNull T callback);
 
 }

@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 /**
- * UserViewModelFactory
+ * ViewModelFactory
  */
-public class UserViewModelFactory implements ViewModelProvider.Factory{
+public class ViewModelFactory implements ViewModelProvider.Factory{
 
     @NonNull
     @Override

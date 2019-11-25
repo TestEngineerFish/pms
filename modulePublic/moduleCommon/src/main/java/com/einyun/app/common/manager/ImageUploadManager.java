@@ -1,15 +1,17 @@
 package com.einyun.app.common.manager;
 
 import android.net.Uri;
-import android.telecom.Call;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.FileUtil;
-import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.utils.FileProviderUtil;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UploadService;
-import com.einyun.app.library.upload.model.ResourceModel;
+import com.einyun.app.library.upload.model.PicUrl;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,13 +20,11 @@ import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @ProjectName: pms
  * @Package: com.einyun.app.common.manager
- * @ClassName: UploadManager
+ * @ClassName: ImageUploadManager
  * @Description: java类作用描述
  * @Author: chumingjun
  * @CreateDate: 2019/11/22 0022 下午 20:08
@@ -33,31 +33,23 @@ import java.util.concurrent.locks.ReentrantLock;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class UploadManager {
-    private int uploadCount;
-    private Lock lock=new ReentrantLock();
-    private List<Uri> uris;
-    private CallBack<List<String>> callBack;
-    public UploadManager(List<Uri> uris,CallBack<List<String>> callBack){
-        this.uris=uris;
-        this.callBack=callBack;
-        lock.lock();
-        uploadCount=uris.size();
-        lock.unlock();
+public class ImageUploadManager {
+    private final String KEY_SERVER_FILE_ID="fileid";
+    private final String KEY_SERVER_FILE_ID_FIX="id";
+
+    private final String KEY_SERVER_FILE_NAME="fileName";
+    private final String KEY_SERVER_FILE_NAME_FIX="name";
+
+    private final String KEY_SERVER_FILE_PATH="filePath";
+    private final String KEY_SERVER_FILE_PATH_FIX="path";
+
+
+    public ImageUploadManager(){
     }
 
-    private void cutDown(){
-        lock.lock();
-        uploadCount--;
-        lock.unlock();
-    }
 
-    private boolean isEnd(){
-        return uploadCount<=0;
-    }
-
-    public void compress(List<Uri> uris,CallBack<List<String>> callBack){
-        List<String> fileList=new Vector<>();
+    public void compress(List<Uri> uris,CallBack<List<PicUrl>> callBack){
+        List<PicUrl> fileList=new Vector<>();
         ExecutorService fixedThreadPool= Executors.newFixedThreadPool(5);
         CountDownLatch latch=new CountDownLatch(uris.size());
         for(Uri uri:uris){
@@ -66,21 +58,16 @@ public class UploadManager {
                 FileUtil.compress(filePath, new CallBack<File>() {
                     @Override
                     public void call(File data) {
-                        fileList.add(data.getAbsolutePath());
+                        PicUrl picUrl=new PicUrl();
+                        picUrl.setOriginUrl(uri.toString());
+                        picUrl.setCompressed(filePath);
+                        fileList.add(picUrl);
                         latch.countDown();
-//                        cutDown();
-//                        if(isEnd()){
-//                            callBack.call(fileList);
-//                        }
                     }
 
                     @Override
                     public void onFaild(Throwable throwable) {
                         latch.countDown();
-//                        cutDown();
-//                        if(isEnd()){
-//                            callBack.call(fileList);
-//                        }
                     }
                 });
 
@@ -100,14 +87,19 @@ public class UploadManager {
 
 
 
-    public void upload()throws Exception{
-        compress(uris, new CallBack<List<String>>() {
+    public void upload(List<Uri> uris, CallBack<List<PicUrl>> callBack){
+        compress(uris, new CallBack<List<PicUrl>>() {
             @Override
-            public void call(List<String> data) {
+            public void call(List<PicUrl> compressList) {
+                List<String> uploadPaths = getCompressedPaths(compressList);
                 UploadService uploadService= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_UPLOAD);
-                uploadService.uploadImageList(data, new CallBack<List<String>>() {
+                uploadService.uploadImageList(uploadPaths, new CallBack<List<PicUrl>>() {
                     @Override
-                    public void call(List<String> data) {
+                    public void call(List<PicUrl> data) {
+                        for(PicUrl picUrl:data){
+                            String uri=getOriginPath(compressList,picUrl.getCompressed());
+                            picUrl.setOriginUrl(uri);
+                        }
                         callBack.call(data);
                     }
 
@@ -123,5 +115,48 @@ public class UploadManager {
                 callBack.onFaild(throwable);
             }
         });
+    }
+
+    private String getOriginPath(List<PicUrl> uris,String key){
+        for(PicUrl uri:uris){
+            if(uri.getCompressed().equals(key)){
+                return uri.getOriginUrl();
+            }
+        }
+        return null;
+    }
+
+
+    @NotNull
+    private List<String> getUploadPaths(List<PicUrl> data) {
+        List<String> uploadPaths=new ArrayList<>();
+        for(PicUrl picUrl:data){
+            uploadPaths.add(picUrl.getUploaded());
+        }
+        return uploadPaths;
+    }
+
+    @NotNull
+    private List<String> getCompressedPaths(List<PicUrl> data) {
+        List<String> uploadPaths=new ArrayList<>();
+        for(PicUrl picUrl:data){
+            uploadPaths.add(picUrl.getCompressed());
+        }
+        return uploadPaths;
+    }
+
+    public String toJosnString(List<PicUrl> data){
+        List<String> uploadPaths = getUploadPaths(data);
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (String value : uploadPaths) {
+                String jsonStr =value.replace(KEY_SERVER_FILE_ID, KEY_SERVER_FILE_ID_FIX).replace(KEY_SERVER_FILE_NAME, KEY_SERVER_FILE_NAME_FIX).replace(KEY_SERVER_FILE_PATH, KEY_SERVER_FILE_PATH_FIX);
+                org.json.JSONObject json = new org.json.JSONObject(jsonStr);
+                jsonArray.put(json);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray.toString();
     }
 }

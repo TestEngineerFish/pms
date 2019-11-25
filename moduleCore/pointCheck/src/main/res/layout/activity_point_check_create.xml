@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity" />
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-    <include layout="@layout/layout_head" />
+    <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -47,7 +54,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:text="地块"
-                    android:textColor="@color/check_point_item_name"
+                    android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
 
@@ -59,13 +66,17 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请选择"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:onClick="@{()->callBack.onDivideClick()}"
+                    />
                 <ImageView
                     android:id="@+id/iv_check_divide_arrow"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_marginLeft="4dp"
-                    app:srcCompat="@drawable/rightjiantou" />
+                    app:srcCompat="@mipmap/icon_arrow_right"
+                    android:onClick="@{()->callBack.onDivideClick()}"
+                    />
 
             </LinearLayout>
 
@@ -93,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="点检事项"
-                    android:textColor="@color/check_point_item_name"
+                    android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
 
@@ -105,13 +116,17 @@
                     android:background="@null"
                     android:gravity="right"
                     android:hint="请选择"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:onClick="@{()->callBack.onProjectClick()}"
+                    />
                 <ImageView
                     android:id="@+id/iv_check_project_arrow"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_marginLeft="4dp"
-                    app:srcCompat="@drawable/rightjiantou" />
+                    app:srcCompat="@mipmap/icon_arrow_right"
+                    android:onClick="@{()->callBack.onProjectClick()}"
+                    />
 
             </LinearLayout>
 
@@ -141,12 +156,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="点检对象"
-                    android:textColor="@color/check_point_item_name"
+                    android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
 
                 <TextView
-                    android:id="@+id/et_check_object"
+                    android:id="@+id/tv_check_object"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -159,7 +174,7 @@
                     android:layout_height="12dp"
                     android:layout_marginLeft="4dp"
                     android:visibility="invisible"
-                    app:srcCompat="@drawable/rightjiantou" />
+                    app:srcCompat="@mipmap/icon_arrow_right" />
 
             </LinearLayout>
 
@@ -189,12 +204,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="对象地址"
-                    android:textColor="@color/check_point_item_name"
+                    android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
 
                 <TextView
-                    android:id="@+id/et_check_point_obj_address"
+                    android:id="@+id/tv_point_check_obj_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -207,7 +222,7 @@
                     android:layout_height="12dp"
                     android:layout_marginLeft="4dp"
                     android:visibility="invisible"
-                    app:srcCompat="@drawable/rightjiantou" />
+                    app:srcCompat="@mipmap/icon_arrow_right" />
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_projects"
@@ -245,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="备注"
-                    android:textColor="@color/check_point_item_name"
+                    android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
 
@@ -264,7 +279,7 @@
                     android:layout_height="12dp"
                     android:layout_marginLeft="4dp"
                     android:visibility="invisible"
-                    app:srcCompat="@drawable/rightjiantou" />
+                    app:srcCompat="@mipmap/icon_arrow_right" />
             </LinearLayout>
 
 
@@ -287,7 +302,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:text="图片"
-                    android:textColor="@color/check_point_item_name"
+                    android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
                 <RelativeLayout
@@ -317,12 +332,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="90dp"
-                android:background="@drawable/shape_login_button"
+                android:background="@drawable/shape_button_corners"
                 android:textColor="@color/white"
-                android:text="提交"
+                android:onClick="@{()->callBack.onSubmitClick()}"
+                android:text="@string/text_submmit"
                 />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
+</layout>

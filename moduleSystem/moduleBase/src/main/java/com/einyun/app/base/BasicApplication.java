@@ -1,7 +1,8 @@
 package com.einyun.app.base;
 
-import android.app.Activity;
 import android.app.Application;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.db.AppDatabase;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class BasicApplication extends Application {
     private static BasicApplication app;
-    private List<Activity> activityList = new ArrayList<>();
+    private List<AppCompatActivity> activityList = new ArrayList<>();
     private final String TAG="einyun";
 
     @Override
@@ -43,11 +44,11 @@ public class BasicApplication extends Application {
         }
     }
 
-    public void addActivity(Activity activity) {
+    public void addActivity(AppCompatActivity activity) {
         activityList.add(activity);
     }
 
-    public void removeActivity(Activity activity) {
+    public void removeActivity(AppCompatActivity activity) {
         if (activityList.contains(activity)) {
             activityList.remove(activity);
         }
@@ -55,7 +56,7 @@ public class BasicApplication extends Application {
 
 
     public void exit() {
-        for (Activity activity : activityList) {
+        for (AppCompatActivity activity : activityList) {
             if (activity != null) {
                 activity.finish();
             }

@@ -1,6 +1,7 @@
 package com.einyun.app.library.upload.net
 
 import io.reactivex.Flowable
+import okhttp3.MultipartBody
 import retrofit2.http.*
 import okhttp3.RequestBody
 import retrofit2.http.POST
@@ -24,5 +25,5 @@ interface FileResServiceApi {
 
     @Multipart
     @POST(URLs.URL_UPLOAD)
-    fun upload(@Part("upload_file\";file=\"1.jpg") Body: RequestBody): Flowable<UploadResponse>
+    fun upload(@Part part: MultipartBody.Part): Flowable<UploadResponse>
 }

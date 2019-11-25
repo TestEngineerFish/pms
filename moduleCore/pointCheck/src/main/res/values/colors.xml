@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="point_check_item_name">#FF333333</color>
+    <color name="point_check_item_value">#FF9DA3B4</color>
+    <color name="check_pass">#FF6DD400</color>
+    <color name="check_error">#FFE02020</color>
+    <color name="list_bg">#FAFAFA</color>
+    <color name="point_check_bg">#F2F1F1</color>
+</resources>

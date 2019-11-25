@@ -41,7 +41,7 @@ open class EinyunHttpService protected constructor() : HttpService() {
     open fun init() {
         //添加自定义请求头
         addHeader(HTTPS_HEAD_API_RESPONSE_HANDLE, "true")
-        super.BASE_URL = EinyunSDK.server
+        BASE_URL = EinyunSDK.server
     }
 
     companion object {

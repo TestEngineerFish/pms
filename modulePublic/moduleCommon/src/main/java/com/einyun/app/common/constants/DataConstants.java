@@ -20,6 +20,8 @@ public class DataConstants {
 
     public static final String KEY_ORG_HQ="ORG_ZongBu";
 
+    public static final String KEY_ORG_DIVIDE="organization_type_divide";
+
     public static final String KEY_ORG_BLOCK="ORG_DiKuai";
 
     public static final String DATA_PROVIDER_NAME="com.einyun.app.pms";

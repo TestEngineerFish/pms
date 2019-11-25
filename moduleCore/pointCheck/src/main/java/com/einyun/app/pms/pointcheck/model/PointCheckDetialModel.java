@@ -1,8 +1,10 @@
-package com.example.shimaostaff.pointcheck.model;
+package com.einyun.app.pms.pointcheck.model;
 
 import android.text.TextUtils;
 
-import com.example.shimaostaff.net.Constants;
+import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.utils.HttpUrlUtil;
+import com.einyun.app.library.core.net.EinyunHttpService;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -68,7 +70,7 @@ public class PointCheckDetialModel extends CheckPointModel{
            getImages();
         }
         for(PicUrlModel model:images){
-            imagePaths.add(Constants.baseUrl+"media/"+model.getPath());
+            imagePaths.add(HttpUrlUtil.getImageServerUrl(model.getPath()));
         }
         return imagePaths;
     }

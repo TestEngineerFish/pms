@@ -1,5 +1,7 @@
 package com.einyun.app.common.application;
 
+import android.util.TypedValue;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
@@ -57,5 +59,14 @@ public class CommonApplication extends BasicApplication {
     }
 
 
+    /**
+     * 获取主题颜色
+     * @return
+     */
+    public int getColorPrimary(){
+        TypedValue typedValue = new  TypedValue();
+        getTheme().resolveAttribute(com.einyun.app.base.R.attr.colorPrimary, typedValue, true);
+        return typedValue.data;
+    }
 
 }

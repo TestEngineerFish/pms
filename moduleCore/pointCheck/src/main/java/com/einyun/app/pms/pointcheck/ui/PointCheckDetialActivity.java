@@ -1,37 +1,45 @@
-package com.example.shimaostaff.pointcheck.ui;
+package com.einyun.app.pms.pointcheck.ui;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
-import com.example.shimaostaff.R;
-import com.example.shimaostaff.activity.BaseActivity;
-import com.example.shimaostaff.activity.PhotoShowActivity;
-import com.example.shimaostaff.net.Constants;
-import com.example.shimaostaff.pointcheck.listener.SQOnRecycleItemListener;
-import com.example.shimaostaff.pointcheck.model.PicUrlModel;
-import com.example.shimaostaff.pointcheck.model.PointCheckDetialModel;
-import com.example.shimaostaff.pointcheck.model.ProjectContentItemModel;
-import com.example.shimaostaff.pointcheck.model.State;
-import com.example.shimaostaff.pointcheck.viewmodel.PointCheckDetialViewModel;
+import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
+import com.einyun.app.common.utils.HttpUrlUtil;
+import com.einyun.app.library.core.net.EinyunHttpService;
+import com.einyun.app.pms.pointcheck.BR;
+import com.einyun.app.pms.pointcheck.R;
+import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckDetialBinding;
+import com.einyun.app.pms.pointcheck.databinding.ItemPointCheckProjectBinding;
+import com.einyun.app.pms.pointcheck.listener.SQOnRecycleItemListener;
+import com.einyun.app.pms.pointcheck.model.PointCheckDetialModel;
+import com.einyun.app.pms.pointcheck.model.ProjectContentItemModel;
+import com.einyun.app.pms.pointcheck.viewmodel.PointCheckDetialViewModel;
+import com.einyun.app.pms.pointcheck.viewmodel.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;;
+;
 
 /**
  * @ProjectName: pms_old
@@ -45,67 +53,31 @@ import butterknife.ButterKnife;;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class PointCheckDetialActivity extends BaseActivity implements SQOnRecycleItemListener {
+@Route(path = RouterUtils.ACTIVITY_POINT_CHECK_DETIAL)
+public class PointCheckDetialActivity extends BaseHeadViewModelActivity<ActivityPointCheckDetialBinding, PointCheckDetialViewModel> implements SQOnRecycleItemListener {
     private  final String TAG ="PointCheckDetialAct";
-    PointCheckDetialViewModel viewModel;
-    @Bind(R.id.tv_check_name)
-    TextView tvCheckName;
-    @Bind(R.id.iv_check_result)
-    ImageView ivCheckResult;
-    @Bind(R.id.tv_check_result)
-    TextView tvCheckResult;
-    @Bind(R.id.tv_check_no)
-    TextView tvCheckNo;
-    @Bind(R.id.tv_check_block)
-    TextView tvCheckBlock;
-    @Bind(R.id.tv_check_object)
-    TextView tvCheckObject;
-    @Bind(R.id.tv_object_address)
-    TextView tvObjectAddress;
-    @Bind(R.id.tv_check_has_extra)
-    TextView tvCheckHasExtra;
-    @Bind(R.id.tv_check_auther)
-    TextView tvCheckAuther;
-    @Bind(R.id.tv_check_time)
-    TextView tvCheckTime;
-    @Bind(R.id.rv_projects)
-    RecyclerView rvProjects;
-    @Bind(R.id.tv_check_content)
-    TextView tvCheckContent;
-    @Bind(R.id.rv_photo_selector)
-    RecyclerView rvPhotoSelector;
-    @Bind(R.id.ll_pic)
-    LinearLayout llPic;
-    private String checkId;
-    ProjectContentAdapter contentAdapter;
+    @Autowired(name = RouteKey.KEY_TASK_ID)
+    String checkId;
+//    ProjectContentAdapter contentAdapter;
+    RVBindingAdapter<ItemPointCheckProjectBinding,ProjectContentItemModel> adapter;
     private SPPhotoAdapter spphotoAdapter;
     PointCheckDetialModel detialModel;
 
 
     @Override
-    protected int getResourceId() {
-        return R.layout.activity_check_point_detial;
+    protected PointCheckDetialViewModel initViewModel() {
+        return new ViewModelProvider(this, new ViewModelFactory()).get(PointCheckDetialViewModel.class);
     }
 
     @Override
-    protected void initView() {
-        ButterKnife.bind(this);
-        super.initView();
-        viewModel = ViewModelProviders.of(this).get(PointCheckDetialViewModel.class);
-        setTitle(R.string.title_point_check_detial);
-        /**
-         * Loading Dialog show/hide
-         */
-        viewModel.state.observe(this, state -> {
-            if(state== State.HIDELOADING){
-                hideLoading();
-            }else if(state==State.SHOWLOADING){
-                showLoading();
-            }
-        });
-        if (getIntent() != null) {
-            checkId = getIntent().getStringExtra("CHECK_POINT_ID");
-        }
+    public int getLayoutId() {
+        return R.layout.activity_point_check_detial;
+    }
+
+    @Override
+    public void initViews(Bundle savedInstanceState) {
+        super.initViews(savedInstanceState);
+        setHeadTitle(R.string.title_point_check_detial);
         if (!TextUtils.isEmpty(checkId)) {
             viewModel.queryDetial(checkId).observe(this, model -> {
                 updateUI(model);
@@ -113,33 +85,20 @@ public class PointCheckDetialActivity extends BaseActivity implements SQOnRecycl
         }
     }
 
-    private void updateUI(PointCheckDetialModel model) {
-        this.detialModel=model;
-        tvCheckName.setText(model.getCheckName());
-        if (model.getIsUnusual() > 0) {//异常
-            tvCheckResult.setText(R.string.state_error);
-            ivCheckResult.setImageResource(R.mipmap.error);
-            tvCheckResult.setTextColor(getResources().getColor(R.color.check_error));
-        } else {
-            tvCheckResult.setText(R.string.state_ok);
-            ivCheckResult.setImageResource(R.mipmap.ok);
-            tvCheckResult.setTextColor(getResources().getColor(R.color.check_pass));
-        }
 
-        tvCheckBlock.setText(model.getMassifName());
-        tvCheckNo.setText(model.getCheckRecordCode());
-        tvCheckObject.setText(model.getCheckName());
-        tvObjectAddress.setText(R.string.check_object_address);
-        tvCheckHasExtra.setText(model.getSpecificLocation());
-        tvCheckAuther.setText(model.getCreateName());
-        tvCheckTime.setText(model.getCreateTime());
-        tvCheckContent.setText(model.getRemark());
-        loadProjectContents();
+    private void updateUI(PointCheckDetialModel model) {
+        if(model==null){
+            return;
+        }
+        this.detialModel=model;
+        binding.layoutBrief.setVariable(BR.checkpoint,detialModel);
+        binding.tvCheckContent.setText(model.getRemark());
+        loadProjectContents(model);
         if(model.getIsPic()>0||(model.getImages()!=null&&model.getImages().size()>0)){
-            llPic.setVisibility(View.VISIBLE);
-            loadPics();
+            binding.llPic.setVisibility(View.VISIBLE);
+            loadPics(model);
         }else{
-            llPic.setVisibility(View.GONE);
+            binding.llPic.setVisibility(View.GONE);
         }
     }
 
@@ -147,36 +106,59 @@ public class PointCheckDetialActivity extends BaseActivity implements SQOnRecycl
      * 加载点检事项内容
      *
      */
-    private void loadProjectContents() {
+    private void loadProjectContents(PointCheckDetialModel detialModel) {
         if(detialModel==null){
             return;
         }
         List<ProjectContentItemModel> contentItemModels = detialModel.getContentList();
-        if (contentAdapter == null) {
-            contentAdapter = new ProjectContentAdapter(contentItemModels);
-            rvProjects.setLayoutManager(new LinearLayoutManager(this));
-            rvProjects.setNestedScrollingEnabled(false);
-            rvProjects.setAdapter(contentAdapter);
-        } else {
-            contentAdapter.updateContent(contentItemModels);
+        if (adapter == null) {
+            adapter = new RVBindingAdapter<ItemPointCheckProjectBinding, ProjectContentItemModel>(this,BR.content) {
+                @Override
+                public void onBindItem(ItemPointCheckProjectBinding binding, ProjectContentItemModel model,int position) {
+                    binding.tvCheckContent.setText(model.getCheckContent());
+                    if (model.getCheckType() == 2) {//判断型
+                        binding.tvCheckRange.setText(R.string.item_qualified);
+                        binding.tvCheckType.setText(R.string.check_type_judge);
+                        if (model.getQualified() > 0) { //合格
+                            binding.tvCheckResult.setText(R.string.item_qualified);
+                        } else {
+                            binding.tvCheckResult.setText(R.string.item_no_qualified);
+                        }
+                        binding.tvProjectName.setText(getResources().getString(R.string.name_project) + (position + 1));
+                    } else { //填空型
+                        binding.tvCheckType.setText(R.string.check_type_range);
+                        binding.tvCheckResult.setText(model.getCheckResult() + "");
+                        binding.tvCheckRange.setText(model.getMinValue()+"-"+model.getMaxVal());
+                    }
+                }
+
+                @Override
+                public int getLayoutId() {
+                    return R.layout.item_point_check_project;
+                }
+            };
+            binding.rvProjects.setLayoutManager(new LinearLayoutManager(this));
+            binding.rvProjects.setNestedScrollingEnabled(false);
+            binding.rvProjects.setAdapter(adapter);
         }
+        adapter.addAll(contentItemModels);
     }
 
     /**
      * load pics
      */
-    private void loadPics(){
+    private void loadPics(PointCheckDetialModel detialModel){
         if(detialModel==null){
             return;
         }
         if(spphotoAdapter==null){
             spphotoAdapter = new SPPhotoAdapter(this, detialModel.getImages());
             spphotoAdapter.addSQRecycleItemListener(this);
-            rvPhotoSelector.setLayoutManager(new LinearLayoutManager(
+            binding.rvPhotoSelector.setLayoutManager(new LinearLayoutManager(
                     this,
                     LinearLayoutManager.HORIZONTAL,
                     false));
-            rvPhotoSelector.setAdapter(spphotoAdapter);
+            binding.rvPhotoSelector.setAdapter(spphotoAdapter);
         }else{
             spphotoAdapter.updateList(detialModel.getImages());
         }
@@ -200,86 +182,7 @@ public class PointCheckDetialActivity extends BaseActivity implements SQOnRecycl
     }
 
 
-    /**
-     * 点检事项内容适配器
-     */
-    class ProjectContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private List<ProjectContentItemModel> itemModels;
-
-        public void updateContent(List<ProjectContentItemModel> contents) {
-            if (itemModels == null) {
-                itemModels = contents;
-            } else {
-                itemModels.clear();
-                itemModels.addAll(contents);
-            }
-            notifyDataSetChanged();
-        }
-
-        public ProjectContentAdapter(List<ProjectContentItemModel> list) {
-            this.itemModels = list;
-        }
-
-        @NonNull
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = getLayoutInflater().inflate(R.layout.item_check_point_project, viewGroup, false);
-            RecyclerView.ViewHolder holder =  new ProjectContentViewHolder(v);
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-            ProjectContentViewHolder holder = (ProjectContentViewHolder) viewHolder;
-            ProjectContentItemModel model = itemModels.get(i);
-            holder.tvCheckContent.setText(model.getCheckContent());
-            if (model.getCheckType() == 2) {//判断型
-                holder.tvCheckRange.setText(R.string.item_qualified);
-                holder.tvCheckType.setText(R.string.check_type_judge);
-                if (model.getQualified() > 0) { //合格
-                    holder.tvCheckResult.setText(R.string.item_qualified);
-                } else {
-                    holder.tvCheckResult.setText(R.string.item_no_qualified);
-                }
-                holder.tvProjectName.setText(getResources().getString(R.string.name_project) + (i + 1));
-            } else { //填空型
-                holder.tvCheckType.setText(R.string.check_type_range);
-                holder.tvCheckResult.setText(model.getCheckResult() + "");
-                holder.tvCheckRange.setText(model.getMinValue()+"-"+model.getMaxVal());
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return itemModels == null ? 0 : itemModels.size();
-        }
-    }
-
-    /**
-     * 点检内容viewholder
-     */
-    class ProjectContentViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_project_name)
-        TextView tvProjectName;
-        @Bind(R.id.tv_check_content)
-        TextView tvCheckContent;
-        @Bind(R.id.tv_check_type)
-        TextView tvCheckType;
-        @Bind(R.id.tv_check_range)
-        TextView tvCheckRange;
-        @Bind(R.id.tv_check_result)
-        TextView tvCheckResult;
-        @Bind(R.id.ll_range)
-        LinearLayout llRange;
-        @Bind(R.id.ll_qualified)
-        LinearLayout llQualified;
-
-        public ProjectContentViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
 
     /**
      * photo adapter
@@ -324,8 +227,9 @@ public class PointCheckDetialActivity extends BaseActivity implements SQOnRecycl
             holder.layout_add.setVisibility(View.GONE);
             PicUrlModel model = selectedPhotos.get(position);
             Log.e(TAG, "photo = " + model.getPath());
+            String imageUrl= HttpUrlUtil.getImageServerUrl(model.getPath());
             Glide.with(context)
-                    .load(Constants.baseUrl+"media/"+model.getPath())
+                    .load(imageUrl)
                     .centerCrop()
                     .into(holder.imgPhoto);
 

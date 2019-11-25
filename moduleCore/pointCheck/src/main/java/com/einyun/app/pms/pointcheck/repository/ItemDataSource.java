@@ -12,7 +12,7 @@ import com.einyun.app.pms.pointcheck.model.CheckPointPage;
 /**
  * @ProjectName: pms
  * @Package: com.einyun.app.pms.pointcheck.repository
- * @ClassName: DataSource
+ * @ClassName: ItemDataSource
  * @Description: java类作用描述
  * @Author: chumingjun
  * @CreateDate: 2019/11/20 0020 下午 14:06
@@ -21,7 +21,7 @@ import com.einyun.app.pms.pointcheck.model.CheckPointPage;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DataSource extends BaseDataSource<CheckPointModel> {
+public class ItemDataSource extends BaseDataSource<CheckPointModel> {
 
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
@@ -30,11 +30,9 @@ public class DataSource extends BaseDataSource<CheckPointModel> {
         repository.pageQuery(pageBean, new CallBack<CheckPointPage>() {
             @Override
             public void call(CheckPointPage data) {
-
                 if(callback instanceof LoadInitialCallback){
-
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
-                    loadInitialCallback.onResult(data.getRows(),0,(int)data.getTotal());
+                    loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
                     loadInitialCallback.onResult(data.getRows());
@@ -47,4 +45,5 @@ public class DataSource extends BaseDataSource<CheckPointModel> {
             }
         });
     }
+
 }

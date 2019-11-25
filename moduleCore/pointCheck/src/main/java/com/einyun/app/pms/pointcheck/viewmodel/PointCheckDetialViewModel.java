@@ -1,17 +1,20 @@
-package com.example.shimaostaff.pointcheck.viewmodel;
+package com.einyun.app.pms.pointcheck.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.shimaostaff.http.CallBack;
-import com.example.shimaostaff.pointcheck.model.PointCheckDetialModel;
-import com.example.shimaostaff.pointcheck.model.State;
-import com.example.shimaostaff.pointcheck.repository.PointCheckDetialRepository;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.BaseViewModel;
+import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.pms.pointcheck.model.PointCheckDetialModel;
+import com.einyun.app.pms.pointcheck.model.State;
+import com.einyun.app.pms.pointcheck.repository.PointCheckDetialRepository;
 
 /**
  * @ProjectName: pms_old
- * @Package: com.example.shimaostaff.pointcheck.viewmodel
+ * @Package: com.einyun.app.pms.pointcheck.viewmodel
  * @ClassName: PointCheckDetialViewModel
  * @Description: java类作用描述
  * @Author: chumingjun
@@ -21,23 +24,22 @@ import com.example.shimaostaff.pointcheck.repository.PointCheckDetialRepository;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class PointCheckDetialViewModel extends ViewModel {
+public class PointCheckDetialViewModel extends BaseViewModel {
     PointCheckDetialRepository repository=new PointCheckDetialRepository();
-    public MutableLiveData<State> state=new MutableLiveData<>();
     private MutableLiveData<PointCheckDetialModel> detial=new MutableLiveData<>();
 
     public LiveData<PointCheckDetialModel> queryDetial(String id){
-        state.postValue(State.SHOWLOADING);
+        showLoading();
         repository.detial(id, new CallBack<PointCheckDetialModel>() {
             @Override
             public void call(PointCheckDetialModel data) {
-                state.postValue(State.HIDELOADING);
+                hideLoading();
                 detial.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                state.postValue(State.HIDELOADING);
+                hideLoading();
             }
         });
         return detial;

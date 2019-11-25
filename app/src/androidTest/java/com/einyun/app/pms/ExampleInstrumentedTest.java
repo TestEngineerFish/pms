@@ -1,4 +1,4 @@
-package com.einyun.app.pms.pms;
+package com.einyun.app.pms;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.einyun.app.pms.pms", appContext.getPackageName());
+        assertEquals("com.einyun.app.pms", appContext.getPackageName());
     }
 }

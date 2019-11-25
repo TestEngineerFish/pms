@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <variable
+            name="content"
+            type="com.einyun.app.pms.pointcheck.model.ProjectContentItemModel" />
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
@@ -36,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="检查内容"
-            android:textColor="@color/check_point_item_name" />
+            android:textColor="@color/point_check_item_name" />
 
         <TextView
             android:id="@+id/tv_check_content"
@@ -44,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/check_point_item_value" />
+            android:textColor="@color/point_check_item_value" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="类型"
-            android:textColor="@color/check_point_item_name" />
+            android:textColor="@color/point_check_item_name" />
 
         <TextView
             android:id="@+id/tv_check_type"
@@ -67,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/check_point_item_value" />
+            android:textColor="@color/point_check_item_value" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="正常范围"
-            android:textColor="@color/check_point_item_name" />
+            android:textColor="@color/point_check_item_name" />
 
         <TextView
             android:id="@+id/tv_check_range"
@@ -91,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/check_point_item_value" />
+            android:textColor="@color/point_check_item_value" />
     </LinearLayout>
 
     <LinearLayout
@@ -107,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="检查结果"
-            android:textColor="@color/check_point_item_name" />
+            android:textColor="@color/point_check_item_name" />
 
         <TextView
             android:id="@+id/tv_check_result"
@@ -115,6 +122,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/check_point_item_value" />
+            android:textColor="@color/point_check_item_value" />
     </LinearLayout>
 </LinearLayout>
+
+</layout>

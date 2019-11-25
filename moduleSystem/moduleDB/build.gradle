@@ -70,4 +70,5 @@ dependencies {
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.extensions
     annotationProcessor deps.lifecycle.compiler
+    implementation 'com.android.support:appcompat-v7'
 }

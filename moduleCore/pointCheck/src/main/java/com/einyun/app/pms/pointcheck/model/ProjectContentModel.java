@@ -1,4 +1,4 @@
-package com.example.shimaostaff.pointcheck.model;
+package com.einyun.app.pms.pointcheck.model;
 
 import java.util.List;
 

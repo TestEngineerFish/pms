@@ -1,13 +1,12 @@
-package com.example.shimaostaff.pointcheck.net;
+package com.einyun.app.pms.pointcheck.net;
 
-import com.example.shimaostaff.http.BaseResponse;
-import com.example.shimaostaff.pointcheck.net.request.CreatePointCheckRequest;
-import com.example.shimaostaff.pointcheck.net.request.PageQueryRequest;
-import com.example.shimaostaff.pointcheck.net.response.CheckPointDetialResponse;
-import com.example.shimaostaff.pointcheck.net.response.CheckPointListResponse;
-import com.example.shimaostaff.pointcheck.net.response.ProjectContentResponse;
-import com.example.shimaostaff.pointcheck.net.response.ProjectResponse;
-
+import com.einyun.app.base.http.BaseResponse;
+import com.einyun.app.pms.pointcheck.net.request.CreatePointCheckRequest;
+import com.einyun.app.pms.pointcheck.net.request.PageQueryRequest;
+import com.einyun.app.pms.pointcheck.net.response.CheckPointDetialResponse;
+import com.einyun.app.pms.pointcheck.net.response.CheckPointListResponse;
+import com.einyun.app.pms.pointcheck.net.response.ProjectContentResponse;
+import com.einyun.app.pms.pointcheck.net.response.ProjectResponse;
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -32,7 +31,7 @@ public interface CheckPointServiceApi {
      * 获取点检事项集
      */
     @GET(URLs.URL_POINT_CHECK_PROJECTS)
-    Flowable<ProjectResponse> projects(@Query("ids")String ids);
+    Flowable<ProjectResponse> projects(@Query("ids") String ids);
 
     /**
      * 根据点检设置获取该点检设置下面的点检内容

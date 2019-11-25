@@ -1,17 +1,16 @@
-package com.example.shimaostaff.pointcheck.viewmodel;
+package com.einyun.app.pms.pointcheck.viewmodel;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
-import com.example.shimaostaff.http.CallBack;
-import com.example.shimaostaff.pointcheck.model.PageModel;
-import com.example.shimaostaff.pointcheck.model.State;
-import com.example.shimaostaff.pointcheck.model.CheckPointPage;
-import com.example.shimaostaff.pointcheck.repository.PointCheckListRepository;
+import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.pms.pointcheck.model.CheckPointModel;
+import com.einyun.app.pms.pointcheck.repository.DataSourceFactory;
 
 /**
  * @ProjectName: pms_old
- * @Package: com.example.shimaostaff.pointcheck.viewmodel
+ * @Package: com.einyun.app.pms.pointcheck.viewmodel
  * @ClassName: PointCheckListViewModel
  * @Description: java类作用描述
  * @Author: chumingjun
@@ -21,31 +20,19 @@ import com.example.shimaostaff.pointcheck.repository.PointCheckListRepository;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class PointCheckListViewModel extends ViewModel {
-    private MutableLiveData<CheckPointPage> pageList=new MutableLiveData<>();
-    private PointCheckListRepository repository=new PointCheckListRepository();
-    public MutableLiveData<State> state=new MutableLiveData<>();
-    public int page;
-
-    public MutableLiveData<CheckPointPage> queryPage(int page,int pageSize){
-//        state.postValue(State.SHOWLOADING);
-        PageModel pageModel=new PageModel();
-        pageModel.setPage(page);
-        pageModel.setPageSize(pageSize);
-        repository.pageQuery(pageModel, new CallBack<CheckPointPage>() {
-            @Override
-            public void call(CheckPointPage data) {
-                if(data!=null){
-                    pageList.postValue(data);
-                }
-                state.postValue(State.HIDELOADING);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                state.postValue(State.HIDELOADING);
-            }
-        });
+public class PointCheckListViewModel extends BasePageListViewModel<CheckPointModel> {
+    /**
+     * 获取Paging LiveData
+     * @return LiveData
+     */
+    public LiveData<PagedList<CheckPointModel>> loadPadingData(){
+        if(pageList ==null){
+            pageList = new LivePagedListBuilder(new DataSourceFactory(), config)
+//                .setBoundaryCallback(null)
+//                .setFetchExecutor(null)
+                    .build();
+        }
         return pageList;
     }
+
 }

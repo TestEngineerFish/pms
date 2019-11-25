@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -21,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/login_back" />
+            app:srcCompat="@drawable/login_back" />
 
         <LinearLayout
             android:id="@+id/ll_1"
@@ -53,7 +54,7 @@
                         android:layout_height="30dp"
                         android:layout_marginRight="20dp"
                         android:layout_toLeftOf="@id/et_user"
-                        android:src="@drawable/login_user" />
+                        app:srcCompat="@drawable/login_user" />
 
                     <com.einyun.app.pms.user.core.ui.widget.DropEditText
                         android:id="@+id/et_user"
@@ -75,7 +76,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25dp"
-                    android:src="@drawable/edit_delete"
+                    app:srcCompat="@drawable/edit_delete"
                     android:visibility="invisible" />
 
             </RelativeLayout>
@@ -92,7 +93,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/login_password" />
+                    app:srcCompat="@drawable/login_password" />
 
                 <EditText
                     android:id="@+id/et_password"

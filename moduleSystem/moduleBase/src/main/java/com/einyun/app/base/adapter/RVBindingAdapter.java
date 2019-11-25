@@ -1,4 +1,4 @@
-package com.einyun.app.base;
+package com.einyun.app.base.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.einyun.app.base.BaseBindingViewHolder;
 import com.einyun.app.base.event.ItemClickListener;
 
 import java.util.ArrayList;
@@ -52,13 +53,21 @@ public abstract class RVBindingAdapter<D extends ViewDataBinding,M> extends Recy
         holder.getBinding().setVariable(BR_id,mDataList.get(position));
         //立即执行绑定
         holder.getBinding().executePendingBindings();
-        holder.itemView.setOnClickListener(v -> itemClickListener.onItemClicked(holder.itemView,mDataList.get(position)));
 
-        onBindItem((D) holder.getBinding(),mDataList.get(position));
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener!=null){
+                itemClickListener.onItemClicked(holder.itemView, mDataList.get(position));
+            }
+        });
+
+        onBindItem((D) holder.getBinding(),mDataList.get(position),position);
     }
 
+    public List<M> getItemModels(){
+        return mDataList;
+    }
 
-    public abstract void onBindItem(D binding,M model);
+    public abstract void onBindItem(D binding,M model,int position);
 
     //设置item布局文件id
     public abstract int getLayoutId();

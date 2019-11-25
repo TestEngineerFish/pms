@@ -1,22 +1,22 @@
-package com.example.shimaostaff.pointcheck.repository;
+package com.einyun.app.pms.pointcheck.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.shimaostaff.http.CallBack;
-import com.example.shimaostaff.http.HttpService;
-import com.example.shimaostaff.http.RxSchedulers;
-import com.example.shimaostaff.pointcheck.model.ProjectContentModel;
-import com.example.shimaostaff.pointcheck.model.ProjectModel;
-import com.example.shimaostaff.pointcheck.net.CheckPointServiceApi;
-import com.example.shimaostaff.pointcheck.net.URLs;
-import com.example.shimaostaff.pointcheck.net.request.CreatePointCheckRequest;
+import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.RxSchedulers;
+import com.einyun.app.library.core.net.EinyunHttpService;
+import com.einyun.app.pms.pointcheck.model.ProjectContentModel;
+import com.einyun.app.pms.pointcheck.model.ProjectModel;
+import com.einyun.app.pms.pointcheck.net.CheckPointServiceApi;
+import com.einyun.app.pms.pointcheck.net.URLs;
+import com.einyun.app.pms.pointcheck.net.request.CreatePointCheckRequest;
 
 import java.util.List;
 
 /**
  * @ProjectName: pms_old
- * @Package: com.example.shimaostaff.pointcheck.repository
+ * @Package: com.einyun.app.pms.pointcheck.repository
  * @ClassName: CreateCheckRepository
  * @Description: java类作用描述
  * @Author: chumingjun
@@ -30,7 +30,7 @@ public class CreateCheckRepository {
     CheckPointServiceApi serviceApi;
 
     public CreateCheckRepository() {
-        serviceApi = HttpService.getInstance().getServiceApi(CheckPointServiceApi.class);
+        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(CheckPointServiceApi.class);
     }
 
     /**

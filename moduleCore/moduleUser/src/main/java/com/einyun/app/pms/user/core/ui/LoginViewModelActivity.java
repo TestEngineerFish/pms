@@ -12,8 +12,8 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
-import com.yykj.app.pms.user.R;
-import com.yykj.app.pms.user.databinding.ActivityLoginBinding;
+import com.einyun.app.pms.user.R;
+import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
 
 @Route(path = RouterUtils.ACTIVITY_USER_LOGIN)
 public class LoginViewModelActivity extends BaseViewModelActivity<ActivityLoginBinding, UserViewModel> {

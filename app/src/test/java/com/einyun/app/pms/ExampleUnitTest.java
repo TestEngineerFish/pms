@@ -1,4 +1,4 @@
-package com.einyun.app.pms.pms;
+package com.einyun.app.pms;
 
 import org.junit.Test;
 

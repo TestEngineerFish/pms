@@ -1,6 +1,4 @@
-package com.example.shimaostaff.pointcheck.model;
-
-import com.example.shimaostaff.pointcheck.model.CheckPointModel;
+package com.einyun.app.pms.pointcheck.model;
 
 import java.util.List;
 

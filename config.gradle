@@ -80,6 +80,7 @@ versions.pickerview    ="4.1.9"
 versions.x5            ="43697"
 versions.permission_dispatcher ="4.6.0"
 versions.permission_dispatcher_processor ="4.6.0"
+versions.luban         ="1.1.8"
 ext.versions = versions
 
 def deps = [:]
@@ -211,6 +212,7 @@ deps.pickerview       ="com.contrarywind:Android-PickerView:$versions.pickerview
 deps.x5               ="com.tencent.tbs.tbssdk:sdk:$versions.x5"
 deps.permission_dispatcher ="org.permissionsdispatcher:permissionsdispatcher:$versions.permission_dispatcher"
 deps.permission_dispatcher_processor ="org.permissionsdispatcher:permissionsdispatcher-processor:$versions.permission_dispatcher_processor"
+deps.luban             ="top.zibin:Luban:$versions.luban"
 ext.deps = deps
 
 def build_versions = [:]
@@ -247,13 +249,14 @@ project.module_http   = ":moduleSystem:moduleHttp"
 project.module_user = ":moduleCore:moduleUser"
 project.module_main = ":moduleCore:moduleMain"
 project.module_repairs = ":moduleCore:moduleRepairs"
+project.point_check  =":moduleCore:pointCheck"
 deps.project = project
 
 def server =[:]
 //开发调式环境
 server.debug = "\"http://172.16.0.123\""
 //测试环境
-server.debug_test = "\"http://120.79.213.146:8080\""
+server.debug_test = "\"http://120.79.213.146\""
 //UAT环境
 server.uat = "\"https://bpm.somelink.cn/xx\""
 //正式环境

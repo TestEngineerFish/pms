@@ -1,14 +1,12 @@
-package com.example.shimaostaff.pointcheck.net.request;
+package com.einyun.app.pms.pointcheck.net.request;
 
-import com.example.shimaostaff.pointcheck.model.PicUrlModel;
-import com.example.shimaostaff.pointcheck.model.ProjectContentModel;
-import com.example.shimaostaff.pointcheck.model.ProjectResultModel;
+import com.einyun.app.pms.pointcheck.model.ProjectResultModel;
 
 import java.util.List;
 
 /**
  * @ProjectName: pms_old
- * @Package: com.example.shimaostaff.pointcheck.net.request
+ * @Package: com.einyun.app.pms.pointcheck.net.request
  * @ClassName: CreatePointCheckRequest
  * @Description: java类作用描述
  * @Author: chumingjun

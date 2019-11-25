@@ -5,6 +5,7 @@ import androidx.paging.PositionalDataSource;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageResult;
+import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.portal.dictdata.repository.DictRepository;
@@ -23,22 +24,22 @@ import com.einyun.app.base.paging.bean.PageBean;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class RepairsDataSource extends PositionalDataSource<DictDataModel> {
+public class RepairsDataSource extends BaseDataSource<DictDataModel> {
 
 
-    //初始加载
-    @Override
-    public void loadInitial(@NonNull LoadInitialParams params, @NonNull LoadInitialCallback<DictDataModel> callback) {
-        loadData(new PageBean(),callback);
-    }
-
-    //自动分页数据获取
-    @Override
-    public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<DictDataModel> callback) {
-        int page=params.startPosition/params.loadSize+1;
-        Logger.d("page:"+page);
-        loadData(new PageBean(page,params.loadSize),callback);
-    }
+//    //初始加载
+//    @Override
+//    public void loadInitial(@NonNull LoadInitialParams params, @NonNull LoadInitialCallback<DictDataModel> callback) {
+//        loadData(new PageBean(),callback);
+//    }
+//
+//    //自动分页数据获取
+//    @Override
+//    public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<DictDataModel> callback) {
+//        int page=params.startPosition/params.loadSize+1;
+//        Logger.d("page:"+page);
+//        loadData(new PageBean(page,params.loadSize),callback);
+//    }
 
 //    //根据页数获取数据
 //    private  <T> void loadData(PageBean pageBean,@NonNull T callback){
@@ -61,7 +62,7 @@ public class RepairsDataSource extends PositionalDataSource<DictDataModel> {
 //    }
 
     //根据页数获取数据
-    private  <T> void loadData(PageBean pageBean,@NonNull T callback){
+    public  <T> void loadData(PageBean pageBean,@NonNull T callback){
         DictRepository repository=new DictRepository();
 //        RepairsServiceApi serviceApi= CommonHttpService.getInstance().getServiceApi(RepairsServiceApi.class);
 //        RepairsRequest repairsRequest=new RepairsRequest();

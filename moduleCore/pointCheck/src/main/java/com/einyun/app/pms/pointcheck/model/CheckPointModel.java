@@ -1,6 +1,4 @@
-package com.example.shimaostaff.pointcheck.model;
-
-import java.util.List;
+package com.einyun.app.pms.pointcheck.model;
 
 /**
  * @ProjectName: pms_old

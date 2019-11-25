@@ -1,5 +1,9 @@
 package com.einyun.app.common.utils;
 
+import com.einyun.app.library.core.net.EinyunHttpService;
+
+import java.io.File;
+
 /**
  * @ProjectName: pms
  * @Package: com.einyun.app.common.utils
@@ -13,4 +17,8 @@ package com.einyun.app.common.utils;
  * @Version: 1.0
  */
 public class HttpUrlUtil {
+    private final static String MEDIA_PATH="/media";
+    public static String getImageServerUrl(String path){
+        return EinyunHttpService.getInstance().getBaseUrl() +MEDIA_PATH+ File.separator+path;
+    }
 }

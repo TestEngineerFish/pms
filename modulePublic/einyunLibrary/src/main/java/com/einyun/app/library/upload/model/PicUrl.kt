@@ -12,4 +12,8 @@ package com.einyun.app.library.upload.model
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-class PicUrl(var originUrl: String, var destUrl: String)
+class PicUrl{
+    var originUrl:String?=null
+    var compressed:String?=null
+    var uploaded: String?=null
+}

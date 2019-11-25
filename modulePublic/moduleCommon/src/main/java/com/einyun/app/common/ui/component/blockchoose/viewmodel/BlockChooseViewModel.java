@@ -56,10 +56,10 @@ public class BlockChooseViewModel extends BaseViewModel {
             SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID,blockId);
         }
         if(!TextUtils.isEmpty(blockCode)){
-            SPUtils.put(CommonApplication.getInstance(),SPKey.KEY_BLOCK_CODE,blockId);
+            SPUtils.put(CommonApplication.getInstance(),SPKey.KEY_BLOCK_CODE,blockCode);
         }
         if(!TextUtils.isEmpty(blockName)){
-            SPUtils.put(CommonApplication.getInstance(),SPKey.KEY_BLOCK_NAME,blockId);
+            SPUtils.put(CommonApplication.getInstance(),SPKey.KEY_BLOCK_NAME,blockName);
         }
     }
 

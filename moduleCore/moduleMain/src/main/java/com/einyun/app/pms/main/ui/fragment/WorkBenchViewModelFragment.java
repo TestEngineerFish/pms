@@ -1,7 +1,6 @@
 package com.einyun.app.pms.main.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,12 +18,12 @@ import com.einyun.app.pms.main.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.viewmodel.WorkBenchViewModel;
 import com.orhanobut.logger.Logger;
 
-import static android.app.Activity.RESULT_OK;
+import static androidx.appcompat.app.AppCompatActivity.RESULT_OK;
 
 /**
  * 工作台Fragment
  */
-public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWorkBenchBinding,WorkBenchViewModel> {
+public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWorkBenchBinding, WorkBenchViewModel> {
     public static WorkBenchViewModelFragment newInstance() {
         return new WorkBenchViewModelFragment();
     }
@@ -46,26 +45,31 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     @Override
     protected WorkBenchViewModel initViewModel() {
-        return  new ViewModelProvider(this, new ViewModelFactory()).get(WorkBenchViewModel.class);
+        return new ViewModelProvider(this, new ViewModelFactory()).get(WorkBenchViewModel.class);
     }
 
-    public void onPagingButtonClick(){
+    public void onPagingButtonClick() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
                 .navigation();
     }
 
-    public void onX5WebViewButtonClick(){
+    public void onX5WebViewButtonClick() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
-                .withString(RouteKey.KEY_WEB_URL,"http://soft.imtt.qq.com/browser/tes/feedback.html")
+                .withString(RouteKey.KEY_WEB_URL, "http://soft.imtt.qq.com/browser/tes/feedback.html")
                 .navigation();
     }
 
-    public void onWorkButtonClick(){
+    public void onPointCheckButtonClick() {
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_POINT_CHECK_ACTIVITY).navigation();
+
+    }
+
+    public void onWorkButtonClick() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_BLOCK_CHOOSE)
-                .withString(RouteKey.KEY_USER_ID,userModuleService.getUserId())
-                .navigation(getActivity(),RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE);
+                .withString(RouteKey.KEY_USER_ID, userModuleService.getUserId())
+                .navigation(getActivity(), RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE);
     }
 
     @Autowired(name = RouterUtils.SERVICE_USER)
@@ -74,12 +78,12 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
-            if(requestCode==RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE){
-                String blockId=data.getStringExtra(DataConstants.KEY_BLOCK_ID);
-                String blockName=data.getStringExtra(DataConstants.KEY_BLOCK_NAME);
-                String blockCode=data.getStringExtra(DataConstants.KEY_BLOCK_CODE);
-                Logger.d(blockId+":"+blockName+":"+blockCode);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE) {
+                String blockId = data.getStringExtra(DataConstants.KEY_BLOCK_ID);
+                String blockName = data.getStringExtra(DataConstants.KEY_BLOCK_NAME);
+                String blockCode = data.getStringExtra(DataConstants.KEY_BLOCK_CODE);
+                Logger.d(blockId + ":" + blockName + ":" + blockCode);
             }
         }
     }

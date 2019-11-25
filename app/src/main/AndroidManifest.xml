@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yykj.app.pms">
+    package="com.einyun.app.pms">
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -50,12 +51,14 @@
     <!-- 屏幕管理权限 -->
     <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
-    <meta-data android:value="5dad68473fc195309b001055" android:name="UMENG_APPKEY"/>
+    <meta-data
+        android:name="UMENG_APPKEY"
+        android:value="5dad68473fc195309b001055" />
 
     <!--多渠道打包-->
     <meta-data
         android:name="UMENG_CHANNEL"
-        android:value="${UMENG_CHANNEL_VALUE}"/>
+        android:value="${UMENG_CHANNEL_VALUE}" />
     <application
         android:name="com.einyun.app.common.application.CommonApplication"
         android:allowBackup="true"
@@ -71,13 +74,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.einyun.app.pms.main.ui.HomeTabViewModelActivity"/>
-        <activity android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
-<!--        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>-->
-        <activity android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
-        <activity android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+        <activity android:name="com.einyun.app.pms.main.ui.HomeTabViewModelActivity" />
+        <activity android:name="com.einyun.app.pms.repairs.ui.RepairsActivity" />
+        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity" />
+        <activity android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity" />
+        <activity
+            android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity" />
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity" />
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
