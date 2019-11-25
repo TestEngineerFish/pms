@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="9dp"
+        android:background="@drawable/corners_white_large"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@mipmap/img_privacy_title_bg"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/privacy_title_text"
+                android:textColor="@color/user_privacy_title_text_color"
+                android:textSize="@dimen/font_size16">
+            </TextView>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_40"
+                android:layout_marginRight="@dimen/px_40"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/privacy_tv"
+                    android:textStyle="bold"
+                    android:text="@string/privacy_term_dis_1"/>
+
+                <TextView
+                    style="@style/privacy_tv"
+                    android:text="@string/privacy_term_dis_2"/>
+
+                <TextView
+                    style="@style/privacy_tv"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:text="@string/privacy_term_1" />
+
+
+                <TextView
+                    style="@style/privacy_tv"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:text="@string/privacy_term_2" />
+
+
+                <TextView
+                    style="@style/privacy_tv"
+                    android:textColor="@color/normal_main_text_icon_color"
+
+                    android:text="@string/privacy_term_3" />
+
+                <TextView
+                    style="@style/privacy_tv"
+                    android:text="@string/privacy_term_note" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/privacy_tv"
+                        android:text="@string/privacy_term_view">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tv_privacy_term"
+                        style="@style/privacy_tv"
+                        android:layout_marginLeft="@dimen/px_16"
+                        android:textColor="@color/normal_blue_color"
+                        android:text="@string/privacy_term" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/px_40"
+            android:layout_marginRight="@dimen/px_40"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_reject"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="4"
+                android:background="@drawable/corners_privacy_bottom_btn"
+                android:text="不同意"
+                android:textColor="@color/user_privacy_bottom_btn_color">
+
+            </Button>
+
+            <Button
+                android:id="@+id/btn_agree"
+                android:layout_height="36dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:background="@drawable/gradient_blue_btn"
+                android:text="同意"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

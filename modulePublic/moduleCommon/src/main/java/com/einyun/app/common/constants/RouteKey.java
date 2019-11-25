@@ -15,6 +15,7 @@ package com.einyun.app.common.constants;
 public class RouteKey {
     public static final String KEY_USER_ID="userId";
     public static final String KEY_WEB_URL="webUrl";
+    public static final String KEY_WEB_TITLE="webUrlTitle";
     public static final String KEY_PARAMS="params";
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
 }

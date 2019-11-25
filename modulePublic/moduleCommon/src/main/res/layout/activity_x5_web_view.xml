@@ -5,6 +5,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
         <ProgressBar
             android:id="@+id/progress_bar"
             style="@android:style/Widget.ProgressBar.Horizontal"

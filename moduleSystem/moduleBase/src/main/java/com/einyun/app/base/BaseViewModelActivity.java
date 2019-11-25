@@ -30,7 +30,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
 
         BasicApplication.getInstance().addActivity(this);
         viewModel = initViewModel();
-        initViews(savedInstanceState);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -39,6 +39,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
             //状态栏覆盖在contentView上面，设置透明使contentView的背景透出来
             getWindow().setStatusBarColor(getColorPrimary());
         }
+        initViews(savedInstanceState);
         initData();
         initListener();
     }

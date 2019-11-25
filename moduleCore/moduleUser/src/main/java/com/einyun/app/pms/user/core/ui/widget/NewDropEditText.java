@@ -2,6 +2,7 @@ package com.einyun.app.pms.user.core.ui.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -16,39 +17,42 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
+import com.einyun.app.base.RVBindingAdapter;
+import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.yykj.app.pms.user.R;
 
 
-public class DropEditText extends androidx.appcompat.widget.AppCompatEditText implements AdapterView.OnItemClickListener, PopupWindow.OnDismissListener {
+public class NewDropEditText extends AppCompatEditText implements ItemClickListener<UserModel>,PopupWindow.OnDismissListener {
 
     private Drawable mDrawable; // 显示的图
     private PopupWindow mPopupWindow; // 点击图片弹出的popWindow对象
-    private ListView mPopListView; // popWindow的布局
+    private RecyclerView mPopListView; // popWindow的布局
     private int mDropDrawableResId; // 下拉图标
-    private int mRiseDrawableResID; // 上拉图标
 
-    public DropEditText(Context context) {
+    public NewDropEditText(Context context) {
         this(context, null);
     }
 
-    public DropEditText(Context context, AttributeSet attrs) {
+    public NewDropEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public DropEditText(Context context, AttributeSet attrs, int defStyle) {
+    public NewDropEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
 
     @SuppressLint("ResourceAsColor")
     private void init(Context context) {
-        mPopListView = new ListView(context);
+        mPopListView = new RecyclerView(context);
         mDropDrawableResId = R.mipmap.arrow_down; // 设置下拉图标
         showDropDrawable(); // 默认显示下拉图标
-        mPopListView.setOnItemClickListener(this);
     }
 
     /**
@@ -78,7 +82,7 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
         super.onLayout(changed, left, top, right, bottom);
         if (changed) {
             mPopupWindow = new PopupWindow(mPopListView, getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
-            mPopupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white))); // 设置popWindow背景颜色
+            mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE)); // 设置popWindow背景颜色
             mPopupWindow.setFocusable(true); // 让popWindow获取焦点
             mPopupWindow.setOnDismissListener(this);
 //            mPopupWindow.setElevation(10f);
@@ -97,13 +101,13 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
     }
 
     private void showRiseDrawable() {
-        mDrawable = getResources().getDrawable(mRiseDrawableResID);
         mDrawable.setBounds(0, 0, mDrawable.getIntrinsicWidth() - 50, mDrawable.getIntrinsicHeight() - 26);
         setCompoundDrawables(getCompoundDrawables()[0], getCompoundDrawables()[1], mDrawable, getCompoundDrawables()[3]);
     }
 
-    public void setAdapter(BaseAdapter adapter) {
+    public void setAdapter(RVBindingAdapter adapter) {
         mPopListView.setAdapter(adapter);
+        adapter.setOnItemClick(this);
     }
 
     private void closeSoftInput() {
@@ -112,19 +116,13 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String userName = mPopListView.getAdapter().getItem(position).toString();
-        if (view.getId() == R.id.iv_rightselect) {
-            UserViewModel userViewModel = new UserViewModel();
-            userViewModel.deleteUser(userName);
-            return;
-        }
-        this.setText(userName); // 可能需要你重写item的toString方法
-        mPopupWindow.dismiss();
+    public void onDismiss() {
+        showDropDrawable(); // 当popWindow消失时显示下拉图标
     }
 
     @Override
-    public void onDismiss() {
-        showDropDrawable(); // 当popWindow消失时显示下拉图标
+    public void onItemClicked(View veiw, UserModel data) {
+        this.setText(data.getUsername());
+        mPopupWindow.dismiss();
     }
 }

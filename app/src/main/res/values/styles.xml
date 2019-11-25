@@ -3,6 +3,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@null</item>
     </style>
     <style name="AppThemeFullScreen" parent="NoActionBarAppTheme">
         <item name="android:background">@mipmap/splash_bg</item>

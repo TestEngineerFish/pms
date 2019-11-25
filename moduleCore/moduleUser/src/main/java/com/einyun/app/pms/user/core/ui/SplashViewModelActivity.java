@@ -47,13 +47,14 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         LiveData<UserModel> lastLoginUser = viewModel.getLastUser();
         if (lastLoginUser == null || lastLoginUser.getValue() == null || lastLoginUser.getValue().getUsername() == null) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+            finish();
             return;
         }
         //企业编码校验
         viewModel.getTenantId("ccpg").observe(this,
                 tenantModel -> {
                     //拿取最后一个user登陆
-                    viewModel.login(lastLoginUser.getValue().getUsername(), lastLoginUser.getValue().getPassword(), false)
+                    viewModel.login(lastLoginUser.getValue().getUsername(), lastLoginUser.getValue().getPassword())
                             .observe(this,
                                     userModel -> {
                                         ARouter.getInstance()

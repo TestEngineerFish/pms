@@ -2,10 +2,13 @@ package com.einyun.app.common.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -39,11 +42,14 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_X5_WEBVIEW)
-public class X5WebViewActivity extends BaseSkinViewModelActivity<ActivityX5WebViewBinding,BaseViewModel> {
+public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebViewBinding, BaseViewModel> {
     @Autowired(name = RouteKey.KEY_WEB_URL)
     String webUrl;
 
-    @Autowired(name=RouteKey.KEY_PARAMS)
+    @Autowired(name=RouteKey.KEY_WEB_TITLE)
+    String webTitle;
+
+    @Autowired(name = RouteKey.KEY_PARAMS)
     Bundle bundle;
 
     SerializableMap params;
@@ -60,10 +66,12 @@ public class X5WebViewActivity extends BaseSkinViewModelActivity<ActivityX5WebVi
         return R.layout.activity_x5_web_view;
     }
 
+
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        binding.webview.clearCache(true);
+        Log.i("webTitle   ===>  ",webTitle);
+        setHeadTitle(webTitle);
         // 清除网页访问留下的缓存
         // 由于内核缓存是全局的因此这个方法不仅仅针对webView而是针对整个应用程序
         binding.webview.clearCache(true);
@@ -111,39 +119,39 @@ public class X5WebViewActivity extends BaseSkinViewModelActivity<ActivityX5WebVi
     @Override
     protected void initData() {
         super.initData();
-        if(bundle!=null){
-            params= (SerializableMap) bundle.get(RouteKey.KEY_MAP_SERIALIZABLE);
+        if (bundle != null) {
+            params = (SerializableMap) bundle.get(RouteKey.KEY_MAP_SERIALIZABLE);
         }
-        if(params!=null){
-            binding.webview.loadUrl(webUrl,params.getMap());
-        }else{
+        if (params != null) {
+            binding.webview.loadUrl(webUrl, params.getMap());
+        } else {
             binding.webview.loadUrl(webUrl);
         }
-        Logger.d("X5WebView load->"+webUrl);
-        binding.webview.setWebChromeClient(new WebChromeClient(){
+        Logger.d("X5WebView load->" + webUrl);
+        binding.webview.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView webView, int progress) {
                 super.onProgressChanged(webView, progress);
                 binding.progressBar.setProgress(progress);
-                if(progress!=100){
+                if (progress != 100) {
                     binding.progressBar.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     binding.progressBar.setVisibility(View.GONE);
                 }
             }
         });
-        binding.webview.setWebViewClient(new WebViewClient(){
+        binding.webview.setWebViewClient(new WebViewClient() {
 
             // 设置不用系统浏览器打开,直接显示在当前 webview
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // 如果不是http或者https开头的url，那么使用手机自带的浏览器打开
-                if (!url.startsWith("http://") && !url.startsWith("https://")){
+                if (!url.startsWith("http://") && !url.startsWith("https://")) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                         return true;
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         return true;
                     }
@@ -152,7 +160,6 @@ public class X5WebViewActivity extends BaseSkinViewModelActivity<ActivityX5WebVi
                 return false;
 //                return super.shouldOverrideUrlLoading(view, url);
             }
-
 
 
             @Override

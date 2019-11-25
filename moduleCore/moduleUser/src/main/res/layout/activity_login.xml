@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@mipmap/login_bg" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_login_bg" />
 
         <LinearLayout
             android:id="@+id/ll_1"
@@ -86,12 +87,11 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="25dp"
                     android:visibility="invisible"
-                    app:srcCompat="@mipmap/img_login_edit_delete" />
+                    android:src="@mipmap/img_login_edit_delete" />
 
                 <View
                     style="@style/login_input_ll_underline"
-                    android:layout_below="@id/ll_user"
-                     />
+                    android:layout_below="@id/ll_user" />
 
             </RelativeLayout>
 
@@ -121,9 +121,10 @@
                     android:layout_height="10dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/img_login_password_show" />
+                    android:layout_marginRight="@dimen/px_60"
+                    android:onClick="@{()->callBack.showEye()}"
+                    android:src="@mipmap/img_login_password_show"
+                    android:visibility="invisible" />
 
                 <View
                     style="@style/login_input_ll_underline"
@@ -134,6 +135,7 @@
                 android:id="@+id/bt_login"
                 style="@style/login_submit_btn"
                 android:layout_marginTop="@dimen/px_160"
+                android:onClick="@{()->callBack.onLoginClick()}"
                 android:text="登录" />
 
         </LinearLayout>

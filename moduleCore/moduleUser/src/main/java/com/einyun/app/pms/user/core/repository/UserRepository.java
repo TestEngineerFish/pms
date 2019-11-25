@@ -36,7 +36,7 @@ public class UserRepository extends CommonRepository {
         MutableLiveData data = new MutableLiveData();
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
             User user = BasicApplication.getInstance().getDatabase().userDao().selectUserLastUpdate();
-            if (user != null){
+            if (user != null) {
                 data.postValue(new UserModel("", "", "", user.getUserName(), user.getPassword()));
             }
         });
@@ -56,6 +56,31 @@ public class UserRepository extends CommonRepository {
         });
 
         return list;
+    }
+
+    /**
+     * 查询所有的用户名
+     *
+     * @return
+     */
+    public LiveData<List<String>> loadAllUserName() {
+        MutableLiveData list = new MutableLiveData();
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            list.postValue(BasicApplication.getInstance().getDatabase().userDao().loadAllUserName());
+        });
+        return list;
+    }
+
+    /**
+     * 删除数据库字段
+     *
+     * @return
+     */
+    public void deleteUser(String userName) {
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            User user = BasicApplication.getInstance().getDatabase().userDao().selectUserByName(userName);
+            BasicApplication.getInstance().getDatabase().userDao().deleteUser(user);
+        });
     }
 
     /**

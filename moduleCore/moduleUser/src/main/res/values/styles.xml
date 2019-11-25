@@ -10,7 +10,7 @@
         <item name="android:layout_marginRight">@dimen/px_60</item>
         <item name="android:paddingTop">@dimen/px_22</item>
         <item name="android:paddingBottom">@dimen/px_22</item>
-        <item name="android:background">@drawable/shape_login_button</item>
+        <item name="android:background">@drawable/normal_btn_bg</item>
         <item name="android:textColor">@color/user_login_submit_btn_text_color</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -45,5 +45,12 @@
         <item name="android:layout_marginTop">@dimen/px_20</item>
         <item name="android:layout_marginLeft">@dimen/px_60</item>
         <item name="android:layout_marginRight">@dimen/px_60</item>
+    </style>
+
+    <style name="privacy_tv" parent="base_style">
+        <item name="android:layout_marginTop">@dimen/px_32</item>
+        <item name="android:textColor">@color/user_privacy_text_color</item>
+        <item name="android:textSize">@dimen/font_size12</item>
+        <item name="android:lineSpacingExtra">@dimen/px_10</item>
     </style>
 </resources>

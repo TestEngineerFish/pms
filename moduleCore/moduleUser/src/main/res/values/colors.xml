@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="user_login_submit_btn_text_color">#ffffff</color>
+    <color name="user_privacy_title_text_color">#ffffff</color>
+    <color name="user_privacy_text_color">#ff151515</color>
+    <color name="user_privacy_content_tt_color">#ff000000</color>
+    <color name="user_privacy_bottom_btn_color">#185CC7</color>
 </resources>
