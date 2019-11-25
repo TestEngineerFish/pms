@@ -6,7 +6,7 @@ package com.einyun.app.common.service;
  * @ClassName: RouterUtils
  * @Description: 共享服务路由
  * @Author: chumingjun
- * @CreateDate: 2019/08/29 18:44
+ * @CreateDate: 2019/0 8/29 18:44
  * @UpdateUser: 更新者：
  * @UpdateDate: 2019/08/29 18:44
  * @UpdateRemark: 更新说明：

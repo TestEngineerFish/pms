@@ -14,12 +14,13 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.uc.user.model.TenantModel;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
 import com.einyun.app.pms.user.core.ui.widget.PrivacyTermView;
 import com.orhanobut.logger.Logger;
 import com.einyun.app.pms.user.core.UserServiceManager;
 import com.einyun.app.pms.user.core.repository.UserRepository;
-import com.yykj.app.pms.user.R;
+
 
 import java.util.List;
 

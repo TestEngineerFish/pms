@@ -18,12 +18,12 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
+import com.einyun.app.pms.user.databinding.ActivitySplashBinding;
 import com.googlecode.eyesfree.utils.LogUtils;
-import com.yykj.app.pms.user.R;
-import com.yykj.app.pms.user.databinding.ActivityLoginBinding;
-import com.yykj.app.pms.user.databinding.ActivitySplashBinding;
+
 
 import java.util.logging.Logger;
 

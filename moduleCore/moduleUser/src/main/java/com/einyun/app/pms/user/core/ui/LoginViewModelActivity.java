@@ -13,16 +13,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.RVBindingAdapter;
+
+import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
-import com.yykj.app.pms.user.R;
-import com.yykj.app.pms.user.databinding.ActivityLoginBinding;
-import com.yykj.app.pms.user.databinding.ItemBlockTextDeleteBinding;
+import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
+import com.einyun.app.pms.user.databinding.ItemBlockTextDeleteBinding;
+
 
 import java.util.List;
 
@@ -165,6 +167,9 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     public void onLoginClick() {
         UserModel model = binding.getUserModel();
+        if (model.getUsername() == null){
+
+        }
         viewModel.login(model.getUsername(), model.getPassword())
                 .observe(LoginViewModelActivity.this,
                         user -> {

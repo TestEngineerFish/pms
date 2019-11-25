@@ -20,11 +20,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.einyun.app.base.RVBindingAdapter;
+
+import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.yykj.app.pms.user.R;
+import com.einyun.app.pms.user.R;
 
 
 public class NewDropEditText extends AppCompatEditText implements ItemClickListener<UserModel>,PopupWindow.OnDismissListener {

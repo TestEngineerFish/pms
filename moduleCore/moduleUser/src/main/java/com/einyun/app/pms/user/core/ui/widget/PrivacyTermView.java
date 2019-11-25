@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
-import com.yykj.app.pms.user.R;
 
 
 /***
