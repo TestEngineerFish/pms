@@ -45,29 +45,27 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
-        finish();
-//        viewModel.getLastUser().observe(this, userModel -> {
-//            Log.e("usrModel","" + userModel);
-//            if (userModel == null || !StringUtil.isNullStr(userModel.getUsername())) {
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
-//                finish();
-//                return;
-//            }
-//            //企业编码校验
-//            viewModel.getTenantId("ccpg").observe(this,
-//                    tenantModel -> {
-//                        //拿取最后一个user登陆
-//                        viewModel.login(userModel.getUsername(), userModel.getPassword())
-//                                .observe(this,
-//                                        currentUserModel -> {
-//                                            ARouter.getInstance()
-//                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
-//                                                    .navigation();
-//                                            finish();
-//                                        });
-//                    });
-//        });
+        viewModel.getLastUser().observe(this, userModel -> {
+            Log.e("usrModel", "" + userModel);
+            if (userModel == null || !StringUtil.isNullStr(userModel.getUsername())) {
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                finish();
+                return;
+            }
+            //企业编码校验
+            viewModel.getTenantId("ccpg").observe(this,
+                    tenantModel -> {
+                        //拿取最后一个user登陆
+                        viewModel.login(userModel.getUsername(), userModel.getPassword())
+                                .observe(this,
+                                        currentUserModel -> {
+                                            ARouter.getInstance()
+                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                    .navigation();
+                                            finish();
+                                        });
+                    });
+        });
 
     }
 
