@@ -62,4 +62,5 @@ public class UserListPopupAdapter extends BaseAdapter {
     public interface DrawableDeleteClickListener {
         void click(Integer position, Object user);
     }
+
 }

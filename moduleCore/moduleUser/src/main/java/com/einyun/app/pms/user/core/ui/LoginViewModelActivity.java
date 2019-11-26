@@ -224,4 +224,9 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             userListPopupWindow.show();
         }
     }
+
+    @Override
+    protected boolean fullWindowFlag() {
+        return true;
+    }
 }

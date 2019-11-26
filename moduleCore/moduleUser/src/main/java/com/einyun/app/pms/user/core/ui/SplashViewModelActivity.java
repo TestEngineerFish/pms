@@ -79,4 +79,9 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         super.initData();
     }
 
+    @Override
+    protected boolean fullWindowFlag() {
+        return true;
+    }
+
 }

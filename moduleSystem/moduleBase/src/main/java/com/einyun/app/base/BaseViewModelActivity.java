@@ -34,8 +34,10 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //需要设置这个flag contentView才能延伸到状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            if (fullWindowFlag()){
+                //需要设置这个flag contentView才能延伸到状态栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            }
             //状态栏覆盖在contentView上面，设置透明使contentView的背景透出来
             getWindow().setStatusBarColor(getColorPrimary());
         }
@@ -44,7 +46,13 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         initListener();
     }
 
-
+    /**
+     * 是否设置全屏模式
+     * @return
+     */
+    protected boolean fullWindowFlag(){
+        return false;
+    }
 
     /**
      * 获取主题颜色
