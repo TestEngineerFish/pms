@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -28,7 +27,6 @@ import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
 import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
-import com.einyun.app.pms.user.databinding.ItemBlockTextDeleteBinding;
 
 
 /***
@@ -38,7 +36,6 @@ import com.einyun.app.pms.user.databinding.ItemBlockTextDeleteBinding;
  */
 @Route(path = RouterUtils.ACTIVITY_USER_LOGIN)
 public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLoginBinding, UserViewModel> {
-    RVBindingAdapter<ItemBlockTextDeleteBinding, UserModel> adapter;
 
     @Override
     protected UserViewModel initViewModel() {
@@ -75,8 +72,8 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         return Color.TRANSPARENT;
     }
 
-    ListPopupWindow listPopupWindow;
 
+    ListPopupWindow userListPopupWindow;
     /**
      * 设置用户下拉框
      */
@@ -86,25 +83,24 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             if (list == null || list.size() == 0) {
                 return;
             }
-            binding.etUser.setVisibility(View.VISIBLE);
-            listPopupWindow = new ListPopupWindow(this);
+            binding.ivSpinner.setVisibility(View.VISIBLE);
+            userListPopupWindow = new ListPopupWindow(this);
             ArrayAdapter<String> arr_adapter = new ArrayAdapter<>(this, R.layout.item_block_text_delete, list);
-            listPopupWindow.setAdapter(arr_adapter);
-            listPopupWindow.setAnchorView(binding.etUser);
-            listPopupWindow.setModal(true);
-            listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            userListPopupWindow.setAdapter(arr_adapter);
+            userListPopupWindow.setAnchorView(binding.etUser);
+            userListPopupWindow.setModal(true);
+            userListPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     binding.etUser.setText(list.get(i));
-                    listPopupWindow.dismiss();
+                    userListPopupWindow.dismiss();
                 }
             });
         });
-
     }
 
     /**
-     * 设置时间监听
+     * 设置事件监听
      */
     private void initEvent() {
         binding.etPassword.addTextChangedListener(new TextWatcher() {
@@ -154,6 +150,9 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     boolean showPwd;
 
+    /**
+     * 切换隐藏密码图片以及切换edit类型
+     */
     public void showEye() {
         if (showPwd) {
             binding.ivOption.setImageResource(R.mipmap.img_login_password_show);
@@ -165,7 +164,6 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             showPwd = true;
         }
     }
-
 
     /**
      * 登陆事件
@@ -205,10 +203,10 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     }
 
     public void spinnerUser() {
-        if (listPopupWindow.isShowing()) {
-            listPopupWindow.dismiss();
+        if (userListPopupWindow.isShowing()) {
+            userListPopupWindow.dismiss();
         } else {
-            listPopupWindow.show();
+            userListPopupWindow.show();
         }
     }
 }

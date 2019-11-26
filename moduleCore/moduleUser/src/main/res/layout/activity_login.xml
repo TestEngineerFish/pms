@@ -36,7 +36,6 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
                     android:id="@+id/ll_org_code"
                     style="@style/login_input_ll">
