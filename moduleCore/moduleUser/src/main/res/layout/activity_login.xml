@@ -72,24 +72,35 @@
                         android:layout_toLeftOf="@id/et_user"
                         app:srcCompat="@mipmap/img_login_user" />
 
-                    <com.einyun.app.pms.user.core.ui.widget.DropEditText
+                    <EditText
                         android:id="@+id/et_user"
                         style="@style/login_input_ll_edit"
-                        android:text="@={userModel.username}"
-                        android:hint="请输入用户名" />
+                        android:hint="请输入用户名"
+                        android:text="@={userModel.username}" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/iv_delete"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:id="@+id/iv_spinner"
+                    android:layout_width="@dimen/px_28"
+                    android:layout_height="@dimen/px_28"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:visibility="invisible"
+                    android:layout_marginRight="@dimen/px_100"
+                    android:onClick="@{()->callBack.spinnerUser()}"
+                    android:src="@mipmap/arrow_down"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="@dimen/px_28"
+                    android:layout_height="@dimen/px_28"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px_60"
                     android:onClick="@{()->callBack.deleteUserName()}"
-                    android:src="@mipmap/img_login_edit_delete" />
+                    android:src="@mipmap/img_login_edit_delete"
+                    android:visibility="invisible" />
 
                 <View
                     style="@style/login_input_ll_underline"
@@ -114,8 +125,8 @@
                         android:id="@+id/et_password"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入密码"
-                        android:text="@={userModel.password}"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:text="@={userModel.password}" />
                 </LinearLayout>
 
                 <ImageView

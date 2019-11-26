@@ -30,7 +30,8 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
     private int mDropDrawableResId; // 下拉图标
 
     public DropEditText(Context context) {
-        this(context, null);
+        super(context);
+        init(context);
     }
 
     public DropEditText(Context context, AttributeSet attrs) {
@@ -44,7 +45,7 @@ public class DropEditText extends androidx.appcompat.widget.AppCompatEditText im
     }
 
     @SuppressLint("ResourceAsColor")
-    private void init(Context context) {
+    public void init(Context context) {
         mPopListView = new ListView(context);
         mDropDrawableResId = R.mipmap.arrow_down; // 设置下拉图标
         showDropDrawable(); // 默认显示下拉图标

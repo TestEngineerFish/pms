@@ -132,7 +132,7 @@ public class UserViewModel extends BaseViewModel {
         mUsersRepo.deleteUser(userName);
     }
 
-    public List<String> loadAllUserName() {
-        return mUsersRepo.loadAllUserName().getValue();
+    public LiveData<List<String>> loadAllUserName() {
+        return mUsersRepo.loadAllUserName();
     }
 }

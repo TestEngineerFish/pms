@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListPopupWindow;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -28,8 +31,11 @@ import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
 import com.einyun.app.pms.user.databinding.ItemBlockTextDeleteBinding;
 
 
-import java.util.List;
-
+/***
+ * 登录页面
+ *
+ * 需要部分整改   没有将数据整改在一起
+ */
 @Route(path = RouterUtils.ACTIVITY_USER_LOGIN)
 public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLoginBinding, UserViewModel> {
     RVBindingAdapter<ItemBlockTextDeleteBinding, UserModel> adapter;
@@ -69,34 +75,31 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         return Color.TRANSPARENT;
     }
 
+    ListPopupWindow listPopupWindow;
+
     /**
      * 设置用户下拉框
      */
     private void setUserList() {
-        List<String> strings = viewModel.loadAllUserName();
-        if (strings == null || strings.size() == 0) {
-            return;
-        }
-        ArrayAdapter<String> arr_adapter = new ArrayAdapter<>(this, R.layout.item_block_text_delete, viewModel.loadAllUserName());
-        arr_adapter.setDropDownViewResource(R.layout.item_block_text_delete);
-        binding.etUser.setAdapter(arr_adapter);
-//        if (adapter == null) {
-//            adapter = new RVBindingAdapter<ItemBlockTextDeleteBinding, UserModel>(this, com.einyun.app.common.BR.org) {
-//                @Override
-//                public void onBindItem(ItemBlockTextDeleteBinding binding, UserModel model) {
-//
-//                }
-//
-//                @Override
-//                public int getLayoutId() {
-//                    return R.layout.item_block_text_delete;
-//                }
-//            };
-//        }
-//        if (viewModel.localUser() != null && viewModel.localUser().getValue() != null) {
-//            adapter.setDataList(viewModel.localUser().getValue());
-//            binding.etUser.setAdapter(adapter);
-//        }
+        viewModel.loadAllUserName().observe(this, list -> {
+            Log.e("list", "" + list.size());
+            if (list == null || list.size() == 0) {
+                return;
+            }
+            binding.etUser.setVisibility(View.VISIBLE);
+            listPopupWindow = new ListPopupWindow(this);
+            ArrayAdapter<String> arr_adapter = new ArrayAdapter<>(this, R.layout.item_block_text_delete, list);
+            listPopupWindow.setAdapter(arr_adapter);
+            listPopupWindow.setAnchorView(binding.etUser);
+            listPopupWindow.setModal(true);
+            listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    binding.etUser.setText(list.get(i));
+                    listPopupWindow.dismiss();
+                }
+            });
+        });
 
     }
 
@@ -199,5 +202,13 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     public void deleteUserName() {
         binding.etUser.setText("");
+    }
+
+    public void spinnerUser() {
+        if (listPopupWindow.isShowing()) {
+            listPopupWindow.dismiss();
+        } else {
+            listPopupWindow.show();
+        }
     }
 }
