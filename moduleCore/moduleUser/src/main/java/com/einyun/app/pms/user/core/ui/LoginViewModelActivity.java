@@ -64,6 +64,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         binding.setCallBack(this);
         binding.etOrgCode.setText(SPUtils.get(this, "tenantCode", "").toString());
         setUserList();
+
         initEvent();
     }
 

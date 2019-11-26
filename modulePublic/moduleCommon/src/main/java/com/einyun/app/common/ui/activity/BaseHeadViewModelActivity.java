@@ -1,5 +1,6 @@
 package com.einyun.app.common.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -53,7 +54,30 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void setHeadTitle(int resId){
        headBinding.tvHeaderTitle.setText(resId);
     }
-
+    /**
+     * 设置右侧按钮图标
+     * */
+    protected void setRightOption(int iconId){
+        headBinding.ivRightOption.setImageResource(iconId);
+    }
+    /**
+     * 设置标题栏颜色
+    * */
+    protected void setTitleBarColor(int color){
+        headBinding.mainHeaderBar.setBackgroundColor(color);
+    }
+    /**
+     * 设置返回按钮图标
+     * */
+    protected void setBackIcon(int iconId){
+        headBinding.back.setImageResource(iconId);
+    }
+    /**
+     * 设置标题颜色
+     * */
+    protected void setTxtColor(int resId){
+        headBinding.tvHeaderTitle.setTextColor(resId);
+    }
     @Override
     protected void initListener() {
         super.initListener();

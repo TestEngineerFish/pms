@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">moduleSendOrder</string>
+    <string name="text_send_order">派工单</string>
+</resources>

@@ -64,13 +64,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBarAppTheme">
-        <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
-            android:theme="@style/AppThemeFullScreen">
+        <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
+            android:theme="@style/AppThemeFullScreen">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity"/>
         <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity"/>

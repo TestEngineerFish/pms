@@ -260,6 +260,7 @@ project.module_main = ":moduleCore:moduleMain"
 project.module_repairs = ":moduleCore:moduleRepairs"
 project.module_extra = ":moduleCore:moduleExtra"
 project.point_check= ":moduleCore:pointCheck"
+project.module_sendorder= ":moduleCore:moduleSendOrder"
 deps.project = project
 
 def server =[:]

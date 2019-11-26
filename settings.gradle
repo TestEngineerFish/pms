@@ -1,6 +1,6 @@
 include ':app',
         ':moduleCore',':moduleCore:moduleExtra',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
-        ':moduleCore:moduleComplain',':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",
+        ':moduleCore:moduleComplain',':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",":moduleCore:moduleSendOrder",
 
 
         ':modulePublic',':modulePublic:moduleCommon',
