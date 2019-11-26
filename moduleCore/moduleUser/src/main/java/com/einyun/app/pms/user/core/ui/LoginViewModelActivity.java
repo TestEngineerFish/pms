@@ -24,6 +24,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
+import com.einyun.app.pms.user.core.ui.adapter.UserListPopupAdapter;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
 import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
@@ -75,6 +76,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
 
 
     ListPopupWindow userListPopupWindow;
+
     /**
      * 设置用户下拉框
      */
@@ -86,7 +88,18 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             }
             binding.ivSpinner.setVisibility(View.VISIBLE);
             userListPopupWindow = new ListPopupWindow(this);
-            ArrayAdapter<String> arr_adapter = new ArrayAdapter<>(this, R.layout.item_block_text_delete, list);
+            UserListPopupAdapter arr_adapter = new UserListPopupAdapter(this, list, new UserListPopupAdapter.DrawableDeleteClickListener() {
+                @Override
+                public void click(Integer position, Object user) {
+                    //删除数据库用户
+                    viewModel.deleteUser(user.toString());
+                    //当用户数为1时，去掉下拉按钮以及去掉弹窗
+                    if (list.size() == 1) {
+                        userListPopupWindow.dismiss();
+                        binding.ivSpinner.setVisibility(View.GONE);
+                    }
+                }
+            });
             userListPopupWindow.setAdapter(arr_adapter);
             userListPopupWindow.setAnchorView(binding.etUser);
             userListPopupWindow.setModal(true);
@@ -94,6 +107,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     binding.etUser.setText(list.get(i));
+                    binding.etPassword.setText("");
                     userListPopupWindow.dismiss();
                 }
             });
