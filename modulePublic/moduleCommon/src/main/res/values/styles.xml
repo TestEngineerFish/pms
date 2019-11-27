@@ -58,4 +58,10 @@
         <item name="android:layout_height">@dimen/px_2</item>
         <item name="android:background">@color/thin_divider_color</item>
     </style>
+<!--右箭头通用样式-->
+    <style name="right_arrow">
+        <item name="android:layout_width">@dimen/px_26</item>
+        <item name="android:layout_height">@dimen/px_26</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
 </resources>

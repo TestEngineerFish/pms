@@ -30,7 +30,8 @@ public class RouterUtils {
     public static final String ACTIVITY_POINT_CHECK_DETIAL="/pointCheck/PointCheckDetialActivity";
     public static final String ACTIVITY_POINT_CHECK_CREATE="/pointCheck/PointCheckCreatActivity";
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
-
+    public static final String ACTIVITY_RESEND_ORDER="/sendOrder/ReSendOrderActivity";
+    public static final String ACTIVITY_SEND_ORDER_DETAIL="/sendOrder/SendOrderDetailActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;

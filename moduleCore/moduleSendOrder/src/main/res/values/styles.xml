@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ticket_detail_line_simple">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+    </style>
+    <style name="detail_main_color_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="background">@color/grayBgColor</item>
+        <item name="android:drawableLeft">@drawable/logo</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:textColor">@color/main_color</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="work_order_detail_ln">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/px_80</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+    <style name="work_order_detail_txt_left">
+        <item name="android:layout_width">@dimen/px_176</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/px_80</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/px_28</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+    </style>
+    <style name="work_order_detail_txt_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/px_80</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/px_28</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:textColor">@color/txt_black_order</item>
+    </style>
+</resources>

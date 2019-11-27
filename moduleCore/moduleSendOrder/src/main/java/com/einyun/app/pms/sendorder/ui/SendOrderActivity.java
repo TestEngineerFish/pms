@@ -1,8 +1,11 @@
 package com.einyun.app.pms.sendorder.ui;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -11,8 +14,11 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderBinding;
+import com.einyun.app.pms.sendorder.ui.fragment.SendWorkOrderFragment;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
+
+import java.util.ArrayList;
 
 /**
  * @ProjectName: pms_old
@@ -28,7 +34,7 @@ import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
  */
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER)
 public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel> {
-
+    private String[] mTitles = new String[]{"待跟进", "已跟进"};//tab标题
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -41,16 +47,45 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setTitleBarColor(R.color.white);
-        setBackIcon(R.drawable.back);
         setHeadTitle(R.string.text_send_order);
         setTxtColor(R.color.blackTextColor);
         setRightOption(R.drawable.scan);
+        setBackIcon1(R.drawable.back);
+        final ArrayList<SendWorkOrderFragment> fragments = new ArrayList<>();
+        for (int i = 0; i < mTitles.length; i++) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("tabId", i);
+            fragments.add(SendWorkOrderFragment.newInstance(bundle));
+        }
+
+        binding.vpSendWork.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public SendWorkOrderFragment getItem(int i) {
+                return fragments.get(i);
+            }
+
+            @Override
+            public int getCount() {
+                return mTitles.length;
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mTitles[position];
+            }
+        });
+        binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
     }
 
     @Override
     protected void initData() {
         super.initData();
 //        binding.test.setText("hahahahahhah");
+    }
+
+    @Override
+    protected int getColorPrimary() {
+        return Color.WHITE;
     }
 }

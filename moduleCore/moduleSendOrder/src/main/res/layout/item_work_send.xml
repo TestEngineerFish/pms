@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_20"
+        android:layout_marginRight="@dimen/px_20"
+        android:layout_marginBottom="@dimen/px_5">
+
+    <LinearLayout
+        android:id="@+id/item_order_ln"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <ImageView
+                android:id="@+id/item_send_work_lf_img"
+                android:layout_width="@dimen/px_20"
+                android:layout_height="@dimen/px_20"
+                android:layout_centerVertical="true"
+                android:src="@drawable/warning" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="一楼居民晒被子着火" />
+
+            <ImageView
+                android:layout_width="@dimen/px_136"
+                android:layout_height="@dimen/px_48"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/handling" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_60"
+            android:layout_marginLeft="@dimen/px_30"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/px_150"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/text_location" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/text_location" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_60"
+            android:layout_marginLeft="@dimen/px_30"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/px_150"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/text_order_num" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/text_location" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_60"
+            android:layout_marginLeft="@dimen/px_30"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/px_150"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/text_create_time" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/text_location" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/thin_divider_color" />
+
+        <RelativeLayout
+            android:id="@+id/item_resend_re"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="@string/text_turn_order" />
+
+            <ImageView
+                android:layout_width="@dimen/px_26"
+                android:layout_height="@dimen/px_26"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right_arrow" />
+        </RelativeLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">moduleSendOrder</string>
     <string name="text_send_order">派工单</string>
+    <string name="text_location">位置</string>
+    <string name="text_order_num">工单编号</string>
+    <string name="text_create_time">创建时间</string>
+    <string name="text_turn_order">转单</string>
+    <string name="text_resend_to">转派至</string>
+    <string name="text_please_select">请选择</string>
+    <string name="text_resend_reason">转派原因</string>
+    <string name="text_enter_reason">请输入转派原因</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

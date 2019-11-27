@@ -11,4 +11,6 @@
         <attr name="vertical_Space" format="dimension"></attr>
         <attr name="isFull" format="boolean"></attr>
     </declare-styleable>
+    <declare-styleable name="OgSelectView">
+    </declare-styleable>
 </resources>

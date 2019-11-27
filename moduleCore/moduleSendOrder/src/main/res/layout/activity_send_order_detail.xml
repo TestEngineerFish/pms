@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <androidx.core.widget.NestedScrollView
+            adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_clys"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@color/grayBgColor"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="处理用时：0 天 12 小时 21 分"
+                    android:textColor="@color/red" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/px_20"
+                    android:background="@drawable/bg_shadow"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_90">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:gravity="center_vertical"
+                            android:text="工单信息"
+                            android:textSize="@dimen/px_32" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:gravity="center_vertical"
+                            android:text="待处理"
+                            android:textColor="@color/txt_blue_color"
+                            android:textSize="@dimen/px_30" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/pd_view" />
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="工单编号" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="csqy1-GC-pgd_gc_zhwx-20191112192445000" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="分期" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="测试区域2" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="条线" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="工程" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="工单类型" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="排水类" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="工单创建时间" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="2019-11-01  12:34:22" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="完成截止时间" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="2019-11-01  12:34:22" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="问题描述" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="上楼水泵损坏，家里到处漏水，联系维修工人到现在还没来，住户很生气，要求尽快维修好，否则将会投诉。" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/work_order_detail_ln">
+
+                        <TextView
+                            style="@style/work_order_detail_txt_left"
+                            android:text="报修位置" />
+
+                        <TextView
+                            style="@style/work_order_detail_txt_right"
+                            android:text="长城盛世家园二期1栋2单元1208" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/work_order_detail_txt_left"
+                        android:text="图片" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/send_order_detail_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>
