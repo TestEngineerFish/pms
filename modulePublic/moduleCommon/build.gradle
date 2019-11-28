@@ -59,6 +59,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.module_base)
     api project(deps.project.einyun_library)
+    api deps.zxing
 //    api deps.einyun.http
 //    api deps.einyun.db
 //    api deps.einyun.base

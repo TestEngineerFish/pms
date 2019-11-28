@@ -18,5 +18,5 @@ import com.einyun.app.library.dashboard.model.WorkOrderData
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-class UserMenuResponse:BaseResponse<UserMenuData>() {
+class UserMenuResponse:BaseResponse<String>() {
 }

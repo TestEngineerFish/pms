@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="base_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="base_wrap_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- 提交按钮通用样式 -->
+    <style name="submit_btn" parent="base_style">
+        <item name="android:layout_marginLeft">@dimen/px_60</item>
+        <item name="android:layout_marginRight">@dimen/px_60</item>
+        <item name="android:paddingTop">@dimen/px_22</item>
+        <item name="android:paddingBottom">@dimen/px_22</item>
+        <item name="android:background">@drawable/normal_btn_bg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_size16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="CustomProgressDialog" parent="@android:style/Theme.Dialog">
         <!-- Dialog的windowFrame框为无 -->
         <item name="android:windowFrame">@null</item>
@@ -47,10 +68,11 @@
         <item name="isFull">false</item>
     </style>
     
-    <style name="gallery_layout_style">
+    <style name="gallery_layout_style" parent="base_style">
         <item name="android:paddingLeft">@dimen/px_30</item>
         <item name="android:paddingRight">@dimen/px_30</item>
         <item name="android:background">@color/activity_bg_color</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="base_underline">

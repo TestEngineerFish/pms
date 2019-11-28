@@ -16,6 +16,8 @@
     <color name="white">#ffffff</color>
     <color name="red">#ff0000</color>
 
+    <!-- 部分提示文字颜色 -->
+    <color name="hint_text_color">#999999</color>
     <!-- 用于普通文字和箭头图标颜色 -->
     <color name="normal_main_text_icon_color">#9da3b4</color>
     <!-- 用于背景是#f8f9fb时,灰色文字颜色 -->

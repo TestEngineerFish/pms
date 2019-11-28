@@ -29,7 +29,7 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class DashBoardServiceImpl : DashBoardService {
-    override fun userMenuData(menuType: Int, callBack: CallBack<UserMenuData>): LiveData<UserMenuData> {
+    override fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String> {
         return proxy.userMenuData(menuType, callBack)
     }
 

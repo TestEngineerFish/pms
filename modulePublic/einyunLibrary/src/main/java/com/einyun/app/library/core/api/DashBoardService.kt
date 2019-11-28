@@ -31,5 +31,5 @@ interface DashBoardService : EinyunService {
     //运营收缴率
     fun operateCaptureData(orgCode: String, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData>
     //菜单配置
-    fun userMenuData(menuType: Int, callBack: CallBack<UserMenuData>): LiveData<UserMenuData>
+    fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String>
 }

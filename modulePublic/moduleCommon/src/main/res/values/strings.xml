@@ -8,4 +8,7 @@
     <string name="toast_error_net">当前网络连接不可用</string>
     <string name="upload_pic_max">最多可上传4张照片</string>
     <string name="upload_pic_failed">图片上传失败</string>
+    <string name="more">更多</string>
+    <string name="up">涨幅</string>
+    <string name="down">下跌</string>
 </resources>

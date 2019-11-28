@@ -32,8 +32,8 @@ import io.reactivex.functions.Consumer
  * @Version:        1.0
  */
 class DashBoardRepo : DashBoardService {
-    override fun userMenuData(menuType: Int, callBack: CallBack<UserMenuData>): LiveData<UserMenuData> {
-        val liveData = MutableLiveData<UserMenuData>()
+    override fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String> {
+        val liveData = MutableLiveData<String>()
         serviceApi?.userMenu(menuType)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe(
                         Consumer { response ->

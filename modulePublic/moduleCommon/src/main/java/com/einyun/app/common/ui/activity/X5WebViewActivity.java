@@ -47,7 +47,7 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
     String webUrl;
 
     @Autowired(name=RouteKey.KEY_WEB_TITLE)
-    String webTitle;
+    Integer webTitle;
 
     @Autowired(name = RouteKey.KEY_PARAMS)
     Bundle bundle;
@@ -70,7 +70,6 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        Log.i("webTitle   ===>  ",webTitle);
         setHeadTitle(webTitle);
         // 清除网页访问留下的缓存
         // 由于内核缓存是全局的因此这个方法不仅仅针对webView而是针对整个应用程序
