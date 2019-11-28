@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="callBack"
+            type="com.einyun.app.common.zxing.ScannerActivity" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <me.dm7.barcodescanner.zxing.ZXingScannerView
+            android:id="@+id/scannerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:borderColor="#0091FF">
+
+        </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/px_40"
+            android:layout_height="@dimen/px_40"
+            android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginTop="@dimen/px_20"
+            android:src="@drawable/back_white"
+            android:onClick="@{()->callBack.finish()}"/>
+
+    </RelativeLayout>
+</layout>
