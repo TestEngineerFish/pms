@@ -1,5 +1,6 @@
 package com.einyun.app.library.core.api.proxy
 
+import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UserCenterService
 import com.einyun.app.library.uc.usercenter.model.OrgModel
@@ -18,12 +19,18 @@ import com.einyun.app.library.uc.usercenter.repository.UserCenterRepository
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class UserCenterServiceImplProxy :UserCenterService{
-    var instance: UserCenterService?=null
-    constructor(){
-        instance= UserCenterRepository()
+class UserCenterServiceImplProxy : UserCenterService {
+    override fun userCenterUserList(userId: String, callBack: CallBack<List<OrgModel>>): LiveData<List<OrgModel>> {
+        return instance?.userCenterUserList(userId, callBack)!!
     }
+
+    var instance: UserCenterService? = null
+
+    constructor() {
+        instance = UserCenterRepository()
+    }
+
     override fun listOrChildByOrgId(orgId: String, userId: String, callBack: CallBack<List<OrgModel>>) {
-        instance?.listOrChildByOrgId(orgId,userId,callBack)
+        instance?.listOrChildByOrgId(orgId, userId, callBack)
     }
 }

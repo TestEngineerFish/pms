@@ -14,6 +14,8 @@ public class BaseResponse<T> implements Serializable {
 
     private T data;
 
+    private T value;
+
     public String getCode() {
         return code;
     }
@@ -46,4 +48,11 @@ public class BaseResponse<T> implements Serializable {
         this.data = data;
     }
 
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
 }

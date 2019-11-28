@@ -1,5 +1,6 @@
 package com.einyun.app.library.core.api
 
+import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.uc.usercenter.model.OrgModel
 
@@ -16,6 +17,7 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-interface UserCenterService :EinyunService{
+interface UserCenterService : EinyunService {
     fun listOrChildByOrgId(orgId: String, userId: String, callBack: CallBack<List<OrgModel>>)
+    fun userCenterUserList(userId: String, callBack: CallBack<List<OrgModel>>): LiveData<List<OrgModel>>
 }

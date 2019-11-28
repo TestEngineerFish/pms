@@ -1,10 +1,14 @@
 package com.einyun.app.library.workorder.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.*
+import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.net.WorkOrderServiceApi
 import com.einyun.app.library.workorder.net.request.ComplainAppendRequest
@@ -25,7 +29,7 @@ import com.einyun.app.library.workorder.net.request.RepairStartRequest
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class WorkOrderRepository {
+class WorkOrderRepository : WorkOrderService {
     var serviceApi: WorkOrderServiceApi? = null
 
     init {
@@ -47,30 +51,33 @@ class WorkOrderRepository {
     }
 
     /**
-     * 获取抢单数量
+     * 获取审批数量
      */
-    fun getAuditCount(callBack: CallBack<Int>) {
+    override fun getAuditCount(callBack: CallBack<Int>): LiveData<Int> {
+        val liveData = MutableLiveData<Int>()
         serviceApi?.getAuditCount()?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({ response ->
                     if (response.isState) {
                         callBack.call(response.data)
+                        liveData.postValue(response.data)
                     } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
                 }, { error -> callBack.onFaild(error) })
+        return liveData
     }
 
     /**
-    * 获取待办数量（客户报修，客户询问，客户投诉）
-    */
+     * 获取待办数量（客户报修，客户询问，客户投诉）
+     */
     fun getBlocklogNums(callBack: CallBack<BlocklogNums>) {
-        var queryFilter=Query()
-        var queryItem=QueryItem<Any>()
-        var querys=ArrayList<QueryItem<*>>()
+        var queryFilter = Query()
+        var queryItem = QueryItem<Any>()
+        var querys = ArrayList<QueryItem<*>>()
         querys.add(queryItem)
-        queryItem.operation="LIKE"
-        queryItem.relation="AND"
-        queryFilter.querys= querys
+        queryItem.operation = "LIKE"
+        queryItem.relation = "AND"
+        queryFilter.querys = querys
         serviceApi?.getBlockLogNums(queryFilter)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({ response ->
                     if (response.isState) {
@@ -86,16 +93,16 @@ class WorkOrderRepository {
     /**
      *  客户投诉列表 待跟进
      */
-    fun complainPendingPage(pageBean: PageBean,divideId:String,property:String,type:String,state:String,callBack: CallBack<ComplainModelPageResult>){
-        var queryBuilder=queryComplianBuilder(pageBean,divideId,property,type,state)
+    fun complainPendingPage(pageBean: PageBean, divideId: String, property: String, type: String, state: String, callBack: CallBack<ComplainModelPageResult>) {
+        var queryBuilder = queryComplianBuilder(pageBean, divideId, property, type, state)
         serviceApi?.complainPendingPage(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -103,16 +110,16 @@ class WorkOrderRepository {
     /**
      *  客户投诉列表 待反馈
      */
-    fun complainFeedbackPendingPage(pageBean: PageBean,divideId:String,property:String,type:String,state:String,callBack: CallBack<ComplainModelPageResult>){
-        var queryBuilder=queryComplianBuilder(pageBean,divideId,property,type,state)
+    fun complainFeedbackPendingPage(pageBean: PageBean, divideId: String, property: String, type: String, state: String, callBack: CallBack<ComplainModelPageResult>) {
+        var queryBuilder = queryComplianBuilder(pageBean, divideId, property, type, state)
         serviceApi?.complainFeedbackPendingPage(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -120,16 +127,16 @@ class WorkOrderRepository {
     /**
      *  客户投诉列表 已跟进
      */
-    fun complainFlowedPage(pageBean: PageBean,divideId:String,property:String,type:String,state:String,callBack: CallBack<ComplainModelPageResult>){
-        var queryFilter=queryComplianBuilder(pageBean,divideId,property,type,state)
+    fun complainFlowedPage(pageBean: PageBean, divideId: String, property: String, type: String, state: String, callBack: CallBack<ComplainModelPageResult>) {
+        var queryFilter = queryComplianBuilder(pageBean, divideId, property, type, state)
         serviceApi?.complainFlowedPage(queryFilter.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -137,16 +144,16 @@ class WorkOrderRepository {
     /**
      *  客户投诉列表 已办结
      */
-    fun complainCompletedPage(pageBean: PageBean,divideId:String,property:String,type:String,state:String,callBack: CallBack<ComplainModelPageResult>){
-        var queryFilter=queryComplianBuilder(pageBean,divideId,property,type,state)
+    fun complainCompletedPage(pageBean: PageBean, divideId: String, property: String, type: String, state: String, callBack: CallBack<ComplainModelPageResult>) {
+        var queryFilter = queryComplianBuilder(pageBean, divideId, property, type, state)
         serviceApi?.complainCompletedPage(queryFilter.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -154,16 +161,16 @@ class WorkOrderRepository {
     /**
      *  客户投诉列表 抄送我的
      */
-    fun complainCopy2MePage(pageBean: PageBean,divideId:String,property:String,type:String,state:String,callBack: CallBack<ComplainModelPageResult>){
-        var queryFilter=queryComplianBuilder(pageBean,divideId,property,type,state)
+    fun complainCopy2MePage(pageBean: PageBean, divideId: String, property: String, type: String, state: String, callBack: CallBack<ComplainModelPageResult>) {
+        var queryFilter = queryComplianBuilder(pageBean, divideId, property, type, state)
         serviceApi?.complainCopy2MePage(queryFilter.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -171,16 +178,16 @@ class WorkOrderRepository {
     /**
      *  客户投诉列表
      */
-    fun complainCustomerFlowPage(pageBean: PageBean,divideId:String,property:String,type:String,state:String,userId:String,callBack: CallBack<ComplainFlowPageResult>){
-        var queryBuilder=queryFilter(pageBean,divideId,property,type,state,userId)
+    fun complainCustomerFlowPage(pageBean: PageBean, divideId: String, property: String, type: String, state: String, userId: String, callBack: CallBack<ComplainFlowPageResult>) {
+        var queryBuilder = queryFilter(pageBean, divideId, property, type, state, userId)
         serviceApi?.complainCustomerFlowPage(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -188,33 +195,34 @@ class WorkOrderRepository {
     /**
      * 根据参数（如：手机号）查询处理中的投诉列表
      */
-    fun complainWorkListdPage(pageBean: PageBean,mobile:String,callBack: CallBack<ComplainModelPageResult>){
-        var builder=QueryBuilder()
-        builder.addQueryItem("F_ts_mobile",mobile)
-        builder.addSort("F_ts_time",Query.SORT_DESC)
+    fun complainWorkListdPage(pageBean: PageBean, mobile: String, callBack: CallBack<ComplainModelPageResult>) {
+        var builder = QueryBuilder()
+        builder.addQueryItem("F_ts_mobile", mobile)
+        builder.addSort("F_ts_time", Query.SORT_DESC)
         serviceApi?.complainWorkListdPage(builder.build())?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
+
     /**
      *  获取投诉、问询工单类别与条线
      */
-    fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>){
+    fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>) {
         serviceApi?.typeAndLineList()?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({response->
-                    if(response.isState){
+                ?.subscribe({ response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -222,11 +230,11 @@ class WorkOrderRepository {
     /**
      * 追加投诉
      */
-    fun appendComplain(request:ComplainAppendRequest, callBack: CallBack<Boolean>){
+    fun appendComplain(request: ComplainAppendRequest, callBack: CallBack<Boolean>) {
         serviceApi?.appendComplain(request)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -234,11 +242,11 @@ class WorkOrderRepository {
     /**
      * 启动投诉流程
      */
-    fun startComplain(request:ComplainStartRequest,callBack: CallBack<Boolean>){
+    fun startComplain(request: ComplainStartRequest, callBack: CallBack<Boolean>) {
         serviceApi?.startComplain(request)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -246,15 +254,15 @@ class WorkOrderRepository {
     /**
      * 获取报修类别与条线
      */
-    fun repairTypeList(callBack: CallBack<DoorResult>){
+    fun repairTypeList(callBack: CallBack<DoorResult>) {
         serviceApi?.repairTypeList()?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
-                    if(it.isState){
+                    if (it.isState) {
                         callBack.call(it.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(it))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -262,11 +270,11 @@ class WorkOrderRepository {
     /**
      * 启动报修流程
      */
-    fun startRepair(request: RepairStartRequest, callBack: CallBack<Boolean>){
+    fun startRepair(request: RepairStartRequest, callBack: CallBack<Boolean>) {
         serviceApi?.startRepair(request)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -274,11 +282,11 @@ class WorkOrderRepository {
     /**
      * 启动问询流程
      */
-    fun startEnquiry(request: EnquiryStartRequest, callBack: CallBack<Boolean>){
+    fun startEnquiry(request: EnquiryStartRequest, callBack: CallBack<Boolean>) {
         serviceApi?.startEnquiry(request)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -286,16 +294,16 @@ class WorkOrderRepository {
     /**
      *  审批列表 待审批
      */
-    fun approvePendingList(pageBean: PageBean,divideId :String,divideName:String,auditType:String,auditSubType:String,status:String,callBack: CallBack<List<Approve>>){
+    fun approvePendingList(pageBean: PageBean, divideId: String, divideName: String, auditType: String, auditSubType: String, status: String, callBack: CallBack<List<Approve>>) {
         var queryBuilder = queryApproveBuilder(pageBean, divideId, divideName, auditType, auditSubType, status)
         serviceApi?.approvePendingList(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
-                    if(it.isState){
+                    if (it.isState) {
                         callBack.call(it.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(it))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -303,16 +311,16 @@ class WorkOrderRepository {
     /**
      *  审批列表 已审批
      */
-    fun approveDoneList(pageBean: PageBean,divideId :String,divideName:String,auditType:String,auditSubType:String,status:String,callBack: CallBack<List<Approve>>){
+    fun approveDoneList(pageBean: PageBean, divideId: String, divideName: String, auditType: String, auditSubType: String, status: String, callBack: CallBack<List<Approve>>) {
         var queryBuilder = queryApproveBuilder(pageBean, divideId, divideName, auditType, auditSubType, status)
         serviceApi?.approveDoneList(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
-                    if(it.isState){
+                    if (it.isState) {
                         callBack.call(it.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(it))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -320,16 +328,16 @@ class WorkOrderRepository {
     /**
      *  审批列表 我发起的
      */
-    fun approveMyList(pageBean: PageBean,divideId :String,divideName:String,auditType:String,auditSubType:String,status:String,callBack: CallBack<List<Approve>>){
+    fun approveMyList(pageBean: PageBean, divideId: String, divideName: String, auditType: String, auditSubType: String, status: String, callBack: CallBack<List<Approve>>) {
         var queryBuilder = queryApproveBuilder(pageBean, divideId, divideName, auditType, auditSubType, status)
         serviceApi?.approveMyList(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({
-                    if(it.isState){
+                    if (it.isState) {
                         callBack.call(it.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(it))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 })
     }
@@ -346,21 +354,21 @@ class WorkOrderRepository {
     }
 
 
-    private fun queryFilter(pageBean: PageBean,divideId:String,property:String,type:String,state:String,userId:String):QueryBuilder{
-        var builder=queryComplianBuilder(pageBean,divideId,property,type,state)
-        builder.addQueryItem("F_ts_recorder_id",userId,Query.RELATION_AND)
+    private fun queryFilter(pageBean: PageBean, divideId: String, property: String, type: String, state: String, userId: String): QueryBuilder {
+        var builder = queryComplianBuilder(pageBean, divideId, property, type, state)
+        builder.addQueryItem("F_ts_recorder_id", userId, Query.RELATION_AND)
         return builder
 
     }
 
-    private fun queryComplianBuilder(pageBean: PageBean, divideId:String, property:String, type:String, state:String):QueryBuilder{
-        var builder=QueryBuilder()
+    private fun queryComplianBuilder(pageBean: PageBean, divideId: String, property: String, type: String, state: String): QueryBuilder {
+        var builder = QueryBuilder()
 
-        builder.addQueryItem("F_ts_dk_id",divideId,Query.RELATION_AND)
-                .addQueryItem("F_ts_property_id",property,Query.RELATION_AND)
-                .addQueryItem("F_ts_cate_id",type,property,Query.RELATION_AND)
-                .addQueryItem("F_state",state,Query.RELATION_AND)
-                .addSort("F_ts_time",Query.SORT_DESC)
+        builder.addQueryItem("F_ts_dk_id", divideId, Query.RELATION_AND)
+                .addQueryItem("F_ts_property_id", property, Query.RELATION_AND)
+                .addQueryItem("F_ts_cate_id", type, property, Query.RELATION_AND)
+                .addQueryItem("F_state", state, Query.RELATION_AND)
+                .addSort("F_ts_time", Query.SORT_DESC)
                 .setPageBean(pageBean)
 
         return builder

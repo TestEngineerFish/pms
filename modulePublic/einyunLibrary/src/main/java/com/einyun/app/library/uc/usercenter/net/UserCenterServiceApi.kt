@@ -1,10 +1,13 @@
 package com.einyun.app.library.uc.usercenter.net
 
+import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
 import com.einyun.app.library.uc.usercenter.net.response.OrgListResponse
 import io.reactivex.Flowable
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Url
 
 /**
  *
@@ -23,4 +26,7 @@ interface UserCenterServiceApi {
 
     @POST(URLs.URL_USER_CENTER_CHILD_BY_USER_ID)
     fun listOrChildByOrgId(@Body request:OrgRequest):Flowable<OrgListResponse>
+
+    @GET
+    fun userCenterUserList(@Url url: String): Flowable<OrgListResponse>
 }
