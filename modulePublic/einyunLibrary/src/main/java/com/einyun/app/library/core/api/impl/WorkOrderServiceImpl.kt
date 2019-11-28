@@ -16,6 +16,7 @@ import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
+import com.einyun.app.library.workorder.model.BlocklogNums
 
 /**
  *
@@ -31,6 +32,10 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+    override fun getBlocklogNums(callBack: CallBack<BlocklogNums>): LiveData<BlocklogNums> {
+        return proxy.getBlocklogNums(callBack)
+    }
+
     override fun getAuditCount(callBack: CallBack<Int>): LiveData<Int> {
         return proxy.getAuditCount(callBack)
     }
