@@ -7,10 +7,12 @@ import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.net.response.WorkOrderResponse
+import com.einyun.app.library.resource.workorder.model.WaitCount
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
+import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.workorder.model.BlocklogNums
 
 /**
@@ -26,7 +28,6 @@ import com.einyun.app.library.workorder.model.BlocklogNums
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-interface WorkOrderService : EinyunService {
-    fun getAuditCount(callBack: CallBack<Int>): LiveData<Int>
-    fun getBlocklogNums(callBack: CallBack<BlocklogNums>): LiveData<BlocklogNums>
+interface ResourceWorkOrderService : EinyunService {
+    fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount>
 }

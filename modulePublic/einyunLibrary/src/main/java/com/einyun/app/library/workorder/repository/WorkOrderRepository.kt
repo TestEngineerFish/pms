@@ -70,7 +70,8 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 获取待办数量（客户报修，客户询问，客户投诉）
      */
-    fun getBlocklogNums(callBack: CallBack<BlocklogNums>) {
+    override fun getBlocklogNums(callBack: CallBack<BlocklogNums>): LiveData<BlocklogNums> {
+        val liveData = MutableLiveData<BlocklogNums>()
         var queryFilter = Query()
         var queryItem = QueryItem<Any>()
         var querys = ArrayList<QueryItem<*>>()
@@ -82,12 +83,14 @@ class WorkOrderRepository : WorkOrderService {
                 ?.subscribe({ response ->
                     if (response.isState) {
                         callBack.call(response.data)
+                        liveData.postValue(response.data)
                     } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
                 }, { error ->
                     callBack.onFaild(error)
                 })
+        return liveData
     }
 
     /**

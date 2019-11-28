@@ -19,14 +19,15 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class UserCenterServiceImpl :UserCenterService{
+class UserCenterServiceImpl : UserCenterService {
     override fun userCenterUserList(userId: String, callBack: CallBack<List<OrgModel>>): LiveData<List<OrgModel>> {
-        return proxy.userCenterUserList(userId,callBack)
+        return proxy.userCenterUserList(userId, callBack)
     }
 
-    var proxy=UserCenterServiceImplProxy()
+    var proxy = UserCenterServiceImplProxy()
+
     override fun listOrChildByOrgId(orgId: String, userId: String, callBack: CallBack<List<OrgModel>>) {
-        proxy.listOrChildByOrgId(orgId,userId,callBack)
+        proxy.listOrChildByOrgId(orgId, userId, callBack)
     }
 
 }
