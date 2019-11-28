@@ -7,11 +7,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.PopupWindow;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
+import com.einyun.app.common.ui.widget.OgSelectView;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderBinding;
 import com.einyun.app.pms.sendorder.ui.fragment.SendWorkOrderFragment;
@@ -81,7 +87,15 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     protected void initData() {
         super.initData();
-//        binding.test.setText("hahahahahhah");
+        viewModel.distributeWaitPage("", "","","","","","")
+                .observe(SendOrderActivity.this,
+                        user -> {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                    .navigation();
+                            finish();
+                        });
+
     }
 
     @Override
