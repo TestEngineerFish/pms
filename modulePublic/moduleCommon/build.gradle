@@ -30,17 +30,17 @@ android {
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
-            buildConfigField("String", "BASE_URL",deps.server.debug_test)
+            buildConfigField("String", "BASE_URL", deps.server.debug_test)
         }
         uat {
-            buildConfigField("String", "BASE_URL",deps.server.uat)
+            buildConfigField("String", "BASE_URL", deps.server.uat)
             minifyEnabled true   //开启混淆
             zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release.initWith(uat)
         release {
-            buildConfigField("String", "BASE_URL",deps.server.release)
+            buildConfigField("String", "BASE_URL", deps.server.release)
         }
     }
     compileOptions {
@@ -76,9 +76,10 @@ dependencies {
     api deps.pickerview    //菜单选择
     api deps.x5            //腾讯x5浏览器内核
     //页面路由ARouter
-    implementation (deps.arouter_api) {
+    implementation(deps.arouter_api) {
         exclude group: 'com.android.support'
     }
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor deps.arouter_compiler
 
 }

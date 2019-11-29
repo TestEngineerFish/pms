@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.test.internal.util.LogUtil;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -186,7 +187,8 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     public void onLoginClick() {
         viewModel.getTenantId(binding.etOrgCode.getText().toString()).observe(this,
                 tenantModel -> {
-//                    ToastUtil.show(this, "tentantId:" + tenantModel.getId());
+            LogUtil.logDebug("teantantId",tenantModel.getId());
+                    ToastUtil.show(this, "tentantId:" + tenantModel.getId());
                     UserModel model = binding.getUserModel();
                     //判断用户名是否为空
                     if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {

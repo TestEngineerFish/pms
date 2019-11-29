@@ -82,6 +82,7 @@
             />
         <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"
             />
+       <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
