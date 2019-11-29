@@ -34,7 +34,7 @@ import com.einyun.app.library.resource.workorder.net.request.PageRquest
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
 
 
-    fun pageQuery(request:  DistributePageRequest, callback: CallBack<DistributeWorkOrderPage>) {
+    /*fun pageQuery(request:  DistributePageRequest, callback: CallBack<DistributeWorkOrderPage>) {
         serviceApi?.distributeWaitPage(request)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({ response ->
                     //                    if(response.isState()){
@@ -44,7 +44,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callback.onFaild(error)
                     error.printStackTrace()
                 })
-    }
+    }*/
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {
         val liveData = MutableLiveData<WaitCount>()
         serviceApi?.getWaitCount()?.compose(RxSchedulers.inIoMain())

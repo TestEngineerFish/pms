@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
@@ -75,6 +76,8 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
     @Override
     protected void initData() {
         super.initData();
+        userId="63879813097586693";
+//        userId="55614223698362369";
         viewModel.loadFromCache().observe(this, models -> {
             if(models!=null){
                 selectOrgs.addAll(models);
@@ -166,7 +169,7 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
         finish();
     }
 
-    class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
+   public class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
         ItemClickListener<OrgModel> itemClickListener;
 
         public void setItemClickListener(ItemClickListener listener){

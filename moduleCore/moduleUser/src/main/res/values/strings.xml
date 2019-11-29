@@ -14,4 +14,7 @@
 
     <string name="login_username_null_tip">请输入用户名</string>
     <string name="login_password_null_tip">请输入密码</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
