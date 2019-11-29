@@ -1,5 +1,6 @@
 package com.einyun.app.library.resource.workorder.net.request
 
+import com.einyun.app.base.paging.bean.PageBean
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -28,4 +29,5 @@ open class PageRquest {
     var period:String?=null
     @SerializedName("F_OT_STATUS")
     var status:Int=0
+    var pageBean:PageBean?=null
 }

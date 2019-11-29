@@ -186,7 +186,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     public void onLoginClick() {
         viewModel.getTenantId(binding.etOrgCode.getText().toString()).observe(this,
                 tenantModel -> {
-                    ToastUtil.show(this, "tentantId:" + tenantModel.getId());
+//                    ToastUtil.show(this, "tentantId:" + tenantModel.getId());
                     UserModel model = binding.getUserModel();
                     //判断用户名是否为空
                     if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
@@ -198,11 +198,12 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                         ToastUtil.show(this, R.string.login_password_null_tip);
                         return;
                     }
+
                     viewModel.login(binding.etUser.getText().toString(), model.getPassword())
                             .observe(LoginViewModelActivity.this,
                                     user -> {
                                         ARouter.getInstance()
-                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                .build(RouterUtils.ACTIVITY_SEND_ORDER)
                                                 .navigation();
                                         finish();
                                     });

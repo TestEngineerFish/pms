@@ -1,5 +1,6 @@
 package com.einyun.app.library.resource.workorder.net.request
 
+import com.einyun.app.base.paging.bean.PageBean
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -30,4 +31,5 @@ class DistributePageRequest :PageRquest(){
     var envType2:String?=null
     @SerializedName("F_ENVIRMENT_TYPE3_CODE")
     var envType3:String?=null
+
 }
