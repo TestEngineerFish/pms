@@ -11,7 +11,6 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
-        flavorDimensions "default"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [ AROUTER_MODULE_NAME : project.getName() ]
@@ -33,7 +32,6 @@ android {
     dexOptions {
         maxProcessCount 8
         javaMaxHeapSize "4g"
-        preDexLibraries true
     }
 
 
@@ -137,7 +135,7 @@ dependencies {
     implementation project(deps.project.module_repairs)
     implementation project(deps.project.point_check)
     implementation project(deps.project.module_sendorder)
-    implementation project(deps.project.module_complain)
-    implementation project(deps.project.module_extra)
+//    implementation project(deps.project.module_complain)
+//    implementation project(deps.project.module_extra)
     
 }

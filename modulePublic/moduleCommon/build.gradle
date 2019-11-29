@@ -71,7 +71,7 @@ dependencies {
     api deps.skin.constraint
     api deps.photo_view    //图片显示
     api deps.matisse       //知乎图片选择器
-    api deps.smartrefresh  //上拉下拉刷新
+//    api deps.smartrefresh  //上拉下拉刷新
     api deps.mpchat        //图表
     api deps.pickerview    //菜单选择
     api deps.x5            //腾讯x5浏览器内核

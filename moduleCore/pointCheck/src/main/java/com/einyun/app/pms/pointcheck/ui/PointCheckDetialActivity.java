@@ -39,8 +39,6 @@ import com.einyun.app.pms.pointcheck.viewmodel.ViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-;
-
 /**
  * @ProjectName: pms_old
  * @Package: com.example.shimaostaff.pointcheck.ui
@@ -116,6 +114,7 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
                 @Override
                 public void onBindItem(ItemPointCheckProjectBinding binding, ProjectContentItemModel model,int position) {
                     binding.tvCheckContent.setText(model.getCheckContent());
+                    binding.tvProjectName.setText(getResources().getString(R.string.name_project) + (position + 1));
                     if (model.getCheckType() == 2) {//判断型
                         binding.tvCheckRange.setText(R.string.item_qualified);
                         binding.tvCheckType.setText(R.string.check_type_judge);
@@ -124,7 +123,6 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
                         } else {
                             binding.tvCheckResult.setText(R.string.item_no_qualified);
                         }
-                        binding.tvProjectName.setText(getResources().getString(R.string.name_project) + (position + 1));
                     } else { //填空型
                         binding.tvCheckType.setText(R.string.check_type_range);
                         binding.tvCheckResult.setText(model.getCheckResult() + "");

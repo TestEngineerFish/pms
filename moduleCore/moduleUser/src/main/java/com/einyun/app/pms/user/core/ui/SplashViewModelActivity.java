@@ -16,6 +16,7 @@ import com.einyun.app.base.BaseViewModelActivity;
 import com.einyun.app.base.db.entity.User;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
@@ -56,6 +57,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
             //企业编码校验
             viewModel.getTenantId(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString()).observe(this,
                     tenantModel -> {
+//                        ToastUtil.show(this,"tenantid->"+tenantModel.getCode());
                         //拿取最后一个user登陆
                         viewModel.login(userModel.getUsername(), userModel.getPassword(), false)
                                 .observe(this,
