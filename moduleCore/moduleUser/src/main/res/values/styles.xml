@@ -1,23 +1,5 @@
 <resources>
 
-    <style name="base_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="login_submit_btn">
-        <item name="android:layout_marginLeft">@dimen/px_60</item>
-        <item name="android:layout_marginRight">@dimen/px_60</item>
-        <item name="android:paddingTop">@dimen/px_22</item>
-        <item name="android:paddingBottom">@dimen/px_22</item>
-        <item name="android:background">@drawable/normal_btn_bg</item>
-        <item name="android:textColor">@color/user_login_submit_btn_text_color</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/font_size16</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="login_input_ll">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -1,10 +1,13 @@
 package com.einyun.app.pms.sendorder.ui;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DiffUtil;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,12 +17,15 @@ import android.widget.PopupWindow;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.common.ui.widget.OgSelectView;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderBinding;
+import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
+import com.einyun.app.pms.sendorder.model.SendOrderModel;
 import com.einyun.app.pms.sendorder.ui.fragment.SendWorkOrderFragment;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
@@ -41,6 +47,7 @@ import java.util.ArrayList;
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER)
 public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel> {
     private String[] mTitles = new String[]{"待跟进", "已跟进"};//tab标题
+
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -87,14 +94,15 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     protected void initData() {
         super.initData();
-        viewModel.distributeWaitPage("", "","","","","","")
-                .observe(SendOrderActivity.this,
-                        user -> {
-                            ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                    .navigation();
-                            finish();
-                        });
+
+//        viewModel.distributeWaitPage("", "","","","","","")
+//                .observe(SendOrderActivity.this,
+//                        user -> {
+//                            ARouter.getInstance()
+//                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
+//                                    .navigation();
+//                            finish();
+//                        });
 
     }
 
@@ -102,4 +110,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     protected int getColorPrimary() {
         return Color.WHITE;
     }
+
+
+
 }

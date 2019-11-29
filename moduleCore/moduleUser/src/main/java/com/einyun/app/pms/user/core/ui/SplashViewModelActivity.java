@@ -20,6 +20,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
+import com.einyun.app.pms.user.core.Constants;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
 import com.einyun.app.pms.user.databinding.ActivitySplashBinding;
@@ -48,15 +49,15 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         viewModel.getLastUser().observe(this, userModel -> {
             Log.e("usrModel", "" + userModel);
             if (userModel == null || !StringUtil.isNullStr(userModel.getUsername())) {
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
                 finish();
                 return;
             }
             //企业编码校验
-            viewModel.getTenantId("ccpg").observe(this,
+            viewModel.getTenantId(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString()).observe(this,
                     tenantModel -> {
                         //拿取最后一个user登陆
-                        viewModel.login(userModel.getUsername(), userModel.getPassword())
+                        viewModel.login(userModel.getUsername(), userModel.getPassword(), false)
                                 .observe(this,
                                         currentUserModel -> {
                                             ARouter.getInstance()

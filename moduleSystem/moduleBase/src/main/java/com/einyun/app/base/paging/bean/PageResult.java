@@ -20,6 +20,8 @@ public class PageResult<T> {
     private int total;
     private List<T> rows;
 
+
+
     public int getPage() {
         return page;
     }

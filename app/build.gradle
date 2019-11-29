@@ -53,7 +53,7 @@ android {
             manifestPlaceholders=[APP_NAME:app_name+"Dev"]
         }
         debugTest.initWith(buildTypes.debug)
-        debugTest {
+       /* debugTest {
             versionNameSuffix "-test"
 //            applicationIdSuffix '.test'
             manifestPlaceholders=[APP_NAME:app_name+"Test"]
