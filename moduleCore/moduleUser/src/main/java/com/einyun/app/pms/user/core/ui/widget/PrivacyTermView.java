@@ -89,7 +89,7 @@ public class PrivacyTermView extends Dialog implements View.OnClickListener {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
                     .withString(RouteKey.KEY_WEB_URL, Constants.PRIVACY_DETAIL_URL)
-                    .withString(RouteKey.KEY_WEB_TITLE,context.getResources().getString(R.string.privacy_title_text) )
+                    .withInt(RouteKey.KEY_WEB_TITLE, R.string.privacy_title_text)
                     .navigation();
         }
     }
