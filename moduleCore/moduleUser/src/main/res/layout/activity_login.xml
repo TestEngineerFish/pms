@@ -146,10 +146,11 @@
 
             <Button
                 android:id="@+id/bt_login"
-                style="@style/login_submit_btn"
+                style="@style/submi"
                 android:layout_marginTop="@dimen/px_160"
                 android:onClick="@{()->callBack.onLoginClick()}"
-                android:text="登录" />
+                android:text="登录"
+                 />
 
         </LinearLayout>
 

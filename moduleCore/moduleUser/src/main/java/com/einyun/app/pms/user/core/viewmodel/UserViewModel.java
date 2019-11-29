@@ -17,6 +17,7 @@ import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
 import com.einyun.app.pms.user.core.ui.widget.PrivacyTermView;
+import com.einyun.app.pms.user.core.viewmodel.contract.UserViewModelContract;
 import com.orhanobut.logger.Logger;
 import com.einyun.app.pms.user.core.UserServiceManager;
 import com.einyun.app.pms.user.core.repository.UserRepository;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * 业务逻辑处理，UI交互
  */
-public class UserViewModel extends BaseViewModel {
+public class UserViewModel extends BaseViewModel implements UserViewModelContract {
     private static final String TAG = UserViewModel.class.getSimpleName();
     private UserRepository mUsersRepo;
     private UCService mUCService;
@@ -38,10 +39,12 @@ public class UserViewModel extends BaseViewModel {
         mUCService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_UC);
     }
 
+    @Override
     public LiveData<List<UserModel>> localUser() {
         return mUsersRepo.loadUsers();
     }
 
+    @Override
     public LiveData<UserModel> getLastUser() {
         return mUsersRepo.getLastUser();
     }
@@ -53,14 +56,19 @@ public class UserViewModel extends BaseViewModel {
      * @param password
      * @return
      */
-    public LiveData<UserModel> login(String username, String password) {
+    @Override
+    public LiveData<UserModel> login(String username, String password, boolean isShowLoading) {
         //网络数据交互，显示Loading
-        showLoading();
+        if (isShowLoading) {
+            showLoading();
+        }
         mUserModel = mUCService.login(username, password, new CallBack<UserModel>() {
             @Override
             public void call(UserModel data) {
-                //关闭Loading
-                hideLoading();
+                if (isShowLoading) {
+                    //关闭Loading
+                    hideLoading();
+                }
                 UserServiceManager.getInstance().saveUserModel(data);
                 CommonHttpService.getInstance().authorToken(data.getToken());
                 mUsersRepo.saveOrUpdateUser(new UserModel("", data.getUserId(), "", username, password));
@@ -68,7 +76,10 @@ public class UserViewModel extends BaseViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+                if (isShowLoading) {
+                    //关闭Loading
+                    hideLoading();
+                }
                 ThrowableParser.onFailed(throwable);
             }
         });//数据获取
@@ -81,6 +92,7 @@ public class UserViewModel extends BaseViewModel {
      * @param code
      * @return
      */
+    @Override
     public LiveData<TenantModel> getTenantId(String code) {
         //temp code for tenantid
         CommonHttpService.getInstance().tenantId("55614223698362369");
@@ -89,7 +101,7 @@ public class UserViewModel extends BaseViewModel {
             public void call(TenantModel data) {
                 CommonHttpService.getInstance().tenantId(data.getId());
                 Logger.d(TAG, "tentantId:" + data.getId());
-                SPUtils.put(BasicApplication.getInstance(), "tenantCode", code);
+                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, code);
             }
 
             @Override
@@ -102,6 +114,7 @@ public class UserViewModel extends BaseViewModel {
     /**
      * 隐私页设置
      */
+    @Override
     public void showPrivacy(Context context) {
         boolean showPrivacy = (boolean) SPUtils.get(context, Constants.SP_KEY_SHOW_PRIVACY, true);
         if (showPrivacy) {
@@ -128,10 +141,12 @@ public class UserViewModel extends BaseViewModel {
      *
      * @param userName
      */
+    @Override
     public void deleteUser(String userName) {
         mUsersRepo.deleteUser(userName);
     }
 
+    @Override
     public LiveData<List<String>> loadAllUserName() {
         return mUsersRepo.loadAllUserName();
     }

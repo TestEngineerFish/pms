@@ -24,6 +24,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
+import com.einyun.app.pms.user.core.Constants;
 import com.einyun.app.pms.user.core.ui.adapter.UserListPopupAdapter;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
@@ -63,7 +64,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         viewModel.getLastUser().observe(this,
                 user -> binding.setUserModel(user));
         binding.setCallBack(this);
-        binding.etOrgCode.setText(SPUtils.get(this, "tenantCode", "").toString());
+        binding.etOrgCode.setText(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString());
         setUserList();
 
         initEvent();
@@ -186,7 +187,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     public void onLoginClick() {
         viewModel.getTenantId(binding.etOrgCode.getText().toString()).observe(this,
                 tenantModel -> {
-//                    ToastUtil.show(this, "tentantId:" + tenantModel.getId());
+//                    ToastUtil.show(this, "tentantId" + tenantModel.getId());
                     UserModel model = binding.getUserModel();
                     //判断用户名是否为空
                     if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
@@ -198,12 +199,11 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                         ToastUtil.show(this, R.string.login_password_null_tip);
                         return;
                     }
-
-                    viewModel.login(binding.etUser.getText().toString(), model.getPassword())
+                    viewModel.login(binding.etUser.getText().toString(), model.getPassword(),true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
                                         ARouter.getInstance()
-                                                .build(RouterUtils.ACTIVITY_SEND_ORDER)
+                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
                                                 .navigation();
                                         finish();
                                     });
@@ -218,6 +218,9 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         binding.etUser.setText("");
     }
 
+    /**
+     * 用户信息下拉
+     */
     public void spinnerUser() {
         if (userListPopupWindow.isShowing()) {
             userListPopupWindow.dismiss();
