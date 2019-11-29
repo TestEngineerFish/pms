@@ -146,7 +146,7 @@
 
             <Button
                 android:id="@+id/bt_login"
-                style="@style/submi"
+                style="@style/submit_btn"
                 android:layout_marginTop="@dimen/px_160"
                 android:onClick="@{()->callBack.onLoginClick()}"
                 android:text="登录"
