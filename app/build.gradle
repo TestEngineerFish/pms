@@ -27,7 +27,15 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
+
     }
+
+    dexOptions {
+        maxProcessCount 8
+        javaMaxHeapSize "4g"
+        preDexLibraries true
+    }
+
 
     signingConfigs {
         release  {
@@ -52,7 +60,7 @@ android {
         }
         //请勿删除，提测uat环境，上线开启
 
-        uat {
+ /*       uat {
             versionNameSuffix "-uat"
 //            applicationIdSuffix '.uat'
             manifestPlaceholders=[APP_NAME:app_name+"Uat"]
@@ -66,7 +74,7 @@ android {
         release {
             versionNameSuffix ""
             manifestPlaceholders=[APP_NAME:app_name]
-        }
+        }*/
     }
 
     dataBinding {
@@ -129,5 +137,7 @@ dependencies {
     implementation project(deps.project.module_repairs)
     implementation project(deps.project.point_check)
     implementation project(deps.project.module_sendorder)
+    implementation project(deps.project.module_complain)
+    implementation project(deps.project.module_extra)
     
 }

@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:text="地块"
+                    android:text="@string/text_divide"
                     android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
@@ -65,7 +65,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请选择"
+                    android:hint="@string/text_choose_hint"
                     android:textSize="14sp"
                     android:onClick="@{()->callBack.onDivideClick()}"
                     />
@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="点检事项"
+                    android:text="@string/text_check_inventory"
                     android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
@@ -115,7 +115,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:hint="请选择"
+                    android:hint="@string/text_choose_hint"
                     android:textSize="14sp"
                     android:onClick="@{()->callBack.onProjectClick()}"
                     />
@@ -155,7 +155,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="点检对象"
+                    android:text="@string/text_check_object"
                     android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
@@ -203,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="对象地址"
+                    android:text="@string/text_check_address"
                     android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
@@ -259,7 +259,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="备注"
+                    android:text="@string/note"
                     android:textColor="@color/point_check_item_name"
                     android:textSize="14sp" />
 
@@ -271,7 +271,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:hint="请输入"
+                    android:hint="@string/text_input_hint"
                     android:textSize="14sp" />
 
                 <ImageView

@@ -50,7 +50,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:text="备注"
+                            android:text="@string/note"
                             android:textColor="@color/point_check_item_name" />
 
                         <TextView
@@ -58,7 +58,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:text="备注文字"
                             android:textColor="@color/point_check_item_value" />
                     </LinearLayout>
 
@@ -95,7 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="没有更多了~~" />
+                        android:text="@string/text_no_more" />
                 </LinearLayout>
             </LinearLayout>
 

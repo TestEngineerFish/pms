@@ -56,7 +56,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <include layout="@layout/divide_line" />
+        <include layout="@layout/dotted_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="编号"
+                android:text="@string/text_check_no"
                 android:textSize="14sp"
                 android:textColor="@color/point_check_item_name" />
 

@@ -27,7 +27,6 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginRight="14dp"
                 android:layout_marginBottom="6dp"
-                android:text="检查项目1"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -50,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="检查内容"
+                    android:text="@string/text_check_result"
                     android:textColor="@color/point_check_item_name" />
 
                 <TextView
@@ -60,8 +59,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请选择"
-                    android:text="手动紧急操作装置:齐全"
+                    android:hint="@string/text_choose_hint"
                     android:textColor="@color/point_check_item_value"
                     android:textSize="14sp" />
 
@@ -91,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="备注说明"
+                    android:text="@string/text_note"
                     android:textColor="@color/point_check_item_name" />
 
                 <TextView
@@ -133,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="检查范围"
+                    android:text="@string/text_check_range"
                     android:textColor="@color/point_check_item_name" />
 
                 <TextView
@@ -172,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="检查结果"
+                    android:text="@string/text_check_result"
                     android:textColor="@color/point_check_item_name" />
 
                 <EditText
@@ -182,8 +180,8 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:hint="请输入"
-                    android:text="不合格"
+                    android:hint="@string/text_input_hint"
+                    android:text="@string/item_no_qualified"
                     android:textColor="@color/point_check_item_value"
                     android:textSize="14sp" />
 

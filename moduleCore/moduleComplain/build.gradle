@@ -17,13 +17,20 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             minifyEnabled false
         }
-        release {
+        debugTest.initWith(buildTypes.debug)
+        debugTest {
+        }
+        uat {
             minifyEnabled true   //开启混淆
-            zipAlignEnabled true  //压缩优化
+//            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release.initWith(uat)
+        release {
+
         }
     }
     compileOptions {

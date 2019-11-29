@@ -22,4 +22,20 @@
     <string name="state_error">异常</string>
     <string name="sign_upload_photo">拍照上传</string>
     <string name="text_submmit">提交</string>
+    <string name="text_note">备注说明</string>
+    <string name="text_check_range">检查范围</string>
+    <string name="text_check_result">检查结果</string>
+    <string name="text_input_hint">请输入</string>
+    <string name="text_choose_hint">请选择</string>
+    <string name="text_check_content">检查内容</string>
+    <string name="text_check_type">类型</string>
+    <string name="text_check_range_normal">正常范围</string>
+    <string name="text_check_no">编号</string>
+    <string name="text_divide">分期</string>
+    <string name="text_check_inventory">点检事项</string>
+    <string name="text_check_object">点检对象</string>
+    <string name="text_check_address">对象地址</string>
+    <string name="note">备注</string>
+    <string name="text_no_more">没有更多了~~</string>
+    <string name="text_no_data">暂无数据</string>
 </resources>
