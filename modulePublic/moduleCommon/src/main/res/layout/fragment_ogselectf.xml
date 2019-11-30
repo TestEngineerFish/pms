@@ -9,8 +9,6 @@
         android:background="@color/grayBgColor"
         >
 
-        <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

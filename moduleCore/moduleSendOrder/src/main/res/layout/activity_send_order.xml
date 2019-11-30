@@ -38,12 +38,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <fragment
-                android:id="@+id/fragment1"
-                android:name="com.einyun.app.common.ui.widget.OgselectfFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
         <LinearLayout
+            android:id="@+id/send_work_orer_tab_ln"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:orientation="horizontal"
@@ -95,10 +91,15 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_send_work"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/send_work_orer_tab_ln">
 
         </androidx.viewpager.widget.ViewPager>
-
+            <fragment
+                android:id="@+id/fragment1"
+                android:name="com.einyun.app.common.ui.widget.OgselectfFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>
