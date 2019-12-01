@@ -22,6 +22,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.common.ui.widget.OgSelectView;
+import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
@@ -89,6 +90,12 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
             }
         });
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
+        binding.sendWorkOrerTabLn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               new PeriodizationView().getInstance().show(getSupportFragmentManager(),"");
+            }
+        });
     }
 
     @Override
