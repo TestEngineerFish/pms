@@ -36,7 +36,7 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class PeriodizationView extends DialogFragment implements ItemClickListener<OrgModel> {
+public class PeriodizationView extends DialogFragment implements ItemClickListener<OrgModel> , View.OnClickListener {
     FragmentOgselectfBinding binding;
     BlockChooseViewModel viewModel;
     private Activity activity;
@@ -47,7 +47,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     public  PeriodizationView getInstance() {
 //        this.activity = activity;
         if (periodizationView == null) {
-            return new PeriodizationView();
+            periodizationView=new PeriodizationView();
         }
         return periodizationView;
     }
@@ -56,12 +56,18 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     String blockId = "";
     TagAdapter tagAdapter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_ogselectf, container, false);
         viewModel = new ViewModelProvider(this, new BlockChooseVMFactory()).get(BlockChooseViewModel.class);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        binding.periodViewClose.setOnClickListener(this);
         return binding.getRoot();
     }
 
@@ -70,13 +76,14 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         super.onActivityCreated(savedInstanceState);
         Window window = getDialog().getWindow();
         getDialog().setCanceledOnTouchOutside(true);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.period_view_dialog);
 
         initData();
         window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 //        window.setWindowAnimations(R.style.dialogWindowAnim);
         WindowManager.LayoutParams wlp = window.getAttributes();
         window.setGravity(Gravity.TOP);
-        wlp.y=R.dimen.px_500;
+        wlp.y=R.dimen.px_200;
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
@@ -88,6 +95,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         userId = "63879813097586693";
         viewModel.loadFromCache().observe(this, models -> {
             if (models != null) {
+                binding.periodSelectDefault.setVisibility(View.GONE);
                 selectOrgs.addAll(models);
                 loadTags();
                 blockId = selectOrgs.get(selectOrgs.size() - 1).getId();
@@ -112,14 +120,23 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
 
     @Override
     public void onItemClicked(View veiw, OrgModel orgModel) {
+            binding.periodSelectDefault.setVisibility(View.GONE);
         if (orgModel.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
             viewModel.saveBlock2Local(orgModel.getId(), orgModel.getName(), orgModel.getCode());
             viewModel.saveChache2Local(selectOrgs);
+            this.dismiss();
         } else {
             selectOrgs.add(orgModel);
             loadTags();
             viewModel.queryOrgs(userId, orgModel.getId());
+
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        this.dismiss();
+
     }
 
     public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {

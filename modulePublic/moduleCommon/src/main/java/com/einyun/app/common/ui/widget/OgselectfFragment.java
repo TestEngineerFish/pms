@@ -52,8 +52,7 @@ public class OgselectfFragment extends BaseViewModelFragment<FragmentOgselectfBi
 
     @Override
     protected void setUpView() {
-        binding.tvBlock.setTextColor(getColorPrimary());
-        binding.tvChooseWithArrow.setTextColor(getColorPrimary());
+
     }
 
     @Override

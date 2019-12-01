@@ -64,7 +64,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         setHeadTitle(R.string.text_send_order);
         setTxtColor(R.color.blackTextColor);
         setRightOption(R.drawable.scan);
-        setBackIcon1(R.drawable.back);
+        setBackIcon(R.drawable.back);
         final ArrayList<SendWorkOrderFragment> fragments = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
@@ -90,7 +90,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
             }
         });
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
-        binding.sendWorkOrerTabLn.setOnClickListener(new View.OnClickListener() {
+        binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                new PeriodizationView().getInstance().show(getSupportFragmentManager(),"");
@@ -102,14 +102,6 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     protected void initData() {
         super.initData();
 
-//        viewModel.distributeWaitPage("", "","","","","","")
-//                .observe(SendOrderActivity.this,
-//                        user -> {
-//                            ARouter.getInstance()
-//                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
-//                                    .navigation();
-//                            finish();
-//                        });
 
     }
 

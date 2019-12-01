@@ -27,8 +27,8 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@={org.name}"
-            android:textColor="@android:color/black"
-            android:textSize="17sp"
+            android:textColor="@color/blackTextColor"
+            android:textSize="@dimen/px_28"
             android:textStyle="bold" />
 
         <ImageView

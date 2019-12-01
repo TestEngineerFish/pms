@@ -46,6 +46,7 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp">
             <LinearLayout
+                android:id="@+id/send_work_orer_tab_peroid_ln"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -67,13 +68,14 @@
                     android:scaleType="fitXY"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/send_work_orer_tab_select_ln"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="分期"
+                    android:text="筛选"
                     android:layout_marginLeft="@dimen/px_10"
                     android:layout_marginRight="@dimen/px_10"
                     android:textColor="@color/normal_main_text_icon_color"
