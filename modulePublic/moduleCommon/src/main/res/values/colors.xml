@@ -49,4 +49,6 @@
     <color name="grayLine">#D8D8D8</color>
     <color name="blueTextColor">#185CC7 </color>
     <color name="lightBlueColor">#5C9BFF</color>
+    <color name="color_FAF">#FAFAFE</color>
+    <color name="color_FFD">#FFDDD7</color>
 </resources>

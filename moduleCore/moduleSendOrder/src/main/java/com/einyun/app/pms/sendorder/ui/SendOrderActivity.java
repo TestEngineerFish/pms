@@ -1,18 +1,16 @@
 package com.einyun.app.pms.sendorder.ui;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.einyun.app.common.databinding.SelectPopBinding;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationView;
-import com.einyun.app.common.ui.widget.SelectPopView.SelectPopView;
+import com.einyun.app.common.ui.widget.selectpopview.SelectPopView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderBinding;

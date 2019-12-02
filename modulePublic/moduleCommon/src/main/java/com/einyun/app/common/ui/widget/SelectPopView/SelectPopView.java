@@ -1,37 +1,26 @@
-package com.einyun.app.common.ui.widget.SelectPopView;
+package com.einyun.app.common.ui.widget.selectpopview;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.common.BR;
 import com.einyun.app.common.R;
-import com.einyun.app.common.constants.DataConstants;
-import com.einyun.app.common.databinding.ItemBlockChooseBinding;
 import com.einyun.app.common.databinding.SelectPopBinding;
 import com.einyun.app.common.databinding.SelectPopItemBinding;
 import com.einyun.app.common.model.SelectModel;
-import com.einyun.app.library.uc.usercenter.model.OrgModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class SelectPopView extends PopupWindow implements ItemClickListener<SelectModel> {
@@ -53,11 +42,11 @@ public class SelectPopView extends PopupWindow implements ItemClickListener<Sele
         this.context = context;
         view=LayoutInflater.from(context).inflate(R.layout.select_pop,null);
         initPopWindow();
-        initView();
+//        initView();
     }
 
 
-    public void initView() {
+    /*public void initView() {
         selectModelList.add(new SelectModel("工单"));
         selectModelList.add(new SelectModel("工单"));
         selectModelList.add(new SelectModel("工单"));
@@ -87,7 +76,7 @@ public class SelectPopView extends PopupWindow implements ItemClickListener<Sele
         selectPopBinding.gvApprovalStatus.setAdapter(adapter);
     }
 
-
+*/
     @Override
     public void onItemClicked(View veiw, SelectModel data) {
 
@@ -98,6 +87,20 @@ public class SelectPopView extends PopupWindow implements ItemClickListener<Sele
 
         this.setContentView(view);
         selectPopBinding=DataBindingUtil.bind(view);
+        selectPopBinding.selectSmf.setCallback(new SMFilterView.SMFilterViewInterface() {
+            @Override
+            public void onFilter(Map<String, Object> items) {
+//                onFilterAction(selectPopBinding.selectSmf.getItemSelected());
+            }
+
+            @Override
+            public void onItemClicked(SMFilterItem item) {
+                selectPopBinding.selectSmf.updateType(SMFilterView.FilterType.Type_List_PGD, "");
+            }
+        });
+        selectPopBinding.selectSmf.updateType(SMFilterView.FilterType.Type_List_PGD, "");
+        selectPopBinding.selectSmf.animationShowout();
+
         // 设置弹出窗体的宽
         this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         // 设置弹出窗体的高
@@ -114,6 +117,19 @@ public class SelectPopView extends PopupWindow implements ItemClickListener<Sele
 
     }
 
+   /* private void onFilterAction(Map<String, Object> items){
+        this.tiaoxian = items.containsKey(SMFilterDataHelper.SMFilterDataType.FilterData_TX)?
+                (String)items.get(SMFilterDataHelper.SMFilterDataType.FilterData_TX):"";
+        this.fType = items.containsKey(SMFilterDataHelper.SMFilterDataType.FilterData_GDLX + 1)?
+                (String)items.get(SMFilterDataHelper.SMFilterDataType.FilterData_GDLX + 1):"";
+        this.fType2 = items.containsKey(SMFilterDataHelper.SMFilterDataType.FilterData_GDLX + 2)?
+                (String)items.get(SMFilterDataHelper.SMFilterDataType.FilterData_GDLX + 2):"";
+        this.fType3 = items.containsKey(SMFilterDataHelper.SMFilterDataType.FilterData_GDLX + 3)?
+                (String)items.get(SMFilterDataHelper.SMFilterDataType.FilterData_GDLX + 3):"";
+        this.fOtStatus = items.containsKey(SMFilterDataHelper.SMFilterDataType.FilterData_TIME_OUT)?
+                (String)items.get(SMFilterDataHelper.SMFilterDataType.FilterData_TIME_OUT):"";
+    }
+*/
 }
 /**
      * 设置添加屏幕的背景透明度(值越大,透明度越高)

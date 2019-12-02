@@ -22,16 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:weightSum="4">
-
-            <RelativeLayout
-                android:id="@+id/rlLeftParent"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </RelativeLayout>
-
+            >
 
             <RelativeLayout
                 android:id="@+id/rlRightParent"
@@ -98,7 +89,8 @@
                         android:text="确定"
                         android:textColor="#FFFFFFFF"
                         android:textSize="14sp"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        android:background="@drawable/shape_bt_ff5"/>
 
                 </LinearLayout>
 
