@@ -85,6 +85,8 @@
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
+        <activity android:name=".ui.ApprovalViewModuleActivity"/>
+        <activity android:name=".ui.ApprovalDetailViewModuleActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

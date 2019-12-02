@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="sendOrderModel"
+            type="com.einyun.app.pms.module.ApprovalModule" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.ui.ApprovalViewModuleActivity" />
+    </data>
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <RadioGroup
+             android:background="@color/white"
+             android:id="@+id/rg_approval"
+             android:layout_width="match_parent"
+             android:layout_height="44dp"
+
+             android:orientation="horizontal">
+
+             <RadioButton
+                 android:id="@+id/rbtn_wait_approval"
+                 style="@style/home_rbtn_line"
+                 android:checked="true"
+                 android:text="@string/tv_wait_approval" />
+
+             <RadioButton
+                 android:id="@+id/rbtn_had_approval"
+                 style="@style/home_rbtn_line"
+                 android:text="@string/tv_had_approval" />
+
+             <RadioButton
+                 android:id="@+id/rbtn_me_started"
+                 style="@style/home_rbtn_line"
+                 android:text="@string/tv_me_started" />
+
+         </RadioGroup>
+         <androidx.viewpager.widget.ViewPager
+             android:id="@+id/viewpager_approval"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
+     </LinearLayout>
+</layout>

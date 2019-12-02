@@ -33,6 +33,9 @@ public class RouterUtils {
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
     public static final String ACTIVITY_RESEND_ORDER="/sendOrder/ReSendOrderActivity";
     public static final String ACTIVITY_SEND_ORDER_DETAIL="/sendOrder/SendOrderDetailActivity";
+    public static final String ACTIVITY_APPROVAL="/approval/ApprovalActivity";
+    public static final String ACTIVITY_APPROVAL_DETAIL="/approval/ApprovalDetailActivity";
+
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
