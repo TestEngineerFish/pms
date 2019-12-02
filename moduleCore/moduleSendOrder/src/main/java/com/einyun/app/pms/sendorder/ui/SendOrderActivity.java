@@ -1,36 +1,21 @@
 package com.einyun.app.pms.sendorder.ui;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
-
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.PopupWindow;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
-import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
-import com.einyun.app.common.ui.widget.OgSelectView;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderBinding;
-import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
-import com.einyun.app.pms.sendorder.model.SendOrderModel;
 import com.einyun.app.pms.sendorder.ui.fragment.SendWorkOrderFragment;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
-
 import java.util.ArrayList;
 
 /**
@@ -46,7 +31,7 @@ import java.util.ArrayList;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER)
-public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel> {
+public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel> implements PeriodizationView.OnPeriodSelectListener {
     private String[] mTitles = new String[]{"待跟进", "已跟进"};//tab标题
 
     @Override
@@ -93,7 +78,11 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new PeriodizationView().getInstance().show(getSupportFragmentManager(),"");
+                //弹出分期view
+                PeriodizationView periodizationView=new PeriodizationView().getInstance();
+                periodizationView.setPeriodListener(SendOrderActivity.this::onPeriodSelectListener);
+                periodizationView.show(getSupportFragmentManager(),"");
+//                 PeriodizationView.getInstance().setPeriodListener(SendOrderActivity.this::onPeriodSelectListener).show(getSupportFragmentManager(),"");
             }
         });
     }
@@ -110,6 +99,8 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         return Color.WHITE;
     }
 
-
-
+    @Override
+    public void onPeriodSelectListener(OrgModel orgModel) {
+        binding.periodSelected.setText(orgModel.getName());
+    }
 }

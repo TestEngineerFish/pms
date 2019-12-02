@@ -50,6 +50,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/period_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="分期"
@@ -72,6 +73,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/select_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="筛选"

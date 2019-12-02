@@ -5,61 +5,68 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_80"
-                android:gravity="center"
                 android:layout_centerInParent="true"
-                android:textSize="@dimen/px_30"
+                android:gravity="center"
+                android:text="请选择"
                 android:textColor="@color/blackTextColor"
-                android:text="请选择"/>
+                android:textSize="@dimen/px_30" />
+
             <ImageView
                 android:id="@+id/period_view_close"
                 android:layout_width="@dimen/px_22"
                 android:layout_height="@dimen/px_22"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/px_30"
-                android:src="@drawable/close"/>
+                android:gravity="center"
+                android:src="@drawable/close" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_80"
-            android:background="@android:color/white"
-            android:orientation="horizontal"
+            android:layout_height="@dimen/px_100"
             android:layout_marginLeft="@dimen/px_30"
-            >
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/period_select_default"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_80"
-                android:gravity="center"
                 android:layout_centerInParent="true"
-                android:textSize="@dimen/px_28"
+                android:gravity="center"
+                android:text="默认集团"
                 android:textColor="@color/normal_main_text_icon_color"
-                android:text="默认集团"/>
+                android:textSize="@dimen/px_28" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_tags"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:background="@color/thick_divider_color"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_org_list"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_998"
-            android:background="@android:color/white"
-            >
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white">
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>

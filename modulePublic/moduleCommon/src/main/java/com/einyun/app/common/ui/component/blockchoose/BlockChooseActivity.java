@@ -98,11 +98,11 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
                 @Override
                 public void onBindItem(ItemBlockChooseBinding binding, OrgModel model,int pos) {
                     if(!model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)){
-                        binding.ivRightselect.setVisibility(View.GONE);
+                       /* binding.ivRightselect.setVisibility(View.GONE);
                         binding.ivRightSelected.setVisibility(View.GONE);
                     }else{
                         binding.ivRight.setVisibility(View.GONE);
-                        binding.ivRightSelected.setVisibility(View.GONE);
+                        binding.ivRightSelected.setVisibility(View.GONE);*/
                     }
                 }
 

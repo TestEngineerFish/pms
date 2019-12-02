@@ -5,12 +5,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.internal.util.LogUtil;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
@@ -39,13 +42,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PeriodizationView extends DialogFragment implements ItemClickListener<OrgModel> , View.OnClickListener {
     FragmentOgselectfBinding binding;
     BlockChooseViewModel viewModel;
-    private Activity activity;
     private String userId;
     List<OrgModel> selectOrgs = new CopyOnWriteArrayList<>();
-    private PeriodizationView periodizationView = null;
-
+    private  PeriodizationView periodizationView = null;
+    private OnPeriodSelectListener onPeriodSelectListener;
+    //设置分期选择监听
     public  PeriodizationView getInstance() {
-//        this.activity = activity;
         if (periodizationView == null) {
             periodizationView=new PeriodizationView();
         }
@@ -77,31 +79,32 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         Window window = getDialog().getWindow();
         getDialog().setCanceledOnTouchOutside(true);
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.period_view_dialog);
-
         initData();
         window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 //        window.setWindowAnimations(R.style.dialogWindowAnim);
         WindowManager.LayoutParams wlp = window.getAttributes();
         window.setGravity(Gravity.TOP);
-        wlp.y=R.dimen.px_200;
+        window.setDimAmount(0);
+        wlp.y=R.dimen.px_300;
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
         window.setAttributes(wlp);
 
     }
 
     private void initData() {
         userId = "63879813097586693";
-        viewModel.loadFromCache().observe(this, models -> {
+        /*viewModel.loadFromCache().observe(this, models -> {
             if (models != null) {
                 binding.periodSelectDefault.setVisibility(View.GONE);
                 selectOrgs.addAll(models);
                 loadTags();
                 blockId = selectOrgs.get(selectOrgs.size() - 1).getId();
+
             }
             viewModel.queryOrgs(userId, blockId);
-        });
+        });*/
+        viewModel.queryOrgs(userId,blockId);
         viewModel.orgList.observe(this, orgModels -> {
 
             loadData(orgModels);
@@ -120,13 +123,21 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
 
     @Override
     public void onItemClicked(View veiw, OrgModel orgModel) {
+        if (selectOrgs.size()>=1&&selectOrgs.get(selectOrgs.size()-1).getName().equals("请选择组织")){
+            selectOrgs.remove(selectOrgs.size()-1);
+        }
             binding.periodSelectDefault.setVisibility(View.GONE);
         if (orgModel.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
             viewModel.saveBlock2Local(orgModel.getId(), orgModel.getName(), orgModel.getCode());
             viewModel.saveChache2Local(selectOrgs);
+            Log.d("test","zhixingitemcliected");
+            onPeriodSelectListener.onPeriodSelectListener(orgModel);
             this.dismiss();
         } else {
             selectOrgs.add(orgModel);
+            OrgModel orgModel1=new OrgModel();
+            orgModel1.setName("请选择组织");
+            selectOrgs.add(orgModel1);
             loadTags();
             viewModel.queryOrgs(userId, orgModel.getId());
 
@@ -157,6 +168,11 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         @Override
         public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
             String tag = selectOrgs.get(position).getName();
+            if (tag.equals("请选择组织")){
+                holder.imageView.setImageResource(R.drawable.blue_oval_stock);
+            }else {
+                holder.imageView.setImageResource(R.drawable.blue_oval);
+            }
             holder.text1.setText(tag);
             holder.itemView.setOnClickListener(v -> {
                 if (itemClickListener != null) {
@@ -175,17 +191,18 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
 
         public TextView text1;
         public TextView text2;
-
+        public ImageView imageView;
         public TagViewHolder(@NonNull View itemView) {
             super(itemView);
             text1 = itemView.findViewById(android.R.id.text1);
-//            text1.setTextColor(getColorPrimary());
             text2 = itemView.findViewById(android.R.id.text2);
-//            text2.setTextColor(getColorPrimary());
+            imageView=itemView.findViewById(R.id.iv_blockchoose_toptag);
         }
     }
 
     public void switchOrgTag(OrgModel model) {
+        Log.d("test",selectOrgs.size()+"");
+        selectOrgs.remove(selectOrgs.get(selectOrgs.size()-1));
         OrgModel lastOrg = selectOrgs.get(selectOrgs.size() - 1);
         if (!model.getId().equals(lastOrg)) {
             for (OrgModel orgModel : selectOrgs) {
@@ -203,11 +220,11 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
                 @Override
                 public void onBindItem(ItemBlockChooseBinding binding, OrgModel model, int pos) {
                     if (!model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
-                        binding.ivRightselect.setVisibility(View.GONE);
-                        binding.ivRightSelected.setVisibility(View.GONE);
+//                        binding.ivRightselect.setVisibility(View.GONE);
+//                        binding.ivRightSelected.setVisibility(View.GONE);
                     } else {
-                        binding.ivRight.setVisibility(View.GONE);
-                        binding.ivRightSelected.setVisibility(View.GONE);
+//                        binding.ivRight.setVisibility(View.GONE);
+//                        binding.ivRightSelected.setVisibility(View.GONE);
                     }
                 }
 
@@ -233,5 +250,17 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     @Override
     public int show(@NonNull FragmentTransaction transaction, @Nullable String tag) {
         return super.show(transaction, tag);
+    }
+
+    /**
+     * 设置分期选择监听
+     * */
+    public interface OnPeriodSelectListener{
+        void onPeriodSelectListener(OrgModel orgModel);
+    }
+
+    public void setPeriodListener(OnPeriodSelectListener onPeriodSelectListener){
+        this.onPeriodSelectListener=onPeriodSelectListener;
+
     }
 }
