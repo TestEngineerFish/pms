@@ -136,7 +136,9 @@ dependencies {
     implementation project(deps.project.point_check)
     implementation project(deps.project.module_sendorder)
     implementation project(deps.project.module_patrol)
+    implementation project(deps.project.module_approval)
+
 //    implementation project(deps.project.module_complain)
 //    implementation project(deps.project.module_extra)
-    
+
 }

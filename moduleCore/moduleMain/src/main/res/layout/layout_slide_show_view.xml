@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_200"
+        android:layout_marginTop="@dimen/px_20"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+
+        <LinearLayout
+            android:id="@+id/ll_point_check"
+            style="@style/ll_slide_show_view"
+            android:tag="dj">
+
+            <ImageView
+                style="@style/iv_slide_show_view"
+                app:srcCompat="@mipmap/img_point_check" />
+
+            <TextView
+                style="@style/tv_slide_show_view"
+                android:text="点检" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_work_gongdanliebiao"
+            style="@style/ll_slide_show_view"
+            android:tag="gdlb">
+
+            <ImageView
+                style="@style/iv_slide_show_view"
+                app:srcCompat="@mipmap/img_work_list" />
+
+            <TextView
+                style="@style/tv_slide_show_view"
+                android:text="工单列表" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_work_chuangjiangongdan"
+            style="@style/ll_slide_show_view"
+            android:tag="cjgd">
+
+            <ImageView
+                style="@style/iv_slide_show_view"
+                app:srcCompat="@mipmap/img_create_work" />
+
+            <TextView
+                style="@style/tv_slide_show_view"
+                android:text="创建工单" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_approval"
+            style="@style/ll_slide_show_view"
+            android:tag="sp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/iv_slide_show_view"
+                        app:srcCompat="@mipmap/img_approve" />
+
+                    <TextView
+                        style="@style/tv_slide_show_view"
+                        android:text="审批" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/shenpi_tv_red"
+                    style="@style/tv_slide_show_view_red" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_work_gongzuoyulan"
+            style="@style/ll_slide_show_view"
+            android:tag="gzyl">
+
+            <ImageView
+                style="@style/iv_slide_show_view"
+                app:srcCompat="@mipmap/img_work_preview" />
+
+            <TextView
+                style="@style/tv_slide_show_view"
+                android:text="工作预览" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_saoma"
+            style="@style/ll_slide_show_view"
+            android:tag="smcl">
+
+            <ImageView
+                style="@style/iv_slide_show_view"
+                app:srcCompat="@mipmap/img_scan" />
+
+            <TextView
+                style="@style/tv_slide_show_view"
+                android:text="扫码处理" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -36,15 +36,20 @@ public class RouterUtils {
     public static final String ACTIVITY_PATROL_LIST="/patrol/PatrolListActivity";
 
     /**********************派工单****************************/
+    //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
     public static final String ACTIVITY_RESEND_ORDER="/sendOrder/ReSendOrderActivity";
     public static final String ACTIVITY_SEND_ORDER_DETAIL="/sendOrder/SendOrderDetailActivity";
+    public static final String ACTIVITY_APPROVAL="/approval/ApprovalActivity";
+    public static final String ACTIVITY_APPROVAL_DETAIL="/approval/ApprovalDetailActivity";
+
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
     public static final int ACTIVITY_REQUEST_REQUEST_PIC_PICK = 103;
-    public static final int ACTIVITY_REQUEST_SCANNER_OK = 104;
+    public static final int ACTIVITY_REQUEST_SCANNER = 104;
+
 
     /**********************Fragment*********************************/
     public static final String FRAGMENT_REPAIRS_PAGING="/repairs/RepairsFragment";

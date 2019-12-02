@@ -32,7 +32,7 @@ interface DashBoardServiceApi {
     fun workOrder(@Body request: WorkOrderRequest):Flowable<WorkOrderResponse>
 
     @POST(URLs.URL_DASHBOARD_OPERATE_CAPTURE_RATE)
-    fun operateCapture(@Body orgCode: String):Flowable<OperateCaptureResponse>
+    fun operateCapture(@Body orgCodes: List<String>):Flowable<OperateCaptureResponse>
 
     /**
      * 根据分类key获取字典

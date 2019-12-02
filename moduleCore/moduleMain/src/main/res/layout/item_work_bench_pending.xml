@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="router"
+            type="com.einyun.app.common.service.RouterUtils" />
+        <variable
+            name="workBenchModel"
+            type="com.einyun.app.pms.main.core.model.WorkBenchModel" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            style="@style/base_style"
+            android:layout_marginTop="@dimen/px_64">
+
+            <TextView
+                android:id="@+id/tv_work_order_pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/title_pending_work_order"
+                android:textColor="@color/tv_main_second_title_color"
+                android:textSize="@dimen/font_size22"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/qrcode_scan"
+                android:layout_width="@dimen/px_68"
+                android:layout_height="@dimen/px_68"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:onClick="@{()->callBack.scanner()}"
+                android:src="@mipmap/img_qrcode_scan" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_work_order_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_40"
+            android:background="@mipmap/img_pending_worktable_bg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_160"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    style="@style/base_wrap_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
+
+                    <LinearLayout
+                        android:id="@+id/ll_work_tousu"
+                        style="@style/ll_work_table_pending">
+
+                        <TextView
+                            android:id="@+id/tv_work_table_plan_num"
+                            style="@style/tv_work_table_pending_num"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/tv_work_table_pending_name"
+                            android:text="@string/tv_plan_work_order" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/iv_light_waring"
+                        android:layout_alignBottom="@id/ll_work_tousu"
+                        android:layout_toRightOf="@id/ll_work_tousu" />
+
+                    <View style="@style/vertical_line" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/base_wrap_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_work_baoxiu"
+                        style="@style/ll_work_table_pending">
+
+                        <TextView
+                            android:id="@+id/tv_work_table_patrol_num"
+                            style="@style/tv_work_table_pending_num"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/tv_work_table_pending_name"
+                            android:layout_width="wrap_content"
+                            android:text="@string/tv_patrol_work_order" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/iv_light_waring"
+                        android:layout_alignBottom="@id/ll_work_baoxiu"
+                        android:layout_toRightOf="@id/ll_work_baoxiu" />
+
+                    <View style="@style/vertical_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/base_wrap_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
+
+                    <LinearLayout
+                        android:id="@+id/ll_work_wenxiu"
+                        style="@style/ll_work_table_pending">
+
+                        <TextView
+                            android:id="@+id/tv_work_table_dispatch_num"
+                            style="@style/tv_work_table_pending_num"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/tv_work_table_pending_name"
+                            android:text="@string/tv_dispatch_work_order" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/iv_light_waring"
+                        android:layout_alignBottom="@id/ll_work_wenxiu"
+                        android:layout_toRightOf="@id/ll_work_wenxiu" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    style="@style/base_wrap_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_work_paigongdan"
+                        style="@style/ll_work_table_pending">
+
+                        <TextView
+                            android:id="@+id/tv_clent_complain_num"
+                            style="@style/tv_work_table_pending_num"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/tv_work_table_pending_name"
+                            android:text="@string/tv_client_complain" />
+
+                    </LinearLayout>
+
+                    <View style="@style/vertical_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/base_wrap_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_work_jiahuaagongdan"
+                        style="@style/ll_work_table_pending">
+
+                        <TextView
+                            android:id="@+id/tv_clent_inquiry_num"
+                            style="@style/tv_work_table_pending_num"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/tv_work_table_pending_name"
+                            android:text="@string/tv_client_repairs" />
+
+                    </LinearLayout>
+
+                    <View style="@style/vertical_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/base_wrap_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_work_xunchagongdan"
+                        style="@style/ll_work_table_pending">
+
+                        <TextView
+                            android:id="@+id/tv_clent_repairs_num"
+                            style="@style/tv_work_table_pending_num"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/tv_work_table_pending_name"
+                            android:text="@string/tv_client_enquiry" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.einyun.app.pms.main.core.ui.widget.SlideShowView
+            android:id="@+id/ssv_common_fun"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_230" />
+    </LinearLayout>
+
+</layout>
+

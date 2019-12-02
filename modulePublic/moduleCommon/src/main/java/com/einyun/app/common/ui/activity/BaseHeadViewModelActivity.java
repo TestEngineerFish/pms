@@ -69,7 +69,7 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     /**
      * 设置返回按钮图标
      * */
-    protected void setBackIcon1(int iconId){
+    protected void setBackIcon(int iconId){
         headBinding.back.setImageResource(iconId);
     }
     /**

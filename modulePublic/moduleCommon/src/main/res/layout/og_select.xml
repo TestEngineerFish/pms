@@ -1,82 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-    </data>
-
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/grayBgColor">
-
-            <include
-                layout="@layout/include_layout_activity_head"
-                android:id="@+id/head_bar" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:background="@android:color/white"
-                    android:gravity="left"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="4dp"
-                        app:srcCompat="@mipmap/icon_block" />
-
-                    <TextView
-                        android:id="@+id/tv_choose_with_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_choose_with_arrow" />
-
-                    <TextView
-                        android:id="@+id/tv_block"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="14dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:id="@+id/rv_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_org_list"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white">
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
+<fragment
+    android:id="@+id/og_frag"
+    android:name="com.einyun.app.common.ui.widget.OgselectfFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
 
     </LinearLayout>
-</layout>
+

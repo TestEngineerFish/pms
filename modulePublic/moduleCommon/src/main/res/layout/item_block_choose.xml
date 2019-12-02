@@ -27,11 +27,11 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@={org.name}"
-            android:textColor="@android:color/black"
-            android:textSize="17sp"
+            android:textColor="@color/blackTextColor"
+            android:textSize="@dimen/px_28"
             android:textStyle="bold" />
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/iv_right"
             android:layout_width="12dp"
             android:layout_height="wrap_content"
@@ -53,6 +53,6 @@
             android:layout_marginRight="20dp"
             app:srcCompat="@mipmap/icon_no_checked"
             android:visibility="visible" />
-
+-->
     </LinearLayout>
 </layout>

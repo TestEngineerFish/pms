@@ -39,49 +39,49 @@ interface WorkOrderServiceApi {
      * 获取待办数量（客户报修，客户询问，客户投诉）
      */
     @POST(URLs.URL_BACKLOG_NUMS)
-    fun getBlockLogNums(request: Query):Flowable<BlocklogNumsResponse>
+    fun getBlockLogNums(@Body request: Query):Flowable<BlocklogNumsResponse>
 
     /**
      *  客户投诉列表 待跟进
      */
     @POST(URLs.URL_COMPLAIN_FLOW_PENDING)
-    fun complainPendingPage(request: Query):Flowable<ComplainListResponse>
+    fun complainPendingPage(@Body request: Query):Flowable<ComplainListResponse>
 
     /**
      *  客户投诉列表 待反馈
      */
     @POST(URLs.URL_COMPLAIN_FEEDBACK_PENDING)
-    fun complainFeedbackPendingPage(request: Query):Flowable<ComplainListResponse>
+    fun complainFeedbackPendingPage(@Body request: Query):Flowable<ComplainListResponse>
 
     /**
      *  客户投诉列表 已跟进
      */
     @POST(URLs.URL_COMPLAIN_FLOWED)
-    fun complainFlowedPage(request: Query):Flowable<ComplainListResponse>
+    fun complainFlowedPage(@Body request: Query):Flowable<ComplainListResponse>
 
     /**
      *  客户投诉列表 已办结
      */
     @POST(URLs.URL_COMPLAIN_COMPLETE)
-    fun complainCompletedPage(request: Query):Flowable<ComplainListResponse>
+    fun complainCompletedPage(@Body request: Query):Flowable<ComplainListResponse>
 
     /**
      *  客户投诉列表 抄送我的
      */
     @POST(URLs.URL_COMPLAIN_COPY)
-    fun complainCopy2MePage(request: Query):Flowable<ComplainListResponse>
+    fun complainCopy2MePage(@Body request: Query):Flowable<ComplainListResponse>
 
     /**
      *  客户投诉列表
      */
     @POST(URLs.URL_COMPLAIN_LIST)
-    fun complainCustomerFlowPage(request: Query):Flowable<ComplainFlowListResponse>
+    fun complainCustomerFlowPage(@Body request: Query):Flowable<ComplainFlowListResponse>
 
     /**
      *   根据参数（如：手机号）查询处理中的投诉列表
      */
     @POST(URLs.URL_COMPLAIN_WORK_LIST)
-    fun complainWorkListdPage(request: Query):Flowable<ComplainListResponse>
+    fun complainWorkListdPage(@Body request: Query):Flowable<ComplainListResponse>
 
     /**
      *  获取投诉、问询工单类别与条线
@@ -123,17 +123,17 @@ interface WorkOrderServiceApi {
      *  审批列表 待审批
      */
     @POST(URLs.URL_APPROVE_TODO_LIST)
-    fun approvePendingList(request: Query):Flowable<ApproveListResponse>
+    fun approvePendingList(@Body request: Query):Flowable<ApproveListResponse>
 
     /**
      *  审批列表 已审批
      */
     @POST(URLs.URL_APPROVE_DONE_LIST)
-    fun approveDoneList(request: Query):Flowable<ApproveListResponse>
+    fun approveDoneList(@Body request: Query):Flowable<ApproveListResponse>
 
     /**
      *  审批列表 我发起的
      */
     @POST(URLs.URL_APPROVE_INITIATED_LIST)
-    fun approveMyList(request: Query):Flowable<ApproveListResponse>
+    fun approveMyList(@Body request: Query):Flowable<ApproveListResponse>
 }
