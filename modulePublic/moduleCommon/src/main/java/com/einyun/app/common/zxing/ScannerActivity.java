@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.R;
@@ -28,27 +29,18 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 @Route(path = RouterUtils.ACTIVITY_SCANNER)
 public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBinding, BaseViewModel> {
     private boolean mFlash;
-    private ZXingScannerView mScannerView;
 
     private ZXingScannerView.ResultHandler mResultHandler = new ZXingScannerView.ResultHandler() {
         @Override
         public void handleResult(Result result) {
-            mScannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
-//            Intent intent = new Intent(ScannerActivity.this, SaoMaZiYuanActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("zyId", result.getText());
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//            finish();
-
-//            Intent intent=new Intent();
-//            intent.putExtra(DataConstants.KEY_BLOCK_ID,model.getId());
-//            intent.putExtra(DataConstants.KEY_BLOCK_CODE,model.getCode());
-//            intent.putExtra(DataConstants.KEY_BLOCK_NAME,model.getName());
-//            setResult(RESULT_OK,intent);
-//            finish();
+            binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+            finish();
+            Intent intent=new Intent();
+            intent.putExtra(DataConstants.KEY_SCANNER_CONTENT,result.getText());
             Log.e("shmshmshm扫码内容", result.getText());
             Log.e("shmshmshm扫码格式", result.getBarcodeFormat().toString());
+            setResult(RESULT_OK,intent);
+            finish();
         }
     };
 
@@ -79,19 +71,19 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
     @Override
     public void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(mResultHandler);
-        mScannerView.startCamera();
+        binding.scannerView.setResultHandler(mResultHandler);
+        binding.scannerView.startCamera();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mScannerView.stopCamera();
+        binding.scannerView.stopCamera();
     }
 
     private void toggleFlash() {
         mFlash = !mFlash;
-        mScannerView.setFlash(mFlash);
+        binding.scannerView.setFlash(mFlash);
     }
 
     @Override
