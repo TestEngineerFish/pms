@@ -1,8 +1,7 @@
 package com.einyun.app.pms.main.core.ui.widget;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
@@ -22,7 +20,6 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.main.R;
-import com.einyun.app.pms.main.databinding.WidgetSlideShowBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +83,7 @@ public class SlideShowView extends FrameLayout {
 
     }
 
-    private LinearLayout createLinearLayout(List<String> dataList, int page) {
+    private LinearLayout createLinearLayout(Activity activity, List<String> dataList, int page) {
         LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.layout_slide_show_view, null);
         LinearLayout root = linearLayout.findViewById(R.id.ll_root);
 
@@ -131,7 +128,7 @@ public class SlideShowView extends FrameLayout {
                             //扫码处理
                             item.setOnClickListener(v -> ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_SCANNER)
-                                    .navigation());
+                                    .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER));
                             break;
                     }
                 }
@@ -142,17 +139,17 @@ public class SlideShowView extends FrameLayout {
     }
 
 
-    public void setImageData(List<String> dataList) {
+    public void setImageData(Activity activity, List<String> dataList) {
         this.dataList = dataList;
         linearLayoutList = new ArrayList<>();
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(5, 0, 0, 0);
 
-        LinearLayout linearLayout1 = createLinearLayout(dataList, 0);
+        LinearLayout linearLayout1 = createLinearLayout(activity, dataList, 0);
         if (linearLayout1 != null)
             linearLayoutList.add(linearLayout1);
 
-        LinearLayout linearLayout2 = createLinearLayout(dataList, 1);
+        LinearLayout linearLayout2 = createLinearLayout(activity,dataList, 1);
         if (linearLayout2 != null)
             linearLayoutList.add(linearLayout2);
         if (dataList.size() <= 4) {

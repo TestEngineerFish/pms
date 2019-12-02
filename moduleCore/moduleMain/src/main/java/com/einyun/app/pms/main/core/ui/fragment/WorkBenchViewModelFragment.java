@@ -14,6 +14,7 @@ import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -22,6 +23,7 @@ import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.R;
+import com.einyun.app.pms.main.core.Constants;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
@@ -272,7 +274,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         functionList.add("gzyl");
         functionList.add("smcl");
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
-        binding.itemWorkBenchFirst.ssvCommonFun.setImageData(functionList);
+        binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
     }
 
     /**
@@ -362,6 +364,34 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
+    public void scanner() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_SCANNER)
+                .navigation(getActivity(), RouterUtils.ACTIVITY_REQUEST_SCANNER);
+    }
+
+    public void jumpWorkTable(String routerName) {
+        ARouter.getInstance()
+                .build(routerName)
+                .navigation();
+    }
+
+    public void jumpX5Web(int type) {
+        String url;
+        if (type == 0) {
+            url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
+                    + "&userId=" + userModuleService.getUserId();
+        } else {
+            url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
+                    + "&userId=" + userModuleService.getUserId() + "&type=" + type;
+        }
+
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                .withString(RouteKey.KEY_WEB_URL, url)
+                .navigation();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -371,6 +401,8 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 String blockName = data.getStringExtra(DataConstants.KEY_BLOCK_NAME);
                 String blockCode = data.getStringExtra(DataConstants.KEY_BLOCK_CODE);
                 Logger.d(blockId + ":" + blockName + ":" + blockCode);
+            } else if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
+                ToastUtil.show(getActivity(), data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
             }
         }
     }

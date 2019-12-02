@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="router"
+            type="com.einyun.app.common.service.RouterUtils" />
         <variable
             name="workBenchModel"
             type="com.einyun.app.pms.main.core.model.WorkBenchModel" />
@@ -38,6 +40,7 @@
                 android:layout_height="@dimen/px_68"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
+                android:onClick="@{()->callBack.scanner()}"
                 android:src="@mipmap/img_qrcode_scan" />
         </RelativeLayout>
 
@@ -59,7 +62,8 @@
                 <RelativeLayout
                     style="@style/base_wrap_style"
                     android:layout_width="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
 
                     <LinearLayout
                         android:id="@+id/ll_work_tousu"
@@ -117,7 +121,8 @@
                 <RelativeLayout
                     style="@style/base_wrap_style"
                     android:layout_width="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
 
                     <LinearLayout
                         android:id="@+id/ll_work_wenxiu"
@@ -166,6 +171,7 @@
                             android:text="@string/tv_client_complain" />
 
                     </LinearLayout>
+
                     <View style="@style/vertical_line" />
                 </RelativeLayout>
 
@@ -188,6 +194,7 @@
                             android:text="@string/tv_client_repairs" />
 
                     </LinearLayout>
+
                     <View style="@style/vertical_line" />
                 </RelativeLayout>
 

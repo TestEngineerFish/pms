@@ -41,7 +41,8 @@ public class RouterUtils {
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
     public static final int ACTIVITY_REQUEST_REQUEST_PIC_PICK = 103;
-    public static final int ACTIVITY_REQUEST_SCANNER_OK = 104;
+    public static final int ACTIVITY_REQUEST_SCANNER = 104;
+
 
     /**********************Fragment*********************************/
     public static final String FRAGMENT_REPAIRS_PAGING="/repairs/RepairsFragment";

@@ -41,7 +41,8 @@
                 android:layout_centerVertical="true"
                 android:text="@string/more"
                 android:textColor="@color/normal_main_text_icon_color"
-                android:textSize="@dimen/font_size14" />
+                android:textSize="@dimen/font_size14"
+                android:onClick="@{()->callBack.jumpX5Web(2)}"/>
         </RelativeLayout>
 
         <LinearLayout

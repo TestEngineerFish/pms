@@ -70,7 +70,10 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle(webTitle);
+        if (webTitle != null){
+            setHeadTitle(webTitle);
+        }
+
         // 清除网页访问留下的缓存
         // 由于内核缓存是全局的因此这个方法不仅仅针对webView而是针对整个应用程序
         binding.webview.clearCache(true);

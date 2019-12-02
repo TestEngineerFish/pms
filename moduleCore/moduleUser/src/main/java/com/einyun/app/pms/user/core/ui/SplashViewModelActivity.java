@@ -63,7 +63,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
                                 .observe(this,
                                         currentUserModel -> {
                                             ARouter.getInstance()
-                                                    .build(RouterUtils.ACTIVITY_SEND_ORDER)
+                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
                                                     .navigation();
                                             finish();
                                         });
