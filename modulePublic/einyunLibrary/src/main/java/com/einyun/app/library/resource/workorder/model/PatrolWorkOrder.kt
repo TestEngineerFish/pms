@@ -1,5 +1,6 @@
 package com.einyun.app.library.resource.workorder.model
 
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.library.resource.workorder.model
@@ -13,24 +14,24 @@ package com.einyun.app.library.resource.workorder.model
  * @Version: 1.0
  */
 class PatrolWorkOrder {
-    private val proInsId: String? = null
-    private val orderType: Int = 0
-    private val createTime: Long = 0
-    private val F_creation_date: Long = 0
-    private val F_plan_work_order_state: Int = 0
-    private val ID_: String? = null
-    private val subject: String? = null
-    private val F_house_code: String? = null
-    private val F_grid_name: String? = null
-    private val F_building_name: String? = null
-    private val F_unit_name: String? = null
-    private val F_floor: String? = null
-    private val F_plan_work_order_code: String? = null
-    private val taskName: String? = null
-    private val ownerId: String? = null
-    private val F_inspection_work_plan_name: String? = null
-    private val assigneeId: String? = null
-    private val taskId: String? = null
-    private val taskNodeId: String? = null
-    private val F_actual_completion_time: Long = 0
+     val proInsId: String? = null
+     val orderType: Int = 0
+     val createTime: Long = 0
+     val F_creation_date: Long = 0
+     val F_plan_work_order_state: Int = 0
+     val ID_: String? = null
+     val subject: String? = null
+     val F_house_code: String? = null
+     val F_grid_name: String? = null
+     val F_building_name: String? = null
+     val F_unit_name: String? = null
+     val F_floor: String? = null
+     val F_plan_work_order_code: String? = null
+     val taskName: String? = null
+     val ownerId: String? = null
+     val F_inspection_work_plan_name: String? = null
+     val assigneeId: String? = null
+     val taskId: String? = null
+     val taskNodeId: String? = null
+     val F_actual_completion_time: Long = 0
 }

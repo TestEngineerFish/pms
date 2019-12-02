@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">modulePatrol</string>
+    <string name="text_cached">已缓存</string>
+    <string name="text_no_cached">未缓存</string>
+    <string name="text_state_processing">处理中</string>
+    <string name="text_state_new">新生成</string>
 </resources>

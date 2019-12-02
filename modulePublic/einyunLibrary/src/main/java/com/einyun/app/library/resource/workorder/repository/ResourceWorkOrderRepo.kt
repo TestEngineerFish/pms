@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.PageBean
+import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
+import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage
 import com.einyun.app.library.resource.workorder.model.WaitCount
 import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
@@ -17,6 +19,7 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
 import com.einyun.app.library.uc.user.net.request.LoginRequest
 import com.einyun.app.library.resource.workorder.net.request.PageQueryRequest
 import com.einyun.app.library.resource.workorder.net.request.PageRquest
+import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 
 /**
  *
@@ -32,6 +35,19 @@ import com.einyun.app.library.resource.workorder.net.request.PageRquest
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    /**
+     * 获取巡查待办列表
+     */
+    override fun patrolWaitPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>) {
+        serviceApi?.patrolWaitPage(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({response->
+                if(response.isState){
+                    callBack.call(response.data)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+    }
 
 
     /*fun pageQuery(request:  DistributePageRequest, callback: CallBack<DistributeWorkOrderPage>) {

@@ -26,9 +26,16 @@ public class RouterUtils {
     public static final String ACTIVITY_HEALTH_WORK="/health/HealthActivity";
     public static final String ACTIVITY_BLOCK_CHOOSE="/choose/BlockChooseActivity";
     public static final String ACTIVITY_X5_WEBVIEW="/webview/X5WebViewActivity";
+
+    /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
     public static final String ACTIVITY_POINT_CHECK_DETIAL="/pointCheck/PointCheckDetialActivity";
     public static final String ACTIVITY_POINT_CHECK_CREATE="/pointCheck/PointCheckCreatActivity";
+
+    /**********************巡查工单*************************/
+    public static final String ACTIVITY_PATROL_LIST="/patrol/PatrolListActivity";
+
+    /**********************派工单****************************/
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
     public static final String ACTIVITY_RESEND_ORDER="/sendOrder/ReSendOrderActivity";

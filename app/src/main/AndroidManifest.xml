@@ -82,9 +82,12 @@
             />
         <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"
             />
+        <!--点检-->
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
+        <!--巡查工单-->
+        <activity android:name="com.einyun.app.patrol.ui.PatrolListActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

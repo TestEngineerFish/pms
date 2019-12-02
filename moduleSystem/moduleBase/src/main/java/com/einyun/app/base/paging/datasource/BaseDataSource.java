@@ -27,7 +27,7 @@ public abstract class BaseDataSource<M> extends PositionalDataSource<M> {
     public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<M> callback) {
         int page=params.startPosition/params.loadSize+1;
         if(params.startPosition<params.loadSize){
-            page=params.startPosition/params.loadSize+2;
+            page++;
         }
         loadData(new PageBean(page,params.loadSize),callback);
     }

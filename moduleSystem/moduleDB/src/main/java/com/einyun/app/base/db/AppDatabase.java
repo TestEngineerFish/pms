@@ -9,11 +9,13 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.einyun.app.base.db.converter.DateConverter;
+import com.einyun.app.base.db.dao.PatrolDao;
 import com.einyun.app.base.db.dao.UserDao;
+import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.User;
 
 
-@Database(entities = {User.class}, version = 1,exportSchema = false)
+@Database(entities = {User.class, Patrol.class}, version = 2,exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -23,6 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "pms-db";
 
     public abstract UserDao userDao();
+    public abstract PatrolDao patrolDao();
     public static AppDatabase getInstance(final Context context) {
         if (sInstance == null) {
             synchronized (AppDatabase.class) {

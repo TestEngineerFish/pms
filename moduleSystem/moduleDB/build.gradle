@@ -65,6 +65,7 @@ dependencies {
     api deps.room.rxjava2
     annotationProcessor deps.room.compiler
 //    implementation deps.kotlin.stdlib
+    implementation deps.paging
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.extensions
     annotationProcessor deps.lifecycle.compiler

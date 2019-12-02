@@ -1,7 +1,7 @@
 include ':app',
         ':moduleCore',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
-        //':moduleCore:moduleComplain',
-        //':moduleCore:moduleExtra',
+        ':moduleCore:moduleComplain',
+        ':moduleCore:moduleExtra',
         ':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",":moduleCore:moduleSendOrder",
 
 

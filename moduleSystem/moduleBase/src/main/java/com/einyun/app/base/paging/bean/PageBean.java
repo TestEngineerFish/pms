@@ -15,6 +15,7 @@ package com.einyun.app.base.paging.bean;
 public class PageBean {
     public static final int DEFAULT_PAGE_SIZE=10;
     public static final int DEFAULT_PAGE=1;
+    public static final int MAX_PAGE_SIZE=99999;
     private int page=DEFAULT_PAGE;
     private int pageSize=DEFAULT_PAGE_SIZE;
     private boolean showTotal=true;
@@ -31,6 +32,13 @@ public class PageBean {
         this.page = page;
         this.pageSize = pageSize;
         this.showTotal=showTotal;
+    }
+
+    public int current(){
+        if (page <= 0) {
+            page = 1;
+        }
+        return (page - 1) * pageSize;
     }
 
     public int getPage() {

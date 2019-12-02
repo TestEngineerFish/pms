@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="patrol"
+            type="com.einyun.app.base.db.entity.Patrol" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_20"
+        android:layout_marginRight="@dimen/px_20"
+        android:layout_marginBottom="@dimen/px_5">
+
+        <LinearLayout
+            android:id="@+id/item_order_ln"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_has_warn"
+                    android:layout_width="@dimen/px_20"
+                    android:layout_height="@dimen/px_20"
+                    android:layout_centerVertical="true"
+                    app:isWarn="@{patrol.warn}" />
+
+                <TextView
+                    android:id="@+id/tv_order_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{patrol.f_inspection_work_plan_name}" />
+
+
+                <FrameLayout
+                    android:layout_width="@dimen/px_136"
+                    android:layout_height="@dimen/px_48"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_right_option"
+                        android:layout_width="@dimen/px_136"
+                        android:layout_height="@dimen/px_48"
+                        android:src="@drawable/handling" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+
+                        />
+
+                </FrameLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/dotted_line" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_order_num" />
+
+                <TextView
+                    android:id="@+id/tv_order_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{patrol.f_plan_work_order_code}"
+                     />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_create_time" />
+
+                <TextView
+                    android:id="@+id/tv_create_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    app:time="@{patrol.createTime}"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/thin_divider_color" />
+
+            <RelativeLayout
+                android:id="@+id/item_resend_re"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_30">
+
+                <ImageView
+                    android:id="@+id/iv_is_cached"
+                    android:layout_marginRight="@dimen/px_14"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    app:isCached="@{patrol.cached}"
+                    >
+
+                </ImageView>
+                <TextView
+                    android:id="@+id/tv_is_cached"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/iv_is_cached"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    app:isCached="@{patrol.cached}" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

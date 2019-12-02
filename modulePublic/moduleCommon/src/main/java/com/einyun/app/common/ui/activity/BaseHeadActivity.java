@@ -38,11 +38,11 @@ public class BaseHeadActivity extends BaseSkinActivity {
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        root=findViewById(R.id.main_header_bar);
+        root=findViewById(R.id.head_bar);
         btnBack=findViewById(R.id.back);
         tvTitle=findViewById(R.id.tv_header_title);
         tvRightTitle=findViewById(R.id.tv_right_title);
-        ivRightOption.findViewById(R.id.iv_right_option);
+        ivRightOption=findViewById(R.id.iv_right_option);
 
         root.setBackgroundColor(getColorPrimary());
     }

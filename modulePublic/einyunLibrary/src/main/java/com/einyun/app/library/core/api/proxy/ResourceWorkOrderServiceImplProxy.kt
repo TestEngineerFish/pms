@@ -13,8 +13,10 @@ import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.repository.DashBoardRepo
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
+import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage
 import com.einyun.app.library.resource.workorder.model.WaitCount
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
+import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
@@ -37,11 +39,22 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun patrolWaitPage(
+        request: PatrolPageRequest,
+        callBack: CallBack<PatrolWorkOrderPage>
+    ) {
+        instance?.patrolWaitPage(request, callBack)
+    }
+
     /**
      * 派工单代办列表
      * */
-    override fun distributeWaitPage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage> {
-        return instance?.distributeWaitPage(request, callBack)!!    }
+    override fun distributeWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage> {
+        return instance?.distributeWaitPage(request, callBack)!!
+    }
 
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {
         return instance?.getWaitCount(callBack)!!

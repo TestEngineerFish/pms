@@ -8,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.work.impl.utils.LiveDataUtils;
 
 import com.einyun.app.base.BasicApplication;
+import com.einyun.app.base.db.AppDatabase;
 import com.einyun.app.base.db.dao.UserDao;
 import com.einyun.app.base.db.entity.User;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.repository.CommonRepository;
 import com.einyun.app.library.uc.user.model.UserModel;
 
@@ -24,9 +26,10 @@ import io.reactivex.schedulers.Schedulers;
  * 数据处理类，网络、数据库、本地数据等
  */
 public class UserRepository extends CommonRepository {
+    AppDatabase db;
 
     public UserRepository() {
-
+        db=AppDatabase.getInstance(CommonApplication.getInstance());
     }
 
     /**
@@ -38,7 +41,7 @@ public class UserRepository extends CommonRepository {
         MutableLiveData data = new MutableLiveData();
         Observable.just(1).subscribeOn(Schedulers.io()).doOnError(throwable -> {
         }).subscribe(integer -> {
-            User user = BasicApplication.getInstance().getDatabase().userDao().selectUserLastUpdate();
+            User user = db.userDao().selectUserLastUpdate();
             if (user != null) {
                 Log.e("user  userName -> ", user.toString());
                 data.postValue(new UserModel("", "", "", user.getUserName(), user.getPassword()));
@@ -61,7 +64,7 @@ public class UserRepository extends CommonRepository {
     public LiveData<List<UserModel>> loadUsers() {
         MutableLiveData list = new MutableLiveData();
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
-            list.postValue(BasicApplication.getInstance().getDatabase().userDao().loadAllUsers());
+            list.postValue(db.userDao().loadAllUsers());
         });
 
         return list;
@@ -75,7 +78,7 @@ public class UserRepository extends CommonRepository {
     public LiveData<List<String>> loadAllUserName() {
         MutableLiveData list = new MutableLiveData();
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
-            list.postValue(BasicApplication.getInstance().getDatabase().userDao().loadAllUserName());
+            list.postValue(db.userDao().loadAllUserName());
         });
         return list;
     }
@@ -89,8 +92,8 @@ public class UserRepository extends CommonRepository {
         Observable.just(1).subscribeOn(Schedulers.io()).doOnError(throwable -> {
             Log.e("dataBase  error ===>", throwable.getMessage());
         }).subscribe(integer -> {
-            User user = BasicApplication.getInstance().getDatabase().userDao().selectUserByName(userName);
-            BasicApplication.getInstance().getDatabase().userDao().deleteUser(user);
+            User user = db.userDao().selectUserByName(userName);
+            db.userDao().deleteUser(user);
         });
     }
 
@@ -99,7 +102,7 @@ public class UserRepository extends CommonRepository {
      */
     public void saveOrUpdateUser(UserModel userModel) {
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
-            UserDao userDao = BasicApplication.getInstance().getDatabase().userDao();
+            UserDao userDao = db.userDao();
             User user = new User(userModel.getUsername(), userModel.getPassword());
             if (userDao.selectUserByName(userModel.getUsername()) == null) {
                 userDao.insertUsers(user);

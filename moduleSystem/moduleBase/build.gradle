@@ -125,7 +125,6 @@ dependencies {
 
     //project
     api project(deps.project.module_http)
-    api project(deps.project.module_db)
 //    api deps.einyun.http
 //    api deps.einyun.db
 }

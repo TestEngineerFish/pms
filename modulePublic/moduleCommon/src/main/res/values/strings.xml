@@ -13,4 +13,7 @@
     <string name="down">下跌</string>
     <string name="tip">提示</string>
     <string name="user_no_permission">对不起！系统尚未为您配置权限，请联系管理员</string>
+    <string name="text_location">位置</string>
+    <string name="text_order_num">工单编号</string>
+    <string name="text_create_time">创建时间</string>
 </resources>
