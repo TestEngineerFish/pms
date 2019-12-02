@@ -50,7 +50,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         viewModel.getLastUser().observe(this, userModel -> {
             Log.e("usrModel", "" + userModel);
             if (userModel == null || !StringUtil.isNullStr(userModel.getUsername())) {
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
                 finish();
                 return;
             }
@@ -63,7 +63,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
                                 .observe(this,
                                         currentUserModel -> {
                                             ARouter.getInstance()
-                                                    .build(RouterUtils.ACTIVITY_SEND_ORDER)
+                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
                                                     .navigation();
                                             finish();
                                         });
