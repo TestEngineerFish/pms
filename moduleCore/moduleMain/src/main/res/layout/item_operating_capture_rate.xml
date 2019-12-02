@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_50"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_operating_capture_rate"
+                android:textColor="@color/tv_main_second_title_color"
+                android:textSize="@dimen/font_size16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:text="@string/more"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size14" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corners_white"
+            android:layout_marginTop="@dimen/px_30"
+            android:paddingTop="@dimen/px_50"
+            android:paddingBottom="@dimen/px_50"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/px_30">
+
+                <ImageView
+                    android:id="@+id/iv_today_capture_rate"
+                    android:layout_width="@dimen/px_86"
+                    android:layout_height="@dimen/px_86"
+                    android:src="@mipmap/img_today_capture_rate" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_toRightOf="@id/iv_today_capture_rate"
+                    android:text="@string/tv_today_capture_rate"
+                    android:textColor="@color/tv_main_text_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:id="@+id/tv_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_today_capture_rate"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="@string/up"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size13" />
+
+                <TextView
+                    android:id="@+id/tv_up_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_up"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/px_4"
+                    tools:text="8%"
+                    android:textColor="@color/tv_up_color"
+                    android:textSize="@dimen/font_size13" />
+
+                <TextView
+                    android:id="@+id/tv_today_income_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:textColor="@color/title_text_icon_color"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/font_size21" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_65"
+                android:paddingLeft="@dimen/px_30">
+
+                <ImageView
+                    android:id="@+id/iv_today_debts_rate"
+                    android:layout_width="@dimen/px_86"
+                    android:layout_height="@dimen/px_86"
+                    android:src="@mipmap/img_today_debts_rate" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_toRightOf="@id/iv_today_debts_rate"
+                    android:text="@string/tv_today_debts_rate"
+                    android:textColor="@color/tv_main_text_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:id="@+id/tv_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_today_debts_rate"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="@string/down"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size13" />
+
+                <TextView
+                    android:id="@+id/tv_down_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/px_4"
+                    android:layout_toRightOf="@id/tv_down"
+                    android:textColor="@color/tv_down_color"
+                    android:textSize="@dimen/font_size13"
+                    tools:text="8%" />
+
+                <TextView
+                    android:id="@+id/tv_today_arrears_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:textColor="@color/title_text_icon_color"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/font_size21" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

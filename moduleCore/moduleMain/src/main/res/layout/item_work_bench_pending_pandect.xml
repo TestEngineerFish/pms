@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="workBenchModel"
+            type="com.einyun.app.pms.main.core.model.WorkBenchModel" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_work_order_pending_pandect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_50"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_work_order_process"
+                android:textColor="@color/tv_main_second_title_color"
+                android:textSize="@dimen/font_size16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:text="@string/more"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size14" />
+        </RelativeLayout>
+
+        <LinearLayout
+            style="@style/base_style"
+            android:background="@drawable/corners_white"
+            android:layout_marginTop="@dimen/px_30"
+            android:paddingTop="@dimen/px_40"
+            android:paddingBottom="@dimen/px_40"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_work_table_pending_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/tv_work_order_num"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_38"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/px_30">
+
+                    <TextView
+                        android:id="@+id/tv_work_order_percentage_complete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_work_order_percentage_complete"
+                        android:textColor="@color/tv_main_text_color"
+                        android:textSize="@dimen/font_size14"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_20">
+
+                        <TextView
+                            android:id="@+id/tv_work_order_process"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:textColor="@color/tv_work_order_process_num_color"
+                            android:textSize="@dimen/font_size21"
+                            android:textStyle="bold"
+                            tools:text="88%" />
+
+                        <ImageView
+                            android:layout_width="@dimen/px_40"
+                            android:layout_height="@dimen/px_40"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/px_80"
+                            android:src="@mipmap/img_work_order_process" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/px_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_work_order_timeliness_ratio"
+                        android:textColor="@color/tv_main_text_color"
+                        android:textSize="@dimen/font_size14"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_20">
+
+                        <TextView
+                            android:id="@+id/tv_work_order_timeliness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:textColor="@color/tv_work_order_timeliness_num_color"
+                            android:textSize="@dimen/font_size21"
+                            android:textStyle="bold"
+                            tools:text="88%" />
+
+                        <ImageView
+                            android:layout_width="@dimen/px_40"
+                            android:layout_height="@dimen/px_40"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/px_80"
+                            android:src="@mipmap/img_work_order_timeliness" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

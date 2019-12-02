@@ -33,8 +33,8 @@ class DashBoardServiceImpl : DashBoardService {
         return proxy.userMenuData(menuType, callBack)
     }
 
-    override fun operateCaptureData(orgCode: String, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData> {
-        return proxy.operateCaptureData(orgCode, callBack)
+    override fun operateCaptureData(orgCodes: List<String>, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData> {
+        return proxy.operateCaptureData(orgCodes, callBack)
     }
 
     override fun workOrderData(request: WorkOrderRequest, callBack: CallBack<WorkOrderData>): LiveData<WorkOrderData> {

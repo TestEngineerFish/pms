@@ -29,7 +29,7 @@ interface DashBoardService : EinyunService {
     //工单处理情况总览
     fun workOrderData(request: WorkOrderRequest, callBack: CallBack<WorkOrderData>): LiveData<WorkOrderData>
     //运营收缴率
-    fun operateCaptureData(orgCode: String, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData>
+    fun operateCaptureData(orgCodes: List<String>, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData>
     //菜单配置
     fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String>
 }

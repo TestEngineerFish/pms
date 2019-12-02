@@ -50,8 +50,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         serviceApi?.getWaitCount()?.compose(RxSchedulers.inIoMain())
                 ?.subscribe({ response ->
                     if (response.isState) {
-                        callBack.call(response.value)
-                        liveData.postValue(response.value)
+                        callBack.call(response.data)
+                        liveData.postValue(response.data)
                     } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }

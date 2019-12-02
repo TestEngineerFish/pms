@@ -29,6 +29,7 @@ public class RouterUtils {
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
     public static final String ACTIVITY_POINT_CHECK_DETIAL="/pointCheck/PointCheckDetialActivity";
     public static final String ACTIVITY_POINT_CHECK_CREATE="/pointCheck/PointCheckCreatActivity";
+    //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
     public static final String ACTIVITY_RESEND_ORDER="/sendOrder/ReSendOrderActivity";

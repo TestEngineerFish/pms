@@ -15,7 +15,6 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/test_ln"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/activity_bg_color"

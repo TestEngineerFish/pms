@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.RxSchedulers
+import com.einyun.app.base.util.JsonUtil
 import com.einyun.app.library.core.EinyunException
 import com.einyun.app.library.core.api.DashBoardService
 import com.einyun.app.library.core.api.EinyunService
@@ -37,8 +38,12 @@ class DashBoardRepo : DashBoardService {
         serviceApi?.userMenu(menuType)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe(
                         Consumer { response ->
-                            liveData.postValue(response.value)
-                            callBack.call(response.value)
+                            if (response.code.equals("0")) {
+                                liveData.postValue(JsonUtil.toJson((response.data)[0].children.toString()))
+                                callBack.call(JsonUtil.toJson((response.data)[0].children.toString()))
+                            } else {
+                                callBack.onFaild(EinyunHttpException(response))
+                            }
                         },
                         Consumer {
                             callBack.onFaild(it)
@@ -47,9 +52,9 @@ class DashBoardRepo : DashBoardService {
         return liveData
     }
 
-    override fun operateCaptureData(orgCode: String, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData> {
+    override fun operateCaptureData(orgCodes: List<String>, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData> {
         val liveData = MutableLiveData<OperateCaptureData>()
-        serviceApi?.operateCapture(orgCode)?.compose(RxSchedulers.inIoMain())
+        serviceApi?.operateCapture(orgCodes)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe(
                         Consumer { response ->
                             if (response.code.equals("0")) {

@@ -14,4 +14,6 @@ package com.einyun.app.library.dashboard.model
  * @Version:        1.0
  */
 class RateModel {
+    val timelyRate: String? = null
+    val completedRate: String? = null
 }
