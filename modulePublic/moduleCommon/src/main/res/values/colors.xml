@@ -45,4 +45,8 @@
     <color name="important_red_color">#E02020</color>
     <color name="txt_blue_color">#458DFE</color>
     <color name="txt_black_order">#132D42</color>
+    <color name="greyTextColor">#9DA3B4</color>
+    <color name="grayLine">#D8D8D8</color>
+    <color name="blueTextColor">#185CC7 </color>
+    <color name="lightBlueColor">#5C9BFF</color>
 </resources>
