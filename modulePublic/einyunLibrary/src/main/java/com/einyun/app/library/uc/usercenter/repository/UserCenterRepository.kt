@@ -27,16 +27,48 @@ import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
  * @Version:        1.0
  */
 class UserCenterRepository() : UserCenterService {
-    override fun userCenterUserList(userId: String, callBack: CallBack<List<OrgModel>>): LiveData<List<OrgModel>> {
+    override fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String> {
+        val liveData = MutableLiveData<String>()
+        serviceApi?.getWorkStatus(userId)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState()) {
+                    callBack.call(response.value)
+                    liveData.postValue(response.value)
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun updateWorkStatus(
+        userId: String,
+        userName: String,
+        status: String,
+        callBack: CallBack<String>
+    ): LiveData<String> {
+        val liveData = MutableLiveData<String>()
+        serviceApi?.updateWorkStatus(userId, userName, status)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState()) {
+                    callBack.call(response.value)
+                    liveData.postValue(response.value)
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun userCenterUserList(
+        userId: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
         val liveData = MutableLiveData<List<OrgModel>>()
         val url = URLs.URL_USER_CENTER_USER_LIST + userId
         serviceApi?.userCenterUserList(url)?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response ->
-                    if (response.isState()) {
-                        callBack.call(response.data)
-                        liveData.postValue(response.data)
-                    }
-                }, { error -> callBack.onFaild(error) })
+            ?.subscribe({ response ->
+                if (response.isState()) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                }
+            }, { error -> callBack.onFaild(error) })
         return liveData
     }
 
@@ -50,17 +82,21 @@ class UserCenterRepository() : UserCenterService {
     /**
      * 查询组织列表或其子列表
      */
-    override fun listOrChildByOrgId(orgId: String, userId: String, callBack: CallBack<List<OrgModel>>) {
+    override fun listOrChildByOrgId(
+        orgId: String,
+        userId: String,
+        callBack: CallBack<List<OrgModel>>
+    ) {
         var request = OrgRequest(orgId, userId)
         serviceApi?.listOrChildByOrgId(request)?.compose(RxSchedulers.inIoMain())
-                ?.subscribe({ response ->
-                    if (response.isState) {
-                        callBack.call(response.data)
-                    } else {
-                        callBack.onFaild(EinyunHttpException(response))
-                    }
-                }, {
-                    callBack.onFaild(it)
-                })
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
     }
 }

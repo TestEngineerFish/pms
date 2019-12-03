@@ -20,7 +20,23 @@ import com.einyun.app.library.uc.usercenter.repository.UserCenterRepository
  * @Version:        1.0
  */
 class UserCenterServiceImplProxy : UserCenterService {
-    override fun userCenterUserList(userId: String, callBack: CallBack<List<OrgModel>>): LiveData<List<OrgModel>> {
+    override fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String> {
+        return instance?.getWorkStatus(userId, callBack)!!
+    }
+
+    override fun updateWorkStatus(
+        userId: String,
+        userName: String,
+        status: String,
+        callBack: CallBack<String>
+    ): LiveData<String> {
+        return instance?.updateWorkStatus(userId, userName, status, callBack)!!
+    }
+
+    override fun userCenterUserList(
+        userId: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
         return instance?.userCenterUserList(userId, callBack)!!
     }
 
@@ -30,7 +46,11 @@ class UserCenterServiceImplProxy : UserCenterService {
         instance = UserCenterRepository()
     }
 
-    override fun listOrChildByOrgId(orgId: String, userId: String, callBack: CallBack<List<OrgModel>>) {
+    override fun listOrChildByOrgId(
+        orgId: String,
+        userId: String,
+        callBack: CallBack<List<OrgModel>>
+    ) {
         instance?.listOrChildByOrgId(orgId, userId, callBack)
     }
 }

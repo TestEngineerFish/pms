@@ -1,22 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="workBenchViewModel"
-            type="com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel" />
+            name="callBack"
+            type="com.einyun.app.pms.main.core.ui.fragment.MineViewModelFragment" />
+
+        <variable
+            name="userInfo"
+            type="com.einyun.app.library.uc.user.model.UserInfoModel" />
     </data>
 
-    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".core.ui.fragment.MineViewModelFragment">
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/px_30"
+        android:paddingTop="20dp"
+        android:paddingRight="@dimen/px_30">
 
-        <TextView
+        <ImageView
+            android:layout_width="@dimen/px_46"
+            android:layout_height="@dimen/px_46"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/px_25"
+            android:src="@mipmap/img_message_center" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Mine" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_36">
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/user_head_image"
+                android:layout_width="@dimen/px_90"
+                android:layout_height="@dimen/px_90"
+                android:src="@mipmap/img_user_default_head"
+                app:setHeadImage="@{userInfo.photo}" />
+
+            <LinearLayout
+                android:id="@+id/ll_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_36"
+                android:layout_toRightOf="@id/user_head_image"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{userInfo.fullname}"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size22"
+                    android:textStyle="bold"
+                    tools:text="楠木李" />
+
+                <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_marginLeft="@dimen/px_22"
+                    android:layout_weight="1"
+                    app:clickable="false"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/rating_off"
+                    app:starFill="@mipmap/rating_on"
+                    app:starImageSize="@dimen/px_26"
+                    app:starPadding="@dimen/px_12"
+                    app:starStep="5"
+                    app:stepSize="Full" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_marginRight="@dimen/px_6"
+                    android:src="@mipmap/icon_arrow_right" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_work_status"
+                android:layout_width="@dimen/px_146"
+                android:layout_height="@dimen/px_46"
+                android:layout_below="@id/ll_user"
+                android:layout_marginLeft="@dimen/px_36"
+                android:layout_marginTop="@dimen/px_24"
+                android:layout_toRightOf="@id/user_head_image"
+                android:onClick="@{()->callBack.changeWorkStatus()}"
+                android:src="@mipmap/img_mine_working"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_112"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/px_60"
+                    android:layout_height="@dimen/px_60"
+                    android:src="@mipmap/img_mine_approve" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_26"
+                    android:text="@string/tv_mine_approve"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/px_60"
+                    android:layout_height="@dimen/px_60"
+                    android:src="@mipmap/img_feedback" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_26"
+                    android:text="@string/tv_feedback"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/px_60"
+                    android:layout_height="@dimen/px_60"
+                    android:src="@mipmap/img_setting" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_26"
+                    android:text="@string/tv_setting"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </layout>

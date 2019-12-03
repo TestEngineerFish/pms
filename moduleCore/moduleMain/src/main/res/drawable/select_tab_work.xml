@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/work_bench_u" android:state_enabled="true"></item>
-    <item android:drawable="@drawable/work_bench_s" android:state_enabled="false"></item>
+    <item android:drawable="@mipmap/work_bench_u" android:state_enabled="true"></item>
+    <item android:drawable="@mipmap/work_bench_s" android:state_enabled="false"></item>
 
 </selector>

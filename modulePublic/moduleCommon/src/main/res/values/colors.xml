@@ -38,7 +38,7 @@
     <color name="edit_hint_color">#d8d8d8</color>
     
     <color name="normal_blue_color">#2B7DFE</color>
-    
+    <color name="main_bottom_tab_text_select_color">#185cc7</color>
     <color name="normal_blue_btn_start_color">#185cc7</color>
     <color name="normal_blue_btn_end_color">#5c9bff</color>
     <!--星号颜色-->
