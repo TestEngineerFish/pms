@@ -77,7 +77,6 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     @Override
     protected void onResume() {
         super.onResume();
-        mWorkBenchFragment.freshData();
     }
 
     /**

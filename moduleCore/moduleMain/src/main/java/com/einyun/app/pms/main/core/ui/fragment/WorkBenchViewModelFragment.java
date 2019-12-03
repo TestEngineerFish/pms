@@ -55,6 +55,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     ArrayList<String> divideCode = new ArrayList<>();
     NumberFormat formatDouble = new DecimalFormat("#.##");
     DecimalFormat formatInt = new DecimalFormat("#,###");
+    boolean firstFresh = false;
 
     @Override
     public int getLayoutId() {
@@ -78,6 +79,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             //获取分期数据
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
                 handleStagingData(orgModels);
+                firstFresh = true;
                 freshData();
             });
         });
@@ -88,10 +90,19 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        freshData();
+    }
+
     /**
-     *  刷新当前页面
+     * 刷新当前页面
      */
     public void freshData() {
+        if (!firstFresh){
+            return;
+        }
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
