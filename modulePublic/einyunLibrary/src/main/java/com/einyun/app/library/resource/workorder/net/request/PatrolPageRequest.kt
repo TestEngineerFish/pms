@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName
  */
 class PatrolPageRequest :PageRquest(){
     @SerializedName("F_is_time_out")
-    var timeout:Int=0
+    var timeout:String?=null
     @SerializedName("F_grid_id")
     var gridId:String?=null
     @SerializedName("F_building_id")
@@ -26,4 +26,6 @@ class PatrolPageRequest :PageRquest(){
     var unitId:String?=null
     @SerializedName("F_floor")
     var floor:String?=null
+    @SerializedName("F_massif_id")
+    var f_massif_id: String? = null
 }

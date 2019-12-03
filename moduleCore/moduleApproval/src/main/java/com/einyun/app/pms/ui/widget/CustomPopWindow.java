@@ -27,9 +27,9 @@ public class CustomPopWindow extends PopupWindow {
     private NoScrollGridview gv_approval_type;
     private NoScrollGridview gv_approval_child_type;
     private NoScrollGridview gv_approval_status;
-    public static int mApprovalTypePosition=-1;
-    public static int mApprovalChildTypePosition=-1;
-    public static int mApprovalStatusPosition=-1;
+    public static int mApprovalTypePosition = -1;
+    public static int mApprovalChildTypePosition = -1;
+    public static int mApprovalStatusPosition = -1;
     private ApprovalTypeAdapter approvalTypeAdapter;
     private ApprovalChildTypeAdapter approvalChildTypeAdapter;
     private ApprovalStatusAdapter approvalStatusAdapter;
@@ -41,7 +41,7 @@ public class CustomPopWindow extends PopupWindow {
         this.context = context;
         initView();
         initPopWindow();
-}
+    }
 
 
     private void initView() {
@@ -52,7 +52,9 @@ public class CustomPopWindow extends PopupWindow {
         gv_approval_type = view.findViewById(R.id.gv_approval_type);
         gv_approval_child_type = view.findViewById(R.id.gv_approval_child_type);
         gv_approval_status = view.findViewById(R.id.gv_approval_status);
-        iv_close.setOnClickListener(view1 -> {dismiss();});
+        iv_close.setOnClickListener(view1 -> {
+            dismiss();
+        });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +64,7 @@ public class CustomPopWindow extends PopupWindow {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.setOnItemClick(v,"我是接口参数");
+                mListener.setOnItemClick(v, "我是接口参数");
             }
         });
         //一级列表
@@ -77,27 +79,28 @@ public class CustomPopWindow extends PopupWindow {
         gv_approval_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                 mApprovalTypePosition=position;//暂定这样 等有真实数据 直接修改数据源刷新适配器，取出对应参数放到请求参数中
-                 approvalTypeAdapter.notifyDataSetChanged();
+                mApprovalTypePosition = position;//暂定这样 等有真实数据 直接修改数据源刷新适配器，取出对应参数放到请求参数中
+                approvalTypeAdapter.notifyDataSetChanged();
             }
         });
         gv_approval_child_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mApprovalChildTypePosition=position;
+                mApprovalChildTypePosition = position;
                 approvalChildTypeAdapter.notifyDataSetChanged();
             }
         });
         gv_approval_status.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mApprovalStatusPosition=position;
+                mApprovalStatusPosition = position;
                 approvalStatusAdapter.notifyDataSetChanged();
 
             }
         });
     }
-    class Adapter extends BaseAdapter{
+
+    class Adapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -118,7 +121,7 @@ public class CustomPopWindow extends PopupWindow {
         public View getView(int position, View convertView, ViewGroup viewGroup) {
             ///这里的convertView instanceof ViewGroup是对convertView来进行
             ViewHodle hodler;
-            if (convertView !=null && convertView instanceof ViewGroup) {
+            if (convertView != null && convertView instanceof ViewGroup) {
                 hodler = (ViewHodle) convertView.getTag();
             } else {
                 convertView = View.inflate(context, R.layout.custom_popwindow_item, null);
@@ -126,21 +129,23 @@ public class CustomPopWindow extends PopupWindow {
                 hodler.textview = (TextView) convertView.findViewById(R.id.tv_content);
                 convertView.setTag(hodler);
             }
-                hodler.textview.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        notifyDataSetChanged();
-                        hodler.textview.setBackgroundResource(R.drawable.iv_pop_item_choise);
-                    }
-                });
+            hodler.textview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notifyDataSetChanged();
+                    hodler.textview.setBackgroundResource(R.drawable.iv_pop_item_choise);
+                }
+            });
 
             return convertView;
         }
 
     }
-   static class ViewHodle {
+
+    static class ViewHodle {
         TextView textview;
     }
+
     private void initPopWindow() {
         this.setContentView(view);
         // 设置弹出窗体的宽
@@ -157,10 +162,10 @@ public class CustomPopWindow extends PopupWindow {
         //设置弹出窗体的背景
         this.setBackgroundDrawable(dw);
         backgroundAlpha(context, 1f);//0.0-1.0
-        setOnDismissListener(new PopupWindow.OnDismissListener(){
+        setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-               backgroundAlpha(context, 1f);
+                backgroundAlpha(context, 1f);
             }
         });
     }
@@ -179,7 +184,7 @@ public class CustomPopWindow extends PopupWindow {
 
 
     public interface OnItemClickListener {
-        void setOnItemClick(View v,String data);
+        void setOnItemClick(View v, String data);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

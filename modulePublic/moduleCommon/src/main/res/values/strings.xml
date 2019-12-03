@@ -13,7 +13,20 @@
     <string name="down">下跌</string>
     <string name="tip">提示</string>
     <string name="user_no_permission">对不起！系统尚未为您配置权限，请联系管理员</string>
+<<<<<<< HEAD
     <string name="text_location">位置</string>
     <string name="text_order_num">工单编号</string>
     <string name="text_create_time">创建时间</string>
+=======
+    <string name="tv_approval">审批</string>
+    <string name="tv_approval_detail">审批详情</string>
+    <string name="tv_wait_approval">待审批</string>
+    <string name="tv_had_approval">已审批</string>
+    <string name="tv_me_started">我发起的</string>
+    <string name="tv_approval_installment">分期</string>
+    <string name="tv_approval_filter">筛选</string>
+    <string name="tv_pl_choice">请选择</string>
+    <string name="tv_approval_type">审批类型</string>
+    <string name="tv_approval_status">审批状态</string>
+>>>>>>> 70c735dbd3bcdeda68d64c6aadb4ef691c7afe5d
 </resources>

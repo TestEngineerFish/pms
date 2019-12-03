@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.paging.bean.PageBean;
+import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.patrol.BR;
 import com.einyun.app.patrol.R;
@@ -21,7 +24,15 @@ import com.einyun.app.patrol.viewmodel.ViewModelFactory;
 
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> {
     RVPageListAdapter<ItemPatrolListBinding,Patrol> adapter;
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
     PatrolPageRequest pageRequest;
+    private String period = "";
+    private String status = "";
+    private String gridId = "";
+    private String buildId = "";
+    private String unitId = "";
+    private String divideId = "";
 
     public static Fragment newInstance() {
         return new PatrolPendingFragment();
@@ -42,8 +53,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
     @Override
     protected void setUpData() {
-        pageRequest=new PatrolPageRequest();
-        pageRequest.setPageSize(PageBean.MAX_PAGE_SIZE);
+        createPageRequest();
         if(adapter==null){
             adapter=new RVPageListAdapter<ItemPatrolListBinding, Patrol>(getContext(), BR.patrol,mDiffCallback) {
 
@@ -65,6 +75,20 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     public void onResume() {
         super.onResume();
         viewModel.loadPadingData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
+    }
+
+    private void createPageRequest(){
+        if(pageRequest==null){
+            pageRequest=new PatrolPageRequest();
+            pageRequest.setPageSize(PageBean.MAX_PAGE_SIZE);
+            pageRequest.setUserId(userModuleService.getUserId());
+            pageRequest.setPeriod(period);
+            pageRequest.setGridId(gridId);
+            pageRequest.setUnitId(unitId);
+            pageRequest.setBuildingId(buildId);
+            pageRequest.setTimeout(status);
+            pageRequest.setF_massif_id(divideId);
+        }
     }
 
     //DiffUtil.ItemCallback,标准写法

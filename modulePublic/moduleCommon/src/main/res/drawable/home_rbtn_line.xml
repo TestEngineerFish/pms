@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+        <layer-list>
+
+            <item android:top="42dp">
+                <shape android:shape="rectangle">
+                    <size android:width="15dp"/>
+                    <solid android:color="#2B7DFE " />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:drawable="@color/white" android:state_checked="false" />
+
+</selector>
