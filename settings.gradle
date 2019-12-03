@@ -3,10 +3,7 @@ include ':app',
         ':moduleCore:moduleComplain',
         ':moduleCore:moduleExtra',
         ':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",":moduleCore:moduleSendOrder",
-
-        ':moduleCore',':moduleCore:moduleExtra',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
-        ':moduleCore:moduleComplain',':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",":moduleCore:moduleSendOrder",
-        ':moduleCore:moduleApproval',
+        ':moduleCore:moduleApproval',':moduleCore:modulePlan',
 
         ':modulePublic',':modulePublic:moduleCommon',
         ':modulePublic:einyunLibrary',
