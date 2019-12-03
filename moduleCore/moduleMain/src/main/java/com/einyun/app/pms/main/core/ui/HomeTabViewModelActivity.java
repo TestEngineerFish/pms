@@ -127,9 +127,9 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     private void onWorkBenchPage(boolean flag) {
         if (binding.ivWorkBench.isEnabled()) {
             binding.ivWorkBench.setEnabled(false);
-            binding.tvWorkBench.setTextColor(getColorPrimary());
+            binding.tvWorkBench.setTextColor(getResources().getColor(R.color.main_bottom_tab_text_select_color));
             binding.ivMine.setEnabled(true);
-            binding.tvMine.setTextColor(getResources().getColor(R.color.blackTextColor));
+            binding.tvMine.setTextColor(getResources().getColor(R.color.normal_main_text_icon_color));
             if (flag) {
                 binding.vpTab.setCurrentItem(0);
             }
@@ -142,9 +142,9 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     private void onMinePage(boolean flag) {
         if (binding.ivMine.isEnabled()) {
             binding.ivWorkBench.setEnabled(true);
-            binding.tvWorkBench.setTextColor(getResources().getColor(R.color.blackTextColor));
+            binding.tvWorkBench.setTextColor(getResources().getColor(R.color.normal_main_text_icon_color));
             binding.ivMine.setEnabled(false);
-            binding.tvMine.setTextColor(getColorPrimary());
+            binding.tvMine.setTextColor(getResources().getColor(R.color.main_bottom_tab_text_select_color));
             if (flag) {
                 binding.vpTab.setCurrentItem(1);
             }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -28,6 +30,7 @@ import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
 import com.einyun.app.pms.main.databinding.ItemWorkTablePendingNumBinding;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
 import java.text.DecimalFormat;
@@ -60,7 +63,14 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     @Override
     protected void setUpView() {
-
+        LiveEventBus
+                .get(LiveDataBusKey.WORK_BENCH_FRESH, String.class)
+                .observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(@Nullable String s) {
+                        freshData();
+                    }
+                });
     }
 
     @Override

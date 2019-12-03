@@ -34,12 +34,11 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
         @Override
         public void handleResult(Result result) {
             binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
-            finish();
-            Intent intent=new Intent();
-            intent.putExtra(DataConstants.KEY_SCANNER_CONTENT,result.getText());
+            Intent intent = new Intent();
+            intent.putExtra(DataConstants.KEY_SCANNER_CONTENT, result.getText());
             Log.e("shmshmshm扫码内容", result.getText());
             Log.e("shmshmshm扫码格式", result.getBarcodeFormat().toString());
-            setResult(RESULT_OK,intent);
+            setResult(RESULT_OK, intent);
             finish();
         }
     };

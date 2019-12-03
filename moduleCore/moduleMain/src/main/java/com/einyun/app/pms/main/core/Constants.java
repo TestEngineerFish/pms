@@ -16,5 +16,5 @@ import com.einyun.app.library.core.net.EinyunHttpService;
  */
 public class Constants {
     public static final String SP_KEY_MAIN = "KEY_MAIN";
-    public static final String MORE_HTML_URL = EinyunHttpService.getInstance().getBaseUrl() + "h5-mobile/url/yunying?";
+    public static final String MORE_HTML_URL = EinyunHttpService.getInstance().getBaseUrl() + "/h5-mobile/url/yunying?";
 }

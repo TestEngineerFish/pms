@@ -11,4 +11,5 @@ import com.einyun.app.common.service.IBaseModuleService;
  * */
 public interface IUserModuleService extends IBaseModuleService {
     public String getUserId();
+    public String getUserName();
 }

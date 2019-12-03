@@ -26,5 +26,11 @@ class URLs {
         //获取满意度
         const val URL_STATISFACTION: String = "/$DOMAIN/api/Satisfaction/v1/satisfaction/getAllSatisfactionNoAuth?time="
 
+        //获取工作状态
+        const val URL_GET_WORK_STATUS: String = "/$DOMAIN/api/usercenter/v1/ucWorkHistory/getUserHisStatus"
+
+        //更新工作状态
+        const val URL_UPDATE_WORK_STATUS: String = "/$DOMAIN/api/usercenter/v1/ucWorkHistory/save"
+
     }
 }

@@ -19,5 +19,16 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel
  */
 interface UserCenterService : EinyunService {
     fun listOrChildByOrgId(orgId: String, userId: String, callBack: CallBack<List<OrgModel>>)
-    fun userCenterUserList(userId: String, callBack: CallBack<List<OrgModel>>): LiveData<List<OrgModel>>
+    fun userCenterUserList(
+        userId: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>>
+
+    fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String>
+    fun updateWorkStatus(
+        userId: String,
+        userName: String,
+        status: String,
+        callBack: CallBack<String>
+    ): LiveData<String>
 }

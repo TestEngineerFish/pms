@@ -5,6 +5,13 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.einyun.app.base.BasicApplication;
+import com.einyun.app.library.core.net.EinyunHttpService;
+import com.einyun.app.pms.main.R;
+
 
 /**
  * @ProjectName: pms
@@ -20,13 +27,14 @@ import androidx.databinding.BindingAdapter;
  */
 public class MainBindingAdapter {
 
-//    @BindingAdapter("isPic")
-//    public static void setIsPic(TextView view,int value){
-//        if(value>0){
-//           view.setText(R.string.yes);
-//        }else{
-//            view.setText(R.string.no);
-//        }
-//    }
+    @BindingAdapter("setHeadImage")
+    public static void setHeadImage(ImageView iv, String imagePath) {
+        Glide.with(BasicApplication.getInstance()).load(EinyunHttpService.getInstance().getBaseUrl() + "/media/" + imagePath)
+                .apply(RequestOptions
+                        .bitmapTransform(new CircleCrop()))
+                .error(Glide.with(BasicApplication.getInstance()).load(R.mipmap.img_user_default_head).apply(RequestOptions
+                        .bitmapTransform(new CircleCrop())))
+                .into(iv);
+    }
 
 }

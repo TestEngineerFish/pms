@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.db.AppDatabase;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -16,7 +17,7 @@ import java.util.List;
 public class BasicApplication extends Application {
     private static BasicApplication app;
     private List<AppCompatActivity> activityList = new ArrayList<>();
-    private final String TAG="einyun";
+    private final String TAG = "einyun";
 
     @Override
     public void onCreate() {
@@ -24,7 +25,11 @@ public class BasicApplication extends Application {
         app = this;
         //在init之前打开日志和调试
         ARouter.init(this);
-
+        if (BuildConfig.DEBUG) {
+            LiveEventBus.config().supportBroadcast(this).autoClear(true);
+        } else {
+            LiveEventBus.config().supportBroadcast(this).autoClear(true).enableLogger(false);
+        }
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
                 .methodCount(2)// (Optional) How many method line to show. Default 2
@@ -61,7 +66,6 @@ public class BasicApplication extends Application {
             }
         }
     }
-
 
 
     public static BasicApplication getInstance() {

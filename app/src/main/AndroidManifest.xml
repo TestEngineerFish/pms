@@ -76,6 +76,7 @@
         <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity"/>
         <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
         <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
+        <activity android:name="com.einyun.app.common.zxing.ScannerActivity"/>
         <activity  android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
         <activity  android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"

@@ -102,7 +102,6 @@ dependencies {
     api deps.dagger.android_support
     annotationProcessor  deps.dagger.compiler
     annotationProcessor  deps.dagger.android_support_compiler
-
     // Android Testing Support Library's runner and rules
     api deps.atsl.core
     api deps.atsl.runner
@@ -122,7 +121,7 @@ dependencies {
     api deps.support.annotations
     api deps.support.app_compat
     api deps.support.design
-
+    api deps.live_event_bus
     //project
     api project(deps.project.module_http)
 //    api deps.einyun.http
