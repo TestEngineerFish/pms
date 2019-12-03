@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.db.AppDatabase;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
