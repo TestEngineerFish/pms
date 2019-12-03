@@ -63,14 +63,6 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     @Override
     protected void setUpView() {
-        LiveEventBus
-                .get(LiveDataBusKey.WORK_BENCH_FRESH, String.class)
-                .observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                        freshData();
-                    }
-                });
     }
 
     @Override
@@ -97,9 +89,9 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     }
 
     /**
-     *
+     *  刷新当前页面
      */
-    private void freshData() {
+    public void freshData() {
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
