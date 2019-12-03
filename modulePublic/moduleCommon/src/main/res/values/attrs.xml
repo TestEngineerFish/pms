@@ -36,4 +36,8 @@
             <enum name="Full" value="1" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="LimitInput">
+        <attr name="hint" format="string" />
+        <attr name="maxNumber" format="integer" />
+    </declare-styleable>
 </resources>
