@@ -228,7 +228,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //常用功能
         if (userMenu.indexOf("cygn") != -1) {
             binding.itemWorkBenchFirst.ssvCommonFun.setVisibility(View.VISIBLE);
-            binding.itemWorkBenchFirst.ssvCommonFun.initUI(getActivity());
+//            binding.itemWorkBenchFirst.ssvCommonFun.initUI(getActivity());
         } else {
             index++;
             binding.itemWorkBenchFirst.ssvCommonFun.setVisibility(View.GONE);
