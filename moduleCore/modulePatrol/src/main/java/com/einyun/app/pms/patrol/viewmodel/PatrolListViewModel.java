@@ -1,14 +1,13 @@
-package com.einyun.app.patrol.viewmodel;
+package com.einyun.app.pms.patrol.viewmodel;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
-import com.einyun.app.patrol.repository.PatrolBoundaryCallBack;
-import com.einyun.app.patrol.repository.PatrolListRepo;
+import com.einyun.app.pms.patrol.repository.PatrolBoundaryCallBack;
+import com.einyun.app.pms.patrol.repository.PatrolListRepo;
 
 public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
 

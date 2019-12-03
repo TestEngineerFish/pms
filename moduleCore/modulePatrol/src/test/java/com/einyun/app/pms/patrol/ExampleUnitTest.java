@@ -1,4 +1,4 @@
-package com.einyun.app.patrol;
+package com.einyun.app.pms.patrol;
 
 import org.junit.Test;
 

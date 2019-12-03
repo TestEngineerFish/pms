@@ -1,4 +1,4 @@
-package com.einyun.app.patrol.repository;
+package com.einyun.app.pms.patrol.repository;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedList;
@@ -9,7 +9,7 @@ import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
-import com.einyun.app.patrol.convert.PatrolListTypeConvert;
+import com.einyun.app.pms.patrol.convert.PatrolListTypeConvert;
 import com.google.gson.Gson;
 import java.util.List;
 

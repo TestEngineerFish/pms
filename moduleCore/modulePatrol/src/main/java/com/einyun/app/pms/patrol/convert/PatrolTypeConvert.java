@@ -1,4 +1,4 @@
-package com.einyun.app.patrol.convert;
+package com.einyun.app.pms.patrol.convert;
 
 import androidx.room.TypeConverter;
 

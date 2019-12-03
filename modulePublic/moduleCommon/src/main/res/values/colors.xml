@@ -51,4 +51,8 @@
     <color name="lightBlueColor">#5C9BFF</color>
     <color name="color_FAF">#FAFAFE</color>
     <color name="color_FFD">#FFDDD7</color>
+
+    <color name="greenTextColor">#20CD70</color>
+    <color name="grayFrameColor">#D4D4D4</color>
+    <color name="redTextColor">#F03D3D</color>
 </resources>

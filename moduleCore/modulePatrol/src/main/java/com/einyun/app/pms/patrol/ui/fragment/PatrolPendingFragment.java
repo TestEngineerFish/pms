@@ -1,12 +1,10 @@
-package com.einyun.app.patrol.ui.fragment;
+package com.einyun.app.pms.patrol.ui.fragment;
 
 import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -15,26 +13,29 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
-import com.einyun.app.patrol.BR;
-import com.einyun.app.patrol.R;
-import com.einyun.app.patrol.databinding.FragmentPatrolPendingBinding;
-import com.einyun.app.patrol.databinding.ItemPatrolListBinding;
-import com.einyun.app.patrol.viewmodel.PatrolListViewModel;
-import com.einyun.app.patrol.viewmodel.ViewModelFactory;
+import com.einyun.app.pms.patrol.databinding.FragmentPatrolPendingBinding;
+import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
+import com.einyun.app.pms.patrol.BR;
+import com.einyun.app.pms.patrol.R;
+import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
+import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
+/**
+ * 巡查待办
+ */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> {
-    RVPageListAdapter<ItemPatrolListBinding,Patrol> adapter;
+    protected RVPageListAdapter<ItemPatrolListBinding,Patrol> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
-    IUserModuleService userModuleService;
-    PatrolPageRequest pageRequest;
-    private String period = "";
-    private String status = "";
-    private String gridId = "";
-    private String buildId = "";
-    private String unitId = "";
-    private String divideId = "";
+    protected IUserModuleService userModuleService;
+    protected PatrolPageRequest pageRequest;
+    protected String period = "";
+    protected String status = "";
+    protected String gridId = "";
+    protected String buildId = "";
+    protected String unitId = "";
+    protected String divideId = "";
 
-    public static Fragment newInstance() {
+    public static PatrolPendingFragment newInstance() {
         return new PatrolPendingFragment();
     }
 
@@ -54,8 +55,13 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     protected void setUpData() {
         createPageRequest();
+        initAdapter();
+        binding.patrolList.setAdapter(adapter);
+    }
+
+    protected void initAdapter() {
         if(adapter==null){
-            adapter=new RVPageListAdapter<ItemPatrolListBinding, Patrol>(getContext(), BR.patrol,mDiffCallback) {
+            adapter=new RVPageListAdapter<ItemPatrolListBinding, Patrol>(getContext(), com.einyun.app.pms.patrol.BR.patrol,mDiffCallback) {
 
                 @Override
                 public void onBindItem(ItemPatrolListBinding binding, Patrol model) {
@@ -68,7 +74,6 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                 }
             };
         }
-        binding.patrolList.setAdapter(adapter);
     }
 
     @Override
@@ -77,7 +82,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         viewModel.loadPadingData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
     }
 
-    private void createPageRequest(){
+    protected void createPageRequest(){
         if(pageRequest==null){
             pageRequest=new PatrolPageRequest();
             pageRequest.setPageSize(PageBean.MAX_PAGE_SIZE);
@@ -92,7 +97,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<Patrol> mDiffCallback = new DiffUtil.ItemCallback<Patrol>() {
+    protected DiffUtil.ItemCallback<Patrol> mDiffCallback = new DiffUtil.ItemCallback<Patrol>() {
 
         @Override
         public boolean areItemsTheSame(@NonNull Patrol oldItem, @NonNull Patrol newItem) {

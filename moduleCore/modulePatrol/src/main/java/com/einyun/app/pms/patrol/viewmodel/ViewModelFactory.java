@@ -1,4 +1,4 @@
-package com.einyun.app.patrol.viewmodel;
+package com.einyun.app.pms.patrol.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

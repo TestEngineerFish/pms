@@ -1,6 +1,5 @@
-package com.einyun.app.patrol.ui;
+package com.einyun.app.pms.patrol.ui;
 
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +8,7 @@ import androidx.databinding.BindingAdapter;
 
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.library.resource.workorder.model.OrderState;
-import com.einyun.app.patrol.R;
+import com.einyun.app.pms.patrol.R;
 
 
 /**
@@ -58,15 +57,19 @@ public class PatrolBindiAdapter {
             view.setText(R.string.text_state_new);
         }else if(value==OrderState.HANDING.getState()||value==OrderState.PROCESSING.getState()){
             view.setText(R.string.text_state_processing);
+        }else if(value==OrderState.CLOSED.getState()){
+            view.setText(R.string.text_state_closed);
         }
     }
 
     @BindingAdapter("status")
     public static void status(ImageView view,int value){
-        if(value==1){
+        if(value== OrderState.NEW.getState()){
             view.setImageResource(R.mipmap.icon_new);
-        }else if(value==2||value==3){
+        }else if(value==OrderState.HANDING.getState()||value==OrderState.PROCESSING.getState()){
             view.setImageResource(R.mipmap.icon_processing);
+        }else if(value==OrderState.CLOSED.getState()){
+            view.setImageResource(R.mipmap.icon_state_closed);
         }
     }
 

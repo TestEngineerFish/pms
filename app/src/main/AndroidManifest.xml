@@ -88,7 +88,7 @@
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
         <!--巡查工单-->
-        <activity android:name="com.einyun.app.patrol.ui.PatrolListActivity"/>
+        <activity android:name="com.einyun.app.pms.patrol.ui.PatrolListActivity"/>
         <activity android:name=".ui.ApprovalViewModuleActivity"/>
         <activity android:name=".ui.ApprovalDetailViewModuleActivity"/>
         <provider

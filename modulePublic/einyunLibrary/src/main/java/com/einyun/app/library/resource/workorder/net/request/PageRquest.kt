@@ -24,9 +24,9 @@ open class PageRquest {
         const val PERIOD_SEASON="season"
     }
     var userId:String?=null
-    var page :Int=0
+    var page :Int=1
     var pageSize:Int=10
-    var period:String?=null
+    var period:String?=PERIOD_DAY
     @SerializedName("F_OT_STATUS")
     var status:Int=0
     var pageBean:PageBean?=null
