@@ -2,7 +2,6 @@ package com.einyun.app.pms.patrol.ui.fragment;
 
 import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -15,7 +14,6 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.pms.patrol.databinding.FragmentPatrolPendingBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
-import com.einyun.app.pms.patrol.BR;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
@@ -25,8 +23,10 @@ import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
  */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> {
     protected RVPageListAdapter<ItemPatrolListBinding,Patrol> adapter;
+
     @Autowired(name = RouterUtils.SERVICE_USER)
-    protected IUserModuleService userModuleService;
+    IUserModuleService userModuleService;
+
     protected PatrolPageRequest pageRequest;
     protected String period = "";
     protected String status = "";
@@ -79,7 +79,11 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.loadPadingData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
+        loadData();
+    }
+
+    protected void loadData() {
+        viewModel.loadPendingData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
     }
 
     protected void createPageRequest(){

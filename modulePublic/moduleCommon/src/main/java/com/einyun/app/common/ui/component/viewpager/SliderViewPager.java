@@ -27,7 +27,7 @@ public class SliderViewPager extends ViewPager {
             preX=(int) even.getX();
         }else
         {
-            if(Math.abs((int)even.getX()-preX)>5)
+            if(Math.abs((int)even.getX()-preX)>3)
             {
                 return true;
             }else

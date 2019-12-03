@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="patrol"
+            type="com.einyun.app.base.db.entity.Patrol" />
+    </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,7 +16,6 @@
         android:orientation="vertical"
         >
         <androidx.cardview.widget.CardView
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/px_20"
@@ -293,7 +297,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:visibility="gone"
             android:id="@+id/cd_work_nodes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -395,7 +398,8 @@
                         android:text="@string/text_resolve_dis"
                         />
                 </LinearLayout>
-                <EditText
+                <com.einyun.app.common.ui.component.limit.LimitInput
+                    android:id="@+id/limit_input"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_182"
                     android:layout_marginTop="@dimen/px_20"
@@ -506,6 +510,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_88"
             android:layout_marginTop="@dimen/px_40"
+            android:layout_marginBottom="@dimen/px_40"
             android:text="@string/text_submit"
             />
     </LinearLayout>

@@ -15,6 +15,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolListBinding;
+import com.einyun.app.pms.patrol.ui.fragment.PatrolClosedListFragment;
 import com.einyun.app.pms.patrol.ui.fragment.PatrolPendingFragment;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 
@@ -28,6 +29,8 @@ import java.util.List;
 public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrolListBinding, PatrolListViewModel> implements PeriodizationView.OnPeriodSelectListener{
     String[] mTitles;
     List<BaseViewModelFragment> fragmentList=new ArrayList<>();
+    final int TAB_PENDING=0;
+    final int TAB_CLOSED=1;
 
     @Override
     protected PatrolListViewModel initViewModel() {
@@ -45,7 +48,8 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         super.initViews(savedInstanceState);
         setHeadTitle(getString(R.string.title_patrol));
         mTitles=getResources().getStringArray(R.array.order_list);
-        fragmentList.add(0,PatrolPendingFragment.newInstance());
+        fragmentList.add(TAB_PENDING,PatrolPendingFragment.newInstance());
+        fragmentList.add(TAB_CLOSED, PatrolClosedListFragment.newInstance());
         binding.vpSendWork.setAdapter(new PatrolFragmentTabAdapter(getSupportFragmentManager(),fragmentList));
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
         binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {

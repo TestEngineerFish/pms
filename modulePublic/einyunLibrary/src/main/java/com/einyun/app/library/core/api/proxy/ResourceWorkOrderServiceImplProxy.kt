@@ -39,6 +39,13 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun patrolClosedPage(
+        request: PatrolPageRequest,
+        callBack: CallBack<PatrolWorkOrderPage>
+    ) {
+       instance?.patrolClosedPage(request,callBack)
+    }
+
     override fun patrolWaitPage(
         request: PatrolPageRequest,
         callBack: CallBack<PatrolWorkOrderPage>

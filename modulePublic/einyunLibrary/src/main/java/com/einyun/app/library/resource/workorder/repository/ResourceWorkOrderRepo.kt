@@ -49,6 +49,20 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             }, { error -> callBack.onFaild(error) })
     }
 
+    /**
+     * 获取巡查待办已办
+     */
+    override fun patrolClosedPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>) {
+        serviceApi?.patrolDonePage(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({response->
+                if(response.isState){
+                    callBack.call(response.data)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+    }
+
 
     /*fun pageQuery(request:  DistributePageRequest, callback: CallBack<DistributeWorkOrderPage>) {
         serviceApi?.distributeWaitPage(request)?.compose(RxSchedulers.inIoMain())

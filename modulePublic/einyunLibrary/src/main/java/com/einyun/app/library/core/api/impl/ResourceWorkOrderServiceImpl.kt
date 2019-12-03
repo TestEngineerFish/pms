@@ -39,6 +39,13 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun patrolClosedPage(
+        request: PatrolPageRequest,
+        callBack: CallBack<PatrolWorkOrderPage>
+    ) {
+        proxy.patrolClosedPage(request,callBack)
+    }
+
     override fun patrolWaitPage(
         request: PatrolPageRequest,
         callBack: CallBack<PatrolWorkOrderPage>

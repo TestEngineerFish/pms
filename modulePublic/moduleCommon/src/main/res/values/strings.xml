@@ -48,4 +48,5 @@
         <item>待办</item>
         <item>已办</item>
     </string-array>
+    <string name="search">搜索</string>
 </resources>

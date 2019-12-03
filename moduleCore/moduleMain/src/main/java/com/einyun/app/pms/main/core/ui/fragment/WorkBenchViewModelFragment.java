@@ -55,6 +55,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     ArrayList<String> divideCode = new ArrayList<>();
     NumberFormat formatDouble = new DecimalFormat("#.##");
     DecimalFormat formatInt = new DecimalFormat("#,###");
+    boolean firstFresh = false;
 
     @Override
     public int getLayoutId() {
@@ -63,14 +64,6 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     @Override
     protected void setUpView() {
-        LiveEventBus
-                .get(LiveDataBusKey.WORK_BENCH_FRESH, String.class)
-                .observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                        freshData();
-                    }
-                });
     }
 
     @Override
@@ -86,6 +79,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             //获取分期数据
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
                 handleStagingData(orgModels);
+                firstFresh = true;
                 freshData();
             });
         });
@@ -96,10 +90,19 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        freshData();
+    }
+
     /**
-     *
+     * 刷新当前页面
      */
-    private void freshData() {
+    public void freshData() {
+        if (!firstFresh){
+            return;
+        }
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
@@ -228,7 +231,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //常用功能
         if (userMenu.indexOf("cygn") != -1) {
             binding.itemWorkBenchFirst.ssvCommonFun.setVisibility(View.VISIBLE);
-            binding.itemWorkBenchFirst.ssvCommonFun.initUI(getActivity());
+//            binding.itemWorkBenchFirst.ssvCommonFun.initUI(getActivity());
         } else {
             index++;
             binding.itemWorkBenchFirst.ssvCommonFun.setVisibility(View.GONE);

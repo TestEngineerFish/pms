@@ -63,10 +63,10 @@ public class SlideShowView extends FrameLayout {
         mContext = context;
         linearLayoutList = new ArrayList<>();
         dataList = new ArrayList<>();
-        View view = LayoutInflater.from(context).inflate(R.layout.widget_slide_show, this, true);
-        ivOne = view.findViewById(R.id.iv_one);
-        ivTwo = view.findViewById(R.id.iv_two);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        LayoutInflater.from(context).inflate(R.layout.widget_slide_show, this, true);
+        ivOne = findViewById(R.id.iv_one);
+        ivTwo = findViewById(R.id.iv_two);
+        mViewPager = findViewById(R.id.viewPager);
     }
 
     public void setRed_SP(int red) {

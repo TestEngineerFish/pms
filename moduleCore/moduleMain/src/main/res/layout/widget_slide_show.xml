@@ -26,16 +26,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:visibility="gone"
-                app:srcCompat="@drawable/shape_work_one" />
+                android:visibility="visible"
+                android:src="@drawable/shape_work_one" />
 
             <ImageView
                 android:id="@+id/iv_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_10"
-                android:visibility="gone"
-                app:srcCompat="@drawable/shape_work_two" />
+                android:visibility="visible"
+                android:src="@drawable/shape_work_two" />
 
         </LinearLayout>
 

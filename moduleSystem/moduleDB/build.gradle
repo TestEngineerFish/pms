@@ -13,7 +13,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+                arguments = [ AROUTER_MODULE_NAME : project.getName(),
+                              "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
         }
     }
@@ -63,6 +65,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api deps.room.runtime
     api deps.room.rxjava2
+    implementation deps.retrofit.gson
     annotationProcessor deps.room.compiler
 //    implementation deps.kotlin.stdlib
     implementation deps.paging

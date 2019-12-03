@@ -76,5 +76,5 @@ uploadArchives {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.module_base)
-    kapt deps.room.compiler
+    // Architecture components
 }

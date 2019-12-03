@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -73,6 +74,10 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         onWorkBenchPage(false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     /**
      * pageItem change event
@@ -180,6 +185,12 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         public int getCount() {
             return this.mList == null ? 0 : this.mList.size();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding.vpTab.removeOnPageChangeListener(pageChangeListener);
     }
 
     @Override
