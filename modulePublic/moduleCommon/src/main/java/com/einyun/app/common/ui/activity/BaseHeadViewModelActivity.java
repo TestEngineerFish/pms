@@ -87,7 +87,7 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
 
     @Override
     protected int getColorPrimary() {
-        return getResources().getColor(R.color.activity_bg_color);
+        return getResources().getColor(R.color.white);
     }
 
     /**
