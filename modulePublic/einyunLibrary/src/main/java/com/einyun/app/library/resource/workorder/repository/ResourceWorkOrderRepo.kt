@@ -9,17 +9,12 @@ import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
-import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage
-import com.einyun.app.library.resource.workorder.model.WaitCount
+import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
-import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
+import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
 import com.einyun.app.library.uc.user.net.request.LoginRequest
-import com.einyun.app.library.resource.workorder.net.request.PageQueryRequest
-import com.einyun.app.library.resource.workorder.net.request.PageRquest
-import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
+import com.einyun.app.library.resource.workorder.net.response.PatrolDetialResponse
 
 /**
  *
@@ -39,7 +34,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 获取巡查待办列表
      */
     override fun patrolWaitPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>) {
-        serviceApi?.patrolWaitPage(request)?.compose(RxSchedulers.inIoMain())
+        serviceApi?.patrolWaitPage(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({response->
                 if(response.isState){
                     callBack.call(response.data)
@@ -53,7 +48,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 获取巡查待办已办
      */
     override fun patrolClosedPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>) {
-        serviceApi?.patrolDonePage(request)?.compose(RxSchedulers.inIoMain())
+        serviceApi?.patrolDonePage(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({response->
                 if(response.isState){
                     callBack.call(response.data)
@@ -61,6 +56,22 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error) })
+    }
+
+    /**
+     * 巡查工单详情
+     */
+   override fun patrolDetial(request: PatrolDetialRequest,callBack: CallBack<PatrolInfo>){
+        serviceApi?.patrolDetial(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {response->
+                    if(response.isState){
+                        callBack.call(response.data)
+                    }else{
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                },{callBack.onFaild(it)}
+            )
     }
 
 
@@ -77,7 +88,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     }*/
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {
         val liveData = MutableLiveData<WaitCount>()
-        serviceApi?.getWaitCount()?.compose(RxSchedulers.inIoMain())
+        serviceApi?.getWaitCount()?.compose(RxSchedulers.inIo())
                 ?.subscribe({ response ->
                     if (response.isState) {
                         callBack.call(response.data)

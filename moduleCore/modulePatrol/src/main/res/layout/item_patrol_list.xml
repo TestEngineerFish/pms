@@ -11,6 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_20"
         android:layout_marginLeft="@dimen/px_20"
         android:layout_marginRight="@dimen/px_20"
         android:layout_marginBottom="@dimen/px_5">
@@ -54,13 +55,14 @@
                         android:id="@+id/iv_right_option"
                         android:layout_width="@dimen/px_136"
                         android:layout_height="@dimen/px_48"
-                        android:src="@drawable/handling" />
+                        app:status="@{patrol.f_plan_work_order_state}"
+                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:layout_gravity="center"
-
+                        app:status="@{patrol.f_plan_work_order_state}"
                         />
 
                 </FrameLayout>

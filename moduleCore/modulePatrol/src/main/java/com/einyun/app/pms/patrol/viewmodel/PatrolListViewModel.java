@@ -3,6 +3,7 @@ package com.einyun.app.pms.patrol.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
+
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
@@ -23,7 +24,6 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
         if(pageList ==null){
             pageList = new LivePagedListBuilder(repo.queryAll(), config)
                 .setBoundaryCallback(new PatrolPendingBoundaryCallBack(request))
-//                .setFetchExecutor(null)
                     .build();
         }
         return pageList;

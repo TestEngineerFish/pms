@@ -56,8 +56,10 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
         viewModel.getUserInfoByUserId().observe(this, userInfoModel -> {
             binding.setUserInfo(userInfoModel);
             viewModel.getWorkState().observe(this, status -> {
-                binding.ivWorkStatus.setVisibility(View.VISIBLE);
-                upWorkStatus(status);
+                if(status!=null){
+                    binding.ivWorkStatus.setVisibility(View.VISIBLE);
+                    upWorkStatus(status);
+                }
             });
         });
     }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.einyun.app.base.BaseBindingViewHolder;
 import com.einyun.app.base.event.ItemClickListener;
@@ -41,6 +42,7 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
         BR_id = br_id;
         this.mContext=context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        setHasStableIds(true);
     }
 
     @NonNull
@@ -49,6 +51,7 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
         View itemView =mInflater.inflate(getLayoutId(), parent, false);
         return new BaseBindingViewHolder<D>(itemView);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull BaseBindingViewHolder holder, int position) {
@@ -65,7 +68,12 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
         onBindItem((D) holder.getBinding(),getItem(position));
     }
 
-    public abstract void onBindItem(D binding,M model);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    public abstract void onBindItem(D binding, M model);
 
     //设置item布局文件id
     public abstract int getLayoutId();

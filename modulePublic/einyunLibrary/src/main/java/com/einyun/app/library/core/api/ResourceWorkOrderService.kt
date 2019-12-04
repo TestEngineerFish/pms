@@ -8,11 +8,9 @@ import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.net.response.WorkOrderResponse
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
-import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage
-import com.einyun.app.library.resource.workorder.model.WaitCount
+import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
@@ -42,4 +40,6 @@ interface ResourceWorkOrderService : EinyunService {
     fun patrolWaitPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>)
     //巡查工单已办
     fun patrolClosedPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>)
+    //巡查工单详情
+    fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>)
 }

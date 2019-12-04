@@ -143,12 +143,14 @@ public class CreateCheckViewModel extends BaseViewModel {
                             uploadedImages.put(picUrl.getOriginUrl(), picUrl.getUploaded());
                         }
                     }
+                    hideLoading();
                     uploadState.postValue(data);
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
                     uploadState.postValue(null);
+                    hideLoading();
                 }
             });
         } catch (Exception e) {

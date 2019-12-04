@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -28,12 +30,12 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     IUserModuleService userModuleService;
 
     protected PatrolPageRequest pageRequest;
-    protected String period = "";
-    protected String status = "";
-    protected String gridId = "";
-    protected String buildId = "";
-    protected String unitId = "";
-    protected String divideId = "";
+    protected String period ;
+    protected String status ;
+    protected String gridId ;
+    protected String buildId ;
+    protected String unitId;
+    protected String divideId;
 
     public static PatrolPendingFragment newInstance() {
         return new PatrolPendingFragment();
@@ -48,6 +50,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     protected void setUpView() {
         binding.swiperefresh.setOnRefreshListener(() -> {
             binding.swiperefresh.setRefreshing(false);
+            adapter.submitList(null);
             viewModel.refresh();
         });
     }
@@ -57,6 +60,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         createPageRequest();
         initAdapter();
         binding.patrolList.setAdapter(adapter);
+
     }
 
     protected void initAdapter() {

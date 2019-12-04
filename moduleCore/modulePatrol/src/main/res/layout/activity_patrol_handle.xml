@@ -4,515 +4,530 @@
     <data>
         <variable
             name="patrol"
-            type="com.einyun.app.base.db.entity.Patrol" />
+            type="com.einyun.app.base.db.entity.PatrolInfo" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.patrol.ui.PatrolHandleActivity" />
     </data>
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <androidx.cardview.widget.CardView
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginRight="@dimen/px_20"
-            android:layout_marginBottom="@dimen/px_5"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
             >
             <LinearLayout
-                android:id="@+id/item_order_ln"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <RelativeLayout
+                android:orientation="vertical"
+                >
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_90"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
-
-
-                    <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_5"
+                    app:cardCornerRadius="10dp"
+                    >
+                    <LinearLayout
+                        android:id="@+id/item_order_ln"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        android:text="@string/text_order_info" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
 
-                    <FrameLayout
-                        android:layout_width="@dimen/px_136"
-                        android:layout_height="@dimen/px_48"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_90"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@string/text_order_info" />
+
+
+                            <FrameLayout
+                                android:layout_width="@dimen/px_136"
+                                android:layout_height="@dimen/px_48"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/txt_blue_color"
+                                    android:layout_gravity="center"
+                                    app:status="@{patrol.data.zyxcgd.f_plan_work_order_state}"
+                                    />
+
+                            </FrameLayout>
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/dotted_line" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_order_num" />
+
+                            <TextView
+                                android:id="@+id/tv_order_no"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_plan_work_order_code}"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_divide" />
+
+                            <TextView
+                                android:id="@+id/tv_divide_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_massif_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_line" />
+
+                            <TextView
+                                android:id="@+id/tv_line"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_line_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_type" />
+
+                            <TextView
+                                android:id="@+id/tv_types"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_type_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_plan_name" />
+
+                            <TextView
+                                android:id="@+id/tv_plan_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_inspection_work_plan_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_work_guide" />
+
+                            <TextView
+                                android:id="@+id/tv_work_guide"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_inspection_work_guidance_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_grid" />
+
+                            <TextView
+                                android:id="@+id/tv_grid"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_grid_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_order_person" />
+
+                            <TextView
+                                android:id="@+id/tv_order_person"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_principal_name}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_order_create_time" />
+
+                            <TextView
+                                android:id="@+id/tv_order_create_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_creation_date}"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_60"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_marginBottom="@dimen/px_30"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="@dimen/px_170"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_end_time" />
+
+                            <TextView
+                                android:id="@+id/tv_end_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@{patrol.data.zyxcgd.f_completion_deadline}"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cd_work_nodes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_5">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_90"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@string/text_work_nodes" />
+                        </RelativeLayout>
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="@dimen/px_30"
+                            android:src="@drawable/dotted_line" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_nodes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:layout_marginBottom="@dimen/px_30"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            >
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_5"
+                    app:cardCornerRadius="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_90"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/txt_black_order"
+                                android:text="@string/text_resolve_result" />
+                        </RelativeLayout>
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="@dimen/px_30"
+                            android:src="@drawable/dotted_line" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:gravity="center_vertical"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px_4"
+                                android:text="*"
+                                android:textColor="@color/important_red_color"
+                                android:textSize="20sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_resolve_dis"
+                                />
+                        </LinearLayout>
+                        <com.einyun.app.common.ui.component.limit.LimitInput
+                            android:id="@+id/limit_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_182"
+                            android:layout_marginTop="@dimen/px_20"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_marginRight="@dimen/px_30"
+                            android:layout_marginBottom="@dimen/px_30"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:gravity="center_vertical"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px_4"
+                                android:text="*"
+                                android:textColor="@color/important_red_color"
+                                android:textSize="20sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_handle_pic"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_15"
+                                android:textColor="@color/important_red_color"
+                                android:text="@string/text_pic_max"
+                                />
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/point_ck_imglist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_20"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:layout_marginBottom="@dimen/px_30">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_5"
+                    app:cardCornerRadius="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:layout_marginBottom="@dimen/px_30"
                         >
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/greenTextColor"
-                            android:layout_gravity="center"
-                            android:text="@string/text_state_completed"
-                            />
-
-                    </FrameLayout>
-                </RelativeLayout>
-
-                <ImageView
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            >
+                            <ImageView
+                                android:layout_width="@dimen/px_110"
+                                android:layout_height="@dimen/px_110"
+                                android:layout_marginBottom="@dimen/px_20"
+                                android:src="@mipmap/icon_apply_postpone"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_apply_postpone"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            >
+                            <ImageView
+                                android:layout_width="@dimen/px_110"
+                                android:layout_height="@dimen/px_110"
+                                android:layout_marginBottom="@dimen/px_20"
+                                android:src="@mipmap/icon_force_close"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_apply_postpone"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <Button
+                    android:id="@+id/btn_submit"
+                    style="@style/submit_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/dotted_line" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_order_num" />
-
-                    <TextView
-                        android:id="@+id/tv_order_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        android:text="@{patrol.f_plan_work_order_code}"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_divide" />
-
-                    <TextView
-                        android:id="@+id/tv_divide_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_line" />
-
-                    <TextView
-                        android:id="@+id/tv_line"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_type" />
-
-                    <TextView
-                        android:id="@+id/tv_types"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_plan_name" />
-
-                    <TextView
-                        android:id="@+id/tv_plan_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_work_guide" />
-
-                    <TextView
-                        android:id="@+id/tv_work_guide"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_grid" />
-
-                    <TextView
-                        android:id="@+id/tv_grid"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_order_person" />
-
-                    <TextView
-                        android:id="@+id/tv_order_person"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_order_create_time" />
-
-                    <TextView
-                        android:id="@+id/tv_order_create_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:layout_marginBottom="@dimen/px_30"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_170"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:text="@string/text_end_time" />
-
-                    <TextView
-                        android:id="@+id/tv_end_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        app:time="@{patrol.createTime}"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cd_work_nodes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginRight="@dimen/px_20"
-            android:layout_marginBottom="@dimen/px_5">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_90"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        android:text="@string/text_work_nodes" />
-                </RelativeLayout>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="@dimen/px_30"
-                    android:src="@drawable/dotted_line" />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_nodes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginRight="@dimen/px_20"
-                    android:layout_marginBottom="@dimen/px_30"
-                    >
-                </androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginRight="@dimen/px_20"
-            android:layout_marginBottom="@dimen/px_5"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_90"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/txt_black_order"
-                        android:text="@string/text_resolve_result" />
-                </RelativeLayout>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="@dimen/px_30"
-                    android:src="@drawable/dotted_line" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/px_4"
-                        android:text="*"
-                        android:textColor="@color/important_red_color"
-                        android:textSize="20sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_resolve_dis"
-                        />
-                </LinearLayout>
-                <com.einyun.app.common.ui.component.limit.LimitInput
-                    android:id="@+id/limit_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_182"
-                    android:layout_marginTop="@dimen/px_20"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:layout_marginRight="@dimen/px_30"
-                    android:layout_marginBottom="@dimen/px_30"
+                    android:layout_height="@dimen/px_88"
+                    android:layout_marginTop="@dimen/px_40"
+                    android:layout_marginBottom="@dimen/px_40"
+                    android:onClick="@{()->callBack.onSubmitClick()}"
+                    android:text="@string/text_submit"
                     />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/px_4"
-                        android:text="*"
-                        android:textColor="@color/important_red_color"
-                        android:textSize="20sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_handle_pic"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
-                        android:textColor="@color/important_red_color"
-                        android:text="@string/text_pic_max"
-                        />
-                </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/point_ck_imglist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_20"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginRight="@dimen/px_20"
-                    android:layout_marginBottom="@dimen/px_30">
-
-                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginRight="@dimen/px_20"
-            android:layout_marginBottom="@dimen/px_5"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/px_30"
-                android:layout_marginBottom="@dimen/px_30"
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    >
-                    <ImageView
-                        android:layout_width="@dimen/px_110"
-                        android:layout_height="@dimen/px_110"
-                        android:layout_marginBottom="@dimen/px_20"
-                        android:src="@mipmap/icon_apply_postpone"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_apply_postpone"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    >
-                    <ImageView
-                        android:layout_width="@dimen/px_110"
-                        android:layout_height="@dimen/px_110"
-                        android:layout_marginBottom="@dimen/px_20"
-                        android:src="@mipmap/icon_force_close"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_apply_postpone"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        <Button
-            android:id="@+id/btn_submit"
-            style="@style/submit_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_88"
-            android:layout_marginTop="@dimen/px_40"
-            android:layout_marginBottom="@dimen/px_40"
-            android:text="@string/text_submit"
-            />
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
 </layout>

@@ -75,9 +75,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
     }
 
     class PatrolFragmentTabAdapter extends FragmentPagerAdapter{
-
         List<BaseViewModelFragment> mList;
-
         public PatrolFragmentTabAdapter(@NonNull FragmentManager fm, List<BaseViewModelFragment> mList) {
             super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.mList = mList;

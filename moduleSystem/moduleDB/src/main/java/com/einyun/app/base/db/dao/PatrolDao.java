@@ -1,6 +1,5 @@
 package com.einyun.app.base.db.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;

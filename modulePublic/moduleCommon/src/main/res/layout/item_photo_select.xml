@@ -24,19 +24,9 @@
             android:id="@+id/layout_add"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_edit_box">
+            android:background="@mipmap/icon_capture">
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:background="#ccc" />
 
-            <View
-                android:layout_width="24dp"
-                android:layout_height="2dp"
-                android:layout_gravity="center"
-                android:background="#ccc" />
 
         </FrameLayout>
 

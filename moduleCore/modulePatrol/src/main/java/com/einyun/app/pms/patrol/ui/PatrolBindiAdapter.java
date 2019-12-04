@@ -62,6 +62,7 @@ public class PatrolBindiAdapter {
         }
     }
 
+
     @BindingAdapter("status")
     public static void status(ImageView view,int value){
         if(value== OrderState.NEW.getState()){

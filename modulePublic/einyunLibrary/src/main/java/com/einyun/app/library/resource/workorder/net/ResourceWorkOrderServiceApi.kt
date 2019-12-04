@@ -2,11 +2,9 @@ package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
 import com.einyun.app.library.resource.workorder.net.request.PageRquest
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
-import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
-import com.einyun.app.library.resource.workorder.net.response.PatrolListResponse
-import com.einyun.app.library.resource.workorder.net.response.PlanListResponse
-import com.einyun.app.library.resource.workorder.net.response.WaitCountResponse
+import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -55,6 +53,12 @@ interface ResourceWorkOrderServiceApi{
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_PATROL_DONE)
     fun patrolDonePage(@Body request:PatrolPageRequest):Flowable<PatrolListResponse>
+
+    /**
+     * 巡查工单详情
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_PATROL_WAIT_DETAIL)
+    fun patrolDetial(@Body request: PatrolDetialRequest):Flowable<PatrolDetialResponse>
 
     /**
      * 2.31派工单-待办列表

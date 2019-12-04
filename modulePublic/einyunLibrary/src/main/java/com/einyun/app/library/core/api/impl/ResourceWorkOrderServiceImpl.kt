@@ -14,11 +14,9 @@ import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
-import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage
-import com.einyun.app.library.resource.workorder.model.WaitCount
+import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
@@ -39,6 +37,10 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
+        proxy.patrolDetial(request,callBack)
+    }
+
     override fun patrolClosedPage(
         request: PatrolPageRequest,
         callBack: CallBack<PatrolWorkOrderPage>

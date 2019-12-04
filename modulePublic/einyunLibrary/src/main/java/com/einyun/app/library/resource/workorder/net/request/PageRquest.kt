@@ -26,8 +26,6 @@ open class PageRquest {
     var userId:String?=null
     var page :Int=1
     var pageSize:Int=10
-    var period:String?=PERIOD_DAY
-    @SerializedName("F_OT_STATUS")
-    var status:Int=0
+    var period:String?=null
     var pageBean:PageBean?=null
 }

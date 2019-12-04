@@ -18,8 +18,8 @@ import com.einyun.app.base.db.converter.InspectionTypeConvert;
 import com.einyun.app.base.db.converter.PatrolContentConvert;
 import com.einyun.app.base.db.converter.StringTypeConvert;
 import com.einyun.app.base.db.converter.SubInspectionTypeConvert;
-import com.einyun.app.base.db.converter.WorkNoteTypeConvert;
 import com.einyun.app.base.db.dao.PatrolDao;
+import com.einyun.app.base.db.dao.PatrolInfoDao;
 import com.einyun.app.base.db.dao.SearchHistoryDao;
 import com.einyun.app.base.db.dao.UserDao;
 import com.einyun.app.base.db.entity.Patrol;
@@ -35,7 +35,7 @@ import com.einyun.app.base.db.entity.User;
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,
         InspectionTypeConvert.class, PatrolContentConvert.class,
-        SubInspectionTypeConvert.class, WorkNoteTypeConvert.class
+        SubInspectionTypeConvert.class
 })
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -47,6 +47,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract PatrolDao patrolDao();
+
+    public abstract PatrolInfoDao patrolInfoDao();
 
     public abstract SearchHistoryDao searchHistoryDao();
 
