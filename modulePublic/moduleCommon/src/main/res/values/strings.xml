@@ -49,4 +49,5 @@
         <item>已办</item>
     </string-array>
     <string name="search">搜索</string>
+    <string name="et_limit_input_hint">请输入您要咨询的内容,500字以内。</string>
 </resources>
