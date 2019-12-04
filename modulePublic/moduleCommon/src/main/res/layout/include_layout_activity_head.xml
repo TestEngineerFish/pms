@@ -29,7 +29,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/whiteTextColor"
+            android:textColor="@color/txt_black_order"
             android:textSize="18sp" />
 
         <ImageView
