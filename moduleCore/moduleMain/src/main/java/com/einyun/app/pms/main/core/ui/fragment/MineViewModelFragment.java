@@ -96,21 +96,24 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
             return;
         }
         new AlertDialog(getActivity()).builder().setTitle(getResources().getString(R.string.tip))
-                .setMsg(getResources().getString(R.string.ad_change_work_status))
+                .setMsg(getResources().getString(
+                        "0".equals(workStatus) ? R.string.ad_change_work_status : R.string.ad_change_working_status))
                 .setNegativeButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        viewModel.updateWorkState("0".equals(workStatus) ? "1" : "0").observe(getActivity(), workStatus -> {
-                            upWorkStatus(workStatus);
-                        });
+
                     }
                 })
                 .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        viewModel.updateWorkState("0".equals(workStatus) ? "1" : "0").observe(getActivity(), workStatus -> {
+                            viewModel.getWorkState().observe(getActivity(), status -> {
+                                upWorkStatus(status);
+                            });
+                        });
                     }
-                });
+                }).show();
     }
 
     @Override

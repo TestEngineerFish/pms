@@ -32,8 +32,13 @@ class UserCenterRepository() : UserCenterService {
         serviceApi?.getWorkStatus(userId)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState()) {
-                    callBack.call(response.value)
-                    liveData.postValue(response.value)
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    if("-1".equals(response.code)){
+                        callBack.call("1")
+                        liveData.postValue("1")
+                    }
                 }
             }, { error -> callBack.onFaild(error) })
         return liveData
