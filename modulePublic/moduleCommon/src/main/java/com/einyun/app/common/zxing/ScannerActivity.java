@@ -53,6 +53,7 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
             }
         } else {
         }
+        binding.setCallBack(this);
         binding.scannerView.setResultHandler(mResultHandler);
     }
 
@@ -83,6 +84,11 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
     private void toggleFlash() {
         mFlash = !mFlash;
         binding.scannerView.setFlash(mFlash);
+    }
+
+    @Override
+    protected boolean fullWindowFlag() {
+        return true;
     }
 
     @Override

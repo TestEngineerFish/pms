@@ -40,4 +40,7 @@
         <attr name="hint" format="string" />
         <attr name="maxNumber" format="integer" />
     </declare-styleable>
+    <declare-styleable name="SearchHistory">
+        <attr name="type" format="integer"/>
+    </declare-styleable>
 </resources>

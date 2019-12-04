@@ -30,4 +30,5 @@
     <string name="tv_feedback">意见反馈</string>
     <string name="tv_setting">设置</string>
     <string name="ad_change_work_status">是否设置为下班状态？</string>
+    <string name="ad_change_working_status">是否设置为上班状态？</string>
 </resources>

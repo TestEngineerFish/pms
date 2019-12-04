@@ -85,6 +85,11 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
         headBinding.ivRightOption.setOnClickListener(v->onOptionClick(v));
     }
 
+    @Override
+    protected int getColorPrimary() {
+        return getResources().getColor(R.color.white);
+    }
+
     /**
      * 返回按钮
      */

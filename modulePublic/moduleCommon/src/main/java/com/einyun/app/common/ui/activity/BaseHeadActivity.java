@@ -69,4 +69,9 @@ public class BaseHeadActivity extends BaseSkinActivity {
     protected void onOptionClick(View ivOption){
 
     }
+
+    @Override
+    protected int getColorPrimary() {
+        return getResources().getColor(R.color.white);
+    }
 }
