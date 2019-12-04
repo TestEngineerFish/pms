@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class WorkNoteTypeConvert {
     Gson gson = new Gson();
-
+/*
     @TypeConverter
     public List<WorkNode> stringToSomeObjectList(String data) {
         if (data == null) {
@@ -38,5 +38,5 @@ public class WorkNoteTypeConvert {
     @TypeConverter
     public String someObjectListToString(List<WorkNode> someObjects) {
         return gson.toJson(someObjects);
-    }
+    }*/
 }

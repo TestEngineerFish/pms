@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,7 @@ public class SendWorkOrderFragment  extends BaseViewModelFragment<FragmentSendWo
         return R.layout.fragment_send_work_order;
     }
 
+
     @Override
     protected void init() {
         super.init();
@@ -70,6 +72,13 @@ public class SendWorkOrderFragment  extends BaseViewModelFragment<FragmentSendWo
 
     @Override
     protected void setUpView() {
+        binding.sendOrderRef.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.sendOrderRef.setRefreshing(false);
+                viewModel.refresh();
+            }
+        });
 
     }
 
@@ -143,17 +152,17 @@ public class SendWorkOrderFragment  extends BaseViewModelFragment<FragmentSendWo
             return oldItem==newItem;
         }
     };
-//    //DiffUtil.ItemCallback,标准写法
-//    private DiffUtil.ItemCallback<DictDataModel> mDiffCallback = new DiffUtil.ItemCallback<DictDataModel>() {
-//
-//        @Override
-//        public boolean areItemsTheSame(@NonNull DictDataModel oldItem, @NonNull DictDataModel newItem) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean areContentsTheSame(@NonNull DictDataModel oldItem, @NonNull DictDataModel newItem) {
-//            return false;
-//        }
-//    };
+   /* //DiffUtil.ItemCallback,标准写法
+    private DiffUtil.ItemCallback<DictDataModel> mDiffCallback = new DiffUtil.ItemCallback<DictDataModel>() {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull DictDataModel oldItem, @NonNull DictDataModel newItem) {
+            return false;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull DictDataModel oldItem, @NonNull DictDataModel newItem) {
+            return false;
+        }
+    };*/
 }

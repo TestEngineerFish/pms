@@ -35,7 +35,7 @@ import com.einyun.app.base.db.entity.User;
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,
         InspectionTypeConvert.class, PatrolContentConvert.class,
-        SubInspectionTypeConvert.class, WorkNoteTypeConvert.class
+        SubInspectionTypeConvert.class
 })
 public abstract class AppDatabase extends RoomDatabase {
 

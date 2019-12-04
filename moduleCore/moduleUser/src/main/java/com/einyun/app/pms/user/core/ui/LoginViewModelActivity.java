@@ -203,7 +203,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                             .observe(LoginViewModelActivity.this,
                                     user -> {
                                         ARouter.getInstance()
-                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                .build(RouterUtils.ACTIVITY_SEND_ORDER)
                                                 .navigation();
                                         finish();
                                     });

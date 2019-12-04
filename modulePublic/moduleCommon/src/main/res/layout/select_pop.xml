@@ -6,25 +6,13 @@
     <data>
 
     </data>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.einyun.app.common.ui.widget.selectpopview.SMFilterView
-            android:id="@+id/select_smf"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-    <!--<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
-
+       <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <RelativeLayout
@@ -51,71 +39,126 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/select_type_fir"
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:textSize="16sp"
                     android:textColor="@color/blackTextColor"
                     android:layout_centerInParent="true"
-                    android:text="@string/tv_approval_type"
+                    android:text="@string/tv_tiao_line"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/gv_approval_type"
+                    android:id="@+id/select_rec_fir"
                     android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+           <LinearLayout
+               android:id="@+id/select_ln_sec"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+            <TextView
+                android:id="@+id/select_type_sec"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/blackTextColor"
+                android:layout_centerInParent="true"
+                android:text="@string/tv_tiao_line"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/select_rec_sec"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+           </LinearLayout>
+            <LinearLayout
+                android:id="@+id/select_ln_thir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <View
+                android:layout_margin="15dp"
+                android:background="@drawable/iv_pop_line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp" />
+
+                <TextView
+                    android:id="@+id/select_type_thir"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/blackTextColor"
+                    android:layout_centerInParent="true"
+                    android:text="@string/tv_order_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp" />
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/select_rec_thir"
+                    android:numColumns="3"
                     android:verticalSpacing="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
+           <LinearLayout
+               android:id="@+id/select_ln_four"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+                <View
+                    android:layout_margin="15dp"
+                    android:background="@drawable/iv_pop_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/select_rec_four"
+                    android:numColumns="3"
+                    android:verticalSpacing="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+           </LinearLayout>
             <LinearLayout
+                android:id="@+id/select_ln_fif"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <View
                     android:layout_margin="15dp"
                     android:background="@drawable/iv_pop_line"
                     android:layout_width="wrap_content"
                     android:layout_height="1dp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/gv_approval_child_type"
-                    android:numColumns="3"
-                    android:verticalSpacing="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="25dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
                 <TextView
+                    android:id="@+id/select_type_fif"
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
                     android:textSize="16sp"
                     android:textColor="@color/blackTextColor"
                     android:layout_centerInParent="true"
-                    android:text="@string/tv_approval_status"
+                    android:text="@string/tv_order_type"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp" />
 
+
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/gv_approval_status"
+                    android:id="@+id/select_rec_fif"
                     android:numColumns="3"
                     android:verticalSpacing="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -127,10 +170,10 @@
 
                     <TextView
                         android:background="@drawable/shape_little_blue"
-                        android:text="cancle"
+                        android:text="重置"
                         android:gravity="center"
                         android:textColor="@color/blueTextColor"
-                        android:id="@+id/cancle"
+                        android:id="@+id/canclel"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
@@ -146,5 +189,5 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>-->
+       </ScrollView>
 </layout>

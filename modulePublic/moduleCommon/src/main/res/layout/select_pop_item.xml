@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
         <data>
                 <variable
-                    name="select"
+                    name="selects"
                     type="com.einyun.app.common.model.SelectModel" />
         </data>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="@dimen/px_100">
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:background="@drawable/shape_line"
                     android:id="@+id/tv_content"
-                    android:text="修改计划"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/shape_line"
+                    android:text="@{selects.content}"
                     android:gravity="center"
-                    android:layout_width="108dp"
-                    android:layout_height="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_40"
+                    android:layout_marginRight="@dimen/px_40"
+                    android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/font_size14" />
 
-        </LinearLayout>
+        </RelativeLayout>
 </layout>
