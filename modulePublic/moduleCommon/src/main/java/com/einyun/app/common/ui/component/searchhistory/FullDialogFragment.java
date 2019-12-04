@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -88,11 +89,18 @@ public class FullDialogFragment extends DialogFragment {
         });
         adapter = new ArrayAdapter<String>(getContext(), R.layout.item_search_history, histories);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.search(histories.get(position));
+            }
+        });
         etSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         repository.loadAllSearchHistory(type).observe(getActivity(), strings -> {
             if (strings == null) {
                 strings = new ArrayList<>();
             }
+            histories = strings;
             adapter.clear();
             adapter.addAll(strings);
         });
