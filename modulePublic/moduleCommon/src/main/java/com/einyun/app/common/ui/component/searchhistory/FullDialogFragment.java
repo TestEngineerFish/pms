@@ -93,6 +93,7 @@ public class FullDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listener.search(histories.get(position));
+                dismiss();
             }
         });
         etSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
