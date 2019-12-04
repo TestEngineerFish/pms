@@ -23,7 +23,7 @@
             android:layout_width="@dimen/px_40"
             android:layout_height="@dimen/px_40"
             android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginTop="@dimen/px_20"
+            android:layout_marginTop="@dimen/px_60"
             android:src="@drawable/back_white"
             android:onClick="@{()->callBack.finish()}"/>
 
