@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
     private EditText editText;
 
     private TextView textView;
-
+    private String hint;
     private static int MAX_COUNT = 500;
 
     public LimitInput(Context context) {
@@ -42,17 +43,17 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
         View view = inflate(context, R.layout.text_input_layout, null);
         addView(view);
 
-        editText = (EditText) view.findViewById(R.id.ed);
-        textView = (TextView) view.findViewById(R.id.txt);
+        editText = (EditText) view.findViewById(R.id.et_limit_input);
+        textView = (TextView) view.findViewById(R.id.tv_limit_input);
         editText.addTextChangedListener(this);
 
-        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.TextInputLayout);
-        String s = array.getString(R.styleable.LimitInput_hint);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.LimitInput);
+        hint = array.getString(R.styleable.LimitInput_hintText);
         MAX_COUNT = array.getInteger(R.styleable.LimitInput_maxNumber, 500);
         array.recycle();
         textView.setText("0/" + MAX_COUNT);
-        if (StringUtil.isNullStr(s)) {
-            editText.setHint(s);
+        if (StringUtil.isNullStr(hint)) {
+            editText.setHint(hint);
         }
     }
 
