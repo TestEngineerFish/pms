@@ -16,7 +16,7 @@ import java.util.List;
 @Dao
 public interface SearchHistoryDao {
     @Query("SELECT search_content FROM search_history WHERE type==:type ORDER BY update_time DESC LIMIT 10")
-    LiveData<List<String>> loadAllSearchHistory(int type);
+    List<String> loadAllSearchHistory(int type);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertSearchHistory(SearchHistory... searchHistories);

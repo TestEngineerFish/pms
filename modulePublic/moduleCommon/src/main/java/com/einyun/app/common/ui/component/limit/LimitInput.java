@@ -49,6 +49,7 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.TextInputLayout);
         String s = array.getString(R.styleable.LimitInput_hint);
         MAX_COUNT = array.getInteger(R.styleable.LimitInput_maxNumber, 500);
+        array.recycle();
         textView.setText("0/" + MAX_COUNT);
         if (StringUtil.isNullStr(s)) {
             editText.setHint(s);
