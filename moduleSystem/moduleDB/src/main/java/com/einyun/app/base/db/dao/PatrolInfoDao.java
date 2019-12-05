@@ -31,5 +31,5 @@ public interface PatrolInfoDao {
     void syncLocal(String... taskIds);
 
     @Query("SELECT * FROM PATROL_LOCAL WHERE taskId=:taskId")
-    LiveData<PatrolLocal> loadByTaskId(String taskId);
+    PatrolLocal loadByTaskId(String taskId);
 }

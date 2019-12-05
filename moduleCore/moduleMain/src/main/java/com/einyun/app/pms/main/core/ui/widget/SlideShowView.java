@@ -114,7 +114,9 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "cjgd":
                             //创建工单
-//                            item.setOnClickListener( v -> readyGo(CreateSendOrderActivity.class));
+                            item.setOnClickListener( v -> ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                                    .navigation());
                             break;
                         case "sp":
                             //审批

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.db.bean.WorkNode;
+import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
@@ -130,7 +131,19 @@ public class PatrolViewModel extends BaseViewModel {
      * @return
      */
     public LiveData<PatrolLocal> loadLocalUserData(String taskId) {
-        return repo.loadLocalUserData(taskId);
+        MutableLiveData<PatrolLocal> liveData=new MutableLiveData<>();
+         repo.loadLocalUserData(taskId, new CallBack<PatrolLocal>() {
+             @Override
+             public void call(PatrolLocal data) {
+                liveData.postValue(data);
+             }
+
+             @Override
+             public void onFaild(Throwable throwable) {
+
+             }
+         });
+        return liveData;
     }
 
     /**

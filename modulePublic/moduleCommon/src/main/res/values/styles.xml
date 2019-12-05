@@ -102,4 +102,42 @@
         <item name="android:windowBackground">@color/activity_bg_color</item>
         <item name="android:windowIsFloating">false</item>
     </style>
+    <style name="ll_create_order">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px_100</item>
+        <item name="android:layout_marginLeft">@dimen/px_30</item>
+        <item name="android:layout_marginRight">@dimen/px_30</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="tv_create_order_red_star">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">*</item>
+        <item name="android:textColor">@color/redTextColor</item>
+        <item name="android:textSize">@dimen/font_size20</item>
+        <item name="android:layout_marginRight">@dimen/px_6</item>
+    </style>
+    <style name="tv_create_order_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:textSize">@dimen/font_size16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="tv_create_order_right_arrow">
+        <item name="android:layout_width">@dimen/px_26</item>
+        <item name="android:layout_height">@dimen/px_26</item>
+        <item name="android:layout_marginLeft">@dimen/px_10</item>
+        <item name="android:src">@mipmap/icon_arrow_right</item>
+    </style>
+    <style name="tv_create_order_select">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/please_select</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+        <item name="android:textSize">@dimen/font_size15</item>
+    </style>
 </resources>

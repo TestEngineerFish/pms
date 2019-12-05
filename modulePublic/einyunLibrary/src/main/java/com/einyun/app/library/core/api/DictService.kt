@@ -1,5 +1,9 @@
 package com.einyun.app.library.core.api
 
+import androidx.lifecycle.LiveData
+import com.einyun.app.base.event.CallBack
+import com.einyun.app.library.portal.dictdata.model.DictDataModel
+
 /**
  *
  * @ProjectName:    android-framework
@@ -14,4 +18,6 @@ package com.einyun.app.library.core.api
  * @Version:        1.0
  */
 interface DictService :EinyunService{
+    //条线等信息
+    fun getByTypeKey(typeKey: String, callBack: CallBack<List<DictDataModel>>?): LiveData<List<DictDataModel>>
 }

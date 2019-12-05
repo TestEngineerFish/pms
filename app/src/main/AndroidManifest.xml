@@ -88,13 +88,14 @@
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
-        <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
-        <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
 
         <!--巡查工单Start-->
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolListActivity"/>
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolHandleActivity"/>
         <!--巡查工单End-->
+        <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
+        <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
+        <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

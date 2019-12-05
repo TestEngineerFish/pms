@@ -49,5 +49,16 @@
     <string name="et_limit_input_hint">请输入您要咨询的内容,500字以内。</string>
     <string name="tv_tiao_line">条线</string>
     <string name="tv_order_type">工单类型</string>
+    <string name="tv_order_type_one">工单类型(一级)</string>
+    <string name="tv_order_type_two">工单类型(二级)</string>
+    <string name="tv_order_type_three">工单类型(三级)</string>
     <string name="tv_if_late">是否超期</string>
+    <string name="please_select">请选择</string>
+    <string name="resource_type">资源分类</string>
+    <string name="resource">资源</string>
+    <string name="dispose_person">处理人</string>
+    <string name="overtime_rank">超时级别</string>
+    <string name="question_desc">问题描述</string>
+    <string name="question_location">问题位置</string>
+    <string name="picture">图片</string>
 </resources>

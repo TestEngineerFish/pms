@@ -100,10 +100,12 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
                         //选中不通过
                         reject(binding, model);
 
-                        if(model.result.equals(WorkNode.RESULT_REJECT)){
-                            onReject(binding);
-                        }else if(model.result.equals(WorkNode.RESULT_PASS)){
-                            onAgree(binding);
+                        if(!TextUtils.isEmpty(model.result)){
+                            if(model.result.equals(WorkNode.RESULT_REJECT)){
+                                onReject(binding);
+                            }else if(model.result.equals(WorkNode.RESULT_PASS)){
+                                onAgree(binding);
+                            }
                         }
                     }
                 }

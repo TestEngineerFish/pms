@@ -1,6 +1,11 @@
 package com.einyun.app.library.core.api.impl
 
+import androidx.lifecycle.LiveData
+import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.DictService
+import com.einyun.app.library.core.api.proxy.DashBoardServiceImplProxy
+import com.einyun.app.library.core.api.proxy.DictServiceImplProxy
+import com.einyun.app.library.portal.dictdata.model.DictDataModel
 
 /**
  * @ProjectName: android-framework
@@ -15,6 +20,13 @@ import com.einyun.app.library.core.api.DictService
  * @Version: 1.0
  */
 class DictServiceImpl :DictService{
+    override fun getByTypeKey(
+        typeKey: String,
+        callBack: CallBack<List<DictDataModel>>?
+    ): LiveData<List<DictDataModel>> {
+        return proxy.getByTypeKey(typeKey, callBack)
+    }
+    var proxy: DictServiceImplProxy = DictServiceImplProxy()
     fun getName(): String {
         return this.javaClass.simpleName
     }
