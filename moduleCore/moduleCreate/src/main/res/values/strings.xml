@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">moduleCreate</string>
+    <string name="create_send_order_title">派工单</string>
+
+</resources>

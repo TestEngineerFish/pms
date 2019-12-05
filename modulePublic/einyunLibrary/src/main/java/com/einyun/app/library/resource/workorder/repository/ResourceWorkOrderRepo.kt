@@ -3,6 +3,7 @@ package com.einyun.app.library.resource.workorder.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.base.paging.bean.Query
@@ -30,6 +31,23 @@ import com.einyun.app.library.resource.workorder.net.response.PatrolDetialRespon
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun createSendOrder(
+        request: CreateSendOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        val liveData = MutableLiveData<Boolean>()
+        serviceApi?.createSendOrder(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({response->
+                if(response.isState){
+                    callBack.call(response.isState)
+                    liveData.postValue(response.isState)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData;
+    }
+
     /**
      * 获取巡查待办列表
      */

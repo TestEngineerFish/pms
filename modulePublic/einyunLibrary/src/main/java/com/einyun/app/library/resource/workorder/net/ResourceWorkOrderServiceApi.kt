@@ -1,9 +1,7 @@
 package com.einyun.app.library.resource.workorder.net
 
-import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
-import com.einyun.app.library.resource.workorder.net.request.PageRquest
-import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
-import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
+import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
 import retrofit2.http.Body
@@ -24,6 +22,10 @@ import retrofit2.http.POST
  * @Version: 1.0
  */
 interface ResourceWorkOrderServiceApi{
+
+    @GET(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_NEW)
+    fun createSendOrder(@Body request: CreateSendOrderRequest):Flowable<BaseResponse<String>>
+
     /**
      *  2.6待办统计-计划、巡查、派工单 GET
      */

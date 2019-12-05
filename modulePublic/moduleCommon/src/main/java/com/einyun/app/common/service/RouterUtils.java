@@ -45,6 +45,10 @@ public class RouterUtils {
     public static final String ACTIVITY_APPROVAL="/approval/ApprovalActivity";
     public static final String ACTIVITY_APPROVAL_DETAIL="/approval/ApprovalDetailActivity";
 
+    /**********************创建工单****************************/
+    public static final String ACTIVITY_CREATE_ORDER = "/create";
+    public static final String ACTIVITY_CREATE_SEND_ORDER = "/create/sendOrder";
+
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;

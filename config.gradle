@@ -265,6 +265,9 @@ project.module_extra = ":moduleCore:moduleExtra"
 project.point_check= ":moduleCore:pointCheck"
 project.module_sendorder= ":moduleCore:moduleSendOrder"
 project.module_approval= ":moduleCore:moduleApproval"
+project.module_create= ":moduleCore:moduleCreate"
+project.module_patrol =":moduleCore:modulePatrol"
+project.module_plan= ":moduleCore:modulePlan"
 deps.project = project
 
 def server =[:]

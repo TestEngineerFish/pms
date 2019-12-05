@@ -15,6 +15,7 @@ import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.resource.workorder.model.*
+import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
@@ -37,6 +38,13 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun createSendOrder(
+        request: CreateSendOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+       return proxy.createSendOrder(request,callBack)
+    }
+
     override fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
         proxy.patrolDetial(request,callBack)
     }
