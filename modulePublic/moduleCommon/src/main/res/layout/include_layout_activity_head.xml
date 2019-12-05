@@ -16,7 +16,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:paddingLeft="15dp"
-            app:srcCompat="@mipmap/back_black"
+            app:srcCompat="@mipmap/icon_back_blue"
             android:adjustViewBounds="true"
             />
 

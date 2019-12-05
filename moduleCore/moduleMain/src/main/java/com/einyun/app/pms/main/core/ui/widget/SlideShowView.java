@@ -106,7 +106,7 @@ public class SlideShowView extends FrameLayout {
                     switch (dataList.get(i)) {
                         case "dj":
                             //点检
-//                            item.setOnClickListener( v -> readyGo(PointCheckListActivity.class));
+                            item.setOnClickListener( v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_POINT_CHECK_ACTIVITY).navigation());
                             break;
                         case "gdlb":
                             //工单列表

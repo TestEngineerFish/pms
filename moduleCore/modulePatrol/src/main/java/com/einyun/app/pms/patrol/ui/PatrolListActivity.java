@@ -7,8 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationView;
@@ -18,6 +22,7 @@ import com.einyun.app.pms.patrol.databinding.ActivityPatrolListBinding;
 import com.einyun.app.pms.patrol.ui.fragment.PatrolClosedListFragment;
 import com.einyun.app.pms.patrol.ui.fragment.PatrolPendingFragment;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
+import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +39,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
 
     @Override
     protected PatrolListViewModel initViewModel() {
-        return null;
+        return new ViewModelProvider(this,new ViewModelFactory()).get(PatrolListViewModel.class);
     }
 
     @Override

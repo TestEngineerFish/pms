@@ -3,7 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion deps.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.einyun.app.pms" //property management system
+        applicationId "com.einyun.app.pms"
+        //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
         versionCode 1
@@ -137,8 +138,8 @@ dependencies {
     implementation project(deps.project.module_repairs)
     implementation project(deps.project.point_check)
     implementation project(deps.project.module_sendorder)
-//    implementationon project(deps.project.module_patrol)
-    implementation project(deps.project.module_approval)
+    implementation project(deps.project.module_patrol)
+//    implementation project(deps.project.module_approval)
 //    implementation project(deps.project.module_plan)
 //    implementation project(deps.project.module_complain)
 //    implementation project(deps.project.module_extra)

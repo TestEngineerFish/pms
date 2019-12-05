@@ -67,7 +67,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.title_point_check_list);
         binding.headBar.ivRightOption.setVisibility(View.VISIBLE);
-        binding.headBar.ivRightOption.setImageResource(R.mipmap.icon_add);
+        binding.headBar.ivRightOption.setImageResource(R.mipmap.icon_add_blue);
         binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);

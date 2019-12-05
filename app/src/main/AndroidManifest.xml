@@ -90,6 +90,11 @@
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
         <activity android:name=".ui.ApprovalViewModuleActivity"/>
         <activity android:name=".ui.ApprovalDetailViewModuleActivity"/>
+
+        <!--巡查工单Start-->
+        <activity android:name="com.einyun.app.pms.patrol.ui.PatrolListActivity"/>
+        <activity android:name="com.einyun.app.pms.patrol.ui.PatrolHandleActivity"/>
+        <!--巡查工单End-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
