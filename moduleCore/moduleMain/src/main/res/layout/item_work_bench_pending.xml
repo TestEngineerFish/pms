@@ -226,7 +226,7 @@
         <com.einyun.app.pms.main.core.ui.widget.SlideShowView
             android:id="@+id/ssv_common_fun"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_230" />
+            android:layout_height="@dimen/px_280" />
     </LinearLayout>
 
 </layout>

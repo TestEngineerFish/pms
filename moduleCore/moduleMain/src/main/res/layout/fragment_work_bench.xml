@@ -21,47 +21,39 @@
             name="numAdapter"
             type="android.widget.BaseAdapter" />
     </data>
-
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
+        <com.einyun.app.common.ui.component.AbScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.einyun.app.common.ui.component.AbScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/home"
-                    style="@style/gallery_layout_style">
+            <LinearLayout
+                android:id="@+id/home"
+                style="@style/gallery_layout_style">
 
 
-                    <!-- 顶部 -->
-                    <include
-                        android:id="@+id/item_work_bench_first"
-                        layout="@layout/item_work_bench_pending"
-                        app:callBack="@{callBack}" />
+                <!-- 顶部 -->
+                <include
+                    android:id="@+id/item_work_bench_first"
+                    layout="@layout/item_work_bench_pending"
+                    app:callBack="@{callBack}" />
 
-                    <!-- 工单处理情况总览 -->
-                    <include
-                        android:id="@+id/item_work_bench_second"
-                        layout="@layout/item_work_bench_pending_pandect"
-                        app:callBack="@{callBack}" />
+                <!-- 工单处理情况总览 -->
+                <include
+                    android:id="@+id/item_work_bench_second"
+                    layout="@layout/item_work_bench_pending_pandect"
+                    app:callBack="@{callBack}" />
 
-                    <!-- 运营收缴率 -->
-                    <include
-                        android:id="@+id/item_work_bench_third"
-                        layout="@layout/item_operating_capture_rate"
-                        app:callBack="@{callBack}" />
+                <!-- 运营收缴率 -->
+                <include
+                    android:id="@+id/item_work_bench_third"
+                    layout="@layout/item_operating_capture_rate"
+                    app:callBack="@{callBack}" />
 
-                </LinearLayout>
-            </com.einyun.app.common.ui.component.AbScrollView>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
-
+            </LinearLayout>
+        </com.einyun.app.common.ui.component.AbScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

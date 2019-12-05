@@ -10,7 +10,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/px_10" />
+            android:paddingBottom="@dimen/px_60" />
 
         <LinearLayout
             android:id="@+id/linearlayout"
@@ -19,6 +19,7 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal|bottom"
             android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/px_40"
             android:padding="@dimen/px_10">
 
             <ImageView
