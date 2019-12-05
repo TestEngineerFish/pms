@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.einyun.app.base.db.entity.Patrol;
+import com.einyun.app.base.db.entity.PatrolLocal;
 
 import java.util.List;
 
@@ -27,4 +28,13 @@ public interface PatrolDao {
 
     @Query("update patrol_digests set isCached=1 where taskId=:taskId")
     void updateCachedState(String taskId);
+
+    @Query("update patrol_digests set isCached=1 where taskId in (select taskId from patrols_info)")
+    void updateCachedStates();
+
+    @Query("delete from patrol_digests where taskId not in(:taskIds)")
+    void sync(String... taskIds);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertLocal(PatrolLocal local);
 }

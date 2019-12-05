@@ -23,7 +23,11 @@ public class BasePageListViewModel<T> extends BaseViewModel {
 
     public void refresh(){
         if(pageList !=null){
-            pageList.getValue().getDataSource().invalidate();
+            if(pageList.getValue()!=null){
+                if(pageList.getValue().getDataSource()!=null){
+                    pageList.getValue().getDataSource().invalidate();
+                }
+            }
         }
     }
 

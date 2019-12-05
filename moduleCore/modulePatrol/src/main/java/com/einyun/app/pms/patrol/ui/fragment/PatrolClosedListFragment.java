@@ -49,16 +49,18 @@ public class PatrolClosedListFragment extends PatrolPendingFragment{
         }
     }
 
-    protected void createPageRequest(){
+    protected PatrolPageRequest createPageRequest(){
         if(pageRequest==null){
             pageRequest=new PatrolPageRequest();
             pageRequest.setUserId(userModuleService.getUserId());
-            pageRequest.setPeriod(period);
-            pageRequest.setGridId(gridId);
-            pageRequest.setUnitId(unitId);
-            pageRequest.setBuildingId(buildId);
-            pageRequest.setTimeout(status);
-            pageRequest.setF_massif_id(divideId);
+
         }
+        pageRequest.setPeriod(period);
+        pageRequest.setGridId(gridId);
+        pageRequest.setUnitId(unitId);
+        pageRequest.setBuildingId(buildId);
+        pageRequest.setTimeout(status);
+        pageRequest.setF_massif_id(divideId);
+        return pageRequest;
     }
 }

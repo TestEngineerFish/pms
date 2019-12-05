@@ -18,6 +18,7 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.pms.patrol.databinding.FragmentPatrolPendingBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
@@ -56,7 +57,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.swiperefresh.setOnRefreshListener(() -> {
             binding.swiperefresh.setRefreshing(false);
             adapter.submitList(null);
-            viewModel.refresh();
+            viewModel.refresh(createPageRequest());
         });
     }
 
@@ -64,8 +65,9 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     protected void setUpData() {
         createPageRequest();
         initAdapter();
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
         binding.patrolList.setAdapter(adapter);
-
+        loadData();
     }
 
     protected void initAdapter() {
@@ -89,25 +91,26 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     public void onResume() {
         super.onResume();
-        loadData();
+        viewModel.refresh(createPageRequest());
     }
 
     protected void loadData() {
         viewModel.loadPendingData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
     }
 
-    protected void createPageRequest(){
+    protected PatrolPageRequest createPageRequest(){
         if(pageRequest==null){
             pageRequest=new PatrolPageRequest();
             pageRequest.setPageSize(PageBean.MAX_PAGE_SIZE);
             pageRequest.setUserId(userModuleService.getUserId());
-            pageRequest.setPeriod(period);
-            pageRequest.setGridId(gridId);
-            pageRequest.setUnitId(unitId);
-            pageRequest.setBuildingId(buildId);
-            pageRequest.setTimeout(status);
-            pageRequest.setF_massif_id(divideId);
         }
+        pageRequest.setPeriod(period);
+        pageRequest.setGridId(gridId);
+        pageRequest.setUnitId(unitId);
+        pageRequest.setBuildingId(buildId);
+        pageRequest.setTimeout(status);
+        pageRequest.setF_massif_id(divideId);
+        return pageRequest;
     }
 
     //DiffUtil.ItemCallback,标准写法

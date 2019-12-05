@@ -26,12 +26,12 @@ public class PointCheckListViewModel extends BasePageListViewModel<CheckPointMod
      * @return LiveData
      */
     public LiveData<PagedList<CheckPointModel>> loadPadingData(){
-        if(pageList ==null){
+//        if(pageList ==null){
             pageList = new LivePagedListBuilder(new DataSourceFactory(), config)
 //                .setBoundaryCallback(null)
 //                .setFetchExecutor(null)
                     .build();
-        }
+//        }
         return pageList;
     }
 

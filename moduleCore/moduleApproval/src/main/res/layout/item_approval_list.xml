@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="approvallist"
+            type="com.einyun.app.pms.approval.module.ApprovalItemmodule" />
+    </data>
+    <LinearLayout
+        android:background="@drawable/shape_white_bg"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+        <TextView
+            android:id="@+id/tv_approvaler_name"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@color/blackTextColor"
+            android:text="@string/tv_applicat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_approval_state"
+            android:gravity="center"
+            android:text="@string/tv_approval_wait"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/iv_wait_approval"
+            android:layout_width="68dp"
+            android:textSize="13sp"
+            android:layout_height="24dp"/>
+        </RelativeLayout>
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+
+                android:text="@string/tv_approval_num"
+                style="@style/style_text_approval_left" />
+            <TextView
+                android:id="@+id/tv_approval_num"
+                android:text="CJJH20191113120002"
+                style="@style/style_text_approval_right" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:text="@string/tv_approval_type"
+                style="@style/style_text_approval_left"
+                />
+            <TextView
+                android:id="@+id/tv_approval_type"
+                style="@style/style_text_approval_right"
+                android:text="创建计划-创建巡查计划"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:text="@string/tv_installment"
+                style="@style/style_text_approval_left"
+                />
+            <TextView
+                android:id="@+id/tv_intallment"
+                style="@style/style_text_approval_right"
+                android:text="长城二期"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                style="@style/style_text_approval_left"
+                android:text="@string/tv_apply_time"
+
+                />
+            <TextView
+                android:id="@+id/tv_apply_time"
+                style="@style/style_text_approval_right"
+                android:text="2019-11-18 15:34:55"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_approval_time"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                style="@style/style_text_approval_left"
+                android:text="@string/tv_approval_time"
+
+                />
+            <TextView
+                android:id="@+id/tv_approval_time"
+                style="@style/style_text_approval_right"
+                android:text="2019-11-18 15:34:55"
+
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
+

@@ -18,24 +18,26 @@ import com.einyun.app.base.db.converter.InspectionTypeConvert;
 import com.einyun.app.base.db.converter.PatrolContentConvert;
 import com.einyun.app.base.db.converter.StringTypeConvert;
 import com.einyun.app.base.db.converter.SubInspectionTypeConvert;
+import com.einyun.app.base.db.converter.WorkNoteTypeConvert;
 import com.einyun.app.base.db.dao.PatrolDao;
 import com.einyun.app.base.db.dao.PatrolInfoDao;
 import com.einyun.app.base.db.dao.SearchHistoryDao;
 import com.einyun.app.base.db.dao.UserDao;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
+import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.db.entity.SearchHistory;
 import com.einyun.app.base.db.entity.User;
 
 
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
-        PatrolInfo.class
+        PatrolInfo.class, PatrolLocal.class
 }, version = 3, exportSchema = false)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,
         InspectionTypeConvert.class, PatrolContentConvert.class,
-        SubInspectionTypeConvert.class
+        SubInspectionTypeConvert.class, WorkNoteTypeConvert.class
 })
 public abstract class AppDatabase extends RoomDatabase {
 

@@ -25,6 +25,7 @@ public class Patrol{
     private long createTime;
     private long F_creation_date;
     private int F_plan_work_order_state;
+    @NonNull
     private String userId;
     @PrimaryKey
     @NonNull
@@ -241,11 +242,12 @@ public class Patrol{
         isWarn = warn;
     }
 
+    @NonNull
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(@NonNull String userId) {
         this.userId = userId;
     }
 }

@@ -1,19 +1,38 @@
 package com.einyun.app.pms.patrol.repository;
 
+import androidx.lifecycle.LiveData;
+
 import com.einyun.app.base.db.AppDatabase;
 import com.einyun.app.base.db.dao.PatrolDao;
 import com.einyun.app.base.db.dao.PatrolInfoDao;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
+import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.CommonApplication;
 
 public class PatrolRepo {
     PatrolDao dao;
     PatrolInfoDao infoDao;
+    AppDatabase db;
 
     public PatrolRepo(){
-        dao= AppDatabase.getInstance(CommonApplication.getInstance()).patrolDao();
-        infoDao=AppDatabase.getInstance(CommonApplication.getInstance()).patrolInfoDao();
+        db=AppDatabase.getInstance(CommonApplication.getInstance());
+        dao= db.patrolDao();
+        infoDao=db.patrolInfoDao();
+    }
+
+    /**
+     * 获取用户本地输入数据
+     * @param taskId
+     * @return
+     */
+    public LiveData<PatrolLocal> loadLocalUserData(String taskId){
+       return infoDao.loadByTaskId(taskId);
+    }
+
+    public void saveLocalData(PatrolLocal local){
+        db.runInTransaction(() -> dao.insertLocal(local));
     }
 
     /**

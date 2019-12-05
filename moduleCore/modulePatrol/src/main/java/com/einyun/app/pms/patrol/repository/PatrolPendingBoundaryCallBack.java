@@ -33,19 +33,19 @@ public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Pa
     @Override
     public void onZeroItemsLoaded() {
         super.onZeroItemsLoaded();
-        service.patrolWaitPage(request, new CallBack<PatrolWorkOrderPage>() {
-            @Override
-            public void call(PatrolWorkOrderPage data) {
-                PatrolListTypeConvert convert=new PatrolListTypeConvert();
-                List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
-                patrolRepo.initData(patrols);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-
-            }
-        });
+//        service.patrolWaitPage(request, new CallBack<PatrolWorkOrderPage>() {
+//            @Override
+//            public void call(PatrolWorkOrderPage data) {
+//                PatrolListTypeConvert convert=new PatrolListTypeConvert();
+//                List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
+//                patrolRepo.initData(patrols);
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//
+//            }
+//        });
     }
 
     @Override

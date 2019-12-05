@@ -57,6 +57,10 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
         }
     }
 
+    public void addTextWatcher(TextWatcher watcher){
+        editText.addTextChangedListener(watcher);
+    }
+
     /**
      * 获取输入字符
      *
@@ -64,6 +68,10 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
      */
     public String getString() {
         return editText.getText().toString();
+    }
+
+    public void setText(String text){
+        editText.setText(text);
     }
 
     @Override

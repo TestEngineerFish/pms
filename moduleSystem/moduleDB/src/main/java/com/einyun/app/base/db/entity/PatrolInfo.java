@@ -28,6 +28,7 @@ public class PatrolInfo {
     private List<PatrolButton> buttons;
     @TypeConverters(DelayExtensionApplicationBeanConvert.class)
     private DelayExtensionApplication delayExtensionApplication;
+    @NonNull
     private String userId;
 
     @NonNull
@@ -71,11 +72,12 @@ public class PatrolInfo {
         this.delayExtensionApplication = delayExtensionApplication;
     }
 
+    @NonNull
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(@NonNull String userId) {
         this.userId = userId;
     }
 }

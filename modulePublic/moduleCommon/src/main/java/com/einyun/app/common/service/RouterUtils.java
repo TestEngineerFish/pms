@@ -33,7 +33,7 @@ public class RouterUtils {
     public static final String ACTIVITY_POINT_CHECK_CREATE="/pointCheck/PointCheckCreatActivity";
 
     /**********************巡查工单*************************/
-    public static final String ACTIVITY_PATROL_LIST="/patrol/PatrolListActivity";
+    public static final String ACTIVITY_PATROL_LIST ="/patrol/PatrolListActivity";
     public static final String ACTIVITY_PATROL_HANDLE="/patrol/PatrolHandleActivity";
 
     /**********************派工单****************************/

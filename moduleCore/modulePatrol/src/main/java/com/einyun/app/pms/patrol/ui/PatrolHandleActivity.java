@@ -1,44 +1,57 @@
 package com.einyun.app.pms.patrol.ui;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
+import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.GetUploadJson;
+import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.utils.Glide4Engine;
-import com.einyun.app.pms.patrol.BR;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolHandleBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
-import com.einyun.app.pms.patrol.model.WorkNode;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.google.gson.Gson;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_PATROL_HANDLE)
 public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatrolHandleBinding, PatrolViewModel> {
     RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode> nodesAdapter;
+    @Autowired
+    IUserModuleService userModuleService;
     PhotoSelectAdapter photoSelectAdapter;
+    PatrolLocal patrolLocal;
     private final int MAX_PHOTO_SIZE = 4;
 
     @Autowired(name = RouteKey.KEY_TASK_ID)
@@ -86,28 +99,44 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
                         agree(binding, model);
                         //选中不通过
                         reject(binding, model);
+
+                        if(model.result.equals(WorkNode.RESULT_REJECT)){
+                            onReject(binding);
+                        }else if(model.result.equals(WorkNode.RESULT_PASS)){
+                            onAgree(binding);
+                        }
                     }
+                }
+
+                protected void onReject(ItemPatrolWorkNodeBinding binding){
+                    binding.btnAgree.setBackgroundResource(R.drawable.shape_frame_corners_gray);
+                    binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.normal_main_text_icon_color));
+                    binding.btnReject.setBackgroundResource(R.drawable.corners_red_large);
+                    binding.btnReject.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
+                }
+
+                protected void onAgree(ItemPatrolWorkNodeBinding binding){
+                    binding.btnAgree.setBackgroundResource(R.drawable.corners_green_large);
+                    binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
+                    binding.btnReject.setBackgroundResource(R.drawable.shape_frame_corners_gray);
+                    binding.btnReject.setTextColor(binding.btnAgree.getResources().getColor(R.color.normal_main_text_icon_color));
                 }
 
                 //不通过
                 protected void reject(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnReject.setOnClickListener(v -> {
-                        binding.btnAgree.setBackgroundResource(R.drawable.shape_frame_corners_gray);
-                        binding.btnAgree.setTextColor(v.getResources().getColor(R.color.normal_main_text_icon_color));
-                        binding.btnReject.setBackgroundResource(R.drawable.corners_red_large);
-                        binding.btnReject.setTextColor(v.getResources().getColor(R.color.white));
+                       onReject(binding);
                         model.setResult(WorkNode.RESULT_REJECT);
+                        saveLocalUserData();
                     });
                 }
 
                 //通过
                 protected void agree(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnAgree.setOnClickListener((View v) -> {
-                        binding.btnAgree.setBackgroundResource(R.drawable.corners_green_large);
-                        binding.btnAgree.setTextColor(v.getResources().getColor(R.color.white));
-                        binding.btnReject.setBackgroundResource(R.drawable.shape_frame_corners_gray);
-                        binding.btnReject.setTextColor(v.getResources().getColor(R.color.normal_main_text_icon_color));
+                        onAgree(binding);
                         model.setResult(WorkNode.RESULT_PASS);
+                        saveLocalUserData();
                     });
                 }
 
@@ -144,7 +173,30 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
         //加载数据
         viewModel.loadDetial(taskId).observe(this, patrolInfo -> {
             updateUI(patrolInfo);
+            viewModel.loadLocalUserData(taskId).observe(this, local -> {
+                patrolLocal=local;
+                updateLocalData(local);
+            });
         });
+    }
+
+    private void updateLocalData(PatrolLocal local){
+        if (local != null) {
+            if (local.getImages() != null && local.getImages().size() > 0) {
+                List<Uri> uris = new ArrayList<>();
+                for (String imgeUrl : local.getImages()) {
+                    Uri uri = Uri.parse(imgeUrl);
+                    uris.add(uri);
+                }
+                photoSelectAdapter.setSelectedPhotos(uris);
+            }
+            if (!TextUtils.isEmpty(local.getNote())) {
+                binding.limitInput.setText(local.getNote());
+            }
+            if(local.getNodes()!=null){
+                nodesAdapter.setDataList(local.getNodes());
+            }
+        }
     }
 
     @Override
@@ -167,6 +219,22 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
                     .imageEngine(new Glide4Engine())
                     .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
         }, PatrolHandleActivity.this);
+        binding.limitInput.addTextWatcher(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //saveLocalUserData();
+            }
+        });
     }
 
     private void updateUI(PatrolInfo patrol){
@@ -212,10 +280,42 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
         return all.subList(1,all.size()-1);
     }
 
-    private void uploadImages(){
-
+    /**
+     * 上传图片
+     * @param patrol
+     */
+    private void uploadImages(PatrolInfo patrol){
+        if(patrol==null){
+            return;
+        }
+        viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
+            GetUploadJson getUploadJsonStr = new GetUploadJson(picUrls).invoke();
+            Gson gson = getUploadJsonStr.getGson();
+            List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+            patrol.getData().getZyxcgd().setF_files(gson.toJson(picUrlModels));
+        });
     }
 
+
+    /**
+     * 保存本地数据
+     */
+    public void saveLocalUserData(){
+        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
+        List<String> images = new ArrayList<>();
+        for (Uri uri : uris) {
+            images.add(uri.toString());
+        }
+        if(patrolLocal==null){
+            patrolLocal=new PatrolLocal();
+            patrolLocal.setTaskId(taskId);
+            patrolLocal.setUserId(userModuleService.getUserId());
+        }
+        patrolLocal.setImages(images);
+        patrolLocal.setNote(binding.limitInput.getString());
+        patrolLocal.setNodes(nodesAdapter.getDataList());
+        viewModel.saveLocal(patrolLocal);
+    }
 
     /**
      * 提交
@@ -228,6 +328,12 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        saveLocalUserData();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
@@ -235,10 +341,10 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
                 photoSelectAdapter.addPhotos(uris);
+                saveLocalUserData();
             }
         }
     }
-
 
 
 }

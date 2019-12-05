@@ -55,7 +55,6 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
 
     @Override
     public void onBindViewHolder(@NonNull BaseBindingViewHolder holder, int position) {
-
         holder.getBinding().setVariable(BR_id, getItem(position));
         //立即执行绑定
         holder.getBinding().executePendingBindings();

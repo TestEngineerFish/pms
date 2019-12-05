@@ -6,17 +6,20 @@ import android.text.TextUtils;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModel;
+import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
+import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.manager.ImageUploadManager;
+import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.convert.PatrolInfoTypeConvert;
-import com.einyun.app.pms.patrol.convert.PatrolTypeConvert;
-import com.einyun.app.pms.patrol.model.WorkNode;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
 import com.google.gson.Gson;
 
@@ -32,16 +35,20 @@ import java.util.concurrent.ConcurrentHashMap;
 import io.reactivex.Observable;
 
 public class PatrolViewModel extends BaseViewModel {
-    PatrolRepo repo=new PatrolRepo();
-    MutableLiveData<PatrolInfo> liveData=new MutableLiveData<>();
+    PatrolRepo repo = new PatrolRepo();
+    MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
     private final Map<String, String> uploadedImages = new ConcurrentHashMap<>();
-    private ImageUploadManager uploadManager=new ImageUploadManager();
+    private ImageUploadManager uploadManager = new ImageUploadManager();
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
+
     /**
      * 工作节点
+     *
      * @param patrolInfo
      * @return
      */
-    public List<WorkNode> loadNodes(PatrolInfo patrolInfo){
+    public List<WorkNode> loadNodes(PatrolInfo patrolInfo) {
         List<WorkNode> nodes;
         nodes = Observable
                 .fromIterable(patrolInfo.getData().getZyxcgd().getSub_inspection_work_order_flow_node())
@@ -53,6 +60,9 @@ public class PatrolViewModel extends BaseViewModel {
                 .toList()
                 .blockingGet();
         Collections.sort(nodes, (o1, o2) -> {
+            if (TextUtils.isEmpty(o1.number) || TextUtils.isEmpty(o2.number)) {
+                return 0;
+            }
             int num1 = Integer.parseInt(o1.number);
             int num2 = Integer.parseInt(o2.number);
             return num1 - num2;
@@ -62,49 +72,79 @@ public class PatrolViewModel extends BaseViewModel {
 
     /**
      * 获取巡查详情
+     *
      * @param taskId
      * @return
      */
-    public LiveData<PatrolInfo> loadDetial(String taskId){
-        PatrolInfo patrolInfo=repo.loadPatrolInfo(taskId);
-        if(patrolInfo!=null){
+    public LiveData<PatrolInfo> loadDetial(String taskId) {
+        PatrolInfo patrolInfo = repo.loadPatrolInfo(taskId);
+        if (patrolInfo != null) {
             liveData.postValue(patrolInfo);
-        }else{
-            showLoading();
-            PatrolDetialRequest request=new PatrolDetialRequest();
-            request.setTaskId(taskId);
-            ResourceWorkOrderService service= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
-            service.patrolDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
-                @Override
-                public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
-                    String jsonStr=new Gson().toJson(data);
-                    PatrolInfoTypeConvert convert=new PatrolInfoTypeConvert();
-                    PatrolInfo patrolInfo=convert.stringToSomeObject(jsonStr);
-                    patrolInfo.setTaskId(taskId);
-                    repo.updatePatrolCached(taskId);
-                    repo.insertPatrolInfo(patrolInfo);
-                    liveData.postValue(patrolInfo);
-                    hideLoading();
-                }
-
-                @Override
-                public void onFaild(Throwable throwable) {
-                    hideLoading();
-                }
-            });
         }
+        if (patrolInfo == null) {
+            showLoading();
+        }
+        PatrolDetialRequest request = new PatrolDetialRequest();
+        request.setTaskId(taskId);
+        ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+        service.patrolDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
+            @Override
+            public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
+                String jsonStr = new Gson().toJson(data);
+                PatrolInfoTypeConvert convert = new PatrolInfoTypeConvert();
+                PatrolInfo patrolInfo = convert.stringToSomeObject(jsonStr);
+                patrolInfo.setUserId(userModuleService.getUserId());
+                patrolInfo.setTaskId(taskId);
+                if(patrolInfo==null){
+                    PatrolLocal patrolLocal = new PatrolLocal();
+                    patrolLocal.setTaskId(taskId);
+                    patrolLocal.setUserId(userModuleService.getUserId());
+                    repo.saveLocalData(patrolLocal);
+                }
+                repo.updatePatrolCached(taskId);
+                repo.insertPatrolInfo(patrolInfo);
+                liveData.postValue(patrolInfo);
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
         return liveData;
     }
 
     /**
      * 保存巡查
      */
-    public void save(PatrolInfo info){
+    public void save(PatrolInfo info) {
         repo.savePatrolInfo(info);
+    }
+
+
+    /**
+     * 获取用户本地输入数据
+     *
+     * @param taskId
+     * @return
+     */
+    public LiveData<PatrolLocal> loadLocalUserData(String taskId) {
+        return repo.loadLocalUserData(taskId);
+    }
+
+    /**
+     * 保存本地用户输入数据
+     *
+     * @param local
+     */
+    public void saveLocal(PatrolLocal local) {
+        repo.saveLocalData(local);
     }
 
     /**
      * 上传图片
+     *
      * @param allSelectedPhotos
      * @return
      */
@@ -122,8 +162,8 @@ public class PatrolViewModel extends BaseViewModel {
             uploadManager.upload(todoUploadUris, new CallBack<List<PicUrl>>() {
                 @Override
                 public void call(List<PicUrl> data) {
-                    for(PicUrl picUrl:data){
-                        if(TextUtils.isEmpty(picUrl.getOriginUrl())){
+                    for (PicUrl picUrl : data) {
+                        if (TextUtils.isEmpty(picUrl.getOriginUrl())) {
                             uploadedImages.put(picUrl.getOriginUrl(), picUrl.getUploaded());
                         }
                     }
@@ -146,6 +186,7 @@ public class PatrolViewModel extends BaseViewModel {
 
     /**
      * 过滤已上传图片
+     *
      * @param allSelectedPhotos
      * @return
      */
@@ -162,7 +203,7 @@ public class PatrolViewModel extends BaseViewModel {
 
         // 删除缓存中已经上传但已经被删除的图片
         for (String uploadeUrl : uploadedImages.keySet()) {
-            Uri uploadedUri=Uri.fromFile(new File(uploadeUrl));
+            Uri uploadedUri = Uri.fromFile(new File(uploadeUrl));
             if (!allSelectedPhotos.contains(uploadedUri)) {
                 uploadedImages.remove(uploadedUri);
             }

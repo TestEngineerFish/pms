@@ -5,16 +5,478 @@
     <data>
         <variable
             name="sendOrderModel"
-            type="com.einyun.app.pms.module.ApprovalDetailModule" />
+            type="com.einyun.app.pms.approval.module.ApprovalDetailModule" />
         <variable
             name="callBack"
-            type="com.einyun.app.pms.ui.ApprovalDetailViewModuleActivity" />
+            type="com.einyun.app.pms.approval.ui.ApprovalDetailViewModuleActivity" />
     </data>
-     <LinearLayout
-         android:orientation="vertical"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
-         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+    <ScrollView
+        android:id="@+id/approval_sc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_white_bg"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+            <TextView
+                android:id="@+id/tv_approvaler_name"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:textColor="@color/blackTextColor"
+                android:text="@string/tv_applicat"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tv_approval_state"
+                android:gravity="center"
+                android:text="@string/tv_approval_wait"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="68dp"
+                android:textSize="13sp"
+                android:layout_height="24dp"/>
+        </RelativeLayout>
+        <ImageView
+            android:src="@drawable/iv_pop_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            style="@style/style_rl_normal">
+            <TextView
 
-     </LinearLayout>
+                android:text="@string/tv_approval_num"
+                style="@style/style_text_approval_left" />
+            <TextView
+                android:id="@+id/tv_approval_num"
+                android:text="CJJH20191113120002"
+                style="@style/style_text_approval_right" />
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/style_rl_normal">
+            <TextView
+                android:text="@string/tv_approval_type"
+                style="@style/style_text_approval_left"
+                />
+            <TextView
+                android:id="@+id/tv_approval_type"
+                style="@style/style_text_approval_right"
+                android:text="创建计划-创建巡查计划"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout style="@style/style_rl_normal">
+            <TextView
+                android:text="@string/tv_installment"
+                style="@style/style_text_approval_left"
+                />
+            <TextView
+                android:id="@+id/tv_intallment"
+                style="@style/style_text_approval_right"
+                android:text="长城二期"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/style_rl_normal">
+            <TextView
+                style="@style/style_text_approval_left"
+                android:text="@string/tv_applicat"
+
+                />
+            <TextView
+                android:id="@+id/tv_approval_time"
+                style="@style/style_text_approval_right"
+                android:text="20"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/style_rl_normal">
+            <TextView
+                style="@style/style_text_approval_left"
+                android:text="@string/tv_apply_time"
+
+                />
+            <TextView
+                android:id="@+id/tv_apply_time"
+                style="@style/style_text_approval_right"
+                android:text="2019-11-18 15:34:55"
+
+                />
+            </RelativeLayout>
+             </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_creat_change_info"
+                android:background="@drawable/shape_white_bg"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:textColor="@color/blackTextColor"
+                        android:text="@string/tv_approval_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+                <ImageView
+                    android:src="@drawable/iv_pop_line"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+
+                        android:text="@string/tv_tiaoxian"
+                        style="@style/style_text_approval_left" />
+                    <TextView
+                        android:text="工程"
+                        style="@style/style_text_approval_right" />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        android:text="@string/tv_plan_name"
+                        style="@style/style_text_approval_left"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="检查开关柜"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        android:text="@string/tv_resource_classification"
+                        style="@style/style_text_approval_left"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="高压开关柜"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="@string/tv_work_instruction"
+
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="开关柜"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="工单负责职位"
+
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="2019-11-18 15:34:55"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        android:text="@string/tv_apply_start_time"
+                        style="@style/style_text_approval_left"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="2019-11-18  00:00:00"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="申请结束时间"
+
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="2019-11-18  00:00:00"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="执行频率"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="从1月到12月，每1个月生成5次工单，工单每月18号生成"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_delay_close_info"
+                android:background="@drawable/shape_white_bg"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:textColor="@color/blackTextColor"
+                        android:text="@string/tv_approval_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+                <ImageView
+                    android:src="@drawable/iv_pop_line"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+
+                        android:text="@string/tv_work_order_type"
+                        style="@style/style_text_approval_left" />
+                    <TextView
+                        android:text="派工单"
+                        style="@style/style_text_approval_right" />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        android:text="@string/tv_work_order_code"
+                        style="@style/style_text_approval_left"
+                        />
+                    <TextView
+                        android:textColor="@color/blueTextColor"
+                        style="@style/style_text_approval_right"
+                        android:text="csqy1-GC-pgd_gc_zhwx-201911121924450020"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        android:text="@string/tv_tiaoxian"
+                        style="@style/style_text_approval_left"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="环境"
+
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="@string/tv_dispatch_order_type"
+
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="品质工单"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        android:text="@string/tv_work_order_responsible"
+                        style="@style/style_text_approval_left"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="测试人员"
+
+                        />
+                </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/ll_gone_time"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        style="@style/style_rl_normal">
+                        <TextView
+                            style="@style/style_text_approval_left"
+                            android:text="@string/tv_work_order_create_time"
+
+                            />
+                        <TextView
+                            style="@style/style_text_approval_right"
+                            android:text="2019-11-18 15:34:55"
+
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        style="@style/style_rl_normal">
+                        <TextView
+                            style="@style/style_text_approval_left"
+                            android:text="@string/tv_finish_time"
+
+                            />
+                        <TextView
+                            style="@style/style_text_approval_right"
+                            android:text="2019-11-18  00:00:00"
+
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        style="@style/style_rl_normal">
+                        <TextView
+                            style="@style/style_text_approval_left"
+                            android:text="@string/tv_delay_day"
+                            />
+                        <TextView
+                            style="@style/style_text_approval_right"
+                            android:text="1天"
+                            />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="@string/tv_apply_reason"
+                        />
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="因为时间限制，今天之内无法完成工作安排，需要延期"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:background="@drawable/shape_white_bg"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:textColor="@color/blackTextColor"
+                        android:text="@string/tv_approval_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                    <ImageView
+                        android:src="@drawable/iv_pop_line"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <com.einyun.app.pms.approval.ui.widget.NoScrollListview
+                    android:id="@+id/listview"
+                    android:layout_marginTop="3dp"
+                    android:dividerHeight="0dp"
+                    android:divider="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+                <RelativeLayout
+                    style="@style/style_rl_normal">
+                    <TextView
+
+                        android:text="@string/tv_approval_sug"
+                        style="@style/style_text_approval_left"
+                        android:textColor="@color/blackTextColor"
+                        />
+
+                </RelativeLayout>
+                <com.einyun.app.common.ui.component.limit.LimitInput
+                    android:id="@+id/limit_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_182"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:layout_marginBottom="@dimen/px_30"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/tv_unpass"
+                    android:background="@drawable/shape_iv_unpass"
+                    android:layout_width="0dp"
+                    android:textColor="@color/blueTextColor"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_marginRight="7.5dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_marginLeft="7.5dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/tv_pass"
+                    android:background="@drawable/iv_pass_bg"
+                    android:layout_width="0dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </layout>

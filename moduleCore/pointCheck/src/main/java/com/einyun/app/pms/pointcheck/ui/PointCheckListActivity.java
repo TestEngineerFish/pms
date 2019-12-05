@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -17,6 +19,7 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.pms.pointcheck.BR;
 import com.einyun.app.pms.pointcheck.R;
 import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckListBinding;
@@ -68,16 +71,14 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
         setHeadTitle(R.string.title_point_check_list);
         binding.headBar.ivRightOption.setVisibility(View.VISIBLE);
         binding.headBar.ivRightOption.setImageResource(R.mipmap.icon_add_blue);
-        binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
-            viewModel.refresh();
+           viewModel.refresh();
         });
         binding.checkPointList.setLayoutManager(new LinearLayoutManager(
                 this,
                 LinearLayoutManager.VERTICAL,
                 false));
-        binding.checkPointList.setAdapter(adapter);
     }
 
     @Override
@@ -97,6 +98,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
                 }
             };
         }
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.checkPointList);
         binding.checkPointList.setAdapter(adapter);
         adapter.setOnItemClick(this);
         loadPagingData();

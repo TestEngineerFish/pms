@@ -49,7 +49,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.module_common)
     //页面路由ARouter
-    implementation(deps.arouter_api) {
+    implementation (deps.arouter_api) {
         exclude group: 'com.android.support'
     }
     annotationProcessor deps.arouter_compiler
