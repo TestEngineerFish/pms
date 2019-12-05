@@ -10,8 +10,6 @@ import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.library.EinyunSDK
 import com.einyun.app.library.core.api.DictService
 import com.einyun.app.library.core.net.EinyunHttpException
-import com.einyun.app.library.portal.dictdata.db.DictDataDao
-import com.einyun.app.library.portal.dictdata.db.DictDatabase
 import com.einyun.app.library.portal.dictdata.model.DictDataModel
 import com.einyun.app.library.portal.dictdata.net.DictDataServiceApi
 import com.einyun.app.library.portal.dictdata.net.request.*
@@ -33,11 +31,10 @@ import com.einyun.app.library.core.net.EinyunHttpService
  */
 class DictRepository : DictService {
 
-    var dictDao: DictDataDao? = null
+
     var serviceApi: DictDataServiceApi? = null
 
     init {
-        dictDao = DictDatabase.instance(EinyunSDK.context!!).dictDao()
         serviceApi = EinyunHttpService.getInstance().getServiceApi(DictDataServiceApi::class.java)
     }
 
@@ -339,17 +336,5 @@ class DictRepository : DictService {
         return liveData
     }
 
-    /**
-     * 从数据库获取所有字典列表
-     */
-    fun listAllFromDb(): LiveData<List<DictDataModel>>? {
-        return dictDao?.listAll()
-    }
 
-    /**
-     * 插入数据
-     */
-    fun insertAllToDb(list: List<DictDataModel>) {
-        dictDao?.insert(list)
-    }
 }
