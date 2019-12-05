@@ -286,6 +286,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         functionList.add("cjgd");
         functionList.add("gzyl");
         functionList.add("smcl");
+        functionList.add("dj");
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
         binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
     }
