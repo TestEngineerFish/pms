@@ -1,16 +1,21 @@
 package com.einyun.app.pms.patrol.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
+import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.PageBean;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
@@ -23,7 +28,7 @@ import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 /**
  * 巡查待办
  */
-public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> {
+public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> implements ItemClickListener<Patrol> {
     protected RVPageListAdapter<ItemPatrolListBinding,Patrol> adapter;
 
     @Autowired(name = RouterUtils.SERVICE_USER)
@@ -78,6 +83,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                 }
             };
         }
+        adapter.setOnItemClick(this);
     }
 
     @Override
@@ -122,5 +128,12 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     protected PatrolListViewModel initViewModel() {
         return new ViewModelProvider(getActivity(),new ViewModelFactory()).get(PatrolListViewModel.class);
+    }
+
+    @Override
+    public void onItemClicked(View veiw, Patrol data) {
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
+                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .navigation();
     }
 }

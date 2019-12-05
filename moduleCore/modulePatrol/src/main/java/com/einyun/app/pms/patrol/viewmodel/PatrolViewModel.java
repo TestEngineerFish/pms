@@ -80,6 +80,7 @@ public class PatrolViewModel extends BaseViewModel {
                     String jsonStr=new Gson().toJson(data);
                     PatrolInfoTypeConvert convert=new PatrolInfoTypeConvert();
                     PatrolInfo patrolInfo=convert.stringToSomeObject(jsonStr);
+                    patrolInfo.setTaskId(taskId);
                     repo.updatePatrolCached(taskId);
                     repo.insertPatrolInfo(patrolInfo);
                     liveData.postValue(patrolInfo);

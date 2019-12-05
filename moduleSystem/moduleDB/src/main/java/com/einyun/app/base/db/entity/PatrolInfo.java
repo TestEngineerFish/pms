@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
-
 import com.einyun.app.base.db.bean.DelayExtensionApplication;
 import com.einyun.app.base.db.bean.ExtensionApplication;
 import com.einyun.app.base.db.bean.PatrolButton;
@@ -29,6 +28,7 @@ public class PatrolInfo {
     private List<PatrolButton> buttons;
     @TypeConverters(DelayExtensionApplicationBeanConvert.class)
     private DelayExtensionApplication delayExtensionApplication;
+    private String userId;
 
     @NonNull
     public String getTaskId() {
@@ -69,6 +69,14 @@ public class PatrolInfo {
 
     public void setDelayExtensionApplication(DelayExtensionApplication delayExtensionApplication) {
         this.delayExtensionApplication = delayExtensionApplication;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
 

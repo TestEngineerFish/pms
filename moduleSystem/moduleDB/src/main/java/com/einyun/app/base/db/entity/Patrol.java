@@ -25,6 +25,7 @@ public class Patrol{
     private long createTime;
     private long F_creation_date;
     private int F_plan_work_order_state;
+    private String userId;
     @PrimaryKey
     @NonNull
     private String ID_;
@@ -238,5 +239,13 @@ public class Patrol{
 
     public void setWarn(boolean warn) {
         isWarn = warn;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -22,6 +22,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.utils.Glide4Engine;
+import com.einyun.app.pms.patrol.BR;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolHandleBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
@@ -31,10 +32,7 @@ import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
-
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_PATROL_HANDLE)
@@ -172,16 +170,10 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     private void updateUI(PatrolInfo patrol){
-        List<WorkNode> nodes=new ArrayList<>();
-        WorkNode headWorkNode=new WorkNode();
-        nodes.add(headWorkNode);
-        WorkNode workNode1=new WorkNode("","电梯设备房巡查","1.机房温度，湿度，环境情况。" +
-                "2.限速器，钢丝绳的运行状态。3.电动机温度，主机轴","");
-        nodes.add(workNode1);
-        WorkNode workNode2=new WorkNode("","电梯设备房巡查","1.机房温度，湿度，环境情况。" +
-                "2.限速器，钢丝绳的运行状态。3.电动机温度，主机轴","");
-        nodes.add(workNode2);
+        List<WorkNode> nodes=viewModel.loadNodes(patrol);
+        nodes.add(0,new WorkNode());
         nodesAdapter.addAll(nodes);
+        binding.setPatrol(patrol);
     }
 
     /**
