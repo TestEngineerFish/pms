@@ -25,8 +25,6 @@ public class OrderItemDataSource extends BaseDataSource<DistributeWorkOrder> {
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
         ResourceWorkOrderRepo repository=new ResourceWorkOrderRepo();
         DistributePageRequest request=new DistributePageRequest();
-        Log.d("test","执行了");
-        Log.d("uerId","63879813097586693");
         request.setPageBean(pageBean);
         request.setUserId("63879813097586693");
         repository.distributeWaitPage(request, new CallBack<DistributeWorkOrderPage>() {

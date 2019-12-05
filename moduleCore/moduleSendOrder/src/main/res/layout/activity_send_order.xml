@@ -1,7 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -24,80 +23,99 @@
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_send_order"
+        <LinearLayout
+            android:id="@+id/send_work_tab_ln"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:tabIndicatorColor="@color/stress_text_btn_icon_color"
-            app:tabIndicatorFullWidth="false"
-            app:tabIndicatorHeight="3dp"
-            app:tabSelectedTextColor="@color/blackTextColor"
-            app:tabTextColor="@color/normal_main_text_icon_color"/>
+            android:orientation="vertical">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_send_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabIndicatorColor="@color/stress_text_btn_icon_color"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="3dp"
+                app:tabSelectedTextColor="@color/blackTextColor"
+                app:tabTextColor="@color/normal_main_text_icon_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_10"
+                android:background="@color/activity_bg_color" />
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/send_work_orer_tab_ln"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
-            <LinearLayout
-                android:id="@+id/send_work_orer_tab_peroid_ln"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/period_selected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="分期"
-                    android:layout_marginLeft="@dimen/px_10"
-                    android:layout_marginRight="@dimen/px_10"
-                    android:gravity="center"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    />
-                <ImageView
-                    android:layout_width="@dimen/px_12"
-                    android:layout_height="@dimen/px_12"
-                    android:src="@drawable/down"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/px_10"
-                    android:scaleType="fitXY"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/send_work_orer_tab_select_ln"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/select_selected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="筛选"
-                    android:layout_marginLeft="@dimen/px_10"
-                    android:layout_marginRight="@dimen/px_10"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:gravity="center"
-                    />
-                <ImageView
-                    android:layout_width="@dimen/px_12"
-                    android:layout_height="@dimen/px_12"
-                    android:src="@drawable/down"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/px_10"
-                    android:scaleType="fitXY"/>
-            </LinearLayout>
-        </LinearLayout>
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_send_work"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/send_work_orer_tab_ln">
 
-        </androidx.viewpager.widget.ViewPager>
+            <LinearLayout
+                android:id="@+id/send_work_orer_tab_ln"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <LinearLayout
+                    android:id="@+id/send_work_orer_tab_peroid_ln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/period_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_10"
+                        android:layout_marginRight="@dimen/px_10"
+                        android:gravity="center"
+                        android:text="分期"
+                        android:textColor="@color/normal_main_text_icon_color" />
+
+                    <ImageView
+                        android:layout_width="@dimen/px_12"
+                        android:layout_height="@dimen/px_12"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/px_10"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/down" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/send_work_orer_tab_select_ln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/select_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_10"
+                        android:layout_marginRight="@dimen/px_10"
+                        android:gravity="center"
+                        android:text="筛选"
+                        android:textColor="@color/normal_main_text_icon_color" />
+
+                    <ImageView
+                        android:layout_width="@dimen/px_12"
+                        android:layout_height="@dimen/px_12"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/px_10"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/down" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vp_send_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/send_work_orer_tab_ln">
+
+            </androidx.viewpager.widget.ViewPager>
         </RelativeLayout>
     </LinearLayout>
 </layout>

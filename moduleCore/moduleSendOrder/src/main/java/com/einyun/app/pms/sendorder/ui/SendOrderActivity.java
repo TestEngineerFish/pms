@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.ui.widget.selectpopview.SelectPopUpView;
 import com.einyun.app.common.ui.widget.selectpopview.SelectPopView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
  */
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER)
 public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel> implements PeriodizationView.OnPeriodSelectListener {
-    private String[] mTitles = new String[]{"待跟进", "已跟进"};//tab标题
+    private String[] mTitles;//tab标题
 //    private SelectPopView selectPopView=new SelectPopView(this);
     @Override
     protected SendOrderViewModel initViewModel() {
@@ -47,6 +48,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        mTitles=new String[]{getResources().getString(R.string.text_wait_handle),getResources().getString(R.string.text_already_handle)};
         setHeadTitle(R.string.text_send_order);
         setTxtColor(R.color.blackTextColor);
         setRightOption(R.drawable.scan);
@@ -83,18 +85,13 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
                 PeriodizationView periodizationView=new PeriodizationView();
                 periodizationView.setPeriodListener(SendOrderActivity.this::onPeriodSelectListener);
                 periodizationView.show(getSupportFragmentManager(),"");
-//                 PeriodizationView.getInstance().setPeriodListener(SendOrderActivity.this::onPeriodSelectListener).show(getSupportFragmentManager(),"");
             }
         });
         binding.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              // SelectPopBinding selectPopBinding= DataBindingUtil.setContentView(SendOrderActivity.this, com.einyun.app.common.R.layout.select_pop);
+               new SelectPopUpView(SendOrderActivity.this).showAsDropDown(binding.sendWorkTabLn);
 
-               new SelectPopView(SendOrderActivity.this).showAsDropDown(binding.sendWorkOrerTabSelectLn);
-
-//                selectPopView.showAsDropDown(binding.sendWorkOrerTabSelectLn);
-//                selectPopView.showAsDropDown(binding.sendWorkOrerTabSelectLn);
             }
         });
     }

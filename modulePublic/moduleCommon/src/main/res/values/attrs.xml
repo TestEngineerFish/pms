@@ -37,7 +37,7 @@
         </attr>
     </declare-styleable>
     <declare-styleable name="LimitInput">
-        <attr name="hint" format="string" />
+        <attr name="hintText" format="string" />
         <attr name="maxNumber" format="integer" />
     </declare-styleable>
     <declare-styleable name="SearchHistory">

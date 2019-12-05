@@ -12,9 +12,10 @@
         android:orientation="vertical">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/srf_list"
+            android:id="@+id/send_order_ref"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/activity_bg_color">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,7 +26,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/work_send_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20">
 
                 </androidx.recyclerview.widget.RecyclerView>
 

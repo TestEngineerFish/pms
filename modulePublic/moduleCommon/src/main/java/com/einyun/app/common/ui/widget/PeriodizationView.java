@@ -44,7 +44,6 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     BlockChooseViewModel viewModel;
     private String userId;
     List<OrgModel> selectOrgs = new CopyOnWriteArrayList<>();
-    private PeriodizationView periodizationView = null;
     private OnPeriodSelectListener onPeriodSelectListener;
     //设置分期选择监听
 
@@ -75,7 +74,6 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.period_view_dialog);
         initData();
         window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-//        window.setWindowAnimations(R.style.dialogWindowAnim);
         WindowManager.LayoutParams wlp = window.getAttributes();
         window.setGravity(Gravity.TOP);
         window.setDimAmount(0);
@@ -169,9 +167,14 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
             }
             holder.text1.setText(tag);
             holder.itemView.setOnClickListener(v -> {
-                if (itemClickListener != null) {
-                    itemClickListener.onItemClicked(holder.itemView, selectOrgs.get(position));
+                try {
+                    if (itemClickListener != null) {
+                        itemClickListener.onItemClicked(holder.itemView, selectOrgs.get(position));
+                    }
+                }catch (Exception e){
+
                 }
+
             });
         }
 
@@ -196,9 +199,9 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     }
 
     public void switchOrgTag(OrgModel model) {
-        Log.d("test", selectOrgs.size() + "");
         selectOrgs.remove(selectOrgs.get(selectOrgs.size() - 1));
         OrgModel lastOrg = selectOrgs.get(selectOrgs.size() - 1);
+        try {
         if (!model.getId().equals(lastOrg)) {
             for (OrgModel orgModel : selectOrgs) {
                 if (orgModel.getLevel() > model.getLevel()) {
@@ -209,6 +212,8 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
             orgModel1.setName("请选择组织");
             selectOrgs.add(orgModel1);
             viewModel.queryOrgs(userId, model.getId());
+        }}catch (Exception e){
+
         }
     }
 

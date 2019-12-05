@@ -261,17 +261,17 @@ project.module_user = ":moduleCore:moduleUser"
 project.module_main = ":moduleCore:moduleMain"
 project.module_repairs = ":moduleCore:moduleRepairs"
 project.module_complain=":moduleCore:moduleComplain"
-project.module_patrol =":moduleCore:modulePatrol"
 project.module_extra = ":moduleCore:moduleExtra"
 project.point_check= ":moduleCore:pointCheck"
 project.module_sendorder= ":moduleCore:moduleSendOrder"
 project.module_approval= ":moduleCore:moduleApproval"
-project.module_plan= ":moduleCore:modulePlan"
 deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"http://172.16.0.123\""
+//server.debug = "\"http://172.16.0.123\""https://smcloud.shimaowy.com/
+server.debug = "\"http://120.79.213.146\""
+//server.debug = "\"https://bms.einyun.com\""
 //测试环境
 server.debug_test = "\"http://120.79.213.146\""
 //UAT环境
