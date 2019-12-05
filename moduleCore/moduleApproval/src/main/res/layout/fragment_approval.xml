@@ -5,10 +5,10 @@
 
         <variable
             name="approvalViewModel"
-            type="com.einyun.app.pms.viewmodule.ApprovalFragmentViewModel" />
+            type="com.einyun.app.pms.approval.viewmodule.ApprovalFragmentViewModel" />
         <variable
             name="callBack"
-            type="com.einyun.app.pms.ui.fragment.ApprovalViewModelFragment" />
+            type="com.einyun.app.pms.approval.ui.fragment.ApprovalViewModelFragment" />
 
     </data>
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
@@ -62,9 +62,11 @@
             </LinearLayout>
         </LinearLayout>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/approval_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

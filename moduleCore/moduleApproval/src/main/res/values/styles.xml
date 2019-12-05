@@ -21,4 +21,30 @@
         <item name="android:background">@drawable/home_rbtn_line</item>
     </style>
 
+    <style name="style_text_approval_left">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/greyTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="style_text_approval_right">
+        <item name="android:layout_marginLeft">111dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="style_rl_normal">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
 </resources>

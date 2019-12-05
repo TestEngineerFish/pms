@@ -5,10 +5,10 @@
     <data>
         <variable
             name="sendOrderModel"
-            type="com.einyun.app.pms.module.ApprovalModule" />
+            type="com.einyun.app.pms.approval.module.ApprovalModule" />
         <variable
             name="callBack"
-            type="com.einyun.app.pms.ui.ApprovalViewModuleActivity" />
+            type="com.einyun.app.pms.approval.ui.ApprovalViewModuleActivity" />
     </data>
      <LinearLayout
          android:orientation="vertical"

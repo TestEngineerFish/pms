@@ -51,6 +51,7 @@ dependencies {
     implementation (deps.arouter_api) {
         exclude group: 'com.android.support'
     }
+    implementation 'com.alibaba:fastjson:1.1.34'
     annotationProcessor deps.lifecycle.compiler
     annotationProcessor deps.room.compiler
     annotationProcessor deps.arouter_compiler
