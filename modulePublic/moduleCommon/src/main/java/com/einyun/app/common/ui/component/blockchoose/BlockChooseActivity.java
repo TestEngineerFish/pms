@@ -54,7 +54,8 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
     @Autowired(name = RouteKey.KEY_USER_ID)
     String userId;
     String blockId="";
-
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
     @Override
     public int getLayoutId() {
         return R.layout.activity_choose_org;
@@ -76,8 +77,7 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
     @Override
     protected void initData() {
         super.initData();
-        userId="63879813097586693";
-//        userId="55614223698362369";
+        userId=userModuleService.getUserId();
         viewModel.loadFromCache().observe(this, models -> {
             if(models!=null){
                 selectOrgs.addAll(models);

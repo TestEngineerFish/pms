@@ -21,28 +21,53 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
 public class OrderItemDataSource extends BaseDataSource<DistributeWorkOrder> {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    private DistributePageRequest request;
+
+    public OrderItemDataSource(DistributePageRequest request) {
+        this.request = request;
+    }
+
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
-        ResourceWorkOrderRepo repository=new ResourceWorkOrderRepo();
-        DistributePageRequest request=new DistributePageRequest();
-        request.setPageBean(pageBean);
-        request.setUserId("63879813097586693");
-        repository.distributeWaitPage(request, new CallBack<DistributeWorkOrderPage>() {
-            @Override
-            public void call(DistributeWorkOrderPage data) {
-                if(callback instanceof LoadInitialCallback){
-                    LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
-                    loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
-                }else if(callback instanceof LoadRangeCallback){
-                    LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
-                    loadInitialCallback.onResult(data.getRows());
+        ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();
+        if (request.getTypeRe().equals("0")) {
+            //代办
+            repository.distributeWaitPage(request, new CallBack<DistributeWorkOrderPage>() {
+                @Override
+                public void call(DistributeWorkOrderPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
                 }
-            }
 
-            @Override
-            public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
-            }
-        });
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+        } else {
+            //已办
+            repository.distributeDonePage(request, new CallBack<DistributeWorkOrderPage>() {
+                @Override
+                public void call(DistributeWorkOrderPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+        }
     }
 }

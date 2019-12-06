@@ -11,4 +11,5 @@
     <string name="text_enter_reason">请输入转派原因</string>
     <string name="text_wait_handle">待跟进</string>
     <string name="text_already_handle">已跟进</string>
+    <string name="text_resend_order">转派工单</string>
 </resources>

@@ -38,6 +38,15 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+
+    override fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>> {
+        return proxy.getWorkOrderType(callBack)
+    }
+
+    override fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>> {
+        return proxy.getTiaoXian(callBack)
+    }
+
     override fun createSendOrder(
         request: CreateSendOrderRequest,
         callBack: CallBack<Boolean>
@@ -46,27 +55,35 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
     }
 
     override fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        proxy.patrolDetial(request,callBack)
+        proxy.patrolDetial(request, callBack)
     }
 
     override fun patrolClosedPage(
         request: PatrolPageRequest,
         callBack: CallBack<PatrolWorkOrderPage>
     ) {
-        proxy.patrolClosedPage(request,callBack)
+        proxy.patrolClosedPage(request, callBack)
     }
 
     override fun patrolWaitPage(
         request: PatrolPageRequest,
         callBack: CallBack<PatrolWorkOrderPage>
     ) {
-        proxy.patrolWaitPage(request,callBack)
+        proxy.patrolWaitPage(request, callBack)
     }
 
-    override fun distributeWaitPage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage> {
-        return proxy.distributeWaitPage(request,callBack)
+    override fun distributeWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage> {
+        return proxy.distributeWaitPage(request, callBack)
     }
-
+    override fun distributeDonePage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage> {
+        return proxy.distributeWaitPage(request, callBack)
+    }
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {
         return proxy.getWaitCount(callBack)
     }

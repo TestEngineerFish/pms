@@ -34,7 +34,7 @@ class DistributeWorkOrder {
      var ID: String? = null
      var F_DESC: String? = null
      var F_PROC_CONTENT: String? = null
-     var F_STATUS: String? = null
+     var F_STATUS: Int? = 0
      var F_RES_NAME: String? = null
      var assigneeId: String? = null
      var F_CHECK_NAME: String? = null

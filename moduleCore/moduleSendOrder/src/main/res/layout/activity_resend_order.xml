@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         tools:context=".ui.ResendOrderActivity">
@@ -101,5 +101,15 @@
                 android:textSize="15sp"
                 android:background="@null"/>
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                style="@style/submit_btn"
+                android:layout_alignParentBottom="true"
+                android:text="提交"
+                android:layout_marginBottom="@dimen/px_126"
+                />
+        </RelativeLayout>
     </LinearLayout>
 </layout>

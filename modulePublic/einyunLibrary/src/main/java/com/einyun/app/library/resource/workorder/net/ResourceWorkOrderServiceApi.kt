@@ -2,6 +2,11 @@ package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.net.request.*
+import androidx.room.FtsOptions
+import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
+import com.einyun.app.library.resource.workorder.net.request.PageRquest
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
+import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
 import retrofit2.http.Body
@@ -77,5 +82,18 @@ interface ResourceWorkOrderServiceApi{
     /**
      * 2.30派工单-列表（根据地块id、条线编码）
      */
+
+    /**
+     *获取条线
+     **/
+    @GET(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_TIAOXIAN)
+    fun getTiaoXian():Flowable<TiaoXianResponse>
+
+    /**
+     *获取工单类型
+     **/
+    @GET(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_ORDER_TYPE)
+    fun getOrderType():Flowable<OrderTypeResponse>
+
 
 }

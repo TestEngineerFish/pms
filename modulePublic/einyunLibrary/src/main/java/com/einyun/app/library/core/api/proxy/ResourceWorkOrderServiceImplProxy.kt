@@ -38,6 +38,8 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+
+
     override fun createSendOrder(
         request: CreateSendOrderRequest,
         callBack: CallBack<Boolean>
@@ -72,11 +74,26 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     ): LiveData<DistributeWorkOrderPage> {
         return instance?.distributeWaitPage(request, callBack)!!
     }
-
+    /**
+     * 派工单已办列表
+     * */
+    override fun distributeDonePage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage> {
+        return instance?.distributeWaitPage(request, callBack)!!
+    }
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {
         return instance?.getWaitCount(callBack)!!
     }
 
+    override fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>> {
+        return instance?.getTiaoXian(callBack)!!
+    }
+
+    override fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>> {
+        return instance?.getWorkOrderType(callBack)!!
+    }
     private var instance: ResourceWorkOrderService? = null
 
     constructor() {

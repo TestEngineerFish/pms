@@ -13,10 +13,16 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_100">
 
+                 <ImageView
+                     android:id="@+id/tv_choose"
+                     android:layout_width="@dimen/px_30"
+                     android:layout_height="@dimen/px_30"
+                     android:layout_centerVertical="true"
+                     android:layout_marginLeft="@dimen/px_30"
+                     />
                 <TextView
                     android:id="@+id/tv_content"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/shape_line"
                     android:text="@{selects.content}"
                     android:gravity="center"
                     android:layout_width="match_parent"

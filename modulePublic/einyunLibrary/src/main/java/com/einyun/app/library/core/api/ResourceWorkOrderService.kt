@@ -36,12 +36,10 @@ import com.einyun.app.library.workorder.model.BlocklogNums
  */
 interface ResourceWorkOrderService : EinyunService {
     fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount>
-    //派工单代办列表
-    fun distributeWaitPage(
-        request: DistributePageRequest,
-        callBack: CallBack<DistributeWorkOrderPage>
-    ): LiveData<DistributeWorkOrderPage>
 
+    fun distributeWaitPage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage>
+    //派工单代办列表
+    fun distributeDonePage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage>
     //巡查工单代办
     fun patrolWaitPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>)
 
@@ -56,4 +54,9 @@ interface ResourceWorkOrderService : EinyunService {
         request: CreateSendOrderRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean>
+    //获取条线
+    fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
+    //获取工单类型
+    fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>>
+
 }

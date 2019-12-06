@@ -3,7 +3,6 @@ package com.einyun.app.library.resource.workorder.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.base.paging.bean.Query
@@ -138,5 +137,56 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     }
                 }, { error -> callBack.onFaild(error) })
         return liveData    }
+    /**
+     * 派工单已跟进列表
+     * */
+    override fun distributeDonePage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage> {
+        val liveData = MutableLiveData<DistributeWorkOrderPage>()
+        serviceApi?.distributeDonePage(request)?.compose(RxSchedulers.inIoMain<DistributeListResponse>())
+            ?.subscribe({ response:DistributeListResponse ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData    }
+
+
+    /**
+     * 获取条线
+     * */
+    override fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>> {
+        val liveData = MutableLiveData<List<ResourceTypeBean>>()
+        serviceApi?.getTiaoXian()?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    /**
+     * 获取工单类型
+     * */
+    override fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>> {
+        val liveData = MutableLiveData<List<WorkOrderTypeModel>>()
+        serviceApi?.getOrderType()?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+
+    }
 
 }

@@ -54,6 +54,11 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_PLAN_ORDER_NUMS_DONE="/$DOMAIN/res-order/plan/getOrderDoneCount"
         //派工单是否关闭
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_CLOSE="/$DOMAIN/res-order/distribute/isClosed"
+        //获取条线
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_TIAOXIAN="/portal/sys/sysType/v1/getTypesListByKey?typeKey=RESOURCE_TYPE"
+        //获取工单类型
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_ORDER_TYPE="/portal/sys/dataDict/v1/getByTypeKey?typeKey=pgdlx"
+
 
     }
 }

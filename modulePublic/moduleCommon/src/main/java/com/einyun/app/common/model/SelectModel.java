@@ -7,10 +7,19 @@ import java.util.List;
 
 public class SelectModel implements Cloneable{
 
-    private String id;//标签id
+    private String id="";//标签id
     private String content;//标签名
     private String type="";//分类
     private boolean isCheck=false;//标签是否被选中
+
+    private String typeId;
+    private String key;
+    private String name;
+    private String parentId;
+    private String open;
+    private String text;
+    private List<?> children;
+    private String isParent;
     private List<SelectModel> selectModelList=new ArrayList<>();
     public SelectModel() {
 
@@ -80,5 +89,69 @@ public class SelectModel implements Cloneable{
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getOpen() {
+        return open;
+    }
+
+    public void setOpen(String open) {
+        this.open = open;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public List<?> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<?> children) {
+        this.children = children;
+    }
+
+    public String getIsParent() {
+        return isParent;
+    }
+
+    public void setIsParent(String isParent) {
+        this.isParent = isParent;
     }
 }

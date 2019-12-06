@@ -14,6 +14,7 @@ import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolListBinding;
@@ -67,7 +68,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         binding.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new com.einyun.app.common.ui.widget.selectpopview.SelectPopView(PatrolListActivity.this).showAsDropDown(binding.sendWorkOrerTabSelectLn);
+                new SelectPopUpView(PatrolListActivity.this,null).showAsDropDown(binding.sendWorkOrerTabSelectLn);
             }
         });
     }

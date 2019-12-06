@@ -22,7 +22,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle("转派工单");
+        setHeadTitle(R.string.text_resend_order);
     }
 
     @Override
