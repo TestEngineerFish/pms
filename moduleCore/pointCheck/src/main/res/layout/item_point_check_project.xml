@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15sp"
+            android:textSize="@dimen/font_size16"
+            android:textColor="@color/txt_black_order"
             android:textStyle="bold" />
 
 
@@ -42,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="@string/text_check_content"
-            android:textColor="@color/point_check_item_name" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
 
         <TextView
             android:id="@+id/tv_check_content"
@@ -50,7 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/point_check_item_value" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +68,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="@string/text_check_type"
-            android:textColor="@color/point_check_item_name" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
 
         <TextView
             android:id="@+id/tv_check_type"
@@ -73,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/point_check_item_value" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,7 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="@string/text_check_range_normal"
-            android:textColor="@color/point_check_item_name" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
 
         <TextView
             android:id="@+id/tv_check_range"
@@ -97,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/point_check_item_value" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="@string/text_check_result"
-            android:textColor="@color/point_check_item_name" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
 
         <TextView
             android:id="@+id/tv_check_result"
@@ -121,7 +129,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text=""
-            android:textColor="@color/point_check_item_value" />
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/normal_main_text_icon_color" />
     </LinearLayout>
 </LinearLayout>
 

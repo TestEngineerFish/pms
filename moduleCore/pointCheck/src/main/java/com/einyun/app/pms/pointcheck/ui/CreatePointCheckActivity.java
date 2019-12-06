@@ -28,7 +28,9 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.BottomPicker;
+import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.Glide4Engine;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.pointcheck.R;
 import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckCreateBinding;
 import com.einyun.app.pms.pointcheck.databinding.ItemPointCheckProjectEditBinding;
@@ -59,7 +61,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_POINT_CHECK_CREATE)
-public class CreatePointCheckActivity extends BaseHeadViewModelActivity<ActivityPointCheckCreateBinding, CreateCheckViewModel> {
+public class CreatePointCheckActivity extends BaseHeadViewModelActivity<ActivityPointCheckCreateBinding, CreateCheckViewModel> implements PeriodizationView.OnPeriodSelectListener{
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private String divideId;
@@ -124,35 +126,33 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                             @Override
                             public void onBindItem(ItemPointCheckProjectEditBinding binding, ProjectContentItemModel model, int position) {
                                 binding.tvCheckContent.setText(model.getCheckContent());
+                                binding.tvCheckNote.setText(model.getRemark());
+                                binding.tvProjectName.setText(getResources().getString(R.string.name_project) + (position + 1));
                                 if (model.getCheckType() == 2) {
-                                    binding.ivCheckResult.setVisibility(View.VISIBLE);
                                     binding.pointCheckRangSplit.setVisibility(View.GONE);
                                     binding.pointCheckRangContainer.setVisibility(View.GONE);
-                                    binding.edCheckResult.setText("");
+                                    binding.btnAgree.setVisibility(View.VISIBLE);
+                                    binding.btnReject.setVisibility(View.VISIBLE);
                                     binding.tvCheckRange.setText(R.string.item_qualified);
-                                    binding.edCheckResult.setHint("");
-                                    binding.edCheckResult.setInputType(InputType.TYPE_NULL);
-                                    binding.edCheckResult.setFocusable(false);
-                                    binding.edCheckResult.setOnClickListener(v -> {
-                                        BottomPicker.buildBottomPicker(CreatePointCheckActivity.this, Arrays.asList(getResources().getString(R.string.item_no_qualified), getResources().getString(R.string.item_qualified)), (pos, label) -> {
-                                            binding.edCheckResult.setText(label);
-                                        });
-                                    });
-                                    binding.tvProjectName.setText(getResources().getString(R.string.name_project) + (position + 1));
                                     binding.tvCheckContent.setText(model.getCheckContent());
-                                    binding.tvCheckNote.setText(model.getRemark());
-                                } else {
-                                    binding.edCheckResult.setOnClickListener(v -> {
-
+                                    binding.btnAgree.setOnClickListener(v -> {
+                                        onAgree(binding);
+                                        model.setCheckResult(1);
                                     });
+
+                                    binding.btnReject.setOnClickListener(v -> {
+                                        onReject(binding);
+                                        model.setCheckResult(0);
+                                    });
+
+                                } else {
                                     binding.pointCheckRangSplit.setVisibility(View.VISIBLE);
                                     binding.pointCheckRangContainer.setVisibility(View.VISIBLE);
-                                    binding.ivCheckResult.setVisibility(View.INVISIBLE);
-                                    binding.edCheckResult.setText("");
-                                    binding.edCheckResult.setHint(R.string.alert_input);
                                     binding.edCheckResult.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
                                     binding.tvCheckRange.setText(model.getMinValue() + "-" + model.getMaxVal());
-                                    binding.edCheckResult.setFocusable(true);
+                                    binding.edCheckResult.setVisibility(View.VISIBLE);
+                                    binding.btnAgree.setVisibility(View.GONE);
+                                    binding.btnReject.setVisibility(View.GONE);
                                 }
                                 binding.edCheckResult.addTextChangedListener(new TextWatcher() {
                                     @Override
@@ -168,25 +168,24 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                     @Override
                                     public void afterTextChanged(Editable s) {
                                         String value = s.toString();
-                                        int result = 0;
-                                        if (model.getCheckType() == 2) {
-                                            if (value.equals(getResources().getString(R.string.item_qualified))) {
-                                                result = 1;
-                                            }
-                                        } else {
-                                            if (TextUtils.isEmpty(value)) {
-                                                result = -1;
-                                            } else {
-                                                try {
-                                                    result = Integer.parseInt(value);
-                                                } catch (NumberFormatException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }
-                                        model.setCheckResult(result);
+                                        model.setCheckResult(Float.parseFloat(value));
                                     }
                                 });
+
+                            }
+
+                            protected void onReject(ItemPointCheckProjectEditBinding binding){
+                                binding.btnAgree.setBackgroundResource(R.drawable.shape_frame_corners_gray);
+                                binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.normal_main_text_icon_color));
+                                binding.btnReject.setBackgroundResource(R.drawable.corners_red_large);
+                                binding.btnReject.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
+                            }
+
+                            protected void onAgree(ItemPointCheckProjectEditBinding binding){
+                                binding.btnAgree.setBackgroundResource(R.drawable.corners_green_large);
+                                binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
+                                binding.btnReject.setBackgroundResource(R.drawable.shape_frame_corners_gray);
+                                binding.btnReject.setTextColor(binding.btnAgree.getResources().getColor(R.color.normal_main_text_icon_color));
                             }
 
                             @Override
@@ -198,7 +197,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                         binding.rvProjects.setNestedScrollingEnabled(false);
                         binding.rvProjects.setAdapter(adapter);
                     }
-                    adapter.addAll(projectContentModel.getContentList());
+                    adapter.setDataList(projectContentModel.getContentList());
                 });
             });
         });
@@ -226,10 +225,14 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
     }
 
     public void onDivideClick() {
-        //选择组织地块
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_BLOCK_CHOOSE)
-                .withString(RouteKey.KEY_USER_ID, userModuleService.getUserId())
-                .navigation(this, RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE);
+        //选择分期
+//        ARouter.getInstance().build(RouterUtils.ACTIVITY_BLOCK_CHOOSE)
+//                .withString(RouteKey.KEY_USER_ID, userModuleService.getUserId())
+//                .navigation(this, RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE);
+        //弹出分期view
+        PeriodizationView periodizationView=new PeriodizationView();
+        periodizationView.setPeriodListener(CreatePointCheckActivity.this::onPeriodSelectListener);
+        periodizationView.show(getSupportFragmentManager(),"");
     }
 
     public void onProjectClick() {
@@ -318,7 +321,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         request.setCreateId(userModuleService.getUserId());
         request.setResults(buildResultList());
         request.setCheckProjectId(viewModel.loadProjectIdByName(binding.tvCheckProject.getText().toString().trim()));
-        request.setRemark(binding.etCheckNote.getText().toString());
+        request.setRemark(binding.etLimitInput.getString());
         return request;
     }
 
@@ -334,4 +337,11 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         return list;
     }
 
+    @Override
+    public void onPeriodSelectListener(OrgModel orgModel) {
+        divideId=orgModel.getId();
+        divideName=orgModel.getName();
+        divideCode=orgModel.getCode();
+        binding.tvCheckDivide.setText(divideName);
+    }
 }

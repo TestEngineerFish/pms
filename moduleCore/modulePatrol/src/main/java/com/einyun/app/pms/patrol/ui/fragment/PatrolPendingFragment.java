@@ -118,7 +118,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
         @Override
         public boolean areItemsTheSame(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getTaskId() == newItem.getTaskId();
+            return oldItem.getTaskId().equals(newItem.getTaskId());
         }
 
         @SuppressLint("DiffUtilEquals")

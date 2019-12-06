@@ -54,8 +54,9 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:text="@string/text_divide"
-                    android:textColor="@color/point_check_item_name"
-                    android:textSize="14sp" />
+                    android:textColor="@color/blackTextColor"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
 
                 <TextView
@@ -66,7 +67,8 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/text_choose_hint"
-                    android:textSize="14sp"
+                    android:textColorHint="@color/normal_main_text_icon_color"
+                    android:textSize="15sp"
                     android:onClick="@{()->callBack.onDivideClick()}"
                     />
                 <ImageView
@@ -104,8 +106,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_check_inventory"
-                    android:textColor="@color/point_check_item_name"
-                    android:textSize="14sp" />
+                    android:textColor="@color/blackTextColor"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
 
                 <TextView
@@ -116,7 +119,8 @@
                     android:background="@null"
                     android:gravity="right"
                     android:hint="@string/text_choose_hint"
-                    android:textSize="14sp"
+                    android:textColorHint="@color/normal_main_text_icon_color"
+                    android:textSize="15sp"
                     android:onClick="@{()->callBack.onProjectClick()}"
                     />
                 <ImageView
@@ -156,8 +160,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_check_object"
-                    android:textColor="@color/point_check_item_name"
-                    android:textSize="14sp" />
+                    android:textColor="@color/blackTextColor"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
 
                 <TextView
@@ -167,8 +172,9 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:hint="请输入"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textColor="@color/txt_black_order"
+                    />
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -204,8 +210,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_check_address"
-                    android:textColor="@color/point_check_item_name"
-                    android:textSize="14sp" />
+                    android:textColor="@color/blackTextColor"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
 
                 <TextView
@@ -215,7 +222,8 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textColor="@color/txt_black_order" />
 
                 <ImageView
                     android:layout_width="12dp"
@@ -240,7 +248,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#ffffff"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
@@ -259,27 +267,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
                     android:text="@string/note"
-                    android:textColor="@color/point_check_item_name"
-                    android:textSize="14sp" />
+                    android:textColor="@color/blackTextColor"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
 
-                <EditText
-                    android:id="@+id/et_check_note"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="@string/text_input_hint"
-                    android:textSize="14sp" />
+               <com.einyun.app.common.ui.component.limit.LimitInput
+                   android:id="@+id/et_limit_input"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/px_20"
+                   android:layout_marginTop="@dimen/px_20"
+                   />
 
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="4dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/icon_arrow_right" />
             </LinearLayout>
 
 
@@ -297,13 +299,30 @@
                 android:paddingBottom="8dp">
 
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:text="图片"
-                    android:textColor="@color/point_check_item_name"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_20"
+                        android:text="图片"
+
+                        android:textColor="@color/blackTextColor"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/font_size16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_15"
+                        android:textColor="@color/important_red_color"
+                        android:text="@string/text_pic_max"
+                        />
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"

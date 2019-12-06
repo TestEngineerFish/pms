@@ -17,7 +17,7 @@ public class ProjectContentItemModel {
     private String checkContent;
     private int checkType;
     private String remark;
-    private int checkResult=-1;
+    private float checkResult=-1;
     private int qualified;
     private String minValue;
     private String maxVal;
@@ -54,11 +54,11 @@ public class ProjectContentItemModel {
         this.remark = remark;
     }
 
-    public int getCheckResult() {
+    public float getCheckResult() {
         return checkResult;
     }
 
-    public void setCheckResult(int checkResult) {
+    public void setCheckResult(float checkResult) {
         this.checkResult = checkResult;
     }
 

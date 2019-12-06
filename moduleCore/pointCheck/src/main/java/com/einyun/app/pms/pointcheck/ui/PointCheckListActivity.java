@@ -126,7 +126,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
 
         @Override
         public boolean areItemsTheSame(@NonNull CheckPointModel oldItem, @NonNull CheckPointModel newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.getId().equals(newItem.getId());
         }
 
         @SuppressLint("DiffUtilEquals")

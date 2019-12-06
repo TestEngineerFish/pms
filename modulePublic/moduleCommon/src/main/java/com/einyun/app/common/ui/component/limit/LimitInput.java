@@ -27,7 +27,7 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
 
     private TextView textView;
     private String hint;
-    private static int MAX_COUNT = 500;
+    private static int MAX_COUNT = 300;
 
     public LimitInput(Context context) {
         this(context, null, 0);
@@ -49,7 +49,7 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
 
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.LimitInput);
         hint = array.getString(R.styleable.LimitInput_hintText);
-        MAX_COUNT = array.getInteger(R.styleable.LimitInput_maxNumber, 500);
+        MAX_COUNT = array.getInteger(R.styleable.LimitInput_maxNumber, MAX_COUNT);
         array.recycle();
         textView.setText("0/" + MAX_COUNT);
         if (StringUtil.isNullStr(hint)) {
