@@ -55,6 +55,12 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
         return R.layout.activity_point_check_list;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
