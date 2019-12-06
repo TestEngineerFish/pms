@@ -56,7 +56,6 @@ import java.util.List;
  * @Version: 1.0
  */
 public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> {
-    //    private SendOrderAdapter adapter;//适配器
     RVPageListAdapter<ItemWorkSendBinding, DistributeWorkOrder> adapter;
     private PageBean pageBean=new PageBean();;
     private DistributePageRequest request= new DistributePageRequest();;
@@ -131,6 +130,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         request.setTypeRe(getArguments().getString("tabId"));
         request.setDivideId(SendOrderActivity.divideId);
         request.setTxId(SendOrderActivity.tiaoxianId);
+        request.setType(SendOrderActivity.typeFir);
         request.setEnvType2(SendOrderActivity.typeSec);
         request.setEnvType3(SendOrderActivity.typeThir);
         request.setPage(pageBean.getPage());
