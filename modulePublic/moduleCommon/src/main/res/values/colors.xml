@@ -8,8 +8,11 @@
     <color name="whiteTextColor">#ffffff</color>
     <color name="blackTextColor">#111111</color>
     <color name="grayItemColor">#555555</color>
-    <color name="main_color">#ca9e2d</color>
-    <color name="main_color_dark">#B88F29</color>
+    <color name="main_color">#476DF6</color>
+    <color name="main_color_dark">#476DF6</color>
+    <color name="colorPrimary">#476DF6</color>
+    <color name="colorPrimaryDark">#00ca9e2d</color>
+    <color name="colorAccent">#476DF6</color>
     <color name="whiteListColor">#f9f9f9</color>
     <color name="alertdialog_line">#c6c6c6</color>
     <color name="divider">#EEEEEE</color>

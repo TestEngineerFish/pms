@@ -27,11 +27,10 @@
                     android:id="@+id/check_point_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="vertical"
                     />
 
                 <LinearLayout
-                    android:id="@+id/ll_listwsj"
+                    android:id="@+id/ll_empty"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

@@ -1,7 +1,5 @@
 package com.einyun.app.common.ui.widget;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,28 +12,30 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.internal.util.LogUtil;
-
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.databinding.FragmentOgselectfBinding;
 import com.einyun.app.common.databinding.ItemBlockChooseBinding;
+import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -43,6 +43,8 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     FragmentOgselectfBinding binding;
     BlockChooseViewModel viewModel;
     private String userId;
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
     List<OrgModel> selectOrgs = new CopyOnWriteArrayList<>();
     private OnPeriodSelectListener onPeriodSelectListener;
     //设置分期选择监听
@@ -54,6 +56,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ARouter.getInstance().inject(this);
     }
 
     @Nullable
@@ -82,11 +85,18 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(wlp);
 
+        getActivity().getLifecycle().addObserver((LifecycleEventObserver) (source, event) -> {
+            if (event == Lifecycle.Event.ON_STOP) {
+                dismiss();
+            }
+        });
+
     }
 
+
     private void initData() {
-        userId = "63879813097586693";
-        /*viewModel.loadFromCache().observe(this, models -> {
+        userId = userModuleService.getUserId();
+        viewModel.loadFromCache().observe(this, models -> {
             if (models != null) {
                 binding.periodSelectDefault.setVisibility(View.GONE);
                 selectOrgs.addAll(models);
@@ -95,10 +105,9 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
 
             }
             viewModel.queryOrgs(userId, blockId);
-        });*/
-        viewModel.queryOrgs(userId, blockId);
+        });
+//        viewModel.queryOrgs(userId, blockId);
         viewModel.orgList.observe(this, orgModels -> {
-
             loadData(orgModels);
         });
     }
@@ -115,7 +124,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
 
     @Override
     public void onItemClicked(View veiw, OrgModel orgModel) {
-        if (selectOrgs.size() >= 1 && selectOrgs.get(selectOrgs.size() - 1).getName().equals("请选择组织")) {
+        if (selectOrgs.size() >= 1 && selectOrgs.get(selectOrgs.size() - 1).getName().equals(getContext().getResources().getString(R.string.text_choose_org))) {
             selectOrgs.remove(selectOrgs.size() - 1);
         }
         binding.periodSelectDefault.setVisibility(View.GONE);
@@ -128,7 +137,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         } else {
             selectOrgs.add(orgModel);
             OrgModel orgModel1 = new OrgModel();
-            orgModel1.setName("请选择组织");
+            orgModel1.setName(getContext().getResources().getString(R.string.text_choose_org));
             selectOrgs.add(orgModel1);
             loadTags();
             viewModel.queryOrgs(userId, orgModel.getId());
@@ -160,7 +169,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         @Override
         public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
             String tag = selectOrgs.get(position).getName();
-            if (tag.equals("请选择组织")) {
+            if (tag.equals(getContext().getResources().getString(R.string.text_choose_org))) {
                 holder.imageView.setImageResource(R.drawable.blue_oval_stock);
             } else {
                 holder.imageView.setImageResource(R.drawable.blue_oval);
@@ -171,7 +180,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
                     if (itemClickListener != null) {
                         itemClickListener.onItemClicked(holder.itemView, selectOrgs.get(position));
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -202,17 +211,18 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         selectOrgs.remove(selectOrgs.get(selectOrgs.size() - 1));
         OrgModel lastOrg = selectOrgs.get(selectOrgs.size() - 1);
         try {
-        if (!model.getId().equals(lastOrg)) {
-            for (OrgModel orgModel : selectOrgs) {
-                if (orgModel.getLevel() > model.getLevel()) {
-                    selectOrgs.remove(orgModel);
+            if (!model.getId().equals(lastOrg)) {
+                for (OrgModel orgModel : selectOrgs) {
+                    if (orgModel.getLevel() > model.getLevel()) {
+                        selectOrgs.remove(orgModel);
+                    }
                 }
+                OrgModel orgModel1 = new OrgModel();
+                orgModel1.setName(getContext().getResources().getString(R.string.text_choose_org));
+                selectOrgs.add(orgModel1);
+                viewModel.queryOrgs(userId, model.getId());
             }
-            OrgModel orgModel1=new OrgModel();
-            orgModel1.setName("请选择组织");
-            selectOrgs.add(orgModel1);
-            viewModel.queryOrgs(userId, model.getId());
-        }}catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -222,12 +232,8 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
             adapter = new RVBindingAdapter<ItemBlockChooseBinding, OrgModel>(getActivity(), com.einyun.app.common.BR.org) {
                 @Override
                 public void onBindItem(ItemBlockChooseBinding binding, OrgModel model, int pos) {
-                    if (!model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
-//                        binding.ivRightselect.setVisibility(View.GONE);
-//                        binding.ivRightSelected.setVisibility(View.GONE);
-                    } else {
-//                        binding.ivRight.setVisibility(View.GONE);
-//                        binding.ivRightSelected.setVisibility(View.GONE);
+                    if (model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
+                        binding.ivRightselect.setVisibility(View.VISIBLE);
                     }
                 }
 

@@ -46,7 +46,7 @@
         <item>已跟进</item>
     </string-array>
     <string name="search">搜索</string>
-    <string name="et_limit_input_hint">请输入您要咨询的内容,500字以内。</string>
+    <string name="et_limit_input_hint">请输入内容,300字以内。</string>
     <string name="tv_tiao_line">条线</string>
     <string name="tv_order_type">工单类型</string>
     <string name="tv_order_type_one">工单类型(一级)</string>
@@ -61,5 +61,6 @@
     <string name="question_desc">问题描述</string>
     <string name="question_location">问题位置</string>
     <string name="picture">图片</string>
+    <string name="text_choose_org">请选择组织</string>
     <string name="alert_submit_error">提交失败</string>
 </resources>

@@ -117,13 +117,23 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        BasicApplication.getInstance().removeActivity(this);
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if(loadingDialog!=null){
             if(loadingDialog.isShowing()){
                 loadingDialog.dismiss();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BasicApplication.getInstance().removeActivity(this);
     }
 }

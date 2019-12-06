@@ -46,13 +46,14 @@
             android:layout_marginRight="20dp"
             app:srcCompat="@mipmap/icon_checked"
             android:visibility="visible" />
+            -->
         <ImageView
             android:id="@+id/iv_rightselect"
             android:layout_width="20dp"
             android:layout_height="16dp"
             android:layout_marginRight="20dp"
             app:srcCompat="@mipmap/icon_no_checked"
-            android:visibility="visible" />
--->
+            android:visibility="gone" />
+
     </LinearLayout>
 </layout>

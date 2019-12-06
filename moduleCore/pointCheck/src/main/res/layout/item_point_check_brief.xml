@@ -28,7 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="15sp"
+                android:textSize="@dimen/font_size15"
+                android:textColor="@color/blackTextColor"
                 android:text="@{checkpoint.checkName}"
                 android:textStyle="bold" />
 
@@ -68,17 +69,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="@string/text_check_no"
-                android:textSize="14sp"
-                android:textColor="@color/point_check_item_name" />
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/normal_main_text_icon_color" />
 
             <TextView
                 android:id="@+id/tv_check_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textSize="14sp"
                 android:text="@{checkpoint.checkRecordCode}"
-                android:textColor="@color/point_check_item_value" />
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size14"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -93,17 +95,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="地块"
-                android:textSize="14sp"
-                android:textColor="@color/point_check_item_name" />
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/normal_main_text_icon_color" />
 
             <TextView
                 android:id="@+id/tv_check_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textSize="14sp"
                 android:text="@{checkpoint.massifName}"
-                android:textColor="@color/point_check_item_value" />
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size14" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,17 +120,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="点检对象"
-                android:textSize="14sp"
-                android:textColor="@color/point_check_item_name" />
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/normal_main_text_icon_color" />
 
             <TextView
                 android:id="@+id/tv_check_object"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textSize="14sp"
                 android:text="@{checkpoint.checkName}"
-                android:textColor="@color/point_check_item_value" />
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size14" />
         </LinearLayout>
 
         <LinearLayout
@@ -144,17 +146,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="是否上传附件"
-                android:textSize="14sp"
-                android:textColor="@color/point_check_item_name" />
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/normal_main_text_icon_color" />
 
             <TextView
                 android:id="@+id/tv_check_has_extra"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textSize="14sp"
                 app:isPic="@{checkpoint.isPic}"
-                android:textColor="@color/point_check_item_value" />
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size14" />
         </LinearLayout>
 
         <LinearLayout
@@ -169,17 +171,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="录入人"
-                android:textSize="14sp"
-                android:textColor="@color/point_check_item_name" />
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/normal_main_text_icon_color" />
 
             <TextView
                 android:id="@+id/tv_check_auther"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textSize="14sp"
                 android:text="@{checkpoint.createName}"
-                android:textColor="@color/point_check_item_value" />
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size14" />
         </LinearLayout>
 
         <LinearLayout
@@ -194,17 +196,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="录入时间"
-                android:textSize="14sp"
-                android:textColor="@color/point_check_item_name" />
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/normal_main_text_icon_color" />
 
             <TextView
                 android:id="@+id/tv_check_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textSize="14sp"
                 android:text="@{checkpoint.createTime}"
-                android:textColor="@color/point_check_item_value" />
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size14" />
         </LinearLayout>
 
     </LinearLayout>
