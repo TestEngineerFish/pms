@@ -1,9 +1,11 @@
 package com.einyun.app.base.paging.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PagedList;
 
 import com.einyun.app.base.BaseViewModel;
+import com.einyun.app.base.event.Status;
 import com.einyun.app.base.paging.bean.PageBean;
 
 /**
@@ -20,6 +22,13 @@ import com.einyun.app.base.paging.bean.PageBean;
  */
 public class BasePageListViewModel<T> extends BaseViewModel {
     public LiveData<PagedList<T>> pageList;
+
+    public void stopRefresh(){
+        Status status=new Status();
+        status.setRefresShown(false);
+        singleLiveEvent.setValue(status);
+    }
+
 
     public void refresh(){
         if(pageList !=null){

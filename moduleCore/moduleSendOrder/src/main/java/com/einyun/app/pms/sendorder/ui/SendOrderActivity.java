@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.event.Status;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -157,6 +158,8 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.periodSelected.setText(orgModel.getName());
+        viewModel.setOrgModel(orgModel);
+        viewModel.refreshUI();
     }
    /**
     * 处理筛选展示数据

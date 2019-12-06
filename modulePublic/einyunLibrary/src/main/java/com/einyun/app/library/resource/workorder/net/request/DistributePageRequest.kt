@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName
  */
 class DistributePageRequest :PageRquest(){
     @SerializedName("F_DIVIDE_ID")
-    var divideId:String?=null
+    var divideId:String?=""
     @SerializedName("F_TX_ID")
     var txId:String?=null
     @SerializedName("F_TYPE")

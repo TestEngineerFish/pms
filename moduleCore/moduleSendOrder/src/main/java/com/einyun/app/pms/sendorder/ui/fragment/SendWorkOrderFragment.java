@@ -1,47 +1,35 @@
 package com.einyun.app.pms.sendorder.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
-import com.einyun.app.base.paging.bean.PageBean;
-import com.einyun.app.common.model.SelectModel;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
-import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
-import com.einyun.app.pms.sendorder.adapter.SendOrderAdapter;
 import com.einyun.app.pms.sendorder.databinding.FragmentSendWorkOrderBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
-import com.einyun.app.pms.sendorder.model.SendOrderModel;
-import com.einyun.app.pms.sendorder.ui.SendOrderActivity;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 /**
  * @ProjectName: pms_old
@@ -58,8 +46,7 @@ import java.util.List;
 public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> {
     //    private SendOrderAdapter adapter;//适配器
     RVPageListAdapter<ItemWorkSendBinding, DistributeWorkOrder> adapter;
-    private PageBean pageBean=new PageBean();;
-    private DistributePageRequest request= new DistributePageRequest();;
+    private DistributePageRequest request= new DistributePageRequest();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public static SendWorkOrderFragment newInstance(Bundle bundle) {
@@ -86,8 +73,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         binding.sendOrderRef.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                binding.sendOrderRef.setRefreshing(false);
-                viewModel.refresh();
+                loadPagingData();
             }
         });
         binding.workSendList.addItemDecoration(new SpacesItemDecoration(30));
@@ -96,6 +82,19 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     @Override
     protected void setUpData() {
+        //停止刷新
+        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH,Boolean.class).observe(getActivity(), shown -> {
+            if(!shown){
+                binding.sendOrderRef.setRefreshing(false);
+            }
+        });
+
+        //切换筛选条件
+        viewModel.getLiveEvent().observe(getActivity(), status -> {
+            if(status.isRefresShown()){
+                loadPagingData();
+            }
+        });
         RecyclerView mRecyclerView = binding.workSendList;
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -120,7 +119,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                 }
             };
         }
-
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
 
         loadPagingData();
@@ -129,17 +128,16 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
         request.setTypeRe(getArguments().getString("tabId"));
-        request.setDivideId(SendOrderActivity.divideId);
-        request.setPage(pageBean.getPage());
-        request.setPageSize(pageBean.getPageSize());
+        if(viewModel.getOrgModel()!=null){
+            request.setDivideId(viewModel.getOrgModel().getId());
+        }
         request.setUserId(userModuleService.getUserId());
         viewModel.loadPadingData(request).observe(this, dataBeans -> adapter.submitList(dataBeans));
     }
 
     @Override
     protected SendOrderViewModel initViewModel() {
-        return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
-
+        return new ViewModelProvider(getActivity(), new SendOdViewModelFactory()).get(SendOrderViewModel.class);
     }
 
     //DiffUtil.ItemCallback,标准写法
@@ -147,7 +145,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
         @Override
         public boolean areItemsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
-            return oldItem.getID() == newItem.getID();
+            return oldItem.getID().equals(newItem.getID());
         }
 
         @SuppressLint("DiffUtilEquals")

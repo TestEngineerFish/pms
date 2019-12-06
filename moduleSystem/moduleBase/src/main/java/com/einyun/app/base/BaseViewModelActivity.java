@@ -1,11 +1,8 @@
 package com.einyun.app.base;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
@@ -14,7 +11,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.widget.LoadingDialog;
-import com.githang.statusbar.StatusBarCompat;
 
 public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends AppCompatActivity {
 
@@ -92,7 +88,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
      */
     public void initViews(Bundle savedInstanceState) {
         if(viewModel!=null){
-            viewModel.getSingleLiveEvent().observe(this, status -> {
+            viewModel.getLiveEvent().observe(this, status -> {
                 if (status.isLoadingShow()) {
                     showLoading();
                 }else if(!status.isLoadingShow()){

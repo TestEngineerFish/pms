@@ -26,6 +26,7 @@ import com.einyun.app.library.resource.workorder.net.request.DistributePageReque
 import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.model.SendOrderModel;
 import com.einyun.app.pms.sendorder.repository.OrderDataSourceFactory;
 
@@ -38,41 +39,52 @@ public class SendOrderViewModel extends BasePageListViewModel {
     private ResourceWorkOrderRepo resourceWorkOrderRepo;
     private ResourceWorkOrderService resourceWorkOrderService;
     private LiveData<DistributeWorkOrderPage> workOrderListViewModel;
-    private MutableLiveData<List<ResourceTypeBean>> tiaoxianList=new MutableLiveData<>();//条线
-    private MutableLiveData<List<WorkOrderTypeModel>> workOrderTypeList=new MutableLiveData<>();//条线
-    public List<SelectModel> selectModelList=new ArrayList<>();
-    public List<ResourceTypeBean> resourceTypeBeans=new ArrayList<>();
+    private MutableLiveData<List<ResourceTypeBean>> tiaoxianList = new MutableLiveData<>();//条线
+    private MutableLiveData<List<WorkOrderTypeModel>> workOrderTypeList = new MutableLiveData<>();//条线
+    public List<SelectModel> selectModelList = new ArrayList<>();
+    public List<ResourceTypeBean> resourceTypeBeans = new ArrayList<>();
+    private OrgModel orgModel;
 
-    public List<SelectModel> listAll=new ArrayList<>();
+    public OrgModel getOrgModel() {
+        return orgModel;
+    }
+
+    public void setOrgModel(OrgModel orgModel) {
+        this.orgModel = orgModel;
+    }
+
+    public List<SelectModel> listAll = new ArrayList<>();
+
     public SendOrderViewModel() {
         this.resourceWorkOrderRepo = new ResourceWorkOrderRepo();
         this.resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     }
+
     /**
      * 获取Paging LiveData
+     *
      * @return LiveData
      */
-    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request){
+    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request) {
 
-        if(pageList ==null){
-            pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
-                    .build();
-        }
+        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
+                .build();
         return pageList;
     }
 
     /**
      * 获取跳线 LiveData
+     *
      * @return LiveData
      */
-    public LiveData<List<ResourceTypeBean>> getTiaoXian(){
+    public LiveData<List<ResourceTypeBean>> getTiaoXian() {
         showLoading();
         resourceWorkOrderRepo.getTiaoXian(new CallBack<List<ResourceTypeBean>>() {
             @Override
             public void call(List<ResourceTypeBean> data) {
                 hideLoading();
                 tiaoxianList.postValue(data);
-                 resourceTypeBeans=new ArrayList<>();
+                resourceTypeBeans = new ArrayList<>();
             }
 
             @Override
@@ -86,31 +98,32 @@ public class SendOrderViewModel extends BasePageListViewModel {
 
     /**
      * 获取跳线 LiveData
+     *
      * @return LiveData
      */
-    public LiveData<List<WorkOrderTypeModel>> getOrderType(){
+    public LiveData<List<WorkOrderTypeModel>> getOrderType() {
         showLoading();
         resourceWorkOrderRepo.getWorkOrderType(new CallBack<List<WorkOrderTypeModel>>() {
             @Override
             public void call(List<WorkOrderTypeModel> data) {
-               hideLoading();
+                hideLoading();
                 workOrderTypeList.postValue(data);
                 //先获取第一级别，并将其他级别按照parentid分组
-                 listAll = new ArrayList<>();
+                listAll = new ArrayList<>();
                 for (WorkOrderTypeModel beanLoop : data) {
-                   SelectModel selectModel=new SelectModel();
-                   selectModel.setId(beanLoop.getId());
-                   selectModel.setIsCheck(false);
-                   selectModel.setContent(beanLoop.getText());
-                   selectModel.setType("");
-                   selectModel.setTypeId(beanLoop.getTypeId());
-                   selectModel.setKey(beanLoop.getKey());
-                   selectModel.setName(beanLoop.getName());
-                   selectModel.setParentId(beanLoop.getParentId());
-                   selectModel.setOpen(beanLoop.getOpen());
-                   selectModel.setText(beanLoop.getText());
-                   selectModel.setKey(beanLoop.getKey());
-                   listAll.add(selectModel);
+                    SelectModel selectModel = new SelectModel();
+                    selectModel.setId(beanLoop.getId());
+                    selectModel.setIsCheck(false);
+                    selectModel.setContent(beanLoop.getText());
+                    selectModel.setType("");
+                    selectModel.setTypeId(beanLoop.getTypeId());
+                    selectModel.setKey(beanLoop.getKey());
+                    selectModel.setName(beanLoop.getName());
+                    selectModel.setParentId(beanLoop.getParentId());
+                    selectModel.setOpen(beanLoop.getOpen());
+                    selectModel.setText(beanLoop.getText());
+                    selectModel.setKey(beanLoop.getKey());
+                    listAll.add(selectModel);
                 }
             }
 
