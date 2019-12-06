@@ -35,6 +35,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3;
+
 public class SendOrderViewModel extends BasePageListViewModel {
     private ResourceWorkOrderRepo resourceWorkOrderRepo;
     private ResourceWorkOrderService resourceWorkOrderService;
@@ -44,6 +50,15 @@ public class SendOrderViewModel extends BasePageListViewModel {
     public List<SelectModel> selectModelList = new ArrayList<>();
     public List<ResourceTypeBean> resourceTypeBeans = new ArrayList<>();
     private OrgModel orgModel;
+    private DistributePageRequest request=new DistributePageRequest();
+
+    public DistributePageRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(DistributePageRequest request) {
+        this.request = request;
+    }
 
     public OrgModel getOrgModel() {
         return orgModel;
@@ -94,6 +109,28 @@ public class SendOrderViewModel extends BasePageListViewModel {
         });
 
         return tiaoxianList;
+    }
+
+    public void onConditionSelected(Map<String,SelectModel> selected){
+        request.resetConditions();
+        if(selected.get(SELECT_LINE)!=null){
+            String lineId=selected.get(SELECT_LINE).getKey();
+            request.setDivideId(lineId);
+        }
+        if(selected.get(SELECT_ORDER_TYPE)!=null){
+            String orderType=selected.get(SELECT_ORDER_TYPE).getKey();
+            request.setType(orderType);
+        }
+        if(selected.get(SELECT_ORDER_TYPE2)!=null){
+            request.setEnvType2(selected.get(SELECT_ORDER_TYPE2).getKey());
+        }
+        if(selected.get(SELECT_ORDER_TYPE3)!=null){
+            request.setEnvType3(selected.get(SELECT_ORDER_TYPE3).getKey());
+        }
+        if(selected.get(SELECT_IS_OVERDUE)!=null){
+            request.setFState(selected.get(SELECT_IS_OVERDUE).getKey());
+        }
+        refreshUI();
     }
 
     /**

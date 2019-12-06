@@ -2,6 +2,7 @@ package com.einyun.app.common.ui.widget;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,20 +24,28 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class SelectPopUpView extends PopupWindow implements View.OnClickListener {
     private static final String TAG = "CustomPopWindow";
+    public static final String SELECT_LINE = "SELECT_LINE";//条线
+    public static final String SELECT_ORDER_TYPE = "SELECT_ORDER_TYPE";//工单类型1
+    public static final String SELECT_ORDER_TYPE2 = "SELECT_ORDER_TYPE2";//工单类型2
+    public static final String SELECT_ORDER_TYPE3 = "SELECT_ORDER_TYPE3";//工单类型3
+    public static final String SELECT_IS_OVERDUE = "SELECT_IS_OVERDUE";//是否超期;
     private View view;
     private Activity context;
     private AdapterView.OnItemClickListener mListener;
     private RVBindingAdapter<ItemSelectPopBinding, SelectModel> adapter;//外部适配器
     private SelectPopUpBinding selectPopUpBinding;
-    private List<SelectModel> selectModelList = new ArrayList<>();
+    private List<SelectModel> selectModelList;
     private List<SelectModel> selectModelListOrig = new ArrayList<>();//复制原始数据
     private String listJsonString;
     private OnSelectedListener onSelectedListener;
+    private HashMap<String,SelectModel> selectedMap=new HashMap<>();
 
     public SelectPopUpView(Activity context, List<SelectModel> selectModelList) {
         super(context);
@@ -113,6 +122,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
                 adapterIn.setOnItemClick(new ItemClickListener<SelectModel>() {
                     @Override
                     public void onItemClicked(View veiw, SelectModel data) {
+                        onSelected(data);
                         handleCheck(model.getSelectModelList(), data);
                         adapterIn.setDataList(model.getSelectModelList());
                         if (data.getSelectModelList().size() == 0) {
@@ -157,6 +167,21 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
         selectPopUpBinding.confirm.setOnClickListener(this);
     }
 
+    protected void onSelected(SelectModel data) {
+        if (!TextUtils.isEmpty(data.getTypeId()) && !TextUtils.isEmpty(data.getParentId())
+                && data.getParentId().equals(data.getTypeId())){
+            selectedMap.put(SELECT_LINE,data);
+        }else if(data.getParentId().equals(selectedMap.get(SELECT_LINE).getId())){
+            selectedMap.put(SELECT_ORDER_TYPE,data);
+        }else if(data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE).getId())){
+            selectedMap.put(SELECT_ORDER_TYPE2,data);
+        }else if(data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE2).getId())){
+            selectedMap.put(SELECT_ORDER_TYPE3,data);
+        }else if(data.getConditionType().equals(SELECT_IS_OVERDUE)){
+            selectedMap.put(SELECT_IS_OVERDUE,data);
+        }
+    }
+
 
     /**
      * 设置选中数据处理
@@ -191,6 +216,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     private void reCoverData() {
         selectModelList = new Gson().fromJson(listJsonString, new TypeToken<List<SelectModel>>() {
         }.getType());
+        selectedMap.clear();
         adapter.setDataList(selectModelList);
     }
 
@@ -220,7 +246,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
             this.dismiss();
         }
         if (v.getId() == R.id.confirm) {
-            onSelectedListener.onSelected(selectModelList);
+            onSelectedListener.onSelected(selectedMap);
             this.dismiss();
         }
 
@@ -230,7 +256,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
      * 设置确认回调
      */
     public interface OnSelectedListener {
-        void onSelected(List<SelectModel> selectModelList);
+        void onSelected(Map<String,SelectModel> selected);
     }
 
     public SelectPopUpView setOnSelectedListener(OnSelectedListener onSelectedListener) {

@@ -127,6 +127,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

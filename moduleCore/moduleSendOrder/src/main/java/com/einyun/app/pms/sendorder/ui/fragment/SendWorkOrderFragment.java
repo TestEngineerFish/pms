@@ -46,7 +46,6 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> {
     //    private SendOrderAdapter adapter;//适配器
     RVPageListAdapter<ItemWorkSendBinding, DistributeWorkOrder> adapter;
-    private DistributePageRequest request= new DistributePageRequest();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public static SendWorkOrderFragment newInstance(Bundle bundle) {
@@ -127,12 +126,12 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        request.setTypeRe(getArguments().getString("tabId"));
+        viewModel.getRequest().setTypeRe(getArguments().getString("tabId"));
         if(viewModel.getOrgModel()!=null){
-            request.setDivideId(viewModel.getOrgModel().getId());
+            viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
         }
-        request.setUserId(userModuleService.getUserId());
-        viewModel.loadPadingData(request).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        viewModel.getRequest().setUserId(userModuleService.getUserId());
+        viewModel.loadPadingData(viewModel.getRequest()).observe(this, dataBeans -> adapter.submitList(dataBeans));
     }
 
     @Override
