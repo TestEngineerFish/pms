@@ -20,4 +20,7 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel
 interface DictService :EinyunService{
     //条线等信息
     fun getByTypeKey(typeKey: String, callBack: CallBack<List<DictDataModel>>?): LiveData<List<DictDataModel>>
+
+    //条线等信息
+    fun getTypesListByKey(typeKey: String, callBack: CallBack<List<DictDataModel>>?): LiveData<List<DictDataModel>>
 }

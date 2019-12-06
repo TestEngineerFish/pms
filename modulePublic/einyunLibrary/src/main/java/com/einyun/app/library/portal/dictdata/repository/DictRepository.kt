@@ -65,6 +65,27 @@ class DictRepository : DictService {
     /**
      * 通过Typekey 获取字典
      */
+    override fun getTypesListByKey(
+        typeKey: String,
+        callBack: CallBack<List<DictDataModel>>?
+    ): LiveData<List<DictDataModel>> {
+        var liveData = MutableLiveData<List<DictDataModel>>()
+        serviceApi?.getTypesListByKey(typeKey)
+            ?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack?.call(response.data)
+                    liveData.postValue(response.data)
+                }
+            }, { error ->
+                error.printStackTrace()
+            })
+        return liveData
+    }
+
+    /**
+     * 通过Typekey 获取字典
+     */
     override fun getByTypeKey(
         typeKey: String,
         callBack: CallBack<List<DictDataModel>>?

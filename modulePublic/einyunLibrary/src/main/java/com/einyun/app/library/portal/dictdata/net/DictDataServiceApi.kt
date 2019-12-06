@@ -38,6 +38,14 @@ interface DictDataServiceApi {
     fun getByTypeKey(@Query("typeKey") typeKey: String): Flowable<DictListResponse>
 
     /**
+     * 根据分类key获取字典
+     * @param typeKey
+     * @return
+     */
+    @GET(URLS.URL_DATA_DICT_GET_BY_TYPE_KEY_LIST)
+    fun getTypesListByKey(@Query("typeKey") typeKey: String): Flowable<DictListResponse>
+
+    /**
      *
      *数据字典明细页面
      */

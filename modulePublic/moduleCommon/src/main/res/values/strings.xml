@@ -61,4 +61,5 @@
     <string name="question_desc">问题描述</string>
     <string name="question_location">问题位置</string>
     <string name="picture">图片</string>
+    <string name="alert_submit_error">提交失败</string>
 </resources>

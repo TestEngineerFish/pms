@@ -32,6 +32,13 @@ import com.einyun.app.library.uc.user.repository.UserRepository
  * @Version: 1.0
  */
 class DictServiceImplProxy : DictService {
+    override fun getTypesListByKey(
+        typeKey: String,
+        callBack: CallBack<List<DictDataModel>>?
+    ): LiveData<List<DictDataModel>> {
+        return instance?.getTypesListByKey(typeKey, callBack)!!
+    }
+
     override fun getByTypeKey(
         typeKey: String,
         callBack: CallBack<List<DictDataModel>>?

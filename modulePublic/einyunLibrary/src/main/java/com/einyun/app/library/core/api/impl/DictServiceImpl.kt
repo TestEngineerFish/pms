@@ -20,6 +20,13 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel
  * @Version: 1.0
  */
 class DictServiceImpl :DictService{
+    override fun getTypesListByKey(
+        typeKey: String,
+        callBack: CallBack<List<DictDataModel>>?
+    ): LiveData<List<DictDataModel>> {
+        return proxy.getTypesListByKey(typeKey, callBack)
+    }
+
     override fun getByTypeKey(
         typeKey: String,
         callBack: CallBack<List<DictDataModel>>?

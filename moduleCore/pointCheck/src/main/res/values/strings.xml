@@ -7,7 +7,7 @@
     <string name="alert_choose_massif">请选择地块</string>
     <string name="alert_choose_project">请选择点检事项</string>
     <string name="alert_choose_pic">请上传图片</string>
-    <string name="alert_submit_error">提交失败</string>
+
     <string name="alert_input">请输入</string>
     <string name="alert_input_result">请输入检查结果</string>
     <string name="item_qualified">合格</string>
