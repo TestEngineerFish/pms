@@ -130,6 +130,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         //初始化数据，LiveData自动感知，刷新页面
         request.setTypeRe(getArguments().getString("tabId"));
         request.setDivideId(SendOrderActivity.divideId);
+        request.setTxId(SendOrderActivity.tiaoxianId);
+        request.setEnvType2(SendOrderActivity.typeSec);
+        request.setEnvType3(SendOrderActivity.typeThir);
         request.setPage(pageBean.getPage());
         request.setPageSize(pageBean.getPageSize());
         request.setUserId(userModuleService.getUserId());

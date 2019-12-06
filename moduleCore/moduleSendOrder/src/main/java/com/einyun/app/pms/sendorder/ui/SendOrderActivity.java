@@ -157,6 +157,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.periodSelected.setText(orgModel.getName());
+        divideId=orgModel.getId();
     }
    /**
     * 处理筛选展示数据

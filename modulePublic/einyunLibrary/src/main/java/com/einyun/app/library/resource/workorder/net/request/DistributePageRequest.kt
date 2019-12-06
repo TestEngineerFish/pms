@@ -31,6 +31,8 @@ class DistributePageRequest :PageRquest(){
     var envType2:String?=null
     @SerializedName("F_ENVIRMENT_TYPE3_CODE")
     var envType3:String?=null
+    @SerializedName("F_OT_STATUS")
+    var otStatus:String?=null
     var typeRe:String?=null
 
 }
