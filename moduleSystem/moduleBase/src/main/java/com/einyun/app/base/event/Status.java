@@ -17,6 +17,15 @@ public class Status {
     private boolean isLoadingShow;
     private boolean isProgressIndicatorShown;
     private boolean isGenderDialogShown;
+    private boolean isRefresShown;
+
+    public boolean isRefresShown() {
+        return isRefresShown;
+    }
+
+    public void setRefresShown(boolean refresShown) {
+        isRefresShown = refresShown;
+    }
 
     public boolean isLoadingShow() {
         return isLoadingShow;

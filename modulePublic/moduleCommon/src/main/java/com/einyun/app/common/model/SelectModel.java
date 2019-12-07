@@ -1,5 +1,6 @@
 package com.einyun.app.common.model;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ public class SelectModel implements Cloneable{
     private String content;//标签名
     private String type="";//分类
     private boolean isCheck=false;//标签是否被选中
-
+    @NonNull
+    private String conditionType;
     private String typeId;
     private String key;
     private String name;
@@ -84,6 +86,15 @@ public class SelectModel implements Cloneable{
 
     public void setSelectModelList(List<SelectModel> selectModelList) {
         this.selectModelList = selectModelList;
+    }
+
+    @NonNull
+    public String getConditionType() {
+        return conditionType;
+    }
+
+    public void setConditionType(@NonNull String conditionType) {
+        this.conditionType = conditionType;
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.einyun.app.base;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
@@ -29,15 +31,33 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BaseViewModel extends ViewModel implements IActivityLifecycle{
 
-    protected SingleLiveEvent<Status> singleLiveEvent =new SingleLiveEvent();
+    protected MutableLiveData<Status> singleLiveEvent =new MutableLiveData();
 
-    public SingleLiveEvent<Status> getSingleLiveEvent() {
+    public LiveData<Status> getLiveEvent() {
         return singleLiveEvent;
     }
 
     //弱引用持有
     public BaseViewModel(){
         ARouter.getInstance().inject(this);
+    }
+
+    /**
+     * 刷新页面
+     */
+    public void refreshUI(){
+        Status status=new Status();
+        status.setRefresShown(true);
+        singleLiveEvent.postValue(status);
+    }
+
+    /**
+     * 停止刷新页面
+     */
+    public void stopRefresh(){
+        Status status=new Status();
+        status.setRefresShown(false);
+        singleLiveEvent.postValue(status);
     }
 
 
