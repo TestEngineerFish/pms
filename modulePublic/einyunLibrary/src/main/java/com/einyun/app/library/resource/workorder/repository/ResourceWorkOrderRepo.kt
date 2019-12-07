@@ -27,6 +27,17 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+        serviceApi?.distribteResponse(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    callBack.call(it.isState)
+                },{
+                    callBack.onFaild(it)
+                }
+            )
+    }
+
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
         var url=URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL+taskId
         serviceApi?.distributeWaitDetial(url)?.compose(RxSchedulers.inIo())

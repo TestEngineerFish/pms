@@ -44,6 +44,8 @@ interface ResourceWorkOrderService : EinyunService {
 
     //获取派工单已办详情
     fun distributeDoneDetial(request:DoneDetialRequest,callBack: CallBack<DisttributeDetialModel>)
+    //派工单接单
+    fun distributeResponse(request: WorkOrderHanlerRequest,callBack: CallBack<Boolean>)
     //获取条线
     fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
     //获取工单类型

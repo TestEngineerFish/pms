@@ -1,11 +1,13 @@
 package com.einyun.app.pms.sendorder.ui;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 
@@ -105,9 +107,32 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        if(tipDialog!=null){
+            tipDialog.dismiss();
+        }
+    }
+
+    private void takeOrder(){
+        viewModel.takeOrder(taskId).observe(this, aBoolean -> {
+            if(aBoolean){
+                tipDialog.setTipDialogListener(new TipDialog.TipDialogListener() {
+                    @Override
+                    public void onKnowClick(AlertDialog dialog) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                tipDialog.show();
+            }
+        });
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.send_order_detail_submit) {
-            tipDialog.show();
+            takeOrder();
         }
         if (v.getId()==R.id.send_order_apply_late){
             ARouter.getInstance()

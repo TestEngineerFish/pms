@@ -8,6 +8,7 @@ import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
+import com.einyun.app.library.resource.workorder.net.request.WorkOrderHanlerRequest;
 
 public class SendOrderDetialViewModel extends BaseUploadViewModel {
     ResourceWorkOrderService service;
@@ -36,5 +37,31 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
             }
         });
         return workOrderLiveData;
+    }
+
+    /**
+     * 接单
+     * @param taskId
+     * @return
+     */
+    public LiveData<Boolean> takeOrder(String taskId){
+        MutableLiveData<Boolean> liveData=new MutableLiveData<>();
+        WorkOrderHanlerRequest request=new WorkOrderHanlerRequest();
+        request.setTaskId(taskId);
+        showLoading();
+        service.distributeResponse(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                liveData.postValue(false);
+            }
+        });
+        return liveData;
     }
 }

@@ -60,6 +60,9 @@ class URLs {
 
         //派工单已办详细 POST   param["proInsId"] = proInsID param["taskNodeId"] = taskNodeID
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DONE_DETAIL="/$DOMAIN/res-order/distribute/doneDetail"
+        //派工单接单
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE="/$DOMAIN/res-order/distribute/response"
+
         //获取条线
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_TIAOXIAN="/portal/sys/sysType/v1/getTypesListByKey?typeKey=RESOURCE_TYPE"
         //获取工单类型

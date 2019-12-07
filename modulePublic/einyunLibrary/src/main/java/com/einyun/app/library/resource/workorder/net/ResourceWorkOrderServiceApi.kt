@@ -2,8 +2,6 @@ package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.net.request.*
-import androidx.room.FtsOptions
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
 import com.einyun.app.library.resource.workorder.net.request.PageRquest
@@ -15,8 +13,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Url
-import retrofit2.http.*
-import java.util.*
 
 /**
  * @ProjectName: android-framework
@@ -96,6 +92,12 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DONE_DETAIL)
     fun distributeDoneDetial(@Body request:DoneDetialRequest):Flowable<DistributeWorkOrderResponse>
+
+    /**
+     * 派工单接单
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE)
+    fun distribteResponse(@Body request:WorkOrderHanlerRequest):Flowable<BaseResponse<Any>>
 
     /**
      * 2.30派工单-列表（根据地块id、条线编码）

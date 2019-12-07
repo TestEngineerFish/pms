@@ -18,8 +18,10 @@ public class TipDialog {
     private Context context;
     private String tip;
     private AlertDialog.Builder alterDiaglog;
+    private AlertDialog dialog;
     private View view;
     TipDialogBinding binding;
+    private TipDialogListener listener;
     public TipDialog(Context context, String tip) {
         this.context = context;
         this.tip = tip;
@@ -38,9 +40,29 @@ public class TipDialog {
         });
          binding= DataBindingUtil.bind(view);
         binding.tipDialogContent.setText(tip);
+        binding.tipDialogKnow.setOnClickListener(v -> {
+           if(listener!=null){
+               listener.onKnowClick(dialog);
+           }
+        });
+        dialog=alterDiaglog.create();
+
+    }
+
+    public void dismiss(){
+        if(dialog!=null&&dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 
     public void show() {
-        alterDiaglog.show();
+        dialog.show();
+    }
+
+    public void setTipDialogListener(TipDialogListener listener){
+        this.listener=listener;
+    }
+    public interface TipDialogListener{
+        void onKnowClick(AlertDialog dialog);
     }
 }

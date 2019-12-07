@@ -21,6 +21,10 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+        instance?.distributeResponse(request,callBack)
+    }
+
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
          instance?.distributeWaitDetial(taskId,callBack)
     }
