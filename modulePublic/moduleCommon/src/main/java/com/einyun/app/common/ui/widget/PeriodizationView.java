@@ -81,6 +81,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         window.setGravity(Gravity.TOP);
         window.setDimAmount(0);
         wlp.y = R.dimen.px_300;
+        wlp.windowAnimations = R.style.BottomDialogAnimation;
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(wlp);
