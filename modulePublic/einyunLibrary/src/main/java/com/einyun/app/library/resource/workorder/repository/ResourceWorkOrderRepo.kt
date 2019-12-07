@@ -30,17 +30,38 @@ import com.einyun.app.library.resource.workorder.net.response.PatrolDetialRespon
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun getResourceInfos(
+        massifId: String,
+        resourceTypeCode: String,
+        callBack: CallBack<List<ResourceTypeBean>>
+    ): LiveData<List<ResourceTypeBean>> {
+        val liveData = MutableLiveData<List<ResourceTypeBean>>()
+        val request = ResourceTypeRequest()
+        request.massifId = massifId
+        request.resourceTypeCode = resourceTypeCode
+        serviceApi?.getResourceInfos(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData;
+    }
+
     override fun createSendOrder(
         request: CreateSendOrderRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean> {
         val liveData = MutableLiveData<Boolean>()
         serviceApi?.createSendOrder(request)?.compose(RxSchedulers.inIo())
-            ?.subscribe({response->
-                if(response.isState){
+            ?.subscribe({ response ->
+                if (response.isState) {
                     callBack.call(response.isState)
                     liveData.postValue(response.isState)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error) })
@@ -50,12 +71,15 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     /**
      * 获取巡查待办列表
      */
-    override fun patrolWaitPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>) {
+    override fun patrolWaitPage(
+        request: PatrolPageRequest,
+        callBack: CallBack<PatrolWorkOrderPage>
+    ) {
         serviceApi?.patrolWaitPage(request)?.compose(RxSchedulers.inIo())
-            ?.subscribe({response->
-                if(response.isState){
+            ?.subscribe({ response ->
+                if (response.isState) {
                     callBack.call(response.data)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error) })
@@ -64,12 +88,15 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     /**
      * 获取巡查待办已办
      */
-    override fun patrolClosedPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>) {
+    override fun patrolClosedPage(
+        request: PatrolPageRequest,
+        callBack: CallBack<PatrolWorkOrderPage>
+    ) {
         serviceApi?.patrolDonePage(request)?.compose(RxSchedulers.inIo())
-            ?.subscribe({response->
-                if(response.isState){
+            ?.subscribe({ response ->
+                if (response.isState) {
                     callBack.call(response.data)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error) })
@@ -78,16 +105,16 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     /**
      * 巡查工单详情
      */
-   override fun patrolDetial(request: PatrolDetialRequest,callBack: CallBack<PatrolInfo>){
+    override fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
         serviceApi?.patrolDetial(request)?.compose(RxSchedulers.inIo())
             ?.subscribe(
-                {response->
-                    if(response.isState){
+                { response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{callBack.onFaild(it)}
+                }, { callBack.onFaild(it) }
             )
     }
 
@@ -106,44 +133,36 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {
         val liveData = MutableLiveData<WaitCount>()
         serviceApi?.getWaitCount()?.compose(RxSchedulers.inIo())
-                ?.subscribe({ response ->
-                    if (response.isState) {
-                        callBack.call(response.data)
-                        liveData.postValue(response.data)
-                    } else {
-                        callBack.onFaild(EinyunHttpException(response))
-                    }
-                }, { error -> callBack.onFaild(error) })
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
         return liveData
     }
 
 
-    var serviceApi: ResourceWorkOrderServiceApi?= null
+    var serviceApi: ResourceWorkOrderServiceApi? = null
+
     init {
-        serviceApi=EinyunHttpService.getInstance().getServiceApi(ResourceWorkOrderServiceApi::class.java)
+        serviceApi =
+            EinyunHttpService.getInstance().getServiceApi(ResourceWorkOrderServiceApi::class.java)
     }
+
     /**
      * 派工单代办列表
      * */
-    override fun distributeWaitPage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage> {
+    override fun distributeWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage> {
         val liveData = MutableLiveData<DistributeWorkOrderPage>()
-        serviceApi?.distributeWaitPage(request)?.compose(RxSchedulers.inIoMain<DistributeListResponse>())
-                ?.subscribe({ response:DistributeListResponse ->
-                    if (response.isState) {
-                        callBack.call(response.data)
-//                        liveData.postValue(response.value)
-                    } else {
-                        callBack.onFaild(EinyunHttpException(response))
-                    }
-                }, { error -> callBack.onFaild(error) })
-        return liveData    }
-    /**
-     * 派工单已跟进列表
-     * */
-    override fun distributeDonePage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage> {
-        val liveData = MutableLiveData<DistributeWorkOrderPage>()
-        serviceApi?.distributeDonePage(request)?.compose(RxSchedulers.inIoMain<DistributeListResponse>())
-            ?.subscribe({ response:DistributeListResponse ->
+        serviceApi?.distributeWaitPage(request)
+            ?.compose(RxSchedulers.inIoMain<DistributeListResponse>())
+            ?.subscribe({ response: DistributeListResponse ->
                 if (response.isState) {
                     callBack.call(response.data)
 //                        liveData.postValue(response.value)
@@ -151,7 +170,29 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error) })
-        return liveData    }
+        return liveData
+    }
+
+    /**
+     * 派工单已跟进列表
+     * */
+    override fun distributeDonePage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage> {
+        val liveData = MutableLiveData<DistributeWorkOrderPage>()
+        serviceApi?.distributeDonePage(request)
+            ?.compose(RxSchedulers.inIoMain<DistributeListResponse>())
+            ?.subscribe({ response: DistributeListResponse ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
 
 
     /**

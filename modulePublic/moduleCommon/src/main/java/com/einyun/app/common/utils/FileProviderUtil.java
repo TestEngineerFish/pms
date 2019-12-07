@@ -22,7 +22,7 @@ import com.einyun.app.common.application.CommonApplication;
 public class FileProviderUtil {
     public final static String EXTERNAL_CACHE="/mq_external_cache";
     public final static String getFileProviderName(Context context){
-        return context.getPackageName()+".fileprovider";
+        return "com.einyun.app.pms.fileprovider";
     }
 
     public static String getRealPathFromURI(Context context, Uri contentUri) {

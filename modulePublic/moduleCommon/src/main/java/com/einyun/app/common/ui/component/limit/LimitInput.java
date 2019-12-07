@@ -27,7 +27,7 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
 
     private TextView textView;
     private String hint;
-    private static int MAX_COUNT = 300;
+    private int MAX_COUNT = 300;
 
     public LimitInput(Context context) {
         this(context, null, 0);

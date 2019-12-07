@@ -1,7 +1,10 @@
 package com.einyun.app.pms.create;
 
 public enum SelectType {
-    AGING("分期", "sss"), LINE("条线", "bbb");
+    AGING("分期", "sss"), LINE("条线", "bbb"),WORKY_TYPE("工单类型","")
+    ,RESOURCE_TYPE("资源类型","")
+    ,RESOURCE("资源","")
+    ,DISPOSE_PERSON("处理人","dispose_person");
     // 成员变量  
     private String name;
     private String index;

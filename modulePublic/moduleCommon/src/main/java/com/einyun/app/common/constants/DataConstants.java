@@ -24,6 +24,7 @@ public class DataConstants {
 
     public static final String KEY_ORG_BLOCK="ORG_DiKuai";
 
-    public static final String DATA_PROVIDER_NAME="com.einyun.app.pms";
+    public static final String DATA_PROVIDER_NAME="com.einyun.app.pms.fileprovider";
     public static final String KEY_SCANNER_CONTENT = "SCANNER_CONTENT";
+    public static final String KEY_CHOOSE_DISPOSE_PERSON_CONTENT = "CHOOSE_DISPOSE_PERSON_CONTENT";
 }

@@ -1,6 +1,7 @@
 package com.einyun.app.library.uc.usercenter.net
 
 import androidx.work.WorkRequest
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.portal.dictdata.net.URLS
 import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
@@ -35,4 +36,7 @@ interface UserCenterServiceApi {
 
     @GET(URLs.URL_UPDATE_WORK_STATUS)
     fun updateWorkStatus(@Query("userId") userId: String, @Query("account") account: String, @Query("status") status: String): Flowable<WorkStatusResponse>
+
+    @GET(URLs.URL_GET_DISPOSE_PERSON)
+    fun getDisposePerson(@Query("orgId") orgId: String, @Query("dimCode") dimCode: String): Flowable<BaseResponse<List<OrgModel>>>
 }

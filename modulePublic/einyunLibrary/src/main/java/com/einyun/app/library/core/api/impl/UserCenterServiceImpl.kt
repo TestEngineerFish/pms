@@ -20,6 +20,14 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel
  * @Version:        1.0
  */
 class UserCenterServiceImpl : UserCenterService {
+    override fun getDisposePerson(
+        orgId: String,
+        dimCode: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
+        return proxy.getDisposePerson(orgId, dimCode, callBack)
+    }
+
     override fun updateWorkStatus(
         userId: String,
         userName: String,

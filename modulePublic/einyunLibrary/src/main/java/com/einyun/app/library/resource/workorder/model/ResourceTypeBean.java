@@ -23,7 +23,7 @@ public class ResourceTypeBean {
     private String ownerId;
     private int sn;
     private String text;
-    private List<?> children;
+    private List<ResourceChildBean> children;
 
     public String getCreateBy() {
         return createBy;
@@ -153,11 +153,11 @@ public class ResourceTypeBean {
         this.text = text;
     }
 
-    public List<?> getChildren() {
+    public List<ResourceChildBean> getChildren() {
         return children;
     }
 
-    public void setChildren(List<?> children) {
+    public void setChildren(List<ResourceChildBean> children) {
         this.children = children;
     }
 }

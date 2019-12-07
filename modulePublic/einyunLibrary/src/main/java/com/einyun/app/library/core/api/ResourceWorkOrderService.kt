@@ -59,4 +59,5 @@ interface ResourceWorkOrderService : EinyunService {
     //获取工单类型
     fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>>
 
+    fun getResourceInfos(massifId: String, resourceTypeCode: String,callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
 }

@@ -11,8 +11,10 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UserCenterService;
+import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,6 +52,20 @@ public class BlockChooseViewModel extends BaseViewModel {
         return orgList;
     }
 
+    public LiveData<List<DictDataModel>> getByTypeKey() {
+        DictService service= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DICT);
+        return service.getByTypeKey("pgdlx", new CallBack<List<DictDataModel>>() {
+            @Override
+            public void call(List<DictDataModel> data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
 
     public void saveBlock2Local(String blockId, String blockName, String blockCode){
         if(!TextUtils.isEmpty(blockId)){
@@ -73,6 +89,24 @@ public class BlockChooseViewModel extends BaseViewModel {
         String json=SPUtils.get(CommonApplication.getInstance(),SPKey.KEY_BLOCK_CHOOSE_CACHE,"").toString();
         if(!TextUtils.isEmpty(json)){
             List<OrgModel> list= new Gson().fromJson(json,new TypeToken<List<OrgModel>>(){}.getType());
+            liveData.postValue(list);
+        }else{
+            liveData.postValue(null);
+        }
+        return liveData;
+    }
+
+    public void saveChacheWorkType(List<DictDataModel> selected){
+        String josn= new Gson().toJson(selected);
+        SPUtils.put(CommonApplication.getInstance(),SPKey.KEY_WORK_TYPE_CHOOSE_CACHE,josn);
+    }
+
+
+    public LiveData<List<DictDataModel>> loadFromCacheWorkType(){
+        MutableLiveData<List<DictDataModel>> liveData=new MutableLiveData<>();
+        String json=SPUtils.get(CommonApplication.getInstance(),SPKey.KEY_WORK_TYPE_CHOOSE_CACHE,"").toString();
+        if(!TextUtils.isEmpty(json)){
+            List<DictDataModel> list= new Gson().fromJson(json,new TypeToken<List<DictDataModel>>(){}.getType());
             liveData.postValue(list);
         }else{
             liveData.postValue(null);

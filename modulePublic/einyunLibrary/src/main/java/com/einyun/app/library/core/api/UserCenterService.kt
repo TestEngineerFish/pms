@@ -24,6 +24,11 @@ interface UserCenterService : EinyunService {
         callBack: CallBack<List<OrgModel>>
     ): LiveData<List<OrgModel>>
 
+    fun getDisposePerson(
+        orgId: String,
+        dimCode: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>>
     fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String>
     fun updateWorkStatus(
         userId: String,

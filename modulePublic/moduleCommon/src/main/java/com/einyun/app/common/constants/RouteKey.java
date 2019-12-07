@@ -19,4 +19,8 @@ public class RouteKey {
     public static final String KEY_PARAMS="params";
     public static final String KEY_TASK_ID="taskId";
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
+
+    //选择处理人
+    public static final String KEY_ORG_ID="org_id";
+    public static final String KEY_DIM_CODE="dimCode";
 }

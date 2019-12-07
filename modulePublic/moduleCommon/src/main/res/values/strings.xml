@@ -67,8 +67,11 @@
     <string name="picture">图片</string>
     <string name="text_choose_org">请选择组织</string>
     <string name="alert_submit_error">提交失败</string>
+    <string name="alert_submit_work_order_success">派工单创建成功</string>
     <string name="text_get_order">接单</string>
     <string name="text_is_overdue">是否超期</string>
     <string name="text_result_yes">是</string>
     <string name="text_result_no">否</string>
+    <string name="select_person">选择人员</string>
+    <string name="text_choose_work_type">请选择分类</string>
 </resources>

@@ -79,8 +79,8 @@ public class PhotoListAddView extends LinearLayout {
             public void onAddClick(int selectedSize) {
                 Matisse.from((Activity) getContext())
                         .choose(MimeType.ofImage())
-                        .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                         .capture(true)
+                        .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                         .countable(true)
                         .maxSelectable(MAX_PHOTO_SIZE)
 //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))

@@ -94,11 +94,12 @@
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolHandleActivity"/>
         <!--巡查工单End-->
         <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>
         <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
         <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.einyun.app.pms.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

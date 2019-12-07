@@ -26,6 +26,7 @@ public class RouterUtils {
     public static final String ACTIVITY_HEALTH_WORK="/health/HealthActivity";
     public static final String ACTIVITY_BLOCK_CHOOSE="/choose/BlockChooseActivity";
     public static final String ACTIVITY_X5_WEBVIEW="/webview/X5WebViewActivity";
+    public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
@@ -39,7 +40,6 @@ public class RouterUtils {
     /**********************派工单****************************/
     //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
-    public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
     public static final String ACTIVITY_RESEND_ORDER="/sendOrder/ReSendOrderActivity";
     public static final String ACTIVITY_SEND_ORDER_DETAIL="/sendOrder/SendOrderDetailActivity";
     public static final String ACTIVITY_APPROVAL="/approval/ApprovalActivity";
@@ -51,12 +51,14 @@ public class RouterUtils {
     /**********************创建工单****************************/
     public static final String ACTIVITY_CREATE_ORDER = "/create/home";
     public static final String ACTIVITY_CREATE_SEND_ORDER = "/create/sendOrder";
+    public static final String ACTIVITY_CHOOSE_DISPOSE_PERSON = "/create/choosePerson";
 
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
     public static final int ACTIVITY_REQUEST_REQUEST_PIC_PICK = 103;
     public static final int ACTIVITY_REQUEST_SCANNER = 104;
+    public static final int ACTIVITY_REQUEST_PERSON_CHOOSE = 105;
 
 
     /**********************Fragment*********************************/

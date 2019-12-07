@@ -27,6 +27,22 @@ import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
  * @Version:        1.0
  */
 class UserCenterRepository() : UserCenterService {
+    override fun getDisposePerson(
+        orgId: String,
+        dimCode: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
+        val liveData = MutableLiveData<List<OrgModel>>()
+        serviceApi?.getDisposePerson(orgId, dimCode)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState()) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     override fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String> {
         val liveData = MutableLiveData<String>()
         serviceApi?.getWorkStatus(userId)?.compose(RxSchedulers.inIoMain())
@@ -35,7 +51,7 @@ class UserCenterRepository() : UserCenterService {
                     callBack.call(response.data)
                     liveData.postValue(response.data)
                 } else {
-                    if("-1".equals(response.code)){
+                    if ("-1".equals(response.code)) {
                         callBack.call("1")
                         liveData.postValue("1")
                     }

@@ -32,5 +32,7 @@ class URLs {
         //更新工作状态
         const val URL_UPDATE_WORK_STATUS: String = "/$DOMAIN/api/usercenter/v1/ucWorkHistory/save"
 
+        //获取处理人
+        const val URL_GET_DISPOSE_PERSON: String = "/$DOMAIN/api/usercenter/v1/ucUser/users/getByJobCodeAndOrgIdAndDimCodeDeeplyWithPost"
     }
 }
