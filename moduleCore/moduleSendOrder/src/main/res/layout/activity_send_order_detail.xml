@@ -437,6 +437,7 @@
                 </LinearLayout>
             </ScrollView>
 
+
             <Button
                 android:id="@+id/send_order_detail_submit"
                 style="@style/submit_btn"
