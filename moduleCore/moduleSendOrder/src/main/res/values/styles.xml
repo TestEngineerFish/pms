@@ -25,28 +25,27 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
+        <item name="android:minHeight">@dimen/px_80</item>
         <item name="android:background">@color/white</item>
 
     </style>
     <style name="work_order_detail_txt_left">
         <item name="android:layout_width">@dimen/px_176</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">@dimen/px_80</item>
+        <item name="android:layout_height">@dimen/px_80</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/px_28</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_marginRight">@dimen/px_30</item>
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
     </style>
     <style name="work_order_detail_txt_right">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">@dimen/px_80</item>
-        <item name="android:maxHeight">@dimen/px_200</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/px_28</item>
-        <item name="android:adjustViewBounds">true</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:layout_marginBottom">@dimen/px_20</item>
         <item name="android:textColor">@color/txt_black_order</item>
     </style>
 </resources>

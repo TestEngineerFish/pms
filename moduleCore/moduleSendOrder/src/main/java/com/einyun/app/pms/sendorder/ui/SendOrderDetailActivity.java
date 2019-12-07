@@ -50,7 +50,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         setHeadTitle(R.string.text_send_order);
         tipDialog = new TipDialog(this, "接单成功");
         setRightOption(R.drawable.histroy);
-        setRightTxt(R.string.text_histroy);
     }
 
     @Override
@@ -105,6 +104,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.sendOrderDetailSubmit.setOnClickListener(this);
         binding.sendOrderApplyLate.setOnClickListener(this);
         binding.applyForceClose.setOnClickListener(this);
+        headBinding.ivRightOption.setOnClickListener(this);
     }
 
     @Override
@@ -120,5 +120,10 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_CLOSE)
                     .navigation();        }
+        if (v.getId()==R.id.iv_right_option){
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_HISTORY)
+                    .navigation();
+        }
     }
 }
