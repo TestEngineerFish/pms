@@ -1,6 +1,7 @@
 package com.einyun.app.library.resource.workorder.net.request
 
 import com.einyun.app.base.paging.bean.PageBean
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -41,6 +42,7 @@ class DistributePageRequest :PageRquest(){
     var envType3:String?=null
     @SerializedName("F_OT_STATUS")
     var otStatus:String?=null
+    @Expose
     var typeRe:String?=null
 
 }

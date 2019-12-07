@@ -41,8 +41,9 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3;
 
-public class SendOrderViewModel extends BasePageListViewModel {
+public class SendOrderViewModel extends BasePageListViewModel<DistributeWorkOrder> {
     private ResourceWorkOrderRepo resourceWorkOrderRepo;
+    LiveData<PagedList<DistributeWorkOrder>> donePageList;
     private ResourceWorkOrderService resourceWorkOrderService;
     private LiveData<DistributeWorkOrderPage> workOrderListViewModel;
     private MutableLiveData<List<ResourceTypeBean>> tiaoxianList = new MutableLiveData<>();//条线
@@ -76,16 +77,39 @@ public class SendOrderViewModel extends BasePageListViewModel {
     }
 
     /**
-     * 获取Paging LiveData
+     * * 获取代办列表
      *
      * @return LiveData
      */
-    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request) {
-
-        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
+    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request,String tag) {
+        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
                 .build();
         return pageList;
     }
+
+
+    /**
+     * 获取已办列表
+     * @param request
+     * @return
+     */
+    public LiveData<PagedList<DistributeWorkOrder>> loadDonePagingData(DistributePageRequest request,String tag){
+       donePageList= new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
+                .build();
+       return donePageList;
+    }
+
+//    /**
+//     * 获取Paging LiveData
+//     *
+//     * @return LiveData
+//     */
+//    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request) {
+//
+//        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
+//                .build();
+//        return pageList;
+//    }
 
     /**
      * 获取跳线 LiveData

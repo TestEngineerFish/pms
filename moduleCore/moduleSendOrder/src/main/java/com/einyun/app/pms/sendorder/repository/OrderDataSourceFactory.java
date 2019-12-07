@@ -8,12 +8,14 @@ import com.einyun.app.library.resource.workorder.net.request.DistributePageReque
 
 public class OrderDataSourceFactory extends DataSource.Factory<Integer, DistributeWorkOrder> {
     private DistributePageRequest request;
-    public OrderDataSourceFactory(DistributePageRequest request){
+    private String tag;
+    public OrderDataSourceFactory(DistributePageRequest request,String tag){
         this.request=request;
+        this.tag=tag;
     }
     @NonNull
     @Override
     public DataSource<Integer, DistributeWorkOrder> create() {
-        return new OrderItemDataSource(request);
+        return new OrderItemDataSource(request,tag);
     }
 }

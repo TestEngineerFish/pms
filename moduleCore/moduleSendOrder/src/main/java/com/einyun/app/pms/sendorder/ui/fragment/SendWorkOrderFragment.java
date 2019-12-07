@@ -5,7 +5,9 @@ import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +34,12 @@ import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 
 /**
  * @ProjectName: pms_old
@@ -53,6 +61,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     public static SendWorkOrderFragment newInstance(Bundle bundle) {
         SendWorkOrderFragment fragment = new SendWorkOrderFragment();
         fragment.setArguments(bundle);
+        Logger.d("setBundle->"+bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
         return fragment;
     }
 
@@ -68,6 +77,11 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPagingData();
+    }
 
     @Override
     protected void setUpView() {
@@ -123,17 +137,22 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        loadPagingData();
     }
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.getRequest().setTypeRe(getArguments().getString("tabId"));
+        binding.sendOrderRef.setRefreshing(true);
+        String fragmentTag=getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
+        viewModel.getRequest().setTypeRe(fragmentTag);
         if(viewModel.getOrgModel()!=null){
             viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
         }
         viewModel.getRequest().setUserId(userModuleService.getUserId());
-        viewModel.loadPadingData(viewModel.getRequest()).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_PENDING)){
+            viewModel.loadPadingData(viewModel.getRequest(),fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        }else{
+            viewModel.loadDonePagingData(viewModel.getRequest(),fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        }
     }
 
     @Override

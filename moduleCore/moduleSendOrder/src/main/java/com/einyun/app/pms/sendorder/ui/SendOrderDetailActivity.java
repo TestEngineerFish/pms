@@ -14,8 +14,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.pms.sendorder.R;
@@ -25,14 +28,16 @@ import com.einyun.app.pms.sendorder.model.SendOrderModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderDetialViewModel;
 
+import java.util.List;
+
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
 public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivitySendOrderDetailBinding, SendOrderDetialViewModel> implements View.OnClickListener {
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
-    RVPageListAdapter<ItemSendOrderDetailImgBinding, SendOrderModel> adapter;
     private TipDialog tipDialog;
+    PhotoListAdapter photoListAdapter;
 
     @Override
     protected SendOrderDetialViewModel initViewModel() {
@@ -57,31 +62,23 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     protected void initData() {
         viewModel.detial(taskId).observe(this, distributeWorkOrder -> updateUI(distributeWorkOrder));
         super.initData();
-        if (adapter == null) {
-            adapter = new RVPageListAdapter<ItemSendOrderDetailImgBinding, SendOrderModel>(this, com.einyun.app.pms.sendorder.BR.sendOrderModel, mDiffCallback) {
-
-
-                @Override
-                public void onBindItem(ItemSendOrderDetailImgBinding binding, SendOrderModel model) {
-
-                }
-
-                @Override
-                public int getLayoutId() {
-                    return R.layout.item_send_order_detail_img;
-                }
-
-            };
-            binding.sendOrderDetailList.setLayoutManager(new LinearLayoutManager(
-                    this,
-                    LinearLayoutManager.VERTICAL,
-                    false));
-            binding.sendOrderDetailList.setAdapter(adapter);
-        }
+        photoListAdapter=new PhotoListAdapter(this);
+        binding.sendOrderDetailList.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false));
+        binding.sendOrderDetailList.setAdapter(photoListAdapter);
     }
 
     private void updateUI(DisttributeDetialModel distributeWorkOrder) {
         binding.setWorkOrder(distributeWorkOrder);
+        updateImages(distributeWorkOrder);
+    }
+
+    private void updateImages(DisttributeDetialModel distributeWorkOrder) {
+        PicUrlModelConvert convert=new PicUrlModelConvert();
+        List<PicUrlModel> modelList=convert.stringToSomeObjectList(distributeWorkOrder.getData().getInfo().getPgdAttachment());
+        photoListAdapter.updateList(modelList);
     }
 
     //DiffUtil.ItemCallback,标准写法

@@ -128,6 +128,7 @@ class DisttributeMainModel {
     var txName: String? = null ////条线名称
     @SerializedName("id_")
     var ID: String? = null//工单id
+    @SerializedName("pgd_attachment")
     var pgdAttachment: String? = null//创建派工单时的图片
     var pgdAttachmentArray: List<ResourceModel>? = null ////图片集合 model
     @SerializedName("proc_inst_id_")

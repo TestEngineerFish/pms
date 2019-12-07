@@ -22,7 +22,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
     @NonNull
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LinearLayout.inflate(mContext, R.layout.item_photo_select,parent);
+        View view= LinearLayout.inflate(mContext, R.layout.item_photo_select,null);
         PhotoViewHolder viewHolder=new PhotoViewHolder(view);
         return viewHolder;
     }
