@@ -142,4 +142,5 @@
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
         <item name="android:textSize">@dimen/font_size15</item>
     </style>
+
 </resources>

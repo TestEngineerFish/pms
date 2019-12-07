@@ -16,53 +16,6 @@
         <include
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
-
-        <LinearLayout style="@style/ll_create_order">
-
-            <TextView style="@style/tv_create_order_red_star" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:text="已延期次数" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:layout_marginLeft="@dimen/px_132"
-                android:text="3次"
-                android:textSize="@dimen/font_size15" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/ll_create_order">
-
-            <TextView style="@style/tv_create_order_red_star" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:text="已延期次数" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:layout_marginLeft="@dimen/px_132"
-                android:text="3次"
-                android:textSize="@dimen/font_size15" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/ll_create_order">
-
-            <TextView style="@style/tv_create_order_red_star" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:text="延期天数（天）" />
-
-            <EditText
-                style="@style/tv_create_order_name"
-                android:layout_marginLeft="@dimen/px_132"
-                android:background="@null"
-                android:hint="请输入"
-                android:textSize="@dimen/font_size15" />
-        </LinearLayout>
-
         <LinearLayout style="@style/ll_create_order">
 
             <TextView style="@style/tv_create_order_red_star" />
@@ -80,7 +33,7 @@
                 android:id="@+id/location_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:hintText="请输入位置信息"
+                app:hintText="请输入申请原因"
                 app:maxNumber="100" />
         </LinearLayout>
 

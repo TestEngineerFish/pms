@@ -78,6 +78,15 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void setTxtColor(int resId){
         headBinding.tvHeaderTitle.setTextColor(resId);
     }
+
+    /**
+     * 设置最右侧文字
+     * */
+    protected void setRightTxt(int resId){
+        headBinding.tvRightTitle.setVisibility(View.VISIBLE);
+        headBinding.tvRightTitle.setText(resId);
+    }
+
     @Override
     protected void initListener() {
         super.initListener();

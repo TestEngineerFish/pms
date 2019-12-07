@@ -18,7 +18,6 @@ public class SendOrderBindAdapter {
         }else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
         }
-        view.setText(R.string.text_state_new);
 
     }
 

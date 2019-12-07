@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -40,6 +41,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_send_order);
         tipDialog = new TipDialog(this, "接单成功");
+        setRightOption(R.drawable.histroy);
+        setRightTxt(R.string.text_histroy);
     }
 
     @Override
@@ -88,6 +91,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     protected void initListener() {
         super.initListener();
         binding.sendOrderDetailSubmit.setOnClickListener(this);
+        binding.sendOrderApplyLate.setOnClickListener(this);
+        binding.applyForceClose.setOnClickListener(this);
     }
 
     @Override
@@ -95,5 +100,13 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (v.getId() == R.id.send_order_detail_submit) {
             tipDialog.show();
         }
+        if (v.getId()==R.id.send_order_apply_late){
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_LATE)
+                    .navigation();        }
+        if (v.getId()==R.id.apply_force_close){
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_CLOSE)
+                    .navigation();        }
     }
 }

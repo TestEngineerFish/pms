@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="history"
+            type="com.einyun.app.pms.sendorder.model.HistoryModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/px_96"
+            android:layout_height="@dimen/px_95"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="@dimen/px_36"
+                android:layout_height="@dimen/px_36"
+                android:layout_marginTop="@dimen/px_34"
+                android:layout_marginLeft="@dimen/px_30">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/blueTextColor"
+                    android:gravity="center"
+                    android:text="1" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_36"
+                android:layout_marginTop="@dimen/px_30"
+                android:layout_marginLeft="@dimen/px_30"
+                android:textSize="@dimen/font_size16"
+                android:textColor="@color/blackTextColor"
+                android:text="创建工单" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="执行人：" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="创建工单" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="执行人：" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="创建工单" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="执行人：" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="创建工单" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="执行人：" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/grayTextColor"
+                    android:text="创建工单" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

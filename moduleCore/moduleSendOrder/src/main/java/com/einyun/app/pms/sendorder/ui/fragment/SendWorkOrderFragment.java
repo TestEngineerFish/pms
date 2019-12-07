@@ -143,7 +143,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
         @Override
         public boolean areItemsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
-            return oldItem.getID() == newItem.getID();
+            return oldItem.getID() .equals(newItem.getID());
         }
 
         @SuppressLint("DiffUtilEquals")

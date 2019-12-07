@@ -61,18 +61,18 @@
                     tools:text="楠木李" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/px_26"
-                    android:layout_marginLeft="@dimen/px_22"
-                    android:layout_weight="1"
-                    app:clickable="false"
-                    app:starCount="5"
-                    app:starEmpty="@mipmap/rating_off"
-                    app:starFill="@mipmap/rating_on"
-                    app:starImageSize="@dimen/px_26"
-                    app:starPadding="@dimen/px_12"
-                    app:starStep="5"
-                    app:stepSize="Full" />
+                android:layout_width="0dp"
+                android:layout_height="@dimen/px_26"
+                android:layout_marginLeft="@dimen/px_22"
+                android:layout_weight="1"
+                app:clickable="false"
+                app:starCount="5"
+                app:starEmpty="@mipmap/rating_off"
+                app:starFill="@mipmap/rating_on"
+                app:starImageSize="@dimen/px_26"
+                app:starPadding="@dimen/px_12"
+                app:starStep="5"
+                app:stepSize="Full" />
 
                 <ImageView
                     android:layout_width="@dimen/px_26"

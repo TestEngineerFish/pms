@@ -3,7 +3,9 @@
     package="com.einyun.app.pms.sendorder">
 
     <application>
-        <activity android:name=".ui.ApplyLateActivity"></activity>
+        <activity android:name=".ui.HistroyActivity"></activity>
+        <activity android:name=".ui.ApplyForceCloseActivity" />
+        <activity android:name=".ui.ApplyLateActivity" />
         <activity android:name=".ui.SelectPeopleActivity" />
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.SendOrderDetailActivity" />
