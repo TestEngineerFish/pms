@@ -49,7 +49,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/px_20"
                     android:background="@drawable/bg_shadow"
-                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -260,7 +259,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_238"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/px_100">
                     <LinearLayout
                         android:layout_width="@dimen/px_110"
                         android:layout_height="wrap_content"
