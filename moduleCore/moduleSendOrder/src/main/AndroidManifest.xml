@@ -3,7 +3,9 @@
     package="com.einyun.app.pms.sendorder">
 
     <application>
-        <activity android:name=".ui.SendOrderDetailActivity"></activity>
+        <activity android:name=".ui.SelectPeopleActivity"></activity>
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.SendOrderDetailActivity" />
         <activity android:name=".ui.ResendOrderActivity" />
     </application>
 

@@ -32,6 +32,8 @@ public class OrderItemDataSource extends BaseDataSource<DistributeWorkOrder> {
         request.setPageSize(pageBean.getPageSize());
         ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();
         if (request.getTypeRe().equals("0")) {
+            request.setPage(pageBean.getPage());
+            request.setPageSize(pageBean.getPageSize());
             //代办
             repository.distributeWaitPage(request, new CallBack<DistributeWorkOrderPage>() {
                 @Override

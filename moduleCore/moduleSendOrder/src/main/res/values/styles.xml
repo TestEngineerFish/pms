@@ -40,7 +40,8 @@
     <style name="work_order_detail_txt_right">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">@dimen/px_80</item>
+        <item name="android:minHeight">@dimen/px_100</item>
+        <item name="android:maxHeight">@dimen/px_200</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/px_28</item>
         <item name="android:adjustViewBounds">true</item>

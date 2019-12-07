@@ -44,6 +44,7 @@ public class RouterUtils {
     public static final String ACTIVITY_SEND_ORDER_DETAIL="/sendOrder/SendOrderDetailActivity";
     public static final String ACTIVITY_APPROVAL="/approval/ApprovalActivity";
     public static final String ACTIVITY_APPROVAL_DETAIL="/approval/ApprovalDetailActivity";
+    public static final String ACTIVITY_SELECT_PEOPLE="/sendOrder/SelectPeopleActivity";
 
     /**********************创建工单****************************/
     public static final String ACTIVITY_CREATE_ORDER = "/create/home";

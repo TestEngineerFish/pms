@@ -17,6 +17,7 @@
         <include layout="@layout/include_layout_activity_head" android:id="@id/head_bar" />
 
         <RelativeLayout
+            android:id="@+id/resend_order_to"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_100"
             android:layout_marginLeft="@dimen/px_30"

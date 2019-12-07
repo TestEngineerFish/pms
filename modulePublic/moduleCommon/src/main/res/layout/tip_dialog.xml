@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/px_500"
+        android:layout_height="@dimen/px_310"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_30"
+            android:text="提示"
+            android:textSize="@dimen/px_34"
+            android:textColor="@color/blackTextColor"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tip_dialog_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_40"
+            android:text="提示"
+            android:textSize="@dimen/px_30"
+            android:textColor="@color/greyTextColor"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/tip_dialog_know"
+            style="@style/submit_btn"
+            android:layout_marginTop="@dimen/px_50"
+            android:text="我知道了" />
+    </LinearLayout>
+</layout>
