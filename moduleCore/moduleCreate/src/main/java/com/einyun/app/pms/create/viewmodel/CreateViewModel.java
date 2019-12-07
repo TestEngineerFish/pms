@@ -171,16 +171,13 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
 
     @Override
     public LiveData<List<OrgModel>> getDisposePerson(String orgId, String dimCode) {
-        showLoading();
         return userCenterService.getDisposePerson(orgId, dimCode, new CallBack<List<OrgModel>>() {
             @Override
             public void call(List<OrgModel> data) {
-                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
                 ThrowableParser.onFailed(throwable);
             }
         });

@@ -234,6 +234,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
         ColorDrawable dw = new ColorDrawable(0x00FFFFFF);
         //设置弹出窗体的背景
         this.setBackgroundDrawable(dw);
+        this.setAnimationStyle(R.style.BottomDialogAnimation);
 
     }
 

@@ -28,6 +28,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.BR;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
@@ -98,7 +99,8 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
         WindowManager.LayoutParams wlp = window.getAttributes();
         window.setGravity(Gravity.TOP);
         window.setDimAmount(0);
-        wlp.y = R.dimen.px_500;
+        wlp.y = ScreenUtils.getMetricsHeight(getContext()) / 2;
+        wlp.windowAnimations = R.style.BottomDialogAnimation;
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(wlp);
@@ -113,6 +115,9 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
 
 
     private void initData() {
+        ViewGroup.LayoutParams layoutParams = binding.rvOrgList.getLayoutParams();
+        layoutParams.height = ScreenUtils.getMetricsHeight(getContext()) / 2;
+        binding.rvOrgList.setLayoutParams(layoutParams);
         if (dictDataModels != null && dictDataModels.size() != 0) {
             loadData();
         } else {
@@ -165,6 +170,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
             this.dismiss();
         } else {
             selectOrgs.add(model);
+            binding.hintText.setText(String.format(getContext().getResources().getString(R.string.text_choose_work_order_type), selectOrgs.size() == 1 ? "二" : selectOrgs.size() == 2 ? "三" : "一"));
             DictDataModel orgModel1 = new DictDataModel();
             orgModel1.setName(getContext().getResources().getString(R.string.text_choose_work_type));
             selectOrgs.add(orgModel1);
@@ -237,32 +243,28 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
 
     public void switchOrgTag(DictDataModel model) {
         selectOrgs.remove(selectOrgs.get(selectOrgs.size() - 1));
-        DictDataModel lastOrg = selectOrgs.get(selectOrgs.size() - 1);
-        try {
-            if (!model.getId().equals(lastOrg.getId())) {
-                int size = selectOrgs.size();
-                for (int i = size - 1; i < 0; i--) {
-                    if (selectOrgs.get(i).getId().equals(model.getId())) {
-                        break;
-                    } else {
-                        selectOrgs.remove(i);
-                    }
-                }
-                if (selectOrgs.size() == 1) {
-                    selectOrgs = new ArrayList<>();
-                }
-                DictDataModel orgModel1 = new DictDataModel();
-                orgModel1.setName(getContext().getResources().getString(R.string.text_choose_work_type));
-                selectOrgs.add(orgModel1);
-                if (selectOrgs.size() == 1) {
-                    adapter.setDataList(disposeData(txId));
-                } else {
-                    adapter.setDataList(disposeData(model.getId()));
-                }
-            }
-        } catch (Exception e) {
 
+        List<DictDataModel> list = new ArrayList<>();
+        for (DictDataModel data : selectOrgs) {
+            if (data.getId().equals(model.getId())) {
+                break;
+            }
+            list.add(data);
         }
+        selectOrgs = list;
+        if (selectOrgs.size() == 0) {
+            selectOrgs = new ArrayList<>();
+        }
+        DictDataModel orgModel1 = new DictDataModel();
+        binding.hintText.setText(String.format(getContext().getResources().getString(R.string.text_choose_work_order_type), selectOrgs.size() == 1 ? "二" : selectOrgs.size() == 2 ? "三" : "一"));
+        orgModel1.setName(getContext().getResources().getString(R.string.text_choose_work_type));
+        selectOrgs.add(orgModel1);
+        if (selectOrgs.size() == 1) {
+            adapter.setDataList(disposeData(txId));
+        } else {
+            adapter.setDataList(disposeData(model.getParentId()));
+        }
+        loadTags();
     }
 
     /**
@@ -281,7 +283,6 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
                 data.add(model);
             }
         }
-        adapter.setDataList(data);
         return data;
     }
 
