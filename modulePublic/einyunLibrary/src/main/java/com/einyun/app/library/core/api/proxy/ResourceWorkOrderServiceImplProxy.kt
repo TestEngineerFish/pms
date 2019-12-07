@@ -2,27 +2,10 @@ package com.einyun.app.library.core.api.proxy
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.core.api.DashBoardService
 import com.einyun.app.library.core.api.ResourceWorkOrderService
-import com.einyun.app.library.core.api.UCService
-import com.einyun.app.library.core.api.WorkOrderService
-import com.einyun.app.library.dashboard.model.OperateCaptureData
-import com.einyun.app.library.dashboard.model.UserMenuData
-import com.einyun.app.library.dashboard.model.WorkOrderData
-import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
-import com.einyun.app.library.dashboard.repository.DashBoardRepo
 import com.einyun.app.library.resource.workorder.model.*
-import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest
-import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
-import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
-import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
+import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo
-import com.einyun.app.library.uc.user.model.TenantModel
-import com.einyun.app.library.uc.user.model.UserInfoModel
-import com.einyun.app.library.uc.user.model.UserModel
-import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
-import com.einyun.app.library.uc.user.repository.UserRepository
-import com.einyun.app.library.workorder.repository.WorkOrderRepository
 
 /**
  * @ProjectName: android-framework
@@ -38,6 +21,16 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
+         instance?.distributeWaitDetial(taskId,callBack)
+    }
+
+    override fun distributeDoneDetial(
+        request: DoneDetialRequest,
+        callBack: CallBack<DisttributeDetialModel>
+    ) {
+       instance?.distributeDoneDetial(request,callBack)
+    }
     override fun getResourceInfos(
         massifId: String,
         resourceTypeCode: String,

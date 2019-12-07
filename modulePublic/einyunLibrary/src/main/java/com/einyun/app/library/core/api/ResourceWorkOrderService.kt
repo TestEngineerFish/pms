@@ -2,24 +2,8 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.base.http.BaseResponse
-import com.einyun.app.base.paging.bean.Query
-import com.einyun.app.library.dashboard.model.OperateCaptureData
-import com.einyun.app.library.dashboard.model.UserMenuData
-import com.einyun.app.library.dashboard.model.WorkOrderData
-import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
-import com.einyun.app.library.dashboard.net.response.WorkOrderResponse
 import com.einyun.app.library.resource.workorder.model.*
-import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest
-import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
-import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
-import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
-import com.einyun.app.library.uc.user.model.TenantModel
-import com.einyun.app.library.uc.user.model.UserInfoModel
-import com.einyun.app.library.uc.user.model.UserModel
-import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
-import com.einyun.app.library.uc.usercenter.model.OrgModel
-import com.einyun.app.library.workorder.model.BlocklogNums
+import com.einyun.app.library.resource.workorder.net.request.*
 
 /**
  *
@@ -54,6 +38,12 @@ interface ResourceWorkOrderService : EinyunService {
         request: CreateSendOrderRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean>
+
+    //获取派工单代办详情
+    fun distributeWaitDetial(taskId:String,callBack:CallBack<DisttributeDetialModel>)
+
+    //获取派工单已办详情
+    fun distributeDoneDetial(request:DoneDetialRequest,callBack: CallBack<DisttributeDetialModel>)
     //获取条线
     fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
     //获取工单类型

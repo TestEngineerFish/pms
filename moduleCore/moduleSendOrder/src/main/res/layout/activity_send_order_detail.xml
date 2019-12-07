@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
     </data>
 
     <LinearLayout
@@ -74,7 +76,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/px_20"
                                 android:gravity="center_vertical"
-                                android:text="待处理"
+                                app:order_status="@{workOrder.data.info.status}"
                                 android:textColor="@color/txt_blue_color"
                                 android:textSize="@dimen/px_30" />
                         </RelativeLayout>
@@ -95,7 +97,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="csqy1-GC-pgd_gc_zhwx-20191112192445000" />
+                                android:text="@{workOrder.data.info.orderNo}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -106,7 +108,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="测试区域2" />
+                                android:text="@{workOrder.data.info.projectName}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -117,7 +119,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="工程" />
+                                android:text="@{workOrder.data.info.txName}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -128,7 +130,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="排水类" />
+                                android:text="@{workOrder.data.info.typeName}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -139,7 +141,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="2019-11-01  12:34:22" />
+                                android:text="@{workOrder.data.info.createTime}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -150,7 +152,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="2019-11-01  12:34:22" />
+                                android:text="@{workOrder.data.info.deadLineTime}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -161,7 +163,7 @@
 
                             <TextView
                                 style="@style/work_order_detail_txt_right"
-                                android:text="上楼水泵损坏，家里到处漏水，联系维修工人到现在还没来，住户很生气，要求尽快维修好，否则将会投诉。" />
+                                android:text="@{workOrder.data.info.desc}" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/work_order_detail_ln">
@@ -172,7 +174,7 @@
 
                             <EditText
                                 style="@style/work_order_detail_txt_right"
-                                android:text="长城盛世家园二期1栋2单元1208"
+                                android:text="@{workOrder.data.info.location}"
                                 android:editable="false"
                                 android:background="@null"/>
                         </LinearLayout>
@@ -187,253 +189,261 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
-
                     <LinearLayout
+                        android:id="@+id/panel_handle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/px_30"
-                        android:background="@color/white"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/px_90">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="@dimen/px_20"
-                                android:gravity="center_vertical"
-                                android:text="上传充分反映情况的照片"
-                                android:textSize="@dimen/px_32" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="@dimen/px_20"
-                                android:gravity="center_vertical"
-                                android:text="待处理"
-                                android:textColor="@color/txt_blue_color"
-                                android:textSize="@dimen/px_30" />
-                        </RelativeLayout>
-
-                        <ImageView
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:src="@drawable/pd_view" />
+                            android:layout_margin="@dimen/px_30"
+                            android:background="@color/white"
+                            android:orientation="vertical">
 
-                        <LinearLayout style="@style/ll_create_order">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_90">
 
-                            <TextView style="@style/tv_create_order_red_star" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="@dimen/px_20"
+                                    android:gravity="center_vertical"
+                                    android:text="上传充分反映情况的照片"
+                                    android:textSize="@dimen/px_32" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/px_20"
+                                    android:gravity="center_vertical"
+                                    android:text="待处理"
+                                    android:textColor="@color/txt_blue_color"
+                                    android:textSize="@dimen/px_30" />
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="处理后图片"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/pd_view" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout style="@style/ll_create_order">
+
+                                <TextView style="@style/tv_create_order_red_star" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="处理后图片"
+                                    android:textColor="@color/blackTextColor"
+                                    android:textSize="@dimen/font_size14" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/px_20"
+                                    android:text="(最多四张)"
+                                    android:textColor="@color/red"
+                                    android:textSize="@dimen/font_size12" />
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/send_order_img_list"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_20"
-                                android:text="(最多四张)"
-                                android:textColor="@color/red"
-                                android:textSize="@dimen/font_size12" />
+                                android:layout_marginTop="8dp">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+
+                            <LinearLayout style="@style/ll_create_order">
+
+                                <TextView style="@style/tv_create_order_red_star" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="处理结果"
+                                    android:textColor="@color/blackTextColor"
+                                    android:textSize="@dimen/font_size14" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/ll_create_order"
+                                android:layout_height="wrap_content">
+
+                                <com.einyun.app.common.ui.component.limit.LimitInput
+                                    android:id="@+id/location_info"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:hintText="请输入文字信息"
+                                    app:maxNumber="100" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_238"
+                                android:layout_marginBottom="@dimen/px_100"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:id="@+id/send_order_apply_late"
+                                    android:layout_width="@dimen/px_110"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/px_125"
+                                    android:layout_marginTop="@dimen/px_40"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/px_110"
+                                        android:src="@drawable/apply_late" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/px_38"
+                                        android:layout_marginTop="@dimen/px_20"
+                                        android:text="申请延期"
+                                        android:textColor="@color/blackTextColor"
+                                        android:textSize="@dimen/font_size13" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/apply_force_close"
+                                    android:layout_width="@dimen/px_110"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/px_220"
+                                    android:layout_marginTop="@dimen/px_40"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/px_110"
+                                        android:src="@drawable/force_close" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/px_38"
+                                        android:layout_marginTop="@dimen/px_20"
+                                        android:text="强制关闭"
+                                        android:textColor="@color/blackTextColor"
+                                        android:textSize="@dimen/font_size13" />
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/send_order_img_list"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp">
+                            android:layout_margin="@dimen/px_30"
+                            android:background="@color/white"
+                            android:orientation="vertical">
 
-                        </androidx.recyclerview.widget.RecyclerView>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_90">
 
-                        <LinearLayout style="@style/ll_create_order">
+                                <TextView
+                                    style="@style/tv_create_order_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="@dimen/px_20"
+                                    android:gravity="center_vertical"
+                                    android:text="验收"
+                                    android:textColor="@color/blackTextColor"
+                                    android:textSize="@dimen/px_32" />
 
-                            <TextView style="@style/tv_create_order_red_star" />
+                            </RelativeLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <ImageView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="处理结果"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/pd_view" />
+
+                            <LinearLayout style="@style/ll_create_order">
+
+                                <TextView style="@style/tv_create_order_red_star" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="验收结论"
+                                    android:textColor="@color/blackTextColor"
+                                    android:textSize="@dimen/font_size14" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/ll_create_order">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="评价"
+                                    android:textColor="@color/blackTextColor"
+                                    android:textSize="@dimen/font_size14" />
+                                <com.einyun.app.common.ui.component.rating.RatingBar
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/px_38"
+                                    android:layout_marginLeft="@dimen/px_144"
+                                    android:layout_weight="1"
+                                    app:clickable="true"
+                                    app:starCount="5"
+                                    app:starEmpty="@mipmap/rating_off"
+                                    app:starFill="@mipmap/rating_on"
+                                    app:starImageSize="@dimen/px_38"
+                                    app:starPadding="@dimen/px_12"
+                                    app:starStep="5"
+                                    app:stepSize="Full" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/ll_create_order">
+
+                                <TextView style="@style/tv_create_order_red_star" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="验收意见"
+                                    android:textColor="@color/blackTextColor"
+                                    android:textSize="@dimen/font_size14" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/ll_create_order"
+                                android:layout_height="wrap_content">
+
+                                <com.einyun.app.common.ui.component.limit.LimitInput
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/px_30"
+                                    app:hintText="请输入文字信息"
+                                    app:maxNumber="100" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             style="@style/ll_create_order"
-                            android:layout_height="wrap_content">
-
-                            <com.einyun.app.common.ui.component.limit.LimitInput
-                                android:id="@+id/location_info"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:hintText="请输入文字信息"
-                                app:maxNumber="100" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/px_238"
-                            android:layout_marginBottom="@dimen/px_100"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:id="@+id/send_order_apply_late"
-                                android:layout_width="@dimen/px_110"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_125"
-                                android:layout_marginTop="@dimen/px_40"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/px_110"
-                                    android:src="@drawable/apply_late" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/px_38"
-                                    android:layout_marginTop="@dimen/px_20"
-                                    android:text="申请延期"
-                                    android:textColor="@color/blackTextColor"
-                                    android:textSize="@dimen/font_size13" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/apply_force_close"
-                                android:layout_width="@dimen/px_110"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_220"
-                                android:layout_marginTop="@dimen/px_40"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/px_110"
-                                    android:src="@drawable/force_close" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/px_38"
-                                    android:layout_marginTop="@dimen/px_20"
-                                    android:text="强制关闭"
-                                    android:textColor="@color/blackTextColor"
-                                    android:textSize="@dimen/font_size13" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/px_30"
-                        android:background="@color/white"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/px_90">
+                            android:layout_marginBottom="@dimen/px_120"
+                            android:background="@color/white">
 
                             <TextView
                                 style="@style/tv_create_order_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="@dimen/px_20"
-                                android:gravity="center_vertical"
-                                android:text="验收"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/px_32" />
+                                android:text="申请延期"
+                                android:layout_marginLeft="@dimen/px_20"/>
 
-                        </RelativeLayout>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:src="@drawable/pd_view" />
-
-                        <LinearLayout style="@style/ll_create_order">
-
-                            <TextView style="@style/tv_create_order_red_star" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="验收结论"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/ll_create_order">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="评价"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-                            <com.einyun.app.common.ui.component.rating.RatingBar
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/px_38"
-                                android:layout_marginLeft="@dimen/px_144"
-                                android:layout_weight="1"
-                                app:clickable="true"
-                                app:starCount="5"
-                                app:starEmpty="@mipmap/rating_off"
-                                app:starFill="@mipmap/rating_on"
-                                app:starImageSize="@dimen/px_38"
-                                app:starPadding="@dimen/px_12"
-                                app:starStep="5"
-                                app:stepSize="Full" />
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/ll_create_order">
-
-                            <TextView style="@style/tv_create_order_red_star" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="验收意见"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            style="@style/ll_create_order"
-                            android:layout_height="wrap_content">
-
-                            <com.einyun.app.common.ui.component.limit.LimitInput
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/px_30"
-                                app:hintText="请输入文字信息"
-                                app:maxNumber="100" />
+                            <ImageView style="@style/tv_create_order_right_arrow"
+                                android:layout_marginRight="@dimen/px_20"/>
                         </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/ll_create_order"
-                        android:layout_marginBottom="@dimen/px_120"
-                        android:background="@color/white">
-
-                        <TextView
-                            style="@style/tv_create_order_name"
-                            android:text="申请延期"
-                            android:layout_marginLeft="@dimen/px_20"/>
-
-                        <ImageView style="@style/tv_create_order_right_arrow"
-                            android:layout_marginRight="@dimen/px_20"/>
-                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
 
@@ -442,7 +452,9 @@
                 android:id="@+id/send_order_detail_submit"
                 style="@style/submit_btn"
                 android:layout_alignParentBottom="true"
-                android:text="@string/text_get_order" />
+                android:text="@string/text_get_order"
+                app:button_status="@{workOrder.data.info.status}"
+                />
 
         </RelativeLayout>
     </LinearLayout>

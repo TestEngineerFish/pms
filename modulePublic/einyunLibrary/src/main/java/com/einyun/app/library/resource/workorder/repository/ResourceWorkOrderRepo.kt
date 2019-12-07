@@ -4,17 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.RxSchedulers
-import com.einyun.app.base.paging.bean.PageBean
-import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
+import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
-import com.einyun.app.library.uc.user.net.request.LoginRequest
-import com.einyun.app.library.resource.workorder.net.response.PatrolDetialResponse
 
 /**
  *
@@ -30,6 +27,40 @@ import com.einyun.app.library.resource.workorder.net.response.PatrolDetialRespon
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
+        var url=URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL+taskId
+        serviceApi?.distributeWaitDetial(url)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response->
+                    if(response.isState){
+                        callBack.call(response.data)
+                    }else{
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                },{
+                    callBack.onFaild(it)
+                }
+            )
+    }
+
+    override fun distributeDoneDetial(
+        request: DoneDetialRequest,
+        callBack: CallBack<DisttributeDetialModel>
+    ) {
+        serviceApi?.distributeDoneDetial(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    if(it.isState){
+                        callBack.call(it.data)
+                    }else{
+                        callBack.onFaild(EinyunHttpException(it))
+                    }
+                },{
+                    callBack.onFaild(it)
+                }
+            )
+    }
+
     override fun getResourceInfos(
         massifId: String,
         resourceTypeCode: String,

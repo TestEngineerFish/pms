@@ -1,7 +1,7 @@
 package com.einyun.app.pms.sendorder.ui;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -9,26 +9,34 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderDetailBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemSendOrderDetailImgBinding;
 import com.einyun.app.pms.sendorder.model.SendOrderModel;
-import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
+import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
+import com.einyun.app.pms.sendorder.viewmodel.SendOrderDetialViewModel;
 
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivitySendOrderDetailBinding, SendOrderViewModel> implements View.OnClickListener {
+public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivitySendOrderDetailBinding, SendOrderDetialViewModel> implements View.OnClickListener {
+    @Autowired(name = RouteKey.KEY_TASK_ID)
+    String taskId;
+    @Autowired(name = RouteKey.KEY_PRO_INS_ID)
+    String proInsId;
     RVPageListAdapter<ItemSendOrderDetailImgBinding, SendOrderModel> adapter;
     private TipDialog tipDialog;
 
     @Override
-    protected SendOrderViewModel initViewModel() {
-        return null;
+    protected SendOrderDetialViewModel initViewModel() {
+        return new ViewModelProvider(this,new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
     }
 
     @Override
@@ -47,6 +55,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
 
     @Override
     protected void initData() {
+        viewModel.detial(taskId).observe(this, distributeWorkOrder -> updateUI(distributeWorkOrder));
         super.initData();
         if (adapter == null) {
             adapter = new RVPageListAdapter<ItemSendOrderDetailImgBinding, SendOrderModel>(this, com.einyun.app.pms.sendorder.BR.sendOrderModel, mDiffCallback) {
@@ -71,13 +80,16 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         }
     }
 
+    private void updateUI(DisttributeDetialModel distributeWorkOrder) {
+        binding.setWorkOrder(distributeWorkOrder);
+    }
+
     //DiffUtil.ItemCallback,标准写法
     private DiffUtil.ItemCallback<SendOrderModel> mDiffCallback = new DiffUtil.ItemCallback<SendOrderModel>() {
 
         @Override
         public boolean areItemsTheSame(@NonNull SendOrderModel oldItem, @NonNull SendOrderModel newItem) {
-//            return oldItem.getId() == newItem.getId();
-            return true;
+            return oldItem.getId().equals(newItem.getId());
         }
 
         @SuppressLint("DiffUtilEquals")

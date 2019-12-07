@@ -1,5 +1,6 @@
 package com.einyun.app.library.resource.workorder.model
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class PatrolInfo {
@@ -23,7 +24,8 @@ class PatrolButton{
 
 class PatrolMain{
      var id: Int = 0
-     var zyxcgd: PatrolContent? = null
+     @SerializedName("zyxcgd")
+     var info: PatrolContent? = null
 }
 
 class PatrolContent{

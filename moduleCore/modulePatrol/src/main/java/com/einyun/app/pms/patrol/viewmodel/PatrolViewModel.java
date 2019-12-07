@@ -16,6 +16,7 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
@@ -35,11 +36,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
 
-public class PatrolViewModel extends BaseViewModel {
+public class PatrolViewModel extends BaseUploadViewModel {
     PatrolRepo repo = new PatrolRepo();
     MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
-    private final Map<String, String> uploadedImages = new ConcurrentHashMap<>();
-    private ImageUploadManager uploadManager = new ImageUploadManager();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
@@ -197,30 +196,4 @@ public class PatrolViewModel extends BaseViewModel {
         return uploadState;
     }
 
-    /**
-     * 过滤已上传图片
-     *
-     * @param allSelectedPhotos
-     * @return
-     */
-    @NotNull
-    private List<Uri> filterUris(List<Uri> allSelectedPhotos) {
-        List<Uri> todoUploadUris = new ArrayList<>();
-
-        // 根据当前已选判断哪些图片是未上传的
-        for (Uri selectedPhoto : allSelectedPhotos) {
-            if (!uploadedImages.keySet().contains(selectedPhoto.toString())) {
-                todoUploadUris.add(selectedPhoto);
-            }
-        }
-
-        // 删除缓存中已经上传但已经被删除的图片
-        for (String uploadeUrl : uploadedImages.keySet()) {
-            Uri uploadedUri = Uri.fromFile(new File(uploadeUrl));
-            if (!allSelectedPhotos.contains(uploadedUri)) {
-                uploadedImages.remove(uploadedUri);
-            }
-        }
-        return todoUploadUris;
-    }
 }
