@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ProjectName: pms_old
@@ -118,11 +119,10 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
                 }
                 new SelectPopUpView(SendOrderActivity.this,selectModelListOrig).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
                     @Override
-                    public void onSelected(List<SelectModel> selectModelList) {
-                        handleSelect(selectModelList);
+                    public void onSelected(Map<String, SelectModel> selected) {
+
                     }
                 }).showAsDropDown(binding.sendWorkTabLn);
-
             }
         });
     }
