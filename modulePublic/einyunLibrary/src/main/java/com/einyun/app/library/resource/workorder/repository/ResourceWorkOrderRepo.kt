@@ -1,5 +1,6 @@
 package com.einyun.app.library.resource.workorder.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
@@ -64,6 +65,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
     }
+
 
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
         var url=URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL+taskId
@@ -298,5 +300,40 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         return liveData
 
     }
+/**
+ * 获取组织结构
+ * */
+    override fun getOrgnization(id:String,callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel> {
+    val liveData = MutableLiveData<OrgnizationModel>()
+    var url=URLs.URL_SELECT_BY_ORGNIZATION+id
+    serviceApi?.getOrgnization(url)?.compose(RxSchedulers.inIo())
+        ?.subscribe({ response ->
+            if (response.isState) {
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            } else {
+                callBack.onFaild(EinyunHttpException(response))
+            }
+        }, { error -> callBack.onFaild(error) })
+    return liveData    }
+    /**
+     * 获取审批角色
+     * */
+
+    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+        val liveData = MutableLiveData<JobPage>()
+        serviceApi?.getJob(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    Log.d("test","cuowu1")
+
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error)
+                Log.d("test",error.message)})
+        return liveData      }
 
 }

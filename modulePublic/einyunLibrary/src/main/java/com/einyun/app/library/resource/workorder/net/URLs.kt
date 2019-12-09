@@ -72,8 +72,8 @@ class URLs {
         //获取资源类型
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH="/resource/resource-api/v1/resource-basic-info/dispatch"
         //获取组织架构
-        const val URL_SELECT_BY_ORGNIZATION="/uc/api/org/v1/org/get"
-
-
+        const val URL_SELECT_BY_ORGNIZATION="/uc/api/org/v1/org/get?id="
+        //获取审批角色
+        const val URL_SELECT_BY_JOB="user-center/api/usercenter/v1/ucOrgJob/filterJobByOrgId"
     }
 }

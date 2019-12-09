@@ -61,4 +61,5 @@ class CreateSendOrderRequest {
     var projectName: String? = null
     @SerializedName("pgd_attachment")
     var imageList: String? = null
+
 }
