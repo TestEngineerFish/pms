@@ -69,5 +69,8 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_ORDER_TYPE="/portal/sys/dataDict/v1/getByTypeKey?typeKey=pgdlx"
         //获取资源类型
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH="/resource/resource-api/v1/resource-basic-info/dispatch"
+        //获取组织架构
+        const val URL_SELECT_BY_ORGNIZATION="/uc/api/org/v1/org/get"
+
     }
 }

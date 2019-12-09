@@ -40,6 +40,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        setHeadTitle(R.string.text_histroy);
         for (int i=0;i<3;i++){
             historyModels.add(new HistoryModel());
         }

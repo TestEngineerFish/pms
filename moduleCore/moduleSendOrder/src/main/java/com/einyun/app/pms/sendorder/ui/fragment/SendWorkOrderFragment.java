@@ -24,6 +24,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -126,6 +127,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                                     .navigation();
                         }
                     });
+                    binding.selectOrderTime.setText(FormatUtil.formatDate(distributeWorkOrder.getCreateTime()));
                 }
 
                 @Override

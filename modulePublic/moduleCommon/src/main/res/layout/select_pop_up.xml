@@ -18,7 +18,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
@@ -52,7 +52,7 @@
                     android:id="@+id/select_out_rec"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/px_100"/>
+                    android:layout_marginBottom="@dimen/px_200"/>
 
 
             </LinearLayout>

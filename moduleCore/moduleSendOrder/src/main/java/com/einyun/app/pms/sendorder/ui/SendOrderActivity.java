@@ -61,9 +61,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         super.initViews(savedInstanceState);
         mTitles=new String[]{getResources().getString(R.string.text_wait_handle),getResources().getString(R.string.text_already_handle)};
         setHeadTitle(R.string.text_send_order);
-        setTxtColor(R.color.blackTextColor);
         setRightOption(R.drawable.scan);
-        setBackIcon(R.drawable.back);
         final ArrayList<SendWorkOrderFragment> fragments = new ArrayList<>();
         String fragmentTags[]=new String[]{FRAGMENT_SEND_OWRKORDER_PENDING,FRAGMENT_SEND_OWRKORDER_DONE};
         for (int i = 0; i < mTitles.length; i++) {

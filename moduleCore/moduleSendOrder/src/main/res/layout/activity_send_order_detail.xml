@@ -441,8 +441,11 @@
                             <ImageView style="@style/tv_create_order_right_arrow"
                                 android:layout_marginRight="@dimen/px_20"/>
                         </LinearLayout>
-                    </LinearLayout>
 
+
+                    </LinearLayout>
+                    <include layout="@layout/layout_apply_late_info"/>
+                    <include layout="@layout/layout_apply_close_info" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
