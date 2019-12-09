@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.R;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.utils.HttpUrlUtil;
+
 import java.util.List;
 
 public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
@@ -32,8 +34,9 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
         holder.ivPhoto.setVisibility(View.VISIBLE);
         holder.add.setVisibility(View.GONE);
         PicUrlModel model = picList.get(position);
+
         Glide.with(mContext)
-                .load(BuildConfig.BASE_URL+"media/"+model.getPath())
+                .load(HttpUrlUtil.getImageServerUrl(model.getPath()))
                 .centerCrop()
                 .into(holder.ivPhoto);
         if(listener!=null){

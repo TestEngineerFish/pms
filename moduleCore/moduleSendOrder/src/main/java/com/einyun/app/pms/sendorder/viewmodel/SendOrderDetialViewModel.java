@@ -136,6 +136,32 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
     }
 
     /**
+     * 批复
+     * @param taskId
+     * @return
+     */
+    public LiveData<Boolean> reply(String taskId){
+        MutableLiveData<Boolean> liveData=new MutableLiveData<>();
+        WorkOrderHanlerRequest request=new WorkOrderHanlerRequest();
+        request.setTaskId(taskId);
+        showLoading();
+        service.distributeReply(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                liveData.postValue(false);
+            }
+        });
+        return liveData;
+    }
+
+    /**
      * 验收
      * @param request
      * @return

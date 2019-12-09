@@ -148,6 +148,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/send_order_detail_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_20"
+            android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginRight="@dimen/px_20"
+            android:layout_marginBottom="@dimen/px_30"
+            />
     </LinearLayout>
 </layout>

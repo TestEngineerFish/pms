@@ -2,6 +2,7 @@ package com.einyun.app.pms.sendorder.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -194,7 +195,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         int state = Integer.parseInt(stateStr);
         if (state == OrderState.NEW.getState()) {//接单-显示接单按钮
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
-        } else if ((state == OrderState.HANDING.getState())) {//处理-提交
+        }
+        else if (detialModel.getData().isReply()>0) {//批复-显示批复按钮
+            binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
+            binding.sendOrderDetailSubmit.setText(getString(R.string.text_work_order_reply));
+            return;
+        }else if ((state == OrderState.HANDING.getState())) {//处理-提交
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.orderForm.getRoot().setVisibility(View.VISIBLE);//显示表单
             binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.VISIBLE);//显示 申请延期和强制逼单
@@ -323,11 +329,27 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         int state = Integer.parseInt(detialModel.getData().getFstatus());
         if (state == OrderState.NEW.getState()) {
             takeOrder();//接单
-        } else if (state == OrderState.HANDING.getState()) {
+        } else if(detialModel.getData().isReply()>0){
+            reply();
+        }else if (state == OrderState.HANDING.getState()) {
             submit();//处理-提交
         } else if (state == OrderState.APPLY.getState()) {
             checkAccept();//验收
         }
+    }
+
+    /**
+     * 批复
+     */
+    private void reply(){
+        viewModel.reply(taskId).observe(this, aBoolean -> {
+            tipDialog.setTip(getString(R.string.text_reply_success));
+            tipDialog.setTipDialogListener(dialog -> {
+                dialog.dismiss();
+                finish();
+            });
+            tipDialog.show();
+        });
     }
 
     /**

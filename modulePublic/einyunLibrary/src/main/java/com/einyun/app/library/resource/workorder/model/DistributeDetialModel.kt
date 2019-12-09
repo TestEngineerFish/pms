@@ -81,4 +81,5 @@ class DisttributeMainModel {
     val ftxId: String? = null
     val ftype: String? = null
     val ftitId: String? = null
+    var isReply:Int=0
 }

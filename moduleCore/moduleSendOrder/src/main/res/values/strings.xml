@@ -24,4 +24,6 @@
     <string name="text_alert_input_suggestion">请输入验收意见</string>
     <string name="text_check_success">验收成功</string>
     <string name="text_alert_check_result">请输入验收结论</string>
+    <string name="text_reply_success">批复成功</string>
+    <string name="text_work_order_reply">批复</string>
 </resources>
