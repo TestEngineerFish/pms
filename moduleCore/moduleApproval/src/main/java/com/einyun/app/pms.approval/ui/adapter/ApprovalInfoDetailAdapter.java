@@ -1,22 +1,33 @@
 package com.einyun.app.pms.approval.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.pms.approval.R;
+import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
+
+import java.util.List;
 
 
 public class ApprovalInfoDetailAdapter extends BaseAdapter {
     Context context;
-    public ApprovalInfoDetailAdapter(Context context){
+    List<ApprovalDetailInfoBean.RowsBean> rows;
+    public ApprovalInfoDetailAdapter(Context context, List<ApprovalDetailInfoBean.RowsBean> rows){
         this.context=context;
+        this.rows=rows;
     }
     @Override
     public int getCount() {
-        return 6;
+        return rows==null?0:rows.size();
     }
 
     @Override
@@ -39,7 +50,10 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
             hodler = new ViewHodle();
             hodler.textview = (TextView) convertView.findViewById(R.id.tv_content);
             hodler.tvTopLine = (TextView) convertView.findViewById(R.id.tv_line_top);
+            hodler.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
             hodler.texBottomLine = (TextView) convertView.findViewById(R.id.tv_line_bottom);
+            hodler.tvState = (TextView) convertView.findViewById(R.id.tv_state);
+            hodler.ivState = (ImageView) convertView.findViewById(R.id.iv_state);
             convertView.setTag(hodler);
         }
         if (position==0) {
@@ -48,17 +62,39 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
             hodler.tvTopLine.setVisibility(View.VISIBLE);
 
         }
-        if (position==5) {
+        if (position==rows.size()-1) {
             hodler.texBottomLine.setVisibility(View.INVISIBLE);
         }else {
             hodler.texBottomLine.setVisibility(View.VISIBLE);
-
         }
+        ApprovalDetailInfoBean.RowsBean rowsBean = rows.get(position);
+        hodler.tvTime.setText( TimeUtil.getAllTime(rowsBean.getAudit_date(),true));
+        //富文本
+        String content=rowsBean.getAuditor()+" ("+rowsBean.getApprovalRole()+ ")";
+        SpannableString mSpannableString = new SpannableString(rowsBean.getAuditor()+" ("+rowsBean.getApprovalRole()+")");
+        mSpannableString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyTextColor)),rowsBean.getAuditor().length(),content.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+//        mSpannableString.setSpan(new ForegroundColorSpan(Color.BLUE),4,6, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        hodler.textview.setText(mSpannableString);
+        if ("reject".equals(rowsBean.getStatus())) {
+            hodler.tvState.setText(context.getString(R.string.tv_no_pass));
+            hodler.tvState.setTextColor(context.getResources().getColor(R.color.redTextColor));
+            hodler.ivState.setImageResource(R.drawable.iv_approval_unpass_state);
+        }else if ("approve".equals(rowsBean.getStatus())){
+            hodler.tvState.setText(context.getString(R.string.tv_had_pass));
+            hodler.tvState.setTextColor(context.getResources().getColor(R.color.greenTextColor));
+            hodler.ivState.setImageResource(R.drawable.iv_approval__pass_state);
+        }
+
         return convertView;
+
+
     }
     static class ViewHodle {
         TextView textview;
         TextView tvTopLine;
         TextView texBottomLine;
+        TextView tvState;
+        TextView tvTime;
+        ImageView ivState;
     }
 }

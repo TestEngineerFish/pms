@@ -8,8 +8,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="44dp">
@@ -70,6 +68,7 @@
             android:layout_height="100dp"/>
     </LinearLayout>
         <LinearLayout
+         android:id="@+id/ll_approval_state"
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -96,7 +95,7 @@
             android:layout_height="44dp">
         <TextView
             android:background="@drawable/shape_little_blue"
-            android:text="cancle"
+            android:text="@string/tv_reset"
             android:gravity="center"
             android:textColor="@color/blueTextColor"
             android:id="@+id/cancle"

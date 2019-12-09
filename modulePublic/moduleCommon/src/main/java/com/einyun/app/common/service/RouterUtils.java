@@ -53,6 +53,12 @@ public class RouterUtils {
     public static final String ACTIVITY_CREATE_ORDER = "/create/home";
     public static final String ACTIVITY_CREATE_SEND_ORDER = "/create/sendOrder";
     public static final String ACTIVITY_CHOOSE_DISPOSE_PERSON = "/create/choosePerson";
+    /**********************Mine****************************/
+    public static final String ACTIVITY_MINE_SETTING = "/mine/setting";
+    public static final String ACTIVITY_USER_INFO = "/mine/userinfo";
+    public static final String ACTIVITY_SIGN_SET = "/mine/signset";
+    public static final String ACTIVITY_USER_HEAD_SHOT = "/mine/userHeadShot";
+    public static final String ACTIVITY_ADVICE_FEED_BACK = "/mine/advcieFeedBack";
 
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

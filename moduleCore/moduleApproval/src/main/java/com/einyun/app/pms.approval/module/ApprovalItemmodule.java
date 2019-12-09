@@ -1,6 +1,8 @@
 package com.einyun.app.pms.approval.module;
 
-public class ApprovalItemmodule {
+import java.io.Serializable;
+
+public class ApprovalItemmodule implements Serializable {
     /**
      * approvalRole : 工程服务单元管理中心员工
      * divide_name : 测试苏南地块
@@ -53,6 +55,7 @@ public class ApprovalItemmodule {
     private String taskNodeId;
     private String audit_type;
     private String status;
+    private String userAuditStatus;
 
     public long getAudit_date() {
         return audit_date;
@@ -252,5 +255,13 @@ public class ApprovalItemmodule {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserAuditStatus() {
+        return userAuditStatus;
+    }
+
+    public void setUserAuditStatus(String userAuditStatus) {
+        this.userAuditStatus = userAuditStatus;
     }
 }

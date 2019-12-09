@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.pms.approval.R;
 
+import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.module.ApprovalBean;
 import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
@@ -28,6 +29,7 @@ import com.einyun.app.pms.approval.ui.adapter.ApprovalTypeAdapter;
 import com.google.gson.Gson;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -53,12 +55,14 @@ public class CustomPopWindow extends PopupWindow {
     private ApprovalBean approvalBean;
     List<GetByTypeKeyForComBoModule> approvalAuditTypeModule;
     List<GetByTypeKeyInnerAuditStatusModule> approvalAuditStateModule;
+    List<GetByTypeKeyInnerAuditStatusModule> approvalSelectedAuditStateModule;
     private GetByTypeKeyForComBoModule mGetByTypeKeyForComBoModule;
     public CustomPopWindow(Activity context, int tabId, List<GetByTypeKeyForComBoModule> approvalAuditTypeModule, List<GetByTypeKeyInnerAuditStatusModule> approvalAuditStateModule) {
         super(context);
         this.tabId=tabId;
         this.approvalAuditStateModule=approvalAuditStateModule;
         this.approvalAuditTypeModule=approvalAuditTypeModule;
+        mGetByTypeKeyForComBoModule=approvalAuditTypeModule.get(0);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.custom_popwindow, null);//alt+ctrl+f
         this.context = context;
@@ -69,18 +73,22 @@ public class CustomPopWindow extends PopupWindow {
 
             @Override
             public void onDismiss() {
-                auditStatus="";
-                auditSubType="";
-                auditType="";
-                mApprovalStatusPosition=-1;
-                mApprovalTypePosition=-1;
-                mApprovalChildTypePosition=-1;
-                approvalChildTypeAdapter.notifyDataSetChanged();
-                approvalStatusAdapter.notifyDataSetChanged();
-                approvalTypeAdapter.notifyDataSetChanged();
+                reSetdata();
             }
         });
 }
+
+    private void reSetdata() {
+        auditStatus="";
+        auditSubType="";
+        auditType="";
+        mApprovalStatusPosition=-1;
+        mApprovalTypePosition=-1;
+        mApprovalChildTypePosition=-1;
+        approvalChildTypeAdapter.notifyDataSetChanged();
+        approvalStatusAdapter.notifyDataSetChanged();
+        approvalTypeAdapter.notifyDataSetChanged();
+    }
 
     private ApprovalBean getData(int page, int pageSize) {
         JSONObject jsonObject = new JSONObject();
@@ -156,6 +164,7 @@ public class CustomPopWindow extends PopupWindow {
         TextView cancel = view.findViewById(R.id.cancle);
         TextView ok = view.findViewById(R.id.ok);
         ImageView iv_close = view.findViewById(R.id.iv_close);
+        LinearLayout llState = view.findViewById(R.id.ll_approval_state);
         gv_approval_type = view.findViewById(R.id.gv_approval_type);
         gv_approval_child_type = view.findViewById(R.id.gv_approval_child_type);
         gv_approval_status = view.findViewById(R.id.gv_approval_status);
@@ -163,7 +172,8 @@ public class CustomPopWindow extends PopupWindow {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+
+                reSetdata();
             }
         });
         ok.setOnClickListener(new View.OnClickListener() {
@@ -181,9 +191,25 @@ public class CustomPopWindow extends PopupWindow {
         //二级列表
         approvalChildTypeAdapter = new ApprovalChildTypeAdapter(context,approvalAuditTypeModule.get(0));
         gv_approval_child_type.setAdapter(approvalChildTypeAdapter);
-        //三级列表
-        approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalAuditStateModule);
-        gv_approval_status.setAdapter(approvalStatusAdapter);
+        //三级列表  已审批 只显示 已审批  已驳回
+        approvalSelectedAuditStateModule=new ArrayList<>();
+        for (GetByTypeKeyInnerAuditStatusModule auditStatusModule : approvalAuditStateModule) {
+            if (ApprovalDataKey.APPROVAL_STATE_HAD_PASS.equals(auditStatusModule.getKey())||ApprovalDataKey.APPROVAL_STATE_HAD_UNPASS.equals(auditStatusModule.getKey())) {
+                approvalSelectedAuditStateModule.add(auditStatusModule);
+            }
+        }
+        if (tabId==1) {
+            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalSelectedAuditStateModule);
+            gv_approval_status.setAdapter(approvalStatusAdapter);
+        }else if (tabId==2){
+            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalAuditStateModule);
+            gv_approval_status.setAdapter(approvalStatusAdapter);
+        }else if (tabId==0) {
+                llState.setVisibility(View.GONE);
+            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalAuditStateModule);
+            gv_approval_status.setAdapter(approvalStatusAdapter);
+        }
+
 
         gv_approval_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -218,7 +244,13 @@ public class CustomPopWindow extends PopupWindow {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 mApprovalStatusPosition=position;
                 approvalStatusAdapter.notifyDataSetChanged();
-                auditStatus=approvalAuditStateModule.get(position).getKey();
+                if (tabId==1) {
+
+                    auditStatus=approvalSelectedAuditStateModule.get(position).getKey();
+                }else {
+                    auditStatus=approvalAuditStateModule.get(position).getKey();
+
+                }
             }
         });
     }

@@ -36,4 +36,11 @@
     <string name="tv_pass">通过</string>
     <string name="tv_had_not_approval">已驳回</string>
     <string name="tv_approvaling">审批中</string>
+    <string name="tv_basic_info">基本信息</string>
+    <string name="tv_had_pass">已通过</string>
+    <string name="tv_no_pass">未通过</string>
+    <string name="tv_empty_sug">审批意见不能为空</string>
+    <string name="tv_reset">重置</string>
+    <string name="tv_execution_frequency">执行频率</string>
+    <string name="text_no_data">暂无数据</string>
 </resources>

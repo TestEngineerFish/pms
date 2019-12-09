@@ -88,7 +88,30 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                 .build(routerName)
                 .navigation();
     }
-
+    /**
+    * 跳转设置界面
+    * */
+    public void Setting(){
+        jumpUserSetting(RouterUtils.ACTIVITY_MINE_SETTING);
+    }
+    /**
+    * 跳转审批界面
+    * */
+    public void approvalOnClick(){
+        jumpUserSetting(RouterUtils.ACTIVITY_APPROVAL);
+    }
+    /**
+    * 跳转意见反馈
+    * */
+    public void adviceFeedBack(){
+      jumpUserSetting(RouterUtils.ACTIVITY_ADVICE_FEED_BACK);
+    }
+    /**
+     *跳转个人信息
+     */
+    public void userInfoOnClick(){
+      jumpUserSetting(RouterUtils.ACTIVITY_USER_INFO);
+    }
 
     /**
      * 改变工作状态

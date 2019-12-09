@@ -95,9 +95,17 @@
         <!--巡查工单End-->
         <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
         <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>
+
         <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
         <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
         <activity android:name=".sendorder.ui.ChooseDisposeViewModelActivity"/>
+       <!-- Mine       -->
+        <activity android:name=".mine.ui.SettingViewModuleActivity"/>
+        <activity android:name=".mine.ui.AdviceFeedBackViewModuleActivity"/>
+        <activity android:name=".mine.ui.SignSetViewModuleActivity"/>
+        <activity android:name=".mine.ui.UserHeadShotViewModuleActivity"/>
+        <activity android:name=".mine.ui.UserInfoViewModuleActivity"/>
+       <!-- Mine end       -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.einyun.app.pms.fileprovider"
