@@ -21,7 +21,7 @@ import java.util.Map;
 public class SelectPeopleViewModel extends BaseViewModel {
     private UserCenterService userCenterService;
     private WorkOrderService workOrderService;
-    public List<GetMappingByUserIdsResponse> users;
+
 
     public SelectPeopleViewModel() {
         userCenterService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_USER_CENTER);
@@ -37,12 +37,7 @@ public class SelectPeopleViewModel extends BaseViewModel {
         return userCenterService.searchUserByCondition(request, new CallBack<List<GetMappingByUserIdsResponse>>() {
             @Override
             public void call(List<GetMappingByUserIdsResponse> data) {
-                List<String> request = new ArrayList<>();
-                for (GetMappingByUserIdsResponse response : data) {
-                    request.add(response.getId());
-                }
-                users = data;
-                getMappingByUserIds(request);
+
             }
 
             @Override
@@ -56,9 +51,7 @@ public class SelectPeopleViewModel extends BaseViewModel {
         return workOrderService.getMappingByUserIds(request, new CallBack<Map<String, GetMappingByUserIdsResponse>>() {
             @Override
             public void call(Map<String, GetMappingByUserIdsResponse> data) {
-                for (GetMappingByUserIdsResponse user : users) {
-                    user.setPendingCount(data.get(user.getId()).getPendingCount());
-                }
+
             }
 
             @Override

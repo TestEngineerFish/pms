@@ -141,5 +141,5 @@ interface WorkOrderServiceApi {
      *  通过UserId批量查询待处理工单
      */
     @POST(URLs.URL_GET_MAPPING_BY_USERIDS)
-    fun getMappingByUserIds(@Body request: List<String>): Flowable<Map<String, GetMappingByUserIdsResponse>>
+    fun getMappingByUserIds(@Body request: List<String>): Flowable<BaseResponse<Map<String, GetMappingByUserIdsResponse>>>
 }

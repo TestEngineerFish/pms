@@ -37,8 +37,10 @@ class UserCenterRepository() : UserCenterService {
         val liveData = MutableLiveData<List<GetMappingByUserIdsResponse>>()
         serviceApi?.searchUserByCondition(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                callBack.call(response.rows)
-                liveData.postValue(response.rows)
+                if (response.isState){
+                    callBack.call(response.data.rows)
+                    liveData.postValue(response.data.rows)
+                }
             }, { error -> callBack.onFaild(error) })
         return liveData
     }

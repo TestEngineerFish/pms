@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/greyTextColor"
                 android:textSize="@dimen/font_size15"
-                android:text="@{user.pendingCount}"/>
+                android:text="@{String.valueOf(user.pendingCount)}"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>
