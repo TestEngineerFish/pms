@@ -1,6 +1,8 @@
 package com.einyun.app.pms.approval.module;
 
-public class ApprovalItemmodule {
+import java.io.Serializable;
+
+public class ApprovalItemmodule implements Serializable {
     /**
      * approvalRole : 工程服务单元管理中心员工
      * divide_name : 测试苏南地块

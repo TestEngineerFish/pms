@@ -1,5 +1,8 @@
 package com.einyun.app.pms.approval.repository;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
@@ -7,6 +10,7 @@ import com.einyun.app.library.portal.dictdata.net.URLS;
 import com.einyun.app.pms.approval.module.ApprovalBean;
 import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.module.ApprovalListModule;
+import com.einyun.app.pms.approval.module.ApprovalSumitBean;
 import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.module.UrlxcgdGetInstBOModule;
@@ -49,5 +53,22 @@ public class ApprovalkDetailRepository {
                 }, error -> {
                     callBack.onFaild(error);
                 });
+    }
+    /**
+     * 审批提交
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> approvalSumit(ApprovalSumitBean request,String url, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.sumitApproval(url,request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
     }
 }

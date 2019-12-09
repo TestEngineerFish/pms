@@ -37,7 +37,7 @@
                 android:gravity="center_vertical"
                 android:textSize="16sp"
                 android:textColor="@color/blackTextColor"
-                android:text="@string/tv_applicat"
+                android:text="@string/tv_basic_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="68dp"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:layout_height="24dp"/>
         </RelativeLayout>
         <ImageView
@@ -101,7 +101,7 @@
 
                 />
             <TextView
-                android:id="@+id/tv_approval_time"
+                android:id="@+id/tv_apply_person"
                 style="@style/style_text_approval_right"
                 android:text="20"
 
@@ -124,6 +124,7 @@
              </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
+                android:layout_marginTop="10dp"
                 android:id="@+id/ll_creat_change_info"
                 android:background="@drawable/shape_white_bg"
                 android:layout_marginLeft="15dp"
@@ -153,62 +154,47 @@
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
-
                         android:text="@string/tv_tiaoxian"
                         style="@style/style_text_approval_left" />
                     <TextView
-                        android:text="工程"
+                        android:id="@+id/tv_create_line"
                         style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
                         android:text="@string/tv_plan_name"
-                        style="@style/style_text_approval_left"
-                        />
+                        style="@style/style_text_approval_left" />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="检查开关柜"
-
-                        />
+                        android:id="@+id/tv_create_plan_name"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
                         android:text="@string/tv_resource_classification"
-                        style="@style/style_text_approval_left"
-                        />
+                        style="@style/style_text_approval_left" />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="高压开关柜"
-
-                        />
+                        android:id="@+id/tv_create_resource_classification"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
                         style="@style/style_text_approval_left"
-                        android:text="@string/tv_work_instruction"
-
-                        />
+                        android:text="@string/tv_work_instruction" />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="开关柜"
-
-                        />
+                        android:id="@+id/tv_create_work_instruction"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
                         style="@style/style_text_approval_left"
-                        android:text="工单负责职位"
-
-                        />
+                        android:text="工单负责职位" />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="2019-11-18 15:34:55"
-
-                        />
+                        android:id="@+id/tv_create_work_order_respone"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
@@ -217,9 +203,8 @@
                         style="@style/style_text_approval_left"
                         />
                     <TextView
+                        android:id="@+id/tv_create_apply_start_time"
                         style="@style/style_text_approval_right"
-                        android:text="2019-11-18  00:00:00"
-
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -230,24 +215,22 @@
 
                         />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="2019-11-18  00:00:00"
-
-                        />
+                        android:id="@+id/tv_create_apply_end_time"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
                         style="@style/style_text_approval_left"
-                        android:text="执行频率"
+                        android:text="@string/tv_execution_frequency"
                         />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="从1月到12月，每1个月生成5次工单，工单每月18号生成"
-                        />
+                        android:id="@+id/tv_create_execution_frequency"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:visibility="gone"
                 android:id="@+id/ll_delay_close_info"
                 android:background="@drawable/shape_white_bg"
@@ -278,11 +261,10 @@
                 <RelativeLayout
                     style="@style/style_rl_normal">
                     <TextView
-
                         android:text="@string/tv_work_order_type"
                         style="@style/style_text_approval_left" />
                     <TextView
-                        android:text="派工单"
+                        android:id="@+id/tv_close_order_type"
                         style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
@@ -292,11 +274,9 @@
                         style="@style/style_text_approval_left"
                         />
                     <TextView
+                        android:id="@+id/tv_close_order_code"
                         android:textColor="@color/blueTextColor"
-                        style="@style/style_text_approval_right"
-                        android:text="csqy1-GC-pgd_gc_zhwx-201911121924450020"
-
-                        />
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <RelativeLayout
                     style="@style/style_rl_normal">
@@ -305,9 +285,8 @@
                         style="@style/style_text_approval_left"
                         />
                     <TextView
+                        android:id="@+id/tv_close_line"
                         style="@style/style_text_approval_right"
-                        android:text="环境"
-
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -318,10 +297,8 @@
 
                         />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="品质工单"
-
-                        />
+                        android:id="@+id/tv_close_dispatch_order_type"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -331,10 +308,8 @@
                         style="@style/style_text_approval_left"
                         />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="测试人员"
-
-                        />
+                        android:id="@+id/tv_close_order_responer"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
                 <LinearLayout
                     android:id="@+id/ll_gone_time"
@@ -349,10 +324,8 @@
 
                             />
                         <TextView
-                            style="@style/style_text_approval_right"
-                            android:text="2019-11-18 15:34:55"
-
-                            />
+                            android:id="@+id/tv_close_create_time"
+                            style="@style/style_text_approval_right" />
                     </RelativeLayout>
                     <RelativeLayout
                         style="@style/style_rl_normal">
@@ -362,10 +335,8 @@
 
                             />
                         <TextView
-                            style="@style/style_text_approval_right"
-                            android:text="2019-11-18  00:00:00"
-
-                            />
+                            android:id="@+id/tv_close_end_time"
+                            style="@style/style_text_approval_right" />
                     </RelativeLayout>
                     <RelativeLayout
                         style="@style/style_rl_normal">
@@ -374,9 +345,8 @@
                             android:text="@string/tv_delay_day"
                             />
                         <TextView
-                            style="@style/style_text_approval_right"
-                            android:text="1天"
-                            />
+                            android:id="@+id/tv_close_delay_day"
+                            style="@style/style_text_approval_right" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -388,12 +358,16 @@
                         android:text="@string/tv_apply_reason"
                         />
                     <TextView
-                        style="@style/style_text_approval_right"
-                        android:text="因为时间限制，今天之内无法完成工作安排，需要延期"
-                        />
+                        android:id="@+id/tv_close_apply_reason"
+                        style="@style/style_text_approval_right" />
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
                 android:background="@drawable/shape_white_bg"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -426,8 +400,10 @@
                     android:dividerHeight="0dp"
                     android:divider="@null"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"/>
+                    android:layout_marginBottom="20dp"
+                    android:layout_height="match_parent"/>
                 <RelativeLayout
+                    android:id="@+id/rl_approval_sug"
                     style="@style/style_rl_normal">
                     <TextView
 
@@ -449,11 +425,13 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/ll_pass"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
                 <TextView
+                    android:onClick="@{()->callBack.onRejectClick()}"
                     android:layout_marginLeft="20dp"
                     android:text="@string/tv_unpass"
                     android:background="@drawable/shape_iv_unpass"
@@ -465,6 +443,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"/>
                 <TextView
+                    android:onClick="@{()->callBack.onPassClick()}"
                     android:layout_marginLeft="7.5dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/tv_pass"

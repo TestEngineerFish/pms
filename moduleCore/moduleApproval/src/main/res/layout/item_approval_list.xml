@@ -9,6 +9,7 @@
             type="com.einyun.app.pms.approval.module.ApprovalItemmodule" />
     </data>
     <LinearLayout
+        android:layout_marginBottom="10dp"
         android:background="@drawable/shape_white_bg"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"

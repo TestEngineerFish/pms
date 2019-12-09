@@ -24,17 +24,23 @@
              android:orientation="horizontal">
 
              <RadioButton
+                 android:layout_marginLeft="25dp"
+                 android:layout_marginRight="15dp"
                  android:id="@+id/rbtn_wait_approval"
                  style="@style/home_rbtn_line"
                  android:checked="true"
                  android:text="@string/tv_wait_approval" />
 
              <RadioButton
+                 android:layout_marginLeft="15dp"
+                 android:layout_marginRight="15dp"
                  android:id="@+id/rbtn_had_approval"
                  style="@style/home_rbtn_line"
                  android:text="@string/tv_had_approval" />
 
              <RadioButton
+                 android:layout_marginLeft="15dp"
+                 android:layout_marginRight="25dp"
                  android:id="@+id/rbtn_me_started"
                  style="@style/home_rbtn_line"
                  android:text="@string/tv_me_started" />
