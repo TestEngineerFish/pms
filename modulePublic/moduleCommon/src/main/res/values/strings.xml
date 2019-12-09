@@ -79,4 +79,5 @@
     <string name="select_person">选择人员</string>
     <string name="text_choose_work_type">请选择分类</string>
     <string name="text_choose_work_order_type">请选择%1$s级分类</string>
+    <string name="search_name_or_phone">请搜索姓名或手机号</string>
 </resources>

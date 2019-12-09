@@ -3,8 +3,11 @@ package com.einyun.app.library.core.api.proxy
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UserCenterService
+import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
 import com.einyun.app.library.uc.usercenter.repository.UserCenterRepository
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
 /**
  *
@@ -20,6 +23,13 @@ import com.einyun.app.library.uc.usercenter.repository.UserCenterRepository
  * @Version:        1.0
  */
 class UserCenterServiceImplProxy : UserCenterService {
+    override fun searchUserByCondition(
+        request: SearchUserRequest,
+        callBack: CallBack<List<GetMappingByUserIdsResponse>>
+    ): LiveData<List<GetMappingByUserIdsResponse>> {
+        return instance?.searchUserByCondition(request, callBack)!!
+    }
+
     override fun getDisposePerson(
         orgId: String,
         dimCode: String,

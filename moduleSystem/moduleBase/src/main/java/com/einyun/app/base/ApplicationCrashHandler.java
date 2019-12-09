@@ -1,5 +1,7 @@
 package com.einyun.app.base;
 
+import com.einyun.app.base.util.ActivityUtil;
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.base
@@ -16,7 +18,7 @@ public class ApplicationCrashHandler implements Thread.UncaughtExceptionHandler{
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         e.printStackTrace();
-        BasicApplication.getInstance().exit();
+        ActivityUtil.finishActivitys();
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

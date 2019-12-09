@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -62,6 +63,9 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.Dialog_FullScreen);
+        WindowManager.LayoutParams window = getDialog().getWindow().getAttributes();
+        window.windowAnimations = R.style.BottomDialogAnimation;
+        getDialog().getWindow().setAttributes(window);
     }
 
     @Nullable

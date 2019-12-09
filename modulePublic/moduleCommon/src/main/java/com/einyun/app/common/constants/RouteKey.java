@@ -25,4 +25,8 @@ public class RouteKey {
     //选择处理人
     public static final String KEY_ORG_ID="org_id";
     public static final String KEY_DIM_CODE="dimCode";
+
+    //选择处理人
+    public static final String KEY_ORG_ID_LIST="orgIdList";
+    public static final String KEY_JOB_ID_LIST="jobIdList";
 }
