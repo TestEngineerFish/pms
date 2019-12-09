@@ -1,15 +1,12 @@
 package com.einyun.app.pms.sendorder.ui;
 
-import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +24,7 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
-import com.einyun.app.pms.sendorder.databinding.ActivityChooseDisposePersonBinding;
+import com.einyun.app.pms.sendorder.databinding.ActivityResendOrderChoosePersonBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemResendOrderChoosePersonBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SelectPeopleViewModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
@@ -37,13 +34,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
-public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<ActivityChooseDisposePersonBinding, SelectPeopleViewModel> {
+public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<ActivityResendOrderChoosePersonBinding, SelectPeopleViewModel> {
 
     @Autowired(name = RouteKey.KEY_ORG_ID_LIST)
-    List<String> orgIdList;
+    ArrayList<String> orgIdList;
     @Autowired(name = RouteKey.KEY_JOB_ID_LIST)
-    List<String> jobIdList;
+    ArrayList<String> jobIdList;
     RVBindingAdapter<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse> adapter;
+    public List<GetMappingByUserIdsResponse> users = new ArrayList<>();
 
     @Override
     protected SelectPeopleViewModel initViewModel() {
@@ -52,7 +50,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_choose_dispose_person;
+        return R.layout.activity_resend_order_choose_person;
     }
 
     @Override
@@ -83,8 +81,24 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
             };
         }
         binding.rvChooseDisposePerson.setAdapter(adapter);
-        adapter.setDataList(viewModel.users);
-        viewModel.searchUserByCondition(jobIdList, orgIdList);
+
+        viewModel.searchUserByCondition(jobIdList, orgIdList).observe(this, users -> {
+            List<String> request = new ArrayList<>();
+            for (GetMappingByUserIdsResponse response : users) {
+                request.add(response.getId());
+            }
+            viewModel.getMappingByUserIds(request).observe(this, data -> {
+                for (GetMappingByUserIdsResponse user : users) {
+                    if (data.get(user.getId()) == null) {
+                        user.setPendingCount(0);
+                    } else {
+                        user.setPendingCount(data.get(user.getId()).getPendingCount());
+                    }
+                }
+                this.users = users;
+                adapter.setDataList(this.users);
+            });
+        });
         binding.rvChooseDisposePerson.addItemDecoration(new SpacesItemDecoration(0));
     }
 
@@ -98,7 +112,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                 public LiveData<List<GetMappingByUserIdsResponse>> search(String search) {
                     MutableLiveData liveData = new MutableLiveData<List<OrgModel>>();
                     List<GetMappingByUserIdsResponse> list = new ArrayList<>();
-                    for (GetMappingByUserIdsResponse user : viewModel.users) {
+                    for (GetMappingByUserIdsResponse user : users) {
                         if (user.getFullname().contains(search) || user.getMobile().contains(search)) {
                             list.add(user);
                         }

@@ -38,8 +38,11 @@ class WorkOrderRepository : WorkOrderService {
         val liveData = MutableLiveData<Map<String, GetMappingByUserIdsResponse>>()
         serviceApi?.getMappingByUserIds(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                callBack.call(response)
-                liveData.postValue(response)
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                }
+
             }, { error -> callBack.onFaild(error) })
         return liveData
     }
