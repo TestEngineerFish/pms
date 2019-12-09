@@ -15,92 +15,43 @@
         tools:context=".ui.ResendOrderActivity">
 
         <include layout="@layout/include_layout_activity_head" android:id="@id/head_bar" />
-
-        <RelativeLayout
-            android:id="@+id/resend_order_to"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
-            android:layout_marginLeft="@dimen/px_30"
-            android:layout_marginRight="@dimen/px_30">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="*"
-                    android:textColor="@color/important_red_color" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/text_resend_to"
-                    android:textColor="@color/blackTextColor" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/text_please_select"
-                    android:textColor="@color/normal_main_text_icon_color" />
-
-                <ImageView
-                    android:layout_width="@dimen/px_26"
-                    android:layout_height="@dimen/px_26"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/right_arrow" />
-            </LinearLayout>
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+        <View style="@style/base_underline" />
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
-            android:layout_marginLeft="@dimen/px_30"
-            android:layout_marginRight="@dimen/px_30"
-            android:orientation="horizontal">
+            android:id="@+id/resend_order_to"
+            style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@color/important_red_color"
-                android:gravity="center_vertical"
-                android:text="*" />
+                style="@style/tv_create_order_name"
+                android:text="@string/text_resend_to" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@color/blackTextColor"
-                android:gravity="center_vertical"
+                style="@style/tv_create_order_select"
+                android:text="@string/text_please_select" />
+
+            <ImageView style="@style/tv_create_order_right_arrow" />
+        </LinearLayout>
+        <View style="@style/base_underline" />
+        <LinearLayout
+            style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
                 android:text="@string/text_resend_reason" />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_180"
-            android:layout_marginLeft="@dimen/px_50"
-            android:layout_marginRight="@dimen/px_50"
-            android:layout_marginBottom="@dimen/px_50"
-            android:background="@color/activity_bg_color">
-            <EditText
-                android:layout_width="match_parent"
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content">
+
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/location_info"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/px_10"
-                android:hint="@string/text_enter_reason"
-                android:textSize="15sp"
-                android:background="@null"/>
+                app:hintText="请输入转派原因"
+                app:maxNumber="100" />
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

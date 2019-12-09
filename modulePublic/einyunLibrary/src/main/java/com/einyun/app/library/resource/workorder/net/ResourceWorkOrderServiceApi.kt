@@ -117,4 +117,10 @@ interface ResourceWorkOrderServiceApi {
 
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH)
     fun getResourceInfos(@Body request: ResourceTypeRequest): Flowable<BaseResponse<List<ResourceTypeBean>>>
+
+    /**
+     *获取组织架构
+     **/
+    @GET(URLs.URL_SELECT_BY_ORGNIZATION)
+    fun getOrgnization(@Body request: GetOrgnizationRequest): Flowable<GetOrgnizationResponse>
 }

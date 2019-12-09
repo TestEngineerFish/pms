@@ -32,14 +32,12 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
         return R.layout.activity_resend_order;
     }
 
-    @Override
-    protected int getColorPrimary() {
-        return R.color.white;
-    }
+
 
     @Override
     protected void initListener() {
         super.initListener();
+        binding.resendOrderTo.setOnClickListener(this);
     }
 
     @Override
@@ -49,4 +47,5 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                 .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
                 .navigation();
     }
+
 }
