@@ -1,5 +1,7 @@
 package com.einyun.app.base.util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -303,5 +305,37 @@ public class TimeUtil {
         }else{
             return System.currentTimeMillis()/1000;
         }
+    }
+
+    public static long getTimeMillis(String strTime) {
+        long returnMillis = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = null;
+        try {
+            d = sdf.parse(strTime);
+            returnMillis = d.getTime();
+        } catch (Exception e) {
+            Log.e("shmshmshm" , "e = " + e);
+        }
+        return returnMillis;
+    }
+
+    public static String getTimeExpend(String startTime){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String endTime = format.format(new Date());
+        //传入字串类型 2016/06/28 08:30
+        long longStart = getTimeMillis(startTime); //获取开始时间毫秒数
+        long longEnd = getTimeMillis(endTime);  //获取结束时间毫秒数
+        long longExpend = longEnd - longStart;  //获取时间差
+
+        if (longExpend<0){
+            longExpend = 0;
+        }
+
+        long longDay = longExpend / (60 * 60 * 1000*24);
+        long longHours = (longExpend -longDay*(60 * 60 * 1000*24))/ (60 * 60 * 1000); //根据时间差来计算小时数
+        long longMinutes = (longExpend - longHours * (60 * 60 * 1000)-longDay*(60 * 60 * 1000*24)) / (60 * 1000);   //根据时间差来计算分钟数
+
+        return longDay + " 天 " + longHours + " 小时 " + longMinutes+" 分钟";
     }
 }

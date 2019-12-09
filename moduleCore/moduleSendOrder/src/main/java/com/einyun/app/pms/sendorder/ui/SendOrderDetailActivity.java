@@ -161,6 +161,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.setWorkOrder(distributeWorkOrder);
         binding.orderInfo.setWorkOrder(distributeWorkOrder);
         binding.orderForm.setWorkOrder(distributeWorkOrder);
+        binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getFCreateTime()));
         updateImagesUI(distributeWorkOrder);
         switchState(distributeWorkOrder.getData().getFstatus());
     }
