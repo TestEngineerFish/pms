@@ -128,10 +128,14 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        ActivityUtil.removeActivity(this.getClass());
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityUtil.removeActivity(this.getClass());
     }
 }

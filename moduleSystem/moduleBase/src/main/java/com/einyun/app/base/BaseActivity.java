@@ -84,9 +84,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        ActivityUtil.removeActivity(this.getClass());
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityUtil.removeActivity(this.getClass());
         if(loadingDialog!=null){
             if(loadingDialog.isShowing()){
                 loadingDialog.dismiss();
