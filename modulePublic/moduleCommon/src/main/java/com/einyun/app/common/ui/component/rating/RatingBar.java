@@ -238,6 +238,9 @@ public class RatingBar extends LinearLayout {
             ((ImageView) getChildAt(fint)).setImageDrawable(starHalfDrawable);
         }
     }
+    public float getSelectedStarts(){
+        return this.starStep;
+    }
 
     /**
      * 操作星星的点击事件

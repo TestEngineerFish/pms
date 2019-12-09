@@ -46,6 +46,28 @@
                 android:text="验收结论"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
+            <Button
+                android:id="@+id/btn_agree"
+                android:layout_width="@dimen/px_104"
+                android:layout_height="@dimen/px_40"
+                android:padding="@dimen/px_5"
+                android:layout_marginLeft="@dimen/px_75"
+                android:background="@drawable/shape_frame_corners_gray"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size12"
+                android:text="@string/text_state_passed"
+                />
+            <Button
+                android:id="@+id/btn_reject"
+                android:layout_width="@dimen/px_104"
+                android:layout_height="@dimen/px_40"
+                android:layout_marginLeft="@dimen/px_40"
+                android:padding="@dimen/px_5"
+                android:textSize="@dimen/font_size12"
+                android:background="@drawable/shape_frame_corners_gray"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:text="@string/text_reject"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/ll_create_order">
@@ -57,6 +79,7 @@
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
             <com.einyun.app.common.ui.component.rating.RatingBar
+                android:id="@+id/rating_bar"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/px_38"
                 android:layout_marginLeft="@dimen/px_144"
@@ -88,11 +111,12 @@
             android:layout_height="wrap_content">
 
             <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/et_limit_suggestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px_30"
                 app:hintText="请输入文字信息"
-                app:maxNumber="100" />
+                app:maxNumber="300" />
         </LinearLayout>
     </LinearLayout>
 

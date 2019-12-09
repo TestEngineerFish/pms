@@ -105,10 +105,22 @@ interface ResourceWorkOrderServiceApi {
     fun distribteResponse(@Body request:WorkOrderHanlerRequest):Flowable<BaseResponse<Any>>
 
     /**
+     * 派工单批复
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_REPLY)
+    fun distribteReply(@Body request:WorkOrderHanlerRequest):Flowable<BaseResponse<Any>>
+
+    /**
      * 派工单处理
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_PROCESS)
     fun distributeSumbmit(@Body request: DistributeSubmitRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 派工单验收
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_APPLY)
+    fun distributeCheck(@Body request: DistributeCheckRequest):Flowable<BaseResponse<Any>>
 
     /**
      * 2.30派工单-列表（根据地块id、条线编码）

@@ -47,6 +47,10 @@ interface ResourceWorkOrderService : EinyunService {
     fun distributeDoneDetial(request:DoneDetialRequest,callBack: CallBack<DisttributeDetialModel>)
     //派工单接单
     fun distributeResponse(request: WorkOrderHanlerRequest,callBack: CallBack<Boolean>)
+    //派工单批复
+    fun distributeReply(request: WorkOrderHanlerRequest,callBack: CallBack<Boolean>)
+    //派工单验收
+    fun distributeCheck(request: DistributeCheckRequest,callBack: CallBack<Boolean>)
     //派工单处理
     fun distributeSubmit(request: DistributeSubmitRequest,callBack: CallBack<Boolean>)
     //获取条线

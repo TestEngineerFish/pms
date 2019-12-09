@@ -65,6 +65,10 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE="/$DOMAIN/res-order/distribute/response"
         //派工单处理
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_PROCESS="/$DOMAIN/res-order/distribute/process"
+        //派工单-验收
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_APPLY="/$DOMAIN/res-order/distribute/check"
+        //派工单-批复
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_REPLY="/$DOMAIN/res-order/distribute/reply"
         //获取条线
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_TIAOXIAN="/portal/sys/sysType/v1/getTypesListByKey?typeKey=RESOURCE_TYPE"
         //获取工单类型

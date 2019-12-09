@@ -193,8 +193,6 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
                     .withString(RouteKey.KEY_ORDER_ID,data.getID_())
                     .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                    .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
-                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                     .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
                     .navigation();
     }

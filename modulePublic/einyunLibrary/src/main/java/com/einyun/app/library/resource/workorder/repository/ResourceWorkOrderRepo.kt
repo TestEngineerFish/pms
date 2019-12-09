@@ -28,9 +28,31 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+        serviceApi?.distribteReply(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    callBack.call(it.isState)
+                },{
+                    callBack.onFaild(it)
+                }
+            )
+    }
+
+    override fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>) {
+        serviceApi?.distributeCheck(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    callBack.call(it.isState)
+                },{
+                    callBack.onFaild(it)
+                }
+            )
+    }
+
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
         var url=URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL_INFO+orderId
-        serviceApi?.distributeWaitDetial(url)?.compose(RxSchedulers.inIo())
+        serviceApi?.distributeWaitDetialInfo(url)?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response->
                     if(response.isState){

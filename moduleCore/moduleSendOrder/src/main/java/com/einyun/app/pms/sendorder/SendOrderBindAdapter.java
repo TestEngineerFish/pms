@@ -22,9 +22,12 @@ public class SendOrderBindAdapter {
     public static void status(TextView view, int value){
         if(value== OrderState.NEW.getState()){
             view.setText(R.string.text_state_new);
-        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
+        }else if(value==OrderState.HANDING.getState()){
             view.setText(R.string.text_state_processing);
-        }else if(value==OrderState.CLOSED.getState()){
+        }else if(value==OrderState.APPLY.getState()){
+            view.setText(R.string.text_apply);
+        }
+        else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
         }
 
@@ -70,7 +73,7 @@ public class SendOrderBindAdapter {
         }else if(state==OrderState.HANDING.getState()){
             view.setText(R.string.text_commit);
         }else if(state==OrderState.APPLY.getState()){
-            view.setText(R.string.text_approval);
+            view.setText(R.string.text_work_order_apply);
         }
         else if(state==OrderState.CLOSED.getState()){
             view.setVisibility(View.GONE);
@@ -82,9 +85,12 @@ public class SendOrderBindAdapter {
     public static void status(ImageView view, int value){
         if(value== OrderState.NEW.getState()){
             view.setImageResource(R.mipmap.icon_new);
-        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
+        }else if(value==OrderState.HANDING.getState()){
             view.setImageResource(R.mipmap.icon_processing);
-        }else if(value==OrderState.CLOSED.getState()){
+        }else if(value==OrderState.APPLY.getState()){
+            view.setImageResource(R.mipmap.icon_work_order_apply);
+        }
+        else if(value==OrderState.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);
         }
     }

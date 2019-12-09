@@ -21,6 +21,14 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+       return instance?.distributeReply(request,callBack)!!
+    }
+
+    override fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>) {
+        return instance?.distributeCheck(request,callBack)!!
+    }
+
     override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
         return instance?.getJob(request,callBack)!!
     }
