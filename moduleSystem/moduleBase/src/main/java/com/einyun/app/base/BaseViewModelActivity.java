@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.widget.LoadingDialog;
 
 public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends AppCompatActivity {
@@ -24,7 +25,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         ARouter.getInstance().inject(this);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
 
-        BasicApplication.getInstance().addActivity(this);
+        ActivityUtil.addActivity(this);
         viewModel = initViewModel();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -131,6 +132,6 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BasicApplication.getInstance().removeActivity(this);
+        ActivityUtil.removeActivity(this.getClass());
     }
 }

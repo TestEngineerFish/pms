@@ -74,5 +74,6 @@ class URLs {
         //获取组织架构
         const val URL_SELECT_BY_ORGNIZATION="/uc/api/org/v1/org/get"
 
+
     }
 }

@@ -2,11 +2,15 @@ package com.einyun.app.library.uc.usercenter.net
 
 import androidx.work.WorkRequest
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.library.portal.dictdata.net.URLS
+import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
+import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
 import com.einyun.app.library.uc.usercenter.net.response.OrgListResponse
 import com.einyun.app.library.uc.usercenter.net.response.WorkStatusResponse
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import io.reactivex.Flowable
 import retrofit2.http.*
 
@@ -39,4 +43,7 @@ interface UserCenterServiceApi {
 
     @GET(URLs.URL_GET_DISPOSE_PERSON)
     fun getDisposePerson(@Query("orgId") orgId: String, @Query("dimCode") dimCode: String): Flowable<BaseResponse<List<OrgModel>>>
+
+    @POST(URLs.URL_SEARCH_USER_BY_CONDITION)
+    fun searchUserByCondition(@Body request: SearchUserRequest):Flowable<PageResult<GetMappingByUserIdsResponse>>
 }

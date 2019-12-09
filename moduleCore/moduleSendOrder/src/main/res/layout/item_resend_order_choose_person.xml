@@ -6,11 +6,11 @@
     <data>
 
         <variable
-            name="org"
-            type="com.einyun.app.library.uc.usercenter.model.OrgModel" />
+            name="user"
+            type="com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_org"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{org.name}"
+                app:setUserName="@{user}"
                 android:textColor="#FF132D42"
                 android:textSize="@dimen/font_size16" />
 
@@ -40,9 +40,30 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@{org.postName}"
+                android:text="@{user.mobile}"
                 android:textColor="#FF132D42"
                 android:textSize="@dimen/font_size13" />
         </LinearLayout>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_30"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/greyTextColor"
+                android:textSize="@dimen/font_size15"
+                android:text="@string/text_pending_work_order"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/greyTextColor"
+                android:textSize="@dimen/font_size15"
+                android:text="@{user.pendingCount}"/>
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

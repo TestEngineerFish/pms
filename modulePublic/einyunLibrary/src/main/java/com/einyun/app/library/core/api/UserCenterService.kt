@@ -2,7 +2,13 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.paging.bean.PageResult
+import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
+import io.reactivex.Flowable
+import retrofit2.http.Body
 
 /**
  *
@@ -29,6 +35,7 @@ interface UserCenterService : EinyunService {
         dimCode: String,
         callBack: CallBack<List<OrgModel>>
     ): LiveData<List<OrgModel>>
+
     fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String>
     fun updateWorkStatus(
         userId: String,
@@ -36,4 +43,9 @@ interface UserCenterService : EinyunService {
         status: String,
         callBack: CallBack<String>
     ): LiveData<String>
+
+    fun searchUserByCondition(
+        request: SearchUserRequest,
+        callBack: CallBack<List<GetMappingByUserIdsResponse>>
+    ): LiveData<List<GetMappingByUserIdsResponse>>
 }

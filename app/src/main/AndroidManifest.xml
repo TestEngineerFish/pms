@@ -97,6 +97,7 @@
         <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>
         <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
         <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
+        <activity android:name=".sendorder.ui.ChooseDisposeViewModelActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.einyun.app.pms.fileprovider"

@@ -6,4 +6,5 @@ import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import java.util.List;
 
 public class OrderTypeResponse extends BaseResponse<List<WorkOrderTypeModel>>{
+
 }

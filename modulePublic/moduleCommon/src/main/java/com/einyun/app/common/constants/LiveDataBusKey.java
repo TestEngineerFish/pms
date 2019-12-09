@@ -11,4 +11,6 @@ public class LiveDataBusKey {
 
     //停止swiperefresh
     public static final String STOP_REFRESH="STOP_REFRESH";
+
+    public static final String POST_RESEND_ORDER_USER = "POST_RESEND_ORDER_USER";
 }

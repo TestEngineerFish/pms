@@ -5,6 +5,7 @@ import android.util.TypedValue;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.widget.LoadingDialog;
 import com.githang.statusbar.StatusBarCompat;
 
@@ -31,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initViews(savedInstanceState);
         initListener();
         initData();
-        BasicApplication.getInstance().addActivity(this);
+        ActivityUtil.addActivity(this);
     }
 
     @Override
@@ -85,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BasicApplication.getInstance().removeActivity(this);
+        ActivityUtil.removeActivity(this.getClass());
         if(loadingDialog!=null){
             if(loadingDialog.isShowing()){
                 loadingDialog.dismiss();
