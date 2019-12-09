@@ -28,7 +28,7 @@ import com.einyun.app.common.ui.component.searchhistory.SearchListener;
 import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
-import com.einyun.app.pms.create.BR;
+import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivityChooseDisposePersonBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemChoosePersonBinding;
@@ -67,7 +67,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (adapter == null) {
-            adapter = new RVBindingAdapter<ItemChoosePersonBinding, GetMappingByUserIdsResponse>(this, com.einyun.app.pms.sendorder.BR.user) {
+            adapter = new RVBindingAdapter<ItemChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user) {
                 @Override
                 public void onBindItem(ItemChoosePersonBinding binding, GetMappingByUserIdsResponse model, int position) {
                     binding.llOrg.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
     @Override
     public void onOptionClick(View view) {
         if (dialog == null) {
-            dialog = new SearchFragment<ItemChoosePersonBinding, GetMappingByUserIdsResponse>(this, com.einyun.app.pms.sendorder.BR.user, new SearchListener<GetMappingByUserIdsResponse>() {
+            dialog = new SearchFragment<ItemChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user, new SearchListener<GetMappingByUserIdsResponse>() {
                 @Override
                 public LiveData<List<GetMappingByUserIdsResponse>> search(String search) {
                     MutableLiveData liveData = new MutableLiveData<List<OrgModel>>();
