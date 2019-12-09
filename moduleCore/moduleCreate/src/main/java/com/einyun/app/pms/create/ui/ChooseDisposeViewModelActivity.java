@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -94,7 +95,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
             this.orgModels = orgModels;
             adapter.setDataList(orgModels);
         });
-        binding.rvChooseDisposePerson.addItemDecoration(new SpacesItemDecoration(0));
+        DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
     }
 
     private SearchFragment dialog;
@@ -138,36 +139,4 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         }
     }
 
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view,
-                                   RecyclerView parent, RecyclerView.State state) {
-            outRect.left = space;
-            outRect.right = space;
-            outRect.bottom = space;
-            if (parent.getChildPosition(view) == 0)
-                outRect.top = space;
-        }
-    }
-
-    //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<OrgModel> mDiffCallback = new DiffUtil.ItemCallback<OrgModel>() {
-
-        @Override
-        public boolean areItemsTheSame(@NonNull OrgModel oldItem, @NonNull OrgModel newItem) {
-            return oldItem.getId() == newItem.getId();
-        }
-
-        @SuppressLint("DiffUtilEquals")
-        @Override
-        public boolean areContentsTheSame(@NonNull OrgModel oldItem, @NonNull OrgModel newItem) {
-            return oldItem == newItem;
-        }
-    };
 }

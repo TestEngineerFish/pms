@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.StringUtil;
@@ -63,6 +64,12 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.Dialog_FullScreen);
+        ARouter.getInstance().inject(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         WindowManager.LayoutParams window = getDialog().getWindow().getAttributes();
         window.windowAnimations = R.style.BottomDialogAnimation;
         getDialog().getWindow().setAttributes(window);
@@ -156,7 +163,7 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
         getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //状态栏覆盖在contentView上面，设置透明使contentView的背景透出来
-        getDialog().getWindow().setStatusBarColor(getResources().getColor(R.color.activity_bg_color));
+        getDialog().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
     }
 
     @Override

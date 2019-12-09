@@ -1,7 +1,6 @@
 package com.einyun.app.pms.sendorder.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.ActivityUtil;
-import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -31,7 +28,7 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivityChooseDisposePersonBinding;
-import com.einyun.app.pms.sendorder.databinding.ItemChoosePersonBinding;
+import com.einyun.app.pms.sendorder.databinding.ItemResendOrderChoosePersonBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SelectPeopleViewModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 
@@ -46,7 +43,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
     List<String> orgIdList;
     @Autowired(name = RouteKey.KEY_JOB_ID_LIST)
     List<String> jobIdList;
-    RVBindingAdapter<ItemChoosePersonBinding, GetMappingByUserIdsResponse> adapter;
+    RVBindingAdapter<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse> adapter;
 
     @Override
     protected SelectPeopleViewModel initViewModel() {
@@ -67,9 +64,9 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (adapter == null) {
-            adapter = new RVBindingAdapter<ItemChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user) {
+            adapter = new RVBindingAdapter<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user) {
                 @Override
-                public void onBindItem(ItemChoosePersonBinding binding, GetMappingByUserIdsResponse model, int position) {
+                public void onBindItem(ItemResendOrderChoosePersonBinding binding, GetMappingByUserIdsResponse model, int position) {
                     binding.llOrg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -81,7 +78,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
 
                 @Override
                 public int getLayoutId() {
-                    return R.layout.item_choose_person;
+                    return R.layout.item_resend_order_choose_person;
                 }
             };
         }
@@ -96,7 +93,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
     @Override
     public void onOptionClick(View view) {
         if (dialog == null) {
-            dialog = new SearchFragment<ItemChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user, new SearchListener<GetMappingByUserIdsResponse>() {
+            dialog = new SearchFragment<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user, new SearchListener<GetMappingByUserIdsResponse>() {
                 @Override
                 public LiveData<List<GetMappingByUserIdsResponse>> search(String search) {
                     MutableLiveData liveData = new MutableLiveData<List<OrgModel>>();
@@ -118,7 +115,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
 
                 @Override
                 public int getLayoutId() {
-                    return R.layout.item_choose_person;
+                    return R.layout.item_resend_order_choose_person;
                 }
             });
             dialog.setHint(getResources().getString(R.string.search_name_or_phone));
@@ -146,18 +143,4 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         }
     }
 
-    //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<GetMappingByUserIdsResponse> mDiffCallback = new DiffUtil.ItemCallback<GetMappingByUserIdsResponse>() {
-
-        @Override
-        public boolean areItemsTheSame(@NonNull GetMappingByUserIdsResponse oldItem, @NonNull GetMappingByUserIdsResponse newItem) {
-            return oldItem.getId() == newItem.getId();
-        }
-
-        @SuppressLint("DiffUtilEquals")
-        @Override
-        public boolean areContentsTheSame(@NonNull GetMappingByUserIdsResponse oldItem, @NonNull GetMappingByUserIdsResponse newItem) {
-            return oldItem == newItem;
-        }
-    };
 }
