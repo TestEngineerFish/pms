@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:setUserName="@{user}"
+                app:setUserName="@{user}"
                 android:textColor="#FF132D42"
                 android:textSize="@dimen/font_size16" />
 
