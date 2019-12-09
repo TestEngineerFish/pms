@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.databinding.BindingAdapter;
 
 import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 
 public class SendOrderBindAdapter {
 
@@ -86,5 +87,10 @@ public class SendOrderBindAdapter {
         }else if(value==OrderState.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);
         }
+    }
+
+    @BindingAdapter("setUserName")
+    public static void status(TextView view, GetMappingByUserIdsResponse value) {
+        view.setText(value.getFullname() + "(" + value.getAccount() + ")");
     }
 }
