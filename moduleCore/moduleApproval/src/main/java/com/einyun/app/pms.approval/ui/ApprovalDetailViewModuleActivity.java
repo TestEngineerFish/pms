@@ -163,13 +163,33 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
         } else if (workorder_audit_model.getStatus().equals("in_approval")) {//审批中
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
+            if (approvalItemmodule.getUserAuditStatus()==null) {//自己没有审批过
 
-            binding.listview.setVisibility(View.GONE);//
-            binding.rlApprovalSug.setVisibility(View.VISIBLE);
-            binding.limitInput.setVisibility(View.VISIBLE);
+                binding.listview.setVisibility(View.GONE);//
+                binding.rlApprovalSug.setVisibility(View.VISIBLE);
+                binding.limitInput.setVisibility(View.VISIBLE);
 
-            binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
-            binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
+                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+            }else {//自己审批过 显示审批列表 UserAuditStatus 不为空
+                binding.listview.setVisibility(View.VISIBLE);//显示审批信息列表
+                binding.rlApprovalSug.setVisibility(View.GONE);
+                binding.limitInput.setVisibility(View.GONE);
+                binding.llPass.setVisibility(View.GONE);
+                binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
+                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                if ("approve".equals(approvalItemmodule.getUserAuditStatus())) {
+//                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
+//                    binding.tvApprovalState.setText(getString(R.string.tv_had_approval));
+//                    binding.tvApprovalState.setTextColor(getResources().getColor(R.color.greenTextColor));
+                }else if ("reject".equals(approvalItemmodule.getUserAuditStatus())){
+
+//                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_unpass);
+//                    binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));
+//                    binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
+                }
+
+            }
         }
         /*
         * 基本信息

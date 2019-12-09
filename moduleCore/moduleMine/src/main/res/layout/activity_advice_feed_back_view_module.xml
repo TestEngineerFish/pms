@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="advcieFeedBackModule"
+            type="com.einyun.app.pms.mine.module.AdvcieFeedBackModule" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.mine.ui.AdviceFeedBackViewModuleActivity" />
+    </data>
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+     </LinearLayout>
+</layout>

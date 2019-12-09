@@ -133,11 +133,17 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         });
         if(adapter==null){
             adapter=new RVPageListAdapter<ItemApprovalListBinding, ApprovalItemmodule>(getActivity(), BR.approvallist,mDiffCallback){
-
+                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemApprovalListBinding binding, ApprovalItemmodule checkPointModel) {
                     binding.tvApprovalerName.setText(getString(R.string.tv_applicat)+checkPointModel.getApply_user());
                     binding.rlApprovalTime.setVisibility(View.VISIBLE);
+//                    Log.e(TAG, "1onBindItem: auditType:"+checkPointModel.getAudit_type()+"---auditSubType :"+checkPointModel.getAudit_sub_type());
+                    String auditType = getTypeStringByCode(checkPointModel.getAudit_type());
+                    String auditSubType = getSubTypeStringByCode(checkPointModel.getAudit_sub_type());
+//                    Log.e(TAG, "2onBindItem: auditType:"+auditType+"---auditSubType :"+auditSubType);
+                    typeValue = (auditType.length() > 0 ? (auditType + "-") : "") + (auditSubType.length() > 0 ? auditSubType : "");
+                    checkPointModel.getUserAuditStatus();
                     if (checkPointModel.getStatus().equals("submit")) {//待审批
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
                         binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
@@ -150,17 +156,15 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));
                     } else if (checkPointModel.getStatus().equals("in_approval")) {//审批中
                         binding.rlApprovalTime.setVisibility(View.GONE);//隐藏审批时间
-                        binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
+                        binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approvaling);
                         binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
                     }
                     binding.tvApprovalNum.setText(checkPointModel.getAudit_code());//审批单号
-                    String auditType = getTypeStringByCode(checkPointModel.getAudit_type());
-                    String auditSubType = getSubTypeStringByCode(checkPointModel.getAudit_sub_type());
-                    typeValue = (auditType.length() > 0 ? (auditType + "-") : "") + (auditSubType.length() > 0 ? auditSubType : "");
                     binding.tvApprovalType.setText(typeValue);
                     binding.tvIntallment.setText(checkPointModel.getDivide_name());
                     binding.tvApplyTime.setText(TimeUtil.getAllTimeNoSecond(checkPointModel.getApply_date()));
                     binding.tvApprovalTime.setText(TimeUtil.getAllTimeNoSecond(checkPointModel.getAudit_date()));
+
 
 
 

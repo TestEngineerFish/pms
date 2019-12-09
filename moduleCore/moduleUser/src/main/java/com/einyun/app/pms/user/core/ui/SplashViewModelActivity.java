@@ -47,6 +47,12 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        //已退出登录
+        if (SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString().isEmpty()) {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+            finish();
+            return;
+        }
         viewModel.getLastUser().observe(this, userModel -> {
             Log.e("usrModel", "" + userModel);
             if (userModel == null || !StringUtil.isNullStr(userModel.getUsername())) {

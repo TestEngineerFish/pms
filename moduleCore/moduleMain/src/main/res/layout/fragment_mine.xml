@@ -31,6 +31,7 @@
             android:src="@mipmap/img_message_center" />
 
         <RelativeLayout
+            android:onClick="@{()->callBack.userInfoOnClick()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_36">
@@ -64,10 +65,12 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/px_26"
                 android:layout_marginLeft="@dimen/px_22"
+                android:id="@+id/rating_bar"
                 android:layout_weight="1"
                 app:clickable="false"
                 app:starCount="5"
                 app:starEmpty="@mipmap/rating_off"
+                app:starHalf="@mipmap/rating_off"
                 app:starFill="@mipmap/rating_on"
                 app:starImageSize="@dimen/px_26"
                 app:starPadding="@dimen/px_12"
@@ -96,12 +99,15 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:background="@drawable/shape_white_bg"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_112"
+            android:layout_height="130dp"
+            android:layout_marginTop="24dp"
             android:orientation="horizontal">
 
             <LinearLayout
+                android:onClick="@{()->callBack.approvalOnClick()}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -124,6 +130,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:onClick="@{()->callBack.adviceFeedBack()}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,6 +153,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:onClick="@{()->callBack.Setting()}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

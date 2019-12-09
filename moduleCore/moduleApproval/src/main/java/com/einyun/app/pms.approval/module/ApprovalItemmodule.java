@@ -55,6 +55,7 @@ public class ApprovalItemmodule implements Serializable {
     private String taskNodeId;
     private String audit_type;
     private String status;
+    private String userAuditStatus;
 
     public long getAudit_date() {
         return audit_date;
@@ -254,5 +255,13 @@ public class ApprovalItemmodule implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserAuditStatus() {
+        return userAuditStatus;
+    }
+
+    public void setUserAuditStatus(String userAuditStatus) {
+        this.userAuditStatus = userAuditStatus;
     }
 }

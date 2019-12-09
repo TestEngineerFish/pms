@@ -121,6 +121,9 @@ public class SlideShowView extends FrameLayout {
                         case "sp":
                             //审批
 //                            item.setOnClickListener(v -> readyGo(ApprovalActivity.class));
+                            item.setOnClickListener(v ->
+                                    ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL).navigation());
+
                             break;
                         case "gzyl":
                             //工作预览
