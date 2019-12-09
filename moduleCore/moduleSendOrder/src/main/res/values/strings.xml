@@ -19,4 +19,9 @@
     <string name="text_handle_success">处理成功</string>
 
     <string name="text_pending_work_order">待处理工单：</string>
+    <string name="text_apply">待验收</string>
+    <string name="text_work_order_apply">验收</string>
+    <string name="text_alert_input_suggestion">请输入验收意见</string>
+    <string name="text_check_success">验收成功</string>
+    <string name="text_alert_check_result">请输入验收结论</string>
 </resources>

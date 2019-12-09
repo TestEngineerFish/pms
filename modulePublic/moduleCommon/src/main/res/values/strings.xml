@@ -73,6 +73,7 @@
     <string name="text_result_yes">是</string>
     <string name="text_result_no">否</string>
     <string name="text_take_order">接单</string>
+    <string name="text_reject">不通过</string>
     <string name="text_commit">提交</string>
     <string name="text_approval">批复</string>
     <string name="text_approval_wait">待验收</string>

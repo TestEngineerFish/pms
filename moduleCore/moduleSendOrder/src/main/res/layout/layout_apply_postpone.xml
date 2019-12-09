@@ -3,12 +3,11 @@
     <LinearLayout
         android:id="@+id/panel_postpone"
         style="@style/ll_create_order"
-        android:layout_marginBottom="@dimen/px_120"
+        android:layout_margin="@dimen/px_30"
         android:background="@color/white">
 
         <TextView
             style="@style/tv_create_order_name"
-            android:layout_marginLeft="@dimen/px_20"
             android:text="申请延期" />
 
         <ImageView
