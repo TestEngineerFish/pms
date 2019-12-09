@@ -48,7 +48,7 @@ public class FormatUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return formatDate.replace("-", "");
+        return formatDate;
     }
 
     /**

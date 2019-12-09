@@ -34,5 +34,9 @@ class URLs {
 
         //获取处理人
         const val URL_GET_DISPOSE_PERSON: String = "/$DOMAIN/api/usercenter/v1/ucUser/users/getByJobCodeAndOrgIdAndDimCodeDeeplyWithPost"
+
+        //通过条件搜索负责人
+        const val URL_SEARCH_USER_BY_CONDITION: String = "/$DOMAIN/api/usercenter/v1/ucUser/searchUserByCondition"
+
     }
 }

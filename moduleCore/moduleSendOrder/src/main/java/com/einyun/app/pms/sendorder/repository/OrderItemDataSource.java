@@ -1,5 +1,7 @@
 package com.einyun.app.pms.sendorder.repository;
 
+import android.nfc.Tag;
+
 import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -8,6 +10,7 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.utils.LiveDataBusUtils;
@@ -16,22 +19,26 @@ import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
 
 public class OrderItemDataSource extends BaseDataSource<DistributeWorkOrder> {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     private DistributePageRequest request;
+    private String tag;
 
-    public OrderItemDataSource(DistributePageRequest request) {
+    public OrderItemDataSource(DistributePageRequest request,String tag) {
         this.request = request;
+        this.tag=tag;
     }
 
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
+        Logger.d(request.getTypeRe());
         request.setPage(pageBean.getPage());
         request.setPageSize(pageBean.getPageSize());
         ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();
-        if (request.getTypeRe().equals("0")) {
+        if (tag.equals(RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING)) {
             request.setPage(pageBean.getPage());
             request.setPageSize(pageBean.getPageSize());
             //代办

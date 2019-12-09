@@ -2,8 +2,6 @@ package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.net.request.*
-import androidx.room.FtsOptions
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
 import com.einyun.app.library.resource.workorder.net.request.PageRquest
@@ -15,8 +13,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Url
-import retrofit2.http.*
-import java.util.*
 
 /**
  * @ProjectName: android-framework
@@ -34,7 +30,7 @@ import java.util.*
 interface ResourceWorkOrderServiceApi {
 
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_NEW)
-    fun createSendOrder(@Body request: CreateSendOrderRequest): Flowable<BaseResponse<Object>>
+    fun createSendOrder(@Body request: CreateSendOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      *  2.6待办统计-计划、巡查、派工单 GET
@@ -90,12 +86,41 @@ interface ResourceWorkOrderServiceApi {
     @GET
     fun distributeWaitDetial(@Url url:String):Flowable<DistributeWorkOrderResponse>
 
+    /**
+     * 派工单待办详情-info
+     */
+    @GET
+    fun distributeWaitDetialInfo(@Url url:String):Flowable<DistributeWorkOrderResponse>
 
     /**
      * 派工单已办详情
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DONE_DETAIL)
     fun distributeDoneDetial(@Body request:DoneDetialRequest):Flowable<DistributeWorkOrderResponse>
+
+    /**
+     * 派工单接单
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE)
+    fun distribteResponse(@Body request:WorkOrderHanlerRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 派工单批复
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_REPLY)
+    fun distribteReply(@Body request:WorkOrderHanlerRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 派工单处理
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_PROCESS)
+    fun distributeSumbmit(@Body request: DistributeSubmitRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 派工单验收
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_APPLY)
+    fun distributeCheck(@Body request: DistributeCheckRequest):Flowable<BaseResponse<Any>>
 
     /**
      * 2.30派工单-列表（根据地块id、条线编码）
@@ -117,4 +142,18 @@ interface ResourceWorkOrderServiceApi {
 
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH)
     fun getResourceInfos(@Body request: ResourceTypeRequest): Flowable<BaseResponse<List<ResourceTypeBean>>>
+
+    /**
+     *获取组织架构
+     **/
+    @GET
+    fun getOrgnization(@Url url: String ): Flowable<GetOrgnizationResponse>
+
+
+    /**
+     * 获取审批角色
+     */
+    @POST(URLs.URL_SELECT_BY_JOB)
+    fun getJob(@Body request:GetJobRequest):Flowable<GetJobResponse>
+
 }

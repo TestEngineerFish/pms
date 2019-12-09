@@ -16,7 +16,6 @@ import java.util.List;
 
 public class BasicApplication extends Application {
     private static BasicApplication app;
-    private List<AppCompatActivity> activityList = new ArrayList<>();
     private final String TAG = "einyun";
 
     @Override
@@ -48,24 +47,13 @@ public class BasicApplication extends Application {
         }
     }
 
-    public void addActivity(AppCompatActivity activity) {
-        activityList.add(activity);
-    }
-
-    public void removeActivity(AppCompatActivity activity) {
-        if (activityList.contains(activity)) {
-            activityList.remove(activity);
-        }
-    }
-
-
-    public void exit() {
-        for (AppCompatActivity activity : activityList) {
-            if (activity != null) {
-                activity.finish();
-            }
-        }
-    }
+//    public void exit() {
+//        for (AppCompatActivity activity : activityList) {
+//            if (activity != null) {
+//                activity.finish();
+//            }
+//        }
+//    }
 
 
     public static BasicApplication getInstance() {

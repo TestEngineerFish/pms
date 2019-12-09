@@ -19,10 +19,15 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
+import com.einyun.app.library.resource.workorder.model.JobModel;
+import com.einyun.app.library.resource.workorder.model.JobPage;
+import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WaitCount;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.GetJobRequest;
+import com.einyun.app.library.resource.workorder.net.response.GetJobResponse;
 import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.uc.user.model.UserModel;
@@ -41,8 +46,9 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3;
 
-public class SendOrderViewModel extends BasePageListViewModel {
+public class SendOrderViewModel extends BasePageListViewModel<DistributeWorkOrder> {
     private ResourceWorkOrderRepo resourceWorkOrderRepo;
+    LiveData<PagedList<DistributeWorkOrder>> donePageList;
     private ResourceWorkOrderService resourceWorkOrderService;
     private LiveData<DistributeWorkOrderPage> workOrderListViewModel;
     private MutableLiveData<List<ResourceTypeBean>> tiaoxianList = new MutableLiveData<>();//条线
@@ -70,22 +76,48 @@ public class SendOrderViewModel extends BasePageListViewModel {
 
     public List<SelectModel> listAll = new ArrayList<>();
 
+    public MutableLiveData<OrgnizationModel> orgnizationModelLiveData=new MutableLiveData<>();
     public SendOrderViewModel() {
         this.resourceWorkOrderRepo = new ResourceWorkOrderRepo();
         this.resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     }
 
+    public MutableLiveData<List<JobModel>> jobModels=new MutableLiveData<>();
+
     /**
-     * 获取Paging LiveData
+     * * 获取代办列表
      *
      * @return LiveData
      */
-    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request) {
-
-        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
+    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request,String tag) {
+        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
                 .build();
         return pageList;
     }
+
+
+    /**
+     * 获取已办列表
+     * @param request
+     * @return
+     */
+    public LiveData<PagedList<DistributeWorkOrder>> loadDonePagingData(DistributePageRequest request,String tag){
+       donePageList= new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
+                .build();
+       return donePageList;
+    }
+
+//    /**
+//     * 获取Paging LiveData
+//     *
+//     * @return LiveData
+//     */
+//    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request) {
+//
+//        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
+//                .build();
+//        return pageList;
+//    }
 
     /**
      * 获取跳线 LiveData
@@ -171,5 +203,50 @@ public class SendOrderViewModel extends BasePageListViewModel {
         });
 
         return workOrderTypeList;
+    }
+
+    /**
+     * 获取组织架构 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<OrgnizationModel> getOrgnization() {
+        showLoading();
+        resourceWorkOrderRepo.getOrgnization("63872495547056133",new CallBack<OrgnizationModel>() {
+            @Override
+            public void call(OrgnizationModel data) {
+                hideLoading();
+                orgnizationModelLiveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return orgnizationModelLiveData;
+    }
+
+    /**
+     * 获取审批角色 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<List<JobModel>> getJob(GetJobRequest request) {
+        showLoading();
+        resourceWorkOrderRepo.getJob(request,new CallBack<JobPage>() {
+            @Override
+            public void call(JobPage data) {
+                hideLoading();
+                jobModels.postValue(data.getRows());
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+            }
+        });
+
+        return jobModels;
     }
 }

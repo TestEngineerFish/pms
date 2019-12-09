@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -24,6 +25,9 @@ import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 
 /**
  * @ProjectName: pms_old
@@ -57,13 +61,12 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         super.initViews(savedInstanceState);
         mTitles=new String[]{getResources().getString(R.string.text_wait_handle),getResources().getString(R.string.text_already_handle)};
         setHeadTitle(R.string.text_send_order);
-        setTxtColor(R.color.blackTextColor);
         setRightOption(R.drawable.scan);
-        setBackIcon(R.drawable.back);
         final ArrayList<SendWorkOrderFragment> fragments = new ArrayList<>();
+        String fragmentTags[]=new String[]{FRAGMENT_SEND_OWRKORDER_PENDING,FRAGMENT_SEND_OWRKORDER_DONE};
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
-            bundle.putString("tabId", i+"");
+            bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
             fragments.add(SendWorkOrderFragment.newInstance(bundle));
         }
 

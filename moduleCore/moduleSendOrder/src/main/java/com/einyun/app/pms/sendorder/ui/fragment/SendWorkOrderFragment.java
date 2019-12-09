@@ -5,7 +5,9 @@ import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -32,6 +35,12 @@ import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 
 /**
  * @ProjectName: pms_old
@@ -53,6 +62,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     public static SendWorkOrderFragment newInstance(Bundle bundle) {
         SendWorkOrderFragment fragment = new SendWorkOrderFragment();
         fragment.setArguments(bundle);
+        Logger.d("setBundle->"+bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
         return fragment;
     }
 
@@ -68,6 +78,15 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     }
 
+    protected String getFragmentTag(){
+        return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPagingData();
+    }
 
     @Override
     protected void setUpView() {
@@ -112,6 +131,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                                     .navigation();
                         }
                     });
+                    binding.selectOrderTime.setText(FormatUtil.formatDate(distributeWorkOrder.getCreateTime()));
                 }
 
                 @Override
@@ -123,17 +143,22 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        loadPagingData();
     }
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.getRequest().setTypeRe(getArguments().getString("tabId"));
+        binding.sendOrderRef.setRefreshing(true);
+        String fragmentTag=getFragmentTag();
+        viewModel.getRequest().setTypeRe(fragmentTag);
         if(viewModel.getOrgModel()!=null){
             viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
         }
         viewModel.getRequest().setUserId(userModuleService.getUserId());
-        viewModel.loadPadingData(viewModel.getRequest()).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_PENDING)){
+            viewModel.loadPadingData(viewModel.getRequest(),fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        }else{
+            viewModel.loadDonePagingData(viewModel.getRequest(),fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        }
     }
 
     @Override
@@ -146,7 +171,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
         @Override
         public boolean areItemsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
-            return oldItem.getID().equals(newItem.getID());
+            return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
@@ -156,12 +181,20 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         }
     };
 
+
+    /**
+     * 列表Item 点击，跳转进入详情
+     * 代办详情进入(taskId)，已办详情(taskNodeTd,proInsId)
+     * @param veiw
+     * @param data
+     */
     @Override
     public void onItemClicked(View veiw, DistributeWorkOrder data) {
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
-                .navigation();
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
+                    .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                    .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                    .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
+                    .navigation();
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

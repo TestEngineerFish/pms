@@ -8,10 +8,13 @@ import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.library.core.api.UserCenterService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.uc.usercenter.net.URLs
 import com.einyun.app.library.uc.usercenter.net.UserCenterServiceApi
 import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
+import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
 /**
  *
@@ -27,6 +30,21 @@ import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
  * @Version:        1.0
  */
 class UserCenterRepository() : UserCenterService {
+    override fun searchUserByCondition(
+        request: SearchUserRequest,
+        callBack: CallBack<List<GetMappingByUserIdsResponse>>
+    ): LiveData<List<GetMappingByUserIdsResponse>> {
+        val liveData = MutableLiveData<List<GetMappingByUserIdsResponse>>()
+        serviceApi?.searchUserByCondition(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState){
+                    callBack.call(response.data.rows)
+                    liveData.postValue(response.data.rows)
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     override fun getDisposePerson(
         orgId: String,
         dimCode: String,

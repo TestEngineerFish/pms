@@ -54,5 +54,9 @@ class URLs {
         const val URL_APPROVE_DONE_LIST:String="/$DOMAIN/workOrder/workOrderInnerAudit/v1/getDoneCompelteApprove"
         //我发起的
         const val URL_APPROVE_INITIATED_LIST:String="/$DOMAIN/workOrder/workOrderInnerAudit/v1/getIInitiated"
+
+
+        //通过UserId批量查询待处理工单
+        const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
     }
 }

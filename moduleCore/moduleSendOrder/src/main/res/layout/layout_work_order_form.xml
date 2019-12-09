@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+    </data>
+    <LinearLayout
+        android:id="@+id/panel_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/px_30"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:text="上传充分反映情况的照片"
+                    android:textSize="@dimen/px_32" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    app:order_status="@{workOrder.data.fstatus}"
+                    android:textColor="@color/txt_blue_color"
+                    android:textSize="@dimen/px_30" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView style="@style/tv_create_order_red_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="处理后图片"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="(最多四张)"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/font_size12" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_img_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView style="@style/tv_create_order_red_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="处理结果"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:layout_height="wrap_content">
+
+                <com.einyun.app.common.ui.component.limit.LimitInput
+                    android:id="@+id/et_limit_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:hintText="请输入文字信息"
+                    app:maxNumber="300" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

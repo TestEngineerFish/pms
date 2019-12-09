@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/panel_postpone"
+        style="@style/ll_create_order"
+        android:layout_margin="@dimen/px_30"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/tv_create_order_name"
+            android:text="申请延期" />
+
+        <ImageView
+            style="@style/tv_create_order_right_arrow"
+            android:layout_marginRight="@dimen/px_20" />
+    </LinearLayout>
+</layout>

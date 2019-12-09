@@ -48,6 +48,7 @@ public class RouterUtils {
     public static final String ACTIVITY_LATE="/sendOrder/ApplyLateActivity";
     public static final String ACTIVITY_CLOSE="/sendOrder/ApplyForceCloseActivity";
     public static final String ACTIVITY_HISTORY="/sendOrder/HistoryActivity";
+    public static final String ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER = "/sendOrder/choosePerson";
     /**********************创建工单****************************/
     public static final String ACTIVITY_CREATE_ORDER = "/create/home";
     public static final String ACTIVITY_CREATE_SEND_ORDER = "/create/sendOrder";

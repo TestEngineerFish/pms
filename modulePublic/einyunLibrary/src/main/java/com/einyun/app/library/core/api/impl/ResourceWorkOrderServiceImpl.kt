@@ -21,6 +21,33 @@ import com.einyun.app.library.resource.workorder.net.request.*
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+       proxy.distributeReply(request,callBack)
+    }
+
+    override fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>) {
+        proxy.distributeCheck(request,callBack)
+    }
+
+    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+      return  proxy.getJob(request,callBack)
+    }
+
+    override fun getOrgnization(id:String,callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel> {
+        return proxy.getOrgnization(id,callBack)    }
+
+    override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
+        proxy.distributeDetial(orderId,callBack)
+    }
+
+    override fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>) {
+        proxy.distributeSubmit(request,callBack)
+    }
+
+    override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+       proxy.distributeResponse(request,callBack)
+    }
+
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
        return proxy.distributeWaitDetial(taskId,callBack)
     }

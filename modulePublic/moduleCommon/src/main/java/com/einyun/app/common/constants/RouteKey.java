@@ -21,8 +21,16 @@ public class RouteKey {
     public static final String KEY_TASK_NODE_ID="taskNodeId";
     public static final String KEY_PRO_INS_ID="proInsId";
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
+    public static final String KEY_FRAGEMNT_TAG="fragmentTag";
+    public static final String KEY_ORDER_ID="orderId";
+    public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
+    public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
 
     //选择处理人
     public static final String KEY_ORG_ID="org_id";
     public static final String KEY_DIM_CODE="dimCode";
+
+    //选择处理人
+    public static final String KEY_ORG_ID_LIST="orgIdList";
+    public static final String KEY_JOB_ID_LIST="jobIdList";
 }

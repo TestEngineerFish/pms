@@ -12,6 +12,9 @@ import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.workorder.model.BlocklogNums
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
+import io.reactivex.Flowable
+import retrofit2.http.Body
 
 /**
  *
@@ -29,4 +32,8 @@ import com.einyun.app.library.workorder.model.BlocklogNums
 interface WorkOrderService : EinyunService {
     fun getAuditCount(callBack: CallBack<Int>): LiveData<Int>
     fun getBlocklogNums(callBack: CallBack<BlocklogNums>): LiveData<BlocklogNums>
+    fun getMappingByUserIds(
+        request: List<String>,
+        callBack: CallBack<Map<String, GetMappingByUserIdsResponse>>
+    ): LiveData<Map<String, GetMappingByUserIdsResponse>>
 }

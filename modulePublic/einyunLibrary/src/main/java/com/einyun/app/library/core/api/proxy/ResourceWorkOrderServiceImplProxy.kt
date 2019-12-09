@@ -21,16 +21,48 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+       return instance?.distributeReply(request,callBack)!!
+    }
+
+    override fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>) {
+        return instance?.distributeCheck(request,callBack)!!
+    }
+
+    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+        return instance?.getJob(request,callBack)!!
+    }
+
+    override fun getOrgnization(
+        id: String,
+        callBack: CallBack<OrgnizationModel>
+    ): LiveData<OrgnizationModel> {
+       return instance?.getOrgnization(id, callBack)!!
+    }
+
+    override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
+       instance?.distributeDetial(orderId,callBack)
+    }
+
+    override fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>) {
+        instance?.distributeSubmit(request,callBack)
+    }
+
+    override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
+        instance?.distributeResponse(request,callBack)
+    }
+
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
-         instance?.distributeWaitDetial(taskId,callBack)
+        instance?.distributeWaitDetial(taskId, callBack)
     }
 
     override fun distributeDoneDetial(
         request: DoneDetialRequest,
         callBack: CallBack<DisttributeDetialModel>
     ) {
-       instance?.distributeDoneDetial(request,callBack)
+        instance?.distributeDoneDetial(request, callBack)
     }
+
     override fun getResourceInfos(
         massifId: String,
         resourceTypeCode: String,

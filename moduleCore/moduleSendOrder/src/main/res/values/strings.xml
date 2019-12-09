@@ -13,5 +13,15 @@
     <string name="text_already_handle">已跟进</string>
     <string name="text_resend_order">转派工单</string>
     <string name="text_histroy">历史流程</string>
+    <string name="text_take_order_success">接单成功</string>
+    <string name="text_alert_handle_result">请输入处理结果</string>
+    <string name="text_alert_handle_pic">请选择处理后图片</string>
+    <string name="text_handle_success">处理成功</string>
 
+    <string name="text_pending_work_order">待处理工单：</string>
+    <string name="text_apply">待验收</string>
+    <string name="text_work_order_apply">验收</string>
+    <string name="text_alert_input_suggestion">请输入验收意见</string>
+    <string name="text_check_success">验收成功</string>
+    <string name="text_alert_check_result">请输入验收结论</string>
 </resources>

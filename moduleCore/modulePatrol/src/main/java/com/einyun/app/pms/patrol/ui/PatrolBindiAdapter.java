@@ -55,7 +55,7 @@ public class PatrolBindiAdapter {
     public static void status(TextView view,int value){
         if(value== OrderState.NEW.getState()){
             view.setText(R.string.text_state_new);
-        }else if(value==OrderState.HANDING.getState()||value==OrderState.PROCESSING.getState()){
+        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
             view.setText(R.string.text_state_processing);
         }else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
@@ -67,7 +67,7 @@ public class PatrolBindiAdapter {
     public static void status(ImageView view,int value){
         if(value== OrderState.NEW.getState()){
             view.setImageResource(R.mipmap.icon_new);
-        }else if(value==OrderState.HANDING.getState()||value==OrderState.PROCESSING.getState()){
+        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
             view.setImageResource(R.mipmap.icon_processing);
         }else if(value==OrderState.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);

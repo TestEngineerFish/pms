@@ -51,19 +51,19 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     >
+
                     <ImageView
                         android:id="@+id/iv_right_option"
                         android:layout_width="@dimen/px_136"
-                        android:layout_height="@dimen/px_48"
-                        app:status="@{patrol.f_plan_work_order_state}"
-                         />
+                        android:layout_height="match_parent"
+                        app:status="@{patrol.f_plan_work_order_state}" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
                         android:layout_gravity="center"
-                        app:status="@{patrol.f_plan_work_order_state}"
-                        />
+                        android:textColor="@color/white"
+                        app:status="@{patrol.f_plan_work_order_state}" />
 
                 </FrameLayout>
             </RelativeLayout>

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.net.CommonHttpService;
@@ -129,7 +130,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 @Override
                 public void onNegtiveClick() {
                     privacyTermView.dismiss();
-                    BasicApplication.getInstance().exit();
+                    ActivityUtil.finishActivitys();
                 }
             });
             privacyTermView.show();
