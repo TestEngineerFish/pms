@@ -1,112 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/px_30"
-        android:background="@drawable/bg_shadow"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_90"
-            android:background="@color/white">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/px_20"
-                android:gravity="center_vertical"
-                android:text="申请延期信息"
-                android:textSize="@dimen/px_32" />
-
-        </RelativeLayout>
-
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/pd_view" />
+            android:layout_margin="@dimen/px_30"
+            android:background="@drawable/bg_shadow"
+            android:orientation="vertical">
 
-        <LinearLayout style="@style/work_order_detail_ln"
-            android:background="@color/white">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:background="@color/white">
 
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="审批结果" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:text="申请延期信息"
+                    android:textSize="@dimen/px_32" />
 
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                 />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="审批结果" />
+
+                <TextView style="@style/work_order_detail_txt_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="审批时间" />
+
+                <TextView style="@style/work_order_detail_txt_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="延期天数" />
+
+                <TextView style="@style/work_order_detail_txt_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="申请人" />
+
+                <TextView style="@style/work_order_detail_txt_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="申请时间" />
+
+                <TextView style="@style/work_order_detail_txt_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="申请原因" />
+
+                <TextView style="@style/work_order_detail_txt_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="申请照片" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_detail_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="审批时间" />
-
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="延期天数" />
-
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                 />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="申请人" />
-
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                 />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="申请时间" />
-
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                 />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="申请原因" />
-
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                 />
-        </LinearLayout>
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="申请照片" />
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/send_order_detail_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
-</LinearLayout>
+</layout>

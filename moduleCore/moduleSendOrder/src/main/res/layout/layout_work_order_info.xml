@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+    </data>
+    <LinearLayout
+        android:id="@+id/panel_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px_30"
+        android:background="@drawable/bg_shadow"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="工单信息"
+                android:textSize="@dimen/px_32" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/txt_blue_color"
+                android:textSize="@dimen/px_30"
+                app:order_status="@{workOrder.data.fstatus}" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="工单编号" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.forderNo}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="分期" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.fdivideName}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="条线" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.ftxName}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="工单类型" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.ftypeName}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="工单创建时间" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.fCreateTime}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="完成截止时间" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.fDeadlineTime}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="问题描述" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.fdesc}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="报修位置" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.flocation}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="图片" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/send_order_detail_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>

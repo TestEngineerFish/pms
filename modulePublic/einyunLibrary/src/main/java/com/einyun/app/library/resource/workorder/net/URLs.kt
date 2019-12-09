@@ -54,7 +54,8 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_PLAN_ORDER_NUMS_DONE="/$DOMAIN/res-order/plan/getOrderDoneCount"
         //派工单是否关闭
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_CLOSE="/$DOMAIN/res-order/distribute/isClosed"
-
+        //派工单代办详情 GET
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL_INFO="/$DOMAIN/res-order/distribute/detailById/"
         //派工单代办详情 GET
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL="/$DOMAIN/res-order/distribute/detail?taskId="
 
@@ -62,7 +63,8 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DONE_DETAIL="/$DOMAIN/res-order/distribute/doneDetail"
         //派工单接单
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE="/$DOMAIN/res-order/distribute/response"
-
+        //派工单处理
+        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_PROCESS="/$DOMAIN/res-order/distribute/process"
         //获取条线
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_TIAOXIAN="/portal/sys/sysType/v1/getTypesListByKey?typeKey=RESOURCE_TYPE"
         //获取工单类型

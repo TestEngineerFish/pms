@@ -55,6 +55,11 @@ public class TipDialog {
         }
     }
 
+    public void setTip(String tip){
+        this.tip=tip;
+        binding.tipDialogContent.setText(tip);
+    }
+
     public void show() {
         dialog.show();
     }

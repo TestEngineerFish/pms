@@ -31,7 +31,7 @@ class DistributeWorkOrder {
      var taskNodeId: String? = null
      var F_LOCATION: String? = null
      var F_TX_ID: String? = null
-     var ID: String? = null
+     var ID_: String? = null
      var F_DESC: String? = null
      var F_PROC_CONTENT: String? = null
      var F_STATUS: Int? = 0

@@ -21,6 +21,14 @@ import com.einyun.app.library.resource.workorder.net.request.*
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
+        proxy.distributeDetial(orderId,callBack)
+    }
+
+    override fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>) {
+        proxy.distributeSubmit(request,callBack)
+    }
+
     override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
        proxy.distributeResponse(request,callBack)
     }

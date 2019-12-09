@@ -21,7 +21,7 @@ public class SendOrderBindAdapter {
     public static void status(TextView view, int value){
         if(value== OrderState.NEW.getState()){
             view.setText(R.string.text_state_new);
-        }else if(value==OrderState.HANDING.getState()||value==OrderState.PROCESSING.getState()){
+        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
             view.setText(R.string.text_state_processing);
         }else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
@@ -44,7 +44,7 @@ public class SendOrderBindAdapter {
             view.setText(R.string.text_state_new);
         }else if(state==OrderState.HANDING.getState()){
             view.setText(R.string.text_state_processing);
-        } else if(state==OrderState.PROCESSING.getState()){
+        } else if(state==OrderState.APPLY.getState()){
             view.setText(R.string.text_approval_wait);
         }
         else if(state==OrderState.CLOSED.getState()){
@@ -68,7 +68,7 @@ public class SendOrderBindAdapter {
             view.setText(R.string.text_take_order);
         }else if(state==OrderState.HANDING.getState()){
             view.setText(R.string.text_commit);
-        }else if(state==OrderState.PROCESSING.getState()){
+        }else if(state==OrderState.APPLY.getState()){
             view.setText(R.string.text_approval);
         }
         else if(state==OrderState.CLOSED.getState()){
@@ -81,7 +81,7 @@ public class SendOrderBindAdapter {
     public static void status(ImageView view, int value){
         if(value== OrderState.NEW.getState()){
             view.setImageResource(R.mipmap.icon_new);
-        }else if(value==OrderState.HANDING.getState()||value==OrderState.PROCESSING.getState()){
+        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
             view.setImageResource(R.mipmap.icon_processing);
         }else if(value==OrderState.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);

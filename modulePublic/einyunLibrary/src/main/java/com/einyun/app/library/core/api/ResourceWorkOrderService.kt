@@ -41,11 +41,14 @@ interface ResourceWorkOrderService : EinyunService {
 
     //获取派工单代办详情
     fun distributeWaitDetial(taskId:String,callBack:CallBack<DisttributeDetialModel>)
-
+    //获取派工单已办详情
+    fun distributeDetial(orderId:String,callBack:CallBack<DisttributeDetialModel>)
     //获取派工单已办详情
     fun distributeDoneDetial(request:DoneDetialRequest,callBack: CallBack<DisttributeDetialModel>)
     //派工单接单
     fun distributeResponse(request: WorkOrderHanlerRequest,callBack: CallBack<Boolean>)
+    //派工单处理
+    fun distributeSubmit(request: DistributeSubmitRequest,callBack: CallBack<Boolean>)
     //获取条线
     fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
     //获取工单类型

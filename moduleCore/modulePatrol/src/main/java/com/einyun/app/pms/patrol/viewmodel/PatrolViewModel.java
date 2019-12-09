@@ -154,46 +154,6 @@ public class PatrolViewModel extends BaseUploadViewModel {
         repo.saveLocalData(local);
     }
 
-    /**
-     * 上传图片
-     *
-     * @param allSelectedPhotos
-     * @return
-     */
-    public LiveData<List<PicUrl>> uploadImages(List<Uri> allSelectedPhotos) {
-        MutableLiveData<List<PicUrl>> uploadState = new MutableLiveData<>();
-        List<Uri> todoUploadUris = filterUris(allSelectedPhotos);
-        // 如果所有照片已经被上传过，则直接回调
-        if (allSelectedPhotos.size() == uploadedImages.size()) {
-            uploadState.postValue(new ArrayList<>());
-            return uploadState;
-        }
 
-        showLoading();
-        try {
-            uploadManager.upload(todoUploadUris, new CallBack<List<PicUrl>>() {
-                @Override
-                public void call(List<PicUrl> data) {
-                    for (PicUrl picUrl : data) {
-                        if (TextUtils.isEmpty(picUrl.getOriginUrl())) {
-                            uploadedImages.put(picUrl.getOriginUrl(), picUrl.getUploaded());
-                        }
-                    }
-                    hideLoading();
-                    uploadState.postValue(data);
-                }
-
-                @Override
-                public void onFaild(Throwable throwable) {
-                    uploadState.postValue(null);
-                    hideLoading();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            uploadState.postValue(null);
-        }
-        return uploadState;
-    }
 
 }

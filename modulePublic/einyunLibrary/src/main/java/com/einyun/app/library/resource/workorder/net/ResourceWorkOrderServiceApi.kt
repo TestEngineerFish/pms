@@ -30,7 +30,7 @@ import retrofit2.http.Url
 interface ResourceWorkOrderServiceApi {
 
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_NEW)
-    fun createSendOrder(@Body request: CreateSendOrderRequest): Flowable<BaseResponse<Object>>
+    fun createSendOrder(@Body request: CreateSendOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      *  2.6待办统计-计划、巡查、派工单 GET
@@ -86,6 +86,11 @@ interface ResourceWorkOrderServiceApi {
     @GET
     fun distributeWaitDetial(@Url url:String):Flowable<DistributeWorkOrderResponse>
 
+    /**
+     * 派工单待办详情-info
+     */
+    @GET
+    fun distributeWaitDetialInfo(@Url url:String):Flowable<DistributeWorkOrderResponse>
 
     /**
      * 派工单已办详情
@@ -98,6 +103,12 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE)
     fun distribteResponse(@Body request:WorkOrderHanlerRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 派工单处理
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_PROCESS)
+    fun distributeSumbmit(@Body request: DistributeSubmitRequest):Flowable<BaseResponse<Any>>
 
     /**
      * 2.30派工单-列表（根据地块id、条线编码）

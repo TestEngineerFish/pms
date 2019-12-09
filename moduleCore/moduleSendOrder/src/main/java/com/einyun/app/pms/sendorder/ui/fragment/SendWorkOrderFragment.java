@@ -78,6 +78,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     }
 
+    protected String getFragmentTag(){
+        return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -144,7 +148,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
         binding.sendOrderRef.setRefreshing(true);
-        String fragmentTag=getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
+        String fragmentTag=getFragmentTag();
         viewModel.getRequest().setTypeRe(fragmentTag);
         if(viewModel.getOrgModel()!=null){
             viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
@@ -167,7 +171,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
         @Override
         public boolean areItemsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
-            return oldItem.getID().equals(newItem.getID());
+            return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
@@ -177,12 +181,22 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         }
     };
 
+
+    /**
+     * 列表Item 点击，跳转进入详情
+     * 代办详情进入(taskId)，已办详情(taskNodeTd,proInsId)
+     * @param veiw
+     * @param data
+     */
     @Override
     public void onItemClicked(View veiw, DistributeWorkOrder data) {
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
-                .navigation();
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
+                    .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                    .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                    .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
+                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                    .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
+                    .navigation();
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

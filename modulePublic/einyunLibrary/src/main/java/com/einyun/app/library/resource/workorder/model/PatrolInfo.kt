@@ -85,11 +85,14 @@ class ExtensionApplication{
      var id: String? = null
      var poId: String? = null
      var applyType: Int = 0
+     var extensionDays:String?=null
      var applicationDescription: String? = null
      var applicationState: Int = 0
      var creationDate: String? = null
      var type: Int = 0
      var createdBy: String? = null
+     var approveId:String?=null
+     var approveName:String?=null
      var createdName: String? = null
      var applyFiles: String? = null
 }
