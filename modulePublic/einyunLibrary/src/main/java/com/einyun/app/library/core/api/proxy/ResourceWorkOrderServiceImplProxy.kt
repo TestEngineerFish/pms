@@ -7,7 +7,9 @@ import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
+import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo
+import java.util.*
 
 /**
  * @ProjectName: android-framework
@@ -23,6 +25,13 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun resendOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse> {
+        return instance?.resendOrder(request, callBack)!!    }
+
+
     override fun applyClose(
         request: ApplyCloseRequest,
         callBack: CallBack<ApplyCloseResponse>
@@ -30,12 +39,6 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
         return instance?.applyClose(request, callBack)!!
     }
 
-    override fun resendOrder(
-        request: ResendOrderRequest,
-        callBack: CallBack<ResendOrderModel>
-    ): LiveData<ResendOrderModel> {
-        return instance?.resendOrder(request, callBack)!!
-    }
 
     override fun exten(
         request: ExtenDetialRequest,

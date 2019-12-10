@@ -12,6 +12,7 @@ import androidx.paging.PagedList;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.model.SelectModel;
@@ -35,6 +36,7 @@ import com.einyun.app.library.resource.workorder.net.request.GetJobRequest;
 import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse;
 import com.einyun.app.library.resource.workorder.net.response.GetJobResponse;
+import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse;
 import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.uc.user.model.UserModel;
@@ -262,12 +264,12 @@ public class SendOrderViewModel extends BasePageListViewModel<DistributeWorkOrde
      *
      * @return LiveData
      */
-    public MutableLiveData<ResendOrderModel> resendOrder(ResendOrderRequest request) {
+    public MutableLiveData<ResendOrderResponse> resendOrder(ResendOrderRequest request) {
         showLoading();
-        MutableLiveData<ResendOrderModel> resend=new MutableLiveData<>();
-        resourceWorkOrderRepo.resendOrder(request,new CallBack<ResendOrderModel>() {
+        MutableLiveData<ResendOrderResponse> resend=new MutableLiveData<>();
+        resourceWorkOrderRepo.resendOrder(request,new CallBack<ResendOrderResponse>() {
             @Override
-            public void call(ResendOrderModel data) {
+            public void call(ResendOrderResponse data) {
                 hideLoading();
                 resend.postValue(data);
             }

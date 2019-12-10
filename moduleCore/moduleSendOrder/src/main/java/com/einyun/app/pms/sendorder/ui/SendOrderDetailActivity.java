@@ -441,6 +441,9 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (v.getId() == R.id.apply_postpone) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_CLOSE)
+                    .withSerializable(RouteKey.KEY_SEND_ORDER_DETAIL, detialModel)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withString(RouteKey.KEY_TASK_ID,taskId)
                     .navigation();
         }
         if (v.getId() == R.id.iv_right_option) {
