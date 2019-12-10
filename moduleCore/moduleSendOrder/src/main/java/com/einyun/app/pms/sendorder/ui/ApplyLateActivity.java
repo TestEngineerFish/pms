@@ -67,7 +67,9 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
             binding.applyNum.setText(model.getExtensionApplication().size() + "次");
             int i = 0;
             for (ExtensionApplication bean : model.getExtensionApplication()) {
-                i = i + Integer.valueOf(bean.getExtensionDays());
+                if (StringUtil.isNullStr(bean.getExtensionDays())){
+                    i = i + Integer.valueOf(bean.getExtensionDays());
+                }
             }
             binding.applyDate.setText(i + "天");
         }
