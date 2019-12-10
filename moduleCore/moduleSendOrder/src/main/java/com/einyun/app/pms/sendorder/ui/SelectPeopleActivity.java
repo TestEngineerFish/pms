@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.library.resource.workorder.model.JobModel;
@@ -26,6 +28,10 @@ import java.util.Observer;
 @Route(path = RouterUtils.ACTIVITY_SELECT_PEOPLE)
 public class SelectPeopleActivity extends BaseHeadViewModelActivity<ActivitySelectPeopleBinding, SendOrderViewModel> {
      private SelectPeopleAdapter selectPeopleAdapter;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+    String divideID;
+    @Autowired(name = RouteKey.KEY_PROJECT_ID)
+    String projectID;
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -49,8 +55,8 @@ public class SelectPeopleActivity extends BaseHeadViewModelActivity<ActivitySele
 
         GetJobRequest request=new GetJobRequest();
         List<String> idList=new ArrayList<>();
-        idList.add("63872495547056133");
-        idList.add("63872468703510533");
+        idList.add(divideID);
+        idList.add(projectID);
         request.params=request.new params(idList);
         viewModel.getJob(request);
         viewModel.getOrgnization().observe(this,model ->{

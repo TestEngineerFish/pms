@@ -128,6 +128,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_TASK_ID,distributeWorkOrder.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID,distributeWorkOrder.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID,distributeWorkOrder.getF_DIVIDE_ID())
+                                    .withString(RouteKey.KEY_PROJECT_ID,distributeWorkOrder.getF_PROJECT_ID())
                                     .navigation();
                         }
                     });

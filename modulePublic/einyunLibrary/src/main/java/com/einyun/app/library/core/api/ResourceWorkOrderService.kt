@@ -6,6 +6,8 @@ import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
+import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
+import java.util.*
 import java.util.*
 
 /**
@@ -92,9 +94,8 @@ interface ResourceWorkOrderService : EinyunService {
     //转派工单
     fun resendOrder(
         request: ResendOrderRequest,
-        callBack: CallBack<ResendOrderModel>
-    ): LiveData<ResendOrderModel>
-
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse>
     //申请闭单
     fun applyClose(
         request: ApplyCloseRequest,
