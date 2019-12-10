@@ -47,7 +47,7 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
     String webUrl;
 
     @Autowired(name=RouteKey.KEY_WEB_TITLE)
-    Integer webTitle;
+    String webTitle;
 
     @Autowired(name = RouteKey.KEY_PARAMS)
     Bundle bundle;
@@ -73,6 +73,7 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
         if (webTitle != null){
             setHeadTitle(webTitle);
         }
+        binding.headBar.mainHeaderBar.setBackground(getResources().getDrawable(R.color.main_color));
 
         // 清除网页访问留下的缓存
         // 由于内核缓存是全局的因此这个方法不仅仅针对webView而是针对整个应用程序
@@ -116,6 +117,11 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
         // 通过addJavascriptInterface()将Java对象映射到JS对象
 //        binding.webview.addJavascriptInterface(new AndroidToJs(getContext()), "androidObj");
 
+    }
+
+    @Override
+    protected int getColorPrimary() {
+        return getResources().getColor(R.color.main_color);
     }
 
     @Override
