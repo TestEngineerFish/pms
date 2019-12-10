@@ -81,14 +81,8 @@
         <activity  android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             />
-        <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity">
+        <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"/>
 
-
-        </activity>
-        <activity android:name="com.einyun.app.pms.sendorder.ui.ApplyForceCloseActivity"
-            >
-
-        </activity>
 
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>

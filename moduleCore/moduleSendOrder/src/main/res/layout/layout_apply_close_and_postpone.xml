@@ -4,8 +4,11 @@
         android:id="@+id/apply_force_close_and_postpone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_238"
-        android:layout_marginBottom="@dimen/px_100"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_30"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/send_order_apply_late"

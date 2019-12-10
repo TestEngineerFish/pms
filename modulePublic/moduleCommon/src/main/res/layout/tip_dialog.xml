@@ -32,10 +32,14 @@
 
         <Button
             android:id="@+id/tip_dialog_know"
-            style="@style/submit_btn"
+            style="@style/dialog_submit_btn"
             android:layout_gravity="center_horizontal"
             android:layout_width="@dimen/px_320"
+            android:layout_height="@dimen/px_64"
             android:layout_marginTop="@dimen/px_50"
+            android:textSize="@dimen/font_size14"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp"
             android:text="我知道了" />
     </LinearLayout>
 </layout>

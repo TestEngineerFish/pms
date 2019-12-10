@@ -2,16 +2,21 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="workOrder"
             type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
     </data>
+
     <LinearLayout
         android:id="@+id/panel_work_order_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/px_30"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_30"
         android:background="@drawable/bg_shadow"
         android:orientation="vertical"
         android:visibility="visible">
@@ -144,15 +149,19 @@
                 style="@style/work_order_detail_txt_left"
                 android:text="图片" />
         </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/send_order_detail_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginRight="@dimen/px_20"
+            android:layout_marginBottom="@dimen/px_30"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
+    </LinearLayout>
     </LinearLayout>
 </layout>

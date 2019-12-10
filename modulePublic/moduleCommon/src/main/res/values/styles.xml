@@ -114,6 +114,16 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
     </style>
+    <style name="ll_handle_imgs">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/px_30</item>
+        <item name="android:paddingRight">@dimen/px_30</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
     <style name="tv_create_order_red_star">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -154,5 +164,16 @@
     <style name="BottomDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_slide_up</item>
         <item name="android:windowExitAnimation">@anim/dialog_slide_down</item>
+    </style>
+    <!-- 提交按钮通用样式 -->
+    <style name="dialog_submit_btn" parent="base_style">
+        <item name="android:layout_marginLeft">@dimen/px_60</item>
+        <item name="android:layout_marginRight">@dimen/px_60</item>
+        <item name="android:layout_marginTop">@dimen/px_40</item>
+        <item name="android:background">@drawable/select_btn_bg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_size16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:elevation" tools:targetApi="lollipop">@dimen/px_10</item>
     </style>
 </resources>

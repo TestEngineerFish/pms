@@ -135,7 +135,7 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
             hideLoading();
             if (data != null) {
                 viewModel.applyLate(request, data).observe(this, o -> {
-                    ToastUtil.show(getApplicationContext(), "申请延期成功");
+                    ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
                     finish();
                 });
             } else {

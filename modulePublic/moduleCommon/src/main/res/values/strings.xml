@@ -82,4 +82,7 @@
     <string name="text_choose_work_order_type">请选择%1$s级分类</string>
     <string name="search_name_or_phone">请搜索姓名或手机号</string>
     <string name="create">创建</string>
+    <string name="resend_success">转派成功</string>
+    <string name="apply_close_success">强制闭单成功</string>
+    <string name="apply_late_success">强制闭单成功,请等待审批</string>
 </resources>

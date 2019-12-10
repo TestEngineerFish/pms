@@ -7,8 +7,8 @@
         <activity android:name=".ui.ApplyForceCloseActivity" />
         <activity android:name=".ui.ApplyLateActivity" />
         <activity android:name=".ui.SelectPeopleActivity" />
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.SendOrderDetailActivity" />
+        <activity android:name=".ui.SendOrderDetailActivity"
+            ></activity>
         <activity android:name=".ui.ResendOrderActivity" />
     </application>
 

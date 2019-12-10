@@ -10,6 +10,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -79,6 +80,12 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
 
             if (v.getId()==R.id.resend_submit_btn){
                 viewModel.resendOrder(resendOrderRequest).observe(this,model->{
+                    if (model.getCode().equals("0")){
+                        ToastUtil.show(ResendOrderActivity.this,R.string.resend_success);
+                        this.finish();
+                    }else {
+                        ToastUtil.show(ResendOrderActivity.this,model.getMsg());
+                    }
                 });
             }
         else {

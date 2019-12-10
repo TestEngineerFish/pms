@@ -15,22 +15,29 @@
 
         <LinearLayout
             android:layout_width="@dimen/px_96"
-            android:layout_height="@dimen/px_95"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="@dimen/px_36"
                 android:layout_height="@dimen/px_36"
-                android:layout_marginTop="@dimen/px_34"
-                android:layout_marginLeft="@dimen/px_30">
+                android:layout_marginLeft="@dimen/px_30"
+                android:background="@drawable/round">
 
                 <TextView
+                    android:id="@+id/item_histroy_step"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/blueTextColor"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:text="1" />
             </RelativeLayout>
+            <ImageView
+                android:id="@+id/item_histroy_img"
+                android:layout_width="@dimen/px_4"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/px_47"
+                android:src="@drawable/rect"/>
         </LinearLayout>
 
         <LinearLayout
@@ -41,7 +48,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_36"
-                android:layout_marginTop="@dimen/px_30"
                 android:layout_marginLeft="@dimen/px_30"
                 android:textSize="@dimen/font_size16"
                 android:textColor="@color/blackTextColor"

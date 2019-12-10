@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -39,7 +40,7 @@ import java.util.List;
 @Route(path = RouterUtils.ACTIVITY_CLOSE)
 public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityApplyForceCloseBinding, ApplyCloseViewModel> {
     private PhotoSelectAdapter photoSelectAdapter;
-    private static final int MAX_PHOTO_SIZE=4;
+    private static final int MAX_PHOTO_SIZE = 4;
     private ApplyCloseRequest request;
     @Autowired(name = RouteKey.KEY_SEND_ORDER_DETAIL)
     public DisttributeDetialModel model;
@@ -47,10 +48,17 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
     String proInsId;
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
+
     @Override
     protected ApplyCloseViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(ApplyCloseViewModel.class);
 
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override
@@ -62,7 +70,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_close);
-        request=new ApplyCloseRequest();
+        request = new ApplyCloseRequest();
         request.setID(model.getData().getInfo().getID());
         request.setTaskID(taskId);
         request.setProInsID(proInsId);
@@ -131,12 +139,14 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
             hideLoading();
             if (data != null) {
                 viewModel.applyClose(request, data).observe(this, model -> {
-                        ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
+                    if (model.getCode().equals("0")) {
+                        ToastUtil.show(this, R.string.apply_close_success);
+                        this.finish();
+                    } else {
+                        ToastUtil.show(this, model.getMsg());
+                    }
                 });
-            } else {
-                ToastUtil.show(getApplicationContext(), R.string.upload_pic_failed);
             }
         });
     }
-
 }

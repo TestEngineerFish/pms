@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
@@ -49,7 +50,12 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
 
                 @Override
                 public void onBindItem(ItemHistoryLayoutBinding binding, HistoryModel model, int position) {
-
+                    binding.itemHistroyStep.setText(position+1+"");
+                    if (position==historyModels.size()-1){
+                        binding.itemHistroyImg.setVisibility(View.INVISIBLE);
+                    }else {
+                        binding.itemHistroyImg.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override

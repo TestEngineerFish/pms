@@ -6,10 +6,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -74,7 +76,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     private String checkResult;
     public static String RESULT_PASS = "1";
     public static String RESULT_REJECT = "0";
-
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
@@ -102,6 +103,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));
+        binding.orderInfo.sendOrderDetailList.addItemDecoration(new SpacesItemDecoration(18));
         binding.orderInfo.sendOrderDetailList.setAdapter(photoListInfoAdapter);
         initWorkForm();
         initCheckAccept();
@@ -131,6 +133,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
         binding.orderForm.sendOrderImgList.setAdapter(photoListFormAdapter);
+
     }
 
     private void initCheckAccept() {
@@ -558,5 +561,21 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return false;
         }
         return userModuleService.getUserId().equals(detialModel.getData().getInfo().getCheckID());
+    }
+/**
+ * 设置图片间隔
+ * */
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+        }
     }
 }

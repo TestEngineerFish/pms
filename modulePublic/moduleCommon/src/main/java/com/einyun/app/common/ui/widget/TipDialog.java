@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -22,6 +23,7 @@ public class TipDialog {
     private View view;
     TipDialogBinding binding;
     private TipDialogListener listener;
+
     public TipDialog(Context context, String tip) {
         this.context = context;
         this.tip = tip;
@@ -35,39 +37,42 @@ public class TipDialog {
         alterDiaglog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                ((ViewGroup)view.getParent()).removeView(view);
+                ((ViewGroup) view.getParent()).removeView(view);
             }
         });
-         binding= DataBindingUtil.bind(view);
+        binding = DataBindingUtil.bind(view);
         binding.tipDialogContent.setText(tip);
         binding.tipDialogKnow.setOnClickListener(v -> {
-           if(listener!=null){
-               listener.onKnowClick(dialog);
-           }
+            if (listener != null) {
+                listener.onKnowClick(dialog);
+            }
         });
-        dialog=alterDiaglog.create();
+        dialog = alterDiaglog.create();
+
 
     }
 
-    public void dismiss(){
-        if(dialog!=null&&dialog.isShowing()){
+    public void dismiss() {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
 
-    public void setTip(String tip){
-        this.tip=tip;
+    public void setTip(String tip) {
+        this.tip = tip;
         binding.tipDialogContent.setText(tip);
     }
 
     public void show() {
         dialog.show();
+        dialog.getWindow().setLayout(1000,750);
     }
 
-    public void setTipDialogListener(TipDialogListener listener){
-        this.listener=listener;
+    public void setTipDialogListener(TipDialogListener listener) {
+        this.listener = listener;
     }
-    public interface TipDialogListener{
+
+    public interface TipDialogListener {
         void onKnowClick(AlertDialog dialog);
     }
 }
