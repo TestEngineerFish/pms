@@ -18,7 +18,7 @@
         <item name="android:paddingBottom">@dimen/px_22</item>
         <item name="android:layout_marginBottom">@dimen/px_40</item>
         <item name="android:layout_marginTop">@dimen/px_40</item>
-        <item name="android:background">@drawable/normal_btn_bg</item>
+        <item name="android:background">@drawable/select_btn_bg</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/font_size16</item>
         <item name="android:textStyle">bold</item>
