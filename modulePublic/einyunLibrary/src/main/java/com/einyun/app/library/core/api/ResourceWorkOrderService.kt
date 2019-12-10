@@ -6,6 +6,7 @@ import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
+import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
 import java.util.*
 import java.util.*
@@ -103,4 +104,7 @@ interface ResourceWorkOrderService : EinyunService {
     ): LiveData<ApplyCloseResponse>
 
     fun exten(request: ExtenDetialRequest, callBack: CallBack<BaseResponse<Object>>): LiveData<BaseResponse<Object>>
+
+    //历史流程
+    fun getHistroy(intstId:String,callBack: CallBack<List<HistoryModel>>):LiveData<List<HistoryModel>>
 }

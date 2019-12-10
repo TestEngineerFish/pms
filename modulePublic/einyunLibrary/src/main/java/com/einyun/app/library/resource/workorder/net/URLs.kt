@@ -85,5 +85,7 @@ class URLs {
         const val URL_CLOSE_ORDER="/$DOMAIN/res-order/distribute/close"
         //派工单-延期
         const val URL_EXTEN="/$DOMAIN/res-order/distribute/exten"
+        //历史流程
+        const val URL_HIDTROY="bpm-runtime/runtime/instance/v1/instanceFlowOpinions?instId="
     }
 }

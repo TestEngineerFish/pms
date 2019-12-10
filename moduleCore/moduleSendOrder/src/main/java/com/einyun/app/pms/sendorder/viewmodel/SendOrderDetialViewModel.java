@@ -1,22 +1,25 @@
 package com.einyun.app.pms.sendorder.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
-import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
+import com.einyun.app.library.resource.workorder.model.HistoryModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributeCheckRequest;
 import com.einyun.app.library.resource.workorder.net.request.DistributeSubmitRequest;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.WorkOrderHanlerRequest;
+import com.einyun.app.library.resource.workorder.net.response.HistroyResponse;
 import com.einyun.app.library.upload.model.PicUrl;
 
 import java.util.List;
@@ -218,5 +221,29 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
             }
         });
     }
+
+    /**
+     * 获取历史流程
+     * @return
+     */
+    public LiveData<List<HistoryModel>> getHistory(String instId) {
+        showLoading();
+        MutableLiveData<List<HistoryModel>> histroyList=new MutableLiveData<>();
+
+        service.getHistroy(instId, new CallBack<List<HistoryModel>>() {
+            @Override
+            public void call(List<HistoryModel> data) {
+                hideLoading();
+                histroyList.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return histroyList;
+    }
+
 
 }

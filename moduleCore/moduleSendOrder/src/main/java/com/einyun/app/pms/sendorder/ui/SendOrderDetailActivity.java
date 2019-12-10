@@ -530,6 +530,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (v.getId() == R.id.iv_right_option) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_HISTORY)
+                    .withString(RouteKey.KEY_ORDER_ID,orderId)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                     .navigation();
         }
     }

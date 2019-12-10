@@ -5,7 +5,7 @@
 
         <variable
             name="history"
-            type="com.einyun.app.pms.sendorder.model.HistoryModel" />
+            type="com.einyun.app.library.resource.workorder.model.HistoryModel" />
     </data>
 
     <LinearLayout
@@ -47,11 +47,11 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/px_36"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_30"
-                android:textSize="@dimen/font_size16"
+                android:text="@{history.taskName}"
                 android:textColor="@color/blackTextColor"
-                android:text="创建工单" />
+                android:textSize="@dimen/font_size16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="创建工单" />
+                    android:text="@{history.auditorName}" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +90,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="执行人：" />
+                    android:text="处理时间：" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="创建工单" />
+                    android:text="@{history.completeTime}" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,7 +114,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/grayTextColor"
-                    android:text="执行人：" />
+                    android:text="状态：" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/grayTextColor"
-                    android:text="创建工单" />
+                    android:text="@{history.statusVal}" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,7 +138,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/grayTextColor"
-                    android:text="执行人：" />
+                    android:text="意见：" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
                     android:textSize="@dimen/font_size14"
                     android:gravity="center_vertical"
                     android:textColor="@color/grayTextColor"
-                    android:text="创建工单" />
+                    android:text="@{history.opinion}" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

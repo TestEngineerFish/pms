@@ -7,6 +7,7 @@ import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
+import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo
 import java.util.*
@@ -25,6 +26,12 @@ import java.util.*
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun getHistroy(
+        intstId: String,
+        callBack: CallBack<List<HistoryModel>>
+    ): LiveData<List<HistoryModel>> {
+        return instance?.getHistroy(intstId, callBack)!!     }
+
     override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderResponse>

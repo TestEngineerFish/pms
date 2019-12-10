@@ -15,6 +15,7 @@ import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
+import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
 import java.util.*
 
@@ -32,6 +33,24 @@ import java.util.*
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+
+    //获取历史流程
+    override fun getHistroy(
+        intstId: String,
+        callBack: CallBack<List<HistoryModel>>
+    ): LiveData<List<HistoryModel>> {
+        val liveData = MutableLiveData<List<HistoryModel>>()
+        var url = URLs.URL_HIDTROY + intstId
+        serviceApi?.getHistroy(url)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response.data)
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
+        return liveData;       }
+//转派工单
     override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderResponse>

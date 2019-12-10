@@ -171,4 +171,10 @@ interface ResourceWorkOrderServiceApi {
     @POST(URLs.URL_CLOSE_ORDER)
     
     fun closeOrder(@Body request:ApplyCloseRequest):Flowable<ApplyCloseResponse>
+
+    /**
+     * 获取历史流程
+     * */
+    @GET
+    fun getHistroy(@Url url: String):Flowable<HistroyResponse>
 }
