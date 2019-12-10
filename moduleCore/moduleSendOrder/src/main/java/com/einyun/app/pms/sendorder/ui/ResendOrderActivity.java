@@ -56,7 +56,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
          resendOrderRequest.setId(orderId);
          resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
          resendOrderRequest.setTaskId(taskId);
-         resendOrderRequest.setUserId(userModuleService.getUserId());
+         resendOrderRequest.setUserId(model.getId());
          resendOrderRequest.setUserName(model.getFullname());
         });
     }

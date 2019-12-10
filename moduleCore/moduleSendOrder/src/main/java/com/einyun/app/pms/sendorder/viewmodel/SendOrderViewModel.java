@@ -271,11 +271,13 @@ public class SendOrderViewModel extends BasePageListViewModel<DistributeWorkOrde
             @Override
             public void call(ResendOrderResponse data) {
                 hideLoading();
+                Log.d("test",data.getMsg());
                 resend.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+
             }
         });
 

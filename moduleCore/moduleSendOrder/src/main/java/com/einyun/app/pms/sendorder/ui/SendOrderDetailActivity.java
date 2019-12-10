@@ -211,8 +211,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (detialModel == null) {
             return;
         }
-        //如果是已办，全部显示详情
-        if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)){
+        showForceClose();
+        showPostpone();
+        //如果是已办,申请延期中，申请强制关闭中，全部显示详情
+        if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)
+                ||detialModel.getExtApplication(ApplyType.FORCECLOSE.getState())!=null
+                ||detialModel.getExtApplication(ApplyType.POSTPONE.getState())!=null){
             onlyShowDetial();
             return;
         }
@@ -276,8 +280,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.sendOrderDetailSubmit.setVisibility(View.GONE);
         binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
         binding.orderHandle.setWorkOrder(detialModel);
-        showForceClose();
-        showPostpone();
+
     }
 
     /**
