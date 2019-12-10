@@ -150,13 +150,13 @@ interface ResourceWorkOrderServiceApi {
     @GET
     fun getOrgnization(@Url url: String): Flowable<GetOrgnizationResponse>
 
-
     /**
      * 获取审批角色
      */
     @POST(URLs.URL_SELECT_BY_JOB)
     fun getJob(@Body request: GetJobRequest): Flowable<GetJobResponse>
 
+    @POST(URLs.URL_EXTEN)
     fun exten(@Body request: ExtenDetialRequest): Flowable<BaseResponse<Object>>
 
     /**

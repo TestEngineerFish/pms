@@ -31,14 +31,13 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
 
-
-
-    override fun exten(request: ExtenDetialRequest): LiveData<Object> {
+    override fun exten(request: ExtenDetialRequest, callBack: CallBack<Object>): LiveData<Object> {
         val liveData = MutableLiveData<Object>()
         serviceApi?.exten(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 if (response.isState) {
                     liveData.postValue(response.data)
+                    callBack.call(response.data)
                 }
             }, { error -> {} })
         return liveData;
@@ -49,7 +48,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             ?.subscribe(
                 {
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 }
             )
@@ -60,37 +59,37 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             ?.subscribe(
                 {
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 }
             )
     }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
-        var url=URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL_INFO+orderId
+        var url = URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL_INFO + orderId
         serviceApi?.distributeWaitDetialInfo(url)?.compose(RxSchedulers.inIo())
             ?.subscribe(
-                { response->
-                    if(response.isState){
+                { response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 }
             )
     }
 
     override fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>) {
-       serviceApi?.distributeSumbmit(request)?.compose(RxSchedulers.inIo())
-           ?.subscribe(
-               {
-                   callBack.call(it.isState)
-               },{
-                   callBack.onFaild(it)
-               }
-           )
+        serviceApi?.distributeSumbmit(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    callBack.call(it.isState)
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
     }
 
     override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
@@ -98,7 +97,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             ?.subscribe(
                 {
                     callBack.call(it.isState)
-                },{
+                }, {
                     callBack.onFaild(it)
                 }
             )
@@ -106,16 +105,16 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
 
 
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
-        var url=URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL+taskId
+        var url = URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL + taskId
         serviceApi?.distributeWaitDetial(url)?.compose(RxSchedulers.inIo())
             ?.subscribe(
-                { response->
-                    if(response.isState){
+                { response ->
+                    if (response.isState) {
                         callBack.call(response.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 }
             )
@@ -128,12 +127,12 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         serviceApi?.distributeDoneDetial(request)?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 {
-                    if(it.isState){
+                    if (it.isState) {
                         callBack.call(it.data)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(it))
                     }
-                },{
+                }, {
                     callBack.onFaild(it)
                 }
             )
@@ -338,22 +337,28 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         return liveData
 
     }
-/**
- * 获取组织结构
- * */
-    override fun getOrgnization(id:String,callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel> {
-    val liveData = MutableLiveData<OrgnizationModel>()
-    var url=URLs.URL_SELECT_BY_ORGNIZATION+id
-    serviceApi?.getOrgnization(url)?.compose(RxSchedulers.inIo())
-        ?.subscribe({ response ->
-            if (response.isState) {
-                callBack.call(response.data)
-                liveData.postValue(response.data)
-            } else {
-                callBack.onFaild(EinyunHttpException(response))
-            }
-        }, { error -> callBack.onFaild(error) })
-    return liveData    }
+
+    /**
+     * 获取组织结构
+     * */
+    override fun getOrgnization(
+        id: String,
+        callBack: CallBack<OrgnizationModel>
+    ): LiveData<OrgnizationModel> {
+        val liveData = MutableLiveData<OrgnizationModel>()
+        var url = URLs.URL_SELECT_BY_ORGNIZATION + id
+        serviceApi?.getOrgnization(url)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     /**
      * 获取审批角色
      * */
@@ -368,13 +373,17 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
-            }, { error -> callBack.onFaild(error)
-                Log.d("test",error.message)})
-        return liveData      }
+            }, { error ->
+                callBack.onFaild(error)
+                Log.d("test", error.message)
+            })
+        return liveData
+    }
 
     /**
      * 转单
-     * */override fun resendOrder(
+     * */
+    override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderModel>
     ): LiveData<ResendOrderModel> {
@@ -387,8 +396,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
-            }, { error -> callBack.onFaild(error)
-                Log.d("test",error.message)})
+            }, { error ->
+                callBack.onFaild(error)
+                Log.d("test", error.message)
+            })
         return liveData
     }
 
@@ -405,8 +416,9 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
-            }, { error -> callBack.onFaild(error)
-                })
+            }, { error ->
+                callBack.onFaild(error)
+            })
         return liveData
     }
 

@@ -190,7 +190,18 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
     }
 
     public LiveData<?> applyLate(ExtenDetialRequest request, List<PicUrl> images){
+        showLoading();
         request.setApplyFiles(uploadManager.toJosnString(images));
-        return service.exten(request);
+        return service.exten(request, new CallBack<Object>() {
+            @Override
+            public void call(Object data) {
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
     }
 }

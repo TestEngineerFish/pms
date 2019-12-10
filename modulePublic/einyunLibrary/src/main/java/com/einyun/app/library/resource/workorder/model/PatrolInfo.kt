@@ -81,7 +81,7 @@ class PatrolContent{
      var F_duration: Int = 0
 }
 
-class ExtensionApplication{
+class ExtensionApplication : Serializable{
      var id: String? = null
      var poId: String? = null
      var applyType: Int = 0

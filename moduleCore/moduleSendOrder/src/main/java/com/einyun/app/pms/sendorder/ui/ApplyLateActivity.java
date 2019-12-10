@@ -15,11 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
+import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
@@ -37,8 +39,10 @@ import java.util.List;
 @Route(path = RouterUtils.ACTIVITY_LATE)
 public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLateBinding, SendOrderDetialViewModel> {
 
-    @Autowired
+    @Autowired(name = RouteKey.KEY_SEND_ORDER_DETAIL)
     public DisttributeDetialModel model;
+    @Autowired(name = RouteKey.KEY_PRO_INS_ID)
+    String proInsId;
     PhotoSelectAdapter photoSelectAdapter;
     private final int MAX_PHOTO_SIZE = 4;
 
@@ -57,10 +61,16 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_postpone);
-        binding.setDetail(model.getExtensionApplication().get(0));
         binding.setCallBack(this);
         selectPng();
-
+        if (model.getExtensionApplication() != null) {
+            binding.applyNum.setText(model.getExtensionApplication().size() + "次");
+            int i = 0;
+            for (ExtensionApplication bean : model.getExtensionApplication()) {
+                i = i + Integer.valueOf(bean.getExtensionDays());
+            }
+            binding.applyDate.setText(i + "天");
+        }
     }
 
     /**
@@ -108,8 +118,8 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         }
         request.setExtensionDays(binding.delayDate.getText().toString());
         request.setApplicationDescription(binding.delayInfo.getString());
-        request.setId(model.getExtensionApplication().get(0).getId());
-        request.setInstId(model.getExtensionApplication().get(0).getPoId());
+        request.setId(model.getData().getId());
+        request.setInstId(proInsId);
         uploadImages();
     }
 

@@ -26,55 +26,62 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         request: ApplyCloseRequest,
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse> {
-        return  proxy.applyClose(request,callBack)    }
+        return proxy.applyClose(request, callBack)
+    }
 
     override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderModel>
     ): LiveData<ResendOrderModel> {
-        return  proxy.resendOrder(request,callBack)    }
+        return proxy.resendOrder(request, callBack)
+    }
 
-    override fun exten(request: ExtenDetialRequest): LiveData<Object> {
-        return proxy.exten(request)
+    override fun exten(request: ExtenDetialRequest, callBack: CallBack<Object>): LiveData<Object> {
+        return proxy.exten(request, callBack)
     }
 
     override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
-       proxy.distributeReply(request,callBack)
+        proxy.distributeReply(request, callBack)
     }
 
     override fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>) {
-        proxy.distributeCheck(request,callBack)
+        proxy.distributeCheck(request, callBack)
     }
 
     override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
-      return  proxy.getJob(request,callBack)
+        return proxy.getJob(request, callBack)
     }
 
-    override fun getOrgnization(id:String,callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel> {
-        return proxy.getOrgnization(id,callBack)    }
+    override fun getOrgnization(
+        id: String,
+        callBack: CallBack<OrgnizationModel>
+    ): LiveData<OrgnizationModel> {
+        return proxy.getOrgnization(id, callBack)
+    }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
-        proxy.distributeDetial(orderId,callBack)
+        proxy.distributeDetial(orderId, callBack)
     }
 
     override fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>) {
-        proxy.distributeSubmit(request,callBack)
+        proxy.distributeSubmit(request, callBack)
     }
 
     override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
-       proxy.distributeResponse(request,callBack)
+        proxy.distributeResponse(request, callBack)
     }
 
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {
-       return proxy.distributeWaitDetial(taskId,callBack)
+        return proxy.distributeWaitDetial(taskId, callBack)
     }
 
     override fun distributeDoneDetial(
         request: DoneDetialRequest,
         callBack: CallBack<DisttributeDetialModel>
     ) {
-        return proxy.distributeDoneDetial(request,callBack)
+        return proxy.distributeDoneDetial(request, callBack)
     }
+
     override fun getResourceInfos(
         massifId: String,
         resourceTypeCode: String,

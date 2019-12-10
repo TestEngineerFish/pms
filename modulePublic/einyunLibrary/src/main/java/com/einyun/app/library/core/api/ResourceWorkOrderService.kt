@@ -23,9 +23,17 @@ import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 interface ResourceWorkOrderService : EinyunService {
     fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount>
 
-    fun distributeWaitPage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage>
+    fun distributeWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage>
+
     //派工单代办列表
-    fun distributeDonePage(request: DistributePageRequest, callBack: CallBack<DistributeWorkOrderPage>): LiveData<DistributeWorkOrderPage>
+    fun distributeDonePage(
+        request: DistributePageRequest,
+        callBack: CallBack<DistributeWorkOrderPage>
+    ): LiveData<DistributeWorkOrderPage>
+
     //巡查工单代办
     fun patrolWaitPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>)
 
@@ -42,37 +50,55 @@ interface ResourceWorkOrderService : EinyunService {
     ): LiveData<Boolean>
 
     //获取派工单代办详情
-    fun distributeWaitDetial(taskId:String,callBack:CallBack<DisttributeDetialModel>)
+    fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>)
+
     //获取派工单已办详情
-    fun distributeDetial(orderId:String,callBack:CallBack<DisttributeDetialModel>)
+    fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>)
+
     //获取派工单已办详情
-    fun distributeDoneDetial(request:DoneDetialRequest,callBack: CallBack<DisttributeDetialModel>)
+    fun distributeDoneDetial(request: DoneDetialRequest, callBack: CallBack<DisttributeDetialModel>)
+
     //派工单接单
-    fun distributeResponse(request: WorkOrderHanlerRequest,callBack: CallBack<Boolean>)
+    fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>)
+
     //派工单批复
-    fun distributeReply(request: WorkOrderHanlerRequest,callBack: CallBack<Boolean>)
+    fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>)
+
     //派工单验收
-    fun distributeCheck(request: DistributeCheckRequest,callBack: CallBack<Boolean>)
+    fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>)
+
     //派工单处理
-    fun distributeSubmit(request: DistributeSubmitRequest,callBack: CallBack<Boolean>)
+    fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>)
+
     //获取条线
     fun getTiaoXian(callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
+
     //获取工单类型
     fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>>
 
-    fun getResourceInfos(massifId: String, resourceTypeCode: String,callBack: CallBack<List<ResourceTypeBean>>): LiveData<List<ResourceTypeBean>>
+    fun getResourceInfos(
+        massifId: String,
+        resourceTypeCode: String,
+        callBack: CallBack<List<ResourceTypeBean>>
+    ): LiveData<List<ResourceTypeBean>>
 
     //获取组织结构
-    fun getOrgnization(id:String,callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel>
+    fun getOrgnization(id: String, callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel>
     //获取审批角色
 
-    fun getJob(request: GetJobRequest,callBack: CallBack<JobPage>): LiveData<JobPage>
+    fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage>
 
     //转派工单
-    fun resendOrder(request: ResendOrderRequest,callBack: CallBack<ResendOrderModel>): LiveData<ResendOrderModel>
+    fun resendOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderModel>
+    ): LiveData<ResendOrderModel>
 
     //申请闭单
-    fun applyClose(request: ApplyCloseRequest,callBack: CallBack<ApplyCloseResponse>): LiveData<ApplyCloseResponse>
+    fun applyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse>
 
-    fun exten(request: ExtenDetialRequest):LiveData<Object>
+    fun exten(request: ExtenDetialRequest, callBack: CallBack<Object>): LiveData<Object>
 }

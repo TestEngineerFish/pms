@@ -26,47 +26,49 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
         request: ApplyCloseRequest,
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse> {
-        return instance?.applyClose(request,callBack)!!    }
+        return instance?.applyClose(request, callBack)!!
+    }
 
     override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderModel>
     ): LiveData<ResendOrderModel> {
-        return instance?.resendOrder(request,callBack)!!    }
+        return instance?.resendOrder(request, callBack)!!
+    }
 
-    override fun exten(request: ExtenDetialRequest): LiveData<Object> {
-        return instance?.exten(request)!!
+    override fun exten(request: ExtenDetialRequest, callBack: CallBack<Object>): LiveData<Object> {
+        return instance?.exten(request, callBack)!!
     }
 
     override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
-       return instance?.distributeReply(request,callBack)!!
+        return instance?.distributeReply(request, callBack)!!
     }
 
     override fun distributeCheck(request: DistributeCheckRequest, callBack: CallBack<Boolean>) {
-        return instance?.distributeCheck(request,callBack)!!
+        return instance?.distributeCheck(request, callBack)!!
     }
 
     override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
-        return instance?.getJob(request,callBack)!!
+        return instance?.getJob(request, callBack)!!
     }
 
     override fun getOrgnization(
         id: String,
         callBack: CallBack<OrgnizationModel>
     ): LiveData<OrgnizationModel> {
-       return instance?.getOrgnization(id, callBack)!!
+        return instance?.getOrgnization(id, callBack)!!
     }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
-       instance?.distributeDetial(orderId,callBack)
+        instance?.distributeDetial(orderId, callBack)
     }
 
     override fun distributeSubmit(request: DistributeSubmitRequest, callBack: CallBack<Boolean>) {
-        instance?.distributeSubmit(request,callBack)
+        instance?.distributeSubmit(request, callBack)
     }
 
     override fun distributeResponse(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
-        instance?.distributeResponse(request,callBack)
+        instance?.distributeResponse(request, callBack)
     }
 
     override fun distributeWaitDetial(taskId: String, callBack: CallBack<DisttributeDetialModel>) {

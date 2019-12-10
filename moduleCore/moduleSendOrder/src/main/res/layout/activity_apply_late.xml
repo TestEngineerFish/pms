@@ -7,15 +7,14 @@
         <variable
             name="callBack"
             type="com.einyun.app.pms.sendorder.ui.ApplyLateActivity" />
-        <variable
-            name="detail"
-            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".ui.ApplyLateActivity">
 
         <include
@@ -33,9 +32,10 @@
                 android:text="已延期次数" />
 
             <TextView
+                android:id="@+id/apply_num"
                 style="@style/tv_create_order_name"
                 android:layout_marginLeft="@dimen/px_132"
-                android:text="@{detail.extensionDays}"
+                android:text="0"
                 android:textSize="@dimen/font_size15" />
         </LinearLayout>
         <View style="@style/base_underline"/>
@@ -48,9 +48,10 @@
                 android:text="已延期时长" />
 
             <TextView
+                android:id="@+id/apply_date"
                 style="@style/tv_create_order_name"
                 android:layout_marginLeft="@dimen/px_132"
-                android:text="3次"
+                android:text="0"
                 android:textSize="@dimen/font_size15" />
         </LinearLayout>
         <View style="@style/base_underline"/>
