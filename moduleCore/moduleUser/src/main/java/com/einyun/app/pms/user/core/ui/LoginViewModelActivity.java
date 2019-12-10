@@ -119,6 +119,22 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      * 设置事件监听
      */
     private void initEvent() {
+        binding.etOrgCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkData();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         binding.etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -132,6 +148,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                 } else {
                     binding.ivOption.setVisibility(View.INVISIBLE);
                 }
+                checkData();
             }
 
             @Override
@@ -152,6 +169,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                 } else {
                     binding.ivDelete.setVisibility(View.GONE);
                 }
+                checkData();
             }
 
             @Override
@@ -159,6 +177,15 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
 
             }
         });
+    }
+
+    private void checkData() {
+        if (StringUtil.isNullStr(binding.etOrgCode.getText().toString()) && StringUtil.isNullStr(binding.etUser.getText().toString())
+                && StringUtil.isNullStr(binding.etPassword.getText().toString())) {
+            binding.btLogin.setEnabled(true);
+        } else {
+            binding.btLogin.setEnabled(false);
+        }
     }
 
     /**
@@ -199,7 +226,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                         ToastUtil.show(this, R.string.login_password_null_tip);
                         return;
                     }
-                    viewModel.login(binding.etUser.getText().toString(), model.getPassword(),true)
+                    viewModel.login(binding.etUser.getText().toString(), model.getPassword(), true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
                                         ARouter.getInstance()

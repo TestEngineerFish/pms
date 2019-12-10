@@ -149,6 +149,7 @@
                 style="@style/submit_btn"
                 android:layout_marginTop="@dimen/px_120"
                 android:onClick="@{()->callBack.onLoginClick()}"
+                android:enabled="false"
                 android:text="登录"
                  />
 
