@@ -37,6 +37,7 @@ import com.einyun.app.pms.approval.module.ApprovalBean;
 import com.einyun.app.pms.approval.module.ApprovalItemmodule;
 import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
+import com.einyun.app.pms.approval.repository.ApprovalkListRepository;
 import com.einyun.app.pms.approval.ui.widget.CustomPopWindow;
 import com.einyun.app.pms.approval.utils.IsFastClick;
 import com.einyun.app.pms.approval.viewmodule.ApprovalFragmentViewModel;
@@ -133,16 +134,20 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         });
         if(adapter==null){
             adapter=new RVPageListAdapter<ItemApprovalListBinding, ApprovalItemmodule>(getActivity(), BR.approvallist,mDiffCallback){
-                private static final String TAG = "ApprovalViewModelFragme";
+//                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemApprovalListBinding binding, ApprovalItemmodule checkPointModel) {
                     binding.tvApprovalerName.setText(getString(R.string.tv_applicat)+checkPointModel.getApply_user());
                     binding.rlApprovalTime.setVisibility(View.VISIBLE);
 //                    Log.e(TAG, "1onBindItem: auditType:"+checkPointModel.getAudit_type()+"---auditSubType :"+checkPointModel.getAudit_sub_type());
-                    String auditType = getTypeStringByCode(checkPointModel.getAudit_type());
-                    String auditSubType = getSubTypeStringByCode(checkPointModel.getAudit_sub_type());
+//                    String auditType = getTypeStringByCode(checkPointModel.getAudit_type());
+//                    String auditSubType = getSubTypeStringByCode(checkPointModel.getAudit_sub_type());
+                    auditType=checkPointModel.getAudit_type();
+                    auditSubType=checkPointModel.getAudit_sub_type();
+
+
 //                    Log.e(TAG, "2onBindItem: auditType:"+auditType+"---auditSubType :"+auditSubType);
-                    typeValue = (auditType.length() > 0 ? (auditType + "-") : "") + (auditSubType.length() > 0 ? auditSubType : "");
+//                    typeValue = (auditType.length() > 0 ? (auditType + "-") : "") + (auditSubType.length() > 0 ? auditSubType : "");
                     checkPointModel.getUserAuditStatus();
                     if (checkPointModel.getStatus().equals("submit")) {//待审批
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
@@ -160,7 +165,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
                     }
                     binding.tvApprovalNum.setText(checkPointModel.getAudit_code());//审批单号
-                    binding.tvApprovalType.setText(typeValue);
+                    binding.tvApprovalType.setText(getTypeValue(auditType,auditSubType));
                     binding.tvIntallment.setText(checkPointModel.getDivide_name());
                     binding.tvApplyTime.setText(TimeUtil.getAllTimeNoSecond(checkPointModel.getApply_date()));
                     binding.tvApprovalTime.setText(TimeUtil.getAllTimeNoSecond(checkPointModel.getAudit_date()));
@@ -178,14 +183,79 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         }
         binding.approvalList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        loadPagingData(viewModel.getData(1,100),tabId);
+        loadPagingData(viewModel.getData(1,10),tabId);
     }
+
+    private String  getTypeValue(String auditType ,String auditSubType) {
+        switch (auditType) {
+            case "INNER_AUDIT_CREATE_PLAN"://创建计划
+                switch (auditSubType) {
+                    case "CREATE_WORK_PLAN"://创建工作计划
+                        typeValue="创建计划-创建工作计划";
+                        break;
+                    case "CREATE_PATROL_PLAN"://创建巡查计划
+                        typeValue="创建计划-创建巡查计划";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_FORCE_CLOSE"://强制闭单
+                switch (auditSubType) {
+                    case "FORCE_CLOSE_COMPLAIN"://客户投诉工单
+                        typeValue="强制闭单-客户投诉工单";
+                        break;
+                    case "FORCE_CLOSE_ENQUIRY"://客户问询工单
+                        typeValue="强制闭单-客户问询工单";
+                        break;
+                    case "FORCE_CLOSE_REPAIR"://客户报修工单
+                        typeValue="强制闭单-客户报修工单";
+                        break;
+                    case "FORCE_CLOSE_PATROL"://巡查工单
+                        typeValue="强制闭单-巡查工单";
+                        break;
+                    case "FORCE_CLOSE_PLAN"://计划工单
+                        typeValue="强制闭单-计划工单";
+                        break;
+                    case "FORCE_CLOSE_ALLOCATE"://派工单
+                        typeValue="强制闭单-派工单";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_UPDATE_PLAN"://修改计划
+                switch (auditSubType) {
+                    case "UPDATE_PATROL_PLAN"://修改巡查计划
+                        typeValue="修改计划-修改巡查计划";
+                        break;
+                    case "UPDATE_WORK_PLAN"://修改工作计划
+                        typeValue="修改计划-修改工作计划";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_POSTPONED": //工单延期
+                switch (auditSubType) {
+                    case "POSTPONED_REPAIR"://客户报修工单
+                        typeValue="工单延期-客户报修工单";
+                        break;
+                    case "POSTPONED_COMPLAIN"://客户投诉工单
+                        typeValue="工单延期-客户投诉工单";
+                        break;
+                    case "POSTPONED_PATROL"://巡查工单
+                        typeValue="工单延期-巡查工单";
+                        break;
+                    case "POSTPONED_PLAN"://计划工单
+                        typeValue="工单延期-计划工单";
+                        break;
+                    case "POSTPONED_ALLOCATE"://派工单
+                        typeValue="工单延期-派工单";
+                        break;
+                }
+                break;
+        }
+        return typeValue;
+    }
+
     private void loadPagingData(ApprovalBean approvalBean,int tabId){
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPadingData(approvalBean,tabId).observe(this, dataBeans -> {
-            adapter.submitList(dataBeans)
-
-            ;});
+        viewModel.loadPadingData(approvalBean,tabId).observe(this, dataBeans -> adapter.submitList(dataBeans));
 
     }
     /*
@@ -252,7 +322,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 
         @Override
         public boolean areItemsTheSame(@NonNull ApprovalItemmodule oldItem, @NonNull ApprovalItemmodule newItem) {
-            return oldItem.getTaskId().equals(newItem.getTaskId()) ;
+            return oldItem.getID_()==newItem.getID_();
         }
 
         @SuppressLint("DiffUtilEquals")
@@ -303,7 +373,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     @Override
     public void onItemClicked(View veiw, ApprovalItemmodule data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
-                .withString(RouteKey.APPROVAL_DETAIL_TYPE_VALUE,typeValue)
+                .withString(RouteKey.APPROVAL_DETAIL_TYPE_VALUE,getTypeValue(data.getAudit_type(),data.getAudit_sub_type()))
                 .withSerializable(RouteKey.APPROVAL_ITEM_DATA,data).navigation();
     }
 
@@ -336,5 +406,13 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         }
 
         return "";
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ApprovalkListRepository.mPage2=0;
+        ApprovalkListRepository.mPage1=0;
+        ApprovalkListRepository.mPage3=0;
     }
 }

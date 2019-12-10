@@ -15,6 +15,7 @@ import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.request.PageQueryRequest;
 import com.einyun.app.pms.approval.response.ApprovalServiceApi;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -32,7 +33,9 @@ import java.util.List;
  */
 public class ApprovalkListRepository {
     ApprovalServiceApi serviceApi;
-
+    public static int mPage1;
+    public static int mPage2;
+    public static int mPage3;
     public ApprovalkListRepository() {
         serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(ApprovalServiceApi.class);
     }
@@ -47,8 +50,13 @@ public class ApprovalkListRepository {
             serviceApi.waitApproval(page).compose(RxSchedulers.inIoMain())
                     .subscribe(response -> {
 //                    if(response.isState()){
-                        callback.call(response.getData());
+                        if (mPage1==page.getPageBean().getPage()) {
 
+                        }else {
+                            mPage1=page.getPageBean().getPage();
+                            callback.call(response.getData());
+                            Logger.d("ItemDataSourcce.0pageBean .."+page.getPageBean().getPage());
+                        }
 
 //                    }
                     }, error -> {
@@ -59,7 +67,13 @@ public class ApprovalkListRepository {
             serviceApi.query(page).compose(RxSchedulers.inIoMain())
                     .subscribe(response -> {
 //                    if(response.isState()){
-                        callback.call(response.getData());
+                        if (mPage2==page.getPageBean().getPage()) {
+
+                        }else {
+                            mPage2=page.getPageBean().getPage();
+                            callback.call(response.getData());
+                            Logger.d("ItemDataSourcce.1pageBean .."+page.getPageBean().getPage());
+                        }
 //                    }
                     }, error -> {
                         callback.onFaild(error);
@@ -69,7 +83,13 @@ public class ApprovalkListRepository {
             serviceApi.meSendApproval(page).compose(RxSchedulers.inIoMain())
                     .subscribe(response -> {
 //                    if(response.isState()){
-                        callback.call(response.getData());
+                        if (mPage3==page.getPageBean().getPage()) {
+
+                        }else {
+                            mPage3=page.getPageBean().getPage();
+                            callback.call(response.getData());
+                            Logger.d("ItemDataSourcce.1pageBean .."+page.getPageBean().getPage());
+                        }
 //                    }
                     }, error -> {
                         callback.onFaild(error);
