@@ -107,6 +107,16 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.orderInfo.sendOrderDetailList.setAdapter(photoListInfoAdapter);
         initWorkForm();
         initCheckAccept();
+        binding.applyPostpone.panelPostpone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_LATE)
+                        .withSerializable(RouteKey.KEY_SEND_ORDER_DETAIL, detialModel)
+                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                        .navigation();
+            }
+        });
     }
 
     /**
