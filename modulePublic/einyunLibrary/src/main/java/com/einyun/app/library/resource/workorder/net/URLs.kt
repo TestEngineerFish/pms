@@ -79,6 +79,10 @@ class URLs {
         const val URL_SELECT_BY_ORGNIZATION="/uc/api/org/v1/org/get?id="
         //获取审批角色
         const val URL_SELECT_BY_JOB="user-center/api/usercenter/v1/ucOrgJob/filterJobByOrgId"
+        //转派
+        const val URL_RESEND_ORDER="/$DOMAIN/res-order/distribute/direct"
+        //申请闭单
+        const val URL_CLOSE_ORDER="/$DOMAIN/res-order/distribute/close"
         //派工单-延期
         const val URL_EXTEN="/$DOMAIN/res-order/distribute/exten"
     }

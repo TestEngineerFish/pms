@@ -40,6 +40,7 @@ public class SelectPeopleActivity extends BaseHeadViewModelActivity<ActivitySele
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        setHeadTitle(R.string.text_add_people);
     }
 
     @Override

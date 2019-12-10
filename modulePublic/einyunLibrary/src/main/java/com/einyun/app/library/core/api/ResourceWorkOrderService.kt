@@ -5,6 +5,7 @@ import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
+import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 
 /**
  *
@@ -66,6 +67,12 @@ interface ResourceWorkOrderService : EinyunService {
     //获取审批角色
 
     fun getJob(request: GetJobRequest,callBack: CallBack<JobPage>): LiveData<JobPage>
+
+    //转派工单
+    fun resendOrder(request: ResendOrderRequest,callBack: CallBack<ResendOrderModel>): LiveData<ResendOrderModel>
+
+    //申请闭单
+    fun applyClose(request: ApplyCloseRequest,callBack: CallBack<ApplyCloseResponse>): LiveData<ApplyCloseResponse>
 
     fun exten(request: ExtenDetialRequest):LiveData<Object>
 }

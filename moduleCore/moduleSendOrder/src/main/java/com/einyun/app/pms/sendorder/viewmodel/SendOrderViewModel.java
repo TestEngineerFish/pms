@@ -1,6 +1,8 @@
 package com.einyun.app.pms.sendorder.viewmodel;
 
 import android.net.LinkAddress;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -17,21 +19,27 @@ import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
+import com.einyun.app.library.resource.workorder.model.ApplyCloseModel;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
 import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.model.JobPage;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
+import com.einyun.app.library.resource.workorder.model.ResendOrderModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WaitCount;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.GetJobRequest;
+import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
+import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse;
 import com.einyun.app.library.resource.workorder.net.response.GetJobResponse;
 import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.sendorder.model.SendOrderModel;
 import com.einyun.app.pms.sendorder.repository.OrderDataSourceFactory;
 
@@ -249,4 +257,27 @@ public class SendOrderViewModel extends BasePageListViewModel<DistributeWorkOrde
 
         return jobModels;
     }
+    /**
+     * 转单 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<ResendOrderModel> resendOrder(ResendOrderRequest request) {
+        showLoading();
+        MutableLiveData<ResendOrderModel> resend=new MutableLiveData<>();
+        resourceWorkOrderRepo.resendOrder(request,new CallBack<ResendOrderModel>() {
+            @Override
+            public void call(ResendOrderModel data) {
+                hideLoading();
+                resend.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+            }
+        });
+
+        return resend;
+    }
+
 }

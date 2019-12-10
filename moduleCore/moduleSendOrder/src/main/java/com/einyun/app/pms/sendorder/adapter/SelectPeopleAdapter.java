@@ -105,7 +105,7 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                         list.add(orgnizationModel.getValue().getId());
                         list.add(orgnizationModel.getValue().getParentId());
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list)
-                                .withStringArrayList(RouteKey.KEY_JOB_ID_LIST,null).navigation();
+                                .navigation();
                 }
             });
         }else {
@@ -113,12 +113,13 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<String> list=new ArrayList<>();
-                    list.add(orgnizationModel.getValue().getId());
-                    list.add(orgnizationModel.getValue().getParentId());
-                    list.add(jobList.getValue().get(childPosition).getId());
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list)
-                            .withStringArrayList(RouteKey.KEY_JOB_ID_LIST,null).navigation();
+                    ArrayList<String> list1=new ArrayList<>();
+                    list1.add(orgnizationModel.getValue().getId());
+                    list1.add(orgnizationModel.getValue().getParentId());
+                    ArrayList<String> list2=new ArrayList<>();
+                    list2.add(jobList.getValue().get(childPosition).getId());
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list1)
+                            .withStringArrayList(RouteKey.KEY_JOB_ID_LIST,list2).navigation();
                 }
             });
         }

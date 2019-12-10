@@ -6,6 +6,7 @@ import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.api.proxy.ResourceWorkOrderServiceImplProxy
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
+import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 
 /**
  *
@@ -21,6 +22,18 @@ import com.einyun.app.library.resource.workorder.net.request.*
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun applyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        return  proxy.applyClose(request,callBack)    }
+
+    override fun resendOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderModel>
+    ): LiveData<ResendOrderModel> {
+        return  proxy.resendOrder(request,callBack)    }
+
     override fun exten(request: ExtenDetialRequest): LiveData<Object> {
         return proxy.exten(request)
     }

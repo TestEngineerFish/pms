@@ -1,30 +1,52 @@
 package com.einyun.app.pms.sendorder.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivityResendOrderBinding;
+import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 @Route(path = RouterUtils.ACTIVITY_RESEND_ORDER)
 public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResendOrderBinding, SendOrderViewModel> implements View.OnClickListener {
-
+    ResendOrderRequest resendOrderRequest;
+    private String taskId="";
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
     @Override
     protected SendOrderViewModel initViewModel() {
-        return null;
+        return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
+
     }
 
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        ARouter.getInstance().inject(this);
         setHeadTitle(R.string.text_resend_order);
+        resendOrderRequest=new ResendOrderRequest();
+        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
+         binding.resendName.setText(model.getFullname());
+         resendOrderRequest.setId("");
+         resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
+         resendOrderRequest.setTaskId(taskId);
+         resendOrderRequest.setUserId(userModuleService.getUserId());
+         resendOrderRequest.setUserName(model.getFullname());
+        });
     }
 
     @Override
@@ -38,14 +60,20 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     protected void initListener() {
         super.initListener();
         binding.resendOrderTo.setOnClickListener(this);
+        binding.resendSubmitBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
-                .navigation();
+            if (v.getId()==R.id.resend_submit_btn){
+                viewModel.resendOrder(resendOrderRequest);
+            }
+        else {
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                        .navigation();
+            }
     }
 
 }

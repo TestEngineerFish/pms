@@ -30,7 +30,7 @@
             android:layout_height="wrap_content">
 
             <com.einyun.app.common.ui.component.limit.LimitInput
-                android:id="@+id/location_info"
+                android:id="@+id/apply_close_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:hintText="请输入申请原因"
@@ -56,19 +56,25 @@
                 android:textColor="@color/red"
                 android:textSize="@dimen/font_size12" />
         </LinearLayout>
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/send_order_img_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_close_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/px_30"
+                >
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
+                android:id="@+id/apply_close_btn"
                 android:layout_alignParentBottom="true"
                 style="@style/submit_btn"
                 android:text="@string/text_submit"

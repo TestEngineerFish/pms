@@ -19,6 +19,9 @@ public class SendOdViewModelFactory implements ViewModelProvider.Factory {
         if(modelClass.isAssignableFrom(SelectPeopleViewModel.class)){
             return (T)new SelectPeopleViewModel();
         }
+        if (modelClass.isAssignableFrom(ApplyCloseViewModel.class)){
+            return (T)new ApplyCloseViewModel();
+        }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

@@ -1,6 +1,7 @@
 package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.library.resource.workorder.model.ApplyCloseModel
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
@@ -158,4 +159,16 @@ interface ResourceWorkOrderServiceApi {
 
     fun exten(@Body request: ExtenDetialRequest): Flowable<BaseResponse<Object>>
 
+    /**
+     * 转派
+     */
+    @POST(URLs.URL_RESEND_ORDER)
+    fun resendOrder(@Body request:ResendOrderRequest):Flowable<ResendOrderResponse>
+
+    /**
+     * 申请闭单
+     * */
+    @POST(URLs.URL_CLOSE_ORDER)
+    
+    fun closeOrder(@Body request:ApplyCloseRequest):Flowable<ApplyCloseResponse>
 }

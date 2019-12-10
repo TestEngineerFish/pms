@@ -13,6 +13,7 @@ import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
 import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
+import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
 
 /**
@@ -29,6 +30,9 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+
+
+
     override fun exten(request: ExtenDetialRequest): LiveData<Object> {
         val liveData = MutableLiveData<Object>()
         serviceApi?.exten(request)?.compose(RxSchedulers.inIo())
@@ -362,12 +366,48 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.call(response.data)
                     liveData.postValue(response.data)
                 } else {
-                    Log.d("test","cuowu1")
-
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error)
                 Log.d("test",error.message)})
         return liveData      }
+
+    /**
+     * 转单
+     * */override fun resendOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderModel>
+    ): LiveData<ResendOrderModel> {
+        val liveData = MutableLiveData<ResendOrderModel>()
+        serviceApi?.resendOrder(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error)
+                Log.d("test",error.message)})
+        return liveData
+    }
+
+    override fun applyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        val liveData = MutableLiveData<ApplyCloseResponse>()
+        serviceApi?.closeOrder(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response)
+                    liveData.postValue(response)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error)
+                })
+        return liveData
+    }
 
 }

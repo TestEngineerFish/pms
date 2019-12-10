@@ -27,6 +27,7 @@
                 android:text="@string/text_resend_to" />
 
             <TextView
+                android:id="@+id/resend_name"
                 style="@style/tv_create_order_select"
                 android:text="@string/text_please_select" />
 
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content">
 
             <com.einyun.app.common.ui.component.limit.LimitInput
-                android:id="@+id/location_info"
+                android:id="@+id/resend_order_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:hintText="请输入转派原因"
@@ -57,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
+                android:id="@+id/resend_submit_btn"
                 style="@style/submit_btn"
                 android:layout_alignParentBottom="true"
                 android:text="提交"

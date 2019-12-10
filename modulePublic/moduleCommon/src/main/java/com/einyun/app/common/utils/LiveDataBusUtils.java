@@ -10,6 +10,6 @@ public class LiveDataBusUtils {
     }
 
     public static void postResendOrderUser(GetMappingByUserIdsResponse model) {
-        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).post(model);
+        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER).post(model);
     }
 }
