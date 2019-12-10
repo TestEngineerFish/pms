@@ -143,6 +143,13 @@
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
         <item name="android:textSize">@dimen/font_size15</item>
     </style>
+    <style name="tv_create_order_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:textColor">#FF132D42</item>
+        <item name="android:textSize">@dimen/font_size15</item>
+    </style>
     <!-- 带动画的底部弹出dialog-->
     <style name="BottomDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_slide_up</item>
