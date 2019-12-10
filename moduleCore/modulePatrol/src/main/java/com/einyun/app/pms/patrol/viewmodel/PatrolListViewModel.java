@@ -58,7 +58,7 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
                     @Override
                     public void call(Boolean data) {
                         //刷新列表
-                        refresh();
+//                        refresh();
                     }
 
                     @Override

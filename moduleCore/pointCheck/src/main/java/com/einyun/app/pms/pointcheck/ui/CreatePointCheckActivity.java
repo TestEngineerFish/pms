@@ -67,6 +67,8 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
     private String divideId;
     private String divideCode;
     private String divideName;
+    public static int RESULT_PARAMS_RANG=1;
+    public static int RESULT_PARAMS_SELECT=2;
     //    ProjectContentAdapter contentAdapter;
     RVBindingAdapter<ItemPointCheckProjectEditBinding, ProjectContentItemModel> adapter;
 
@@ -128,7 +130,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                 binding.tvCheckContent.setText(model.getCheckContent());
                                 binding.tvCheckNote.setText(model.getRemark());
                                 binding.tvProjectName.setText(getResources().getString(R.string.name_project) + (position + 1));
-                                if (model.getCheckType() == 2) {
+                                if (model.getCheckType() == RESULT_PARAMS_SELECT) {
                                     binding.pointCheckRangSplit.setVisibility(View.GONE);
                                     binding.pointCheckRangContainer.setVisibility(View.GONE);
                                     binding.btnAgree.setVisibility(View.VISIBLE);
@@ -332,6 +334,9 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
             ProjectResultModel resultModel = new ProjectResultModel();
             resultModel.setCheckContentId(model.getId());
             resultModel.setCheckResult(model.getCheckResult() + "");
+            if(model.getCheckType()==RESULT_PARAMS_SELECT){
+                resultModel.setCheckResult((int)model.getCheckResult() + "");
+            }
             list.add(resultModel);
         }
         return list;

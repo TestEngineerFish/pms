@@ -26,7 +26,6 @@ public class ItemDataSource extends BaseDataSource<CheckPointModel> {
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
         PointCheckListRepository repository=new PointCheckListRepository();
-
         repository.pageQuery(pageBean, new CallBack<CheckPointPage>() {
             @Override
             public void call(CheckPointPage data) {

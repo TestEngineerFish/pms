@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
+import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.SimpleItemAnimator;
@@ -45,6 +47,15 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
         setHasStableIds(true);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull BaseBindingViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if(!payloads.isEmpty()){
+            holder.getBinding().setVariable(BR_id, getItem(position));
+        }else{
+            onBindViewHolder(holder, position);
+        }
+    }
+
     @NonNull
     @Override
     public BaseBindingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,7 +74,6 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
                 itemClickListener.onItemClicked(holder.itemView, getItem(position));
             }
         });
-
         onBindItem((D) holder.getBinding(),getItem(position));
     }
 
@@ -81,4 +91,8 @@ public abstract class RVPageListAdapter<D extends ViewDataBinding,M> extends Pag
         this.itemClickListener =itemClick;
     }
 
+    @Override
+    public void submitList(@Nullable PagedList<M> pagedList) {
+        super.submitList(pagedList);
+    }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 
@@ -56,7 +57,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     protected void setUpView() {
         binding.swiperefresh.setOnRefreshListener(() -> {
             binding.swiperefresh.setRefreshing(false);
-            adapter.submitList(null);
+//            adapter.submitList(null);
             viewModel.refresh(createPageRequest());
         });
     }
@@ -65,7 +66,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     protected void setUpData() {
         createPageRequest();
         initAdapter();
-        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
+//        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
         binding.patrolList.setAdapter(adapter);
         loadData();
     }
@@ -125,6 +126,12 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         @Override
         public boolean areContentsTheSame(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
             return oldItem==newItem;
+        }
+
+        @Nullable
+        @Override
+        public Object getChangePayload(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
+            return oldItem.getTaskId().equals(newItem.getTaskId());
         }
     };
 

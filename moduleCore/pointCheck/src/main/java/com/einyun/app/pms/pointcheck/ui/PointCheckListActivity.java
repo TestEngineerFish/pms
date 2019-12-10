@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -81,10 +82,10 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
             binding.swipeRefresh.setRefreshing(false);
            viewModel.refresh();
         });
-        binding.checkPointList.setLayoutManager(new LinearLayoutManager(
-                this,
-                LinearLayoutManager.VERTICAL,
-                false));
+//        binding.checkPointList.setLayoutManager(new LinearLayoutManager(
+//                this,
+//                LinearLayoutManager.VERTICAL,
+//                false));
     }
 
     @Override
@@ -104,7 +105,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
                 }
             };
         }
-        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.checkPointList);
+//        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.checkPointList);
         binding.checkPointList.setAdapter(adapter);
         adapter.setOnItemClick(this);
         loadPagingData();
@@ -139,6 +140,12 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
         @Override
         public boolean areContentsTheSame(@NonNull CheckPointModel oldItem, @NonNull CheckPointModel newItem) {
             return oldItem==newItem;
+        }
+
+        @Nullable
+        @Override
+        public Object getChangePayload(@NonNull CheckPointModel oldItem, @NonNull CheckPointModel newItem) {
+            return oldItem.getId().equals(newItem.getId());
         }
     };
 

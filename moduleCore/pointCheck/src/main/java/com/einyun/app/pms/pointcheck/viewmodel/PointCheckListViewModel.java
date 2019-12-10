@@ -8,6 +8,8 @@ import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.pms.pointcheck.model.CheckPointModel;
 import com.einyun.app.pms.pointcheck.repository.DataSourceFactory;
 
+import java.util.concurrent.Executors;
+
 /**
  * @ProjectName: pms_old
  * @Package: com.einyun.app.pms.pointcheck.viewmodel
@@ -21,17 +23,19 @@ import com.einyun.app.pms.pointcheck.repository.DataSourceFactory;
  * @Version: 1.0
  */
 public class PointCheckListViewModel extends BasePageListViewModel<CheckPointModel> {
+
     /**
      * 获取Paging LiveData
      * @return LiveData
      */
     public LiveData<PagedList<CheckPointModel>> loadPadingData(){
-//        if(pageList ==null){
+        if(pageList ==null){
             pageList = new LivePagedListBuilder(new DataSourceFactory(), config)
-//                .setBoundaryCallback(null)
+                .setBoundaryCallback(null)
 //                .setFetchExecutor(null)
+                    .setFetchExecutor(Executors.newFixedThreadPool(2))
                     .build();
-//        }
+        }
         return pageList;
     }
 

@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
@@ -19,6 +20,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
@@ -148,7 +150,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                 }
             };
         }
-        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
+//        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
     }
@@ -186,6 +188,12 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         @Override
         public boolean areContentsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
             return oldItem == newItem;
+        }
+
+        @Nullable
+        @Override
+        public Object getChangePayload(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
+            return oldItem.getID_().equals(newItem.getID_());
         }
     };
 

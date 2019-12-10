@@ -1,5 +1,7 @@
 package com.einyun.app.pms.pointcheck.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * @ProjectName: pms_old
  * @Package: com.example.shimaostaff.pointcheck.model
@@ -13,6 +15,7 @@ package com.einyun.app.pms.pointcheck.model;
  * @Version: 1.0
  */
 public class CheckPointModel {
+    @NonNull
     private String id;
     private String checkRecordCode;
     private String massifId;
