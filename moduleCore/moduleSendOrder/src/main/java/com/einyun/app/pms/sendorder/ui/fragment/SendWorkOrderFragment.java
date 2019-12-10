@@ -40,6 +40,7 @@ import com.orhanobut.logger.Logger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 
 /**
@@ -123,6 +124,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
                 @Override
                 public void onBindItem(ItemWorkSendBinding binding, DistributeWorkOrder distributeWorkOrder) {
+                    if(FRAGMENT_SEND_OWRKORDER_DONE.equals(getFragmentTag())){
+                        binding.itemResendRe.setVisibility(View.GONE);
+                    }
                     binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -196,7 +200,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     public void onItemClicked(View veiw, DistributeWorkOrder data) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
                     .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                    .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
                     .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                     .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
                     .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                     .navigation();

@@ -120,7 +120,7 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         }
         request.setExtensionDays(binding.delayDate.getText().toString());
         request.setApplicationDescription(binding.delayInfo.getString());
-        request.setId(model.getData().getId());
+        request.setId(model.getData().getInfo().getID());
         request.setInstId(proInsId);
         uploadImages();
     }

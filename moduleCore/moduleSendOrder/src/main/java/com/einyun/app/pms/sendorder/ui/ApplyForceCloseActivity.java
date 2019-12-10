@@ -63,7 +63,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_close);
         request=new ApplyCloseRequest();
-        request.setID(model.getData().getId());
+        request.setID(model.getData().getInfo().getID());
         request.setTaskID(taskId);
         request.setProInsID(proInsId);
         selectPng();

@@ -83,18 +83,20 @@ class PatrolContent{
 
 class ExtensionApplication : Serializable{
      var id: String? = null
-     var poId: String? = null
-     var applyType: Int = 0
-     var extensionDays:String?=null
-     var applicationDescription: String? = null
+     var poId: String? = null //"业务表id"
+     var applyType: Int = 0 //"审批类型，1:工单延期，2:工单闭单，3:计划审批"
+     var extensionDays:String?=null //"延期天数"
+     var applicationDescription: String? = null //"申请说明"
      var applicationState: Int = 0
      var creationDate: String? = null
-     var type: Int = 0
-     var createdBy: String? = null
-     var approveId:String?=null
-     var approveName:String?=null
-     var createdName: String? = null
-     var applyFiles: String? = null
+     var type: Int = 0 //"申请分类，1计划工单２派工单3巡查工单4定期计划5巡查计划"
+     var createdBy: String? = null //创建人id
+     var approveId:String?=null //审批人id
+     var approveName:String?=null //审批人姓名
+     var createdName: String? = null //创建人姓名
+     var applyFiles: String? = null //申请附件
+     var auditDate:String?=null  //审批时间
+
 }
 
 class DelayExtensionApplication{

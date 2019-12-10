@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 
@@ -53,6 +54,23 @@ public class SendOrderBindAdapter {
         }
         else if(state==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
+        }
+
+    }
+
+    /**
+     * 派工单详情显示状态
+     * @param view
+     * @param state
+     */
+    @BindingAdapter("apply_status")
+    public static void apply_status(TextView view, int state){
+        if(state== ApplyState.APPLYING.getState()){
+            view.setText(R.string.text_applying);
+        }else if(state==ApplyState.APPLYING.getState()){
+            view.setText(R.string.text_state_pass);
+        } else if(state==ApplyState.APPLYING.getState()){
+            view.setText(R.string.text_state_reject);
         }
 
     }

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="ext"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +50,9 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="审批结果" />
 
-                <TextView style="@style/work_order_detail_txt_right" />
+                <TextView style="@style/work_order_detail_txt_right"
+                    app:apply_status="@{ext.applicationState}"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -53,7 +61,9 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="审批时间" />
 
-                <TextView style="@style/work_order_detail_txt_right" />
+                <TextView style="@style/work_order_detail_txt_right"
+                    android:text="@{ext.auditDate}"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -62,7 +72,9 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="延期天数" />
 
-                <TextView style="@style/work_order_detail_txt_right" />
+                <TextView style="@style/work_order_detail_txt_right"
+                    android:text="@{ext.extensionDays}"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -71,7 +83,9 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="申请人" />
 
-                <TextView style="@style/work_order_detail_txt_right" />
+                <TextView style="@style/work_order_detail_txt_right"
+                    android:text="@{ext.createdName}"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -80,7 +94,9 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="申请时间" />
 
-                <TextView style="@style/work_order_detail_txt_right" />
+                <TextView style="@style/work_order_detail_txt_right"
+                    android:text="@{ext.creationDate}"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -89,7 +105,9 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="申请原因" />
 
-                <TextView style="@style/work_order_detail_txt_right" />
+                <TextView style="@style/work_order_detail_txt_right"
+                    android:text="@{ext.applicationDescription}"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -100,9 +118,11 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/send_order_detail_list"
+                android:id="@+id/send_order_postpone_pic_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
         </LinearLayout>
     </LinearLayout>
 </layout>
