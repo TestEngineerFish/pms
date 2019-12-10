@@ -433,6 +433,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (v.getId() == R.id.send_order_apply_late) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_LATE)
+                    .withObject(RouteKey.KEY_SEND_ORDER_DETAIL,detialModel)
                     .navigation();
         }
         if (v.getId() == R.id.apply_postpone) {

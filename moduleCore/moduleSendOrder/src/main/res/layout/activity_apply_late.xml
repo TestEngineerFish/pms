@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.sendorder.ui.ApplyLateActivity" />
+        <variable
+            name="detail"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
     </data>
 
     <LinearLayout
@@ -17,20 +22,7 @@
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
 
-        <LinearLayout style="@style/ll_create_order">
-
-            <TextView style="@style/tv_create_order_red_star" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:text="已延期次数" />
-
-            <TextView
-                style="@style/tv_create_order_name"
-                android:layout_marginLeft="@dimen/px_132"
-                android:text="3次"
-                android:textSize="@dimen/font_size15" />
-        </LinearLayout>
+        <View style="@style/base_underline"/>
 
         <LinearLayout style="@style/ll_create_order">
 
@@ -43,10 +35,25 @@
             <TextView
                 style="@style/tv_create_order_name"
                 android:layout_marginLeft="@dimen/px_132"
+                android:text="@{detail.extensionDays}"
+                android:textSize="@dimen/font_size15" />
+        </LinearLayout>
+        <View style="@style/base_underline"/>
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="已延期时长" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_marginLeft="@dimen/px_132"
                 android:text="3次"
                 android:textSize="@dimen/font_size15" />
         </LinearLayout>
-
+        <View style="@style/base_underline"/>
         <LinearLayout style="@style/ll_create_order">
 
             <TextView style="@style/tv_create_order_red_star" />
@@ -56,13 +63,15 @@
                 android:text="延期天数（天）" />
 
             <EditText
+                android:id="@+id/delay_date"
                 style="@style/tv_create_order_name"
                 android:layout_marginLeft="@dimen/px_132"
                 android:background="@null"
+                android:inputType="number"
                 android:hint="请输入"
                 android:textSize="@dimen/font_size15" />
         </LinearLayout>
-
+        <View style="@style/base_underline"/>
         <LinearLayout style="@style/ll_create_order">
 
             <TextView style="@style/tv_create_order_red_star" />
@@ -77,13 +86,13 @@
             android:layout_height="wrap_content">
 
             <com.einyun.app.common.ui.component.limit.LimitInput
-                android:id="@+id/location_info"
+                android:id="@+id/delay_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:hintText="请输入位置信息"
+                app:hintText="请输入延期原因"
                 app:maxNumber="100" />
         </LinearLayout>
-
+        <View style="@style/base_underline"/>
         <LinearLayout style="@style/ll_create_order">
 
             <TextView style="@style/tv_create_order_red_star" />
@@ -91,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="处理后图片"
+                android:text="图片"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
 
@@ -119,6 +128,7 @@
                 android:layout_alignParentBottom="true"
                 style="@style/submit_btn"
                 android:text="@string/text_submit"
+                android:onClick="@{()->callBack.submit()}"
                 />
         </RelativeLayout>
 

@@ -2,13 +2,14 @@ package com.einyun.app.library.resource.workorder.model
 
 import com.einyun.app.library.upload.model.ResourceModel
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class DisttributeDetialModel {
+class DisttributeDetialModel : Serializable {
 
     /**
     var buttons: List<DistributeButtonModel>? = null
     var couldScore: Boolean? = null
-    **/
+     **/
     var data: DisttributeMainModel? = null
     var extensionApplication: List<ExtensionApplication>? = null
 
@@ -24,7 +25,7 @@ class DisttributeDetialModel {
 
 class DistributeOpinionModel
 
-class DisttributeMainModel {
+class DisttributeMainModel : Serializable {
 
     val id: String? = null
     val refId: String? = null

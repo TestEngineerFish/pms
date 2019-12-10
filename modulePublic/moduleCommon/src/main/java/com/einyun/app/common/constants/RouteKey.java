@@ -25,7 +25,7 @@ public class RouteKey {
     public static final String KEY_ORDER_ID="orderId";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
     public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
-
+    public static final String KEY_SEND_ORDER_DETAIL="KEY_SEND_ORDER_DETAIL";
     //选择处理人
     public static final String KEY_ORG_ID="org_id";
     public static final String KEY_DIM_CODE="dimCode";

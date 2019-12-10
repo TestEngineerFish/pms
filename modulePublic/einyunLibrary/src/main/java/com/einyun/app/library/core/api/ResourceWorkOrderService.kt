@@ -2,6 +2,7 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
 
@@ -66,5 +67,5 @@ interface ResourceWorkOrderService : EinyunService {
 
     fun getJob(request: GetJobRequest,callBack: CallBack<JobPage>): LiveData<JobPage>
 
-
+    fun exten(request: ExtenDetialRequest):LiveData<Object>
 }

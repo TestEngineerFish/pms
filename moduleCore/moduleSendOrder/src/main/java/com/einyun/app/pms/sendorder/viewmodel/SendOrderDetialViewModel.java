@@ -11,7 +11,11 @@ import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributeCheckRequest;
 import com.einyun.app.library.resource.workorder.net.request.DistributeSubmitRequest;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
+import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.WorkOrderHanlerRequest;
+import com.einyun.app.library.upload.model.PicUrl;
+
+import java.util.List;
 
 public class SendOrderDetialViewModel extends BaseUploadViewModel {
     ResourceWorkOrderService service;
@@ -183,5 +187,10 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
             }
         });
         return liveData;
+    }
+
+    public LiveData<?> applyLate(ExtenDetialRequest request, List<PicUrl> images){
+        request.setApplyFiles(uploadManager.toJosnString(images));
+        return service.exten(request);
     }
 }

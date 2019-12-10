@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
@@ -28,6 +29,17 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun exten(request: ExtenDetialRequest): LiveData<Object> {
+        val liveData = MutableLiveData<Object>()
+        serviceApi?.exten(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    liveData.postValue(response.data)
+                }
+            }, { error -> {} })
+        return liveData;
+    }
+
     override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
         serviceApi?.distribteReply(request)?.compose(RxSchedulers.inIo())
             ?.subscribe(

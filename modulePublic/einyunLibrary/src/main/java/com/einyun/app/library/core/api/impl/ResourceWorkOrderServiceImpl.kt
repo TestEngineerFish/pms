@@ -21,6 +21,10 @@ import com.einyun.app.library.resource.workorder.net.request.*
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun exten(request: ExtenDetialRequest): LiveData<Object> {
+        return proxy.exten(request)
+    }
+
     override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
        proxy.distributeReply(request,callBack)
     }
