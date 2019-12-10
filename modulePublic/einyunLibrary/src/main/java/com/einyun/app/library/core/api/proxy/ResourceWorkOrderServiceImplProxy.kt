@@ -2,6 +2,7 @@ package com.einyun.app.library.core.api.proxy
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
@@ -36,7 +37,10 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
         return instance?.resendOrder(request, callBack)!!
     }
 
-    override fun exten(request: ExtenDetialRequest, callBack: CallBack<Object>): LiveData<Object> {
+    override fun exten(
+        request: ExtenDetialRequest,
+        callBack: CallBack<BaseResponse<Object>>
+    ): LiveData<BaseResponse<Object>> {
         return instance?.exten(request, callBack)!!
     }
 

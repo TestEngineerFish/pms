@@ -31,14 +31,15 @@ import com.einyun.app.library.resource.workorder.net.response.DistributeListResp
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
 
-    override fun exten(request: ExtenDetialRequest, callBack: CallBack<Object>): LiveData<Object> {
-        val liveData = MutableLiveData<Object>()
+    override fun exten(
+        request: ExtenDetialRequest,
+        callBack: CallBack<BaseResponse<Object>>
+    ): LiveData<BaseResponse<Object>> {
+        val liveData = MutableLiveData<BaseResponse<Object>>()
         serviceApi?.exten(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
-                if (response.isState) {
-                    liveData.postValue(response.data)
-                    callBack.call(response.data)
-                }
+                    liveData.postValue(response)
+                    callBack.call(response)
             }, { error -> {} })
         return liveData;
     }
