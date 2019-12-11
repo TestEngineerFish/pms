@@ -1,6 +1,7 @@
 package com.einyun.app.pms.approval.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.common.service.RouterUtils;
@@ -29,7 +31,8 @@ import java.util.List;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_APPROVAL)
 public class ApprovalViewModuleActivity extends BaseHeadViewModelActivity<ActivityApprovalViewModuleBinding, ApprovalViewModel> {
-
+    @Autowired(name="from")
+            String from;
     List<BaseViewModelFragment> fragmentList;
     ApprovalPagerAdapter approvalPagerAdapter;//适配器
     @Override
@@ -48,12 +51,23 @@ public class ApprovalViewModuleActivity extends BaseHeadViewModelActivity<Activi
 //        setTitleBarColor(R.color.white);
 //        setBackIcon(R.drawable.back);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
-        setHeadTitle(getString(R.string.tv_approval));
-        fragmentList=new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("tabId", i);
-            fragmentList.add(ApprovalViewModelFragment.newInstance(bundle));
+        if (from==null) {//显示两个待审批 已审批
+            binding.rbtnMeStarted.setVisibility(View.GONE);
+            setHeadTitle(getString(R.string.tv_approval));
+            fragmentList=new ArrayList<>();
+            for (int i = 0; i < 2; i++) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("tabId", i);
+                fragmentList.add(ApprovalViewModelFragment.newInstance(bundle));
+            }
+        }else {// from 不为空  从 mine 来 显示三个fragment
+            setHeadTitle(getString(R.string.tv_mine_approval));
+            fragmentList=new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("tabId", i);
+                fragmentList.add(ApprovalViewModelFragment.newInstance(bundle));
+            }
         }
         approvalPagerAdapter=new ApprovalPagerAdapter(getSupportFragmentManager(),fragmentList);
         binding.viewpagerApproval.setAdapter(approvalPagerAdapter);

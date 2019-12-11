@@ -105,7 +105,10 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     * 跳转审批界面
     * */
     public void approvalOnClick(){
-        jumpUserSetting(RouterUtils.ACTIVITY_APPROVAL);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_APPROVAL)
+                .withString("from","mine")
+                .navigation();
     }
     /**
     * 跳转意见反馈

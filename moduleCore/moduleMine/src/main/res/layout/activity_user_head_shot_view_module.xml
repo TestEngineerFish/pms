@@ -23,7 +23,7 @@
              android:id="@+id/iv_head"
              android:src="@drawable/iv_default_head_shot"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"/>
+             android:layout_height="375dp"/>
      </LinearLayout>
 
 

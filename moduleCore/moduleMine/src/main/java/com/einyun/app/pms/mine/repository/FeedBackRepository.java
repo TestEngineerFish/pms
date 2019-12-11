@@ -86,5 +86,16 @@ public class FeedBackRepository {
                     callBack.onFaild(error);
                 });
     }
+    public LiveData<Boolean> create(GetUserByccountBean request, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.upload(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
 
 }

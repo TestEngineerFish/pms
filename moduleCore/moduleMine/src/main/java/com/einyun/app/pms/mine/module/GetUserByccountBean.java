@@ -1,9 +1,11 @@
 package com.einyun.app.pms.mine.module;
 
+import java.io.Serializable;
+
 /**
  * Create by dowedo on 2019/4/8
  */
-public class GetUserByccountBean {
+public class GetUserByccountBean implements Serializable {
 
     /**
      * id : 588d07a902da48a7a94e84660cb22609
