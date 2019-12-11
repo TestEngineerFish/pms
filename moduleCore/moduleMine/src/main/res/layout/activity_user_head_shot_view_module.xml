@@ -17,5 +17,14 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent">
          <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <ImageView
+             android:background="@color/white"
+             android:layout_marginTop="82dp"
+             android:id="@+id/iv_head"
+             android:src="@drawable/iv_default_head_shot"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"/>
      </LinearLayout>
+
+
 </layout>

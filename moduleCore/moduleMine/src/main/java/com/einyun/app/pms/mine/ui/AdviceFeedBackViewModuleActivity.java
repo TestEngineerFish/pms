@@ -1,24 +1,48 @@
 package com.einyun.app.pms.mine.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.fastjson.JSONObject;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.databinding.ActivityAdviceFeedBackViewModuleBinding;
 import com.einyun.app.pms.mine.databinding.ActivityUserHeadShotViewModuleBinding;
+import com.einyun.app.pms.mine.module.FeedBackBean;
 import com.einyun.app.pms.mine.viewmodule.AdviceFeedBackViewModel;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.einyun.app.pms.mine.viewmodule.UserHeadShotViewModel;
+import com.google.gson.Gson;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_ADVICE_FEED_BACK)
 public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<ActivityAdviceFeedBackViewModuleBinding, AdviceFeedBackViewModel> {
-
+    @Autowired(name= RouteKey.ACCOUNT)
+    String account;
+    @Autowired(name= RouteKey.NAME)
+    String name;
+    @Autowired(name= RouteKey.ID)
+    String userId;
+    @Autowired(name= RouteKey.PHONE)
+    String mobile;
+    int typeDefaultPos=-1;
+    List<String> typeList = new ArrayList<>();
     @Override
     protected AdviceFeedBackViewModel initViewModel() {
         return new ViewModelProvider(this, new SettingViewModelFactory()).get(AdviceFeedBackViewModel.class);
@@ -38,6 +62,45 @@ public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<
         setHeadTitle(getString(R.string.tv_advice_feed_back));
         binding.setCallBack(this);
     }
+
+    /**
+     * 问题类型选择
+     */
+    public void EnterSignName(){
+        typeList.clear();
+        typeList.add("优化建议");
+        typeList.add("功能错误");
+        typeList.add("其他");
+        BottomPicker.buildBottomPicker(this, typeList, typeDefaultPos, new BottomPicker.OnItemPickListener() {
+            @Override
+            public void onPick(int position, String label) {
+                typeDefaultPos = position;
+                binding.tvSelectType.setText(typeList.get(position));
+            }
+        });
+    }
+    /**
+     * 确认提交
+     */
+    public void btnConfirm(){
+        if(typeDefaultPos<0){
+            ToastUtil.show(this,"请选择问题类型");
+            return;
+        }
+        if (binding.etLimitInput.getString().isEmpty()) {
+            ToastUtil.show(this,"请简要描述你的问题或意见");
+            return;
+        }
+        FeedBackBean feedBackBean = viewModel.getJsonObject(binding.etLimitInput.getString(), account, name, mobile, userId, (typeDefaultPos + 1));
+        viewModel.sumitApproval(feedBackBean).observe(this, model -> {
+            if (model) {
+                finish();
+            }
+
+        });
+    }
+
+
 
     @Override
     protected void initData() {

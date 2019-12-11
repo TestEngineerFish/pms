@@ -71,6 +71,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         super.initData();
         binding.setCallBack(this);
         binding.listview.setFocusable(false);
+        binding.tvApprovalState.setOnClickListener(view -> {
+            HashMap<Object, Object> approve = viewModel.approval("sss", urlxcgdGetInstBOModule, approvalItemmodule.getProInsId(), approvalItemmodule.getTaskId(), "sss", approvalFormdata);
+        });
         /*
          * 获取基本信息
          * */
@@ -119,13 +122,13 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
          *提交审批
          * */
         viewModel.sumitApproval((ApprovalSumitBean) approve.get("bean"),(String) approve.get("url")).observe(this, model -> {
-               Logger.d("sumitApproval-----model="+model);
+            Logger.d("sumitApproval-----model="+model);
             if (model) {
-                ToastUtil.show(getApplicationContext(), R.string.tv_had_pass);
+//                ToastUtil.show(getApplicationContext(), R.string.tv_had_pass);
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
                 finish();
             }else {
-                ToastUtil.show(getApplicationContext(), R.string.tv_no_pass);
+//                ToastUtil.show(getApplicationContext(), R.string.tv_no_pass);
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
             }
         });

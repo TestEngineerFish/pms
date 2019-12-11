@@ -14,4 +14,6 @@
     <string name="tv_start">评价星级</string>
     <string name="tv_sign_name">个性签名</string>
     <string name="tv_finish">完成</string>
+    <string name="tv_quest_type">问题类型</string>
+    <string name="tv_pl_select">请选择</string>
 </resources>

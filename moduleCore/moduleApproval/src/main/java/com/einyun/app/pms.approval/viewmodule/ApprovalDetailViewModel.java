@@ -125,10 +125,13 @@ public class ApprovalDetailViewModel extends BaseViewModel {
             sendObject = itemObject;
 
             if (subType.equals("FORCE_CLOSE_PATROL")) {//巡查工单
+           //                resource-workorder/res-order/patrol/closeApprove
                 middleURL = "resource-workorder/res-order/patrol/closeApprove";
             } else if (subType.equals("FORCE_CLOSE_PLAN")) {//计划工单
+           //                resource-workorder/res-order/plan/closeApprove
                 middleURL = "resource-workorder/res-order/plan/closeApprove";
             } else if (subType.equals("FORCE_CLOSE_ALLOCATE")) {//派工单
+           //                resource-workorder/res-order/distribute/closeApprove
                 middleURL = "resource-workorder/res-order/distribute/closeApprove";
             } else {
                 sendObject = jsonObject;
@@ -142,8 +145,10 @@ public class ApprovalDetailViewModel extends BaseViewModel {
             sendObject = itemObject;
 
             if (subType.equals("CREATE_WORK_PLAN") || subType.equals("UPDATE_WORK_PLAN")) {//创建工作计划 或 修改工作计划
+//                           resource/api/resource/v1/workPlan/approve
                 middleURL = "resource/api/resource/v1/workPlan/approve";
             } else if (subType.equals("CREATE_PATROL_PLAN") || subType.equals("UPDATE_PATROL_PLAN")) {//创建巡查工单 或 修改巡查工单
+//                           resource/api/resource/v1/inspectionWorkPlan/approval
                 middleURL = "resource/api/resource/v1/inspectionWorkPlan/approval";
             } else {
                 sendObject = jsonObject;
@@ -160,10 +165,13 @@ public class ApprovalDetailViewModel extends BaseViewModel {
             sendObject = itemObject;
 
             if (subType.equals("POSTPONED_PATROL")) {//巡查工单
+//                           resource-workorder/res-order/patrol/extenApprove
                 middleURL = "resource-workorder/res-order/patrol/extenApprove";
             } else if (subType.equals("POSTPONED_PLAN")) {//计划工单
+//                           resource-workorder/res-order/plan/extenApprove
                 middleURL = "resource-workorder/res-order/plan/extenApprove";
             } else if (subType.equals("POSTPONED_ALLOCATE")) {//派工单
+//                           resource-workorder/res-order/distribute/postPoneApprove
                 middleURL = "resource-workorder/res-order/distribute/postPoneApprove";
             } else {
                 sendObject = jsonObject;
@@ -171,6 +179,7 @@ public class ApprovalDetailViewModel extends BaseViewModel {
         }
 
         Logger.d("Approvaldetailvm"+sendObject.toString()+"url:  "+middleURL);
+        Log.e("sendObject", "approval: "+sendObject.toString() );
         approvalSumitBean = new Gson().fromJson(sendObject.toString(), ApprovalSumitBean.class);
 //        sumitApproval(approvalSumitBean,middleURL).observe(this);
         url = middleURL;

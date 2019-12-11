@@ -1,6 +1,7 @@
 package com.einyun.app.pms.mine.ui;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,8 +12,8 @@ import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.databinding.ActivitySignSetViewModuleBinding;
 import com.einyun.app.pms.mine.databinding.ActivityUserHeadShotViewModuleBinding;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
-import com.einyun.app.pms.mine.viewmodule.SignSetViewModel;
 import com.einyun.app.pms.mine.viewmodule.UserHeadShotViewModel;
+import com.orhanobut.logger.Logger;
 
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
@@ -36,6 +37,7 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
 //        setBackIcon(R.drawable.back);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(getString(R.string.tv_person_head));
+        setRightOption(R.drawable.iv_head_choice);
         binding.setCallBack(this);
     }
 
@@ -43,7 +45,12 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
     protected void initData() {
         super.initData();
     }
-
+    /**
+     * 右侧功能按钮
+     */
+    public void onOptionClick(View view){
+        Logger.d("ssssssss");
+    }
     @Override
     protected int getColorPrimary() {
         return getResources().getColor(R.color.white);
