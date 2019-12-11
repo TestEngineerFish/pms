@@ -37,6 +37,12 @@ public class RouterUtils {
     public static final String ACTIVITY_PATROL_LIST ="/patrol/PatrolListActivity";
     public static final String ACTIVITY_PATROL_HANDLE="/patrol/PatrolHandleActivity";
 
+    //计划工单
+    public static final String ACTIVITY_PLAN_ORDER="/plan/PlanOrderActivity";
+    public static final String ACTIVITY_PLAN_ORDER_DETAIL="/plan/PlanOrderDetailActivity";
+//    public static final String ACTIVITY_LATE="/sendOrder/ApplyLateActivity";
+//    public static final String ACTIVITY_CLOSE="/sendOrder/ApplyForceCloseActivity";
+//    public static final String ACTIVITY_HISTORY="/sendOrder/HistoryActivity";
     /**********************派工单****************************/
     //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
