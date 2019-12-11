@@ -168,7 +168,9 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     }
 
     protected void onSelected(SelectModel data) {
-        if (!TextUtils.isEmpty(data.getTypeId()) && !TextUtils.isEmpty(data.getParentId())
+        if(SELECT_IS_OVERDUE.equals(data.getType())){
+            selectedMap.put(SELECT_IS_OVERDUE,data);
+        } else if (!TextUtils.isEmpty(data.getTypeId()) && !TextUtils.isEmpty(data.getParentId())
                 && data.getParentId().equals(data.getTypeId())){
             selectedMap.put(SELECT_LINE,data);
         }else if(data.getParentId().equals(selectedMap.get(SELECT_LINE).getId())){
@@ -177,8 +179,6 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
             selectedMap.put(SELECT_ORDER_TYPE2,data);
         }else if(data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE2).getId())){
             selectedMap.put(SELECT_ORDER_TYPE3,data);
-        }else if(data.getConditionType().equals(SELECT_IS_OVERDUE)){
-            selectedMap.put(SELECT_IS_OVERDUE,data);
         }
     }
 
