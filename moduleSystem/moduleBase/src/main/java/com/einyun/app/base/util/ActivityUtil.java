@@ -313,7 +313,7 @@ public class ActivityUtil {
             return;
         }
         currentClass = null;
-        for (int i = 0; i > activityList.size() - 2; i++) {
+        for (int i = 0; i < activityList.size() - 1; i++) {
             finish(activityList.get(i));
         }
         if (getLastActivty() != null) {
