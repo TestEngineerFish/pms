@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BasicApplication;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
@@ -63,9 +64,11 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, "");
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_USER_LOGIN)
-                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK)
+//                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK)
                 .navigation();
+
         finish();
+
     }
     @Override
     protected void initData() {
