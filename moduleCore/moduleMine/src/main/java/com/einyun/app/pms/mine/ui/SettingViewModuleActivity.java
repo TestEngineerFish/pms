@@ -61,7 +61,7 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
     * 退出登录
     * */
     public void onLoginOutClick(){
-        SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, "");
+        SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "");
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_USER_LOGIN)
 //                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK)

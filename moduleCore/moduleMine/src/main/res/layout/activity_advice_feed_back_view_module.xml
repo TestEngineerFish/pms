@@ -46,11 +46,26 @@
              android:layout_marginTop="10dp"
              android:layout_width="match_parent"
              android:layout_height="180dp">
-             <TextView
-                 android:layout_marginTop="13.5dp"
-                 android:layout_marginLeft="23dp"
-                 android:text="@string/tv_quest_type"
-                 style="@style/style_devcie_tv_left"/>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:gravity="center_vertical"
+                 android:layout_height="45dp">
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginRight="2dp"
+                     android:text="*"
+                     style="@style/style_devcie_tv_left"
+                     android:textColor="#FFE02020"
+                     android:textSize="20sp" />
+                 <TextView
+                     android:layout_marginLeft="0dp"
+                     android:gravity="center"
+                     android:layout_height="match_parent"
+                     android:text="@string/tv_feed_back_content"
+                     style="@style/style_devcie_tv_left"/>
+             </LinearLayout>
+
              <com.einyun.app.common.ui.component.limit.LimitInput
                  android:id="@+id/et_limit_input"
                  android:layout_marginTop="46dp"

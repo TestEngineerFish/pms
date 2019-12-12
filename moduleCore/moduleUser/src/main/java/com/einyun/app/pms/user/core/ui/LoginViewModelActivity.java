@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
@@ -237,6 +238,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                     viewModel.login(binding.etUser.getText().toString(), model.getPassword(), true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
+                                        SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                                         ARouter.getInstance()
                                                 .build(RouterUtils.ACTIVITY_MAIN_HOME)
                                                 .navigation();

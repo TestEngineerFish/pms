@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">moduleMine</string>
     <string name="current_version">当前版本</string>
-    <string name="tv_login_out">退出登录</string>
+    <string name="tv_login_out">退出</string>
     <string name="tv_setting">设置</string>
     <string name="tv_advice_feed_back">问题反馈</string>
     <string name="tv_sign_set">设置个性签名</string>
@@ -15,6 +15,9 @@
     <string name="tv_sign_name">个性签名</string>
     <string name="tv_finish">完成</string>
     <string name="tv_quest_type">问题类型</string>
+    <string name="tv_feed_back_content">反馈内容 </string>
     <string name="tv_pl_select">请选择</string>
     <string name="tv_pl_set_sign">请设置签名</string>
+    <string name="tv_from_photo_album">从相册选择</string>
+    <string name="tv_from_take_pic">拍照</string>
 </resources>
