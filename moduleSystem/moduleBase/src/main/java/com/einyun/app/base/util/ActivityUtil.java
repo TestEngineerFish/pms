@@ -76,10 +76,10 @@ public class ActivityUtil {
      */
     public static void startActivity(Activity from, Class<?> to, Object data,
                                      int enterAnima, int exitAnima) {
-        if (dataMap == null){
+        if (dataMap == null) {
             dataMap = new HashMap<>();
         }
-        if (data != null){
+        if (data != null) {
             dataMap.put(to, data);
         }
         Intent intent = new Intent(from, to);
@@ -303,6 +303,28 @@ public class ActivityUtil {
         startActivity(from, to, data, enterAnima, exitAnima);
     }
 
+    /**
+     * 移除当前 activity
+     *
+     * @param cls remove的activity的class
+     */
+    public static void removeExceptCurrentActivity(Class cls) {
+        if (activityList.size() == 1) {
+            return;
+        }
+        currentClass = null;
+        for (int i = 0; i > activityList.size() - 2; i++) {
+            if (activityList.get(i) != null) {
+                finish(activityList.get(i));
+                activityList.remove(i);
+            } else {
+                activityList.remove(i);
+            }
+        }
+        if (getLastActivty() != null) {
+            currentClass = getLastActivty().getClass();
+        }
+    }
 
     /**
      * 移除当前 activity
