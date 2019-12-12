@@ -314,12 +314,7 @@ public class ActivityUtil {
         }
         currentClass = null;
         for (int i = 0; i > activityList.size() - 2; i++) {
-            if (activityList.get(i) != null) {
-                finish(activityList.get(i));
-                activityList.remove(i);
-            } else {
-                activityList.remove(i);
-            }
+            finish(activityList.get(i));
         }
         if (getLastActivty() != null) {
             currentClass = getLastActivty().getClass();
