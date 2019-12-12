@@ -71,9 +71,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         super.initData();
         binding.setCallBack(this);
         binding.listview.setFocusable(false);
-        binding.tvApprovalState.setOnClickListener(view -> {
-            HashMap<Object, Object> approve = viewModel.approval("sss", urlxcgdGetInstBOModule, approvalItemmodule.getProInsId(), approvalItemmodule.getTaskId(), "sss", approvalFormdata);
-        });
+//        binding.tvApprovalState.setOnClickListener(view -> {
+//            HashMap<Object, Object> approve = viewModel.approval("sss", urlxcgdGetInstBOModule, approvalItemmodule.getProInsId(), approvalItemmodule.getTaskId(), "sss", approvalFormdata);
+//        });
         /*
          * 获取基本信息
          * */
@@ -128,7 +128,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
                 finish();
             }else {
-//                ToastUtil.show(getApplicationContext(), R.string.tv_no_pass);
+                ToastUtil.show(getApplicationContext(), R.string.tv_no_pass);
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
             }
         });
@@ -238,7 +238,8 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvCloseOrderResponer.setText(approvalFormdata.getProcName());//派工单类型
             binding.tvCloseCreateTime.setText(approvalFormdata.getCreationTime());//工单创建时间
             binding.tvCloseEndTime.setText(approvalFormdata.getDeadlineTime());//工单截止时间
-            binding.tvCloseApplyReason.setText(approvalFormdata.getApplyReason());//申请原因
+            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays());//延期天数
+            binding.tvCloseApplyReason.setText(approvalFormdata.getApplicationDescription());//申请原因
 
 
         }

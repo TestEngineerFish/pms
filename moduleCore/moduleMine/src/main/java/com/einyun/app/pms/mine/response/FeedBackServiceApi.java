@@ -5,12 +5,14 @@ import com.einyun.app.base.http.BaseResponse;
 
 import com.einyun.app.pms.mine.constants.URLS;
 import com.einyun.app.pms.mine.module.FeedBackBean;
+import com.einyun.app.pms.mine.module.GetUserByccountBean;
 import com.einyun.app.pms.mine.module.UserStarsBean;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Url;
 
 /**
@@ -54,4 +56,9 @@ public interface FeedBackServiceApi {
      */
     @POST(URLS.URL_GET_USER_STARS)
     Flowable<UserStarsResponse> getStars(@Body UserStarsBean bean);
+    /**
+     * 更新个人头像
+     */
+    @PUT(URLS.URL_GET_UPLOAD_PIC)
+    Flowable<BaseResponse> upload(@Body GetUserByccountBean bean);
 }
