@@ -1,6 +1,7 @@
 package com.einyun.app.pms.main.core.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModel;
@@ -13,6 +14,9 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
+import com.einyun.app.pms.main.core.model.UCUserDetailsBean;
+import com.einyun.app.pms.main.core.model.UserStarsBean;
+import com.einyun.app.pms.main.core.repository.MainRepository;
 import com.einyun.app.pms.main.core.viewmodel.contract.MineViewModelContract;
 
 
@@ -82,4 +86,26 @@ public class MineViewModel extends BaseViewModel implements MineViewModelContrac
         return userModuleService.getUserId();
     }
 
+    /**
+     * 获取用户星级
+     *
+     * **/
+    MainRepository repository=new MainRepository();
+    private MutableLiveData<UCUserDetailsBean> detialStars=new MutableLiveData<>();
+    public LiveData<UCUserDetailsBean> getStars(UserStarsBean bean){
+        showLoading();
+        repository.queryStars(bean, new CallBack<UCUserDetailsBean>() {
+            @Override
+            public void call(UCUserDetailsBean data) {
+                hideLoading();
+                detialStars.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return detialStars;
+    }
 }

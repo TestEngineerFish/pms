@@ -15,6 +15,7 @@ import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.request.PageQueryRequest;
 import com.einyun.app.pms.approval.response.ApprovalServiceApi;
+import com.einyun.app.pms.approval.utils.IsFastClick;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -66,15 +67,18 @@ public class ApprovalkListRepository {
         }else if (table==1){
             serviceApi.query(page).compose(RxSchedulers.inIoMain())
                     .subscribe(response -> {
-//                    if(response.isState()){
+                    if(response.isState()){
+
                         if (mPage2==page.getPageBean().getPage()) {
 
+//                            mPage2=page.getPageBean().getPage();
+//                            callback.call(response.getData());
                         }else {
                             mPage2=page.getPageBean().getPage();
                             callback.call(response.getData());
                             Logger.d("ItemDataSourcce.1pageBean .."+page.getPageBean().getPage());
                         }
-//                    }
+                    }
                     }, error -> {
                         callback.onFaild(error);
                         error.printStackTrace();

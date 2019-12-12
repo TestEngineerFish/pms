@@ -6,4 +6,5 @@ public class URLS {
     public static final String URL_GET_USER_SIGN_TEXT="appcenter/api/appcenter/v1/userSloganRef/getByUserId/";
     public static final String URL_GET_USER_STARS="user-center/api/usercenter/v1/ucUser/userDetails";
     public static final String URL_GET_UPLOAD_PIC="/uc/api/user/v1/user/updateUser";
+    public static final String URL_SET_SIGN_TEXT="appcenter/api/appcenter/v1/userSloganRef/addOrUpdateSlogan";
 }

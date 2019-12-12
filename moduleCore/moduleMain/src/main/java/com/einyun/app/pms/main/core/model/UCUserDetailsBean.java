@@ -1,4 +1,4 @@
-package com.einyun.app.pms.mine.module;
+package com.einyun.app.pms.main.core.model;
 
 import java.util.List;
 

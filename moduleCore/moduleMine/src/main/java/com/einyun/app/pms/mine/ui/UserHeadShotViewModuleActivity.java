@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,6 +33,9 @@ import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.einyun.app.pms.mine.viewmodule.UserHeadShotViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -125,6 +129,15 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
 
     @Override
     public void takePicClick() {
+       requestPerm(0);
+    }
+
+    @Override
+    public void photoAlbumClick() {
+        requestPerm(1);
+    }
+
+    private void SelectPic() {
         Matisse.from(this) //加号添加图片
                 .choose(MimeType.ofImage())
                 .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
@@ -138,18 +151,21 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
                 .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
     }
 
-    @Override
-    public void photoAlbumClick() {
-        Matisse.from(this) //加号添加图片
-                .choose(MimeType.ofImage())
-                .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
-                .capture(true)
-                .countable(true)
-                .maxSelectable(1)
-                //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
-                .imageEngine(new Glide4Engine())
-                .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+    public void requestPerm(int type) {
+        AndPermission.with(this)
+                .permission(
+                        Permission.Group.CAMERA
+                ).onGranted(new Action() {
+            @Override
+            public void onAction(List<String> permissions) {
+                SelectPic();
+            }
+        }).onDenied(new Action() {
+            @Override
+            public void onAction(List<String> permissions) {
+                Toast.makeText(UserHeadShotViewModuleActivity.this, "没有相机权限", Toast.LENGTH_SHORT).show();
+
+            }
+        }).start();
     }
 }

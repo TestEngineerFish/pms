@@ -6,6 +6,7 @@ import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.pms.mine.constants.URLS;
 import com.einyun.app.pms.mine.module.FeedBackBean;
 import com.einyun.app.pms.mine.module.GetUserByccountBean;
+import com.einyun.app.pms.mine.module.SignSetModule;
 import com.einyun.app.pms.mine.module.UserStarsBean;
 
 import io.reactivex.Flowable;
@@ -48,7 +49,7 @@ public interface FeedBackServiceApi {
      * @return
      */
     @GET
-    Flowable<String> getSignText(@Url String url);
+    Flowable<UserSignTextResponse> getSignText(@Url String url);
     /**
      * 获取个人星星
      * @param
@@ -61,4 +62,9 @@ public interface FeedBackServiceApi {
      */
     @PUT(URLS.URL_GET_UPLOAD_PIC)
     Flowable<BaseResponse> upload(@Body GetUserByccountBean bean);
+    /**
+     * 设置个性签名
+     */
+    @POST(URLS.URL_SET_SIGN_TEXT)
+    Flowable<BaseResponse> setSignText(@Body SignSetModule bean);
 }

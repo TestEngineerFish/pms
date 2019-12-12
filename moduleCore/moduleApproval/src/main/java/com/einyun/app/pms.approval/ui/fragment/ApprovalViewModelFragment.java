@@ -94,6 +94,9 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     protected void setUpView() {
         tabId = getArguments().getInt("tabId");
         binding.swipeRefresh.setOnRefreshListener(() -> {
+            ApprovalkListRepository.mPage2=0;//解决快速刷新导致列表数据不显示问题
+            ApprovalkListRepository.mPage3=0;
+            ApprovalkListRepository.mPage1=0;
             binding.swipeRefresh.setRefreshing(false);
             viewModel.refresh();
         });

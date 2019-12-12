@@ -78,17 +78,10 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
                     }
                 });
         initInfo();
-        /**
-         *有问提
-         */
-//        viewModel.getSignText(userID).observe(this, model -> {
-//            Logger.d("sssssss"+model);
-//        });
-
         viewModel.getStars(viewModel.getJsonObject(userID)).observe(this, model -> {
-//            float stars = (float) model.getValue().getStars();
-            Log.e("ddd", "initData: "+new Gson().toJson(model, UCUserDetailsBean.class));
-//            binding.ratingBar.setStar(stars);
+            float stars = (float) model.getStars();
+            binding.ratingBar.setStar(stars);
+
         });
 
 
@@ -107,13 +100,24 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
 //                    .centerCrop()
                     .into(binding.ivHeadShot);
         });
+        /**
+         *有问提
+         */
+        viewModel.getSignText(userID).observe(this, model -> {
+            Logger.d("sssssss"+model);
+        });
     }
 
     /**
      * 跳转设置签名
      */
     public void EnterSignName(){
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_SIGN_SET).withString("edit",binding.etSignName.getText().toString()).navigation();
+        if (getUserByccountBean==null) {
+            return;
+        }
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_SIGN_SET)
+                .withString(Constants.SIGN_USER_ID,getUserByccountBean.getId())
+                .withString("edit",binding.etSignName.getText().toString()).navigation();
     }
     /**
      *跳转 设置头像

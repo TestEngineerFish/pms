@@ -17,6 +17,7 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
 import com.einyun.app.pms.main.R;
+import com.einyun.app.pms.main.core.model.UserStarsBean;
 import com.einyun.app.pms.main.core.viewmodel.MineViewModel;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.databinding.FragmentMineBinding;
@@ -68,7 +69,16 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                     upWorkStatus(status);
                 }
             });
+            /**
+             * 设置星级
+             * */
+            viewModel.getStars(new UserStarsBean("",userInfoModel.getId())).observe(this, model -> {
+                float stars = (float) model.getStars();
+                binding.ratingBar.setStar(stars);
+
+            });
         });
+
     }
 
     /**
