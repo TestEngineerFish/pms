@@ -109,7 +109,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 
                     @Override
                     public void onChanged(Boolean aBoolean) {
-
+                         viewModel.refresh();
                         Log.e("onChanged", "onChanged: "+aBoolean);
                     }
                 });

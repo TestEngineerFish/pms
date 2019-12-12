@@ -38,4 +38,11 @@ public class RouteKey {
     //选择处理人
     public static final String KEY_ORG_ID_LIST="orgIdList";
     public static final String KEY_JOB_ID_LIST="jobIdList";
+
+
+    //用户信息
+    public static final String ACCOUNT = "account";
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String PHONE = "phone";
 }

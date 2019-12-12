@@ -17,5 +17,61 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent">
          <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <RelativeLayout
+             android:onClick="@{()->callBack.EnterSignName()}"
+             android:background="@color/white"
+             android:layout_marginTop="10dp"
+             android:layout_width="match_parent"
+             android:layout_height="50dp">
+             <TextView
+                 android:text="@string/tv_quest_type"
+                 style="@style/style_userinfo_tv_left"/>
+             <TextView
+                 android:singleLine="true"
+                 android:textColor="@color/greyTextColor"
+                 android:text="@string/tv_pl_select"
+                 android:layout_marginRight="32.5dp"
+                 android:id="@+id/tv_select_type"
+                 style="@style/style_userinfo_right_text" />
+             <ImageView
+                 android:layout_marginRight="17dp"
+                 android:layout_centerVertical="true"
+                 android:layout_alignParentRight="true"
+                 android:src="@drawable/iv_right_arrow"
+                 android:layout_width="13dp"
+                 android:layout_height="13dp"/>
+         </RelativeLayout>
+         <RelativeLayout
+             android:background="@color/white"
+             android:layout_marginTop="10dp"
+             android:layout_width="match_parent"
+             android:layout_height="180dp">
+             <TextView
+                 android:layout_marginTop="13.5dp"
+                 android:layout_marginLeft="23dp"
+                 android:text="@string/tv_quest_type"
+                 style="@style/style_devcie_tv_left"/>
+             <com.einyun.app.common.ui.component.limit.LimitInput
+                 android:id="@+id/et_limit_input"
+                 android:layout_marginTop="46dp"
+                 app:hintText="请简要描述你的问题或意见"
+                 android:layout_marginLeft="25dp"
+                 android:layout_marginRight="25dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"/>
+         </RelativeLayout>
+         <TextView
+             android:onClick="@{()->callBack.btnConfirm()}"
+             android:id="@+id/tv_ok"
+             android:background="@drawable/shape_button_blue_corners"
+             android:textColor="@color/white"
+             android:layout_marginLeft="30dp"
+             android:layout_marginRight="30dp"
+             android:layout_marginTop="139dp"
+             android:text="@string/ok"
+             android:gravity="center"
+             android:textSize="16sp"
+             android:layout_width="match_parent"
+             android:layout_height="44dp"/>
      </LinearLayout>
 </layout>

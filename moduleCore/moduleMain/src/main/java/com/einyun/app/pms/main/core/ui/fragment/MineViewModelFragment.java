@@ -3,6 +3,7 @@ package com.einyun.app.pms.main.core.ui.fragment;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,9 +11,11 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.library.uc.user.model.UserInfoModel;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.viewmodel.MineViewModel;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
@@ -23,6 +26,9 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
  * 我的page
  */
 public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBinding, MineViewModel> {
+
+    private UserInfoModel userInfoModel1;
+
     public static MineViewModelFragment newInstance() {
         return new MineViewModelFragment();
     }
@@ -55,6 +61,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     private void initData() {
         viewModel.getUserInfoByUserId().observe(this, userInfoModel -> {
             binding.setUserInfo(userInfoModel);
+            userInfoModel1 = userInfoModel;
             viewModel.getWorkState().observe(this, status -> {
                 if(status!=null){
                     binding.ivWorkStatus.setVisibility(View.VISIBLE);
@@ -98,19 +105,37 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     * 跳转审批界面
     * */
     public void approvalOnClick(){
-        jumpUserSetting(RouterUtils.ACTIVITY_APPROVAL);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_APPROVAL)
+                .withString("from","mine")
+                .navigation();
     }
     /**
     * 跳转意见反馈
     * */
     public void adviceFeedBack(){
-      jumpUserSetting(RouterUtils.ACTIVITY_ADVICE_FEED_BACK);
+        if (userInfoModel1!=null) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_ADVICE_FEED_BACK)
+                    .withString(RouteKey.ACCOUNT,userInfoModel1.getAccount())
+                    .withString(RouteKey.NAME,userInfoModel1.getFullname())
+                    .withString(RouteKey.PHONE,userInfoModel1.getMobile())
+                    .withString(RouteKey.ID,userInfoModel1.getId())
+                    .navigation();
+        }
+
     }
     /**
      *跳转个人信息
      */
     public void userInfoOnClick(){
-      jumpUserSetting(RouterUtils.ACTIVITY_USER_INFO);
+        if (userInfoModel1!=null) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_USER_INFO)
+                    .withString(RouteKey.ACCOUNT,userInfoModel1.getAccount())
+                    .withString(RouteKey.ID,userInfoModel1.getId())
+                    .navigation();
+        }
     }
 
     /**

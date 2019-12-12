@@ -12,11 +12,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -52,6 +54,12 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityUtil.removeExceptCurrentActivity(LoginViewModelActivity.class);
     }
 
     @Override
