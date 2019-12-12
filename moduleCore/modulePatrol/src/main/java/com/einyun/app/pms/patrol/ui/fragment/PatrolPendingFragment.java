@@ -96,7 +96,10 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     protected void loadData() {
-        viewModel.loadPendingData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
+        viewModel.loadPendingData(pageRequest).observe(getActivity(), patrols -> {
+            adapter.submitList(patrols);
+            adapter.notifyDataSetChanged();
+        });
     }
 
     protected PatrolPageRequest createPageRequest(){

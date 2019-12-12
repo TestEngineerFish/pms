@@ -13,13 +13,16 @@ import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.convert.PatrolInfoTypeConvert;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
@@ -38,10 +41,15 @@ import io.reactivex.Observable;
 
 public class PatrolViewModel extends BaseUploadViewModel {
     PatrolRepo repo = new PatrolRepo();
+    ResourceWorkOrderService service;
     MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
+
+    public PatrolViewModel(){
+        service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+    }
     /**
      * 工作节点
      *
@@ -77,7 +85,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
      * @return
      */
     public LiveData<PatrolInfo> loadDetial(String taskId) {
-        PatrolInfo patrolInfo = repo.loadPatrolInfo(taskId);
+        PatrolInfo patrolInfo = repo.loadPatrolInfo(taskId,userModuleService.getUserId());
         if (patrolInfo != null) {
             liveData.postValue(patrolInfo);
         }
@@ -101,7 +109,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
                     patrolLocal.setUserId(userModuleService.getUserId());
                     repo.saveLocalData(patrolLocal);
                 }
-                repo.updatePatrolCached(taskId);
+                repo.updatePatrolCached(taskId,userModuleService.getUserId());
                 repo.insertPatrolInfo(patrolInfo);
                 liveData.postValue(patrolInfo);
                 hideLoading();
@@ -116,10 +124,46 @@ public class PatrolViewModel extends BaseUploadViewModel {
     }
 
     /**
-     * 保存巡查
+     * 提交
+     * @return
      */
-    public void save(PatrolInfo info) {
-        repo.savePatrolInfo(info);
+    public LiveData<Boolean> submit(PatrolSubmitRequest request){
+        MutableLiveData<Boolean> liveData=new MutableLiveData();
+        showLoading();
+        service.patrolSubmit(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+
+    /**
+     * 完成任务，结束任务
+     * @param taskId
+     */
+    public LiveData<Boolean> finishTask(String taskId){
+        MutableLiveData<Boolean> liveData=new MutableLiveData<>();
+        repo.deleteTask(taskId,userModuleService.getUserId(), new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                liveData.postValue(true);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(false);
+            }
+        });
+        return liveData;
     }
 
 
@@ -131,7 +175,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
      */
     public LiveData<PatrolLocal> loadLocalUserData(String taskId) {
         MutableLiveData<PatrolLocal> liveData=new MutableLiveData<>();
-         repo.loadLocalUserData(taskId, new CallBack<PatrolLocal>() {
+         repo.loadLocalUserData(taskId,userModuleService.getUserId(), new CallBack<PatrolLocal>() {
              @Override
              public void call(PatrolLocal data) {
                 liveData.postValue(data);

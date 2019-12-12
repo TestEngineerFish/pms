@@ -17,15 +17,18 @@ import com.google.gson.annotations.SerializedName
  * @Version:        1.0
  */
 open class PageRquest {
+
     companion object{
         const val PERIOD_DAY="day"
         const val PERIOD_WEEK="week"
         const val PERIOD_MONTH="month"
         const val PERIOD_SEASON="season"
+        const val DEFAULT_PAGE=1
+        const val DEFAULT_PAGE_SIZE=10
     }
     var userId:String?=null
-    var page :Int=1
-    var pageSize:Int=10
+    var page :Int=DEFAULT_PAGE
+    var pageSize:Int=DEFAULT_PAGE_SIZE
     var period:String?=null
     var pageBean:PageBean?=null
 }

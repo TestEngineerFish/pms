@@ -33,7 +33,7 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
      */
     public LiveData<PagedList<Patrol>> loadPendingData(PatrolPageRequest request){
         if(pageList ==null){
-            pageList = new LivePagedListBuilder(repo.queryAll(), config)
+            pageList = new LivePagedListBuilder(repo.queryAll(userModuleService.getUserId()), config)
 //                .setBoundaryCallback(new PatrolPendingBoundaryCallBack(request))
                     .build();
         }
@@ -54,7 +54,7 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
                     patrol.setUserId(userModuleService.getUserId());
                 }
                 //同步数据
-                repo.sync(patrols, new CallBack<Boolean>() {
+                repo.sync(patrols,userModuleService.getUserId(), new CallBack<Boolean>() {
                     @Override
                     public void call(Boolean data) {
                         //刷新列表

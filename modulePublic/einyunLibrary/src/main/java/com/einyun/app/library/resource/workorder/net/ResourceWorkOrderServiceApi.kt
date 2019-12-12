@@ -71,6 +71,12 @@ interface ResourceWorkOrderServiceApi {
     fun patrolDetial(@Body request: PatrolDetialRequest): Flowable<PatrolDetialResponse>
 
     /**
+     * 派工单处理
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_PATROL_SUBMIT)
+    fun patrolSubmit(@Body request: PatrolSubmitRequest):Flowable<BaseResponse<Any>>
+
+    /**
      * 2.31派工单-待办列表
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_WAIT)

@@ -24,6 +24,9 @@ public class TimeUtil {
         return Calendar.getInstance().getTimeInMillis();
     }
 
+    public static String Now(){
+       return getAllTime(getCurrentTime());
+    }
     /**
      * 将time转换为 1970-1-1 00:00:00 格式的时间
      */

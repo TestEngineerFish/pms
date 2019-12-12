@@ -195,7 +195,7 @@ public class AlertDialog {
         }
     }
 
-    public void close() {
+    public void dismiss() {
         if (dialog != null) {
             if (dialog.isShowing()) {
                 dialog.cancel();

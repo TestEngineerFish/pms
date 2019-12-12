@@ -26,6 +26,10 @@ import java.util.*
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
+        proxy.patrolSubmit(request,callBack)
+    }
+
     override fun getHistroy(
         intstId: String,
         callBack: CallBack<List<HistoryModel>>
@@ -149,7 +153,7 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         request: DistributePageRequest,
         callBack: CallBack<DistributeWorkOrderPage>
     ): LiveData<DistributeWorkOrderPage> {
-        return proxy.distributeWaitPage(request, callBack)
+        return proxy.distributeDonePage(request, callBack)
     }
 
     override fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount> {

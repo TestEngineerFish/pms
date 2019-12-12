@@ -15,9 +15,8 @@ import com.einyun.app.base.db.converter.ExtensionApplicationBeanConvert;
 
 import java.util.List;
 
-@Entity(tableName = "patrols_info")
+@Entity(tableName = "patrols_info",primaryKeys = {"taskId","userId"})
 public class PatrolInfo {
-    @PrimaryKey
     @NonNull
     private String taskId;
     @TypeConverters(DataBeanTypeConvert.class)

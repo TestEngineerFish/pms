@@ -20,16 +20,19 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.PageRquest;
 import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.FragmentSendWorkOrderBinding;
@@ -57,9 +60,9 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> implements ItemClickListener<DistributeWorkOrder> {
+public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> implements ItemClickListener<Distribute> {
     //    private SendOrderAdapter adapter;//适配器
-    RVPageListAdapter<ItemWorkSendBinding, DistributeWorkOrder> adapter;
+    RVPageListAdapter<ItemWorkSendBinding, Distribute> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public static SendWorkOrderFragment newInstance(Bundle bundle) {
@@ -93,11 +96,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     @Override
     protected void setUpView() {
-        binding.sendOrderRef.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadPagingData();
-            }
+        binding.sendOrderRef.setOnRefreshListener(() -> {
+            binding.sendOrderRef.setRefreshing(false);
+//            loadPagingData();
+            viewModel.refresh();
         });
         binding.workSendList.addItemDecoration(new SpacesItemDecoration(30));
 
@@ -112,20 +114,20 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             }
         });
 
-        //切换筛选条件
-        viewModel.getLiveEvent().observe(getActivity(), status -> {
-            if(status.isRefresShown()){
-                loadPagingData();
-            }
-        });
+//        //切换筛选条件
+//        viewModel.getLiveEvent().observe(getActivity(), status -> {
+//            if(status.isRefresShown()){
+//                viewModel.refresh();
+//            }
+//        });
         RecyclerView mRecyclerView = binding.workSendList;
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (adapter == null) {
-            adapter = new RVPageListAdapter<ItemWorkSendBinding, DistributeWorkOrder>(getActivity(), BR.distributeWorkOrder, mDiffCallback) {
+            adapter = new RVPageListAdapter<ItemWorkSendBinding, Distribute>(getActivity(), BR.workOrder, mDiffCallback) {
 
                 @Override
-                public void onBindItem(ItemWorkSendBinding binding, DistributeWorkOrder distributeWorkOrder) {
+                public void onBindItem(ItemWorkSendBinding binding, Distribute distribute) {
                     if(FRAGMENT_SEND_OWRKORDER_DONE.equals(getFragmentTag())){
                         binding.itemResendRe.setVisibility(View.GONE);
                     }
@@ -134,14 +136,14 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
-                                    .withString(RouteKey.KEY_TASK_ID,distributeWorkOrder.getTaskId())
-                                    .withString(RouteKey.KEY_ORDER_ID,distributeWorkOrder.getID_())
-                                    .withString(RouteKey.KEY_DIVIDE_ID,distributeWorkOrder.getF_DIVIDE_ID())
-                                    .withString(RouteKey.KEY_PROJECT_ID,distributeWorkOrder.getF_PROJECT_ID())
+                                    .withString(RouteKey.KEY_TASK_ID,distribute.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID,distribute.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID,distribute.getF_DIVIDE_ID())
+                                    .withString(RouteKey.KEY_PROJECT_ID,distribute.getF_PROJECT_ID())
                                     .navigation();
                         }
                     });
-                    binding.selectOrderTime.setText(FormatUtil.formatDate(distributeWorkOrder.getCreateTime()));
+                    binding.selectOrderTime.setText(FormatUtil.formatDate(distribute.getCreateTime()));
                 }
 
                 @Override
@@ -150,24 +152,27 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                 }
             };
         }
-//        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
     }
 
     private void loadPagingData() {
-        //初始化数据，LiveData自动感知，刷新页面
-        binding.sendOrderRef.setRefreshing(true);
         String fragmentTag=getFragmentTag();
-        viewModel.getRequest().setTypeRe(fragmentTag);
         if(viewModel.getOrgModel()!=null){
             viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
         }
         viewModel.getRequest().setUserId(userModuleService.getUserId());
         if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_PENDING)){
-            viewModel.loadPadingData(viewModel.getRequest(),fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+            viewModel.loadPadingData(viewModel.getRequest()).observe(this, dataBeans -> {
+                adapter.submitList(dataBeans);
+                adapter.notifyDataSetChanged();
+            });
         }else{
-            viewModel.loadDonePagingData(viewModel.getRequest(),fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+            viewModel.loadDonePagingData(viewModel.getRequest()).observe(this, dataBeans -> {
+                adapter.submitList(dataBeans);
+                adapter.notifyDataSetChanged();
+            });
         }
     }
 
@@ -177,22 +182,22 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     }
 
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<DistributeWorkOrder> mDiffCallback = new DiffUtil.ItemCallback<DistributeWorkOrder>() {
+    private DiffUtil.ItemCallback<Distribute> mDiffCallback = new DiffUtil.ItemCallback<Distribute>() {
 
         @Override
-        public boolean areItemsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
+        public boolean areItemsTheSame(@NonNull Distribute oldItem, @NonNull Distribute newItem) {
             return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
+        public boolean areContentsTheSame(@NonNull Distribute oldItem, @NonNull Distribute newItem) {
             return oldItem == newItem;
         }
 
         @Nullable
         @Override
-        public Object getChangePayload(@NonNull DistributeWorkOrder oldItem, @NonNull DistributeWorkOrder newItem) {
+        public Object getChangePayload(@NonNull Distribute oldItem, @NonNull Distribute newItem) {
             return oldItem.getID_().equals(newItem.getID_());
         }
     };
@@ -205,7 +210,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
      * @param data
      */
     @Override
-    public void onItemClicked(View veiw, DistributeWorkOrder data) {
+    public void onItemClicked(View veiw, Distribute data) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
                     .withString(RouteKey.KEY_ORDER_ID,data.getID_())
                     .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())

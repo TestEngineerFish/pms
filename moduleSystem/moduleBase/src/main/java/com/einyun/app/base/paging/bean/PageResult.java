@@ -15,34 +15,44 @@ import java.util.List;
  * @Version: 1.0
  */
 public class PageResult<T> {
-    private int page;
-    private int pageSize;
-    private int total;
+    private Integer page;
+    private Integer pageSize;
+    private Integer total;
     private List<T> rows;
 
+    public Boolean hasNextPage(){
+        if(rows!=null&&rows.size()>=0){
+            return true;
+        }
+        return false;
+    }
 
-
-    public int getPage() {
+    public int nextPage(){
+        page++;
         return page;
     }
 
-    public void setPage(int page) {
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
         this.page = page;
     }
 
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 

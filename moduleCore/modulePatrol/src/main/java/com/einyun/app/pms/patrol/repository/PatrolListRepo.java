@@ -31,24 +31,24 @@ public class PatrolListRepo {
      * @param pageSize
      * @return
      */
-    public List<Patrol> queryPage(int current, int pageSize) {
-        return patrolDao.pageDigest(current,pageSize);
+    public List<Patrol> queryPage(int current, int pageSize,String userId) {
+        return patrolDao.pageDigest(current,pageSize,userId);
     }
 
     /**
      * 获取数据源
      * @return
      */
-    public DataSource.Factory<Integer,Patrol> queryAll(){
-        return patrolDao.queryAll();
+    public DataSource.Factory<Integer,Patrol> queryAll(String userId){
+        return patrolDao.queryAll(userId);
     }
 
 
     /**
      * 更新缓存状态
      */
-    public void updateCachedStates(){
-        db.runInTransaction(() -> patrolDao.updateCachedStates());
+    public void updateCachedStates(String userId){
+        db.runInTransaction(() -> patrolDao.updateCachedStates(userId));
     }
 
 
@@ -72,20 +72,20 @@ public class PatrolListRepo {
      * 数据同步
      * @param patrols
      */
-    public void sync(List<Patrol> patrols, CallBack<Boolean> callBack){
+    public void sync(List<Patrol> patrols,String userId, CallBack<Boolean> callBack){
         db.runInTransaction(() -> {
             /**
              * 清空原数据，插入最新数据
              */
-            initData(patrols);
+            initData(patrols,userId);
             String taskIds[]=loadIds(patrols);
             if(taskIds!=null){
                 //删除已关闭巡查信息数据
-                infoDao.sync(taskIds);
-                infoDao.syncLocal(taskIds);
+                infoDao.sync(userId,taskIds);
+                infoDao.syncLocal(userId,taskIds);
             }
             //更新已缓存状态
-            updateCachedStates();
+            updateCachedStates(userId);
             callBack.call(true);
         });
     }
@@ -94,9 +94,9 @@ public class PatrolListRepo {
      * 初始化数据
      * @param patrols
      */
-    public void initData(List<Patrol> patrols){
+    public void initData(List<Patrol> patrols,String userId){
         db.runInTransaction(() -> {
-            patrolDao.deleteAll();
+            patrolDao.deleteAll(userId);
             patrolDao.insertDigest(patrols);
         });
 

@@ -33,6 +33,17 @@ import java.util.*
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    //巡查处理
+    override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
+        serviceApi?.patrolSubmit(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    callBack.call(it.isState)
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
+    }
 
     //获取历史流程
     override fun getHistroy(

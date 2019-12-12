@@ -28,12 +28,28 @@ public class PatrolRepo {
      * @param taskId
      * @return
      */
-    public void loadLocalUserData(String taskId, CallBack<PatrolLocal> callBack) {
+    public void loadLocalUserData(String taskId,String userId, CallBack<PatrolLocal> callBack) {
         db.runInTransaction(() -> {
-            PatrolLocal local = infoDao.loadByTaskId(taskId);
+            PatrolLocal local = infoDao.loadByTaskId(taskId,userId);
             callBack.call(local);
         });
+    }
 
+    /**
+     * 删除任务，完成关闭
+     *
+     * @param taskId
+     */
+    public void deleteTask(String taskId,String userId,CallBack<Boolean> callBack) {
+        db.runInTransaction(new Runnable() {
+            @Override
+            public void run() {
+                dao.deletePatrol(taskId,userId);
+                infoDao.deletePatrolInfo(taskId,userId);
+                infoDao.deletePatrolLocal(taskId,userId);
+                callBack.call(true);
+            }
+        });
     }
 
     public void saveLocalData(PatrolLocal local) {
@@ -64,8 +80,8 @@ public class PatrolRepo {
      * @param taskId
      * @return
      */
-    public PatrolInfo loadPatrolInfo(String taskId) {
-        return infoDao.load(taskId);
+    public PatrolInfo loadPatrolInfo(String taskId,String userId) {
+        return infoDao.load(taskId,userId);
     }
 
     /**
@@ -73,7 +89,7 @@ public class PatrolRepo {
      *
      * @param taskId
      */
-    public void updatePatrolCached(String taskId) {
-        dao.updateCachedState(taskId);
+    public void updatePatrolCached(String taskId,String userId) {
+        dao.updateCachedState(taskId,userId);
     }
 }

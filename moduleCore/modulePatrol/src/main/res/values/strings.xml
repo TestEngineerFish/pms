@@ -15,4 +15,5 @@
     <string name="text_alert_handle_node">请选择工作节点 %s 的处理结果</string>
     <string name="text_alert_handle_content">请填写处理说明</string>
     <string name="text_alert_photo_empty">请添加处理图片</string>
+    <string name="text_request_create_distribute">是否创建派工单</string>
 </resources>

@@ -44,7 +44,6 @@ public class FormatUtil {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             formatDate = format.format(date);
-            Log.e("---formatDate--", formatDate);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,16 +1,12 @@
 package com.einyun.app.common.ui.widget;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-
 import androidx.databinding.DataBindingUtil;
-
 import com.einyun.app.common.R;
 import com.einyun.app.common.databinding.TipDialogBinding;
 

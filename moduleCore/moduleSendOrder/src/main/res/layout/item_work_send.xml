@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="distributeWorkOrder"
-            type="com.einyun.app.library.resource.workorder.model.DistributeWorkOrder" />
+            name="workOrder"
+            type="com.einyun.app.base.db.entity.Distribute" />
     </data>
 
 
@@ -40,7 +40,7 @@
                     android:layout_toRightOf="@id/item_send_work_lf_img"
                     android:gravity="center_vertical"
                     android:maxLength="10"
-                    android:text="@{distributeWorkOrder.subject}"
+                    android:text="@{workOrder.subject}"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/px_32" />
 
@@ -54,7 +54,7 @@
                         android:layout_height="@dimen/px_48"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        app:status="@{distributeWorkOrder.F_STATUS}" />
+                        app:status="@{workOrder.f_STATUS}" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        app:status="@{distributeWorkOrder.F_STATUS}" />
+                        app:status="@{workOrder.f_STATUS}" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="@{distributeWorkOrder.f_LOCATION}"
+                        android:text="@{workOrder.f_LOCATION}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 
@@ -115,7 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="@{distributeWorkOrder.F_ORDER_NO}"
+                        android:text="@{workOrder.f_ORDER_NO}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 

@@ -25,12 +25,16 @@ public class ItemDataSource extends BaseDataSource<CheckPointModel> {
 
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
+//        if(callback instanceof LoadInitialCallback){
+//            ((LoadInitialCallback) callback).onResult(loadCache(),0, getCacheTotal());
+//        }
         PointCheckListRepository repository=new PointCheckListRepository();
         repository.pageQuery(pageBean, new CallBack<CheckPointPage>() {
             @Override
             public void call(CheckPointPage data) {
                 if(callback instanceof LoadInitialCallback){
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
+                    saveCached(data.getRows(),(int)data.getTotal());
                     loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;

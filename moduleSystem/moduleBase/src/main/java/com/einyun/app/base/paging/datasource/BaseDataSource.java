@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.paging.PositionalDataSource;
 import com.einyun.app.base.paging.bean.PageBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @ProjectName: pms
  * @Package: com.einyun.app.base.paging.bean
@@ -17,6 +20,22 @@ import com.einyun.app.base.paging.bean.PageBean;
  * @Version: 1.0
  */
 public abstract class BaseDataSource<M> extends PositionalDataSource<M> {
+    List<M> cached=new ArrayList<>();
+    int cacheTotal;
+
+    protected void saveCached(List<M> list,int total){
+        cached.clear();
+        cached.addAll(list);
+        this.cacheTotal=total;
+    }
+
+    protected List<M> loadCache(){
+        return cached;
+    }
+
+    protected int getCacheTotal(){
+        return cacheTotal;
+    }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams params, @NonNull LoadInitialCallback<M> callback) {

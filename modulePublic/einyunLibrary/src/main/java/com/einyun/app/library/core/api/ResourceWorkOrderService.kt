@@ -47,6 +47,9 @@ interface ResourceWorkOrderService : EinyunService {
     //巡查工单详情
     fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>)
 
+    //巡查工单处理
+    fun patrolSubmit(request: PatrolSubmitRequest,callBack: CallBack<Boolean>)
+
     //创建派工单
     fun createSendOrder(
         request: CreateSendOrderRequest,

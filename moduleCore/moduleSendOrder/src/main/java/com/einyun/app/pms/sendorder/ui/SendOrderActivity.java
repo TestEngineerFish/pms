@@ -21,6 +21,7 @@ import com.einyun.app.pms.sendorder.ui.fragment.SendWorkOrderFragment;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderDetialViewModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +87,25 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
             public CharSequence getPageTitle(int position) {
                 return mTitles[position];
             }
+
         });
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
+        binding.tabSendOrder.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewModel.currentFragmentTag=fragmentTags[tab.getPosition()];
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +148,6 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.periodSelected.setText(orgModel.getName());
         viewModel.setOrgModel(orgModel);
-        viewModel.refreshUI();
     }
 
 

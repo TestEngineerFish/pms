@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "patrol_digests")
+@Entity(tableName = "patrol_digests",primaryKeys = {"taskId","userId"})
 public class Patrol{
     /**
      * proInsId : 485732
@@ -27,8 +27,6 @@ public class Patrol{
     private int F_plan_work_order_state;
     @NonNull
     private String userId;
-    @PrimaryKey
-    @NonNull
     private String ID_;
     private String subject;
     private String F_house_code;
@@ -41,6 +39,7 @@ public class Patrol{
     private String ownerId;
     private String F_inspection_work_plan_name;
     private String assigneeId;
+    @NonNull
     private String taskId;
     private String taskNodeId;
     private long F_actual_completion_time;
@@ -218,11 +217,12 @@ public class Patrol{
         this.assigneeId = assigneeId;
     }
 
+    @NonNull
     public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(@NonNull String taskId) {
         this.taskId = taskId;
     }
 

@@ -41,7 +41,5 @@ class DistributePageRequest :PageRquest(){
     var envType3:String?=null
     @SerializedName("F_OT_STATUS")
     var otStatus:String?=null
-    @Expose
-    var typeRe:String?=null
 
 }

@@ -13,7 +13,7 @@ package com.einyun.app.library.resource.workorder.model
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class DistributeWorkOrder {
+open class DistributeWorkOrder {
      var F_CHECK_CONTENT: String? = null
      var subject: String? = null
      var F_TYPE: String? = null

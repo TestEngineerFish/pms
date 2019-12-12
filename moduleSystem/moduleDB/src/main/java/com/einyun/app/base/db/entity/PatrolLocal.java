@@ -11,9 +11,8 @@ import com.einyun.app.base.db.converter.WorkNoteTypeConvert;
 
 import java.util.List;
 
-@Entity(tableName = "patrol_local")
+@Entity(tableName = "patrol_local",primaryKeys = {"taskId","userId"})
 public class PatrolLocal {
-    @PrimaryKey
     @NonNull
     private String taskId;
     private String note;
