@@ -83,7 +83,24 @@
     <string name="search_name_or_phone">请搜索姓名或手机号</string>
     <string name="create">创建</string>
     <string name="resend_success">转派成功</string>
-    <string name="apply_close_success">强制闭单成功</string>
-    <string name="apply_late_success">强制闭单成功,请等待审批</string>
+    <string name="apply_close_success">强制闭单成功,请等待审批</string>
+    <string name="apply_late_success">申请延期成功,请等待审批</string>
+    <string name="text_complete_time">完成截止时间</string>
+    <string name="text_date_day">当天</string>
+    <string name="text_date_week">本周</string>
+    <string name="text_date_month">本月</string>
+    <string name="text_date_season">本季度</string>
+    <string name="text_alert_photo_empty">请添加处理图片</string>
+    <string name="text_alert_handle_content">请填写处理说明</string>
+    <string name="text_alert_handle_node">请选择工作节点 %s 的处理结果</string>
+    <string name="text_no">序号</string>
+    <string name="text_work_items">工作事项/节点</string>
+    <string name="text_handle_pic">处理后图片</string>
+    <string name="text_resolve_result">处理结果</string>
+    <string name="text_resolve_dis">处理说明</string>
+    <string name="text_work_nodes">工作节点</string>
+    <string name="text_work_plan">工作计划</string>
+    <string name="text_responsible_job">负责岗位</string>
+    <string name="text_location">位置</string>
     <string name="text_alert">提示</string>
 </resources>

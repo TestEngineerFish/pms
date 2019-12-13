@@ -5,9 +5,9 @@ import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
-import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
-import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
-import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
+import com.einyun.app.library.resource.workorder.net.response.*
+import io.reactivex.Flowable
+import retrofit2.http.Url
 import java.util.*
 import java.util.*
 
@@ -25,6 +25,12 @@ import java.util.*
  * @Version:        1.0
  */
 interface ResourceWorkOrderService : EinyunService {
+    //巡查工单代办
+    fun planWaitPage(request: DistributePageRequest, callBack: CallBack<PlanWorkOrderPage>): LiveData<PlanWorkOrderPage>
+
+    //巡查工单已办
+    fun planClosedPage(request: DistributePageRequest, callBack: CallBack<PlanWorkOrderPage>): LiveData<PlanWorkOrderPage>
+
     fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount>
 
     fun distributeWaitPage(
@@ -108,6 +114,22 @@ interface ResourceWorkOrderService : EinyunService {
 
     fun exten(request: ExtenDetialRequest, callBack: CallBack<BaseResponse<Object>>): LiveData<BaseResponse<Object>>
 
+    //申请闭单
+    fun planApplyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse>
+
+    fun planExten(request: ExtenDetialRequest, callBack: CallBack<BaseResponse<Object>>): LiveData<BaseResponse<Object>>
+
+
     //历史流程
     fun getHistroy(intstId:String,callBack: CallBack<List<HistoryModel>>):LiveData<List<HistoryModel>>
+
+    //计划工单详情
+    fun planOrderDetail(taskId:String,callBack: CallBack<PlanInfo>)
+
+    //获取计划工单已办详情
+    fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>)
+
 }

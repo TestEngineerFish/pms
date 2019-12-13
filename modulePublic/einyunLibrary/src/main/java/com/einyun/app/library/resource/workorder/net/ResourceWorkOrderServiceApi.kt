@@ -1,7 +1,9 @@
 package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.library.portal.dictdata.net.URLS
 import com.einyun.app.library.resource.workorder.model.ApplyCloseModel
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrder
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
@@ -10,10 +12,7 @@ import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Url
+import retrofit2.http.*
 import java.util.*
 
 /**
@@ -44,13 +43,19 @@ interface ResourceWorkOrderServiceApi {
      *   2.7计划工单-待办
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_WAIT_PROCESS_LIST)
-    fun planWaitPage(@Body request: PageRquest): Flowable<PlanListResponse>
+    fun planWaitPage(@Body request: DistributePageRequest): Flowable<PlanListResponse>
 
     /**
      * 2.14计划工单-已办
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_PLAN_DONE)
-    fun planDonePage(@Body request: PageRquest): Flowable<PlanListResponse>
+    fun planDonePage(@Body request: DistributePageRequest): Flowable<PlanListResponse>
+
+    /**
+     * 计划工单详详情
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_PLAN_LIST_DETIAL)
+    fun planOrderDetail(@Body request: PatrolDetialRequest):Flowable<PlanDetialResponse>
 
     /**
      * 2.54巡查工单-待办
@@ -105,6 +110,12 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DONE_DETAIL)
     fun distributeDoneDetial(@Body request: DoneDetialRequest): Flowable<DistributeWorkOrderResponse>
+
+    /**
+     * 计划工单已办详情
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_PLAN_DONE_DETAIL)
+    fun planDoneDetial(@Body request: DoneDetialRequest): Flowable<PlanDetialResponse>
 
     /**
      * 派工单接单
@@ -165,6 +176,15 @@ interface ResourceWorkOrderServiceApi {
     @POST(URLs.URL_EXTEN)
     fun exten(@Body request: ExtenDetialRequest): Flowable<BaseResponse<Object>>
 
+    @POST(URLs.URL_PLAN_EXTEN)
+    fun extenPlan(@Body request: ExtenDetialRequest): Flowable<BaseResponse<Object>>
+
+    /**
+     * 申请闭单
+     * */
+    @POST(URLs.URL_PLAN_CLOSE_ORDER)
+    fun closeOrderPlan(@Body request:ApplyCloseRequest):Flowable<ApplyCloseResponse>
+
     /**
      * 转派
      */
@@ -175,7 +195,6 @@ interface ResourceWorkOrderServiceApi {
      * 申请闭单
      * */
     @POST(URLs.URL_CLOSE_ORDER)
-    
     fun closeOrder(@Body request:ApplyCloseRequest):Flowable<ApplyCloseResponse>
 
     /**

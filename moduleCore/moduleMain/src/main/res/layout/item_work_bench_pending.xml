@@ -76,7 +76,7 @@
                         style="@style/base_wrap_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
+                        android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_PLAN_ORDER)}">
 
                         <LinearLayout
                             android:id="@+id/ll_work_tousu"

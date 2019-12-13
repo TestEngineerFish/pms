@@ -20,9 +20,9 @@ class URLs {
 
         //2.6待办统计-计划、巡查、派工单 GETres-order/plan/waitCount
         const val URL_RESOURCE_WORKORDER_WIAIT_COUNT="/$DOMAIN/res-order/plan/waitCount"
-        //2.7计划工单-待办
+        //2.7计划工单-待办列表
         const val URL_RESOURCE_WORKORDER_WAIT_PROCESS_LIST="/$DOMAIN/res-order/plan/wait-process-list"
-        //2.14计划工单-已办
+        //2.14计划工单-已办列表
         const val URL_RESOURCE_WORKORDER_PLAN_DONE="/$DOMAIN/res-order/plan/done"
         //2.54巡查工单-待办
         const val URL_RESOURCE_WORKORDER_PATROL_WAIT="/$DOMAIN/res-order/patrol/wait"
@@ -44,6 +44,8 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_PATROL_WAIT_DETAIL="/$DOMAIN/res-order/patrol/waitDetail"
         //2.60巡查工单-闭单
         const val URL_RESOURCE_WORKORDER_PATROL_CLOSE="/$DOMAIN/res-order/patrol/close"
+        //2.63计划工单-工单详情
+        const val URL_RESOURCE_WORKORDER_PLAN_LIST_DETIAL="/$DOMAIN/res-order/plan/waitDetail"
         //2.9计划工单-已办详情
         const val URL_RESOURCE_WORKORDER_PATROL_DONE_DETAIL="/$DOMAIN/res-order/patrol/doneDetail"
         //2.58巡查工单-处理
@@ -63,6 +65,9 @@ class URLs {
 
         //派工单已办详细 POST   param["proInsId"] = proInsID param["taskNodeId"] = taskNodeID
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DONE_DETAIL="/$DOMAIN/res-order/distribute/doneDetail"
+
+        //派工单已办详细 POST   param["proInsId"] = proInsID param["taskNodeId"] = taskNodeID
+        const val URL_RESOURCE_WORKORDER_PLAN_DONE_DETAIL="/$DOMAIN/res-order/plan/doneDetail"
         //派工单接单
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_RESPONSE="/$DOMAIN/res-order/distribute/response"
         //派工单处理
@@ -87,6 +92,10 @@ class URLs {
         const val URL_CLOSE_ORDER="/$DOMAIN/res-order/distribute/close"
         //派工单-延期
         const val URL_EXTEN="/$DOMAIN/res-order/distribute/exten"
+        //计划工单闭单
+        const val URL_PLAN_CLOSE_ORDER="/$DOMAIN/res-order/plan/close"
+        //计划工单延期
+        const val URL_PLAN_EXTEN="/$DOMAIN/res-order/plan/exten"
         //历史流程
         const val URL_HIDTROY="bpm-runtime/runtime/instance/v1/instanceFlowOpinions?instId="
     }

@@ -26,6 +26,42 @@ import java.util.*
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
+        return instance?.planDoneDetial(request, callBack)!!
+    }
+
+    override fun planExten(
+        request: ExtenDetialRequest,
+        callBack: CallBack<BaseResponse<Object>>
+    ): LiveData<BaseResponse<Object>> {
+        return instance?.planExten(request, callBack)!!
+    }
+
+    override fun planApplyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        return instance?.planApplyClose(request, callBack)!!
+    }
+
+    override fun planOrderDetail(id: String, callBack: CallBack<PlanInfo>) {
+        return instance?.planOrderDetail(id, callBack)!!
+    }
+
+    override fun planWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage> {
+        return instance?.planWaitPage(request, callBack)!!
+    }
+
+    override fun planClosedPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage> {
+        return instance?.planClosedPage(request, callBack)!!
+    }
+
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
        instance?.patrolSubmit(request,callBack)
     }

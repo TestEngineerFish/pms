@@ -29,7 +29,7 @@ public class UserRepository extends CommonRepository {
     AppDatabase db;
 
     public UserRepository() {
-        db=AppDatabase.getInstance(CommonApplication.getInstance());
+        db = AppDatabase.getInstance(CommonApplication.getInstance());
     }
 
     /**
@@ -104,7 +104,9 @@ public class UserRepository extends CommonRepository {
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
             UserDao userDao = db.userDao();
             User user = new User(userModel.getUsername(), userModel.getPassword());
-            if (userDao.selectUserByName(userModel.getUsername()) == null) {
+            user.setId(userModel.getUserId());
+            User user1 = userDao.selectUserByName(userModel.getUsername());
+            if (user1 == null) {
                 userDao.insertUsers(user);
             } else {
                 userDao.updateUser(user);

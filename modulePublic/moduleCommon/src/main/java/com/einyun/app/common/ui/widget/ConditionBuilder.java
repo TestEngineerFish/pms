@@ -11,12 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
 
 public class ConditionBuilder {
     public static final String RESULT_YES = "1";
     public static final String RESULT_NO = "2";
+
+    public static final String RESULT_DATE_DAY = "day";
+    public static final String RESULT_DATE_WEEK = "week";
+    public static final String RESULT_DATE_MONTH = "month";
+    public static final String RESULT_DATE_SEASON = "season";
 
     public static final String REPLACE_KEY = "_map";
 
@@ -76,6 +82,12 @@ public class ConditionBuilder {
                 conditions.add(createIsOverDue());
             }
         }
+        if (key.equals(SELECT_DATE)) {//是否超期数据
+            //去重复叠加
+            if (!selectModelMap.containsKey(SELECT_DATE)) {
+                conditions.add(createCheckDate());
+            }
+        }
         return this;
     }
 
@@ -107,6 +119,39 @@ public class ConditionBuilder {
         selectModels.add(selectNot);
         selectModel.setSelectModelList(selectModels);
         selectModelMap.put(SELECT_IS_OVERDUE, selectModel);
+        return selectModel;
+    }
+
+    public SelectModel createCheckDate() {
+        SelectModel selectModel = new SelectModel();
+        selectModel.setType(CommonApplication.getInstance().getString(R.string.text_complete_time));
+//        selectModel.setConditionType(SELECT_IS_OVERDUE);
+        SelectModel selectDay = new SelectModel();
+        selectDay.setType(SELECT_DATE);
+        selectDay.setId(RESULT_DATE_DAY);
+        selectDay.setContent(CommonApplication.getInstance().getString(R.string.text_date_day));
+
+        SelectModel selectWeek = new SelectModel();
+        selectWeek.setType(SELECT_DATE);
+        selectWeek.setContent(CommonApplication.getInstance().getString(R.string.text_date_week));
+        selectWeek.setId(RESULT_DATE_WEEK);
+
+        SelectModel selectMonth = new SelectModel();
+        selectMonth.setType(SELECT_DATE);
+        selectMonth.setContent(CommonApplication.getInstance().getString(R.string.pickerview_month));
+        selectMonth.setId(RESULT_DATE_MONTH);
+
+        SelectModel selectSeason = new SelectModel();
+        selectSeason.setType(SELECT_DATE);
+        selectSeason.setContent(CommonApplication.getInstance().getString(R.string.text_date_season));
+        selectSeason.setId(RESULT_DATE_SEASON);
+        List<SelectModel> selectModels = new ArrayList<>();
+        selectModels.add(selectDay);
+        selectModels.add(selectWeek);
+        selectModels.add(selectMonth);
+        selectModels.add(selectSeason);
+        selectModel.setSelectModelList(selectModels);
+        selectModelMap.put(SELECT_DATE, selectModel);
         return selectModel;
     }
 

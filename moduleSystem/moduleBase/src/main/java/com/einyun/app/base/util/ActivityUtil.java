@@ -125,6 +125,13 @@ public class ActivityUtil {
         return null;
     }
 
+    public static Activity getPreviousActivty() {
+        if (activityList.size() > 1) {
+            return activityList.get(activityList.size() - 2);
+        }
+        return null;
+    }
+
     /**
      * 跳回之前已经打开的页面
      *

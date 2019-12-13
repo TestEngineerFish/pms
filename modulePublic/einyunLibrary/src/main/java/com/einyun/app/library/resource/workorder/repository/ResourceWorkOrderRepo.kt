@@ -13,10 +13,8 @@ import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
 import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
-import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
-import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
-import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
-import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
+import com.einyun.app.library.resource.workorder.net.response.*
+import io.reactivex.Flowable
 import java.util.*
 
 /**
@@ -33,6 +31,99 @@ import java.util.*
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
+        serviceApi?.planDoneDetial(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    override fun planApplyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        val liveData = MutableLiveData<ApplyCloseResponse>()
+        serviceApi?.closeOrderPlan(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                callBack.call(response)
+                liveData.postValue(response)
+            }, { error ->
+                callBack.onFaild(error)
+            })
+        return liveData
+    }
+
+    override fun planExten(
+        request: ExtenDetialRequest,
+        callBack: CallBack<BaseResponse<Object>>
+    ): LiveData<BaseResponse<Object>> {
+        val liveData = MutableLiveData<BaseResponse<Object>>()
+        serviceApi?.extenPlan(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                liveData.postValue(response)
+                callBack.call(response)
+            }, { error -> {} })
+        return liveData;
+    }
+
+    override fun planOrderDetail(taskId: String, callBack: CallBack<PlanInfo>) {
+        var request = PatrolDetialRequest()
+        request.taskId = taskId
+        serviceApi?.planOrderDetail(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    //计划工单待跟进
+    override fun planWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage> {
+        val liveData = MutableLiveData<PlanWorkOrderPage>()
+        serviceApi?.planWaitPage(request)
+            ?.compose(RxSchedulers.inIoMain<PlanListResponse>())
+            ?.subscribe({ response: PlanListResponse ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    //计划工单已跟进
+    override fun planClosedPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage> {
+        val liveData = MutableLiveData<PlanWorkOrderPage>()
+        serviceApi?.planDonePage(request)
+            ?.compose(RxSchedulers.inIoMain<PlanListResponse>())
+            ?.subscribe({ response: PlanListResponse ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
     //巡查处理
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
         serviceApi?.patrolSubmit(request)?.compose(RxSchedulers.inIo())

@@ -27,7 +27,32 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
     public ApplyCloseViewModel() {
         resourceWorkOrderRepo = new ResourceWorkOrderRepo();
     }
+    /**
+     * 申请延期 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<ApplyCloseResponse> applyClosePlan(ApplyCloseRequest request, List<PicUrl> images) {
+        if (uploadManager != null) {
+            request.setApplyFiles(uploadManager.toJosnString(images));
+        }
+        showLoading();
+        MutableLiveData<ApplyCloseResponse> resend=new MutableLiveData<>();
+        resourceWorkOrderRepo.planApplyClose(request,new CallBack<ApplyCloseResponse>() {
+            @Override
+            public void call(ApplyCloseResponse data) {
+                hideLoading();
+                resend.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+
+        return resend;
+    }
     /**
      * 申请延期 LiveData
      *

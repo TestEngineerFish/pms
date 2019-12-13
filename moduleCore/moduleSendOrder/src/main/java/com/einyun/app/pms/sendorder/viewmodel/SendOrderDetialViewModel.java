@@ -203,6 +203,25 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
         return liveData;
     }
 
+    public LiveData<BaseResponse<Object>> applyLatePlan(ExtenDetialRequest request, List<PicUrl> images) {
+        showLoading();
+        request.setApplyFiles(uploadManager.toJosnString(images));
+        return service.planExten(request, new CallBack<BaseResponse<Object>>() {
+            @Override
+            public void call(BaseResponse<Object> data) {
+                if (!"0".equals(data.getCode())) {
+                    ToastUtil.show(BasicApplication.getInstance(), data.getMsg());
+                }
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+    }
+
     public LiveData<BaseResponse<Object>> applyLate(ExtenDetialRequest request, List<PicUrl> images) {
         showLoading();
         request.setApplyFiles(uploadManager.toJosnString(images));
