@@ -48,9 +48,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.module_common)
     api deps.permission_dispatcher //PermissionsDispatcher
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor deps.permission_dispatcher_processor
     //页面路由ARouter
-    implementation (deps.arouter_api) {
+    implementation(deps.arouter_api) {
         exclude group: 'com.android.support'
     }
     annotationProcessor deps.arouter_compiler

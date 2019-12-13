@@ -105,13 +105,15 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="申请照片" />
             </LinearLayout>
-
+            <LinearLayout style="@style/work_order_detail_ln">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/send_order_close_pic_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_30"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

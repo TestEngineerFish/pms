@@ -14,10 +14,15 @@ import java.util.Map;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_TIME_CIRCLE;
 
 public class ConditionBuilder {
     public static final String RESULT_YES = "1";
     public static final String RESULT_NO = "2";
+    public static final String TIME_CIRCLE_ONE = "3";
+    public static final String TIME_CIRCLE_TWO = "4";
+    public static final String TIME_CIRLE_THREE = "5";
+
 
     public static final String RESULT_DATE_DAY = "day";
     public static final String RESULT_DATE_WEEK = "week";
@@ -81,7 +86,12 @@ public class ConditionBuilder {
             if (!selectModelMap.containsKey(SELECT_IS_OVERDUE)) {
                 conditions.add(createIsOverDue());
             }
+        }else if (key.equals(SELECT_TIME_CIRCLE)){
+            if (!selectModelMap.containsKey(SELECT_TIME_CIRCLE)){
+                conditions.add(createTimeCircle());
+            }
         }
+
         if (key.equals(SELECT_DATE)) {//是否超期数据
             //去重复叠加
             if (!selectModelMap.containsKey(SELECT_DATE)) {
@@ -101,6 +111,9 @@ public class ConditionBuilder {
     public List<SelectModel> build() {
         return conditions;
     }
+    /**
+     * 是否超期item
+    **/
 
     public SelectModel createIsOverDue() {
         SelectModel selectModel = new SelectModel();
@@ -154,6 +167,35 @@ public class ConditionBuilder {
         selectModelMap.put(SELECT_DATE, selectModel);
         return selectModel;
     }
+    public SelectModel createTimeCircle() {
+        SelectModel selectModel = new SelectModel();
+        selectModel.setType(CommonApplication.getInstance().getString(R.string.txt_time_circle));
+//        selectModel.setConditionType(SELECT_IS_OVERDUE);
+        SelectModel selectOne = new SelectModel();
+        selectOne.setType(SELECT_TIME_CIRCLE);
+        selectOne.setId(TIME_CIRCLE_ONE);
+        selectOne.setContent(CommonApplication.getInstance().getString(R.string.txt_one_month));
+        SelectModel selecTwo = new SelectModel();
+        selecTwo.setType(SELECT_TIME_CIRCLE);
+        selecTwo.setContent(CommonApplication.getInstance().getString(R.string.txt_two_month));
+        selecTwo.setId(TIME_CIRCLE_TWO);
+        SelectModel selectThree = new SelectModel();
+        selectThree.setType(SELECT_TIME_CIRCLE);
+        selectThree.setContent(CommonApplication.getInstance().getString(R.string.txt_three_month));
+        selectThree.setId(TIME_CIRLE_THREE);
+        List<SelectModel> selectModels = new ArrayList<>();
+        selectModels.add(selectOne);
+        selectModels.add(selecTwo);
+        selectModels.add(selectThree);
+        selectModel.setSelectModelList(selectModels);
+        selectModelMap.put(SELECT_TIME_CIRCLE, selectModel);
+        return selectModel;
+    }
+    /**
+     * 周期item
+     * */
+
+
 
     private void initMap() {
 

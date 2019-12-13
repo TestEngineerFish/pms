@@ -202,4 +202,16 @@ interface ResourceWorkOrderServiceApi {
      * */
     @GET
     fun getHistroy(@Url url: String):Flowable<HistroyResponse>
+
+    /**
+     * 工作预览-计划工单
+     * */
+    @POST(URLs.URL_WORK_PREVIEW_PLAN_ORDER)
+    fun getPlanPreviewOrders(@Body request: OrderPreviewRequest):Flowable<OrderPreviewResponse>
+
+    /**
+     * 工作预览-巡查工单
+     * */
+    @POST(URLs.URL_WORK_PREVIEW_PATRO_ORDER)
+    fun getPatroPreviewOrders(@Body request: OrderPreviewRequest):Flowable<OrderPreviewResponse>
 }

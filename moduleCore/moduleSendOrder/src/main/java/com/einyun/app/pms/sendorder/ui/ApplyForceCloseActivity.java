@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -127,7 +128,13 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
             @Override
             public void onClick(View v) {
                 request.setDesc(binding.applyCloseReason.getString());
-                uploadImages();
+                if (TextUtils.isEmpty(request.getDesc())) {
+                    ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
+                } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
+                    ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);
+                } else {
+                    uploadImages();
+                }
             }
         });
     }

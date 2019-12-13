@@ -53,7 +53,7 @@
             <LinearLayout
                 android:id="@+id/send_work_orer_tab_ln"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="@dimen/px_70"
                 android:orientation="horizontal"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">

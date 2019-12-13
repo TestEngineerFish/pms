@@ -22,7 +22,8 @@
             android:id="@+id/select_people_list"
             android:layoutDirection="rtl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/px_2"/>
 
     </LinearLayout>
 </layout>

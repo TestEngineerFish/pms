@@ -33,7 +33,7 @@
                 android:layout_marginLeft="@dimen/px_20"
                 android:gravity="center_vertical"
                 android:text="工单信息"
-                android:textSize="@dimen/px_32" />
+                android:textSize="@dimen/font_size16" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             android:background="@color/white">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+               style="@style/work_order_detail_left_txt"
                 android:text="工单编号" />
 
             <TextView
@@ -69,8 +69,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="分期" />
+                style="@style/work_order_detail_left_txt"                android:text="分期" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
@@ -80,7 +79,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="条线" />
 
             <TextView
@@ -91,7 +90,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="工单类型" />
 
             <TextView
@@ -102,7 +101,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="工单创建时间" />
 
             <TextView
@@ -113,7 +112,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="完成截止时间" />
 
             <TextView
@@ -124,7 +123,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="问题描述" />
 
             <TextView
@@ -135,7 +134,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="报修位置" />
 
             <TextView
@@ -147,6 +146,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_left"
+                android:layout_marginBottom="@dimen/px_20"
                 android:text="图片" />
         </LinearLayout>
     <LinearLayout

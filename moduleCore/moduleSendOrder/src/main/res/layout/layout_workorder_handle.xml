@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/px_30"
-        android:background="@drawable/bg_shadow"
+        android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -91,14 +91,16 @@
         </LinearLayout>
 
 
-        <LinearLayout style="@style/work_order_detail_ln">
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:layout_marginBottom="@dimen/px_30"
+            >
 
             <TextView
                 style="@style/work_order_detail_txt_left"
                 android:text="执行人" />
 
             <TextView style="@style/work_order_detail_txt_right" />
-        </LinearLayout>
 
+        </LinearLayout>
     </LinearLayout>
 </layout>

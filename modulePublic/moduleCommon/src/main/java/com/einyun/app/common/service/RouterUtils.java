@@ -27,6 +27,7 @@ public class RouterUtils {
     public static final String ACTIVITY_BLOCK_CHOOSE="/choose/BlockChooseActivity";
     public static final String ACTIVITY_X5_WEBVIEW="/webview/X5WebViewActivity";
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
+    public static final String ACTIVITY_ORDER_LIST="/main/OrderListActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
@@ -43,6 +44,10 @@ public class RouterUtils {
 //    public static final String ACTIVITY_LATE="/sendOrder/ApplyLateActivity";
 //    public static final String ACTIVITY_CLOSE="/sendOrder/ApplyForceCloseActivity";
 //    public static final String ACTIVITY_HISTORY="/sendOrder/HistoryActivity";
+    /*********************工单预览*******************************/
+    public static final String ACTIVITY_ORDER_PREVIEW ="/orderPreview/OrderPreviewActivity";
+    /***********************运营收缴率************************************/
+    public static final String ACTIVITY_OPERATE_PERCENT ="/operatePercent/OperatePercentActivity";
     /**********************派工单****************************/
     //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
@@ -76,6 +81,7 @@ public class RouterUtils {
 
     /**********************Fragment*********************************/
     public static final String FRAGMENT_REPAIRS_PAGING="/repairs/RepairsFragment";
+
 }
 
 

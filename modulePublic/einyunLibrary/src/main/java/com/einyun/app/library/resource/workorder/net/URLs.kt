@@ -98,5 +98,10 @@ class URLs {
         const val URL_PLAN_EXTEN="/$DOMAIN/res-order/plan/exten"
         //历史流程
         const val URL_HIDTROY="bpm-runtime/runtime/instance/v1/instanceFlowOpinions?instId="
+        //工作预览-计划工单
+        const val URL_WORK_PREVIEW_PLAN_ORDER="resource/api/resource/v1/workPlanPreview/list"
+        //工作预览-巡查工单
+        const val URL_WORK_PREVIEW_PATRO_ORDER="resource/api/resource/v1/inspectionWorkOrderPreview/list"
+
     }
 }

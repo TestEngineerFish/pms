@@ -26,6 +26,19 @@ import java.util.*
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+
+    override fun getPatroPreviewList(
+        request: OrderPreviewRequest,
+        callBack: CallBack<OrderPreviewPage>
+    ): LiveData<OrderPreviewPage> {
+        return instance?.getPlanPreviewList(request, callBack)!!        }
+
+    override fun getPlanPreviewList(
+        request: OrderPreviewRequest,
+        callBack: CallBack<OrderPreviewPage>
+    ): LiveData<OrderPreviewPage> {
+        return instance?.getPlanPreviewList(request, callBack)!!     }
+
     override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
         return instance?.planDoneDetial(request, callBack)!!
     }

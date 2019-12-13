@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="orderPreview"
+            type="com.einyun.app.library.resource.workorder.model.OrderPreviewModel" />
+    </data>
+
+
+
+        <LinearLayout
+            android:id="@+id/item_order_ln"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_white_bg"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_40"
+                    android:gravity="center_vertical"
+                    android:maxLength="10"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/px_32" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                android:id="@+id/item_work_send_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="分期" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_70"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_tiao_line" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@{orderPreview.line}"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="生成日期" />
+
+                    <TextView
+                        android:id="@+id/select_order_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@{orderPreview.creationDate}"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/thin_divider_color" />
+        </LinearLayout>
+</layout>

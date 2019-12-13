@@ -14,6 +14,7 @@ import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
 import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.*
+import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
 import java.util.*
 
@@ -134,6 +135,47 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.onFaild(it)
                 }
             )
+    }
+
+    /**
+     * 获取工作预览计划工单列表
+     * */
+    override fun getPatroPreviewList(
+        request: OrderPreviewRequest,
+        callBack: CallBack<OrderPreviewPage>
+    ): LiveData<OrderPreviewPage> {
+        val liveData = MutableLiveData<OrderPreviewPage>()
+        serviceApi?.getPatroPreviewOrders(request)
+            ?.compose(RxSchedulers.inIoMain<OrderPreviewResponse>())
+            ?.subscribe({ response: OrderPreviewResponse ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData    }
+
+    /**
+     * 获取工作预览计划工单列表
+     * */
+    override fun getPlanPreviewList(
+        request: OrderPreviewRequest,
+        callBack: CallBack<OrderPreviewPage>
+    ): LiveData<OrderPreviewPage> {
+        val liveData = MutableLiveData<OrderPreviewPage>()
+        serviceApi?.getPlanPreviewOrders(request)
+            ?.compose(RxSchedulers.inIoMain<OrderPreviewResponse>())
+            ?.subscribe({ response: OrderPreviewResponse ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
     }
 
     //获取历史流程

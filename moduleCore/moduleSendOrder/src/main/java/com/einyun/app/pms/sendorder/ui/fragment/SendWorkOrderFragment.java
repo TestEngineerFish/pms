@@ -232,8 +232,18 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         public void getItemOffsets(Rect outRect, View view,
                                    RecyclerView parent, RecyclerView.State state) {
             outRect.bottom = space;
-            if (parent.getChildPosition(view) == 0)
-                outRect.top = space;
         }
+    }
+
+    /**
+     * 超出10个字显示省略号
+     * */
+    public String LimitText(String txts){
+        if (txts.length()>10){
+            return txts.substring(0,10)+"...";
+        }else {
+            return txts;
+        }
+
     }
 }

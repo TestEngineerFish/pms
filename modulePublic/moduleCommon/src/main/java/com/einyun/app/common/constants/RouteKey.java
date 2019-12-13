@@ -25,6 +25,9 @@ public class RouteKey {
     public static final String KEY_ORDER_ID="orderId";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
     public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
+    public static final String FRAGMENT_WORK_PREVIEW_PLAN="WORK_PREVIEW_PLAN";
+    public static final String FRAGMENT_WORK_PREVIEW_PATRO="WORK_PREVIEW_PATRO";
+    public static final String KEY_SEND_ORDER_DETAIL="KEY_SEND_ORDER_DETAIL";
     public static final String FRAGMENT_PLAN_OWRKORDER_PENDING="FRAGMENT_PLAN_OWRKORDER_PENDING";
     public static final String FRAGMENT_PLAN_OWRKORDER_DONE="FRAGMENT_PLAN_OWRKORDER_DONE";
     public static final String KEY_ORDER_DETAIL_EXTEN="KEY_ORDER_DETAIL_EXTEN";

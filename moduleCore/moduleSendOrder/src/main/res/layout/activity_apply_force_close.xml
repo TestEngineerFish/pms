@@ -13,12 +13,14 @@
         android:orientation="vertical"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:background="@color/activity_bg_color"
         tools:context=".ui.ApplyLateActivity">
 
         <include
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
-        <LinearLayout style="@style/ll_create_order">
+        <LinearLayout style="@style/ll_create_order"
+            android:layout_marginTop="@dimen/px_2">
 
             <TextView style="@style/tv_create_order_red_star" />
 
@@ -36,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:hintText="请输入申请原因"
-                app:maxNumber="100" />
+                app:maxNumber="300" />
         </LinearLayout>
 
         <LinearLayout style="@style/ll_create_order">

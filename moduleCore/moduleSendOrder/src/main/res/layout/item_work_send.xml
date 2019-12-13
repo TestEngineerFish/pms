@@ -33,6 +33,7 @@
                     android:src="@drawable/warning" />
 
                 <TextView
+                    android:id="@+id/item_send_work_subject"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/px_20"
@@ -159,7 +160,7 @@
                     android:layout_alignParentLeft="true"
                     android:gravity="center"
                     android:text="@string/text_turn_order"
-                    android:textColor="@color/blackTextColor" />
+                    android:textColor="@color/blueTextColor" />
 
                 <ImageView
                     android:layout_width="@dimen/px_26"

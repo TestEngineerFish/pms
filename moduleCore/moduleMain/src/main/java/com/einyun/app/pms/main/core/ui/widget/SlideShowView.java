@@ -110,7 +110,7 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gdlb":
                             //工单列表
-//                            item.setOnClickListener( v -> readyGo(WorkListsActivity.class));
+                            item.setOnClickListener( v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation());
                             break;
                         case "cjgd":
                             //创建工单
@@ -123,11 +123,10 @@ public class SlideShowView extends FrameLayout {
 //                            item.setOnClickListener(v -> readyGo(ApprovalActivity.class));
                             item.setOnClickListener(v ->
                                     ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL).navigation());
-
                             break;
                         case "gzyl":
                             //工作预览
-//                            item.setOnClickListener(v -> readyGo(WorkLookActivity.class));
+                            item.setOnClickListener( v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation());
                             break;
                         case "smcl":
                             //扫码处理

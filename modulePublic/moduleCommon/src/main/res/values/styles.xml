@@ -176,4 +176,29 @@
         <item name="android:textStyle">bold</item>
         <item name="android:elevation" tools:targetApi="lollipop">@dimen/px_10</item>
     </style>
+    <!--工单列表首页样式-->
+    <style name="order_list_main" parent="base_style">
+        <item name="android:layout_width">@dimen/px_0</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_weight">1</item>
+
+    </style>
+    <!--工单列表首页图片样式-->
+    <style name="order_list_main_img" parent="base_style">
+        <item name="android:layout_width">@dimen/px_80</item>
+        <item name="android:layout_height">@dimen/px_80</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/px_40</item>
+    </style>
+    <!--工单列表首页文字样式-->
+    <style name="order_list_main_txt" parent="base_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/px_30</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+    </style>
+
 </resources>
