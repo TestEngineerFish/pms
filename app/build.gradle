@@ -141,7 +141,10 @@ dependencies {
     implementation project(deps.project.module_approval)
     implementation project(deps.project.module_create)
     implementation project(deps.project.module_mine)
+    implementation project(deps.project.module_orderpreview)
+    implementation project(deps.project.module_operatepercent)
 //    implementation project(deps.project.module_plan)
+    implementation project(deps.project.module_plan)
 //    implementation project(deps.project.module_complain)
 //    implementation project(deps.project.module_extra)
 

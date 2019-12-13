@@ -88,6 +88,11 @@
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
 
+        <!--计划工单Start-->
+        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderActivity"/>
+        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity"/>
+        <!--计划工单End-->
+
         <!--巡查工单Start-->
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolListActivity"/>
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolHandleActivity"/>

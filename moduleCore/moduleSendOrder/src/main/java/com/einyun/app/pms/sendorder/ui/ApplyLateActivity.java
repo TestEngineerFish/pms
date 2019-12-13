@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
@@ -34,15 +36,20 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_LATE)
 public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLateBinding, SendOrderDetialViewModel> {
 
-    @Autowired(name = RouteKey.KEY_SEND_ORDER_DETAIL)
-    public DisttributeDetialModel model;
+    @Autowired(name = RouteKey.KEY_ORDER_DETAIL_EXTEN)
+    public ArrayList<ExtensionApplication> extensionApplication;
+    @Autowired(name = RouteKey.KEY_ORDER_ID)
+    public String orderId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
+    @Autowired(name = RouteKey.KEY_LATER_ID)
+    String keyId;
     PhotoSelectAdapter photoSelectAdapter;
     private final int MAX_PHOTO_SIZE = 4;
 
@@ -63,11 +70,11 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         setHeadTitle(R.string.text_apply_postpone);
         binding.setCallBack(this);
         selectPng();
-        if (model.getExtensionApplication() != null) {
-            binding.applyNum.setText(model.getExtensionApplication().size() + "次");
+        if (extensionApplication != null) {
+            binding.applyNum.setText(extensionApplication.size() + "次");
             int i = 0;
-            for (ExtensionApplication bean : model.getExtensionApplication()) {
-                if (StringUtil.isNullStr(bean.getExtensionDays())){
+            for (ExtensionApplication bean : extensionApplication) {
+                if (StringUtil.isNullStr(bean.getExtensionDays())) {
                     i = i + Integer.valueOf(bean.getExtensionDays());
                 }
             }
@@ -120,7 +127,7 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         }
         request.setExtensionDays(binding.delayDate.getText().toString());
         request.setApplicationDescription(binding.delayInfo.getString());
-        request.setId(model.getData().getInfo().getID());
+        request.setId(orderId);
         request.setInstId(proInsId);
         uploadImages();
     }
@@ -134,10 +141,19 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                viewModel.applyLate(request, data).observe(this, o -> {
-                    ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
-                    finish();
-                });
+                if (StringUtil.isNullStr(keyId)) {
+                    if (RouteKey.KEY_PLAN.equals(keyId)){
+                        viewModel.applyLatePlan(request, data).observe(this, o -> {
+                            ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                            finish();
+                        });
+                    }
+                } else {
+                    viewModel.applyLate(request, data).observe(this, o -> {
+                        ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                        finish();
+                    });
+                }
             } else {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_failed);
             }

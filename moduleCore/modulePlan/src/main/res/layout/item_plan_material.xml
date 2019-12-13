@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+<!--        <variable-->
+<!--            name="master"-->
+<!--            type="com.einyun.app.library.resource.workorder.model.Master" />-->
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:minHeight="@dimen/px_75"-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/shape_frame_gray"-->
+<!--                android:gravity="center"-->
+<!--                android:paddingTop="8dp"-->
+<!--                android:paddingBottom="8dp"-->
+<!--                android:text="@{master.fmatName}"-->
+<!--                android:textColor="@color/txt_black_order"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="14sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/shape_frame_gray"-->
+<!--                android:gravity="center"-->
+<!--                android:paddingTop="8dp"-->
+<!--                android:paddingBottom="8dp"-->
+<!--                android:textColor="@color/txt_black_order"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="14sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/shape_frame_gray"-->
+<!--                android:gravity="center"-->
+<!--                android:paddingTop="8dp"-->
+<!--                android:paddingBottom="8dp"-->
+<!--                android:textColor="@color/txt_black_order"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="14sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/shape_frame_gray"-->
+<!--                android:gravity="center"-->
+<!--                android:paddingTop="8dp"-->
+<!--                android:paddingBottom="8dp"-->
+<!--                android:textColor="@color/txt_black_order"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="14sp" />-->
+
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+
+</layout>

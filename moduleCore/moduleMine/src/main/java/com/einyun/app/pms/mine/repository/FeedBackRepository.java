@@ -66,14 +66,14 @@ public class FeedBackRepository {
      * 获取个性签名
      * */
     public void querySignText(String id, CallBack<String> callBack) {
-        String url = URLS.URL_GET_USER_SIGN_TEXT + id;
+        String url = URLS.URL_GET_NEW_USER_SIGN_TEXT + id;
         serviceApi.getSignText(url).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
-//                    if(response.isState()){
-                        callBack.call(response.getString());
-//                    }else{
-//                        callBack.onFaild(new Exception(response));
-//                    }
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
                 }, error -> {
                     callBack.onFaild(error);
                 });

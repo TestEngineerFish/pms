@@ -14,7 +14,7 @@ class DisttributeDetialModel :Serializable{
     var form : String?= null  //待定
     var formResult : String?= null //待定
     var permission : String?= null //待定
-    var extensionApplication: List<ExtensionApplication>? = null
+    var extensionApplication: ArrayList<ExtensionApplication>? = null
 
     /**
     var delayExtensionApplication: DelayExtensionApplication? = null

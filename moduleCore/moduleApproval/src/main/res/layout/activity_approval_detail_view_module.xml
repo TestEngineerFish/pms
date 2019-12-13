@@ -97,7 +97,7 @@
             style="@style/style_rl_normal">
             <TextView
                 style="@style/style_text_approval_left"
-                android:text="@string/tv_applicat"
+                android:text="@string/tv_applicat_detail"
 
                 />
             <TextView

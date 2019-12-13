@@ -1,4 +1,4 @@
-include ':moduleUser', ':moduleMain', ':moduleRepairs', ':moduleComplain', ':modulePayment', ':moduleHealth', ':moduleMine', ':modulePatrol', ':moduleExtra', ':modulesendorder', ':moduleApproval', ':modulePlan'
+include ':moduleUser', ':moduleMain', ':moduleRepairs', ':moduleComplain', ':modulePayment', ':moduleHealth', ':moduleMine', ':modulePatrol', ':moduleExtra', ':modulesendorder', ':moduleApproval', ':modulePlan', ':moduleOrderPreview', ':moduleOperatePercent'
 
 
 

@@ -39,6 +39,8 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
             Glide.with(mContext)
                     .load(HttpUrlUtil.getImageServerUrl(model.getPath()))
                     .centerCrop()
+                    .placeholder(R.mipmap.place_holder_img)
+                    .error(R.mipmap.place_holder_img)
                     .into(holder.ivPhoto);
         }
         if(listener!=null){

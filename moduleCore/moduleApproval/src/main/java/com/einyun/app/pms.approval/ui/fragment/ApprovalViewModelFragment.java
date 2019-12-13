@@ -170,8 +170,8 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                     binding.tvApprovalNum.setText(checkPointModel.getAudit_code());//审批单号
                     binding.tvApprovalType.setText(getTypeValue(auditType,auditSubType));
                     binding.tvIntallment.setText(checkPointModel.getDivide_name());
-                    binding.tvApplyTime.setText(TimeUtil.getAllTimeNoSecond(checkPointModel.getApply_date()));
-                    binding.tvApprovalTime.setText(TimeUtil.getAllTimeNoSecond(checkPointModel.getAudit_date()));
+                    binding.tvApplyTime.setText(TimeUtil.getAllTime(checkPointModel.getApply_date()));
+                    binding.tvApprovalTime.setText(TimeUtil.getAllTime(checkPointModel.getAudit_date()));
 
 
 

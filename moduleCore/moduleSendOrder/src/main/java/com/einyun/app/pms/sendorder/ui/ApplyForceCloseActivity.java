@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
@@ -42,13 +44,14 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
     private PhotoSelectAdapter photoSelectAdapter;
     private static final int MAX_PHOTO_SIZE = 4;
     private ApplyCloseRequest request;
-    @Autowired(name = RouteKey.KEY_SEND_ORDER_DETAIL)
-    public DisttributeDetialModel model;
+    @Autowired(name = RouteKey.KEY_ORDER_ID)
+    public String id;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
-
+    @Autowired(name = RouteKey.KEY_CLOSE_ID)
+    String keyId;
     @Override
     protected ApplyCloseViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(ApplyCloseViewModel.class);
@@ -71,7 +74,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_close);
         request = new ApplyCloseRequest();
-        request.setID(model.getData().getInfo().getID());
+        request.setID(id);
         request.setTaskID(taskId);
         request.setProInsID(proInsId);
         selectPng();
@@ -125,7 +128,13 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
             @Override
             public void onClick(View v) {
                 request.setDesc(binding.applyCloseReason.getString());
-                uploadImages();
+                if (TextUtils.isEmpty(request.getDesc())) {
+                    ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
+                } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
+                    ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);
+                } else {
+                    uploadImages();
+                }
             }
         });
     }
@@ -138,14 +147,28 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                viewModel.applyClose(request, data).observe(this, model -> {
-                    if (model.getCode().equals("0")) {
-                        ToastUtil.show(this, R.string.apply_close_success);
-                        this.finish();
-                    } else {
-                        ToastUtil.show(this, model.getMsg());
+                if (StringUtil.isNullStr(keyId)) {
+                    if (RouteKey.KEY_PLAN.equals(keyId)){
+                        viewModel.applyClosePlan(request, data).observe(this, model -> {
+                            if (model.getCode().equals("0")) {
+                                ToastUtil.show(this, R.string.apply_close_success);
+                                this.finish();
+                            } else {
+                                ToastUtil.show(this, model.getMsg());
+                            }
+                        });
                     }
-                });
+                } else {
+                    viewModel.applyClose(request, data).observe(this, model -> {
+                        if (model.getCode().equals("0")) {
+                            ToastUtil.show(this, R.string.apply_close_success);
+                            this.finish();
+                        } else {
+                            ToastUtil.show(this, model.getMsg());
+                        }
+                    });
+                }
+
             }
         });
     }

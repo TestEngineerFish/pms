@@ -25,12 +25,21 @@ public class RouteKey {
     public static final String KEY_ORDER_ID="orderId";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
     public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
+    public static final String FRAGMENT_WORK_PREVIEW_PLAN="WORK_PREVIEW_PLAN";
+    public static final String FRAGMENT_WORK_PREVIEW_PATRO="WORK_PREVIEW_PATRO";
     public static final String KEY_SEND_ORDER_DETAIL="KEY_SEND_ORDER_DETAIL";
+    public static final String FRAGMENT_PLAN_OWRKORDER_PENDING="FRAGMENT_PLAN_OWRKORDER_PENDING";
+    public static final String FRAGMENT_PLAN_OWRKORDER_DONE="FRAGMENT_PLAN_OWRKORDER_DONE";
+    public static final String KEY_ORDER_DETAIL_EXTEN="KEY_ORDER_DETAIL_EXTEN";
     public static final String KEY_TIAO_XIAN_ID="tiaoXianId";
     public static final String KEY_PARENT_ID="parentId";
     public static final String KEY_DIVIDE_ID="divideId";
     public static final String KEY_PROJECT_ID="projectId";
+    public static final String KEY_LATER_ID="KEY_LATER_ID";
+    public static final String KEY_CLOSE_ID="KEY_CLOSE_ID";
 
+    public static final String KEY_PLAN="KEY_PLAN";
+    public static final String KEY_SEND_ORDER="KEY_SEND_ORDER";
     //选择处理人
     public static final String KEY_ORG_ID="org_id";
     public static final String KEY_DIM_CODE="dimCode";

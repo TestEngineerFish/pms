@@ -17,7 +17,7 @@
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_30"
-        android:background="@drawable/bg_shadow"
+        android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -61,17 +61,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_20"
                 android:text="(最多四张)"
-                android:textColor="@color/red"
                 android:textSize="@dimen/font_size12" />
         </LinearLayout>
 
-        <LinearLayout style="@style/ll_handle_imgs">
+        <LinearLayout style="@style/work_order_detail_ln">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/send_order_img_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginLeft="@dimen/px_20"
+                >
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

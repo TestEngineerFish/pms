@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/report_form_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_bg_color" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:text="全部收费项目"
+                    android:textSize="@dimen/font_size16" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_25"
+                    android:layout_height="@dimen/px_25"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:src="@drawable/right_arrow"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+        </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</layout>

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/px_30"
-            android:background="@drawable/bg_shadow"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -116,13 +116,18 @@
                     style="@style/work_order_detail_txt_left"
                     android:text="申请照片" />
             </LinearLayout>
+            <LinearLayout style="@style/work_order_detail_ln"
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_marginBottom="@dimen/px_30">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/send_order_postpone_pic_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/send_order_postpone_pic_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </layout>

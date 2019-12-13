@@ -24,6 +24,55 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+
+    override fun getPatroPreviewList(
+        request: OrderPreviewRequest,
+        callBack: CallBack<OrderPreviewPage>
+    ): LiveData<OrderPreviewPage> {
+        return instance?.getPlanPreviewList(request, callBack)!!        }
+
+    override fun getPlanPreviewList(
+        request: OrderPreviewRequest,
+        callBack: CallBack<OrderPreviewPage>
+    ): LiveData<OrderPreviewPage> {
+        return instance?.getPlanPreviewList(request, callBack)!!     }
+
+    override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
+        return instance?.planDoneDetial(request, callBack)!!
+    }
+
+    override fun planExten(
+        request: ExtenDetialRequest,
+        callBack: CallBack<BaseResponse<Object>>
+    ): LiveData<BaseResponse<Object>> {
+        return instance?.planExten(request, callBack)!!
+    }
+
+    override fun planApplyClose(
+        request: ApplyCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        return instance?.planApplyClose(request, callBack)!!
+    }
+
+    override fun planOrderDetail(id: String, callBack: CallBack<PlanInfo>) {
+        return instance?.planOrderDetail(id, callBack)!!
+    }
+
+    override fun planWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage> {
+        return instance?.planWaitPage(request, callBack)!!
+    }
+
+    override fun planClosedPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage> {
+        return instance?.planClosedPage(request, callBack)!!
+    }
+
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
         instance?.patrolDoneDetial(request,callBack)
     }

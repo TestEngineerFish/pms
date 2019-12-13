@@ -36,6 +36,8 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     public static final String SELECT_ORDER_TYPE2 = "SELECT_ORDER_TYPE2";//工单类型2
     public static final String SELECT_ORDER_TYPE3 = "SELECT_ORDER_TYPE3";//工单类型3
     public static final String SELECT_IS_OVERDUE = "SELECT_IS_OVERDUE";//是否超期;
+    public static final String SELECT_TIME_CIRCLE = "SELECT_TIME_CIRCLE";//周期;
+    public static final String SELECT_DATE = "SELECT_DATE";
     private View view;
     private Activity context;
     private AdapterView.OnItemClickListener mListener;
@@ -45,7 +47,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     private List<SelectModel> selectModelListOrig = new ArrayList<>();//复制原始数据
     private String listJsonString;
     private OnSelectedListener onSelectedListener;
-    private HashMap<String,SelectModel> selectedMap=new HashMap<>();
+    private HashMap<String, SelectModel> selectedMap = new HashMap<>();
 
     public SelectPopUpView(Activity context, List<SelectModel> selectModelList) {
         super(context);
@@ -86,27 +88,28 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
 
                     @Override
                     public void onBindItem(SelectPopItemBinding binding, SelectModel model, int position) {
-                        if (model.getContent().equals("是")||model.getContent().equals("否")){
+                        if (model.getContent().equals("是") || model.getContent().equals("否")) {
                             binding.tvChoose.setVisibility(View.VISIBLE);
-                         if (model.getIsCheck()){
-                             binding.tvChoose.setImageResource(R.drawable.blue_oval);
-                             binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
-                         }else {
-                             binding.tvChoose.setImageResource(R.drawable.blue_oval_stock);
-                             binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
-                         }
-                        }else {
+                            if (model.getIsCheck()) {
+                                binding.tvChoose.setImageResource(R.drawable.blue_oval);
+                                binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
+                            } else {
+                                binding.tvChoose.setImageResource(R.drawable.blue_oval_stock);
+                                binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
+                            }
+                        } else {
                             binding.tvChoose.setVisibility(View.GONE);
-                        if (model.getIsCheck()) {
-                            binding.tvContent.setBackgroundResource(R.drawable.iv_pop_item_choise);
-                        } else {
-                            binding.tvContent.setBackgroundResource(R.drawable.shape_line);
+                            if (model.getIsCheck()) {
+                                binding.tvContent.setBackgroundResource(R.drawable.iv_pop_item_choise);
+                            } else {
+                                binding.tvContent.setBackgroundResource(R.drawable.shape_line);
+                            }
+                            if (model.getIsCheck()) {
+                                binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
+                            } else {
+                                binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
+                            }
                         }
-                        if (model.getIsCheck()) {
-                            binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
-                        } else {
-                            binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
-                        }}
 
                     }
 
@@ -168,103 +171,111 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     }
 
     protected void onSelected(SelectModel data) {
-        if(SELECT_IS_OVERDUE.equals(data.getType())){
-            selectedMap.put(SELECT_IS_OVERDUE,data);
-        } else if (!TextUtils.isEmpty(data.getTypeId()) && !TextUtils.isEmpty(data.getParentId())
-                && data.getParentId().equals(data.getTypeId())){
-            selectedMap.put(SELECT_LINE,data);
-        }else if(data.getParentId().equals(selectedMap.get(SELECT_LINE).getId())){
-            selectedMap.put(SELECT_ORDER_TYPE,data);
-        }else if(data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE).getId())){
-            selectedMap.put(SELECT_ORDER_TYPE2,data);
-        }else if(data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE2).getId())){
-            selectedMap.put(SELECT_ORDER_TYPE3,data);
+        if (SELECT_TIME_CIRCLE.equals(data.getType())) {
+            selectedMap.put(SELECT_TIME_CIRCLE, data);
+        } else if (SELECT_IS_OVERDUE.equals(data.getType())) {
+            selectedMap.put(SELECT_IS_OVERDUE, data);
+            if (SELECT_DATE.equals(data.getType())) {
+                selectedMap.put(SELECT_DATE, data);
+            } else if (SELECT_IS_OVERDUE.equals(data.getType())) {
+                selectedMap.put(SELECT_IS_OVERDUE, data);
+            } else if (!TextUtils.isEmpty(data.getTypeId()) && !TextUtils.isEmpty(data.getParentId())
+                    && data.getParentId().equals(data.getTypeId())) {
+                selectedMap.put(SELECT_LINE, data);
+            } else if (data.getParentId().equals(selectedMap.get(SELECT_LINE).getId())) {
+                selectedMap.put(SELECT_ORDER_TYPE, data);
+            } else if (data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE).getId())) {
+                selectedMap.put(SELECT_ORDER_TYPE2, data);
+            } else if (data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE2).getId())) {
+                selectedMap.put(SELECT_ORDER_TYPE3, data);
+            }
         }
     }
 
 
-    /**
-     * 设置选中数据处理
-     */
-    private void handleCheck(List<SelectModel> list, SelectModel selectModel) {
-        if (selectModel.getIsCheck()) {
-            selectModel.setIsCheck(false);
-        } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (!list.get(i).getId().equals(selectModel.getId())) {
-                    list.get(i).setIsCheck(false);
-                } else {
-                    list.get(i).setIsCheck(true);
+        /**
+         * 设置选中数据处理
+         */
+        private void handleCheck (List < SelectModel > list, SelectModel selectModel){
+            if (selectModel.getIsCheck()) {
+                selectModel.setIsCheck(false);
+            } else {
+                for (int i = 0; i < list.size(); i++) {
+                    if (!list.get(i).getId().equals(selectModel.getId())) {
+                        list.get(i).setIsCheck(false);
+                    } else {
+                        list.get(i).setIsCheck(true);
+                    }
                 }
+            }
+
+        }
+
+        /**
+         * 清除数据
+         */
+        private void cleanData (List < SelectModel > selectModelList) {
+            for (int i = 0; i < selectModelList.size(); i++) {
+                selectModelList.get(i).setIsCheck(false);
             }
         }
 
-    }
+        /**
+         * 重置数据
+         */
+        private void reCoverData () {
+            selectModelList = new Gson().fromJson(listJsonString, new TypeToken<List<SelectModel>>() {
+            }.getType());
+            selectedMap.clear();
+            adapter.setDataList(selectModelList);
+        }
 
-    /**
-     * 清除数据
-     */
-    private void cleanData(List<SelectModel> selectModelList) {
-        for (int i = 0; i < selectModelList.size(); i++) {
-            selectModelList.get(i).setIsCheck(false);
+
+        public void initPopWindow () {
+            this.setContentView(view);
+            selectPopUpBinding = DataBindingUtil.bind(view);
+            // 设置弹出窗体的宽
+            this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+            // 设置弹出窗体的高
+            this.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+            // 设置弹出窗体可点击()
+            this.setFocusable(true);
+            this.setOutsideTouchable(true);
+            ColorDrawable dw = new ColorDrawable(0x00FFFFFF);
+            //设置弹出窗体的背景
+            this.setBackgroundDrawable(dw);
+            this.setAnimationStyle(R.style.BottomDialogAnimation);
+
+        }
+
+        @Override
+        public void onClick (View v){
+            if (v.getId() == R.id.canclel) {
+                reCoverData();//重置
+            }
+            if (v.getId() == R.id.iv_close) {
+                this.dismiss();
+            }
+            if (v.getId() == R.id.confirm) {
+                onSelectedListener.onSelected(selectedMap);
+                this.dismiss();
+            }
+
+        }
+
+        /**
+         * 设置确认回调
+         */
+        public interface OnSelectedListener {
+            void onSelected(Map<String, SelectModel> selected);
+        }
+
+        public SelectPopUpView setOnSelectedListener (OnSelectedListener onSelectedListener){
+            this.onSelectedListener = onSelectedListener;
+            return this;
         }
     }
 
-    /**
-     * 重置数据
-     */
-    private void reCoverData() {
-        selectModelList = new Gson().fromJson(listJsonString, new TypeToken<List<SelectModel>>() {
-        }.getType());
-        selectedMap.clear();
-        adapter.setDataList(selectModelList);
-    }
-
-
-    public void initPopWindow() {
-        this.setContentView(view);
-        selectPopUpBinding = DataBindingUtil.bind(view);
-        // 设置弹出窗体的宽
-        this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        // 设置弹出窗体的高
-        this.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        // 设置弹出窗体可点击()
-        this.setFocusable(true);
-        this.setOutsideTouchable(true);
-        ColorDrawable dw = new ColorDrawable(0x00FFFFFF);
-        //设置弹出窗体的背景
-        this.setBackgroundDrawable(dw);
-        this.setAnimationStyle(R.style.BottomDialogAnimation);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.canclel) {
-            reCoverData();//重置
-        }
-        if (v.getId() == R.id.iv_close) {
-            this.dismiss();
-        }
-        if (v.getId() == R.id.confirm) {
-            onSelectedListener.onSelected(selectedMap);
-            this.dismiss();
-        }
-
-    }
-
-    /**
-     * 设置确认回调
-     */
-    public interface OnSelectedListener {
-        void onSelected(Map<String,SelectModel> selected);
-    }
-
-    public SelectPopUpView setOnSelectedListener(OnSelectedListener onSelectedListener) {
-        this.onSelectedListener = onSelectedListener;
-        return this;
-    }
-}
 
 
 

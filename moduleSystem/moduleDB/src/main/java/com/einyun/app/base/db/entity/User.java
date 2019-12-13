@@ -1,6 +1,7 @@
 package com.einyun.app.base.db.entity;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -11,8 +12,9 @@ import java.util.Date;
 
 @Entity(tableName = "users", indices = {@Index(value = {"user_name"}, unique = true)})
 public class User implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
     @ColumnInfo(name = "user_name")
     private String userName;
@@ -29,11 +31,11 @@ public class User implements Serializable {
         this.updateTime = new Date();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

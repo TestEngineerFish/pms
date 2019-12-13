@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical"
+        tools:context=".core.ui.OrderListActivity">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_45"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_20"
+            android:text="物业工单"
+            android:textStyle="bold"
+            android:textColor="@color/txt_black_order"
+            android:textSize="@dimen/font_size16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_216"
+            android:layout_marginTop="@dimen/px_30"
+            android:background="@color/activity_bg_color"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/og_send_order"
+                style="@style/order_list_main"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="vertical">
+
+                <ImageView style="@style/order_list_main_img"
+                    android:src="@mipmap/send_icon"/>
+
+                <TextView
+                    style="@style/order_list_main_txt"
+                    android:text="派工单" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/og_unwell_order"
+                style="@style/order_list_main"
+                android:layout_marginLeft="@dimen/px_20"
+                android:orientation="vertical">
+
+                <ImageView style="@style/order_list_main_img"
+                    android:src="@mipmap/un_well"/>
+
+                <TextView
+                    style="@style/order_list_main_txt"
+                    android:text="不合格单" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/og_plan_order"
+                style="@style/order_list_main"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginRight="@dimen/px_30"
+                android:orientation="vertical">
+
+                <ImageView style="@style/order_list_main_img"
+                    android:src="@mipmap/plan_icon"/>
+
+                <TextView
+                    style="@style/order_list_main_txt"
+                    android:text="计划工单" />
+            </LinearLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_216"
+        android:layout_marginTop="@dimen/px_30"
+        android:background="@color/activity_bg_color"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/og_patro_order"
+            style="@style/order_list_main"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30"
+            android:orientation="vertical">
+
+            <ImageView style="@style/order_list_main_img"
+                android:src="@mipmap/patro_icon"/>
+
+            <TextView
+                style="@style/order_list_main_txt"
+                android:text="巡查工单" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_marginRight="@dimen/px_30"
+            android:layout_width="@dimen/px_0"
+            android:layout_height="@dimen/px_0"
+            android:orientation="vertical">
+        </LinearLayout>
+    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_45"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_30"
+            android:text="客户服务"
+            android:textStyle="bold"
+            android:textColor="@color/txt_black_order"
+            android:textSize="@dimen/font_size16" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_216"
+            android:layout_marginTop="@dimen/px_30"
+            android:background="@color/activity_bg_color"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/order_list_main"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="vertical">
+
+                <ImageView style="@style/order_list_main_img"
+                    android:src="@mipmap/complain"/>
+
+                <TextView
+                    style="@style/order_list_main_txt"
+                    android:text="客户投诉" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/order_list_main"
+                android:layout_marginLeft="@dimen/px_20"
+                android:orientation="vertical">
+
+                <ImageView style="@style/order_list_main_img"
+                    android:src="@mipmap/fix"/>
+
+                <TextView
+                    style="@style/order_list_main_txt"
+                    android:text="客户报修" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/order_list_main"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginRight="@dimen/px_30"
+                android:orientation="vertical">
+
+                <ImageView style="@style/order_list_main_img"
+                    android:src="@mipmap/ask"/>
+
+                <TextView
+                    style="@style/order_list_main_txt"
+                    android:text="客户问询" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

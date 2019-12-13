@@ -76,6 +76,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     private String checkResult;
     public static String RESULT_PASS = "1";
     public static String RESULT_REJECT = "0";
+
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
@@ -112,7 +113,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             public void onClick(View v) {
                 ARouter.getInstance()
                         .build(RouterUtils.ACTIVITY_LATE)
-                        .withSerializable(RouteKey.KEY_SEND_ORDER_DETAIL, detialModel)
+                        .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, detialModel.getExtensionApplication())
+                        .withString(RouteKey.KEY_ORDER_ID, detialModel.getData().getInfo().getID())
                         .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                         .navigation();
             }
@@ -125,8 +127,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      */
     private void loadData() {
         if (fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)) {
-            viewModel.doneDetial(taskNodeId,proInsId).observe(this, model -> updateUI(model));
-        }else{
+            viewModel.doneDetial(taskNodeId, proInsId).observe(this, model -> updateUI(model));
+        } else {
             viewModel.pendingDetial(taskId).observe(this, model -> updateUI(model));
         }
     }
@@ -214,20 +216,19 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         showForceClose();
         showPostpone();
         //如果是已办,申请延期中，申请强制关闭中，全部显示详情
-        if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)
-                ||detialModel.getExtApplication(ApplyType.FORCECLOSE.getState())!=null
-                ||detialModel.getExtApplication(ApplyType.POSTPONE.getState())!=null){
+        if (fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)
+                || detialModel.getExtApplication(ApplyType.FORCECLOSE.getState()) != null
+                || detialModel.getExtApplication(ApplyType.POSTPONE.getState()) != null) {
             onlyShowDetial();
             return;
         }
         int state = Integer.parseInt(stateStr);
         if (state == OrderState.NEW.getState()) {//接单-显示接单按钮
             showTakeOrder();
-        }
-        else if (detialModel.getData().getInfo().isReply()>0) {//批复-显示批复按钮
+        } else if (detialModel.getData().getInfo().isReply() > 0) {//批复-显示批复按钮
             showReply();
             return;
-        }else if ((state == OrderState.HANDING.getState())) {//处理-提交
+        } else if ((state == OrderState.HANDING.getState())) {//处理-提交
             showSubmit();
         } else if (state == OrderState.APPLY.getState()) {//验收
             showApply();
@@ -276,7 +277,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     /**
      * 只显示详情
      */
-    private void onlyShowDetial(){
+    private void onlyShowDetial() {
         binding.sendOrderDetailSubmit.setVisibility(View.GONE);
         binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
         binding.orderHandle.setWorkOrder(detialModel);
@@ -287,12 +288,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      * 显示申请延期信息
      */
     private void showPostpone() {
-        ExtensionApplication extPostpone=detialModel.getExtApplication(ApplyType.POSTPONE.getState());
-        if(extPostpone!=null){
+        ExtensionApplication extPostpone = detialModel.getExtApplication(ApplyType.POSTPONE.getState());
+        if (extPostpone != null) {
             binding.postponeInfo.getRoot().setVisibility(View.VISIBLE);
             binding.postponeInfo.setExt(extPostpone);
-            if(extPostpone.getApplyFiles()!=null){
-                PhotoListAdapter adapter=new PhotoListAdapter(this);
+            if (extPostpone.getApplyFiles() != null) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.postponeInfo.sendOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
                         this,
                         LinearLayoutManager.HORIZONTAL,
@@ -309,12 +310,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      * 显示强制闭单信息
      */
     private void showForceClose() {
-        ExtensionApplication extForceClose=detialModel.getExtApplication(ApplyType.FORCECLOSE.getState());
-        if(extForceClose!=null){
+        ExtensionApplication extForceClose = detialModel.getExtApplication(ApplyType.FORCECLOSE.getState());
+        if (extForceClose != null) {
             binding.forceCloseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.forceCloseInfo.setExt(extForceClose);
-            if(extForceClose.getApplyFiles()!=null){
-                PhotoListAdapter adapter=new PhotoListAdapter(this);
+            if (extForceClose.getApplyFiles() != null) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.forceCloseInfo.sendOrderClosePicList.setLayoutManager(new LinearLayoutManager(
                         this,
                         LinearLayoutManager.HORIZONTAL,
@@ -425,9 +426,9 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         int state = Integer.parseInt(detialModel.getData().getInfo().getStatus());
         if (state == OrderState.NEW.getState()) {
             takeOrder();//接单
-        } else if(detialModel.getData().getInfo().isReply()>0){
+        } else if (detialModel.getData().getInfo().isReply() > 0) {
             reply();
-        }else if (state == OrderState.HANDING.getState()) {
+        } else if (state == OrderState.HANDING.getState()) {
             submit();//处理-提交
         } else if (state == OrderState.APPLY.getState()) {
             checkAccept();//验收
@@ -437,7 +438,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     /**
      * 批复
      */
-    private void reply(){
+    private void reply() {
         viewModel.reply(taskId).observe(this, aBoolean -> {
             tipDialog.setTip(getString(R.string.text_reply_success));
             tipDialog.setTipDialogListener(dialog -> {
@@ -460,7 +461,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             request.setId(orderId);
             request.setTaskId(taskId);
             request.setFCheckResult(checkResult);
-            request.setFEvaluation(binding.checkAndAccept.ratingBar.getSelectedStarts()+"");
+            request.setFEvaluation(binding.checkAndAccept.ratingBar.getSelectedStarts() + "");
             request.setFCheckContent(binding.checkAndAccept.etLimitSuggestion.getString());
             request.setFCheckDate(TimeUtil.getAllTime(TimeUtil.currentTimeMillis()));
             viewModel.check(request).observe(this, aBoolean -> {
@@ -492,7 +493,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      * @return
      */
     private boolean validateApply() {
-        if(TextUtils.isEmpty(checkResult)){
+        if (TextUtils.isEmpty(checkResult)) {
             ToastUtil.show(CommonApplication.getInstance(), R.string.text_alert_check_result);
             return false;
         }
@@ -528,22 +529,23 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (v.getId() == R.id.send_order_apply_late) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_LATE)
-                    .withSerializable(RouteKey.KEY_SEND_ORDER_DETAIL, detialModel)
+                    .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, detialModel.getExtensionApplication())
+                    .withString(RouteKey.KEY_ORDER_ID, detialModel.getData().getInfo().getID())
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                     .navigation();
         }
         if (v.getId() == R.id.apply_postpone) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_CLOSE)
-                    .withSerializable(RouteKey.KEY_SEND_ORDER_DETAIL, detialModel)
+                    .withString(RouteKey.KEY_ORDER_ID, detialModel.getData().getInfo().getID())
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                    .withString(RouteKey.KEY_TASK_ID,taskId)
+                    .withString(RouteKey.KEY_TASK_ID, taskId)
                     .navigation();
         }
         if (v.getId() == R.id.iv_right_option) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_HISTORY)
-                    .withString(RouteKey.KEY_ORDER_ID,orderId)
+                    .withString(RouteKey.KEY_ORDER_ID, orderId)
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                     .navigation();
         }
@@ -577,9 +579,10 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         }
         return userModuleService.getUserId().equals(detialModel.getData().getInfo().getCheckID());
     }
-/**
- * 设置图片间隔
- * */
+
+    /**
+     * 设置图片间隔
+     */
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 

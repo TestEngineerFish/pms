@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -39,6 +40,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     String divideID;
     @Autowired(name = RouteKey.KEY_PROJECT_ID)
     String projectID;
+
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -50,14 +52,14 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
         super.initViews(savedInstanceState);
         ARouter.getInstance().inject(this);
         setHeadTitle(R.string.text_resend_order);
-        resendOrderRequest=new ResendOrderRequest();
+        resendOrderRequest = new ResendOrderRequest();
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
-         binding.resendName.setText(model.getFullname());
-         resendOrderRequest.setId(orderId);
-         resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
-         resendOrderRequest.setTaskId(taskId);
-         resendOrderRequest.setUserId(model.getId());
-         resendOrderRequest.setUserName(model.getFullname());
+            binding.resendName.setText(model.getFullname());
+            resendOrderRequest.setId(orderId);
+            resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
+            resendOrderRequest.setTaskId(taskId);
+            resendOrderRequest.setUserId(model.getId());
+            resendOrderRequest.setUserName(model.getFullname());
         });
     }
 
@@ -65,7 +67,6 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     public int getLayoutId() {
         return R.layout.activity_resend_order;
     }
-
 
 
     @Override
@@ -78,23 +79,28 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     @Override
     public void onClick(View v) {
 
-            if (v.getId()==R.id.resend_submit_btn){
-                viewModel.resendOrder(resendOrderRequest).observe(this,model->{
-                    if (model.getCode().equals("0")){
-                        ToastUtil.show(ResendOrderActivity.this,R.string.resend_success);
+        if (v.getId() == R.id.resend_submit_btn) {
+            if (TextUtils.isEmpty(resendOrderRequest.getUserName())) {
+                ToastUtil.show(ResendOrderActivity.this, R.string.txt_plese_enter_reason);
+            } else if (TextUtils.isEmpty(resendOrderRequest.getOpinion())) {
+                ToastUtil.show(ResendOrderActivity.this, R.string.txt_plese_select_img);
+            } else {
+                viewModel.resendOrder(resendOrderRequest).observe(this, model -> {
+                    if (model.getCode().equals("0")) {
+                        ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
                         this.finish();
-                    }else {
-                        ToastUtil.show(ResendOrderActivity.this,model.getMsg());
+                    } else {
+                        ToastUtil.show(ResendOrderActivity.this, model.getMsg());
                     }
                 });
             }
-        else {
-                ARouter.getInstance()
-                        .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
-                        .withString(RouteKey.KEY_DIVIDE_ID,divideID)
-                        .withString(RouteKey.KEY_PROJECT_ID,projectID)
-                        .navigation();
-            }
+        } else {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                    .withString(RouteKey.KEY_DIVIDE_ID, divideID)
+                    .withString(RouteKey.KEY_PROJECT_ID, projectID)
+                    .navigation();
+        }
     }
 
 }
