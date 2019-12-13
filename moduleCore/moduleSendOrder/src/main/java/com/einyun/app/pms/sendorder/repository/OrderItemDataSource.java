@@ -35,7 +35,6 @@ public class OrderItemDataSource extends BaseDataSource<Distribute> {
 
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
-        Logger.d(request.getTypeRe());
         request.setPage(pageBean.getPage());
         request.setPageSize(pageBean.getPageSize());
         ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();

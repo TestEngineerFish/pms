@@ -87,7 +87,9 @@ public class PatrolListRepo {
             }
             //更新已缓存状态
             updateCachedStates(userId);
-            callBack.call(true);
+            if(callBack!=null){
+                callBack.call(true);
+            }
         });
     }
 
@@ -101,5 +103,16 @@ public class PatrolListRepo {
             patrolDao.insertDigest(patrols);
         });
 
+    }
+
+    /**
+     * 清空数据
+     * @param userId
+     * @param listType
+     */
+    public void clearAll(String userId,int listType){
+        db.runInTransaction(() -> {
+            patrolDao.deleteAll(userId,listType);
+        });
     }
 }

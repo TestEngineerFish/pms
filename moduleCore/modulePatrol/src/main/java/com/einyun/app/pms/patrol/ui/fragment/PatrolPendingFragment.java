@@ -35,7 +35,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     public static PatrolPendingFragment newInstance() {
         return new PatrolPendingFragment();
     }
-
+    boolean hasInit;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_patrol_pending;
@@ -78,7 +78,10 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     public void onResume() {
         super.onResume();
-//        viewModel.refresh();
+        if(hasInit){
+            viewModel.refresh();
+        }
+        hasInit=true;
     }
 
     protected void loadData() {

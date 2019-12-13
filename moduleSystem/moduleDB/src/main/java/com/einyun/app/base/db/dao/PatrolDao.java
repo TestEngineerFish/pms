@@ -33,8 +33,8 @@ public interface PatrolDao {
     @Query("update patrol_digests set isCached=1 where ID_=:orderId and userId=:userId")
     void updateCachedState(String orderId,String userId);
 
-    @Query("update patrol_digests set isCached=1 where ID_ in (select id from patrols_info) and userId=:userId")
-    void updateCachedStates(String userId);
+    @Query("update patrol_digests set isCached=1 where ID_ in (select id from patrols_info where userId=:userId) and userId=:userId")
+    void updateCachedStates(@NonNull String userId);
 
     @Query("delete from patrol_digests where ID_ not in(:ids) and userId=:userId" )
     void sync(String userId,String... ids);

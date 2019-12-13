@@ -22,6 +22,9 @@ public class DoneBoundaryCallBack extends PatrolPendingBoundaryCallBack{
         service.patrolClosedPage(request, new CallBack<PatrolWorkOrderPage>() {
             @Override
             public void call(PatrolWorkOrderPage data) {
+                if(data.isEmpty()){
+                    clearAll();
+                }
                 PatrolListTypeConvert convert=new PatrolListTypeConvert();
                 List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
                 wrapList(patrols);

@@ -33,7 +33,7 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
     public PatrolPageRequest request;
     PatrolPendingBoundaryCallBack patrolPendingBoundaryCallBack;
     DoneBoundaryCallBack doneBoundaryCallBack;
-
+    public int listType= ListType.PENDING.getType();
 
     public PatrolListViewModel() {
         request = new PatrolPageRequest();
@@ -48,6 +48,17 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
     public void refresh() {
         if(patrolPendingBoundaryCallBack!=null){
             patrolPendingBoundaryCallBack.refresh();
+        }
+    }
+
+    /**
+     * 筛选条件变化
+     */
+    public void onCondition(){
+        if(listType==ListType.PENDING.getType()){
+            refresh();
+        }else{
+            refreshClosedList();
         }
     }
 

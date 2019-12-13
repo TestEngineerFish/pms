@@ -11,6 +11,7 @@ import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
@@ -41,6 +42,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         request=new PatrolDetialRequest();
     }
+
     /**
      * 工作节点
      *
@@ -138,16 +140,25 @@ public class PatrolViewModel extends BaseUploadViewModel {
         String jsonStr = new Gson().toJson(data);
         PatrolInfoTypeConvert convert = new PatrolInfoTypeConvert();
         PatrolInfo patrolInfo = convert.stringToSomeObject(jsonStr);
-        patrolInfo.setId(orderId);
         patrolInfo.setUserId(userModuleService.getUserId());
         patrolInfo.setId(orderId);
         patrolInfo.setTaskId(request.getTaskId());
-        if (patrolInfo == null) {
-            PatrolLocal patrolLocal = new PatrolLocal();
-            patrolLocal.setOrderId(orderId);
-            patrolLocal.setUserId(userModuleService.getUserId());
-            repo.saveLocalData(patrolLocal);
-        }
+        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
+            @Override
+            public void call(PatrolLocal data) {
+                if (data == null) {
+                    PatrolLocal patrolLocal = new PatrolLocal();
+                    patrolLocal.setOrderId(orderId);
+                    patrolLocal.setUserId(userModuleService.getUserId());
+                    repo.saveLocalData(patrolLocal);
+                }
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
         repo.updatePatrolCached(orderId, userModuleService.getUserId());
         repo.insertPatrolInfo(patrolInfo);
         return patrolInfo;

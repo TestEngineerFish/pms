@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationView;
@@ -35,6 +38,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
     List<BaseViewModelFragment> fragmentList=new ArrayList<>();
     final int TAB_PENDING=0;
     final int TAB_CLOSED=1;
+    PatrolFragmentTabAdapter adapter;
 
     @Override
     protected PatrolListViewModel initViewModel() {
@@ -54,7 +58,8 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         mTitles=getResources().getStringArray(R.array.order_list);
         fragmentList.add(TAB_PENDING,PatrolPendingFragment.newInstance());
         fragmentList.add(TAB_CLOSED, PatrolClosedListFragment.newInstance());
-        binding.vpSendWork.setAdapter(new PatrolFragmentTabAdapter(getSupportFragmentManager(),fragmentList));
+        adapter=new PatrolFragmentTabAdapter(getSupportFragmentManager(),fragmentList);
+        binding.vpSendWork.setAdapter(adapter);
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
         binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +73,32 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         binding.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SelectPopUpView(PatrolListActivity.this,null).showAsDropDown(binding.sendWorkOrerTabSelectLn);
+//                new SelectPopUpView(PatrolListActivity.this,null).showAsDropDown(binding.sendWorkOrerTabSelectLn);
+            }
+        });
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        binding.vpSendWork.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==TAB_PENDING){
+                    viewModel.listType= ListType.PENDING.getType();
+                }else {
+                    viewModel.listType=ListType.DONE.getType();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }
@@ -76,6 +106,8 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         viewModel.request.setDivideId(orgModel.getId());
+        binding.periodSelected.setText(orgModel.getName());
+        viewModel.onCondition();
     }
 
     class PatrolFragmentTabAdapter extends FragmentPagerAdapter{
@@ -101,6 +133,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         public CharSequence getPageTitle(int position) {
             return mTitles[position];
         }
+
     }
 }
 

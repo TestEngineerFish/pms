@@ -37,8 +37,7 @@ public class OrderItemDataSource extends BaseDataSource<DistributeWorkOrder> {
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
         request.setPage(pageBean.getPage());
         request.setPageSize(pageBean.getPageSize());
-        request.setShowTotal(0);
-        request.setTypeRe(null);
+        request.setShowTotal(true);
         ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();
         if (tag.equals(RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             request.setPage(pageBean.getPage());

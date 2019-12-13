@@ -30,7 +30,7 @@ public interface PatrolInfoDao {
     @Query("delete from patrol_local where orderId=:orderId and userId=:userId")
     void deletePatrolLocal(String orderId,String userId);
 
-    @Query("delete from patrols_info where taskId not in(:taskIds) and userId=:userId")
+    @Query("delete from patrols_info where id not in(:taskIds) and userId=:userId")
     void sync(String userId,String...taskIds);
 
     @Query("delete from patrol_local where orderId not in(:ids) and userId=:userId")

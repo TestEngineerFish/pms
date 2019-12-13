@@ -139,7 +139,6 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         //初始化数据，LiveData自动感知，刷新页面
         binding.sendOrderRef.setRefreshing(true);
         String fragmentTag = getFragmentTag();
-        viewModel.getRequest().setTypeRe(fragmentTag);
         if (viewModel.getOrgModel() != null) {
             viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
         }

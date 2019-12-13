@@ -17,6 +17,7 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.pms.pointcheck.BR;
 import com.einyun.app.pms.pointcheck.R;
 import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckListBinding;
@@ -100,7 +101,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
                 }
             };
         }
-//        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.checkPointList);
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.checkPointList);
         binding.checkPointList.setAdapter(adapter);
         adapter.setOnItemClick(this);
         loadPagingData();

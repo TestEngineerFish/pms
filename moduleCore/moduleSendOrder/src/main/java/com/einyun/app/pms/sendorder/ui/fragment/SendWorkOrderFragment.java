@@ -61,10 +61,10 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
  * @Version: 1.0
  */
 public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> implements ItemClickListener<Distribute> {
-    //    private SendOrderAdapter adapter;//适配器
     RVPageListAdapter<ItemWorkSendBinding, Distribute> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    boolean hasInit;
     public static SendWorkOrderFragment newInstance(Bundle bundle) {
         SendWorkOrderFragment fragment = new SendWorkOrderFragment();
         fragment.setArguments(bundle);
@@ -91,7 +91,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     @Override
     public void onResume() {
         super.onResume();
-        loadPagingData();
+        if(hasInit){
+            viewModel.refresh();
+        }
+        hasInit=true;
     }
 
     @Override
@@ -114,12 +117,6 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             }
         });
 
-//        //切换筛选条件
-//        viewModel.getLiveEvent().observe(getActivity(), status -> {
-//            if(status.isRefresShown()){
-//                viewModel.refresh();
-//            }
-//        });
         RecyclerView mRecyclerView = binding.workSendList;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -155,6 +152,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
+        loadPagingData();
     }
 
     private void loadPagingData() {
