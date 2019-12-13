@@ -75,7 +75,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-
+        viewModel.request.setDivideId(orgModel.getId());
     }
 
     class PatrolFragmentTabAdapter extends FragmentPagerAdapter{

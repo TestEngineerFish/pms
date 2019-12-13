@@ -1,16 +1,21 @@
 package com.einyun.app.base.db.bean;
 
-public class  ExtensionApplication{
+public class ExtensionApplication{
    private String id;
    private String poId;
    private int applyType;
+   private int extensionDays;
    private String applicationDescription;
    private int applicationState;
    private String creationDate;
    private int type;
    private String createdBy;
-   private String createdName;
+   private String approveId;
+   private String approveName;
+   private String createName;
    private String applyFiles;
+   private String auditDate;
+   private String createdName;
 
    public String getId() {
       return id;
@@ -34,6 +39,14 @@ public class  ExtensionApplication{
 
    public void setApplyType(int applyType) {
       this.applyType = applyType;
+   }
+
+   public int getExtensionDays() {
+      return extensionDays;
+   }
+
+   public void setExtensionDays(int extensionDays) {
+      this.extensionDays = extensionDays;
    }
 
    public String getApplicationDescription() {
@@ -76,12 +89,28 @@ public class  ExtensionApplication{
       this.createdBy = createdBy;
    }
 
-   public String getCreatedName() {
-      return createdName;
+   public String getApproveId() {
+      return approveId;
    }
 
-   public void setCreatedName(String createdName) {
-      this.createdName = createdName;
+   public void setApproveId(String approveId) {
+      this.approveId = approveId;
+   }
+
+   public String getApproveName() {
+      return approveName;
+   }
+
+   public void setApproveName(String approveName) {
+      this.approveName = approveName;
+   }
+
+   public String getCreateName() {
+      return createName;
+   }
+
+   public void setCreateName(String createName) {
+      this.createName = createName;
    }
 
    public String getApplyFiles() {
@@ -91,4 +120,21 @@ public class  ExtensionApplication{
    public void setApplyFiles(String applyFiles) {
       this.applyFiles = applyFiles;
    }
+
+   public String getAuditDate() {
+      return auditDate;
+   }
+
+   public void setAuditDate(String auditDate) {
+      this.auditDate = auditDate;
+   }
+
+   public String getCreatedName() {
+      return createdName;
+   }
+
+   public void setCreatedName(String createdName) {
+      this.createdName = createdName;
+   }
+
 }

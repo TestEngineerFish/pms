@@ -22,6 +22,7 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     protected AppDatabase db;
     public final static int DATA_TYPE_INIT=1;
     public final static int DATA_TYPE_APPPEND=2;
+    public final static int DATA_TYPE_SYNC=3;
     protected PageRquest request;
     protected PageBean pageBean;
     protected Lock lock =new ReentrantLock();

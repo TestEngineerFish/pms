@@ -45,7 +45,10 @@ interface ResourceWorkOrderService : EinyunService {
     fun patrolClosedPage(request: PatrolPageRequest, callBack: CallBack<PatrolWorkOrderPage>)
 
     //巡查工单详情
-    fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>)
+    fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>)
+
+    //巡查工单详情
+    fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>)
 
     //巡查工单处理
     fun patrolSubmit(request: PatrolSubmitRequest,callBack: CallBack<Boolean>)

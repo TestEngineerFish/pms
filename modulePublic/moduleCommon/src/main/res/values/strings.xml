@@ -86,4 +86,13 @@
     <string name="apply_close_success">强制闭单成功</string>
     <string name="apply_late_success">强制闭单成功,请等待审批</string>
     <string name="text_alert">提示</string>
+    <string name="text_applying">审批中</string>
+    <string name="text_state_pass">通过</string>
+    <string name="text_state_reject">驳回</string>
+    <string name="text_work_order_apply">验收</string>
+    <string name="text_apply">待验收</string>
+    <string name="text_order_num">工单编号</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+
 </resources>

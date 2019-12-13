@@ -1,4 +1,4 @@
-package com.einyun.app.pms.sendorder;
+package com.einyun.app.common.ui.binding;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.einyun.app.common.R;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 
-public class SendOrderBindAdapter {
-
+public class WorkOrderAdapter {
     /**
      * 列表状态
      * @param view
@@ -116,5 +116,14 @@ public class SendOrderBindAdapter {
     @BindingAdapter("setUserName")
     public static void status(TextView view, GetMappingByUserIdsResponse value) {
         view.setText(value.getFullname() + "(" + value.getAccount() + ")");
+    }
+
+    @BindingAdapter("is_overdure")
+    public static void is_overdue(TextView view,int status){
+        if(status>0){
+            view.setText(R.string.yes);
+        }else{
+            view.setText(R.string.no);
+        }
     }
 }

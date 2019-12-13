@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -58,14 +57,16 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
     @Autowired
     IUserModuleService userModuleService;
     PhotoSelectAdapter photoSelectAdapter;
+    private final int MAX_PHOTO_SIZE = 4;
     PatrolLocal patrolLocal;
     PatrolInfo patrolInfo;
     AlertDialog alertDialog;
     TipDialog tipDialog;
-    private final int MAX_PHOTO_SIZE = 4;
 
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
+    @Autowired(name = RouteKey.KEY_ORDER_ID)
+    String orderId;
     @Override
     protected PatrolViewModel initViewModel() {
         return new ViewModelProvider(this,new ViewModelFactory()).get(PatrolViewModel.class);
@@ -86,6 +87,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
     @Override
     protected void initData() {
         super.initData();
+        viewModel.request.setTaskId(taskId);
         //图片选择适配器
         photoSelectAdapter = new PhotoSelectAdapter(this);
         binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
@@ -183,9 +185,9 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.rvNodes.setAdapter(nodesAdapter);
 
         //加载数据
-        viewModel.loadDetial(taskId).observe(this, patrolInfo -> {
+        viewModel.loadPendingDetial(orderId).observe(this, patrolInfo -> {
             updateUI(patrolInfo);
-            viewModel.loadLocalUserData(taskId).observe(this, local -> {
+            viewModel.loadLocalUserData(orderId).observe(this, local -> {
                 patrolLocal=local;
                 updateLocalData(local);
             });
@@ -330,7 +332,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
         PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrol.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if(aBoolean){
-                viewModel.finishTask(taskId);
+                viewModel.finishTask(orderId);
                 tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
                 tipDialog.setTipDialogListener(dialog -> {
                     if(hasException(patrol)){
@@ -373,7 +375,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
         if(patrolLocal==null){
             patrolLocal=new PatrolLocal();
-            patrolLocal.setTaskId(taskId);
+            patrolLocal.setOrderId(orderId);
             patrolLocal.setUserId(userModuleService.getUserId());
         }
         patrolLocal.setImages(images);

@@ -5,6 +5,8 @@ import androidx.paging.PagedList;
 
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.repository.BaseBoundaryCallBack;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkOrderPage;
@@ -18,13 +20,18 @@ import java.util.List;
  */
 public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Patrol> {
 
-    PatrolListRepo patrolRepo;
-    PatrolPageRequest request;
-    ResourceWorkOrderService service= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+    protected PatrolListRepo patrolRepo;
+    protected PatrolPageRequest request;
+    protected int listType=ListType.PENDING.getType();
+    protected ResourceWorkOrderService service= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     public PatrolPendingBoundaryCallBack(PatrolPageRequest request) {
         super();
         patrolRepo=new PatrolListRepo();
         this.request=request;
+    }
+
+    public void refresh(){
+        loadData(BaseBoundaryCallBack.DATA_TYPE_SYNC);
     }
 
     /**
@@ -33,28 +40,40 @@ public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Pa
     @Override
     public void onZeroItemsLoaded() {
         super.onZeroItemsLoaded();
-//        service.patrolWaitPage(request, new CallBack<PatrolWorkOrderPage>() {
-//            @Override
-//            public void call(PatrolWorkOrderPage data) {
-//                PatrolListTypeConvert convert=new PatrolListTypeConvert();
-//                List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
-//                patrolRepo.initData(patrols);
-//            }
-//
-//            @Override
-//            public void onFaild(Throwable throwable) {
-//
-//            }
-//        });
+        loadData(BaseBoundaryCallBack.DATA_TYPE_INIT);
     }
 
-    @Override
-    public void onItemAtFrontLoaded(@NonNull Patrol itemAtFront) {
-        super.onItemAtFrontLoaded(itemAtFront);
+    protected void loadData(final int dataType) {
+        service.patrolWaitPage(request, new CallBack<PatrolWorkOrderPage>() {
+            @Override
+            public void call(PatrolWorkOrderPage data) {
+                PatrolListTypeConvert convert=new PatrolListTypeConvert();
+                List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
+                wrapList(patrols);
+                if(dataType==BaseBoundaryCallBack.DATA_TYPE_INIT){
+                    patrolRepo.initData(patrols,request.getUserId(), listType);
+                }else if(dataType==BaseBoundaryCallBack.DATA_TYPE_SYNC){
+                    //同步数据
+                    patrolRepo.sync(patrols, request.getUserId(), listType, null);
+                }
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
     }
 
-    @Override
-    public void onItemAtEndLoaded(@NonNull Patrol itemAtEnd) {
-        super.onItemAtEndLoaded(itemAtEnd);
+    /**
+     * 包装userId
+     * @param patrols
+     */
+    protected void wrapList(List<Patrol> patrols){
+        for(Patrol patrol:patrols){
+            patrol.setListType(listType);
+            patrol.setUserId(request.getUserId());
+        }
     }
+
 }

@@ -26,6 +26,7 @@ public class ItemDataSource extends BaseDataSource<Patrol> {
 
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
+        request.setPage(pageBean.getPage());
         service.patrolClosedPage(request, new CallBack<PatrolWorkOrderPage>() {
             @Override
             public void call(PatrolWorkOrderPage data) {
@@ -33,7 +34,7 @@ public class ItemDataSource extends BaseDataSource<Patrol> {
                 List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
                 if(callback instanceof LoadInitialCallback){
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
-                    loadInitialCallback.onResult(patrols,0, patrols.size());
+                    loadInitialCallback.onResult(patrols,0, data.getTotal());
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
                     loadInitialCallback.onResult(patrols);

@@ -25,12 +25,12 @@ public class PatrolRepo {
     /**
      * 获取用户本地输入数据
      *
-     * @param taskId
+     * @param orderId
      * @return
      */
-    public void loadLocalUserData(String taskId,String userId, CallBack<PatrolLocal> callBack) {
+    public void loadLocalUserData(String orderId,String userId, CallBack<PatrolLocal> callBack) {
         db.runInTransaction(() -> {
-            PatrolLocal local = infoDao.loadByTaskId(taskId,userId);
+            PatrolLocal local = infoDao.loadByTaskId(orderId,userId);
             callBack.call(local);
         });
     }
@@ -38,15 +38,15 @@ public class PatrolRepo {
     /**
      * 删除任务，完成关闭
      *
-     * @param taskId
+     * @param orderId
      */
-    public void deleteTask(String taskId,String userId,CallBack<Boolean> callBack) {
+    public void deleteTask(String orderId,String userId,CallBack<Boolean> callBack) {
         db.runInTransaction(new Runnable() {
             @Override
             public void run() {
-                dao.deletePatrol(taskId,userId);
-                infoDao.deletePatrolInfo(taskId,userId);
-                infoDao.deletePatrolLocal(taskId,userId);
+                dao.deletePatrol(orderId,userId);
+                infoDao.deletePatrolInfo(orderId,userId);
+                infoDao.deletePatrolLocal(orderId,userId);
                 callBack.call(true);
             }
         });
@@ -77,19 +77,19 @@ public class PatrolRepo {
     /**
      * 获取本地巡查详情
      *
-     * @param taskId
+     * @param orderId
      * @return
      */
-    public PatrolInfo loadPatrolInfo(String taskId,String userId) {
-        return infoDao.load(taskId,userId);
+    public PatrolInfo loadPatrolInfo(String orderId,String userId) {
+        return infoDao.load(orderId,userId);
     }
 
     /**
      * 更新缓存状态为已缓存
      *
-     * @param taskId
+     * @param orderId
      */
-    public void updatePatrolCached(String taskId,String userId) {
-        dao.updateCachedState(taskId,userId);
+    public void updatePatrolCached(String orderId,String userId) {
+        dao.updateCachedState(orderId,userId);
     }
 }

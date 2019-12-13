@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName
  */
 class DistributePageRequest :PageRquest(){
     fun resetConditions() {
-        divideId=""
+        txId=null
         type=null
         fState=null
         envType2=null
@@ -26,7 +26,7 @@ class DistributePageRequest :PageRquest(){
     }
 
     @SerializedName("F_DIVIDE_ID")
-    var divideId:String?=""
+    var divideId:String?=null
     @SerializedName("F_TX_ID")
     var txId:String?=null
     @SerializedName("F_TYPE")

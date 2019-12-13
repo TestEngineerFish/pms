@@ -27,6 +27,13 @@ public class PageResult<T> {
         return false;
     }
 
+    public boolean isEmpty(){
+        if(total<=0&&page<=1){
+            return true;
+        }
+        return false;
+    }
+
     public int nextPage(){
         page++;
         return page;

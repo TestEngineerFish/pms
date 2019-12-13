@@ -21,21 +21,21 @@ public interface PatrolInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPatrolInfos(List<PatrolInfo> info);
 
-    @Query("SELECT * FROM PATROLS_INFO WHERE taskId=:taskId and userId=:userId")
-    PatrolInfo load(String taskId,String userId);
+    @Query("SELECT * FROM PATROLS_INFO WHERE id=:orderId and userId=:userId")
+    PatrolInfo load(String orderId,String userId);
 
-    @Query("delete from patrols_info where taskId=:taskId and userId=:userId")
-    void deletePatrolInfo(String taskId,String userId);
+    @Query("delete from patrols_info where taskId=:orderId and userId=:userId")
+    void deletePatrolInfo(String orderId,String userId);
 
-    @Query("delete from patrol_local where taskId=:taskId and userId=:userId")
-    void deletePatrolLocal(String taskId,String userId);
+    @Query("delete from patrol_local where orderId=:orderId and userId=:userId")
+    void deletePatrolLocal(String orderId,String userId);
 
     @Query("delete from patrols_info where taskId not in(:taskIds) and userId=:userId")
     void sync(String userId,String...taskIds);
 
-    @Query("delete from patrol_local where taskId not in(:taskIds) and userId=:userId")
-    void syncLocal(String userId,String... taskIds);
+    @Query("delete from patrol_local where orderId not in(:ids) and userId=:userId")
+    void syncLocal(String userId,String... ids);
 
-    @Query("SELECT * FROM PATROL_LOCAL WHERE taskId=:taskId and userId=:userId")
-    PatrolLocal loadByTaskId(String taskId,String userId);
+    @Query("SELECT * FROM PATROL_LOCAL WHERE orderId=:orderId and userId=:userId")
+    PatrolLocal loadByTaskId(String orderId,String userId);
 }

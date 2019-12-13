@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <data>
         <variable
-            name="workOrder"
-            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+            name="patrol"
+            type="com.einyun.app.base.db.bean.PatrolContent" />
     </data>
     <LinearLayout
         android:id="@+id/panel_work_order_info"
@@ -52,10 +53,10 @@
 
             <TextView
                 style="@style/work_order_detail_txt_left"
-                android:text="处理人" />
+                android:text="是否超时" />
 
             <TextView style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.procName}"
+                app:is_overdure="@{patrol.f_is_time_out}"
                 />
         </LinearLayout>
 
@@ -63,13 +64,24 @@
 
             <TextView
                 style="@style/work_order_detail_txt_left"
-                android:text="处理时间" />
+                android:text="实际完成时间" />
 
             <TextView style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.procDate}"
+                android:text="@{patrol.f_actual_completion_time}"
                 />
         </LinearLayout>
 
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:text="处理说明" />
+
+            <TextView style="@style/work_order_detail_txt_right"
+
+                android:text="@{patrol.f_description}"
+                />
+        </LinearLayout>
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
@@ -79,7 +91,7 @@
 
         <LinearLayout style="@style/work_order_detail_ln">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/send_order_handle_pic_list"
+                android:id="@+id/patrol_handle_pic_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_20"
@@ -89,16 +101,5 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
         </LinearLayout>
-
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="执行人" />
-
-            <TextView style="@style/work_order_detail_txt_right" />
-        </LinearLayout>
-
     </LinearLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.einyun.app.pms.patrol.repository;
 
+import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 
 import com.einyun.app.base.db.AppDatabase;
@@ -39,8 +40,8 @@ public class PatrolListRepo {
      * 获取数据源
      * @return
      */
-    public DataSource.Factory<Integer,Patrol> queryAll(String userId){
-        return patrolDao.queryAll(userId);
+    public DataSource.Factory<Integer,Patrol> queryAll(@NonNull String userId, int listType){
+        return patrolDao.queryAll(userId,listType);
     }
 
 
@@ -62,7 +63,7 @@ public class PatrolListRepo {
         if(list!=null&&list.size()>0){
             taskIds=new String[list.size()];
             for(int i=0;i<list.size();i++){
-                taskIds[i]=list.get(i).getTaskId();
+                taskIds[i]=list.get(i).getID_();
             }
         }
         return taskIds;
@@ -72,12 +73,12 @@ public class PatrolListRepo {
      * 数据同步
      * @param patrols
      */
-    public void sync(List<Patrol> patrols,String userId, CallBack<Boolean> callBack){
+    public void sync(List<Patrol> patrols,String userId,int listType, CallBack<Boolean> callBack){
         db.runInTransaction(() -> {
             /**
              * 清空原数据，插入最新数据
              */
-            initData(patrols,userId);
+            initData(patrols,userId,listType);
             String taskIds[]=loadIds(patrols);
             if(taskIds!=null){
                 //删除已关闭巡查信息数据
@@ -94,9 +95,9 @@ public class PatrolListRepo {
      * 初始化数据
      * @param patrols
      */
-    public void initData(List<Patrol> patrols,String userId){
+    public void initData(List<Patrol> patrols,String userId,int listType){
         db.runInTransaction(() -> {
-            patrolDao.deleteAll(userId);
+            patrolDao.deleteAll(userId,listType);
             patrolDao.insertDigest(patrols);
         });
 

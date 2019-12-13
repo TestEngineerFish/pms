@@ -44,7 +44,7 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_PATROL_WAIT_DETAIL="/$DOMAIN/res-order/patrol/waitDetail"
         //2.60巡查工单-闭单
         const val URL_RESOURCE_WORKORDER_PATROL_CLOSE="/$DOMAIN/res-order/patrol/close"
-        //2.9计划工单-已办详情
+        //2.9巡查工单-已办详情
         const val URL_RESOURCE_WORKORDER_PATROL_DONE_DETAIL="/$DOMAIN/res-order/patrol/doneDetail"
         //2.58巡查工单-处理
         const val URL_RESOURCE_WORKORDER_PATROL_PROCESS="/$DOMAIN/res-order/patrol/process"

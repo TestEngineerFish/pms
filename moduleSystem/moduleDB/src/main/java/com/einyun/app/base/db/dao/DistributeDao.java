@@ -18,10 +18,10 @@ public interface DistributeDao {
     @Query("delete from distributes where userId=:userId and orderType=:orderType")
     void deleteAll(String userId,int orderType);
 
-    @Query("select * from distributes where userId=:userId and orderType=:orderType ORDER BY createTime DESC")
+    @Query("select * from distributes where userId=:userId and orderType=:orderType") //ORDER BY F_PROC_DATE,createTime DESC
     DataSource.Factory<Integer, Distribute> queryAll(String userId,int orderType);
 
 
-    @Query("select * from distributes where userId=:userId and orderType=:orderType ORDER BY createTime DESC LIMIT :current,:pageSize ")
+    @Query("select * from distributes where userId=:userId and orderType=:orderType ORDER BY F_PROC_DATE,createTime DESC LIMIT :current,:pageSize ")
     List<Distribute> page(int current, int pageSize,String userId,int orderType);
 }

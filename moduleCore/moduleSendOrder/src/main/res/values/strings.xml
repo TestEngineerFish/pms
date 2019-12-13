@@ -2,7 +2,6 @@
     <string name="app_name">moduleSendOrder</string>
     <string name="text_send_order">派工单</string>
     <string name="text_location">位置</string>
-    <string name="text_order_num">工单编号</string>
     <string name="text_create_time">创建时间</string>
     <string name="text_turn_order">转单</string>
     <string name="text_resend_to">转派至</string>
@@ -20,15 +19,13 @@
     <string name="text_pending_work_order">待处理工单：</string>
     <string name="text_apply_late">申请延期</string>
     <string name="text_apply_close">申请闭单</string>
-    <string name="text_apply">待验收</string>
-    <string name="text_work_order_apply">验收</string>
+
+
     <string name="text_alert_input_suggestion">请输入验收意见</string>
     <string name="text_check_success">验收成功</string>
     <string name="text_alert_check_result">请输入验收结论</string>
     <string name="text_apply_postpone">申请延期</string>
     <string name="text_reply_success">批复成功</string>
     <string name="text_work_order_reply">批复</string>
-    <string name="text_applying">审批中</string>
-    <string name="text_state_pass">通过</string>
-    <string name="text_state_reject">驳回</string>
+
 </resources>

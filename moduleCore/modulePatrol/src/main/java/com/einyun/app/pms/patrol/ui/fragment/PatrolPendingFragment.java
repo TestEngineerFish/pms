@@ -32,18 +32,6 @@ import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
  */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> implements ItemClickListener<Patrol> {
     protected RVPageListAdapter<ItemPatrolListBinding,Patrol> adapter;
-
-    @Autowired(name = RouterUtils.SERVICE_USER)
-    IUserModuleService userModuleService;
-
-    protected PatrolPageRequest pageRequest;
-    protected String period ;
-    protected String status ;
-    protected String gridId ;
-    protected String buildId ;
-    protected String unitId;
-    protected String divideId;
-
     public static PatrolPendingFragment newInstance() {
         return new PatrolPendingFragment();
     }
@@ -57,14 +45,12 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     protected void setUpView() {
         binding.swiperefresh.setOnRefreshListener(() -> {
             binding.swiperefresh.setRefreshing(false);
-//            adapter.submitList(null);
-            viewModel.refresh(createPageRequest());
+            viewModel.refresh();
         });
     }
 
     @Override
     protected void setUpData() {
-        createPageRequest();
         initAdapter();
 //        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
         binding.patrolList.setAdapter(adapter);
@@ -92,37 +78,23 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.refresh(createPageRequest());
+//        viewModel.refresh();
     }
 
     protected void loadData() {
-        viewModel.loadPendingData(pageRequest).observe(getActivity(), patrols -> {
+        viewModel.loadPendingData().observe(getActivity(), patrols -> {
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
         });
     }
 
-    protected PatrolPageRequest createPageRequest(){
-        if(pageRequest==null){
-            pageRequest=new PatrolPageRequest();
-            pageRequest.setPageSize(PageBean.MAX_PAGE_SIZE);
-            pageRequest.setUserId(userModuleService.getUserId());
-        }
-        pageRequest.setPeriod(period);
-        pageRequest.setGridId(gridId);
-        pageRequest.setUnitId(unitId);
-        pageRequest.setBuildingId(buildId);
-        pageRequest.setTimeout(status);
-        pageRequest.setF_massif_id(divideId);
-        return pageRequest;
-    }
 
     //DiffUtil.ItemCallback,标准写法
     protected DiffUtil.ItemCallback<Patrol> mDiffCallback = new DiffUtil.ItemCallback<Patrol>() {
 
         @Override
         public boolean areItemsTheSame(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getTaskId().equals(newItem.getTaskId());
+            return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
@@ -134,7 +106,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         @Nullable
         @Override
         public Object getChangePayload(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getTaskId().equals(newItem.getTaskId());
+            return oldItem.getID_().equals(newItem.getID_());
         }
     };
 
@@ -147,6 +119,9 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     public void onItemClicked(View veiw, Patrol data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
+                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                 .navigation();
     }
 }

@@ -52,7 +52,7 @@ open class DistributeWorkOrder {
      var F_CHECK_RESULT: String? = null
      var F_CREATE_TIME: Long = 0
      var F_CHECK_DATE: Long = 0
-     var F_PROC_DATE: Long = 0
+     var F_PROC_DATE: String?=null
      var F_EXT_STATUS: Int = 0
      var isReply:Int=0
 }

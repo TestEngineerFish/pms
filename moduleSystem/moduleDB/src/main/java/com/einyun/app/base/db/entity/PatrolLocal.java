@@ -11,13 +11,13 @@ import com.einyun.app.base.db.converter.WorkNoteTypeConvert;
 
 import java.util.List;
 
-@Entity(tableName = "patrol_local",primaryKeys = {"taskId","userId"})
+@Entity(tableName = "patrol_local",primaryKeys = {"orderId","userId"})
 public class PatrolLocal {
-    @NonNull
-    private String taskId;
     private String note;
     @NonNull
     private String userId;
+    @NonNull
+    private String orderId;
 
     @TypeConverters(StringTypeConvert.class)
     private List<String> images;
@@ -32,15 +32,6 @@ public class PatrolLocal {
 
     @TypeConverters(WorkNoteTypeConvert.class)
     private List<WorkNode> nodes;
-
-    @NonNull
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(@NonNull String taskId) {
-        this.taskId = taskId;
-    }
 
     public String getNote() {
         return note;
@@ -65,5 +56,14 @@ public class PatrolLocal {
 
     public void setNodes(List<WorkNode> nodes) {
         this.nodes = nodes;
+    }
+
+    @NonNull
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(@NonNull String orderId) {
+        this.orderId = orderId;
     }
 }

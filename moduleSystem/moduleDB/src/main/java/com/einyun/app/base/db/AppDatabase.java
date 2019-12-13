@@ -34,7 +34,7 @@ import com.einyun.app.base.db.entity.User;
 
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
         PatrolInfo.class, PatrolLocal.class, Distribute.class
-}, version = 4, exportSchema = false)
+}, version = 4)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,

@@ -15,9 +15,7 @@ import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
-import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
-import java.util.*
 
 /**
  *
@@ -33,6 +31,20 @@ import java.util.*
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    //巡查已办详情
+    override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
+        serviceApi?.patrolDoneDetial(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
     //巡查处理
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
         serviceApi?.patrolSubmit(request)?.compose(RxSchedulers.inIo())
@@ -260,8 +272,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     /**
      * 巡查工单详情
      */
-    override fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolDetial(request)?.compose(RxSchedulers.inIo())
+    override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
+        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
                     if (response.isState) {

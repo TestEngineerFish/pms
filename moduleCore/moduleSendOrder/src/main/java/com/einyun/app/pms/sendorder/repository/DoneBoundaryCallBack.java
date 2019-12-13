@@ -23,7 +23,10 @@ public class DoneBoundaryCallBack extends PendingBoundaryCallBack {
         service.distributeDonePage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
-                if(data.hasNextPage()){
+                if(data.isEmpty()){
+                    clearAll();
+                }
+                if (data.hasNextPage()) {
                     callBack.call(data.nextPage());
                 }
                 lock.unlock();

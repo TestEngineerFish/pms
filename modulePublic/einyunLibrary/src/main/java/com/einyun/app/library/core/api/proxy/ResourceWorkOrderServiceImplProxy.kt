@@ -7,10 +7,8 @@ import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.resource.workorder.model.*
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
-import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo
-import java.util.*
 
 /**
  * @ProjectName: android-framework
@@ -26,6 +24,10 @@ import java.util.*
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
+        instance?.patrolDoneDetial(request,callBack)
+    }
+
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
        instance?.patrolSubmit(request,callBack)
     }
@@ -116,8 +118,8 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
         return instance?.createSendOrder(request, callBack)!!
     }
 
-    override fun patrolDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        instance?.patrolDetial(request, callBack)
+    override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
+        instance?.patrolPendingDetial(request, callBack)
     }
 
     override fun patrolClosedPage(

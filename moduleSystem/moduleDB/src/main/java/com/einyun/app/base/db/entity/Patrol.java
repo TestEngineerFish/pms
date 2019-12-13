@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "patrol_digests",primaryKeys = {"taskId","userId"})
+@Entity(tableName = "patrol_digests",primaryKeys = {"ID_","userId"})
 public class Patrol{
     /**
      * proInsId : 485732
@@ -27,6 +27,7 @@ public class Patrol{
     private int F_plan_work_order_state;
     @NonNull
     private String userId;
+    @NonNull
     private String ID_;
     private String subject;
     private String F_house_code;
@@ -39,8 +40,8 @@ public class Patrol{
     private String ownerId;
     private String F_inspection_work_plan_name;
     private String assigneeId;
-    @NonNull
     private String taskId;
+    private int listType;
     private String taskNodeId;
     private long F_actual_completion_time;
     private boolean isCached;
@@ -48,6 +49,14 @@ public class Patrol{
 
     private String F_type_name; //秩序巡更点巡查，环境巡更点巡查，客服巡更点巡查
     private String F_type_id;  // inspection_group
+
+    public int getListType() {
+        return listType;
+    }
+
+    public void setListType(int listType) {
+        this.listType = listType;
+    }
 
     public String getF_type_name() {
         return F_type_name;
@@ -161,11 +170,12 @@ public class Patrol{
         F_creation_date = f_creation_date;
     }
 
+    @NonNull
     public String getID_() {
         return ID_;
     }
 
-    public void setID_(String ID_) {
+    public void setID_(@NonNull String ID_) {
         this.ID_ = ID_;
     }
 
@@ -217,12 +227,11 @@ public class Patrol{
         this.assigneeId = assigneeId;
     }
 
-    @NonNull
     public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(@NonNull String taskId) {
+    public void setTaskId( String taskId) {
         this.taskId = taskId;
     }
 

@@ -16,8 +16,6 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
 import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.model.JobPage;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
@@ -29,7 +27,6 @@ import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.repository.DoneBoundaryCallBack;
-import com.einyun.app.pms.sendorder.repository.OrderDataSourceFactory;
 import com.einyun.app.pms.sendorder.repository.PendingBoundaryCallBack;
 import com.einyun.app.pms.sendorder.repository.SendOrderRespository;
 
@@ -172,7 +169,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         request.resetConditions();
         if (selected.get(SELECT_LINE) != null) {
             String lineId = selected.get(SELECT_LINE).getKey();
-            request.setDivideId(lineId);
+            request.setTxId(lineId);
         }
         if (selected.get(SELECT_ORDER_TYPE) != null) {
             String orderType = selected.get(SELECT_ORDER_TYPE).getKey();

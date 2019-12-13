@@ -91,6 +91,7 @@
         <!--巡查工单Start-->
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolListActivity"/>
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolHandleActivity"/>
+        <activity android:name=".patrol.ui.PatrolDetialActivity"/>
         <!--巡查工单End-->
         <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
         <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>

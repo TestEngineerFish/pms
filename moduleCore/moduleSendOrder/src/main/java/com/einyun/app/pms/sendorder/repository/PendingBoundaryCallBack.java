@@ -28,18 +28,31 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
         dao = db.distributeDao();
     }
 
+    /**
+     * 刷新数据
+     */
     public void refresh() {
         initData();
     }
 
+    /**
+     * 切换筛选条件
+     */
     public void switchCondition() {
+        clearAll();
+        initData();
+    }
+
+    /**
+     * 清空数据缓存
+     */
+    protected void clearAll() {
         db.runInTransaction(new Runnable() {
             @Override
             public void run() {
                 dao.deleteAll(request.getUserId(), orderType);
             }
         });
-        initData();
     }
 
     /**
@@ -53,6 +66,9 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
         service.distributeWaitPage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
+                if(data.isEmpty()){
+                    clearAll();
+                }
                 if (data.hasNextPage()) {
                     callBack.call(data.nextPage());
                 }
@@ -80,11 +96,13 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
      * @param dataType
      */
     protected void persistence(List<Distribute> rows, int dataType) {
+        lock.lock();
         db.runInTransaction(() -> {
             if (dataType == DATA_TYPE_INIT) {//初始化清空数据
                 dao.deleteAll(request.getUserId(), orderType);
             }
             dao.insert(rows);//追加数据
+            lock.unlock();
         });
 
     }

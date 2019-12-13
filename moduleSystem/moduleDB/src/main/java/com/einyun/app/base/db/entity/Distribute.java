@@ -46,7 +46,7 @@ public class Distribute{
     private String  F_CHECK_RESULT;
     private Long F_CREATE_TIME;
     private Long F_CHECK_DATE;
-    private Long F_PROC_DATE;
+    private String F_PROC_DATE;
     private int F_EXT_STATUS;
     private int isReply;
     @NonNull
@@ -369,11 +369,11 @@ public class Distribute{
         F_CHECK_DATE = f_CHECK_DATE;
     }
 
-    public Long getF_PROC_DATE() {
+    public String getF_PROC_DATE() {
         return F_PROC_DATE;
     }
 
-    public void setF_PROC_DATE(Long f_PROC_DATE) {
+    public void setF_PROC_DATE(String f_PROC_DATE) {
         F_PROC_DATE = f_PROC_DATE;
     }
 

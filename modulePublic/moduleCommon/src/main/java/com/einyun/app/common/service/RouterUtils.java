@@ -36,6 +36,7 @@ public class RouterUtils {
     /**********************巡查工单*************************/
     public static final String ACTIVITY_PATROL_LIST ="/patrol/PatrolListActivity";
     public static final String ACTIVITY_PATROL_HANDLE="/patrol/PatrolHandleActivity";
+    public static final String ACTIVITY_PATROL_DETIAL="/patrol/PatrolDetialActivity";
 
     //计划工单
     public static final String ACTIVITY_PLAN_ORDER="/plan/PlanOrderActivity";

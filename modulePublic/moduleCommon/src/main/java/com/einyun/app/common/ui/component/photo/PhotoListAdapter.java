@@ -1,6 +1,7 @@
 package com.einyun.app.common.ui.component.photo;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -34,11 +35,12 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
         holder.ivPhoto.setVisibility(View.VISIBLE);
         holder.add.setVisibility(View.GONE);
         PicUrlModel model = picList.get(position);
-
-        Glide.with(mContext)
-                .load(HttpUrlUtil.getImageServerUrl(model.getPath()))
-                .centerCrop()
-                .into(holder.ivPhoto);
+        if(model!=null){
+            Glide.with(mContext)
+                    .load(HttpUrlUtil.getImageServerUrl(model.getPath()))
+                    .centerCrop()
+                    .into(holder.ivPhoto);
+        }
         if(listener!=null){
             holder.itemView.setOnClickListener(v -> listener.OnItemClick(holder.itemView,position));
         }

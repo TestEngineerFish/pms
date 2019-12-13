@@ -3,8 +3,11 @@ package com.einyun.app.pms.patrol.ui.fragment;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
+import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
@@ -14,7 +17,7 @@ import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 /**
  * 巡查工单已办列表
  */
-public class PatrolClosedListFragment extends PatrolPendingFragment{
+public class PatrolClosedListFragment extends PatrolPendingFragment implements ItemClickListener<Patrol> {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public static PatrolClosedListFragment newInstance() {
@@ -29,7 +32,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment{
     }
 
     protected void loadData() {
-        viewModel.loadCloseData(pageRequest).observe(getActivity(), patrols -> adapter.submitList(patrols));
+        viewModel.loadCloseData().observe(getActivity(), patrols -> adapter.submitList(patrols));
     }
 
     protected void initAdapter() {
@@ -47,20 +50,16 @@ public class PatrolClosedListFragment extends PatrolPendingFragment{
                 }
             };
         }
+        adapter.setOnItemClick(this);
     }
 
-    protected PatrolPageRequest createPageRequest(){
-        if(pageRequest==null){
-            pageRequest=new PatrolPageRequest();
-            pageRequest.setUserId(userModuleService.getUserId());
-
-        }
-        pageRequest.setPeriod(period);
-        pageRequest.setGridId(gridId);
-        pageRequest.setUnitId(unitId);
-        pageRequest.setBuildingId(buildId);
-        pageRequest.setTimeout(status);
-        pageRequest.setF_massif_id(divideId);
-        return pageRequest;
+    @Override
+    public void onItemClicked(View veiw, Patrol data) {
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
+                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .navigation();
     }
 }

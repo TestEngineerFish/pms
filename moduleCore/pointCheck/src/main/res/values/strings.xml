@@ -16,8 +16,6 @@
     <string name="check_object_address">对象地址</string>
     <string name="check_type_judge">判断型</string>
     <string name="check_type_range">读数型</string>
-    <string name="yes">是</string>
-    <string name="no">否</string>
     <string name="state_ok">正常</string>
     <string name="state_error">异常</string>
     <string name="sign_upload_photo">拍照上传</string>
