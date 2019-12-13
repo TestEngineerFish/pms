@@ -19,11 +19,13 @@ import com.einyun.app.base.db.converter.PatrolContentConvert;
 import com.einyun.app.base.db.converter.StringTypeConvert;
 import com.einyun.app.base.db.converter.SubInspectionTypeConvert;
 import com.einyun.app.base.db.converter.WorkNoteTypeConvert;
+import com.einyun.app.base.db.dao.CheckPointDao;
 import com.einyun.app.base.db.dao.DistributeDao;
 import com.einyun.app.base.db.dao.PatrolDao;
 import com.einyun.app.base.db.dao.PatrolInfoDao;
 import com.einyun.app.base.db.dao.SearchHistoryDao;
 import com.einyun.app.base.db.dao.UserDao;
+import com.einyun.app.base.db.entity.CheckPoint;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
@@ -33,7 +35,7 @@ import com.einyun.app.base.db.entity.User;
 
 
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
-        PatrolInfo.class, PatrolLocal.class, Distribute.class
+        PatrolInfo.class, PatrolLocal.class, Distribute.class, CheckPoint.class
 }, version = 4)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
@@ -57,6 +59,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SearchHistoryDao searchHistoryDao();
 
     public abstract DistributeDao distributeDao();
+
+    public abstract CheckPointDao checkPointDao();
 
     public static AppDatabase getInstance(final Context context) {
         if (sInstance == null) {

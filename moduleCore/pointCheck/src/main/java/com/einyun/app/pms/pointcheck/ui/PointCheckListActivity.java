@@ -1,7 +1,6 @@
 package com.einyun.app.pms.pointcheck.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,23 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.db.entity.CheckPoint;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
-import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.pms.pointcheck.BR;
 import com.einyun.app.pms.pointcheck.R;
 import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckListBinding;
 import com.einyun.app.pms.pointcheck.databinding.ItemPointCheckBriefBinding;
-import com.einyun.app.pms.pointcheck.model.CheckPointModel;
 import com.einyun.app.pms.pointcheck.viewmodel.PointCheckListViewModel;
 import com.einyun.app.pms.pointcheck.viewmodel.ViewModelFactory;
 
@@ -42,10 +37,10 @@ import com.einyun.app.pms.pointcheck.viewmodel.ViewModelFactory;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_POINT_CHECK_ACTIVITY)
-public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPointCheckListBinding,PointCheckListViewModel> implements ItemClickListener<CheckPointModel> {
+public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPointCheckListBinding,PointCheckListViewModel> implements ItemClickListener<CheckPoint> {
 
     boolean hasInit=false;
-    RVPageListAdapter<ItemPointCheckBriefBinding,CheckPointModel> adapter;
+    RVPageListAdapter<ItemPointCheckBriefBinding,CheckPoint> adapter;
     @Override
     protected PointCheckListViewModel initViewModel() {
         return new ViewModelProvider(this, new ViewModelFactory()).get(PointCheckListViewModel.class);
@@ -92,10 +87,10 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
     protected void initData() {
         super.initData();
         if(adapter==null){
-            adapter=new RVPageListAdapter<ItemPointCheckBriefBinding, CheckPointModel>(this, BR.checkpoint,mDiffCallback){
+            adapter=new RVPageListAdapter<ItemPointCheckBriefBinding, CheckPoint>(this, BR.checkpoint,mDiffCallback){
 
                 @Override
-                public void onBindItem(ItemPointCheckBriefBinding binding, CheckPointModel checkPointModel) {
+                public void onBindItem(ItemPointCheckBriefBinding binding, CheckPoint checkPointModel) {
 
                 }
 
@@ -123,28 +118,28 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
 
     private void loadPagingData(){
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPadingData().observe(this, dataBeans -> adapter.submitList(dataBeans));
+        viewModel.loadPagingData().observe(this, dataBeans -> adapter.submitList(dataBeans));
     }
 
 
 
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<CheckPointModel> mDiffCallback = new DiffUtil.ItemCallback<CheckPointModel>() {
+    private DiffUtil.ItemCallback<CheckPoint> mDiffCallback = new DiffUtil.ItemCallback<CheckPoint>() {
 
         @Override
-        public boolean areItemsTheSame(@NonNull CheckPointModel oldItem, @NonNull CheckPointModel newItem) {
+        public boolean areItemsTheSame(@NonNull CheckPoint oldItem, @NonNull CheckPoint newItem) {
             return oldItem.getId().equals(newItem.getId());
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull CheckPointModel oldItem, @NonNull CheckPointModel newItem) {
+        public boolean areContentsTheSame(@NonNull CheckPoint oldItem, @NonNull CheckPoint newItem) {
             return oldItem==newItem;
         }
 
         @Nullable
         @Override
-        public Object getChangePayload(@NonNull CheckPointModel oldItem, @NonNull CheckPointModel newItem) {
+        public Object getChangePayload(@NonNull CheckPoint oldItem, @NonNull CheckPoint newItem) {
             return oldItem.getId().equals(newItem.getId());
         }
     };
@@ -155,7 +150,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
      * @param data
      */
     @Override
-    public void onItemClicked(View veiw, CheckPointModel data) {
+    public void onItemClicked(View veiw, CheckPoint data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_POINT_CHECK_DETIAL)
                 .withString(RouteKey.KEY_TASK_ID,data.getId())
                 .navigation();

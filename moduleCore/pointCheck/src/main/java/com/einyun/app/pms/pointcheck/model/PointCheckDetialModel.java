@@ -2,9 +2,9 @@ package com.einyun.app.pms.pointcheck.model;
 
 import android.text.TextUtils;
 
+import com.einyun.app.base.db.entity.CheckPoint;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.utils.HttpUrlUtil;
-import com.einyun.app.library.core.net.EinyunHttpService;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +24,7 @@ import java.util.List;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class PointCheckDetialModel extends CheckPointModel{
+public class PointCheckDetialModel extends CheckPoint {
     private String picUrl;
     private List<PicUrlModel> images;
     private List<String> imagePaths;

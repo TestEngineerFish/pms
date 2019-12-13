@@ -3,7 +3,7 @@ package com.einyun.app.pms.pointcheck.repository;
 import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 
-import com.einyun.app.pms.pointcheck.model.CheckPointModel;
+import com.einyun.app.base.db.entity.CheckPoint;
 
 /**
  * @ProjectName: pms
@@ -17,10 +17,10 @@ import com.einyun.app.pms.pointcheck.model.CheckPointModel;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DataSourceFactory extends DataSource.Factory<Integer, CheckPointModel>{
+public class DataSourceFactory extends DataSource.Factory<Integer, CheckPoint>{
     @NonNull
     @Override
-    public DataSource<Integer, CheckPointModel> create() {
+    public DataSource<Integer, CheckPoint> create() {
         return new ItemDataSource();
     }
 }

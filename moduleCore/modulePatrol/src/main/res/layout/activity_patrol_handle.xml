@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <include
@@ -33,6 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_160"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
@@ -476,7 +477,7 @@
                         android:layout_marginLeft="@dimen/px_20"
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_20"
-                        android:layout_marginBottom="@dimen/px_140"
+                        android:layout_marginBottom="@dimen/px_5"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout

@@ -1,7 +1,6 @@
 package com.einyun.app.pms.patrol.ui;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
@@ -23,6 +22,8 @@ import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 /**
@@ -42,6 +43,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     String proInsId;
 
     RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode> nodesAdapter;
+
     PatrolInfo patrolInfo;
 
     @Override
@@ -141,20 +143,57 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             return;
         }
         this.patrolInfo = patrol;
-        List<WorkNode> nodes = viewModel.loadNodes(patrol);
-        nodes.add(0, new WorkNode());
-        nodesAdapter.addAll(nodes);
         binding.setPatrol(patrol);
+        updateWorkNodesUI(patrol);//更新节点信息
+        updateHandleResultUI(patrol);//更新处理结果信息
 
         ExtensionApplicationConvert convert = new ExtensionApplicationConvert();
-        if (patrol.getExtensionApplication() != null) {
-            binding.panelCloseInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.panelCloseInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getExtensionApplication())));
-        }
+        updateForceCloseUI(patrol,convert);//更新强制关闭信息
+        uploadPostponeUI(patrol, convert);//更新申请超时信息
+    }
 
+    /**
+     * 更新申请超时信息
+     * @param patrol
+     * @param convert
+     */
+    private void uploadPostponeUI(PatrolInfo patrol, ExtensionApplicationConvert convert) {
         if (patrol.getDelayExtensionApplication() != null) {
             binding.panelPostponeInfo.getRoot().setVisibility(View.VISIBLE);
             binding.panelPostponeInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getDelayExtensionApplication())));
         }
+    }
+
+    /**
+     * 更新强制关闭信息
+     * @param patrol
+     * @param convert
+     * @return
+     */
+    @NotNull
+    private ExtensionApplicationConvert updateForceCloseUI(PatrolInfo patrol,ExtensionApplicationConvert convert) {
+        if (patrol.getExtensionApplication() != null) {
+            binding.panelCloseInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.panelCloseInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getExtensionApplication())));
+        }
+        return convert;
+    }
+
+    /**
+     * 更新处理结果信息
+     * @param patrol
+     */
+    private void updateHandleResultUI(PatrolInfo patrol) {
+        binding.panelHandleInfo.setPatrol(patrol.getData().getZyxcgd());
+    }
+
+    /**
+     * 更新处理巡查节点信息
+     * @param patrol
+     */
+    private void updateWorkNodesUI(PatrolInfo patrol) {
+        List<WorkNode> nodes = viewModel.loadNodes(patrol);
+        nodes.add(0, new WorkNode());
+        nodesAdapter.addAll(nodes);
     }
 }

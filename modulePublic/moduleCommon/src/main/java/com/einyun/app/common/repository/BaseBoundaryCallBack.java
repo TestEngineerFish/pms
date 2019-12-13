@@ -49,6 +49,18 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     protected abstract void loadData(int dataType, CallBack<Integer> callBack);
 
     /**
+     * 清空数据
+     */
+    protected abstract void clearAll();
+
+    /**
+     * 刷新数据
+     */
+    public   void refresh(){
+        initData();
+    }
+
+    /**
      * 数据持久化
      * @param rows
      * @param dataType

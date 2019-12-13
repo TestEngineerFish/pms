@@ -1,105 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="patrol"
             type="com.einyun.app.base.db.bean.PatrolContent" />
     </data>
-    <LinearLayout
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/panel_work_order_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/px_30"
-        android:background="@drawable/bg_shadow"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_90"
-            android:background="@color/white">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/px_20"
-                android:gravity="center_vertical"
-                android:text="处理信息"
-                android:textSize="@dimen/px_32" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/px_20"
-                android:gravity="center_vertical"
-                android:textColor="@color/txt_blue_color"
-                android:textSize="@dimen/px_30" />
-        </RelativeLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/pd_view" />
+        android:layout_marginLeft="@dimen/px_20"
+        android:layout_marginTop="@dimen/px_20"
+        android:layout_marginRight="@dimen/px_20"
+        android:layout_marginBottom="@dimen/px_5"
+        android:visibility="visible"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
-            style="@style/work_order_detail_ln"
-            android:background="@color/white">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="是否超时" />
 
-            <TextView style="@style/work_order_detail_txt_right"
-                app:is_overdure="@{patrol.f_is_time_out}"
-                />
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90">
 
-        <LinearLayout style="@style/work_order_detail_ln">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:text="处理信息"
+                    android:textSize="@dimen/px_32" />
 
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="实际完成时间" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/txt_blue_color"
+                    android:textSize="@dimen/px_30" />
+            </RelativeLayout>
 
-            <TextView style="@style/work_order_detail_txt_right"
-                android:text="@{patrol.f_actual_completion_time}"
-                />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="处理说明" />
-
-            <TextView style="@style/work_order_detail_txt_right"
-
-                android:text="@{patrol.f_description}"
-                />
-        </LinearLayout>
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:text="处理后图片" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/patrol_handle_pic_list"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px_20"
-                android:layout_marginTop="@dimen/px_20"
-                android:layout_marginRight="@dimen/px_20"
-                android:layout_marginBottom="@dimen/px_30"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="是否超时" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    app:is_overdure="@{patrol.f_is_time_out}" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="实际完成时间" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{patrol.f_processing_date}" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="处理说明" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+
+                    android:text="@{patrol.f_processing_instructions}" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
+                    android:text="处理后图片" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/patrol_handle_pic_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_30"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

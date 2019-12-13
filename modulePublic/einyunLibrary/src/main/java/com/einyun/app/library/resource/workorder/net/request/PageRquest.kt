@@ -31,4 +31,5 @@ open class PageRquest {
     var pageSize:Int=DEFAULT_PAGE_SIZE
     var period:String?=null
     var pageBean:PageBean?=null
+    var showTotal:Boolean=true
 }

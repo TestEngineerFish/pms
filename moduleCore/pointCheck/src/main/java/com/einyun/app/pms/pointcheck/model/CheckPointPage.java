@@ -1,5 +1,8 @@
 package com.einyun.app.pms.pointcheck.model;
 
+import com.einyun.app.base.db.entity.CheckPoint;
+import com.einyun.app.base.paging.bean.PageResult;
+
 import java.util.List;
 
 /**
@@ -14,40 +17,6 @@ import java.util.List;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class CheckPointPage {
-    private List<CheckPointModel> rows;
-    private long total;
-    private int page;
-    private int pageSize;
-    public List<CheckPointModel> getRows() {
-        return rows;
-    }
+public class CheckPointPage extends PageResult<CheckPoint> {
 
-    public void setRows(List<CheckPointModel> rows) {
-        this.rows = rows;
-    }
-
-    public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
 }

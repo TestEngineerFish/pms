@@ -52,7 +52,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     protected void setUpData() {
         initAdapter();
-//        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
         binding.patrolList.setAdapter(adapter);
         loadData();
     }

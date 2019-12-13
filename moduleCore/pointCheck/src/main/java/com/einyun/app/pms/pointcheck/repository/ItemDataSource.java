@@ -2,11 +2,11 @@ package com.einyun.app.pms.pointcheck.repository;
 
 import androidx.annotation.NonNull;
 
+import com.einyun.app.base.db.entity.CheckPoint;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
-import com.einyun.app.pms.pointcheck.model.CheckPointModel;
 import com.einyun.app.pms.pointcheck.model.CheckPointPage;
 
 /**
@@ -21,7 +21,7 @@ import com.einyun.app.pms.pointcheck.model.CheckPointPage;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class ItemDataSource extends BaseDataSource<CheckPointModel> {
+public class ItemDataSource extends BaseDataSource<CheckPoint> {
 
     @Override
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
