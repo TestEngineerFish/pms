@@ -29,7 +29,7 @@ import com.orhanobut.logger.Logger;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_SIGN_SET)
 public class SignSetViewModuleActivity extends BaseHeadViewModelActivity<ActivitySignSetViewModuleBinding, SignSetViewModel> {
-    @Autowired(name = Constants.SIGN_NAME_EDIT)
+    @Autowired(name = "edit")
     String oldText;
     @Autowired(name = Constants.SIGN_USER_ID)
     String userID;
@@ -52,6 +52,7 @@ public class SignSetViewModuleActivity extends BaseHeadViewModelActivity<Activit
         setHeadTitle(getString(R.string.tv_sign_set));
         binding.setCallBack(this);
         setRightTxt(R.string.tv_finish);
+        binding.etText.setText(oldText);
         headBinding.tvRightTitle.setTextColor(getResources().getColor(R.color.blueTextColor));
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -39,6 +40,8 @@ import com.yanzhenjie.permission.Permission;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhihu.matisse.internal.utils.MediaStoreCompat;
+import com.zhihu.matisse.ui.MatisseActivity;
 
 import java.util.List;
 
@@ -96,6 +99,12 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
             List<Uri> uris = Matisse.obtainResult(data);
 
             uploadImages(uris);
+        }else if (requestCode==24){
+            if (data == null) return;
+            List<Uri> uris = Matisse.obtainResult(data);
+
+            uploadImages(uris);
+            Logger.d("拍照拍找拍照");
         }
     }
     /**
@@ -129,19 +138,27 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
 
     @Override
     public void takePicClick() {
-       requestPerm(0);
+                requestPerm(true);
+//                startActivityForResult(new Intent(this,MatisseActivity.class),24);
+////
+//                MediaStoreCompat mediaStoreCompat = new MediaStoreCompat(UserHeadShotViewModuleActivity.this);
+//                mediaStoreCompat.setCaptureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME));
+//                mediaStoreCompat.dispatchCaptureIntent(UserHeadShotViewModuleActivity.this, 24);
+
+
+
     }
 
     @Override
     public void photoAlbumClick() {
-        requestPerm(1);
+        requestPerm(false);
     }
 
-    private void SelectPic() {
+    private void SelectPic(boolean isCapture) {
         Matisse.from(this) //加号添加图片
                 .choose(MimeType.ofImage())
                 .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
-                .capture(true)
+                .capture(isCapture)
                 .countable(true)
                 .maxSelectable(1)
                 //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
@@ -150,15 +167,17 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
                 .imageEngine(new Glide4Engine())
                 .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
     }
-
-    public void requestPerm(int type) {
+    /**
+     * 相机权限校验
+     * */
+    public void requestPerm(boolean isCapture) {
         AndPermission.with(this)
                 .permission(
                         Permission.Group.CAMERA
                 ).onGranted(new Action() {
             @Override
             public void onAction(List<String> permissions) {
-                SelectPic();
+                SelectPic(isCapture);
             }
         }).onDenied(new Action() {
             @Override

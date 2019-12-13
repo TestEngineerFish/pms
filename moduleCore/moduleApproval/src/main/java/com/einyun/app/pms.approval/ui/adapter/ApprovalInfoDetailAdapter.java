@@ -84,7 +84,13 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
             hodler.tvState.setTextColor(context.getResources().getColor(R.color.greenTextColor));
             hodler.ivState.setImageResource(R.drawable.iv_approval__pass_state);
         }
-
+        if (position==rows.size()-1) {
+            hodler.ivState.setVisibility(View.GONE);
+            hodler.tvState.setVisibility(View.GONE);
+        }else {
+            hodler.ivState.setVisibility(View.VISIBLE);
+            hodler.tvState.setVisibility(View.VISIBLE);
+        }
         return convertView;
 
 

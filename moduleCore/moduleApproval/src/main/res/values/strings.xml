@@ -11,6 +11,7 @@
     <string name="tv_approval_type">审批类型</string>
     <string name="tv_approval_status">审批状态</string>
     <string name="tv_applicat">申请人:</string>
+    <string name="tv_applicat_detail">申请人</string>
     <string name="tv_approval_wait">待审批</string>
     <string name="tv_approval_num">审批单号</string>
     <string name="tv_installment">分期</string>

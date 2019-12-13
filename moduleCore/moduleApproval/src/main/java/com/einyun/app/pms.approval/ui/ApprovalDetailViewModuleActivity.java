@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import com.alibaba.fastjson.JSON;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -19,6 +20,7 @@ import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.constants.RouteKey;
 import com.einyun.app.pms.approval.databinding.ActivityApprovalDetailViewModuleBinding;
 import com.einyun.app.pms.approval.databinding.ActivityApprovalViewModuleBinding;
+import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.module.ApprovalFormdata;
 import com.einyun.app.pms.approval.module.ApprovalItemmodule;
 import com.einyun.app.pms.approval.module.ApprovalSumitBean;
@@ -32,6 +34,7 @@ import com.orhanobut.logger.Logger;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
@@ -82,15 +85,24 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             String form_data = model.getData().getWorkorder_audit_model().getForm_data();
             approvalFormdata = JSON.parseObject(form_data, ApprovalFormdata.class);
             showBasicInfo(model);
-        });
-        /*
-         * 获取审批信息列表数据
-         * */
-        viewModel.queryApprovalDetialInfo(approvalItemmodule.getID_()).observe(this, model -> {
-            ApprovalInfoDetailAdapter approvalInfoDetailAdapter = new ApprovalInfoDetailAdapter(this,model.getRows());
-            binding.listview.setAdapter(approvalInfoDetailAdapter);
+            /*
+             * 获取审批信息列表数据
+             * */
+            viewModel.queryApprovalDetialInfo(approvalItemmodule.getID_()).observe(this, model2 -> {
+                List<ApprovalDetailInfoBean.RowsBean> rows = model2.getRows();
+                if (rows!=null) {
+                    ApprovalDetailInfoBean.RowsBean rowsBean = new ApprovalDetailInfoBean.RowsBean();
+                    rowsBean.setAuditor("我");
+                    rowsBean.setApprovalRole("发起申请");
+                    rowsBean.setAudit_date(TimeUtil.getTimeMillis(model.getData().getWorkorder_audit_model().getApply_date()));
+                    rows.add(rows.size(),rowsBean);
+                    ApprovalInfoDetailAdapter approvalInfoDetailAdapter = new ApprovalInfoDetailAdapter(this,rows);
+                    binding.listview.setAdapter(approvalInfoDetailAdapter);
+                }
 
+            });
         });
+
     }
     /*
     * 审批通过按钮
@@ -152,7 +164,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.limitInput.setVisibility(View.GONE);
             binding.llPass.setVisibility(View.GONE);
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
-            binding.tvApprovalState.setText(getString(R.string.tv_had_approval));
+            binding.tvApprovalState.setText(getString(R.string.tv_had_pass));
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.greenTextColor));
         } else if (workorder_audit_model.getStatus().equals("reject")) {//驳回
 
