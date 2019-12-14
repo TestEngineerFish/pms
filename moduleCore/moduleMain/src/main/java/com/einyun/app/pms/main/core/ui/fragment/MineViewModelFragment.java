@@ -117,7 +117,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     public void approvalOnClick(){
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_APPROVAL)
-                .withString("from","mine")
+                .withString(RouteKey.APPROVAL_LIST_FROM,RouteKey.APPROVAL_LIST_FROM)
                 .navigation();
     }
     /**

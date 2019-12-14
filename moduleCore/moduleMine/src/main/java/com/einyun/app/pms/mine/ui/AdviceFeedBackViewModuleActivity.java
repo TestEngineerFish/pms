@@ -68,9 +68,9 @@ public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<
      */
     public void EnterSignName(){
         typeList.clear();
-        typeList.add("优化建议");
-        typeList.add("功能错误");
-        typeList.add("其他");
+        typeList.add(getString(R.string.tv_optimization_suggestions));
+        typeList.add(getString(R.string.tv_function_error));
+        typeList.add(getString(R.string.tv_other));
         BottomPicker.buildBottomPicker(this, typeList, typeDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
@@ -84,11 +84,11 @@ public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<
      */
     public void btnConfirm(){
         if(typeDefaultPos<0){
-            ToastUtil.show(this,"请选择问题类型");
+            ToastUtil.show(this, R.string.tv_select_ques_type);
             return;
         }
         if (binding.etLimitInput.getString().isEmpty()) {
-            ToastUtil.show(this,"请简要描述你的问题或意见");
+            ToastUtil.show(this, R.string.tv_write_your_advice);
             return;
         }
         FeedBackBean feedBackBean = viewModel.getJsonObject(binding.etLimitInput.getString(), account, name, mobile, userId, (typeDefaultPos + 1));

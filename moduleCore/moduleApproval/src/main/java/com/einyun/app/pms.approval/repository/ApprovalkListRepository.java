@@ -102,7 +102,7 @@ public class ApprovalkListRepository {
         }
 
     }
-    public void queryState(String id, CallBack<List<GetByTypeKeyInnerAuditStatusModule>> callBack) {
+    public void queryState( CallBack<List<GetByTypeKeyInnerAuditStatusModule>> callBack) {
         String url = URLS.URL_DATA_DICT_GET_BY_TYPE_KEY + "?typeKey=inner_audit_status";
         serviceApi.getAuditState(url).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {

@@ -45,4 +45,6 @@
     <string name="tv_execution_frequency">执行频率</string>
     <string name="text_no_data">暂无数据</string>
     <string name="tv_mine_approval">我的审批</string>
+    <string name="tv_me">我</string>
+    <string name="tv_for_apply">发起申请</string>
 </resources>

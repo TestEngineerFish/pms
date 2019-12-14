@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.module.ApprovalFormdata;
 import com.einyun.app.pms.approval.module.ApprovalSumitBean;
@@ -184,8 +185,8 @@ public class ApprovalDetailViewModel extends BaseViewModel {
 //        sumitApproval(approvalSumitBean,middleURL).observe(this);
         url = middleURL;
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("url",url);
-        map.put("bean",approvalSumitBean);
+        map.put(ApprovalDataKey.APPROVAL_SUMIT_URL,url);
+        map.put(ApprovalDataKey.APPROVAL_SUMIT_PARMS,approvalSumitBean);
         return map;
     }
 

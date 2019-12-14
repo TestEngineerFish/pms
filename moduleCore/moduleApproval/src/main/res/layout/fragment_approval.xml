@@ -17,6 +17,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:id="@+id/ll_table_line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,10 +31,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="38.5dp">
                 <TextView
+                    android:id="@+id/tv_divide"
                     android:textSize="13sp"
                     android:layout_marginLeft="25dp"
                     android:layout_gravity="center_vertical"
                     android:text="@string/tv_approval_installment"
+                    android:textColor="@color/greyTextColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -46,10 +54,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="38.5dp">
                 <TextView
+                    android:id="@+id/tv_select"
                     android:textSize="13sp"
                     android:layout_marginLeft="30dp"
                     android:layout_gravity="center_vertical"
                     android:text="@string/tv_approval_filter"
+                    android:textColor="@color/greyTextColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ImageView

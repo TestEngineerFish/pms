@@ -54,4 +54,10 @@ public class RouteKey {
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String PHONE = "phone";
+
+
+    //审批
+    public static final String APPROVAL_LIST_FROM = "APPROVAL_LIST_FROM";
+
+
 }
