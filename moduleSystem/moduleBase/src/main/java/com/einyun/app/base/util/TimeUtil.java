@@ -350,7 +350,7 @@ public class TimeUtil {
         long long2 = long1 - longHours * l2;
         long longMinutes = long2 / l3;   //根据时间差来计算分钟数
         long longSecond = (long2 - longMinutes * l3) / 1000;
-        return longDay + " 天 " + longHours + " 小时 " + longMinutes + " 分钟" + longSecond + "秒";
+        return longDay + " 天 " + longHours + " 时 " + longMinutes + " 分" + longSecond + "秒";
     }
 
     public static String getTimeExpend(String startTime,String endTime) {
@@ -370,6 +370,6 @@ public class TimeUtil {
         long long2 = long1 - longHours * l2;
         long longMinutes = long2 / l3;   //根据时间差来计算分钟数
         long longSecond = (long2 - longMinutes * l3) / 1000;
-        return longDay + " 天 " + longHours + " 小时 " + longMinutes + " 分钟" + longSecond + "秒";
+        return longDay + " 天 " + longHours + " 时 " + longMinutes + " 分" + longSecond + "秒";
     }
 }

@@ -68,4 +68,58 @@
         <item name="android:layout_marginTop">@dimen/px_20</item>
         <item name="android:orientation">horizontal</item>
     </style>
+    <style name="detail_cv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_marginTop">@dimen/px_20</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+        <item name="android:layout_marginBottom">@dimen/px_5</item>
+        <item name="android:paddingBottom">@dimen/px_10</item>
+    </style>
+
+    <style name="detail_title_rl">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+    </style>
+    <style name="detail_title_tv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/txt_black_order</item>
+        <item name="android:textSize">@dimen/font_size16</item>
+        <item name="android:layout_marginTop">@dimen/px_26</item>
+        <item name="android:layout_marginBottom">@dimen/px_26</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="detail_title_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+        <item name="android:layout_marginBottom">@dimen/px_10</item>
+        <item name="android:src">@drawable/dotted_line</item>
+    </style>
+    <style name="detail_item_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginTop">@dimen/px_20</item>
+    </style>
+    <style name="detail_item_left_tv">
+        <item name="android:layout_width">@dimen/px_170</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+    </style>
+    <style name="detail_item_right_tv">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/txt_black_order</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+    </style>
 </resources>

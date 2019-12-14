@@ -38,30 +38,35 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
+                android:onClick="@{()->callBack.jumpX5Web(2)}"
                 android:text="@string/more"
                 android:textColor="@color/normal_main_text_icon_color"
-                android:textSize="@dimen/font_size14"
-                android:onClick="@{()->callBack.jumpX5Web(2)}"/>
+                android:textSize="@dimen/font_size14" />
         </RelativeLayout>
 
         <LinearLayout
             style="@style/base_style"
-            android:background="@drawable/corners_white"
             android:layout_marginTop="@dimen/px_30"
+            android:background="@drawable/corners_white"
+            android:orientation="vertical"
             android:paddingTop="@dimen/px_40"
-            android:paddingBottom="@dimen/px_40"
-            android:orientation="vertical">
+            android:paddingBottom="@dimen/px_40">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_work_table_pending_num"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"/>
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_work_table_pending_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_16"
                 android:gravity="center"
                 android:text="@string/tv_work_order_num"
                 android:textColor="@color/normal_main_text_icon_color"

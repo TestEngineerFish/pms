@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
 
@@ -59,7 +60,9 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
@@ -371,6 +374,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         GetUploadJson getUploadJsonStr = new GetUploadJson(picUrls).invoke();
         Gson gson = getUploadJsonStr.getGson();
         List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+        if (OrderState.HANDING.getState() == patrol.getData().getZyjhgd().getF_OT_STATUS()) {
+            patrol.getData().getZyjhgd().setF_OT_STATUS(OrderState.CLOSED.getState());
+        }
+        hasException();
         patrol.getData().getZyjhgd().setF_FILES(gson.toJson(picUrlModels));//包装上传图片信息
         patrol.getData().getZyjhgd().setF_CONTENT(binding.limitInput.getString());//包装节点选择信息
     }
@@ -395,6 +402,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
 //        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
 //        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
+        patrol.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
@@ -410,6 +418,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 tipDialog.show();
             }
         });
+    }
+
+    private String getTime() {
+        long time = System.currentTimeMillis();//long now = android.os.SystemClock.uptimeMillis();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+        Date d1 = new Date(time);
+        String t1 = format.format(d1);
+        return t1;
     }
 
     AlertDialog alertDialog;
@@ -474,5 +490,29 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 .withString(RouteKey.KEY_ORDER_ID, id)
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .navigation();
+    }
+
+    public void showOrHideOrderInfo() {
+        if (View.VISIBLE == binding.llOrderContent.getVisibility()) {
+            binding.llOrderContent.setVisibility(View.GONE);
+            binding.ivOrderLine.setVisibility(View.GONE);
+            binding.ivOrderArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_arrow_right));
+        } else {
+            binding.llOrderContent.setVisibility(View.VISIBLE);
+            binding.ivOrderLine.setVisibility(View.VISIBLE);
+            binding.ivOrderArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_arrow_down_grey));
+        }
+    }
+
+    public void showOrHideResource() {
+        if (View.VISIBLE == binding.rvResource.getVisibility()) {
+            binding.rvResource.setVisibility(View.GONE);
+            binding.ivResourceLine.setVisibility(View.GONE);
+            binding.ivResourceArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_arrow_right));
+        } else {
+            binding.rvResource.setVisibility(View.VISIBLE);
+            binding.ivResourceLine.setVisibility(View.VISIBLE);
+            binding.ivResourceArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_arrow_down_grey));
+        }
     }
 }
