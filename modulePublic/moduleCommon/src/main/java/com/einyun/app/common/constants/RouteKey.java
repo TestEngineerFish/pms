@@ -23,6 +23,7 @@ public class RouteKey {
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
     public static final String KEY_FRAGEMNT_TAG="fragmentTag";
     public static final String KEY_ORDER_ID="orderId";
+    public static final String KEY_LIST_TYPE="listType";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
     public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
     public static final String FRAGMENT_WORK_PREVIEW_PLAN="WORK_PREVIEW_PLAN";

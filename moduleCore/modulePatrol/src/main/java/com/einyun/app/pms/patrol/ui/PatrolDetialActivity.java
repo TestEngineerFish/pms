@@ -12,6 +12,7 @@ import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -41,6 +42,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     String taskNodeId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
+
+    @Autowired(name = RouteKey.KEY_LIST_TYPE)
+    int listType= ListType.DONE.getType();
 
     RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode> nodesAdapter;
 
@@ -132,10 +136,17 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
-        //加载数据
-        viewModel.loadDoneDetial(orderId).observe(this, patrolInfo -> {
-            updateUI(patrolInfo);
-        });
+
+        if(listType==ListType.PENDING.getType()){
+            viewModel.loadPendingDetial(orderId).observe(this, patrolInfo -> {
+                updateUI(patrolInfo);
+            });
+        }else if(listType==ListType.DONE.getType()){
+            //加载数据
+            viewModel.loadDoneDetial(orderId).observe(this, patrolInfo -> {
+                updateUI(patrolInfo);
+            });
+        }
     }
 
     private void updateUI(PatrolInfo patrol) {
