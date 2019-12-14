@@ -40,8 +40,7 @@
                     android:layout_marginRight="@dimen/px_40"
                     android:layout_toRightOf="@id/item_send_work_lf_img"
                     android:gravity="center_vertical"
-                    android:maxLength="10"
-                    android:text="@{workOrder.subject}"
+                    android:text="@{workOrder.f_DESC}"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/px_32" />
 

@@ -215,10 +215,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         }
         showForceClose();
         showPostpone();
-        //如果是已办,申请延期中，申请强制关闭中，全部显示详情
-        if (fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)
-                || detialModel.getExtApplication(ApplyType.FORCECLOSE.getState()) != null
-                || detialModel.getExtApplication(ApplyType.POSTPONE.getState()) != null) {
+        //如果是已办全部显示详情
+        if (fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)) {
             onlyShowDetial();
             return;
         }
@@ -251,7 +249,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (isNeedCheckAccept()) {//如果验收人是自己，显示验收
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.checkAndAccept.getRoot().setVisibility(View.VISIBLE);//显示验收
-            binding.applyPostpone.getRoot().setVisibility(View.VISIBLE);//显示申请延期
+            binding.orderHandle.getRoot().setVisibility(View.VISIBLE);//显示处理信息
         } else {
             binding.sendOrderDetailSubmit.setVisibility(View.GONE);//如果是自己的单子待验收，显示详情
         }
