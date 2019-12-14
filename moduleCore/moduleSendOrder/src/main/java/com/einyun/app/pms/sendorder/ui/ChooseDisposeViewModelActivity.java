@@ -122,6 +122,17 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                 }
 
                 @Override
+                public void searchClick(String search) {
+                    List<GetMappingByUserIdsResponse> list = new ArrayList<>();
+                    for (GetMappingByUserIdsResponse user : users) {
+                        if (user.getFullname().contains(search) || user.getMobile().contains(search)) {
+                            list.add(user);
+                        }
+                    }
+                    adapter.setDataList(list);
+                }
+
+                @Override
                 public void onItemClick(GetMappingByUserIdsResponse model) {
                     LiveDataBusUtils.postResendOrderUser(model);
                     ActivityUtil.finishToActivity(ResendOrderActivity.class);

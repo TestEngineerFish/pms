@@ -34,6 +34,7 @@
                 android:layout_weight="9"
                 android:background="@drawable/shape_frame_gray"
                 android:orientation="vertical"
+                android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="5dp"
                 android:paddingTop="8dp"

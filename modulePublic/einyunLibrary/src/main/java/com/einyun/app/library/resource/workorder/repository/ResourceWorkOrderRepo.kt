@@ -195,6 +195,18 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         return liveData
     }
 
+    //巡查处理
+    override fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
+        serviceApi?.planSubmit(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                {
+                    callBack.call(it.isState)
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
+    }
+
     //获取历史流程
     override fun getHistroy(
         intstId: String,

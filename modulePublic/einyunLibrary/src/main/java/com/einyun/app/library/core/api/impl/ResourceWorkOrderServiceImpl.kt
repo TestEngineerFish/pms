@@ -46,6 +46,10 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         return proxy.getPlanPreviewList(request, callBack)
     }
 
+    override fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
+        return proxy.planSubmit(request, callBack)
+    }
+
     override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
         return proxy.planDoneDetial(request, callBack)
     }

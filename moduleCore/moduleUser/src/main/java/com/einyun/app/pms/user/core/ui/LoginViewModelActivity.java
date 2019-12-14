@@ -71,7 +71,10 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         binding.setUserModel(new UserModel("", "", "", ""));
         //本地用户信息展示
         viewModel.getLastUser().observe(this,
-                user -> binding.setUserModel(user));
+                user -> {
+                    user.setPassword("");
+                    binding.setUserModel(user);
+                });
         binding.setCallBack(this);
         binding.etOrgCode.setText(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString());
         setUserList();
@@ -207,11 +210,11 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     public void showEye() {
         if (showPwd) {
-            binding.ivOption.setImageResource(R.mipmap.img_login_password_show);
+            binding.ivOption.setImageResource(R.mipmap.img_login_password_hide);
             binding.etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             showPwd = false;
         } else {
-            binding.ivOption.setImageResource(R.mipmap.img_login_password_hide);
+            binding.ivOption.setImageResource(R.mipmap.img_login_password_show);
             binding.etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             showPwd = true;
         }

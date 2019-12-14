@@ -67,9 +67,10 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
     String taskId;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
     String orderId;
+
     @Override
     protected PatrolViewModel initViewModel() {
-        return new ViewModelProvider(this,new ViewModelFactory()).get(PatrolViewModel.class);
+        return new ViewModelProvider(this, new ViewModelFactory()).get(PatrolViewModel.class);
     }
 
     @Override
@@ -97,14 +98,14 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
 
         //工作节点适配
-        if(nodesAdapter==null){
-            nodesAdapter=new RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode>(this, com.einyun.app.pms.patrol.BR.node) {
+        if (nodesAdapter == null) {
+            nodesAdapter = new RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode>(this, com.einyun.app.pms.patrol.BR.node) {
                 @Override
                 public void onBindItem(ItemPatrolWorkNodeBinding binding, WorkNode model, int position) {
                     //处理列表头
-                    if(position==0){
+                    if (position == 0) {
                         tableHead(binding);
-                    }else{
+                    } else {
                         //处理节点
                         tableItem(binding, position);
                         //选中通过
@@ -112,24 +113,24 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
                         //选中不通过
                         reject(binding, model);
 
-                        if(!TextUtils.isEmpty(model.result)){
-                            if(model.result.equals(WorkNode.RESULT_REJECT)){
+                        if (!TextUtils.isEmpty(model.result)) {
+                            if (model.result.equals(WorkNode.RESULT_REJECT)) {
                                 onReject(binding);
-                            }else if(model.result.equals(WorkNode.RESULT_PASS)){
+                            } else if (model.result.equals(WorkNode.RESULT_PASS)) {
                                 onAgree(binding);
                             }
                         }
                     }
                 }
 
-                protected void onReject(ItemPatrolWorkNodeBinding binding){
+                protected void onReject(ItemPatrolWorkNodeBinding binding) {
                     binding.btnAgree.setBackgroundResource(R.drawable.shape_frame_corners_gray);
                     binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.normal_main_text_icon_color));
                     binding.btnReject.setBackgroundResource(R.drawable.corners_red_large);
                     binding.btnReject.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
                 }
 
-                protected void onAgree(ItemPatrolWorkNodeBinding binding){
+                protected void onAgree(ItemPatrolWorkNodeBinding binding) {
                     binding.btnAgree.setBackgroundResource(R.drawable.corners_green_large);
                     binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
                     binding.btnReject.setBackgroundResource(R.drawable.shape_frame_corners_gray);
@@ -139,7 +140,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
                 //不通过
                 protected void reject(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnReject.setOnClickListener(v -> {
-                       onReject(binding);
+                        onReject(binding);
                         model.setResult(WorkNode.RESULT_REJECT);
                         saveLocalUserData();
                     });
@@ -156,7 +157,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
 
                 //处理节点
                 protected void tableItem(ItemPatrolWorkNodeBinding binding, int position) {
-                    binding.tvNumber.setText(position+"");
+                    binding.tvNumber.setText(position + "");
                     binding.tvWorkNode.setVisibility(View.VISIBLE);
                     binding.tvResult.setVisibility(View.GONE);
                     binding.btnAgree.setVisibility(View.VISIBLE);
@@ -279,7 +280,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
     @NotNull
     protected List<WorkNode> getWorkNodes() {
         List<WorkNode> all=nodesAdapter.getDataList();
-        return all.subList(1,all.size()-1);
+        return all.subList(1,all.size());
     }
 
     /**

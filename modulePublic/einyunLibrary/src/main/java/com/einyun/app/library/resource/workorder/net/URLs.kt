@@ -30,6 +30,8 @@ class URLs {
         const val URL_RESOURCE_WORKORDER_PATROL_DONE="/$DOMAIN/res-order/patrol/done"
         //巡查工单处理
         const val URL_RESOURCE_WORKORDER_PATROL_SUBMIT="/$DOMAIN/res-order/patrol/process"
+        //计划工单处理
+        const val URL_RESOURCE_WORKORDER_PLAN_SUBMIT="/$DOMAIN/res-order/plan/process"
         //2.31派工单-待办列表
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_WAIT="/$DOMAIN/res-order/distribute/wait"
         //2.32派工单-已办列表

@@ -136,7 +136,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/px_60"
                     android:onClick="@{()->callBack.showEye()}"
-                    android:src="@mipmap/img_login_password_show"
+                    android:src="@mipmap/img_login_password_hide"
                     android:visibility="invisible" />
 
                 <View

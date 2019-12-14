@@ -89,12 +89,11 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                         (event != null && event.getAction() == KeyEvent.KEYCODE_ENTER)) {
-//                    String search = etSearch.getText().toString();
-////                    repository.insertSearchHistory(new SearchHistory(search, type));
-//                    if (listener != null) {
-//                        listener.search(search);
-//                    }
-//                    dismiss();
+                    String search = etSearch.getText().toString();
+                    if (listener != null) {
+                        listener.searchClick(search);
+                    }
+                    dismiss();
                 }
                 return false;
             }

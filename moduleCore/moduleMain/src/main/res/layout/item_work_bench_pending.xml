@@ -38,8 +38,8 @@
 
             <ImageView
                 android:id="@+id/qrcode_scan"
-                android:layout_width="@dimen/px_68"
-                android:layout_height="@dimen/px_68"
+                android:layout_width="@dimen/px_44"
+                android:layout_height="@dimen/px_44"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="@{()->callBack.scanner()}"
@@ -71,6 +71,33 @@
                     android:layout_height="@dimen/px_160"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+                    <RelativeLayout
+                        style="@style/base_wrap_style"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
+
+                        <LinearLayout
+                            android:id="@+id/ll_work_wenxiu"
+                            style="@style/ll_work_table_pending">
+
+                            <TextView
+                                android:id="@+id/tv_work_table_dispatch_num"
+                                style="@style/tv_work_table_pending_num"
+                                android:text="0" />
+
+                            <TextView
+                                style="@style/tv_work_table_pending_name"
+                                android:text="@string/tv_dispatch_work_order" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            style="@style/iv_light_waring"
+                            android:layout_alignBottom="@id/ll_work_wenxiu"
+                            android:layout_toRightOf="@id/ll_work_wenxiu" />
+                        <View style="@style/vertical_line" />
+                    </RelativeLayout>
 
                     <RelativeLayout
                         style="@style/base_wrap_style"
@@ -129,35 +156,9 @@
                             android:layout_alignBottom="@id/ll_work_baoxiu"
                             android:layout_toRightOf="@id/ll_work_baoxiu" />
 
-                        <View style="@style/vertical_line" />
+
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        style="@style/base_wrap_style"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
-
-                        <LinearLayout
-                            android:id="@+id/ll_work_wenxiu"
-                            style="@style/ll_work_table_pending">
-
-                            <TextView
-                                android:id="@+id/tv_work_table_dispatch_num"
-                                style="@style/tv_work_table_pending_num"
-                                android:text="0" />
-
-                            <TextView
-                                style="@style/tv_work_table_pending_name"
-                                android:text="@string/tv_dispatch_work_order" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            style="@style/iv_light_waring"
-                            android:layout_alignBottom="@id/ll_work_wenxiu"
-                            android:layout_toRightOf="@id/ll_work_wenxiu" />
-                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout

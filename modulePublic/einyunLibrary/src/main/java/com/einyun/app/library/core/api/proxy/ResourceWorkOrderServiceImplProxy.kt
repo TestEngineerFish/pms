@@ -37,6 +37,10 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     ): LiveData<OrderPreviewPage> {
         return instance?.getPlanPreviewList(request, callBack)!!     }
 
+    override fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
+        return instance?.planSubmit(request, callBack)!!
+    }
+
     override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
         return instance?.planDoneDetial(request, callBack)!!
     }

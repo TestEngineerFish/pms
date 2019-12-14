@@ -128,4 +128,6 @@
     <string name="yes">是</string>
     <string name="no">否</string>
 
+    <string name="text_request_create_distribute">是否创建派工单</string>
+    <string name="text_result">结果</string>
 </resources>
