@@ -93,6 +93,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     @Override
     protected void setUpView() {
         tabId = getArguments().getInt("tabId");
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         binding.swipeRefresh.setOnRefreshListener(() -> {
             ApprovalkListRepository.mPage2=0;//解决快速刷新导致列表数据不显示问题
             ApprovalkListRepository.mPage3=0;

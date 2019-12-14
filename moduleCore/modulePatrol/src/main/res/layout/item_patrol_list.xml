@@ -15,6 +15,9 @@
         android:layout_marginLeft="@dimen/px_20"
         android:layout_marginRight="@dimen/px_20"
         android:layout_marginBottom="@dimen/px_5"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="@dimen/px_10"
         android:focusable="true"
         android:clickable="true"
         android:foreground = "?attr/selectableItemBackground"
@@ -45,7 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/txt_black_order"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/px_32"
                     android:text="@{patrol.f_inspection_work_plan_name}" />
 
 

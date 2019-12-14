@@ -52,6 +52,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     protected void setUpData() {
         initAdapter();
+        binding.swiperefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
         binding.patrolList.setAdapter(adapter);
         loadData();

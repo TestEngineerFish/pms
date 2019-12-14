@@ -99,6 +99,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     @Override
     protected void setUpView() {
+        binding.sendOrderRef.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         binding.sendOrderRef.setOnRefreshListener(() -> {
             binding.sendOrderRef.setRefreshing(false);
 //            loadPagingData();
