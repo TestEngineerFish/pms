@@ -29,6 +29,7 @@ import com.einyun.app.common.ui.component.searchhistory.SearchFragment;
 import com.einyun.app.common.ui.component.searchhistory.SearchListener;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.create.BR;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.databinding.ActivityChooseDisposePersonBinding;
@@ -115,6 +116,17 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                     }
                     liveData.postValue(list);
                     return liveData;
+                }
+
+                @Override
+                public void searchClick(String search) {
+                    List<OrgModel> list = new ArrayList<>();
+                    for (OrgModel model : orgModels) {
+                        if (model.getName().contains(search)) {
+                            list.add(model);
+                        }
+                    }
+                    adapter.setDataList(list);
                 }
 
                 @Override

@@ -88,6 +88,12 @@ interface ResourceWorkOrderServiceApi {
     fun patrolSubmit(@Body request: PatrolSubmitRequest):Flowable<BaseResponse<Any>>
 
     /**
+     * 计划工单处理
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_PLAN_SUBMIT)
+    fun planSubmit(@Body request: PatrolSubmitRequest):Flowable<BaseResponse<Any>>
+
+    /**
      * 2.31派工单-待办列表
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_WAIT)

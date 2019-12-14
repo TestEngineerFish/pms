@@ -24,6 +24,7 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.pms.main.BR;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.Constants;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
@@ -118,14 +119,10 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             viewModel.workOrderData(divideCode).observe(this, workOrderData -> {
                 //工单完成率
                 String completedRate = workOrderData.getRate().getCompletedRate();
-                binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(
-                        formatDouble.format(Double.valueOf(
-                                completedRate.substring(0, completedRate.length() - 1))));
+                binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
                 //工单及时率
                 String timelyRate = workOrderData.getRate().getTimelyRate();
-                binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(
-                        formatDouble.format(Double.valueOf(
-                                timelyRate.substring(0, timelyRate.length() - 1))));
+                binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
                 //总单总数
                 int num = 0;
                 for (WorkOrder workOrder : workOrderData.getWorkOrder()) {
@@ -274,6 +271,12 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
         List<String> functionList = new ArrayList<>();
         functionList.add("dj");
+        //审批
+        if (userMenu.indexOf("sprk") != -1) {
+            functionList.add("sp");
+        }
+        //创建工单
+        functionList.add("cjgd");
         if (userMenu.indexOf("gdlbck") != -1) {
             functionList.add("gdlb");
         }
@@ -281,10 +284,8 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 //        if (userMenu.indexOf("qd") != -1) {
 //            functionList.add("qd");
 //        }
-        if (userMenu.indexOf("sprk") != -1) {
-            functionList.add("sp");
-        }
-        functionList.add("cjgd");
+
+
         functionList.add("gzyl");
         functionList.add("smcl");
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
@@ -354,7 +355,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
      */
     private void setWorkTablePendingNum(char[] chars) {
         if (adapter == null) {
-            adapter = new RVBindingAdapter<ItemWorkTablePendingNumBinding, String>(getActivity(), com.einyun.app.common.BR.numAdapter) {
+            adapter = new RVBindingAdapter<ItemWorkTablePendingNumBinding, String>(getActivity(), BR.num) {
 
                 @Override
                 public void onBindItem(ItemWorkTablePendingNumBinding binding, String model, int position) {
@@ -367,12 +368,12 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 }
             };
         }
-        List<String> nums = new ArrayList<>();
+        binding.itemWorkBenchSecond.rvWorkTablePendingNum.setAdapter(adapter);
+        ArrayList<String> nums = new ArrayList<>();
         for (char ch : chars) {
             nums.add(String.valueOf(ch));
         }
         adapter.setDataList(nums);
-        binding.itemWorkBenchSecond.rvWorkTablePendingNum.setAdapter(adapter);
     }
 
     @Autowired(name = RouterUtils.SERVICE_USER)

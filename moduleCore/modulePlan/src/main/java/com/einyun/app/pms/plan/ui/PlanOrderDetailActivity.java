@@ -19,9 +19,11 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.util.Base64Util;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -33,11 +35,16 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
+import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
+import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
@@ -74,6 +81,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
     String taskNodeId;
+
+    private PlanInfo planInfo;
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -208,7 +217,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
 
         //加载数据
-        viewModel.loadDetail(proInsId,taskId,taskNodeId,fragmentTag).observe(this, planInfo -> {
+        viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
             updateUI(planInfo);
             if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_CREATE_TIME())) {
                 createTime = planInfo.getData().getZyjhgd().getF_CREATE_TIME();
@@ -264,6 +273,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     private void updateUI(PlanInfo planInfo) {
+        this.planInfo = planInfo;
         List<WorkNode> nodes = viewModel.loadNodes(planInfo);
         nodes.add(0, new WorkNode());
         nodesAdapter.addAll(nodes);
@@ -331,24 +341,101 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @NotNull
     protected List<WorkNode> getWorkNodes() {
         List<WorkNode> all = nodesAdapter.getDataList();
-        return all.subList(1, all.size() - 1);
+        return all.subList(1, all.size());
     }
 
     /**
      * 上传图片
      *
-     * @param patrol
+     * @param planInfo
      */
-    private void uploadImages(PatrolInfo patrol) {
-        if (patrol == null) {
+    private void uploadImages(PlanInfo planInfo) {
+        if (planInfo == null) {
             return;
         }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
-            GetUploadJson getUploadJsonStr = new GetUploadJson(picUrls).invoke();
-            Gson gson = getUploadJsonStr.getGson();
-            List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
-            patrol.getData().getZyxcgd().setF_files(gson.toJson(picUrlModels));
+            wrapFormData(planInfo, picUrls);
+            acceptForm(planInfo);
         });
+    }
+
+
+    /**
+     * 包装表单数据
+     *
+     * @param patrol
+     * @param picUrls
+     * @return
+     */
+    private void wrapFormData(PlanInfo patrol, List<PicUrl> picUrls) {
+        GetUploadJson getUploadJsonStr = new GetUploadJson(picUrls).invoke();
+        Gson gson = getUploadJsonStr.getGson();
+        List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+        patrol.getData().getZyjhgd().setF_FILES(gson.toJson(picUrlModels));//包装上传图片信息
+        patrol.getData().getZyjhgd().setF_CONTENT(binding.limitInput.getString());//包装节点选择信息
+    }
+
+    private boolean hasException() {
+        int index = 0; //异常节点选项
+        for (Sub_jhgdgzjdb node : planInfo.getData().getZyjhgd().getSub_jhgdgzjdb()) {
+            for (WorkNode workNode : getWorkNodes()) {
+                if (node.getF_WK_ID().equals(workNode.number)) {
+                    node.setF_WK_RESULT(workNode.getResult());
+                    if (workNode.result.equals("0")) index++;
+                }
+            }
+        }
+        return index > 0;
+    }
+
+    TipDialog tipDialog;
+
+    private void acceptForm(PlanInfo patrol) {
+//        patrol.getData().get().setF_actual_completion_time(TimeUtil.Now());
+//        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
+//        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
+//        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
+        String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol));
+        PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
+        viewModel.submit(request).observe(this, aBoolean -> {
+            if (aBoolean) {
+                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
+                tipDialog.setTipDialogListener(dialog -> {
+                    if (hasException()) {
+                        createSendOrder();
+                    } else {
+                        finish();
+                    }
+                });
+                tipDialog.show();
+            }
+        });
+    }
+
+    AlertDialog alertDialog;
+
+    /**
+     * 是否创建派工单
+     */
+    private void createSendOrder() {
+        if (alertDialog == null) {
+            alertDialog = new AlertDialog(this).builder()
+                    .setTitle(getString(R.string.text_alert))
+                    .setMsg(getString(R.string.text_request_create_distribute))
+                    .setPositiveButton(getString(R.string.ok), v -> {
+                        goPaiGongDan(); //跳转至创建派工单
+                    }).setNegativeButton(getString(R.string.cancel), v -> {
+                        finish();
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private void goPaiGongDan() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                .navigation();
+        finish();
     }
 
 
@@ -359,7 +446,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         if (!validateFormData()) {
             return;
         }
-//        uploadImages();
+        uploadImages(planInfo);
     }
 
     @Override

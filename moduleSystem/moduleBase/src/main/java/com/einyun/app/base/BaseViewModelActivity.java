@@ -1,5 +1,6 @@
 package com.einyun.app.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -22,6 +23,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
         ARouter.getInstance().inject(this);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
 

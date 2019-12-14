@@ -1,5 +1,6 @@
 package com.einyun.app.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.TypedValue;
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
         setContentView(getLayoutId());
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, getColorPrimary());

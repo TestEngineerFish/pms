@@ -22,6 +22,7 @@ import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,8 +36,34 @@ public class PlanOrderDetailViewModel extends BaseUploadViewModel {
     MutableLiveData<PlanInfo> liveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    ResourceWorkOrderService service;
 
+    public PlanOrderDetailViewModel(){
+        service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
 
+    }
+    /**
+     * 提交
+     * @return
+     */
+    public LiveData<Boolean> submit(PatrolSubmitRequest request){
+        MutableLiveData<Boolean> liveData=new MutableLiveData();
+        showLoading();
+        service.planSubmit(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
 
     /**
      * 工作节点
@@ -73,7 +100,6 @@ public class PlanOrderDetailViewModel extends BaseUploadViewModel {
      */
     public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag) {
         showLoading();
-        ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
             DoneDetialRequest request = new DoneDetialRequest();
             request.setProInsId(proInsId);
