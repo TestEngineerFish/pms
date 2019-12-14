@@ -1,23 +1,17 @@
 package com.einyun.app.pms.orderpreview.ui;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.FtsOptions;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
-import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.pms.orderpreview.R;
 import com.einyun.app.pms.orderpreview.databinding.ActivityOrderPreviewBinding;
@@ -29,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PATRO;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLAN;
 

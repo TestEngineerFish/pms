@@ -3,7 +3,8 @@
     package="com.einyun.app.pms.operatepercent">
 
     <application>
-        <activity android:name=".ui.OperatePercentActivity"></activity>
+        <activity android:name=".ui.AllChargeActivity"></activity>
+        <activity android:name=".ui.OperatePercentActivity" />
     </application>
 
 </manifest>

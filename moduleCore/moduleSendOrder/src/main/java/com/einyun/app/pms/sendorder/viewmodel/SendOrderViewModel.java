@@ -147,7 +147,6 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      * @return LiveData
      */
     public LiveData<List<ResourceTypeBean>> getTiaoXian() {
-        showLoading();
         resourceWorkOrderService.getTiaoXian(new CallBack<List<ResourceTypeBean>>() {
             @Override
             public void call(List<ResourceTypeBean> data) {
@@ -232,9 +231,9 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      *
      * @return LiveData
      */
-    public MutableLiveData<OrgnizationModel> getOrgnization() {
+    public MutableLiveData<OrgnizationModel> getOrgnization(String divideId) {
         showLoading();
-        resourceWorkOrderService.getOrgnization("63872495547056133", new CallBack<OrgnizationModel>() {
+        resourceWorkOrderService.getOrgnization(divideId, new CallBack<OrgnizationModel>() {
             @Override
             public void call(OrgnizationModel data) {
                 hideLoading();
@@ -284,7 +283,6 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
             @Override
             public void call(ResendOrderResponse data) {
                 hideLoading();
-                Log.d("test", data.getMsg());
                 resend.postValue(data);
             }
 

@@ -49,6 +49,7 @@
     <color name="pressd_blue_btn_end_color">#4B82D8</color>
     <color name="enabled_blue_btn_start_color">#9DBEF1</color>
     <color name="enabled_blue_btn_end_color">#ACCBFD</color>
+    <color name="today_txt_color">#9ea4b4</color>
     <!--星号颜色-->
     <color name="important_red_color">#E02020</color>
     <color name="txt_blue_color">#458DFE</color>

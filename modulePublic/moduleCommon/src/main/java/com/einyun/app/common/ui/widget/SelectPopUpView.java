@@ -3,8 +3,10 @@ package com.einyun.app.common.ui.widget;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.R;
 import com.einyun.app.common.databinding.ItemSelectPopBinding;
 import com.einyun.app.common.databinding.SelectPopItemBinding;
@@ -168,6 +171,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
         selectPopUpBinding.canclel.setOnClickListener(this);
         selectPopUpBinding.ivClose.setOnClickListener(this);
         selectPopUpBinding.confirm.setOnClickListener(this);
+
     }
 
     protected void onSelected(SelectModel data) {

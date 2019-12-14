@@ -1,15 +1,12 @@
 package com.einyun.app.pms.operatepercent.ui;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.lifecycle.ReportFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -25,10 +22,6 @@ import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PATRO;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLAN;
 
 @Route(path = RouterUtils.ACTIVITY_OPERATE_PERCENT)
 public class OperatePercentActivity extends BaseHeadViewModelActivity<ActivityOperatePercentBinding, OperatePercentViewModel> implements PeriodizationView.OnPeriodSelectListener {

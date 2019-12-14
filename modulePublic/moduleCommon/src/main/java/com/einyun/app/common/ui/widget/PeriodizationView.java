@@ -27,6 +27,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.databinding.FragmentOgselectfBinding;
@@ -85,7 +86,9 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(wlp);
-
+        ViewGroup.LayoutParams params=binding.rvOrgList.getLayoutParams();
+        params.height= ScreenUtils.getMetricsHeight(getActivity())-ScreenUtils.getStatusHeight(getActivity())-550;
+        binding.rvOrgList.setLayoutParams(params);
         getActivity().getLifecycle().addObserver((LifecycleEventObserver) (source, event) -> {
             if (event == Lifecycle.Event.ON_STOP) {
                 dismiss();
@@ -101,8 +104,11 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
             if (models != null) {
                 binding.periodSelectDefault.setVisibility(View.GONE);
                 selectOrgs.addAll(models);
+                OrgModel orgModel1 = new OrgModel();
+                orgModel1.setName(getContext().getResources().getString(R.string.text_choose_org));
+                selectOrgs.add(orgModel1);
                 loadTags();
-                blockId = selectOrgs.get(selectOrgs.size() - 1).getId();
+                blockId = selectOrgs.get(selectOrgs.size() - 2).getId();
 
             }
             viewModel.queryOrgs(userId, blockId);
@@ -132,7 +138,6 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         if (orgModel.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
             viewModel.saveBlock2Local(orgModel.getId(), orgModel.getName(), orgModel.getCode());
             viewModel.saveChache2Local(selectOrgs);
-            Log.d("test", "zhixingitemcliected");
             onPeriodSelectListener.onPeriodSelectListener(orgModel);
             this.dismiss();
         } else {
@@ -162,7 +167,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         @NonNull
         @Override
         public TagViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getActivity()).inflate(com.einyun.app.common.R.layout.item_block_choose_tag, parent, false);
+            View root = LayoutInflater.from(getActivity()).inflate(R.layout.item_block_choose_tag, parent, false);
             TagViewHolder viewHolder = new TagViewHolder(root);
             return viewHolder;
         }
@@ -240,7 +245,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
 
                 @Override
                 public int getLayoutId() {
-                    return com.einyun.app.common.R.layout.item_block_choose;
+                    return R.layout.item_block_choose;
                 }
             };
         }

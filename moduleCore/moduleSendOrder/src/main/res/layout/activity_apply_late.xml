@@ -26,7 +26,6 @@
 
         <LinearLayout style="@style/ll_create_order">
 
-            <TextView style="@style/tv_create_order_red_star" />
 
             <TextView
                 style="@style/tv_create_order_name"
@@ -47,7 +46,6 @@
 
         <LinearLayout style="@style/ll_create_order">
 
-            <TextView style="@style/tv_create_order_red_star" />
 
             <TextView
                 style="@style/tv_create_order_name"
@@ -129,7 +127,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_20"
                 android:text="(最多四张)"
-                android:textColor="@color/red"
                 android:textSize="@dimen/font_size12" />
         </LinearLayout>
 
