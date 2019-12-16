@@ -8,6 +8,7 @@ import java.util.List;
 
 public class SelectModel implements Cloneable{
 
+    private int grade;
     private String id="";//标签id
     private String content;//标签名
     private String type="";//分类
@@ -22,10 +23,25 @@ public class SelectModel implements Cloneable{
     private String text;
     private List<?> children;
     private String isParent;
+//    private SelectModel parent;
     private List<SelectModel> selectModelList=new ArrayList<>();
     public SelectModel() {
 
     }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(@NonNull int grade) {
+        this.grade = grade;
+    }
+
+//
+//    public void setParent(SelectModel parent) {
+//        this.parent = parent;
+//        this.setGrade(parent.getGrade()+1);
+//    }
 
     public String getContent() {
         return content;

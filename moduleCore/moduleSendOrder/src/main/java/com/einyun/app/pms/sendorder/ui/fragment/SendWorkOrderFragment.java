@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -23,25 +24,36 @@ import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.ConditionBuilder;
+import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
+import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PageRquest;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.FragmentSendWorkOrderBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
+import com.einyun.app.pms.sendorder.ui.SendOrderActivity;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -60,16 +72,20 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> implements ItemClickListener<Distribute> {
+public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWorkOrderBinding, SendOrderViewModel> implements ItemClickListener<Distribute>, PeriodizationView.OnPeriodSelectListener {
     RVPageListAdapter<ItemWorkSendBinding, Distribute> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    int listType;
+//    String blockName;
+//    String blockId;
+
+    public SendWorkOrderFragment(int listType){
+        this.listType=listType;
+    }
     boolean hasInit;
-    public static SendWorkOrderFragment newInstance(Bundle bundle) {
-        SendWorkOrderFragment fragment = new SendWorkOrderFragment();
-        fragment.setArguments(bundle);
-        Logger.d("setBundle->"+bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
-        return fragment;
+    public static SendWorkOrderFragment newInstance(int listType) {
+        return new SendWorkOrderFragment(listType);
     }
 
     @Override
@@ -82,10 +98,6 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     protected void init() {
         super.init();
 
-    }
-
-    protected String getFragmentTag(){
-        return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
     }
 
     @Override
@@ -126,7 +138,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
                 @Override
                 public void onBindItem(ItemWorkSendBinding binding, Distribute distribute) {
-                    if(FRAGMENT_SEND_OWRKORDER_DONE.equals(getFragmentTag())){
+                    if(listType==ListType.DONE.getType()){
                         binding.itemResendRe.setVisibility(View.GONE);
                     }
                     binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
@@ -153,27 +165,61 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.workSendList);
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
+
+//        blockName= SPUtils.get(getActivity(), SPKey.KEY_BLOCK_NAME,"").toString();
+//        blockId=SPUtils.get(getActivity(), SPKey.KEY_BLOCK_ID,"").toString();
+//        if (!TextUtils.isEmpty(blockName)){
+//            binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+//            binding.panelCondition.periodSelected.setText(blockName);
+//        }
         loadPagingData();
     }
 
+    @Override
+    protected void setUpListener() {
+        super.setUpListener();
+        binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出分期view
+                PeriodizationView periodizationView=new PeriodizationView();
+                periodizationView.setPeriodListener(SendWorkOrderFragment.this::onPeriodSelectListener);
+                periodizationView.show(getParentFragmentManager(),"");
+            }
+        });
+        binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
+            //弹出筛选view
+            ConditionBuilder builder=new ConditionBuilder();
+            List<SelectModel> conditions= builder.addItem(SelectPopUpView.SELECT_LINE,viewModel.listAll)//条线
+                    .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                    .mergeLineRes(viewModel.resourceTypeBeans)
+                    .build();
+            new SelectPopUpView(getActivity(),conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                @Override
+                public void onSelected(Map selected) {
+                    handleSelect(selected);
+                }
+            }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+
+        });
+    }
+
     private void loadPagingData() {
-        String fragmentTag=getFragmentTag();
-        if(viewModel.getOrgModel()!=null){
-            viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
-        }
         viewModel.getRequest().setUserId(userModuleService.getUserId());
-        if(fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_PENDING)){
+        viewModel.requestDone.setUserId(userModuleService.getUserId());
+        if(listType==ListType.PENDING.getType()){
             viewModel.loadPadingData(viewModel.getRequest()).observe(this, dataBeans -> {
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         }else{
-            viewModel.loadDonePagingData(viewModel.getRequest()).observe(this, dataBeans -> {
+            viewModel.loadDonePagingData(viewModel.requestDone).observe(this, dataBeans -> {
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         }
     }
+
 
     @Override
     protected SendOrderViewModel initViewModel() {
@@ -215,9 +261,13 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                     .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
                     .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                     .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
-                    .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
+                    .withInt(RouteKey.KEY_LIST_TYPE,listType)
                     .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                     .navigation();
+    }
+
+    public void setListType(int listType) {
+        this.listType=listType;
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
@@ -244,5 +294,23 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             return txts;
         }
 
+    }
+
+    @Override
+    public void onPeriodSelectListener(OrgModel orgModel) {
+        binding.panelCondition.periodSelected.setText(orgModel.getName());
+        binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+        viewModel.setOrgModel(orgModel);
+    }
+
+
+
+    /**
+     * 处理筛选返回数据
+     * */
+    private void handleSelect(Map selected) {
+        if (selected.size()>0){
+            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));}
+        viewModel.onConditionSelected(selected);
     }
 }

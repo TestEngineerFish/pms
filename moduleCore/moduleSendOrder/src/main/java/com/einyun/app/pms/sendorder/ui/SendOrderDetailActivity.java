@@ -26,6 +26,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.ImageUploadManager;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
@@ -64,8 +65,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     String taskNodeId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
-    @Autowired(name = RouteKey.KEY_FRAGEMNT_TAG)
-    String fragmentTag;
+    @Autowired(name = RouteKey.KEY_LIST_TYPE)
+    int listType;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
     String orderId;
     private TipDialog tipDialog;
@@ -126,7 +127,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      * 已办详情或待办详情
      */
     private void loadData() {
-        if (fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)) {
+        if (listType==ListType.DONE.getType()) {
             viewModel.doneDetial(taskNodeId, proInsId).observe(this, model -> updateUI(model));
         } else {
             viewModel.pendingDetial(taskId).observe(this, model -> updateUI(model));
@@ -216,7 +217,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         showForceClose();
         showPostpone();
         //如果是已办全部显示详情
-        if (fragmentTag.equals(FRAGMENT_SEND_OWRKORDER_DONE)) {
+        if (listType== ListType.DONE.getType()) {
             onlyShowDetial();
             return;
         }

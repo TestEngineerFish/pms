@@ -2,11 +2,8 @@ package com.einyun.app.common.ui.widget;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -17,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.R;
 import com.einyun.app.common.databinding.ItemSelectPopBinding;
 import com.einyun.app.common.databinding.SelectPopItemBinding;
@@ -25,6 +21,7 @@ import com.einyun.app.common.databinding.SelectPopUpBinding;
 import com.einyun.app.common.model.SelectModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,8 +31,11 @@ import java.util.Map;
 
 public class SelectPopUpView extends PopupWindow implements View.OnClickListener {
     private static final String TAG = "CustomPopWindow";
+    public static final String SELECT_LINE_TYPES = "SELECT_LINE_TYPES";//分类，环境，秩序，工程
     public static final String SELECT_LINE = "SELECT_LINE";//条线
+    public static final String SELECT_ROOT = "SELECT_ROOT";//根
     public static final String SELECT_ORDER_TYPE = "SELECT_ORDER_TYPE";//工单类型1
+    public static final String SELECT_ORDER_TYPE1 = "SELECT_ORDER_TYPE1";//工单类型2
     public static final String SELECT_ORDER_TYPE2 = "SELECT_ORDER_TYPE2";//工单类型2
     public static final String SELECT_ORDER_TYPE3 = "SELECT_ORDER_TYPE3";//工单类型3
     public static final String SELECT_IS_OVERDUE = "SELECT_IS_OVERDUE";//是否超期;
@@ -174,26 +174,76 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
 
     }
 
+    /**
+     * 处理选择结果
+     * @param data
+     */
     protected void onSelected(SelectModel data) {
-        if (SELECT_TIME_CIRCLE.equals(data.getType())) {
-            selectedMap.put(SELECT_TIME_CIRCLE, data);
-        } else if (SELECT_IS_OVERDUE.equals(data.getType())) {
-            selectedMap.put(SELECT_IS_OVERDUE, data);
-            if (SELECT_DATE.equals(data.getType())) {
-                selectedMap.put(SELECT_DATE, data);
-            } else if (SELECT_IS_OVERDUE.equals(data.getType())) {
-                selectedMap.put(SELECT_IS_OVERDUE, data);
-            } else if (!TextUtils.isEmpty(data.getTypeId()) && !TextUtils.isEmpty(data.getParentId())
-                    && data.getParentId().equals(data.getTypeId())) {
-                selectedMap.put(SELECT_LINE, data);
-            } else if (data.getParentId().equals(selectedMap.get(SELECT_LINE).getId())) {
-                selectedMap.put(SELECT_ORDER_TYPE, data);
-            } else if (data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE).getId())) {
-                selectedMap.put(SELECT_ORDER_TYPE2, data);
-            } else if (data.getParentId().equals(selectedMap.get(SELECT_ORDER_TYPE2).getId())) {
-                selectedMap.put(SELECT_ORDER_TYPE3, data);
+        selectedMap.put(data.getConditionType(),data);
+        clearUnSelect(data);
+        printSelected();
+    }
+
+    /**
+     * 清空未选择项结果
+     */
+    private void clearUnSelect(SelectModel model) {
+        List<SelectModel> grades= getItemsByCondidition(model.getConditionType(),selectModelList);
+        if(grades!=null){
+            for(SelectModel selectModel:grades){
+                clearChildren(selectModel);
             }
         }
+    }
+
+    /**
+     * 清空子项选择结果
+     */
+    private void clearChildren(SelectModel model){
+        List<SelectModel> children=model.getSelectModelList();
+        if(children!=null&&children.size()>0){
+            for(SelectModel selectModel:children){
+                if(selectModel==model){
+                    continue;
+                }
+                if(selectedMap.containsKey(selectModel.getConditionType())){
+                    selectedMap.remove(selectModel.getConditionType());
+                }
+                clearChildren(selectModel);
+            }
+        }
+    }
+
+    /**
+     * 获取同级别model
+     * @param condititon
+     * @return
+     */
+    private List<SelectModel> getItemsByCondidition(String  condititon, List<SelectModel> models){
+        List<SelectModel> list=new ArrayList<>();
+        for(SelectModel model:models){
+            if(model.getConditionType().equals(condititon)){
+                list.add(model);
+            }else{
+                List<SelectModel> children=model.getSelectModelList();
+                if(children!=null){
+                    list.addAll(getItemsByCondidition(condititon,children));
+                }
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 打印选择结果
+     */
+    private void printSelected(){
+        Logger.d("selected result->");
+        StringBuffer buffer=new StringBuffer();
+        for(String key:selectedMap.keySet()){
+            buffer.append(key+",");
+        }
+        Logger.d(buffer.toString());
     }
 
 

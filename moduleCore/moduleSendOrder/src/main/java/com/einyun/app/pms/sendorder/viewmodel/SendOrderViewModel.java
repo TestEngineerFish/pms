@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -49,13 +50,13 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
     PendingBoundaryCallBack pendingBoundaryCallBack;
     DoneBoundaryCallBack doneBoundaryCallBack;
     SendOrderRespository repo;
-    public String currentFragmentTag=FRAGMENT_SEND_OWRKORDER_PENDING;
+    public int listType= ListType.PENDING.getType();
     private ResourceWorkOrderService resourceWorkOrderService;
     private MutableLiveData<List<ResourceTypeBean>> tiaoxianList = new MutableLiveData<>();//条线
     private MutableLiveData<List<WorkOrderTypeModel>> workOrderTypeList = new MutableLiveData<>();//条线
     public List<ResourceTypeBean> resourceTypeBeans = new ArrayList<>();
-    private OrgModel orgModel;
     private DistributePageRequest request = new DistributePageRequest();
+    public DistributePageRequest requestDone=new DistributePageRequest();
 
     public DistributePageRequest getRequest() {
         return request;
@@ -65,13 +66,13 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         this.request = request;
     }
 
-    public OrgModel getOrgModel() {
-        return orgModel;
-    }
 
     public void setOrgModel(OrgModel orgModel) {
-        this.orgModel = orgModel;
-        request.setDivideId(orgModel.getId());
+        if(listType==ListType.PENDING.getType()){
+            request.setDivideId(orgModel.getId());
+        }else{
+            requestDone.setDivideId(orgModel.getId());
+        }
         switchCondition();
     }
 
@@ -107,15 +108,19 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
 
     @Override
     public void refresh() {
-        if(currentFragmentTag.equals(FRAGMENT_SEND_OWRKORDER_PENDING)){
+        if(isPending()){
             pendingBoundaryCallBack.refresh();
         }else{
             doneBoundaryCallBack.refresh();
         }
     }
 
+    private boolean isPending(){
+        return listType==ListType.PENDING.getType();
+    }
+
     public void switchCondition(){
-        if(currentFragmentTag.equals(FRAGMENT_SEND_OWRKORDER_PENDING)){
+        if(isPending()){
             pendingBoundaryCallBack.switchCondition();
         }else{
             doneBoundaryCallBack.switchCondition();
@@ -165,23 +170,50 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
     }
 
     public void onConditionSelected(Map<String, SelectModel> selected) {
-        request.resetConditions();
+        if(isPending()){
+            request.resetConditions();
+        }else{
+            requestDone.resetConditions();
+        }
+
         if (selected.get(SELECT_LINE) != null) {
             String lineId = selected.get(SELECT_LINE).getKey();
-            request.setTxId(lineId);
+            if(isPending()){
+                request.setTxId(lineId);
+            }else{
+                requestDone.setTxId(lineId);
+            }
         }
         if (selected.get(SELECT_ORDER_TYPE) != null) {
             String orderType = selected.get(SELECT_ORDER_TYPE).getKey();
-            request.setType(orderType);
+            if(isPending()){
+                request.setType(orderType);
+            }else{
+                requestDone.setType(orderType);
+            }
         }
         if (selected.get(SELECT_ORDER_TYPE2) != null) {
-            request.setEnvType2(selected.get(SELECT_ORDER_TYPE2).getKey());
+            if(isPending()){
+                request.setEnvType2(selected.get(SELECT_ORDER_TYPE2).getKey());
+            }else{
+                requestDone.setEnvType2(selected.get(SELECT_ORDER_TYPE2).getKey());
+            }
+
         }
         if (selected.get(SELECT_ORDER_TYPE3) != null) {
-            request.setEnvType3(selected.get(SELECT_ORDER_TYPE3).getKey());
+            if(isPending()){
+                request.setEnvType3(selected.get(SELECT_ORDER_TYPE3).getKey());
+            }else{
+                requestDone.setEnvType3(selected.get(SELECT_ORDER_TYPE3).getKey());
+            }
+
         }
         if (selected.get(SELECT_IS_OVERDUE) != null) {
-            request.setFState(selected.get(SELECT_IS_OVERDUE).getKey());
+            if(isPending()){
+                request.setFState(selected.get(SELECT_IS_OVERDUE).getKey());
+            }else{
+                requestDone.setFState(selected.get(SELECT_IS_OVERDUE).getKey());
+            }
         }
         switchCondition();
     }

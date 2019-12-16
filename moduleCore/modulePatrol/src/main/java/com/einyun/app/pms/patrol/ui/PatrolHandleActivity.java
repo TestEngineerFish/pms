@@ -326,7 +326,7 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
 
     private void acceptForm(PatrolInfo patrol){
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
-        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
+        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
         patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
         patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
         String base64=Base64Util.encodeBase64(new Gson().toJson(patrol));

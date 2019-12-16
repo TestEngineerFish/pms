@@ -43,6 +43,7 @@ public abstract class BaseViewModelFragment<V extends ViewDataBinding, VM extend
         viewModel=initViewModel();
         setUpView();
         setUpData();
+        setUpListener();
     }
 
     /**
@@ -60,6 +61,10 @@ public abstract class BaseViewModelFragment<V extends ViewDataBinding, VM extend
      * 一些View的相关操作
      */
     protected abstract void setUpView();
+
+    protected  void setUpListener(){
+
+    }
 
     /**
      * 一些Data的相关操作
