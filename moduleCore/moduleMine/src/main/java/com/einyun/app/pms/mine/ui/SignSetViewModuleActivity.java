@@ -29,7 +29,7 @@ import com.orhanobut.logger.Logger;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_SIGN_SET)
 public class SignSetViewModuleActivity extends BaseHeadViewModelActivity<ActivitySignSetViewModuleBinding, SignSetViewModel> {
-    @Autowired(name = "edit")
+    @Autowired(name = Constants.KEY_EDIT_CONTENT)
     String oldText;
     @Autowired(name = Constants.SIGN_USER_ID)
     String userID;

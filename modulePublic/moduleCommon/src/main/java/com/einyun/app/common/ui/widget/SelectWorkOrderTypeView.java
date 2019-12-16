@@ -163,8 +163,6 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
         binding.periodSelectDefault.setVisibility(View.GONE);
         List<DictDataModel> dictDataModels = disposeData(model.getId());
         if (dictDataModels.size() == 0) {
-//            viewModel.saveChacheWorkType(selectOrgs);
-            Log.d("test", "zhixingitemcliected");
             selectOrgs.add(model);
             onWorkTypeSelectListener.onWorkTypeSelectListener(selectOrgs);
             this.dismiss();

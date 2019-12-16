@@ -22,8 +22,11 @@ import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.QueryBuilder;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -69,6 +72,8 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     private String auditStatus = "";
     private String typeValue;
     CustomPopWindow customPopWindow;
+    private String blockName;
+
     public static ApprovalViewModelFragment newInstance(Bundle bundle) {
         ApprovalViewModelFragment approvalViewModelFragment = new ApprovalViewModelFragment();
         approvalViewModelFragment.setArguments(bundle);
@@ -95,9 +100,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         tabId = getArguments().getInt("tabId");
         binding.swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         binding.swipeRefresh.setOnRefreshListener(() -> {
-            ApprovalkListRepository.mPage2=0;//解决快速刷新导致列表数据不显示问题
-            ApprovalkListRepository.mPage3=0;
-            ApprovalkListRepository.mPage1=0;
+            initPage();
             binding.swipeRefresh.setRefreshing(false);
             viewModel.refresh();
         });
@@ -117,6 +120,17 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         Log.e("onChanged", "onChanged: "+aBoolean);
                     }
                 });
+        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
+        if (!blockName.isEmpty()) {
+            binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.tvDivide.setText(blockName);
+        }
+    }
+
+    private void initPage() {
+        ApprovalkListRepository.mPage2=0;//解决快速刷新导致列表数据不显示问题
+        ApprovalkListRepository.mPage3=0;
+        ApprovalkListRepository.mPage1=0;
     }
 
     @Override
@@ -125,7 +139,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
      /*
      * 审批状态数据
      * */
-        viewModel.queryAduitState("").observe(this, model -> {
+        viewModel.queryAduitState().observe(this, model -> {
             approvalAuditStateModule = model;
 
         });
@@ -146,10 +160,8 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 //                    Log.e(TAG, "1onBindItem: auditType:"+checkPointModel.getAudit_type()+"---auditSubType :"+checkPointModel.getAudit_sub_type());
 //                    String auditType = getTypeStringByCode(checkPointModel.getAudit_type());
 //                    String auditSubType = getSubTypeStringByCode(checkPointModel.getAudit_sub_type());
-                    auditType=checkPointModel.getAudit_type();
-                    auditSubType=checkPointModel.getAudit_sub_type();
-
-
+//                    auditType=checkPointModel.getAudit_type();
+//                    auditSubType=checkPointModel.getAudit_sub_type();
 //                    Log.e(TAG, "2onBindItem: auditType:"+auditType+"---auditSubType :"+auditSubType);
 //                    typeValue = (auditType.length() > 0 ? (auditType + "-") : "") + (auditSubType.length() > 0 ? auditSubType : "");
                     checkPointModel.getUserAuditStatus();
@@ -169,16 +181,11 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
                     }
                     binding.tvApprovalNum.setText(checkPointModel.getAudit_code());//审批单号
-                    binding.tvApprovalType.setText(getTypeValue(auditType,auditSubType));
+                    binding.tvApprovalType.setText(getTypeValue(checkPointModel.getAudit_type(),checkPointModel.getAudit_sub_type()));
                     binding.tvIntallment.setText(checkPointModel.getDivide_name());
                     binding.tvApplyTime.setText(TimeUtil.getAllTime(checkPointModel.getApply_date()));
                     binding.tvApprovalTime.setText(TimeUtil.getAllTime(checkPointModel.getAudit_date()));
-
-
-
-
                 }
-
                 @Override
                 public int getLayoutId() {
                     return R.layout.item_approval_list;
@@ -187,7 +194,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         }
         binding.approvalList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        loadPagingData(viewModel.getData(1,10),tabId);
+        loadPagingData(viewModel.getData(1,10,"",blockName,"","",""),tabId);
     }
 
     private String  getTypeValue(String auditType ,String auditSubType) {
@@ -272,7 +279,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
             /*
              * 审批状态数据
              * */
-            viewModel.queryAduitState("").observe(this, model -> {
+            viewModel.queryAduitState().observe(this, model -> {
                 approvalAuditStateModule = model;
                 viewModel.queryAduitType().observe(this, model2 -> {
                     approvalAuditTypeModule= model2;
@@ -281,7 +288,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         if (customPopWindow==null) {
                             customPopWindow=new CustomPopWindow(getActivity(),tabId,approvalAuditTypeModule,approvalAuditStateModule);
                             if (!customPopWindow.isShowing()) {
-                                customPopWindow.showAsDropDown(binding.installment);
+                                customPopWindow.showAsDropDown(binding.llTableLine);
                                 customPopWindow.setOnItemClickListener(this);
                             }
                         }
@@ -299,7 +306,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         }else {
             CustomPopWindow customPopWindow = new CustomPopWindow(getActivity(),tabId,approvalAuditTypeModule,approvalAuditStateModule);
             if (!customPopWindow.isShowing()) {
-                customPopWindow.showAsDropDown(binding.installment);
+                customPopWindow.showAsDropDown(binding.llTableLine);
                 customPopWindow.setOnItemClickListener(this);
             }
         }
@@ -309,11 +316,6 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
      * 分期按钮点击
      * */
     public void onPlotClick(){
-//        ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL).navigation();
-//        QueryBuilder queryBuilder = new QueryBuilder();
-//        queryBuilder.addQueryItem("a","s").build();
-//        Logger.d(queryBuilder.toString());
-//        Logger.d("table"+tabId);
         //弹出分期view
         PeriodizationView periodizationView=new PeriodizationView();
         periodizationView.setPeriodListener(ApprovalViewModelFragment.this::onPeriodSelectListener);
@@ -354,6 +356,13 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         this.auditType=auditType;
         this.auditSubType=auditSubType;
         this.auditStatus=auditStatus;
+        initPage();
+        if (auditType.equals("")&&auditStatus.equals("")&&auditStatus.equals("")) {
+            binding.tvSelect.setTextColor(getResources().getColor(R.color.greyTextColor));
+        }else {
+            binding.tvSelect.setTextColor(getResources().getColor(R.color.blueTextColor));
+
+        }
         ApprovalBean data = viewModel.getData(1, 10, divideId, divideName, auditType, auditSubType, auditStatus);
 
         loadPagingData(data,tabId);
@@ -364,9 +373,11 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
      * */
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-
+       initPage();
        divideId=orgModel.getId();
        divideName=orgModel.getName();
+       binding.tvDivide.setText(divideName);
+       binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
         ApprovalBean data = viewModel.getData(1, 10, divideId, divideName, auditType, auditSubType, auditStatus);
         loadPagingData(data,tabId);
 //        viewModel.refresh();
@@ -381,42 +392,9 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                 .withSerializable(RouteKey.APPROVAL_ITEM_DATA,data).navigation();
     }
 
-    private String getTypeStringByCode(String typeCode) {
-
-        //process
-        if (approvalAuditTypeModule != null) {
-            for (GetByTypeKeyForComBoModule bean : approvalAuditTypeModule) {
-                if (bean.getKey().equalsIgnoreCase(typeCode)) {
-                    return bean.getName();
-                }
-            }
-        }
-        return "";
-    }
-
-    private String getSubTypeStringByCode(String typeCode) {
-
-        //process
-        if (approvalAuditTypeModule != null) {
-            for (GetByTypeKeyForComBoModule bean : approvalAuditTypeModule) {
-                List<GetByTypeKeyForComBoModule.ChildrenBean> childs = bean.getChildren();
-                for (GetByTypeKeyForComBoModule.ChildrenBean child : childs) {
-                    if (child.getKey().equalsIgnoreCase(typeCode)) {
-                        return child.getName();
-                    }
-                }
-
-            }
-        }
-
-        return "";
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ApprovalkListRepository.mPage2=0;
-        ApprovalkListRepository.mPage1=0;
-        ApprovalkListRepository.mPage3=0;
+        initPage();
     }
 }

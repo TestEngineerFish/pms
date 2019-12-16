@@ -14,42 +14,42 @@
             android:id="@+id/report_form_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/activity_bg_color" >
+            android:background="@color/activity_bg_color">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <RelativeLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
-                android:background="@color/white">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:gravity="center_vertical"
-                    android:text="全部收费项目"
-                    android:textSize="@dimen/font_size16" />
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="@dimen/px_25"
-                    android:layout_height="@dimen/px_25"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/px_20"
-                    android:src="@drawable/right_arrow"
-                    android:layout_centerVertical="true"
-                    />
-            </RelativeLayout>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/pd_view" />
-        </LinearLayout>
+
+                    <include
+                        android:id="@+id/operate_percent_all_get"
+                        layout="@layout/layout_operate_percent_all_get" />
+
+                    <include
+                        android:id="@+id/operate_percent_car_get"
+                        layout="@layout/layout_operate_percent_car" />
+
+                    <include
+                        android:id="@+id/operate_percent_property_get"
+                        layout="@layout/layout_operate_percent_property" />
+
+                    <com.einyun.app.common.ui.widget.VerticalProgressBar
+                        android:id="@+id/iv_progressBar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="20dp"
+                        android:layout_height="227dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="30dp"
+                        android:max="100"
+                        android:progress="40"
+                        android:progressDrawable="@drawable/all_year_car_get_bg" />
+                </LinearLayout>
+            </ScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 </layout>

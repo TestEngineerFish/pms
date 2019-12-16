@@ -119,7 +119,7 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
         }
         ARouter.getInstance().build(RouterUtils.ACTIVITY_SIGN_SET)
                 .withString(Constants.SIGN_USER_ID,getUserByccountBean.getId())
-                .withString("edit",binding.etSignName.getText().toString()).navigation();
+                .withString(Constants.KEY_EDIT_CONTENT,binding.etSignName.getText().toString()).navigation();
     }
     /**
      *跳转 设置头像
@@ -130,7 +130,7 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
             return;
         }
         ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_HEAD_SHOT)
-                .withSerializable("bean",getUserByccountBean)
+                .withSerializable(Constants.KEY_USER_BEAN,getUserByccountBean)
                 .navigation();
     }
     @Override

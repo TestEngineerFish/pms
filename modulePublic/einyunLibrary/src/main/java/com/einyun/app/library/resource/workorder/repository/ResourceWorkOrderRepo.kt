@@ -580,13 +580,11 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.call(response.data)
                     liveData.postValue(response.data)
                 } else {
-                    Log.d("test","cuowu1")
 
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
                 callBack.onFaild(error)
-                Log.d("test", error.message)
             })
         return liveData
     }

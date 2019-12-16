@@ -53,21 +53,24 @@
             <LinearLayout
                 android:id="@+id/send_work_orer_tab_ln"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_marginBottom="@dimen/px_20"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">
 
                 <LinearLayout
                     android:id="@+id/send_work_orer_tab_peroid_ln"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/period_selected"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/px_10"
                         android:layout_marginRight="@dimen/px_10"
                         android:gravity="center"
@@ -86,14 +89,14 @@
                 <LinearLayout
                     android:id="@+id/send_work_orer_tab_select_ln"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_60"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/select_selected"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/px_10"
                         android:layout_marginRight="@dimen/px_10"
                         android:gravity="center"
@@ -117,7 +120,7 @@
                 <LinearLayout
                     android:id="@+id/search"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/px_10"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"

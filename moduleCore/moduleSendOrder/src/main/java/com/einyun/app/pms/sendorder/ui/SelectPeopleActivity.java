@@ -59,7 +59,7 @@ public class SelectPeopleActivity extends BaseHeadViewModelActivity<ActivitySele
         idList.add(projectID);
         request.params=request.new params(idList);
         viewModel.getJob(request);
-        viewModel.getOrgnization().observe(this,model ->{
+        viewModel.getOrgnization(divideID).observe(this,model ->{
                 selectPeopleAdapter = new SelectPeopleAdapter(SelectPeopleActivity.this, viewModel.jobModels, viewModel.orgnizationModelLiveData);
                 binding.selectPeopleList.setAdapter(selectPeopleAdapter);
         });

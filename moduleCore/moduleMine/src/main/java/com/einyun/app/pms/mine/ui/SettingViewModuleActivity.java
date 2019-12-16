@@ -21,6 +21,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 
 
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.constants.Constants;
 import com.einyun.app.pms.mine.databinding.ActivitySettingViewModuleBinding;
@@ -61,13 +62,25 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
     * 退出登录
     * */
     public void onLoginOutClick(){
-        SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "");
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_USER_LOGIN)
-//                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK)
-                .navigation();
+        new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                .setMsg(getString(R.string.tv_confirm_logout))
+                .setNegativeButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-        finish();
+                    }
+                })
+                .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "");
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_USER_LOGIN)
+                                .navigation();
+                        finish();
+                    }
+                }).show();
+
 
     }
     @Override

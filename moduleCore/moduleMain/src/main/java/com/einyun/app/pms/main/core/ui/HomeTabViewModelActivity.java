@@ -5,12 +5,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -39,8 +42,8 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
 
     WorkBenchViewModelFragment mWorkBenchFragment;//工作台
     MineViewModelFragment mMineFragment;//我的
-    HomeTabPagerAdapter homeTabPagerAdapter;//适配器
-    List<BaseViewModelFragment> fragmentList;//工作台+我的Fragment集合
+    private FragmentManager fragmentManager;
+    private static int currentFragment = 0;
 
     @Override
     protected HomeTabViewModel initViewModel() {
@@ -55,16 +58,9 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        fragmentList = new ArrayList<>();
-        mWorkBenchFragment = new WorkBenchViewModelFragment();
-        mMineFragment = new MineViewModelFragment();
-        fragmentList.add(mWorkBenchFragment);
-        fragmentList.add(mMineFragment);
-        homeTabPagerAdapter = new HomeTabPagerAdapter(getSupportFragmentManager(), fragmentList);
-        binding.vpTab.setAdapter(homeTabPagerAdapter);
-        binding.vpTab.addOnPageChangeListener(pageChangeListener);
-
+        fragmentManager = getSupportFragmentManager();
         HomeTabViewModelActivityPermissionsDispatcher.permissionsWithPermissionCheck(this);
+        showFragment(0, null);
     }
 
     @Override
@@ -74,39 +70,46 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         onWorkBenchPage(false);
     }
 
+    private void showFragment(int index, final Bundle bundle) {
+        final FragmentTransaction ft = fragmentManager.beginTransaction();
+        currentFragment = index;
+        hideFragments(ft);
+        switch (index) {
+            case 0:
+                if (mWorkBenchFragment != null) {
+                    ft.show(mWorkBenchFragment);
+                } else {
+                    mWorkBenchFragment = new WorkBenchViewModelFragment();
+                    ft.add(R.id.vp_tab, mWorkBenchFragment, "home");
+                }
+                break;
+            case 1:
+                if (mMineFragment != null) {
+                    ft.show(mMineFragment);
+                } else {
+                    mMineFragment = new MineViewModelFragment();
+                    if (bundle != null) {
+                        mMineFragment.setArguments(bundle);
+                    }
+                    ft.add(R.id.vp_tab, mMineFragment, "mine");
+                }
+                break;
+        }
+        ft.commitAllowingStateLoss();
+    }
+
+    private void hideFragments(FragmentTransaction ft) {
+        if (mWorkBenchFragment != null)
+            ft.hide(mWorkBenchFragment);
+        if (mMineFragment != null)
+            ft.hide(mMineFragment);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        showFragment(currentFragment, null);
     }
-
-    /**
-     * pageItem change event
-     */
-    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        /**
-         * onPageSelected,change item states
-         * @param position
-         */
-        @Override
-        public void onPageSelected(int position) {
-            Logger.i("onPageSelected:" + position);
-            if (position == 0) {
-                onWorkBenchPage(false);
-            } else if (position == 1) {
-                onMinePage(false);
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
 
     /**
      * mine item click event
@@ -136,7 +139,7 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
             binding.ivMine.setEnabled(true);
             binding.tvMine.setTextColor(getResources().getColor(R.color.normal_main_text_icon_color));
             if (flag) {
-                binding.vpTab.setCurrentItem(0);
+                showFragment(0, null);
             }
         }
     }
@@ -151,7 +154,7 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
             binding.ivMine.setEnabled(false);
             binding.tvMine.setTextColor(getResources().getColor(R.color.main_bottom_tab_text_select_color));
             if (flag) {
-                binding.vpTab.setCurrentItem(1);
+                showFragment(1, null);
             }
         }
     }
@@ -167,30 +170,9 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     }
 
 
-    class HomeTabPagerAdapter extends FragmentPagerAdapter {
-        List<BaseViewModelFragment> mList;
-
-        public HomeTabPagerAdapter(@NonNull FragmentManager fm, List<BaseViewModelFragment> mList) {
-            super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-            this.mList = mList;
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return this.mList == null ? null : this.mList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return this.mList == null ? 0 : this.mList.size();
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        binding.vpTab.removeOnPageChangeListener(pageChangeListener);
     }
 
     @Override

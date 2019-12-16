@@ -367,9 +367,9 @@ public class ActivityUtil {
         activityList.clear();
         dataMap.clear();
         backMap.clear();
-        activityList = null;
-        dataMap = null;
-        backMap = null;
+        activityList = new ArrayList<>();
+        dataMap = new HashMap<>();
+        backMap = new HashMap<>();
     }
 
     /**

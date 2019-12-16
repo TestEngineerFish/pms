@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -373,6 +375,9 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         for (char ch : chars) {
             nums.add(String.valueOf(ch));
         }
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager.setOrientation(RecyclerView.HORIZONTAL);
+        binding.itemWorkBenchSecond.rvWorkTablePendingNum.setLayoutManager(manager);
         adapter.setDataList(nums);
     }
 

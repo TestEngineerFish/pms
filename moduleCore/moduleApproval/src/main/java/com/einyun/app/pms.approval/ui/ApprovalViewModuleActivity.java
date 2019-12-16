@@ -14,9 +14,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.pms.approval.R;
+
+
 import com.einyun.app.pms.approval.databinding.ActivityApprovalViewModuleBinding;
 import com.einyun.app.pms.approval.ui.fragment.ApprovalViewModelFragment;
 import com.einyun.app.pms.approval.viewmodule.ApprovalViewModel;
@@ -31,7 +34,7 @@ import java.util.List;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_APPROVAL)
 public class ApprovalViewModuleActivity extends BaseHeadViewModelActivity<ActivityApprovalViewModuleBinding, ApprovalViewModel> {
-    @Autowired(name="from")
+    @Autowired(name= RouteKey.APPROVAL_LIST_FROM)
             String from;
     List<BaseViewModelFragment> fragmentList;
     ApprovalPagerAdapter approvalPagerAdapter;//适配器

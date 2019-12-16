@@ -81,10 +81,11 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
 
         if (v.getId() == R.id.resend_submit_btn) {
             if (TextUtils.isEmpty(resendOrderRequest.getUserName())) {
+                ToastUtil.show(ResendOrderActivity.this, R.string.txt_plese_select_people);
+            } else if (TextUtils.isEmpty(binding.resendOrderReason.getString())) {
                 ToastUtil.show(ResendOrderActivity.this, R.string.txt_plese_enter_reason);
-            } else if (TextUtils.isEmpty(resendOrderRequest.getOpinion())) {
-                ToastUtil.show(ResendOrderActivity.this, R.string.txt_plese_select_img);
             } else {
+                resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
                 viewModel.resendOrder(resendOrderRequest).observe(this, model -> {
                     if (model.getCode().equals("0")) {
                         ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);

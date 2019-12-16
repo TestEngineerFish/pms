@@ -39,9 +39,9 @@ public class ApprovalFragmentViewModel extends BasePageListViewModel<ApprovalIte
     ApprovalkListRepository repository=new ApprovalkListRepository();
 
     private MutableLiveData<List<GetByTypeKeyInnerAuditStatusModule>> detial=new MutableLiveData<>();
-    public LiveData<List<GetByTypeKeyInnerAuditStatusModule>> queryAduitState(String id){
+    public LiveData<List<GetByTypeKeyInnerAuditStatusModule>> queryAduitState(){
         showLoading();
-        repository.queryState(id, new CallBack<List<GetByTypeKeyInnerAuditStatusModule>>() {
+        repository.queryState(new CallBack<List<GetByTypeKeyInnerAuditStatusModule>>() {
             @Override
             public void call(List<GetByTypeKeyInnerAuditStatusModule> data) {
                 hideLoading();

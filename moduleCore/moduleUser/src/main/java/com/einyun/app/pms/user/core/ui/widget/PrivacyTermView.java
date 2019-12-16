@@ -13,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.widget.MaxHeightScrollView;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
 
@@ -26,6 +28,7 @@ public class PrivacyTermView extends Dialog implements View.OnClickListener {
     TextView tvTrem;
     Button btnReject;
     Button btnAgree;
+    private MaxHeightScrollView scrollView;
     private Context context;
 
     public PrivacyTermView(@NonNull Context context) {
@@ -63,6 +66,8 @@ public class PrivacyTermView extends Dialog implements View.OnClickListener {
         tvTrem = findViewById(R.id.tv_privacy_term);
         btnReject = findViewById(R.id.btn_reject);
         btnAgree = findViewById(R.id.btn_agree);
+        scrollView = findViewById(R.id.scroll_view);
+        scrollView.setMaxHeight(ScreenUtils.getMetricsHeight(context) / 3 * 2);
     }
 
     private void refreshView() {

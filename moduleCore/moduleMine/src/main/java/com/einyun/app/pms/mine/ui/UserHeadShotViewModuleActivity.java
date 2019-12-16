@@ -26,6 +26,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.HttpUrlUtil;
 import com.einyun.app.pms.mine.R;
+import com.einyun.app.pms.mine.constants.Constants;
 import com.einyun.app.pms.mine.databinding.ActivitySignSetViewModuleBinding;
 import com.einyun.app.pms.mine.databinding.ActivityUserHeadShotViewModuleBinding;
 import com.einyun.app.pms.mine.module.GetUserByccountBean;
@@ -49,7 +50,7 @@ import java.util.List;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_USER_HEAD_SHOT)
 public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<ActivityUserHeadShotViewModuleBinding, UserHeadShotViewModel> implements SelectPhotoPopWindow.OnItemClickListener {
-    @Autowired(name ="bean")
+    @Autowired(name = Constants.KEY_USER_BEAN)
     GetUserByccountBean getUserByccountBean;
     @Override
     protected UserHeadShotViewModel initViewModel() {
@@ -144,9 +145,6 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
 //                MediaStoreCompat mediaStoreCompat = new MediaStoreCompat(UserHeadShotViewModuleActivity.this);
 //                mediaStoreCompat.setCaptureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME));
 //                mediaStoreCompat.dispatchCaptureIntent(UserHeadShotViewModuleActivity.this, 24);
-
-
-
     }
 
     @Override

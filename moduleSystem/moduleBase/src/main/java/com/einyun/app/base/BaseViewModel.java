@@ -1,5 +1,7 @@
 package com.einyun.app.base;
 
+import android.text.TextUtils;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -10,12 +12,17 @@ import androidx.paging.PagedList;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.paging.bean.PageBean;
+import com.einyun.app.base.util.SPUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.einyun.app.base.event.ErrorMessage;
 import com.einyun.app.base.event.SingleLiveEvent;
 import com.einyun.app.base.event.Status;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * @ProjectName: android-framework

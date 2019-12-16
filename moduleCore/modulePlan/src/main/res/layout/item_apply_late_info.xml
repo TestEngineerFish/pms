@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="detail"
+            type="com.einyun.app.library.resource.workorder.model.Zyjhgd" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/detail_cv"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout style="@style/detail_title_rl">
+
+
+                <TextView
+                    style="@style/detail_title_tv"
+                    android:text="申请延期信息" />
+            </RelativeLayout>
+
+            <ImageView style="@style/detail_title_line" />
+
+            <LinearLayout style="@style/detail_item_ll">
+
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="审批结果" />
+
+                <TextView style="@style/detail_item_right_tv" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_item_ll">
+
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="审批时间" />
+
+                <TextView style="@style/detail_item_right_tv" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_item_ll">
+
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="延期天数" />
+
+                <TextView style="@style/detail_item_right_tv" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_item_ll">
+
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="申请人" />
+
+                <TextView style="@style/detail_item_right_tv" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_item_ll">
+
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="申请时间" />
+
+                <TextView style="@style/detail_item_right_tv" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_item_ll">
+
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="申请原因" />
+
+                <TextView style="@style/detail_item_right_tv" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/detail_item_ll"
+                android:text="申请照片"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size14" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/point_ck_imglist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_marginRight="@dimen/px_20"
+                android:layout_marginBottom="@dimen/px_30">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -92,8 +92,8 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 List<ApprovalDetailInfoBean.RowsBean> rows = model2.getRows();
                 if (rows!=null) {
                     ApprovalDetailInfoBean.RowsBean rowsBean = new ApprovalDetailInfoBean.RowsBean();
-                    rowsBean.setAuditor("我");
-                    rowsBean.setApprovalRole("发起申请");
+                    rowsBean.setAuditor(getString(R.string.tv_me));
+                    rowsBean.setApprovalRole(getString(R.string.tv_for_apply));
                     rowsBean.setAudit_date(TimeUtil.getTimeMillis(model.getData().getWorkorder_audit_model().getApply_date()));
                     rows.add(rows.size(),rowsBean);
                     ApprovalInfoDetailAdapter approvalInfoDetailAdapter = new ApprovalInfoDetailAdapter(this,rows);
@@ -133,7 +133,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         /*
          *提交审批
          * */
-        viewModel.sumitApproval((ApprovalSumitBean) approve.get("bean"),(String) approve.get("url")).observe(this, model -> {
+        viewModel.sumitApproval((ApprovalSumitBean) approve.get(ApprovalDataKey.APPROVAL_SUMIT_PARMS),(String) approve.get(ApprovalDataKey.APPROVAL_SUMIT_URL)).observe(this, model -> {
             Logger.d("sumitApproval-----model="+model);
             if (model) {
 //                ToastUtil.show(getApplicationContext(), R.string.tv_had_pass);
@@ -149,7 +149,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 
     private void showBasicInfo(UrlxcgdGetInstBOModule model) {
         UrlxcgdGetInstBOModule.DataBean.WorkorderAuditModelBean workorder_audit_model = model.getData().getWorkorder_audit_model();
-        if (workorder_audit_model.getStatus().equals("submit")) {//待审批
+        if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_PENDING)) {//待审批
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
 
             binding.listview.setVisibility(View.GONE);//
@@ -157,7 +157,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.limitInput.setVisibility(View.VISIBLE);
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
             binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
-        } else if (workorder_audit_model.getStatus().equals("approve")) {//通过
+        } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_PASS)) {//通过
 
             binding.listview.setVisibility(View.VISIBLE);//显示审批信息列表
             binding.rlApprovalSug.setVisibility(View.GONE);
@@ -166,7 +166,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
             binding.tvApprovalState.setText(getString(R.string.tv_had_pass));
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.greenTextColor));
-        } else if (workorder_audit_model.getStatus().equals("reject")) {//驳回
+        } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_UNPASS)) {//驳回
 
             binding.listview.setVisibility(View.VISIBLE);//
             binding.rlApprovalSug.setVisibility(View.GONE);
@@ -176,7 +176,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_unpass);
             binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
-        } else if (workorder_audit_model.getStatus().equals("in_approval")) {//审批中
+        } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_IN_APPROVAL)) {//审批中
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
             if (approvalItemmodule.getUserAuditStatus()==null) {//自己没有审批过
 
@@ -193,16 +193,16 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 binding.llPass.setVisibility(View.GONE);
                 binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
                 binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
-                if ("approve".equals(approvalItemmodule.getUserAuditStatus())) {
-//                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
-//                    binding.tvApprovalState.setText(getString(R.string.tv_had_approval));
-//                    binding.tvApprovalState.setTextColor(getResources().getColor(R.color.greenTextColor));
-                }else if ("reject".equals(approvalItemmodule.getUserAuditStatus())){
-
-//                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_unpass);
-//                    binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));
-//                    binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
-                }
+//                if ("approve".equals(approvalItemmodule.getUserAuditStatus())) {
+////                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
+////                    binding.tvApprovalState.setText(getString(R.string.tv_had_approval));
+////                    binding.tvApprovalState.setTextColor(getResources().getColor(R.color.greenTextColor));
+//                }else if ("reject".equals(approvalItemmodule.getUserAuditStatus())){
+//
+////                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_unpass);
+////                    binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));
+////                    binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
+//                }
 
             }
         }
@@ -247,7 +247,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvCloseOrderCode.setText(approvalFormdata.getCode());//工单编码
             binding.tvCloseLine.setText(approvalFormdata.getLine());//条线
             binding.tvCloseDispatchOrderType.setText(approvalFormdata.getDispatchFlowType());//派工单类型
-            binding.tvCloseOrderResponer.setText(approvalFormdata.getProcName());//派工单类型
+            binding.tvCloseOrderResponer.setText(approvalFormdata.getProcName());//工单负责人
             binding.tvCloseCreateTime.setText(approvalFormdata.getCreationTime());//工单创建时间
             binding.tvCloseEndTime.setText(approvalFormdata.getDeadlineTime());//工单截止时间
             binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays());//延期天数
