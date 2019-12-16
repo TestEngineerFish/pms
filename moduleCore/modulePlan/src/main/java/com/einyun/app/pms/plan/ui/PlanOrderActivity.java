@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -99,10 +100,10 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         binding.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
             //弹出筛选view
             ConditionBuilder builder=new ConditionBuilder();
-            List<SelectModel> conditions= builder.addItem(SelectPopUpView.SELECT_LINE,viewModel.listAll)//条线
+            List<SelectModel> conditions= builder.addLines(BasicDataManager.getInstance().loadCache().getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                    .mergeLineRes(viewModel.resourceTypeBeans)
+                    .mergeLineRes(BasicDataManager.getInstance().loadCache().getResources())
                     .build();
             new SelectPopUpView(PlanOrderActivity.this,conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
                 @Override

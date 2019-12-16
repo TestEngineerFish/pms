@@ -11,6 +11,7 @@ import androidx.databinding.BindingAdapter;
 import com.einyun.app.common.R;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.resource.workorder.model.PatrolWorkSate;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 
 public class WorkOrderAdapter {
@@ -29,6 +30,24 @@ public class WorkOrderAdapter {
             view.setText(R.string.text_apply);
         }
         else if(value==OrderState.CLOSED.getState()){
+            view.setText(R.string.text_state_closed);
+        }
+
+    }
+
+    /**
+     * 列表状态
+     * @param view
+     * @param value
+     */
+    @BindingAdapter("patrol_status")
+    public static void patrol_status(TextView view, int value){
+        if(value== PatrolWorkSate.NEW.getState()){
+            view.setText(R.string.text_state_new);
+        }else if(value==PatrolWorkSate.HANDING.getState()){
+            view.setText(R.string.text_state_processing);
+        }
+        else if(value==PatrolWorkSate.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
         }
 
@@ -109,6 +128,18 @@ public class WorkOrderAdapter {
             view.setImageResource(R.mipmap.icon_work_order_apply);
         }
         else if(value==OrderState.CLOSED.getState()){
+            view.setImageResource(R.mipmap.icon_state_closed);
+        }
+    }
+
+    @BindingAdapter("patrol_status")
+    public static void patrol_status(ImageView view, int value){
+        if(value== PatrolWorkSate.NEW.getState()){
+            view.setImageResource(R.mipmap.icon_new);
+        }else if(value==PatrolWorkSate.HANDING.getState()) {
+            view.setImageResource(R.mipmap.icon_processing);
+        }
+        else if(value==PatrolWorkSate.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);
         }
     }

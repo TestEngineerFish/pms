@@ -1,24 +1,22 @@
 package com.einyun.app.common.ui.widget;
 
 import android.text.TextUtils;
-
 import com.einyun.app.common.R;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
+import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE_TYPES;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE1;
-import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ROOT;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_TIME_CIRCLE;
 
@@ -45,7 +43,7 @@ public class ConditionBuilder {
         initMap();
     }
 
-    public ConditionBuilder addItem(String key, List<SelectModel> selectModels) {
+    private ConditionBuilder addItem(String key, List<SelectModel> selectModels) {
         if (selectModels == null) {
             return this;
         }
@@ -53,29 +51,43 @@ public class ConditionBuilder {
         return this;
     }
 
+
+
+    /**
+     * 添加条线数据
+     * @param models
+     */
+    public ConditionBuilder addLines(List<WorkOrderTypeModel> models){
+        List<SelectModel> listAll=createAllLineModels(models);
+        addItem(SelectPopUpView.SELECT_LINE,listAll);
+        return this;
+    }
+
     /**
      * 分类，环境，秩序，工程，客服
      * @param data
      */
-    public void addLineTypesItem(List<LineType> data){
+    public ConditionBuilder addLineTypesItem(List<LineType> data){
         if (!selectModelMap.containsKey(SELECT_LINE_TYPES)) {
             if(data!=null){
                 SelectModel lineAndTypes=new SelectModel();
                 lineAndTypes.setType(CommonApplication.getInstance().getString(R.string.text_line_types));
-                lineAndTypes.setConditionType(SELECT_LINE_TYPES);
+                lineAndTypes.setConditionType(SELECT_ROOT);
                 List<SelectModel> children=new ArrayList<>();
                 for(LineType lineType:data){
                     SelectModel model=new SelectModel();
-                    lineAndTypes.setConditionType(SELECT_LINE_TYPES);
+                    model.setConditionType(SELECT_LINE_TYPES);
                     model.setContent(lineType.getName());
                     model.setKey(lineType.getKey());
                     model.setId(lineType.getId());
                     children.add(model);
                 }
-                lineAndTypes.setChildren(children);
+                lineAndTypes.setSelectModelList(children);
+                conditions.add(lineAndTypes);
                 selectModelMap.put(SELECT_LINE_TYPES,lineAndTypes);
             }
         }
+        return this;
     }
 
     /**
@@ -132,7 +144,6 @@ public class ConditionBuilder {
                 conditions.add(createTimeCircle());
             }
         }
-
         if (key.equals(SELECT_DATE)) {//是否超期数据
             //去重复叠加
             if (!selectModelMap.containsKey(SELECT_DATE)) {
@@ -142,12 +153,6 @@ public class ConditionBuilder {
         return this;
     }
 
-    public ConditionBuilder addItem(String key, SelectModel selectModel) {
-        if (selectModelMap.containsKey(key)) {
-            conditions.add(selectModel);
-        }
-        return this;
-    }
 
     public List<SelectModel> build() {
         return conditions;
@@ -269,6 +274,31 @@ public class ConditionBuilder {
             }
         }
         return lines;
+    }
+
+    /**
+     * 包装条线数据
+     * @param models
+     * @return
+     */
+    protected List<SelectModel> createAllLineModels(List<WorkOrderTypeModel> models) {
+        List<SelectModel> listAll=new ArrayList<>();
+        for (WorkOrderTypeModel beanLoop : models) {
+            SelectModel selectModel = new SelectModel();
+            selectModel.setId(beanLoop.getId());
+            selectModel.setIsCheck(false);
+            selectModel.setContent(beanLoop.getText());
+            selectModel.setType("");
+            selectModel.setTypeId(beanLoop.getTypeId());
+            selectModel.setKey(beanLoop.getKey());
+            selectModel.setName(beanLoop.getName());
+            selectModel.setParentId(beanLoop.getParentId());
+            selectModel.setOpen(beanLoop.getOpen());
+            selectModel.setText(beanLoop.getText());
+            selectModel.setKey(beanLoop.getKey());
+            listAll.add(selectModel);
+        }
+        return listAll;
     }
 
     /**

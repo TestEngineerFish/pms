@@ -3,7 +3,7 @@ package com.einyun.app.base.db.entity;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
-@Entity(tableName = "distributes",primaryKeys = {"ID_","userId"})
+@Entity(tableName = "distributes",primaryKeys = {"ID_","userId","orderType"})
 public class Distribute{
     public final static int ORDER_TYPE_PENDING=1;
     public final static int ORDER_TYPE_DONE=2;

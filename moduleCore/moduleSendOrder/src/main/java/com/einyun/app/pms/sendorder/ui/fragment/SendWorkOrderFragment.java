@@ -28,6 +28,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -190,9 +191,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
             //弹出筛选view
             ConditionBuilder builder=new ConditionBuilder();
-            List<SelectModel> conditions= builder.addItem(SelectPopUpView.SELECT_LINE,viewModel.listAll)//条线
+            List<SelectModel> conditions= builder.addLines(BasicDataManager.getInstance().loadCache().getLines())//条线
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                    .mergeLineRes(viewModel.resourceTypeBeans)
+                    .mergeLineRes(BasicDataManager.getInstance().loadCache().getResources())
                     .build();
             new SelectPopUpView(getActivity(),conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
                 @Override

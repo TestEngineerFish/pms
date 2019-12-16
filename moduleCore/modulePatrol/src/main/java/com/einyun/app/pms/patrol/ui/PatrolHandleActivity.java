@@ -42,6 +42,7 @@ import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -326,9 +327,10 @@ public class PatrolHandleActivity extends BaseHeadViewModelActivity<ActivityPatr
 
     private void acceptForm(PatrolInfo patrol){
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
-        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
+        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.APPLY.getState());
         patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
         patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
+        Logger.d("data->"+new Gson().toJson(patrol));
         String base64=Base64Util.encodeBase64(new Gson().toJson(patrol));
         PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrol.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {

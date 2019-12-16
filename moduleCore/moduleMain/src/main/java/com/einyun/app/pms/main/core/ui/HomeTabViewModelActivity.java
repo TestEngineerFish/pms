@@ -68,7 +68,9 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         super.initData();
         binding.setCallBack(this);
         onWorkBenchPage(false);
+        viewModel.loadBasicData();
     }
+
 
     private void showFragment(int index, final Bundle bundle) {
         final FragmentTransaction ft = fragmentManager.beginTransaction();
