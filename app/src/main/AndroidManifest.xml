@@ -98,8 +98,14 @@
         <activity android:name="com.einyun.app.pms.patrol.ui.PatrolHandleActivity"/>
         <activity android:name=".patrol.ui.PatrolDetialActivity"/>
         <!--巡查工单End-->
+
+        <!-- 创建工单 Start-->
         <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientComplainOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientEnquiryOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientRepairsOrderViewModelActivity"/>
         <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>
+        <!-- 创建工单 End-->
 
         <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
         <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>

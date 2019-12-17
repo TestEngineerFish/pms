@@ -8,12 +8,11 @@ import com.einyun.app.base.paging.bean.*
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
-import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.net.WorkOrderServiceApi
 import com.einyun.app.library.workorder.net.request.ComplainAppendRequest
 import com.einyun.app.library.workorder.net.request.ComplainStartRequest
-import com.einyun.app.library.workorder.net.request.EnquiryStartRequest
+import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.request.RepairStartRequest
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
@@ -282,17 +281,20 @@ class WorkOrderRepository : WorkOrderService {
     /**
      *  获取投诉、问询工单类别与条线
      */
-    fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>) {
+    override fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>> {
+        var liveData = MutableLiveData<List<TypeAndLine>>()
         serviceApi?.typeAndLineList()?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)
+                    liveData.postValue(response.data)
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, {
                 callBack.onFaild(it)
             })
+        return liveData
     }
 
     /**
@@ -350,13 +352,16 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 启动问询流程
      */
-    fun startEnquiry(request: EnquiryStartRequest, callBack: CallBack<Boolean>) {
+    override fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
         serviceApi?.startEnquiry(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
                 callBack.call(it.isState)
+                liveData.postValue(it.isState)
             }, {
                 callBack.onFaild(it)
             })
+        return liveData
     }
 
     /**

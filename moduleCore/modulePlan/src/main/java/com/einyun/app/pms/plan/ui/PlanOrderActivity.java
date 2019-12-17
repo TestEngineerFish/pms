@@ -3,6 +3,8 @@ package com.einyun.app.pms.plan.ui;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderBinding;
@@ -52,6 +55,8 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         return new ViewModelProvider(this, new PlanOdViewModelFactory()).get(PlanOrderViewModel.class);
     }
 
+    private String tag;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_plan_order;
@@ -64,12 +69,28 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         setRightOption(R.drawable.scan);
         final ArrayList<PlanWorkOrderFragment> fragments = new ArrayList<>();
         String fragmentTags[]=new String[]{FRAGMENT_PLAN_OWRKORDER_PENDING,FRAGMENT_PLAN_OWRKORDER_DONE};
+        tag = fragmentTags[0];
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
             bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
             fragments.add(PlanWorkOrderFragment.newInstance(bundle));
         }
+        binding.vpSendWork.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tag = fragmentTags[position];
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         binding.vpSendWork.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public PlanWorkOrderFragment getItem(int i) {
@@ -113,7 +134,15 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
             }).showAsDropDown(binding.sendWorkTabLn);
 
         });
+        binding.search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LiveDataBusUtils.search(tag);
+            }
+        });
     }
+
+
 
     @Override
     protected void initData() {
@@ -133,7 +162,6 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         viewModel.setOrgModel(orgModel);
         viewModel.refreshUI();
     }
-
 
 
     /**

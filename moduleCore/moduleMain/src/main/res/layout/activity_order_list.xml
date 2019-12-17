@@ -78,6 +78,7 @@
             </LinearLayout>
         </LinearLayout>
     <LinearLayout
+        android:id="@+id/second_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_216"
         android:layout_marginTop="@dimen/px_30"
@@ -122,6 +123,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/client_complain_order"
                 style="@style/order_list_main"
                 android:layout_marginLeft="@dimen/px_30"
                 android:orientation="vertical">
@@ -135,6 +137,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/client_repairs_order"
                 style="@style/order_list_main"
                 android:layout_marginLeft="@dimen/px_20"
                 android:orientation="vertical">
@@ -148,6 +151,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/client_enquiry_order"
                 style="@style/order_list_main"
                 android:layout_marginLeft="@dimen/px_20"
                 android:layout_marginRight="@dimen/px_30"

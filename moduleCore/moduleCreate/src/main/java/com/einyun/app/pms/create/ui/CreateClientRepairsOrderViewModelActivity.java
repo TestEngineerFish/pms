@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RadioGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,31 +23,29 @@ import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectWorkOrderTypeView;
 import com.einyun.app.common.utils.Glide4Engine;
-import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceChildBean;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.pms.create.Constants;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.SelectType;
+import com.einyun.app.pms.create.databinding.ActivityCreateClientRepairsOrderBinding;
+import com.einyun.app.pms.create.databinding.ActivityCreateSendOrderBinding;
 import com.einyun.app.pms.create.viewmodel.CreateViewModel;
 import com.einyun.app.pms.create.viewmodel.CreateViewModelFactory;
-import com.einyun.app.pms.create.databinding.ActivityCreateSendOrderBinding;
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-@Route(path = RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
-public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateSendOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
+/**
+ * 创建客户报修
+ */
+@Route(path = RouterUtils.ACTIVITY_CREATE_CLIENT_REPAIRS_ORDER)
+public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateClientRepairsOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private CreateSendOrderRequest request;
@@ -64,7 +60,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_send_order;
+        return R.layout.activity_create_client_repairs_order;
     }
 
     @Override
@@ -74,17 +70,17 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         request = new CreateSendOrderRequest();
         binding.setCallBack(this);
         binding.rgs.setOnCheckedChangeListener(this);
-        viewModel.getByTypeKey(Constants.WORK_TYPE).observe(this, dictDataModels -> {
-            for (DictDataModel model : dictDataModels) {
-                if (model.getParentId().equals(model.getTypeId())) {
-                    dictDataModelList.add(model);
-                }
-            }
-            dictDataModelWorkTypeList = dictDataModels;
-        });
-        viewModel.getTypesListByKey(Constants.RESOURCE_TYPE).observe(this, dictDataModels -> {
-            lineDictDataModelList = dictDataModels;
-        });
+//        viewModel.getByTypeKey().observe(this, dictDataModels -> {
+//            for (DictDataModel model : dictDataModels) {
+//                if (model.getParentId().equals(model.getTypeId())) {
+//                    dictDataModelList.add(model);
+//                }
+//            }
+//            dictDataModelWorkTypeList = dictDataModels;
+//        });
+//        viewModel.getTypesListByKey().observe(this, dictDataModels -> {
+//            lineDictDataModelList = dictDataModels;
+//        });
         selectPng();
     }
 

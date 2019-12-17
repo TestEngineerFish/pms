@@ -5,7 +5,9 @@ import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,11 +24,15 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
+import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.FragmentPlanWorkOrderBinding;
@@ -56,6 +62,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     RVPageListAdapter<ItemWorkPlanBinding, PlanWorkOrder> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    PageSearchFragment<ItemWorkPlanBinding,PlanWorkOrder> searchFragment;
 
     public static PlanWorkOrderFragment newInstance(Bundle bundle) {
         PlanWorkOrderFragment fragment = new PlanWorkOrderFragment();
@@ -73,6 +80,48 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     protected void init() {
         super.init();
+        LiveEventBus.get(LiveDataBusKey.POST_PLAN_SEARCH, String.class).observe(this, tag -> {
+            String fragmentTag = getFragmentTag();
+            if (getFragmentTag().equals(tag)) {
+                if (searchFragment == null) {
+                    searchFragment = new PageSearchFragment<ItemWorkPlanBinding,PlanWorkOrder>(getActivity(), BR.planWorkOrder, new PageSearchListener<PlanWorkOrder>() {
+                        @Override
+                        public LiveData<PagedList<PlanWorkOrder>> search(String search) {
+                            try {
+                                DistributePageRequest request = (DistributePageRequest) viewModel.getRequest().clone();
+                                request.setSearchValue(search);
+                                if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                                    return viewModel.loadPadingData(request, fragmentTag);
+                                } else {
+                                    return viewModel.loadDonePagingData(request, fragmentTag);
+                                }
+                            } catch (CloneNotSupportedException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        public void onItemClick(PlanWorkOrder model) {
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                                    .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                    .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                    .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                    .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+                                    .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
+                                    .navigation();
+                        }
+
+                        @Override
+                        public int getLayoutId() {
+                            return R.layout.item_work_plan;
+                        }
+                    });
+                    searchFragment.setHint("请搜索工单编号或计划名称");
+                }
+                searchFragment.show(getActivity().getSupportFragmentManager(),"");
+            }
+        });
 
     }
 
@@ -121,7 +170,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
                 @Override
                 public void onBindItem(ItemWorkPlanBinding binding, PlanWorkOrder distributeWorkOrder) {
-                    binding.selectOrderTime.setText(FormatUtil.formatDate(distributeWorkOrder.getCreateTime()));
+
                 }
 
                 @Override
@@ -186,7 +235,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                 .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
                 .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
-                .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
+                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
                 .navigation();
     }
 

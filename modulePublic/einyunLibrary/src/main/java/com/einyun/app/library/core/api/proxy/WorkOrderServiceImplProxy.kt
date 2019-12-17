@@ -16,6 +16,8 @@ import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.uc.user.repository.UserRepository
 import com.einyun.app.library.workorder.model.BlocklogNums
+import com.einyun.app.library.workorder.model.TypeAndLine
+import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import com.einyun.app.library.workorder.repository.WorkOrderRepository
 
@@ -33,6 +35,17 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>> {
+        return instance?.typeAndLineList(callBack)!!
+    }
+
+    override fun startEnquiry(
+        request: CreateClientEnquiryOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.startEnquiry(request, callBack)!!
+    }
+
     override fun getMappingByUserIds(
         request: List<String>,
         callBack: CallBack<Map<String, GetMappingByUserIdsResponse>>

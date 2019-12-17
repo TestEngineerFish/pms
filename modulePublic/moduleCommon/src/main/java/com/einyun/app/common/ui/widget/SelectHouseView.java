@@ -3,7 +3,6 @@ package com.einyun.app.common.ui.widget;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,54 +23,39 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.BR;
 import com.einyun.app.common.R;
-import com.einyun.app.common.constants.DataConstants;
-import com.einyun.app.common.databinding.FragmentOgselectfBinding;
 import com.einyun.app.common.databinding.FragmentWorkTableSelectBinding;
-import com.einyun.app.common.databinding.ItemBlockChooseBinding;
+import com.einyun.app.common.databinding.ItemHouseChooseBinding;
 import com.einyun.app.common.databinding.ItemWorkTypeChooseBinding;
-import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
-import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.library.uc.usercenter.model.HouseModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class SelectWorkOrderTypeView extends DialogFragment implements ItemClickListener<DictDataModel>, View.OnClickListener {
+public class SelectHouseView extends DialogFragment implements ItemClickListener<HouseModel>, View.OnClickListener {
     FragmentWorkTableSelectBinding binding;
     BlockChooseViewModel viewModel;
-
-    List<DictDataModel> selectOrgs = new CopyOnWriteArrayList<>();
+    private String divideId;
+    List<HouseModel> selectOrgs = new CopyOnWriteArrayList<>();
     private OnWorkTypeSelectListener onWorkTypeSelectListener;
     //设置分期选择监听
 
-    RVBindingAdapter<ItemWorkTypeChooseBinding, DictDataModel> adapter;
-    String blockId = "";
-    String txId = "";
+    RVBindingAdapter<ItemHouseChooseBinding, HouseModel> adapter;
     TagAdapter tagAdapter;
-    List<DictDataModel> dictDataModels = new ArrayList<>();
+    List<HouseModel> houseModels = new ArrayList<>();
 
-    public SelectWorkOrderTypeView(List<DictDataModel> dictDataModels, String txId) {
-        this.dictDataModels = dictDataModels;
-        this.txId = txId;
+    public SelectHouseView(String divideId) {
+        this.divideId = divideId;
     }
 
-    /**
-     * @param txId
-     */
-    public SelectWorkOrderTypeView(String txId) {
-        this.txId = txId;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,46 +101,48 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
     private void initData() {
         ViewGroup.LayoutParams layoutParams = binding.rvOrgList.getLayoutParams();
         layoutParams.height = ScreenUtils.getMetricsHeight(getContext()) / 2;
+        binding.type.setText(getResources().getString(R.string.text_house));
         binding.rvOrgList.setLayoutParams(layoutParams);
-        if (dictDataModels != null && dictDataModels.size() != 0) {
+        binding.periodSelectDefault.setVisibility(View.GONE);
+        binding.hintText.setVisibility(View.GONE);
+        viewModel.getHouseByCondition(divideId, null).observe(this, houseModels -> {
+            this.houseModels = houseModels;
             loadData();
-        } else {
-            viewModel.getByTypeKey().observe(this, dictDataModel -> {
-                this.dictDataModels = dictDataModel;
-                loadData();
-            });
-        }
+        });
     }
 
     private void loadTags() {
         if (tagAdapter == null) {
             tagAdapter = new TagAdapter();
             binding.rvTags.setAdapter(tagAdapter);
-            tagAdapter.setItemClickListener((ItemClickListener<DictDataModel>) (veiw, data)
+            tagAdapter.setItemClickListener((ItemClickListener<HouseModel>) (veiw, data)
                     -> switchOrgTag(data));
         }
         tagAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onItemClicked(View veiw, DictDataModel model) {
-        if (selectOrgs.size() >= 1 && selectOrgs.get(selectOrgs.size() - 1).getName().equals(getContext().getResources().getString(R.string.text_choose_work_type))) {
+    public void onItemClicked(View veiw, HouseModel model) {
+        if (selectOrgs.size() >= 1) {
             selectOrgs.remove(selectOrgs.size() - 1);
         }
-        binding.periodSelectDefault.setVisibility(View.GONE);
-        List<DictDataModel> dictDataModels = disposeData(model.getId());
-        if (dictDataModels.size() == 0) {
+        if (selectOrgs.size() == 3) {
             selectOrgs.add(model);
             onWorkTypeSelectListener.onWorkTypeSelectListener(selectOrgs);
             this.dismiss();
         } else {
             selectOrgs.add(model);
-            binding.hintText.setText(String.format(getContext().getResources().getString(R.string.text_choose_work_order_type), selectOrgs.size() == 1 ? "二" : selectOrgs.size() == 2 ? "三" : "一"));
-            DictDataModel orgModel1 = new DictDataModel();
-            orgModel1.setName(getContext().getResources().getString(R.string.text_choose_work_type));
+            binding.hintText.setVisibility(View.VISIBLE);
+            binding.hintText.setText(selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
+
+            HouseModel orgModel1 = new HouseModel();
+            orgModel1.setName(selectOrgs.size() == 0 ? "请选择楼栋" : selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
             selectOrgs.add(orgModel1);
+
             loadTags();
-            adapter.setDataList(dictDataModels);
+            viewModel.getHouseByCondition(divideId, model.getId()).observe(this, houseModels -> {
+                adapter.setDataList(houseModels);
+            });
         }
     }
 
@@ -167,7 +153,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
     }
 
     public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
-        ItemClickListener<DictDataModel> itemClickListener;
+        ItemClickListener<HouseModel> itemClickListener;
 
         public void setItemClickListener(ItemClickListener listener) {
             this.itemClickListener = listener;
@@ -184,7 +170,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
         @Override
         public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
             String tag = selectOrgs.get(position).getName();
-            if (tag.equals(getContext().getResources().getString(R.string.text_choose_work_type))) {
+            if (tag.equals("请选择房屋") || tag.equals("请选择单元")) {
                 holder.imageView.setImageResource(R.drawable.blue_oval_stock);
             } else {
                 holder.imageView.setImageResource(R.drawable.blue_oval);
@@ -222,11 +208,11 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
         }
     }
 
-    public void switchOrgTag(DictDataModel model) {
+    public void switchOrgTag(HouseModel model) {
         selectOrgs.remove(selectOrgs.get(selectOrgs.size() - 1));
 
-        List<DictDataModel> list = new ArrayList<>();
-        for (DictDataModel data : selectOrgs) {
+        List<HouseModel> list = new ArrayList<>();
+        for (HouseModel data : selectOrgs) {
             if (data.getId().equals(model.getId())) {
                 break;
             }
@@ -235,49 +221,38 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
         selectOrgs = list;
         if (selectOrgs.size() == 0) {
             selectOrgs = new ArrayList<>();
+            binding.hintText.setVisibility(View.GONE);
+        } else {
+            binding.hintText.setVisibility(View.VISIBLE);
+            binding.hintText.setText(selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
         }
-        DictDataModel orgModel1 = new DictDataModel();
-        binding.hintText.setText(String.format(getContext().getResources().getString(R.string.text_choose_work_order_type), selectOrgs.size() == 1 ? "二" : selectOrgs.size() == 2 ? "三" : "一"));
-        orgModel1.setName(getContext().getResources().getString(R.string.text_choose_work_type));
+
+
+        HouseModel orgModel1 = new HouseModel();
+        orgModel1.setName(selectOrgs.size() == 0 ? "请选择楼栋" : selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
         selectOrgs.add(orgModel1);
         if (selectOrgs.size() == 1) {
-            adapter.setDataList(disposeData(txId));
+            adapter.setDataList(houseModels);
         } else {
-            adapter.setDataList(disposeData(model.getParentId()));
+            viewModel.getHouseByCondition(divideId, model.getId()).observe(this, houseModels -> {
+                adapter.setDataList(houseModels);
+            });
         }
         loadTags();
     }
 
-    /**
-     * 处理数据
-     *
-     * @param id
-     * @return
-     */
-    private List<DictDataModel> disposeData(String id) {
-        if (dictDataModels == null || dictDataModels.size() == 0) {
-            return new ArrayList<>();
-        }
-        List<DictDataModel> data = new ArrayList<>();
-        for (DictDataModel model : dictDataModels) {
-            if (model.getParentId().equals(id)) {
-                data.add(model);
-            }
-        }
-        return data;
-    }
 
     private void loadData() {
         if (adapter == null) {
-            adapter = new RVBindingAdapter<ItemWorkTypeChooseBinding, DictDataModel>(getActivity(), BR.dictDataModel) {
+            adapter = new RVBindingAdapter<ItemHouseChooseBinding, HouseModel>(getActivity(), BR.houseModel) {
                 @Override
-                public void onBindItem(ItemWorkTypeChooseBinding binding, DictDataModel model, int pos) {
+                public void onBindItem(ItemHouseChooseBinding binding, HouseModel model, int pos) {
 
                 }
 
                 @Override
                 public int getLayoutId() {
-                    return R.layout.item_work_type_choose;
+                    return R.layout.item_house_choose;
                 }
             };
         }
@@ -291,7 +266,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
         LinearLayoutManager layoutManage = new LinearLayoutManager(getActivity());
         layoutManage.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvTags.setLayoutManager(layoutManage);
-        adapter.setDataList(disposeData(txId));
+        adapter.setDataList(this.houseModels);
     }
 
     @Override
@@ -303,7 +278,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
      * 设置分期选择监听
      */
     public interface OnWorkTypeSelectListener {
-        void onWorkTypeSelectListener(List<DictDataModel> model);
+        void onWorkTypeSelectListener(List<HouseModel> model);
     }
 
     public void setWorkTypeListener(OnWorkTypeSelectListener onWorkTypeSelectListener) {

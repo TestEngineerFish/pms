@@ -14,11 +14,14 @@ import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UserCenterService;
+import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
+import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
 import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.upload.model.PicUrl;
+import com.einyun.app.library.workorder.model.TypeAndLine;
 import com.einyun.app.pms.create.viewmodel.contract.CreateViewModelContract;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CreateViewModel extends BaseViewModel implements CreateViewModelContract {
     private static final String TAG = CreateViewModel.class.getSimpleName();
     private DictService dictService;
+    private WorkOrderService workOrderService;
     private ResourceWorkOrderService resourceWorkOrderService;
     private UserCenterService userCenterService;
     //    private LiveData<UserModel> mUserModel;
@@ -45,12 +49,13 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         dictService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DICT);
         userCenterService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_USER_CENTER);
         resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+        workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
     }
 
 
     @Override
-    public LiveData<List<DictDataModel>> getByTypeKey() {
-        return dictService.getByTypeKey("pgdlx", new CallBack<List<DictDataModel>>() {
+    public LiveData<List<DictDataModel>> getByTypeKey(String typeKey) {
+        return dictService.getByTypeKey(typeKey, new CallBack<List<DictDataModel>>() {
             @Override
             public void call(List<DictDataModel> data) {
 
@@ -64,10 +69,24 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
     }
 
     @Override
-    public LiveData<List<DictDataModel>> getTypesListByKey() {
-        return dictService.getTypesListByKey("RESOURCE_TYPE", new CallBack<List<DictDataModel>>() {
+    public LiveData<List<DictDataModel>> getTypesListByKey(String typeKey) {
+        return dictService.getTypesListByKey(typeKey, new CallBack<List<DictDataModel>>() {
             @Override
             public void call(List<DictDataModel> data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<List<TypeAndLine>> typeAndLineList() {
+        return workOrderService.typeAndLineList(new CallBack<List<TypeAndLine>>() {
+            @Override
+            public void call(List<TypeAndLine> data) {
 
             }
 
@@ -143,6 +162,24 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         }
         showLoading();
         return resourceWorkOrderService.createSendOrder(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<Boolean> createClientEnquiryOrder(CreateClientEnquiryOrderRequest request, List<PicUrl> images) {
+        if (uploadManager != null) {
+            request.getBizData().setImageList(uploadManager.toJosnString(images));
+        }
+        showLoading();
+        return workOrderService.startEnquiry(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
                 hideLoading();

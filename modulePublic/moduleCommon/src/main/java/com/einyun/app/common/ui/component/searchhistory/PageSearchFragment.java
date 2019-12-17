@@ -1,8 +1,8 @@
 package com.einyun.app.common.ui.component.searchhistory;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,11 +12,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,35 +23,37 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
-import androidx.paging.PagedListAdapter;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.R;
+import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment implements TextWatcher {
+public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFragment implements TextWatcher {
     private RecyclerView recycleView;
     private EditText etSearch;
     private View cancel;
     //    private SearchHistoryRepository repository;
 //    private List<String> histories;
 //    private int type;
-    private SearchListener<M> listener;
-    private AppCompatActivity context;
+    private PageSearchListener<M> listener;
+    private Context context;
     private int br_id;
-    private List<M> list;
-    RVBindingAdapter<D, M> adapter;
+    private PagedList<M> list;
+    RVPageListAdapter<D, M> adapter;
     String hint;
 
-    public SearchFragment(AppCompatActivity context, int br_id, SearchListener<M> listener) {
+    public PageSearchFragment(Context context, int br_id, PageSearchListener<M> listener) {
         this.context = context;
         this.listener = listener;
         this.br_id = br_id;
@@ -89,11 +88,11 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                         (event != null && event.getAction() == KeyEvent.KEYCODE_ENTER)) {
-                    String search = etSearch.getText().toString();
-                    if (listener != null) {
-                        listener.searchClick(search);
-                    }
-                    dismiss();
+//                    String search = etSearch.getText().toString();
+//                    if (listener != null) {
+//                        listener.searchClick(search);
+//                    }
+//                    dismiss();
                 }
                 return false;
             }
@@ -109,11 +108,9 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
         recycleView.setLayoutManager(mLayoutManager);
 
         if (adapter == null) {
-            adapter = new RVBindingAdapter<D, M>(context, br_id) {
-
-
+            adapter = new RVPageListAdapter<D, M>(context, br_id, mDiffCallback) {
                 @Override
-                public void onBindItem(D binding, M model, int position) {
+                public void onBindItem(D binding, M model) {
 
                 }
 
@@ -123,18 +120,21 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
                 }
             };
         }
+
         adapter.setOnItemClick(new ItemClickListener<M>() {
             @Override
             public void onItemClicked(View veiw, M data) {
                 listener.onItemClick(data);
+                dismiss();
             }
         });
-        listener.search("").observe(context, list -> {
+        listener.search("").observe(getViewLifecycleOwner(), list -> {
             this.list = list;
-            adapter.setDataList(this.list);
+            adapter.submitList(this.list);
         });
         recycleView.setAdapter(adapter);
-        recycleView.addItemDecoration(new SpacesItemDecoration(0));
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(recycleView);
+        recycleView.addItemDecoration(new SpacesItemDecoration(30));
         etSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         etSearch.addTextChangedListener(this);
         if (StringUtil.isNullStr(hint)) {
@@ -149,10 +149,6 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
 //            adapter.addAll(strings);
 //        });
         return view;
-    }
-
-    public void show() {
-        show(context.getSupportFragmentManager(), "dialog");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -172,9 +168,9 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        listener.search(s.toString()).observe(context, list -> {
+        listener.search(s.toString()).observe(this, list -> {
             this.list = list;
-            adapter.setDataList(this.list);
+            adapter.submitList(this.list);
         });
     }
 
@@ -204,5 +200,20 @@ public class SearchFragment<D extends ViewDataBinding, M> extends DialogFragment
                 outRect.top = space;
         }
     }
+
+    //DiffUtil.ItemCallback,标准写法
+    private DiffUtil.ItemCallback<M> mDiffCallback = new DiffUtil.ItemCallback<M>() {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull M oldItem, @NonNull M newItem) {
+            return oldItem.equals(newItem);
+        }
+
+        @SuppressLint("DiffUtilEquals")
+        @Override
+        public boolean areContentsTheSame(@NonNull M oldItem, @NonNull M newItem) {
+            return oldItem == newItem;
+        }
+    };
 
 }

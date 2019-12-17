@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.databinding.BindingAdapter;
 
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
@@ -121,6 +122,10 @@ public class PlanOrderBindAdapter {
         }
     }
 
+    @BindingAdapter("setTime")
+    public static void setTime(TextView view, Long value) {
+        view.setText(FormatUtil.formatDate(value));
+    }
 //    @BindingAdapter("setUserName")
 //    public static void status(TextView view, GetMappingByUserIdsResponse value) {
 //        view.setText(value.getFullname() + "(" + value.getAccount() + ")");

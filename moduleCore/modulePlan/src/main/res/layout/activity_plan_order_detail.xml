@@ -99,8 +99,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_order_arrow"
-                                android:layout_width="@dimen/px_26"
-                                android:layout_height="@dimen/px_26"
+                                android:layout_width="@dimen/px_25"
+                                android:layout_height="@dimen/px_25"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:src="@mipmap/icon_arrow_down_grey" />
@@ -274,8 +274,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_resource_arrow"
-                                android:layout_width="@dimen/px_26"
-                                android:layout_height="@dimen/px_26"
+                                android:layout_width="@dimen/px_25"
+                                android:layout_height="@dimen/px_25"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:src="@mipmap/icon_arrow_down_grey" />
@@ -359,6 +359,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_result_edit"
                     style="@style/detail_cv"
                     app:cardCornerRadius="10dp">
 
@@ -452,14 +453,14 @@
 
                 <include
                     android:id="@+id/item_already_result"
-                    layout="@layout/item_already_result"
-                    android:visibility="gone" />
+                    layout="@layout/item_already_result" />
 
-                <include layout="@layout/item_apply_late_info" android:visibility="gone" />
+                <include android:id="@+id/item_apply_late_info" layout="@layout/item_apply_late_info"  />
 
-                <include layout="@layout/item_close_order_info" android:visibility="gone"/>
+                <include android:id="@+id/item_close_order_info" layout="@layout/item_close_order_info" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_operate"
                     style="@style/detail_cv"
                     app:cardCornerRadius="10dp">
 

@@ -11,9 +11,10 @@ import com.einyun.app.library.upload.model.PicUrl;
 import java.util.List;
 
 public interface CreateViewModelContract {
-    LiveData<List<DictDataModel>> getByTypeKey();
 
-    LiveData<List<DictDataModel>> getTypesListByKey();
+    LiveData<List<DictDataModel>> getByTypeKey(String typeKey);
+
+    LiveData<List<DictDataModel>> getTypesListByKey(String typeKey);
 
     LiveData<Boolean> createSendOrder(CreateSendOrderRequest request, List<PicUrl> images);
 

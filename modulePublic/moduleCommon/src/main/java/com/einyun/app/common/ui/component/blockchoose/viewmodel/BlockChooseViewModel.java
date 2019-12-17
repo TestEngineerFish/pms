@@ -15,6 +15,7 @@ import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -69,6 +70,21 @@ public class BlockChooseViewModel extends BaseViewModel {
         });
     }
 
+    public LiveData<List<HouseModel>> getHouseByCondition(String divide, String id) {
+        UserCenterService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_USER_CENTER);
+        return service.getHouseByCondition(divide, id, new CallBack<List<HouseModel>>() {
+            @Override
+            public void call(List<HouseModel> data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
     public void saveBlock2Local(String blockId, String blockName, String blockCode) {
         if (!TextUtils.isEmpty(blockId)) {
             SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, blockId);
@@ -80,7 +96,6 @@ public class BlockChooseViewModel extends BaseViewModel {
             SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, blockName);
         }
     }
-
 
 
     public void saveChache2Local(List<OrgModel> selected) {

@@ -38,5 +38,7 @@ class URLs {
         //通过条件搜索负责人
         const val URL_SEARCH_USER_BY_CONDITION: String = "/$DOMAIN/api/usercenter/v1/ucUser/searchUserByCondition"
 
+        const val URL_GET_HOUSE_BY_CONDITION:String = "/$DOMAIN/grid-api/grid-basic-info/getHouseByCondition"
+
     }
 }

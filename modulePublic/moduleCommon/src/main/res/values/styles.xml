@@ -141,10 +141,11 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="tv_create_order_right_arrow">
-        <item name="android:layout_width">@dimen/px_26</item>
-        <item name="android:layout_height">@dimen/px_26</item>
+        <item name="android:layout_width">@dimen/px_25</item>
+        <item name="android:layout_height">@dimen/px_25</item>
         <item name="android:layout_marginLeft">@dimen/px_10</item>
         <item name="android:src">@mipmap/icon_arrow_right</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
     <style name="tv_create_order_select">
         <item name="android:layout_width">wrap_content</item>
@@ -152,6 +153,16 @@
         <item name="android:text">@string/please_select</item>
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
         <item name="android:textSize">@dimen/font_size15</item>
+    </style>
+    <style name="et_create_order_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:hint">@string/please_input</item>
+        <item name="android:textColorHint">@color/edit_hint_color</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+        <item name="android:textSize">@dimen/font_size15</item>
+        <item name="android:maxLength">11</item>
     </style>
     <style name="tv_create_order_right">
         <item name="android:layout_width">wrap_content</item>

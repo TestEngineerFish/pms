@@ -7,6 +7,21 @@ class PlanInfo {
     val buttons: List<Buttons>? = null
     val data: Data? = null
     var extensionApplication: ArrayList<ExtensionApplication>? = null
+
+    /**
+     * 获取强制逼单或申请延期信息
+     */
+    fun getExt(applyType:Int): ExtensionApplication? {
+        if(extensionApplication==null||extensionApplication?.size==0){
+            return null
+        }
+        for(ext in extensionApplication!!){
+            if(applyType==ext.applyType){
+                return ext
+            }
+        }
+        return null
+    }
 }
 
 class Buttons {
