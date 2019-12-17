@@ -66,7 +66,7 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
         setHeadTitle(R.string.create_enquiry_order_title);
         request = new CreateClientEnquiryOrderRequest();
         binding.setCallBack(this);
-        viewModel.getByTypeKey(Constants.COMPLAIN_WAY).observe(this, dictDataModels -> {
+        viewModel.getByTypeKey(Constants.ENQUIRY_WAY).observe(this, dictDataModels -> {
             dictComplainWayList = dictDataModels;
         });
         viewModel.typeAndLineList().observe(this, lines -> {

@@ -247,8 +247,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             };
         }
         binding.rvResource.setAdapter(resourceAdapter);
+        requestData();
+    }
 
-
+    private void requestData(){
         //加载数据
         viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
             updateUI(planInfo);
@@ -268,6 +270,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 binding.cdWorkResouce.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestData();
     }
 
     private String createTime;

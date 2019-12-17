@@ -10,6 +10,7 @@ public enum SelectType {
     HOUSE("房产","house"),
     COMPLAIN_WAY("投诉方式","complain_way"),
     COMPLAIN_TYPE("投诉类别","complain_type"),
+    COMPLAIN_NATURE("投诉性质","complain_nature"),
     ENQUIRY_WAY("问询方式","ENQUIRY_WAY"),
     ENQUIRY_TYPE("问询类别","ENQUIRY_Type"),
     REPAIRS_TYPE("报修类别","REPAIRS_TYPE"),

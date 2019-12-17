@@ -15,7 +15,7 @@ import com.google.gson.annotations.SerializedName
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class bizData {
+class EnquiryOrderData {
     @SerializedName("wx_dk_id")
     var divideId: String? = null
     @SerializedName("wx_dk")
@@ -65,8 +65,57 @@ class startFlowParamObject {
 
 class CreateClientEnquiryOrderRequest {
     var withModelKey: Boolean? = false
-    var bizData: bizData? =
-        bizData()
+    var bizData: EnquiryOrderData? =
+        EnquiryOrderData()
     var startFlowParamObject: startFlowParamObject? =
         startFlowParamObject()
+}
+
+class CreateClientComplainOrderRequest {
+    var withModelKey: Boolean? = false
+    var bizData: ComplainOrderData? =
+        ComplainOrderData()
+    var startFlowParamObject: startFlowParamObject? =
+        startFlowParamObject()
+}
+
+class ComplainOrderData{
+    @SerializedName("F_ts_dk_id")
+    var divideId: String? = null
+    @SerializedName("F_ts_dk")
+    var divideName: String? = null
+    @SerializedName("F_state")
+    var state: String? = "added"
+    @SerializedName("F_ts_mobile")
+    var mobile: String? = null
+    @SerializedName("F_ts_user")
+    var userName: String? = null
+    @SerializedName("F_ts_way_id")
+    var wayId: String? = null
+    @SerializedName("F_ts_cate_id")
+    var cateId: String? = null
+    @SerializedName("F_line_key")
+    var lineKey: String? = null
+    @SerializedName("F_line_name")
+    var lineName: String? = null
+    @SerializedName("F_ts_build_id")
+    var buildId: String? = null
+    @SerializedName("F_ts_house_id")
+    var houseId: String? = null
+    @SerializedName("F_ts_unit_id")
+    var unitId: String? = null
+    @SerializedName("F_ts_house")
+    var house: String? = null
+    @SerializedName("F_ts_content")
+    var content: String? = null
+    @SerializedName("F_ts_way")
+    var way: String? = null
+    @SerializedName("F_ts_cate")
+    var cate: String? = null
+    @SerializedName("F_ts_attachment")
+    var imageList: String? = null
+    @SerializedName("F_ts_property_id")
+    var propertyId: String? = null
+    @SerializedName("F_ts_property")
+    var propertyName: String? = null
 }

@@ -162,6 +162,7 @@
         <item name="android:background">@null</item>
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
         <item name="android:textSize">@dimen/font_size15</item>
+        <item name="android:maxLength">11</item>
     </style>
     <style name="tv_create_order_right">
         <item name="android:layout_width">wrap_content</item>
