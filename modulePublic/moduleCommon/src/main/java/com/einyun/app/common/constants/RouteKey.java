@@ -37,7 +37,7 @@ public class RouteKey {
     public static final String KEY_PROJECT_ID = "projectId";
     public static final String KEY_LATER_ID = "KEY_LATER_ID";
     public static final String KEY_CLOSE_ID = "KEY_CLOSE_ID";
-    public static final String KEY_LIST_TYPE="listType";
+    public static final String KEY_LIST_TYPE = "listType";
 
     public static final String KEY_PLAN = "KEY_PLAN";
     public static final String KEY_SEND_ORDER = "KEY_SEND_ORDER";
@@ -56,9 +56,7 @@ public class RouteKey {
     public static final String NAME = "name";
     public static final String PHONE = "phone";
 
-
     //审批
     public static final String APPROVAL_LIST_FROM = "APPROVAL_LIST_FROM";
-
 
 }

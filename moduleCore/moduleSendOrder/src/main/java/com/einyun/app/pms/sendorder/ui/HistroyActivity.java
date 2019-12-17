@@ -26,11 +26,12 @@ import java.util.List;
 @Route(path = RouterUtils.ACTIVITY_HISTORY)
 public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBinding, SendOrderDetialViewModel> {
     RVBindingAdapter<ItemHistoryLayoutBinding, HistoryModel> adapter;
-    private List<HistoryModel> historyModels=new ArrayList<>();
+    private List<HistoryModel> historyModels = new ArrayList<>();
     @Autowired(name = RouteKey.KEY_ORDER_ID)
     String orderId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
+
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
@@ -51,10 +52,10 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
 
                 @Override
                 public void onBindItem(ItemHistoryLayoutBinding binding, HistoryModel model, int position) {
-                    binding.itemHistroyStep.setText(position+1+"");
-                    if (position==adapter.getDataList().size()-1){
+                    binding.itemHistroyStep.setText(position + 1 + "");
+                    if (position == adapter.getDataList().size() - 1) {
                         binding.itemHistroyImg.setVisibility(View.INVISIBLE);
-                    }else {
+                    } else {
                         binding.itemHistroyImg.setVisibility(View.VISIBLE);
                     }
                 }
@@ -77,7 +78,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
     @Override
     protected void initData() {
         super.initData();
-        viewModel.getHistory(proInsId).observe(this,modelList->{
+        viewModel.getHistory(proInsId).observe(this, modelList -> {
             adapter.setDataList(modelList);
         });
     }
