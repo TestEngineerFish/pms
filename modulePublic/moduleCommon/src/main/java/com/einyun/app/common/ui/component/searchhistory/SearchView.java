@@ -17,7 +17,7 @@
 //    private AppCompatActivity mContext;
 //    //    private LlSearchHistoryBinding binding;
 ////    private DialogSearchHistoryBinding dialogBinding;
-//    private SearchFragment dialog;
+//    private SingleSearchFragment dialog;
 //    private int mType;
 //
 //    private SearchListener listener;
@@ -45,7 +45,7 @@
 //                    return;
 //                }
 //                if (dialog == null) {
-//                    dialog = new SearchFragment(mType,listener);
+//                    dialog = new SingleSearchFragment(mType,listener);
 //                    dialog.show(mContext.getSupportFragmentManager(), "dialog");
 //                } else {
 //                    dialog.show(mContext.getSupportFragmentManager(), "dialog");

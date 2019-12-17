@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -27,6 +28,7 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.util.Base64Util;
+import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -66,6 +68,7 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -526,7 +529,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
 //        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
         patrol.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
-        String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol));
+        Log.e("传参  patrol  为", JsonUtil.toJson(patrol));
+        String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {

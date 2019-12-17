@@ -17,7 +17,7 @@ import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
-import com.einyun.app.common.ui.component.searchhistory.SearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.SingleSearchFragment;
 import com.einyun.app.common.ui.component.searchhistory.SearchListener;
 import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -102,12 +102,12 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         binding.rvChooseDisposePerson.addItemDecoration(new SpacesItemDecoration(0));
     }
 
-    private SearchFragment dialog;
+    private SingleSearchFragment dialog;
 
     @Override
     public void onOptionClick(View view) {
         if (dialog == null) {
-            dialog = new SearchFragment<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user, new SearchListener<GetMappingByUserIdsResponse>() {
+            dialog = new SingleSearchFragment<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse>(this, BR.user, new SearchListener<GetMappingByUserIdsResponse>() {
                 @Override
                 public LiveData<List<GetMappingByUserIdsResponse>> search(String search) {
                     MutableLiveData liveData = new MutableLiveData<List<OrgModel>>();
@@ -122,17 +122,6 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                 }
 
                 @Override
-                public void searchClick(String search) {
-                    List<GetMappingByUserIdsResponse> list = new ArrayList<>();
-                    for (GetMappingByUserIdsResponse user : users) {
-                        if (user.getFullname().contains(search) || user.getMobile().contains(search)) {
-                            list.add(user);
-                        }
-                    }
-                    adapter.setDataList(list);
-                }
-
-                @Override
                 public void onItemClick(GetMappingByUserIdsResponse model) {
                     LiveDataBusUtils.postResendOrderUser(model);
                     ActivityUtil.finishToActivity(ResendOrderActivity.class);
@@ -144,9 +133,9 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                 }
             });
             dialog.setHint(getResources().getString(R.string.search_name_or_phone));
-            dialog.show();
+            dialog.show(getSupportFragmentManager(),"");
         } else {
-            dialog.show();
+            dialog.show(getSupportFragmentManager(),"");
         }
     }
 

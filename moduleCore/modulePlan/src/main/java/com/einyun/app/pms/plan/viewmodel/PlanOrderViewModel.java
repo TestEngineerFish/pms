@@ -1,55 +1,32 @@
 package com.einyun.app.pms.plan.viewmodel;
 
-import android.net.LinkAddress;
-import android.net.Uri;
-import android.text.TextUtils;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.base.util.StringUtil;
-import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.model.SelectModel;
-import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
-import com.einyun.app.library.core.api.UCService;
-import com.einyun.app.library.resource.workorder.model.ApplyCloseModel;
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
 import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.model.JobPage;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
-import com.einyun.app.library.resource.workorder.model.ResendOrderModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
-import com.einyun.app.library.resource.workorder.model.WaitCount;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
-import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.GetJobRequest;
 import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
-import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse;
-import com.einyun.app.library.resource.workorder.net.response.GetJobResponse;
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse;
-import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
-import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.plan.repository.OrderDataSourceFactory;
 
-import org.mockito.internal.matchers.Null;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

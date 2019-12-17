@@ -1,17 +1,12 @@
 package com.einyun.app.pms.create.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.PagedList;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,17 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
-import com.einyun.app.base.adapter.RVPageListAdapter;
-import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
-import com.einyun.app.common.ui.component.searchhistory.SearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.SingleSearchFragment;
 import com.einyun.app.common.ui.component.searchhistory.SearchListener;
-import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.create.BR;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.databinding.ActivityChooseDisposePersonBinding;
@@ -99,12 +90,12 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
     }
 
-    private SearchFragment dialog;
+    private SingleSearchFragment dialog;
 
     @Override
     public void onOptionClick(View view) {
         if (dialog == null) {
-            dialog = new SearchFragment<ItemChoosePersonBinding, OrgModel>(this, BR.org, new SearchListener<OrgModel>() {
+            dialog = new SingleSearchFragment<ItemChoosePersonBinding, OrgModel>(this, BR.org, new SearchListener<OrgModel>() {
                 @Override
                 public LiveData<List<OrgModel>> search(String search) {
                     MutableLiveData liveData = new MutableLiveData<List<OrgModel>>();
@@ -116,17 +107,6 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                     }
                     liveData.postValue(list);
                     return liveData;
-                }
-
-                @Override
-                public void searchClick(String search) {
-                    List<OrgModel> list = new ArrayList<>();
-                    for (OrgModel model : orgModels) {
-                        if (model.getName().contains(search)) {
-                            list.add(model);
-                        }
-                    }
-                    adapter.setDataList(list);
                 }
 
                 @Override
@@ -145,9 +125,9 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                 }
             });
             dialog.setHint("请搜索姓名");
-            dialog.show();
+            dialog.show(getSupportFragmentManager(),"");
         } else {
-            dialog.show();
+            dialog.show(getSupportFragmentManager(),"");
         }
     }
 

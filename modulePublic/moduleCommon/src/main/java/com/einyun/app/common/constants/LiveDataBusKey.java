@@ -10,7 +10,9 @@ public class LiveDataBusKey {
     public static final String MINE_FRESH = "MINE_FRESH";
 
     //停止swiperefresh
-    public static final String STOP_REFRESH="STOP_REFRESH";
+    public static final String STOP_REFRESH = "STOP_REFRESH";
 
     public static final String POST_RESEND_ORDER_USER = "POST_RESEND_ORDER_USER";
+    public static final String POST_PLAN_SEARCH = "POST_PLAN_SEARCH";
+
 }

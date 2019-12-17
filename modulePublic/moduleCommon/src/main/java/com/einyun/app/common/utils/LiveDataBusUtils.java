@@ -12,4 +12,8 @@ public class LiveDataBusUtils {
     public static void postResendOrderUser(GetMappingByUserIdsResponse model) {
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER).post(model);
     }
+
+    public static void search(String tag) {
+        LiveEventBus.get(LiveDataBusKey.POST_PLAN_SEARCH).post(tag);
+    }
 }

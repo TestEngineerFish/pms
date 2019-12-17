@@ -191,6 +191,7 @@ public class ConditionBuilder {
         selectDay.setType(SELECT_DATE);
         selectDay.setConditionType(SELECT_DATE);
         selectDay.setId(RESULT_DATE_DAY);
+        selectDay.setKey(RESULT_DATE_DAY);
         selectDay.setContent(CommonApplication.getInstance().getString(R.string.text_date_day));
 
         SelectModel selectWeek = new SelectModel();
@@ -198,18 +199,22 @@ public class ConditionBuilder {
         selectWeek.setConditionType(SELECT_DATE);
         selectWeek.setContent(CommonApplication.getInstance().getString(R.string.text_date_week));
         selectWeek.setId(RESULT_DATE_WEEK);
+        selectWeek.setKey(RESULT_DATE_WEEK);
 
         SelectModel selectMonth = new SelectModel();
         selectMonth.setType(SELECT_DATE);
         selectMonth.setConditionType(SELECT_DATE);
         selectMonth.setContent(CommonApplication.getInstance().getString(R.string.pickerview_month));
         selectMonth.setId(RESULT_DATE_MONTH);
+        selectMonth.setKey(RESULT_DATE_MONTH);
 
         SelectModel selectSeason = new SelectModel();
         selectSeason.setType(SELECT_DATE);
         selectSeason.setConditionType(SELECT_DATE);
         selectSeason.setContent(CommonApplication.getInstance().getString(R.string.text_date_season));
         selectSeason.setId(RESULT_DATE_SEASON);
+        selectSeason.setKey(RESULT_DATE_SEASON);
+
         List<SelectModel> selectModels = new ArrayList<>();
         selectModels.add(selectDay);
         selectModels.add(selectWeek);

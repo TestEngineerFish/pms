@@ -54,16 +54,19 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
     PhotoSelectAdapter photoSelectAdapter;
     private final int MAX_PHOTO_SIZE = 4;
 
-    private String getExtDays() {
+    private int getExtDays() {
+        int i = 0;
         if (extensionApplication == null || extensionApplication.size() == 0) {
-            return "0";
+            return i;
         }
+        List<ExtensionApplication> exts = new ArrayList<>();
         for (ExtensionApplication ext : extensionApplication) {
-            if (ApplyType.POSTPONE.getState() == ext.getApplyType()) {
-                return StringUtil.isNullStr(ext.getExtensionDays()) ? ext.getExtensionDays() : "0";
+            if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null) {
+                i = i + Integer.valueOf(ext.getExtensionDays());
             }
         }
-        return "0";
+
+        return i;
     }
 
     @Override
