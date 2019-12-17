@@ -23,12 +23,14 @@ import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Patrol;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -189,18 +191,25 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             }
         });
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
-            //弹出筛选view
-            ConditionBuilder builder=new ConditionBuilder();
-            List<SelectModel> conditions= builder.addLines(BasicDataManager.getInstance().loadCache().getLines())//条线
-                    .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                    .mergeLineRes(BasicDataManager.getInstance().loadCache().getResources())
-                    .build();
-            new SelectPopUpView(getActivity(),conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+            BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
                 @Override
-                public void onSelected(Map selected) {
-                    handleSelect(selected);
+                public void call(BasicData data) {
+                    //弹出筛选view
+                    ConditionBuilder builder=new ConditionBuilder();
+                    List<SelectModel> conditions= builder.addLines(data.getLines())//条线
+                            .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                            .mergeLineRes(data.getResources())
+                            .build();
+                    new SelectPopUpView(getActivity(),conditions)
+                            .setOnSelectedListener(selected -> handleSelect(selected))
+                            .showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                 }
-            }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+
+                @Override
+                public void onFaild(Throwable throwable) {
+
+                }
+            });
 
         });
     }

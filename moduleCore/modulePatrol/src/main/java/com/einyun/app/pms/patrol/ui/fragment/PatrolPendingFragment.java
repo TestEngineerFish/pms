@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.constants.RouteKey;
@@ -147,21 +148,29 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<LineType> lineTypes = BasicDataManager.getInstance().loadCache().getListLineTypes();
-                List<WorkOrderTypeModel> lines = BasicDataManager.getInstance().loadCache().getLines();
-                List<ResourceTypeBean> resources = BasicDataManager.getInstance().loadCache().getResources();
-                ConditionBuilder builder = new ConditionBuilder();
-                List<SelectModel> conditions = builder.addLines(lines)//条线
-                        .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                        .mergeLineRes(resources)
-                        .addLineTypesItem(lineTypes)
-                        .build();
-                new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
                     @Override
-                    public void onSelected(Map selected) {
-                        handleSelect(selected);
+                    public void call(BasicData data) {
+                        ConditionBuilder builder = new ConditionBuilder();
+                        List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+                                .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                                .mergeLineRes(data.getResources())
+                                .addLineTypesItem(data.getListLineTypes())
+                                .build();
+                        new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                            @Override
+                            public void onSelected(Map selected) {
+                                handleSelect(selected);
+                            }
+                        }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                     }
-                }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+
+                    @Override
+                    public void onFaild(Throwable throwable) {
+
+                    }
+                });
+
             }
         });
     }

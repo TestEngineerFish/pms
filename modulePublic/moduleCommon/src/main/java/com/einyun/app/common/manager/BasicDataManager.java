@@ -27,10 +27,12 @@ public class BasicDataManager {
     private ResourceService resourceService;
     private CountDownLatch latch;
     private ExecutorService fixedThreadPool;
+    private final int THREADS=3;
+    private volatile boolean reload=false;//
 
     private BasicDataManager(){
         basicData=new BasicData();
-        latch=new CountDownLatch(3);//目前三类数据，增加一种数据，此处加一
+        latch=new CountDownLatch(THREADS);//目前三类数据，增加一种数据，此处加一
         fixedThreadPool= Executors.newFixedThreadPool(5);
         resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         resourceService=ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE);
@@ -52,10 +54,27 @@ public class BasicDataManager {
     }
 
     /**
-     * 获取基础数据，并缓存内存
+     * 刷新基础数据/从新获取基础数据
+     * @param callBack
+     */
+    public void reload(CallBack<BasicData> callBack){
+        reload=true;
+        latch=new CountDownLatch(THREADS);
+        loadBasicData(callBack);
+    }
+
+    /**
+     * 获取基础数据，并缓存内存,如果有缓存直接返回缓存数据
      * @param callBack
      */
     public void loadBasicData(CallBack<BasicData> callBack){
+        /**
+         * 判断数据是否已经初始化
+         */
+        if(hasInit()&&!reload){
+            callBack.call(basicData);
+            return;
+        }
         loadResources(); //基础资源
         loadLines(); //所有条线
         loadLineTypes(); //所有分类
@@ -71,6 +90,7 @@ public class BasicDataManager {
         fixedThreadPool.execute(() -> {
             try {
                 latch.await();
+                reload=false;
                 callBack.call(basicData);
             } catch (InterruptedException e) {
                 callBack.onFaild(e);
@@ -139,5 +159,18 @@ public class BasicDataManager {
      */
     public BasicData loadCache(){
         return basicData;
+    }
+
+    /**
+     * 判断是否初始化有数据
+     * @return
+     */
+    public boolean hasInit(){
+        if(basicData!=null){
+            if(basicData.getLines()!=null&&basicData.getListLineTypes()!=null&basicData.getResources()!=null){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,12 +1,10 @@
 package com.einyun.app.pms.sendorder.viewmodel;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.event.CallBack;
@@ -36,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
