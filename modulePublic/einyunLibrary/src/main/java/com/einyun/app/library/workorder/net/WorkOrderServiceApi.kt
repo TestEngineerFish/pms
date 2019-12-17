@@ -117,7 +117,7 @@ interface WorkOrderServiceApi {
      * 启动问询
      */
     @POST(URLs.URL_CUSTOMER_ENQUIRY_SUBMIT)
-    fun startEnquiry(@Body request: EnquiryStartRequest): Flowable<BaseResponse<Any>>
+    fun startEnquiry(@Body request: CreateClientEnquiryOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      *  审批列表 待审批

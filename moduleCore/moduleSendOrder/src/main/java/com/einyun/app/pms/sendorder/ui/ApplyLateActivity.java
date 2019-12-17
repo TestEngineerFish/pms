@@ -22,6 +22,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.utils.Glide4Engine;
+import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
@@ -53,6 +54,18 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
     PhotoSelectAdapter photoSelectAdapter;
     private final int MAX_PHOTO_SIZE = 4;
 
+    private String getExtDays() {
+        if (extensionApplication == null || extensionApplication.size() == 0) {
+            return "0";
+        }
+        for (ExtensionApplication ext : extensionApplication) {
+            if (ApplyType.POSTPONE.getState() == ext.getApplyType()) {
+                return StringUtil.isNullStr(ext.getExtensionDays()) ? ext.getExtensionDays() : "0";
+            }
+        }
+        return "0";
+    }
+
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
@@ -70,16 +83,7 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         setHeadTitle(R.string.text_apply_postpone);
         binding.setCallBack(this);
         selectPng();
-        if (extensionApplication != null) {
-            binding.applyNum.setText(extensionApplication.size() + "次");
-            int i = 0;
-            for (ExtensionApplication bean : extensionApplication) {
-                if (StringUtil.isNullStr(bean.getExtensionDays())) {
-                    i = i + Integer.valueOf(bean.getExtensionDays());
-                }
-            }
-            binding.applyDate.setText(i + "天");
-        }
+        binding.applyDate.setText(getExtDays() + "天");
     }
 
     /**
@@ -142,7 +146,7 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
             hideLoading();
             if (data != null) {
                 if (StringUtil.isNullStr(keyId)) {
-                    if (RouteKey.KEY_PLAN.equals(keyId)){
+                    if (RouteKey.KEY_PLAN.equals(keyId)) {
                         viewModel.applyLatePlan(request, data).observe(this, o -> {
                             ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
                             finish();

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="type"
+            type="com.einyun.app.pms.create.SelectType" />
+
+        <variable
+            name="bean"
+            type="com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.create.ui.CreateClientEnquiryOrderViewModelActivity" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+        <View style="@style/base_underline" />
+        <com.einyun.app.common.ui.component.AbScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.AGING)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/text_divide" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.bizData.divideName}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.HOUSE)}">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/text_house" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.bizData.house}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="联系电话" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        style="@style/et_create_order_right"
+                        android:inputType="phone"/>
+                </LinearLayout>
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="问询人" />
+
+                    <EditText
+                        android:id="@+id/user_name"
+                        style="@style/et_create_order_right" />
+                </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.ENQUIRY_WAY)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="问询方式" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.bizData.way}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.ENQUIRY_TYPE)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="问询类别" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.bizData.cate}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="问询内容" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/px_30">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/lt_question_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:hintText="请输入问询内容"
+                        app:maxNumber="500" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout style="@style/ll_create_order">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:layout_weight="0"
+                        android:text="@string/picture" />
+
+                    <TextView
+                        style="@style/tv_create_order_red_star"
+                        android:text="（最多4张）"
+                        android:textSize="@dimen/font_size13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_imglist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/px_30">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bt_login"
+                    style="@style/submit_btn"
+                    android:onClick="@{()->callBack.submit()}"
+                    android:text="@string/create" />
+            </LinearLayout>
+        </com.einyun.app.common.ui.component.AbScrollView>
+    </LinearLayout>
+
+</layout>

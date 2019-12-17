@@ -1,6 +1,7 @@
 package com.einyun.app.pms.main.core.ui;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
@@ -35,6 +36,11 @@ public class MainBindingAdapter {
                 .error(Glide.with(BasicApplication.getInstance()).load(R.mipmap.img_user_default_head).apply(RequestOptions
                         .bitmapTransform(new CircleCrop())))
                 .into(iv);
+    }
+
+    @BindingAdapter("wordOrderHeight")
+    public static void wordOrderHeight(LinearLayout ll, String path) {
+
     }
 
 }

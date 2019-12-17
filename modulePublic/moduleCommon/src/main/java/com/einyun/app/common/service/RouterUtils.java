@@ -62,8 +62,10 @@ public class RouterUtils {
     public static final String ACTIVITY_HISTORY="/sendOrder/HistoryActivity";
     public static final String ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER = "/sendOrder/choosePerson";
     /**********************创建工单****************************/
-    public static final String ACTIVITY_CREATE_ORDER = "/create/home";
     public static final String ACTIVITY_CREATE_SEND_ORDER = "/create/sendOrder";
+    public static final String ACTIVITY_CREATE_CLIENT_COMPLAIN_ORDER = "/create/clientComplainOrder";
+    public static final String ACTIVITY_CREATE_CLIENT_REPAIRS_ORDER = "/create/clientRepairsOrder";
+    public static final String ACTIVITY_CREATE_CLIENT_ENQUIRY_ORDER = "/create/clientEnquiryOrder";
     public static final String ACTIVITY_CHOOSE_DISPOSE_PERSON = "/create/choosePerson";
     /**********************Mine****************************/
     public static final String ACTIVITY_MINE_SETTING = "/mine/setting";

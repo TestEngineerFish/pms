@@ -2,19 +2,10 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.dashboard.model.OperateCaptureData
-import com.einyun.app.library.dashboard.model.UserMenuData
-import com.einyun.app.library.dashboard.model.WorkOrderData
-import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
-import com.einyun.app.library.dashboard.net.response.WorkOrderResponse
-import com.einyun.app.library.uc.user.model.TenantModel
-import com.einyun.app.library.uc.user.model.UserInfoModel
-import com.einyun.app.library.uc.user.model.UserModel
-import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.workorder.model.BlocklogNums
+import com.einyun.app.library.workorder.model.TypeAndLine
+import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
-import io.reactivex.Flowable
-import retrofit2.http.Body
 
 /**
  *
@@ -36,4 +27,6 @@ interface WorkOrderService : EinyunService {
         request: List<String>,
         callBack: CallBack<Map<String, GetMappingByUserIdsResponse>>
     ): LiveData<Map<String, GetMappingByUserIdsResponse>>
+    fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>):LiveData<List<TypeAndLine>>
+    fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
 }

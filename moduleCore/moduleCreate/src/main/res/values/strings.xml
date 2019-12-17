@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">moduleCreate</string>
     <string name="create_send_order_title">派工单</string>
-
+    <string name="create_enquiry_order_title">创建-客户问询</string>
 </resources>

@@ -5,16 +5,14 @@
     <data>
 
         <variable
-            name="detail"
-            type="com.einyun.app.library.resource.workorder.model.Zyjhgd" />
-
-        <variable
-            name="callBack"
-            type="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity" />
+            name="ext"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
         style="@style/detail_cv"
+        android:visibility="gone"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -38,7 +36,7 @@
                     style="@style/detail_item_left_tv"
                     android:text="审批结果" />
 
-                <TextView style="@style/detail_item_right_tv" />
+                <TextView style="@style/detail_item_right_tv" app:apply_status="@{ext.applicationState}"/>
             </LinearLayout>
 
             <LinearLayout style="@style/detail_item_ll">
@@ -47,7 +45,7 @@
                     style="@style/detail_item_left_tv"
                     android:text="审批时间" />
 
-                <TextView style="@style/detail_item_right_tv" />
+                <TextView style="@style/detail_item_right_tv" android:text="@{ext.auditDate}" />
             </LinearLayout>
 
             <LinearLayout style="@style/detail_item_ll">
@@ -56,7 +54,7 @@
                     style="@style/detail_item_left_tv"
                     android:text="申请人" />
 
-                <TextView style="@style/detail_item_right_tv" />
+                <TextView style="@style/detail_item_right_tv"   android:text="@{ext.createdName}"/>
             </LinearLayout>
 
             <LinearLayout style="@style/detail_item_ll">
@@ -65,7 +63,7 @@
                     style="@style/detail_item_left_tv"
                     android:text="申请时间" />
 
-                <TextView style="@style/detail_item_right_tv" />
+                <TextView style="@style/detail_item_right_tv" android:text="@{ext.creationDate}" />
             </LinearLayout>
 
             <LinearLayout style="@style/detail_item_ll">
@@ -74,7 +72,7 @@
                     style="@style/detail_item_left_tv"
                     android:text="申请原因" />
 
-                <TextView style="@style/detail_item_right_tv" />
+                <TextView style="@style/detail_item_right_tv" android:text="@{ext.applicationDescription}" />
             </LinearLayout>
 
             <TextView
@@ -85,7 +83,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/point_ck_imglist"
+                android:id="@+id/img_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_20"

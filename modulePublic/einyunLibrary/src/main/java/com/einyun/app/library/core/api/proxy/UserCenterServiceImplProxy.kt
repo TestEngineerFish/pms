@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UserCenterService
 import com.einyun.app.library.uc.user.model.UserInfoModel
+import com.einyun.app.library.uc.usercenter.model.HouseModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
 import com.einyun.app.library.uc.usercenter.repository.UserCenterRepository
@@ -23,6 +24,14 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class UserCenterServiceImplProxy : UserCenterService {
+    override fun getHouseByCondition(
+        divide: String,
+        id: String?,
+        callBack: CallBack<List<HouseModel>>
+    ): LiveData<List<HouseModel>> {
+        return instance?.getHouseByCondition(divide,id, callBack)!!
+    }
+
     override fun searchUserByCondition(
         request: SearchUserRequest,
         callBack: CallBack<List<GetMappingByUserIdsResponse>>

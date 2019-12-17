@@ -43,7 +43,7 @@
     <string name="text_pic_max">(最多4张)</string>
     <string name="text_submit">提交</string>
     <string name="text_apply_postpone">申请延期</string>
-
+    <string name="text_house">房产</string>
     <string-array name="order_list">
         <item>待跟进</item>
         <item>已跟进</item>
@@ -58,6 +58,7 @@
     <string name="tv_if_late">是否超期</string>
     <string name="text_handle_success">处理成功</string>
     <string name="please_select">请选择</string>
+    <string name="please_input">请输入</string>
     <string name="resource_type">资源分类</string>
     <string name="resource">资源</string>
     <string name="dispose_person">处理人</string>
@@ -127,7 +128,7 @@
     <string name="text_order_num">工单编号</string>
     <string name="yes">是</string>
     <string name="no">否</string>
-
+    <string name="alert_submit_client_enquire_order_success">客户问询工单创建成功</string>
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
 </resources>

@@ -14,7 +14,9 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
         style="@style/detail_cv"
+        android:visibility="gone"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -40,7 +42,8 @@
                     android:text="实际完成时间"/>
 
                 <TextView
-                    style="@style/detail_item_right_tv" />
+                    style="@style/detail_item_right_tv"
+                    android:text="@{detail.f_ACT_FINISH_TIME}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -51,7 +54,8 @@
                     android:text="处理说明"/>
 
                 <TextView
-                    style="@style/detail_item_right_tv"/>
+                    style="@style/detail_item_right_tv"
+                    android:text="@{detail.f_CONTENT}"/>
             </LinearLayout>
 
             <TextView
@@ -62,7 +66,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/point_ck_imglist"
+                android:id="@+id/img_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_20"

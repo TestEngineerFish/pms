@@ -18,6 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.main.R;
 
@@ -106,16 +108,17 @@ public class SlideShowView extends FrameLayout {
                     switch (dataList.get(i)) {
                         case "dj":
                             //点检
-                            item.setOnClickListener( v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_POINT_CHECK_ACTIVITY).navigation());
+                            item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_POINT_CHECK_ACTIVITY).navigation());
                             break;
                         case "gdlb":
                             //工单列表
-                            item.setOnClickListener( v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation());
+                            item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation());
                             break;
                         case "cjgd":
                             //创建工单
-                            item.setOnClickListener( v -> ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                            item.setOnClickListener(v -> ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_ORDER_LIST)
+                                    .withString(RouteKey.KEY_WORK_ORDER_LIST_TYPE, DataConstants.WORK_ORDER_LIST_TYPE_CREATE)
                                     .navigation());
                             break;
                         case "sp":
@@ -126,7 +129,7 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gzyl":
                             //工作预览
-                            item.setOnClickListener( v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation());
+                            item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation());
                             break;
                         case "smcl":
                             //扫码处理
@@ -153,7 +156,7 @@ public class SlideShowView extends FrameLayout {
         if (linearLayout1 != null)
             linearLayoutList.add(linearLayout1);
 
-        LinearLayout linearLayout2 = createLinearLayout(activity,dataList, 1);
+        LinearLayout linearLayout2 = createLinearLayout(activity, dataList, 1);
         if (linearLayout2 != null)
             linearLayoutList.add(linearLayout2);
         if (dataList.size() <= 4) {

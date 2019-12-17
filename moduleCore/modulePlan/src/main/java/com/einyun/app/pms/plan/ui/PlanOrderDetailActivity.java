@@ -2,6 +2,7 @@ package com.einyun.app.pms.plan.ui;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -32,18 +34,23 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 
+import com.einyun.app.library.resource.workorder.model.ApplyType;
+import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb;
+import com.einyun.app.library.resource.workorder.model.Zyjhgd;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.plan.BR;
@@ -103,6 +110,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         setHeadTitle(R.string.text_plan_order);
         setRightOption(R.drawable.histroy);
         binding.setCallBack(this);
+
+        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
+            binding.cvResultEdit.setVisibility(View.GONE);
+            binding.cvOperate.setVisibility(View.GONE);
+            binding.btnSubmit.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -127,6 +140,20 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     } else {
                         //处理节点
                         tableItem(binding, position);
+                        if (nodes.get(position).getResult() != null) {
+                            //成功
+                            if ("1".equals(nodes.get(position).getResult())) {
+                                //选中通过
+                                onAgree(binding);
+                                binding.btnReject.setVisibility(View.GONE);
+                            } else if ("0".equals(nodes.get(position).getResult())) {
+                                //选中不通过
+                                onReject(binding);
+                                binding.btnAgree.setVisibility(View.GONE);
+                            }
+                            return;
+                        }
+
                         //选中通过
                         agree(binding, model);
                         //选中不通过
@@ -275,13 +302,110 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }, this);
     }
 
+    List<WorkNode> nodes = new ArrayList<>();
+
     private void updateUI(PlanInfo planInfo) {
         this.planInfo = planInfo;
-        List<WorkNode> nodes = viewModel.loadNodes(planInfo);
+        showResult();
+        showPostpone();
+        showForceClose();
+        nodes = viewModel.loadNodes(planInfo);
         nodes.add(0, new WorkNode());
         nodesAdapter.addAll(nodes);
         binding.setDetail(planInfo.getData().getZyjhgd());
     }
+
+    /**
+     * 展示处理信息
+     */
+    private void showResult() {
+        Zyjhgd zyjhgd = planInfo.getData().getZyjhgd();
+        if (String.valueOf(OrderState.CLOSED.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
+            binding.cvResultEdit.setVisibility(View.GONE);
+            binding.cvOperate.setVisibility(View.GONE);
+            binding.btnSubmit.setVisibility(View.GONE);
+            binding.itemAlreadyResult.cv.setVisibility(View.VISIBLE);
+            binding.itemAlreadyResult.setDetail(zyjhgd);
+            if (zyjhgd.getF_FILES() != null) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
+                binding.itemAlreadyResult.imgList.setLayoutManager(new LinearLayoutManager(
+                        this,
+                        LinearLayoutManager.HORIZONTAL,
+                        false));
+                binding.itemAlreadyResult.imgList.addItemDecoration(new SpacesItemDecoration(18));
+                binding.itemAlreadyResult.imgList.setAdapter(adapter);
+                PicUrlModelConvert convert = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = convert.stringToSomeObjectList(zyjhgd.getF_FILES());
+                adapter.updateList(modelList);
+            }
+        }
+    }
+
+    /**
+     * 显示申请延期信息
+     */
+    private void showPostpone() {
+        ExtensionApplication extPostpone = planInfo.getExt(ApplyType.POSTPONE.getState());
+        if (extPostpone != null) {
+            binding.itemApplyLateInfo.cv.setVisibility(View.VISIBLE);
+            binding.itemApplyLateInfo.setExt(extPostpone);
+            if (extPostpone.getApplyFiles() != null) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
+                binding.itemApplyLateInfo.imgList.setLayoutManager(new LinearLayoutManager(
+                        this,
+                        LinearLayoutManager.HORIZONTAL,
+                        false));
+                binding.itemApplyLateInfo.imgList.setAdapter(adapter);
+                PicUrlModelConvert convert = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
+                adapter.updateList(modelList);
+            }
+        } else {
+            binding.itemApplyLateInfo.cv.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 设置图片间隔
+     */
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+        }
+    }
+
+    /**
+     * 显示强制闭单信息
+     */
+    private void showForceClose() {
+        ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
+        if (extForceClose != null) {
+            binding.itemCloseOrderInfo.cv.setVisibility(View.VISIBLE);
+            binding.itemCloseOrderInfo.setExt(extForceClose);
+            if (extForceClose.getApplyFiles() != null) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
+                binding.itemCloseOrderInfo.imgList.setLayoutManager(new LinearLayoutManager(
+                        this,
+                        LinearLayoutManager.HORIZONTAL,
+                        false));
+                binding.itemCloseOrderInfo.imgList.setAdapter(adapter);
+                PicUrlModelConvert convert = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = convert.stringToSomeObjectList(extForceClose.getApplyFiles());
+                adapter.updateList(modelList);
+            }
+        } else {
+            binding.itemCloseOrderInfo.cv.setVisibility(View.GONE);
+        }
+    }
+
 
     /**
      * 跳转申请延期
@@ -291,6 +415,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_LATE)
                 .withString(RouteKey.KEY_ORDER_ID, id)
+                .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, planInfo.getExtensionApplication())
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_PLAN)
                 .navigation();
@@ -374,9 +499,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         GetUploadJson getUploadJsonStr = new GetUploadJson(picUrls).invoke();
         Gson gson = getUploadJsonStr.getGson();
         List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
-        if (OrderState.HANDING.getState() == patrol.getData().getZyjhgd().getF_OT_STATUS()) {
-            patrol.getData().getZyjhgd().setF_OT_STATUS(OrderState.CLOSED.getState());
-        }
+        patrol.getData().getZyjhgd().setF_STATUS(String.valueOf(OrderState.CLOSED.getState()));
         hasException();
         patrol.getData().getZyjhgd().setF_FILES(gson.toJson(picUrlModels));//包装上传图片信息
         patrol.getData().getZyjhgd().setF_CONTENT(binding.limitInput.getString());//包装节点选择信息

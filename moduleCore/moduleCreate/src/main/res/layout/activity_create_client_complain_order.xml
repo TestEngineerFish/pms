@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="type"
+            type="com.einyun.app.pms.create.SelectType" />
+
+        <variable
+            name="bean"
+            type="com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.create.ui.CreateClientComplainOrderViewModelActivity" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+        <View style="@style/base_underline" />
+        <com.einyun.app.common.ui.component.AbScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.AGING)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/text_divide" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.divideName}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.LINE)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/text_line" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.txName}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.WORKY_TYPE)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/tv_order_type" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setWorkTypeTxt="@{bean}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.RESOURCE_TYPE)}">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/resource_type" />
+
+                    <TextView
+                        android:id="@+id/tv_resource"
+                        style="@style/tv_create_order_select" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.RESOURCE)}">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/resource" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.resName}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.DISPOSE_PERSON)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/dispose_person" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.procName}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout style="@style/ll_create_order">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/overtime_rank" />
+
+                    <RadioGroup
+                        android:id="@+id/rgs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:setRg="@{bean.otLevel}"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_normal"
+                            android:layout_width="@dimen/px_120"
+                            android:layout_height="@dimen/px_50"
+                            android:background="@drawable/select_radio_button_normal"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:tag="1"
+                            android:text="普通"
+                            android:textColor="@drawable/select_radio_button_text"
+                            android:textSize="@dimen/font_size13" />
+
+                        <RadioButton
+                            android:id="@+id/rb_general"
+                            android:layout_width="@dimen/px_120"
+                            android:layout_height="@dimen/px_50"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:background="@drawable/select_radio_button_general"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:tag="2"
+                            android:text="一般"
+                            android:textColor="@drawable/select_radio_button_text"
+                            android:textSize="@dimen/font_size13" />
+
+                        <RadioButton
+                            android:id="@+id/rb_warning"
+                            android:layout_width="@dimen/px_120"
+                            android:layout_height="@dimen/px_50"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:background="@drawable/select_radio_button_warning"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:tag="3"
+                            android:text="严重"
+                            android:textColor="@drawable/select_radio_button_text"
+                            android:textSize="@dimen/font_size13" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_marginTop="@dimen/px_20">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/question_desc" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/px_30">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/lt_question_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:hintText="请输入问题描述"
+                        app:maxNumber="500" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout style="@style/ll_create_order">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="@string/question_location" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/px_30">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/lt_location_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:hintText="请输入位置信息"
+                        app:maxNumber="100" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+
+                <LinearLayout style="@style/ll_create_order">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:layout_weight="0"
+                        android:text="@string/picture" />
+
+                    <TextView
+                        style="@style/tv_create_order_red_star"
+                        android:text="（最多4张）"
+                        android:textSize="@dimen/font_size13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_imglist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/px_30">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bt_login"
+                    style="@style/submit_btn"
+                    android:onClick="@{()->callBack.submit()}"
+                    android:text="@string/create" />
+            </LinearLayout>
+        </com.einyun.app.common.ui.component.AbScrollView>
+    </LinearLayout>
+
+</layout>

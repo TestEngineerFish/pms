@@ -9,6 +9,7 @@ import com.einyun.app.library.core.api.UserCenterService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.uc.user.model.UserInfoModel
+import com.einyun.app.library.uc.usercenter.model.HouseModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
 import com.einyun.app.library.uc.usercenter.net.URLs
 import com.einyun.app.library.uc.usercenter.net.UserCenterServiceApi
@@ -30,6 +31,32 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class UserCenterRepository() : UserCenterService {
+    override fun getHouseByCondition(
+        divide: String,
+        id: String?,
+        callBack: CallBack<List<HouseModel>>
+    ): LiveData<List<HouseModel>> {
+        val liveData = MutableLiveData<List<HouseModel>>()
+        if(id == null){
+            serviceApi?.getHouseByCondition(divide)?.compose(RxSchedulers.inIoMain())
+                ?.subscribe({ response ->
+                    if (response.isState){
+                        callBack.call(response.data)
+                        liveData.postValue(response.data)
+                    }
+                }, { error -> callBack.onFaild(error) })
+        }else{
+            serviceApi?.getHouseByCondition(divide,id)?.compose(RxSchedulers.inIoMain())
+                ?.subscribe({ response ->
+                    if (response.isState){
+                        callBack.call(response.data)
+                        liveData.postValue(response.data)
+                    }
+                }, { error -> callBack.onFaild(error) })
+        }
+        return liveData
+    }
+
     override fun searchUserByCondition(
         request: SearchUserRequest,
         callBack: CallBack<List<GetMappingByUserIdsResponse>>
