@@ -154,19 +154,18 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 onReject(binding);
                                 binding.btnAgree.setVisibility(View.GONE);
                             }
-                            return;
-                        }
+                        } else{
+                            //选中通过
+                            agree(binding, model);
+                            //选中不通过
+                            reject(binding, model);
 
-                        //选中通过
-                        agree(binding, model);
-                        //选中不通过
-                        reject(binding, model);
-
-                        if (!TextUtils.isEmpty(model.result)) {
-                            if (model.result.equals(WorkNode.RESULT_REJECT)) {
-                                onReject(binding);
-                            } else if (model.result.equals(WorkNode.RESULT_PASS)) {
-                                onAgree(binding);
+                            if (!TextUtils.isEmpty(model.result)) {
+                                if (model.result.equals(WorkNode.RESULT_REJECT)) {
+                                    onReject(binding);
+                                } else if (model.result.equals(WorkNode.RESULT_PASS)) {
+                                    onAgree(binding);
+                                }
                             }
                         }
                     }
@@ -247,7 +246,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             };
         }
         binding.rvResource.setAdapter(resourceAdapter);
-        requestData();
     }
 
     private void requestData(){
@@ -322,7 +320,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         showForceClose();
         nodes = viewModel.loadNodes(planInfo);
         nodes.add(0, new WorkNode());
-        nodesAdapter.addAll(nodes);
+        nodesAdapter.setDataList(nodes);
         binding.setDetail(planInfo.getData().getZyjhgd());
     }
 
