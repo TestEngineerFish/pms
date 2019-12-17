@@ -83,5 +83,10 @@ public class PatrolBindiAdapter {
         }
     }
 
+    @BindingAdapter("duration")
+    public static void duration(TextView view,int duration){
+        String text= String.format(view.getResources().getString(R.string.text_duration),duration);
+        view.setText(text);
+    }
 
 }

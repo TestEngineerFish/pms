@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="地块"
+                    android:text="分期"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size14" />
 
@@ -114,7 +114,6 @@
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size14" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,11 +130,11 @@
                     android:textSize="@dimen/font_size14" />
 
                 <TextView
-                    android:id="@+id/tv_check_object"
+                    android:id="@+id/tv_check_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="@{checkpoint.checkName}"
+                    android:text="@{checkpoint.resourceName}"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size14" />
             </LinearLayout>
@@ -146,6 +145,33 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="对象地址"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:id="@+id/tv_check_object"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@{checkpoint.specificLocation}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_has_attachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                >
 
                 <TextView
                     android:id="@+id/tv_object_address"

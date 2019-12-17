@@ -38,7 +38,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 
     private LayoutInflater inflater;
     private Activity activity;
-    public static int maxSize;
+    public static int maxSize=4;
 
     public void setActivity(Activity activity) {
         this.activity = activity;

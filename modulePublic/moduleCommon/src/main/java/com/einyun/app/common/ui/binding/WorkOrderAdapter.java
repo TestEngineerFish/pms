@@ -157,4 +157,13 @@ public class WorkOrderAdapter {
             view.setText(R.string.no);
         }
     }
+
+    @BindingAdapter("ordered")
+    public static void ordered(TextView view,int sort){
+        if(sort==1){
+            view.setText(R.string.text_ordered);
+        }else{
+            view.setText(R.string.text_unordered);
+        }
+    }
 }

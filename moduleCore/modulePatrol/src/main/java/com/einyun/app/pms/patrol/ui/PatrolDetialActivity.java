@@ -1,30 +1,47 @@
 package com.einyun.app.pms.patrol.ui;
 
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
+import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.convert.ExtensionApplicationConvert;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolDetialBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,22 +50,27 @@ import java.util.List;
 @Route(path = RouterUtils.ACTIVITY_PATROL_DETIAL)
 public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatrolDetialBinding, PatrolViewModel> {
     @Autowired
-    IUserModuleService userModuleService;
+    protected IUserModuleService userModuleService;
     @Autowired(name = RouteKey.KEY_TASK_ID)
-    String taskId;
+    protected String taskId;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
-    String orderId;
+    protected String orderId;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
-    String taskNodeId;
+    protected String taskNodeId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
-    String proInsId;
+    protected String proInsId;
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
-    int listType= ListType.DONE.getType();
+    protected int listType= ListType.PENDING.getType();
 
-    RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode> nodesAdapter;
+    protected PhotoSelectAdapter photoSelectAdapter;
+    protected final int MAX_PHOTO_SIZE = 4;
 
-    PatrolInfo patrolInfo;
+    protected RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode> nodesAdapter;
+    protected PatrolLocal patrolLocal;
+    protected PatrolInfo patrolInfo;
+    protected AlertDialog alertDialog;
+    protected TipDialog tipDialog;
 
     @Override
     protected PatrolViewModel initViewModel() {
@@ -64,13 +86,41 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.title_patrol);
-        binding.setCallBack(this);
     }
 
     @Override
     protected void initData() {
         super.initData();
+
+        setUpPhotoList();
         //工作节点适配
+        setUpWorkNodes();
+        initRequest();
+        switchStateUI();
+        loadData();
+    }
+
+    protected void initRequest() {
+        viewModel.request.setProInsId(proInsId);
+        viewModel.request.setTaskNodeId(taskNodeId);
+        viewModel.request.setTaskId(taskId);
+    }
+
+    protected void switchStateUI() {
+        binding.panelHandleForm.setVisibility(View.GONE);
+        binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+    }
+
+    protected void setUpPhotoList() {
+        photoSelectAdapter = new PhotoSelectAdapter(this);
+        binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false));//设置横向
+        binding.pointCkImglist.setAdapter(photoSelectAdapter);
+    }
+
+    protected void setUpWorkNodes() {
         if (nodesAdapter == null) {
             nodesAdapter = new RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode>(this, com.einyun.app.pms.patrol.BR.node) {
                 @Override
@@ -133,13 +183,16 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             };
         }
         binding.rvNodes.setAdapter(nodesAdapter);
-        viewModel.request.setProInsId(proInsId);
-        viewModel.request.setTaskNodeId(taskNodeId);
-        viewModel.request.setTaskId(taskId);
+    }
 
-        if(listType==ListType.PENDING.getType()){
+    protected void loadData() {
+        if(listType== ListType.PENDING.getType()){
             viewModel.loadPendingDetial(orderId).observe(this, patrolInfo -> {
                 updateUI(patrolInfo);
+                viewModel.loadLocalUserData(orderId).observe(this, local -> {
+                    patrolLocal=local;
+                    updateLocalData(local);
+                });
             });
         }else if(listType==ListType.DONE.getType()){
             //加载数据
@@ -149,7 +202,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
     }
 
-    private void updateUI(PatrolInfo patrol) {
+    protected void updateUI(PatrolInfo patrol) {
         if (patrol == null) {
             return;
         }
@@ -163,14 +216,36 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         uploadPostponeUI(patrol, convert);//更新申请超时信息
     }
 
+    protected void updateLocalData(PatrolLocal local){
+        if (local != null) {
+            if (local.getImages() != null && local.getImages().size() > 0) {
+                List<Uri> uris = new ArrayList<>();
+                for (String imgeUrl : local.getImages()) {
+                    Uri uri = Uri.parse(imgeUrl);
+                    uris.add(uri);
+                }
+                photoSelectAdapter.setSelectedPhotos(uris);
+            }
+            if (!TextUtils.isEmpty(local.getNote())) {
+                binding.limitInput.setText(local.getNote());
+            }
+            if(local.getNodes()!=null){
+                nodesAdapter.setDataList(local.getNodes());
+            }
+        }
+    }
+
+
     /**
      * 更新申请超时信息
      * @param patrol
      * @param convert
      */
-    private void uploadPostponeUI(PatrolInfo patrol, ExtensionApplicationConvert convert) {
+    protected void uploadPostponeUI(PatrolInfo patrol, ExtensionApplicationConvert convert) {
         if (patrol.getDelayExtensionApplication() != null) {
             binding.panelPostponeInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.panelHandleForm.setVisibility(View.GONE);
+            binding.btnSubmit.setVisibility(View.GONE);
             binding.panelPostponeInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getDelayExtensionApplication())));
         }
     }
@@ -182,9 +257,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * @return
      */
     @NotNull
-    private ExtensionApplicationConvert updateForceCloseUI(PatrolInfo patrol,ExtensionApplicationConvert convert) {
+    protected ExtensionApplicationConvert updateForceCloseUI(PatrolInfo patrol,ExtensionApplicationConvert convert) {
         if (patrol.getExtensionApplication() != null) {
             binding.panelCloseInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.panelHandleForm.setVisibility(View.GONE);
+            binding.btnSubmit.setVisibility(View.GONE);
             binding.panelCloseInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getExtensionApplication())));
         }
         return convert;
@@ -194,7 +271,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 更新处理结果信息
      * @param patrol
      */
-    private void updateHandleResultUI(PatrolInfo patrol) {
+    protected void updateHandleResultUI(PatrolInfo patrol) {
         binding.panelHandleInfo.setPatrol(patrol.getData().getZyxcgd());
     }
 
@@ -202,9 +279,76 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 更新处理巡查节点信息
      * @param patrol
      */
-    private void updateWorkNodesUI(PatrolInfo patrol) {
+    protected void updateWorkNodesUI(PatrolInfo patrol) {
         List<WorkNode> nodes = viewModel.loadNodes(patrol);
         nodes.add(0, new WorkNode());
         nodesAdapter.addAll(nodes);
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        photoSelectAdapter.setAddListener(selectedSize -> {
+            if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
+                ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
+                return;
+            }
+            Matisse.from(this) //加号添加图片
+                    .choose(MimeType.ofImage())
+                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
+                    .capture(true)
+                    .countable(true)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
+                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .thumbnailScale(0.85f)
+                    .imageEngine(new Glide4Engine())
+                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+        }, PatrolDetialActivity.this);
+    }
+
+    /**
+     * 保存本地数据
+     */
+    protected void saveLocalUserData(){
+        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
+        List<String> images = new ArrayList<>();
+        for (Uri uri : uris) {
+            images.add(uri.toString());
+        }
+        if(patrolLocal==null){
+            patrolLocal=new PatrolLocal();
+            patrolLocal.setOrderId(orderId);
+            patrolLocal.setUserId(userModuleService.getUserId());
+        }
+        patrolLocal.setImages(images);
+        patrolLocal.setNote(binding.limitInput.getString());
+        patrolLocal.setNodes(nodesAdapter.getDataList());
+        viewModel.saveLocal(patrolLocal);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveLocalUserData();
+        if(tipDialog!=null){
+            tipDialog.dismiss();
+        }
+        if(alertDialog!=null){
+            alertDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
+            if (data == null) return;
+            List<Uri> uris = Matisse.obtainResult(data);
+            if (uris != null && uris.size() > 0) {
+                photoSelectAdapter.addPhotos(uris);
+                saveLocalUserData();
+            }
+        }
     }
 }

@@ -61,7 +61,6 @@ public class TipDialog {
 
     public void show() {
         dialog.show();
-        dialog.getWindow().setLayout(1000,750);
     }
 
     public void setTipDialogListener(TipDialogListener listener) {

@@ -57,7 +57,13 @@ public class PatrolViewModel extends BaseUploadViewModel {
                         index.getF_WK_ID(),
                         index.getF_WK_CONTENT(),
                         index.getF_WK_NODE(),
-                        index.getF_WK_RESULT()))
+                        index.getF_WK_RESULT(),
+                        index.getSign_time(),
+                        index.getSort(),
+                        index.getPatrol_point_id(),
+                        index.getPic_example_url(),
+                        index.getPatrol_items()
+                ))
                 .toList()
                 .blockingGet();
         Collections.sort(nodes, (o1, o2) -> {

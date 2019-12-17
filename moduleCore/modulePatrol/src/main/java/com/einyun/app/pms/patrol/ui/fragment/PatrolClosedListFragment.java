@@ -8,9 +8,9 @@ import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
-import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 
@@ -18,11 +18,14 @@ import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
  * 巡查工单已办列表
  */
 public class PatrolClosedListFragment extends PatrolPendingFragment implements ItemClickListener<Patrol> {
+    protected int listType= ListType.DONE.getType();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public static PatrolClosedListFragment newInstance() {
         return new PatrolClosedListFragment();
     }
+
+
     @Override
     protected void setUpView() {
         binding.swiperefresh.setOnRefreshListener(() -> {
@@ -58,9 +61,11 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
 
     @Override
     public void onItemClicked(View veiw, Patrol data) {
+//        if(!TextUtils.isEmpty(data.getF_patrol_line_id()))
         ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                 .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                .withInt(RouteKey.KEY_LIST_TYPE,listType)
                 .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
                 .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                 .navigation();

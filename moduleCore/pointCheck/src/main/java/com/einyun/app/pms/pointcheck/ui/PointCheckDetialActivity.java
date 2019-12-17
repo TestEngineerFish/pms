@@ -91,6 +91,7 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
         this.detialModel=model;
         binding.layoutBrief.setVariable(BR.checkpoint,detialModel);
         binding.tvCheckContent.setText(model.getRemark());
+        binding.layoutBrief.itemHasAttachment.setVisibility(View.GONE);
         loadProjectContents(model);
         if(model.getIsPic()>0||(model.getImages()!=null&&model.getImages().size()>0)){
             binding.llPic.setVisibility(View.VISIBLE);
@@ -229,6 +230,8 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
             Glide.with(context)
                     .load(imageUrl)
                     .centerCrop()
+                    .placeholder(com.einyun.app.common.R.mipmap.place_holder_img)
+                    .error(com.einyun.app.common.R.mipmap.place_holder_img)
                     .into(holder.imgPhoto);
 
             if (sqmOnItemClickListener != null) {

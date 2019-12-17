@@ -10,6 +10,20 @@ public class WorkNode {
     // 结果可以修改
     public String result;
 
+    /**
+     * 巡更更新字段
+     */
+    public int is_photo;
+    public String tenant_id;
+    public String pic_example_url;
+    public String patrol_items;
+    public String sign_type;
+    public int sort;
+    public String patrol_point_id;
+    public String pic_url;
+    public int sign_result;
+    public String sign_time;
+
     public WorkNode(){}
 
     public WorkNode(String number, String workThings, String workNode, String result) {
@@ -17,6 +31,18 @@ public class WorkNode {
         this.workThings = workThings;
         this.workNode = workNode;
         this.result = result;
+    }
+
+    public WorkNode(String number, String workThings, String workNode, String result,String sign_time,int sort,String patrol_point_id,String pic_example_url,String patrol_items) {
+        this.number = number;
+        this.workThings = workThings;
+        this.workNode = workNode;
+        this.result = result;
+        this.sign_time=sign_time;
+        this.sort=sort;
+        this.patrol_point_id=patrol_point_id;
+        this.pic_example_url=pic_example_url;
+        this.patrol_items=patrol_items;
     }
 
     public int getId() {

@@ -47,6 +47,15 @@ public class Patrol {
     private String taskId;
     private String assigneeId;
     private String ownerId;
+    private String F_patrol_line_id;
+
+    public String getF_patrol_line_id() {
+        return F_patrol_line_id;
+    }
+
+    public void setF_patrol_line_id(String f_patrol_line_id) {
+        F_patrol_line_id = f_patrol_line_id;
+    }
 
     public String getTaskId() {
         return taskId;

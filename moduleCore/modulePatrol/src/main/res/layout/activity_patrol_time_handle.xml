@@ -10,7 +10,7 @@
 
         <variable
             name="callBack"
-            type="com.einyun.app.pms.patrol.ui.PatrolHandleActivity" />
+            type="com.einyun.app.pms.patrol.ui.PatrolTimeHandleActivity" />
     </data>
 
     <LinearLayout
@@ -28,16 +28,13 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                >
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginBottom="@dimen/px_160"
-                    >
+                    android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -45,7 +42,7 @@
                         android:layout_marginLeft="@dimen/px_20"
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_20"
-                        android:layout_marginBottom="@dimen/px_5"
+                        android:layout_marginBottom="@dimen/px_35"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
@@ -67,8 +64,8 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_order_info"
-                                    android:textStyle="bold"
                                     android:textSize="@dimen/font_size16"
+                                    android:textStyle="bold"
                                     android:textColor="@color/txt_black_order" />
 
 
@@ -172,94 +169,6 @@
                                     android:layout_width="@dimen/px_170"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
-                                    android:text="@string/text_type"
-                                    android:textColor="@color/normal_main_text_icon_color" />
-
-                                <TextView
-                                    android:id="@+id/tv_types"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@{patrol.data.zyxcgd.f_type_name}"
-                                    android:textColor="@color/txt_black_order" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/px_60"
-                                android:layout_marginLeft="@dimen/px_30"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="@dimen/px_170"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/text_plan_name"
-                                    android:textColor="@color/normal_main_text_icon_color" />
-
-                                <TextView
-                                    android:id="@+id/tv_plan_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@{patrol.data.zyxcgd.f_inspection_work_plan_name}"
-                                    android:textColor="@color/txt_black_order" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/px_60"
-                                android:layout_marginLeft="@dimen/px_30"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="@dimen/px_170"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/text_work_guide"
-                                    android:textColor="@color/normal_main_text_icon_color" />
-
-                                <TextView
-                                    android:id="@+id/tv_work_guide"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@{patrol.data.zyxcgd.f_inspection_work_guidance_name}"
-                                    android:textColor="@color/txt_black_order" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/px_60"
-                                android:layout_marginLeft="@dimen/px_30"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="@dimen/px_170"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/text_grid"
-                                    android:textColor="@color/normal_main_text_icon_color" />
-
-                                <TextView
-                                    android:id="@+id/tv_grid"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:text="@{patrol.data.zyxcgd.f_grid_name}"
-                                    android:textColor="@color/txt_black_order" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/px_60"
-                                android:layout_marginLeft="@dimen/px_30"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="@dimen/px_170"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
                                     android:text="@string/text_order_person"
                                     android:textColor="@color/normal_main_text_icon_color" />
 
@@ -286,7 +195,6 @@
                                     android:textColor="@color/normal_main_text_icon_color" />
 
                                 <TextView
-                                    android:id="@+id/tv_order_create_time"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
@@ -298,7 +206,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/px_60"
                                 android:layout_marginLeft="@dimen/px_30"
-                                android:layout_marginBottom="@dimen/px_30"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -314,6 +221,49 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@{patrol.data.zyxcgd.f_completion_deadline}"
+                                    android:textColor="@color/txt_black_order" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_road_name"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@{patrol.data.zyxcgd.f_patrol_line_name}"
+                                    android:textColor="@color/txt_black_order" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_road_time"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:id="@+id/tv_order_create_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    app:duration="@{patrol.data.zyxcgd.f_duration}"
                                     android:textColor="@color/txt_black_order" />
                             </LinearLayout>
                         </LinearLayout>
@@ -338,17 +288,41 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/px_90"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp">
-
+                                android:layout_marginRight="10dp"
+                                >
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
-                                    android:text="@string/text_work_nodes"
-                                    android:textStyle="bold"
+                                    android:layout_alignParentLeft="true"
+                                    android:text="@string/text_patrol_time_handle"
                                     android:textSize="@dimen/font_size16"
+                                    android:textStyle="bold"
                                     android:textColor="@color/txt_black_order" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    >
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/txt_black_order"
+                                        android:textStyle="bold"
+                                        android:text="@string/text_require"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/important_red_color"
+                                        android:text="@{patrol.data.zyxcgd.is_sort}"
+                                        />
+                                </LinearLayout>
+
                             </RelativeLayout>
 
                             <ImageView
@@ -371,7 +345,6 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/panel_handle_form"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/px_20"
@@ -397,8 +370,8 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_resolve_result"
-                                    android:textStyle="bold"
                                     android:textSize="@dimen/font_size16"
+                                    android:textStyle="bold"
                                     android:textColor="@color/txt_black_order" />
                             </RelativeLayout>
 
@@ -440,49 +413,10 @@
                                 android:layout_marginRight="@dimen/px_30"
                                 android:layout_marginBottom="@dimen/px_30" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_20"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="@dimen/px_4"
-                                    android:text="*"
-                                    android:textColor="@color/important_red_color"
-                                    android:textSize="20sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/text_handle_pic" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/px_15"
-                                    android:text="@string/text_pic_max"
-                                    />
-                            </LinearLayout>
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/point_ck_imglist"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_20"
-                                android:layout_marginTop="@dimen/px_20"
-                                android:layout_marginRight="@dimen/px_20"
-                                android:layout_marginBottom="@dimen/px_30">
-
-                            </androidx.recyclerview.widget.RecyclerView>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                    <include layout="@layout/layout_patrol_handle_result" android:id="@+id/panel_handle_info"/>
+
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/panel_apply_force_close_and_postpone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/px_20"
@@ -534,25 +468,23 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/text_apply_force_close" />
+                                    android:text="@string/text_apply_postpone" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                    <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
-                    <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
+
             <Button
                 android:id="@+id/btn_submit"
                 style="@style/submit_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_88"
-                android:onClick="@{()->callBack.onSubmitClick()}"
                 android:layout_alignParentBottom="true"
-                android:visibility="gone"
+                android:onClick="@{()->callBack.onSubmitClick()}"
                 android:text="@string/text_submit" />
         </RelativeLayout>
     </LinearLayout>
-
 </layout>
+

@@ -1,6 +1,7 @@
 package com.einyun.app.pms.patrol.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -47,6 +49,8 @@ import java.util.Map;
  * 巡查待办
  */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> implements ItemClickListener<Patrol>, PeriodizationView.OnPeriodSelectListener {
+
+    protected int listType= ListType.PENDING.getType();
     protected RVPageListAdapter<ItemPatrolListBinding, Patrol> adapter;
 
     public static PatrolPendingFragment newInstance() {
@@ -201,11 +205,21 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
     @Override
     public void onItemClicked(View veiw, Patrol data) {
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
-                .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
-                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
-                .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
-                .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
-                .navigation();
+        if(!TextUtils.isEmpty(data.getF_patrol_line_id())){
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
+                    .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                    .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                    .withInt(RouteKey.KEY_LIST_TYPE,listType)
+                    .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                    .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                    .navigation();
+        }else{
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
+                    .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                    .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                    .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                    .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                    .navigation();
+        }
     }
 }

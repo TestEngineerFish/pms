@@ -43,6 +43,7 @@
     <string name="text_pic_max">(最多4张)</string>
     <string name="text_submit">提交</string>
     <string name="text_apply_postpone">申请延期</string>
+    <string name="text_apply_force_close">强制关闭</string>
 
     <string-array name="order_list">
         <item>待跟进</item>
@@ -112,6 +113,7 @@
     <string name="text_alert_handle_node">请选择工作节点 %s 的处理结果</string>
     <string name="text_no">序号</string>
     <string name="text_work_items">工作事项/节点</string>
+    <string name="text_work_time_items">寻根点名称/位置</string>
     <string name="text_handle_pic">处理后图片</string>
     <string name="text_resolve_result">处理结果</string>
     <string name="text_resolve_dis">处理说明</string>
@@ -128,6 +130,8 @@
     <string name="text_order_num">工单编号</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="text_ordered">有序</string>
+    <string name="text_unordered">无序</string>
 
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>

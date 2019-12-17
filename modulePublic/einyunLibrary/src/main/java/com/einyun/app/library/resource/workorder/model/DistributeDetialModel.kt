@@ -14,6 +14,7 @@ class DisttributeDetialModel :Serializable{
     var form : String?= null  //待定
     var formResult : String?= null //待定
     var permission : String?= null //待定
+    var isReply:Int=0
     var extensionApplication: ArrayList<ExtensionApplication>? = null
 
     /**
@@ -162,5 +163,4 @@ class DisttributeMainModel :Serializable {
     @SerializedName("tenant_id")
     var tenantID: String? = null
     var close: String? = null
-    var isReply:Int=0
 }

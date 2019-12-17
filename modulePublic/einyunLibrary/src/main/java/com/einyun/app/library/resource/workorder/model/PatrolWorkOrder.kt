@@ -36,4 +36,5 @@ class PatrolWorkOrder {
     var taskId: String? = null
     var assigneeId: String? = null
     var ownerId: String? = null
+    var F_patrol_line_id:String?=null
 }

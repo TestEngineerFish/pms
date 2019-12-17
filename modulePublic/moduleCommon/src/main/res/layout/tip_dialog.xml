@@ -9,7 +9,7 @@
         android:layout_width="@dimen/px_500"
         android:layout_height="@dimen/px_310"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@drawable/shape_white_bg">
 
         <TextView
             android:layout_width="match_parent"
@@ -17,6 +17,7 @@
             android:layout_marginTop="@dimen/px_30"
             android:text="提示"
             android:textSize="@dimen/px_34"
+            android:textStyle="bold"
             android:textColor="@color/blackTextColor"
             android:gravity="center" />
 
@@ -37,6 +38,8 @@
             android:layout_width="@dimen/px_320"
             android:layout_height="@dimen/px_64"
             android:layout_marginTop="@dimen/px_50"
+            android:layout_marginBottom="@dimen/px_22"
+            android:background="@drawable/shape_button_corners_blue"
             android:textSize="@dimen/font_size14"
             android:paddingBottom="0dp"
             android:paddingTop="0dp"

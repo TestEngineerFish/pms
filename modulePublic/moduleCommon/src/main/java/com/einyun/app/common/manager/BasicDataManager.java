@@ -79,7 +79,7 @@ public class BasicDataManager {
         loadLines(); //所有条线
         loadLineTypes(); //所有分类
         loadResult(callBack);//获取结果
-        fixedThreadPool.shutdown();
+//        fixedThreadPool.shutdown();
     }
 
     /**

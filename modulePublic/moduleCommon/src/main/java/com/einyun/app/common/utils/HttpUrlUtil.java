@@ -1,6 +1,7 @@
 package com.einyun.app.common.utils;
 
 import com.einyun.app.library.core.net.EinyunHttpService;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -19,6 +20,8 @@ import java.io.File;
 public class HttpUrlUtil {
     private final static String MEDIA_PATH="/media";
     public static String getImageServerUrl(String path){
-        return EinyunHttpService.getInstance().getBaseUrl() +MEDIA_PATH+ File.separator+path;
+        String imageUrl=EinyunHttpService.getInstance().getBaseUrl() +MEDIA_PATH+ File.separator+path;
+        Logger.d("imageUrl->"+imageUrl);
+        return imageUrl;
     }
 }

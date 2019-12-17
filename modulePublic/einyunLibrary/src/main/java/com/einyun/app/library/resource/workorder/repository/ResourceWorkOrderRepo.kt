@@ -144,10 +144,14 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     }
     //巡查处理
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
-        serviceApi?.patrolSubmit(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.patrolSubmit(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 {
-                    callBack.call(it.isState)
+                    if(it.isState){
+                        callBack.call(it.isState)
+                    }else{
+                        callBack.onFaild(EinyunHttpException(it))
+                    }
                 }, {
                     callBack.onFaild(it)
                 }

@@ -64,6 +64,8 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_order_info"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/font_size16"
                                     android:textColor="@color/txt_black_order" />
 
 
@@ -341,6 +343,8 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_work_nodes"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/font_size16"
                                     android:textColor="@color/txt_black_order" />
                             </RelativeLayout>
 
@@ -389,6 +393,8 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_resolve_result"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/font_size16"
                                     android:textColor="@color/txt_black_order" />
                             </RelativeLayout>
 
@@ -455,7 +461,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/px_15"
                                     android:text="@string/text_pic_max"
-                                    android:textColor="@color/important_red_color" />
+                                     />
                             </LinearLayout>
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -523,7 +529,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/text_apply_postpone" />
+                                    android:text="@string/text_apply_force_close" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

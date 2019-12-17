@@ -54,7 +54,33 @@ public class PatrolContent{
     @TypeConverters(InitDataTypeConvert.class)
     private InitData initData;
     private List<SubInspectionWorkOrderFlowNode> sub_inspection_work_order_flow_node;
+    private int is_sort;
+    private String F_patrol_line_name;
+    private int  F_duration;
 
+    public int getIs_sort() {
+        return is_sort;
+    }
+
+    public void setIs_sort(int is_sort) {
+        this.is_sort = is_sort;
+    }
+
+    public String getF_patrol_line_name() {
+        return F_patrol_line_name;
+    }
+
+    public void setF_patrol_line_name(String f_patrol_line_name) {
+        F_patrol_line_name = f_patrol_line_name;
+    }
+
+    public int getF_duration() {
+        return F_duration;
+    }
+
+    public void setF_duration(int f_duration) {
+        F_duration = f_duration;
+    }
 
     public String getF_massif_name() {
         return F_massif_name;

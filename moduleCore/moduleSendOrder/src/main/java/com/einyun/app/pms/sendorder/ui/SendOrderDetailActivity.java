@@ -222,17 +222,18 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         int state = Integer.parseInt(stateStr);
-        if (state == OrderState.NEW.getState()) {//接单-显示接单按钮
-            showTakeOrder();
-        } else if (detialModel.getData().getInfo().isReply() > 0) {//批复-显示批复按钮
+        if (detialModel.isReply() > 0) {//批复-显示批复按钮
             showReply();
-            return;
-        } else if ((state == OrderState.HANDING.getState())) {//处理-提交
-            showSubmit();
-        } else if (state == OrderState.APPLY.getState()) {//验收
-            showApply();
-        } else {
-            onlyShowDetial();
+        }else{
+            if (state == OrderState.NEW.getState()) {//接单-显示接单按钮
+                showTakeOrder();
+            } else if ((state == OrderState.HANDING.getState())) {//处理-提交
+                showSubmit();
+            } else if (state == OrderState.APPLY.getState()) {//验收
+                showApply();
+            } else {
+                onlyShowDetial();
+            }
         }
     }
 
@@ -349,7 +350,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoListFormAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -425,7 +426,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         int state = Integer.parseInt(detialModel.getData().getInfo().getStatus());
         if (state == OrderState.NEW.getState()) {
             takeOrder();//接单
-        } else if (detialModel.getData().getInfo().isReply() > 0) {
+        } else if (detialModel.isReply() > 0) {
             reply();
         } else if (state == OrderState.HANDING.getState()) {
             submit();//处理-提交
