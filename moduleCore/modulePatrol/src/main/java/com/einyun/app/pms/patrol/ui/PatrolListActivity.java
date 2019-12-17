@@ -33,7 +33,7 @@ import java.util.List;
  * 巡查列表
  */
 @Route(path = RouterUtils.ACTIVITY_PATROL_LIST)
-public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrolListBinding, PatrolListViewModel> implements PeriodizationView.OnPeriodSelectListener{
+public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrolListBinding, PatrolListViewModel> {
     String[] mTitles;
     List<BaseViewModelFragment> fragmentList=new ArrayList<>();
     final int TAB_PENDING=0;
@@ -61,21 +61,7 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         adapter=new PatrolFragmentTabAdapter(getSupportFragmentManager(),fragmentList);
         binding.vpSendWork.setAdapter(adapter);
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
-        binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //弹出分期view
-                PeriodizationView periodizationView=new PeriodizationView();
-                periodizationView.setPeriodListener(PatrolListActivity.this::onPeriodSelectListener);
-                periodizationView.show(getSupportFragmentManager(),"");
-            }
-        });
-        binding.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                new SelectPopUpView(PatrolListActivity.this,null).showAsDropDown(binding.sendWorkOrerTabSelectLn);
-            }
-        });
+
     }
 
     @Override
@@ -103,12 +89,6 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         });
     }
 
-    @Override
-    public void onPeriodSelectListener(OrgModel orgModel) {
-        viewModel.request.setDivideId(orgModel.getId());
-        binding.periodSelected.setText(orgModel.getName());
-        viewModel.onCondition();
-    }
 
     class PatrolFragmentTabAdapter extends FragmentPagerAdapter{
         List<BaseViewModelFragment> mList;

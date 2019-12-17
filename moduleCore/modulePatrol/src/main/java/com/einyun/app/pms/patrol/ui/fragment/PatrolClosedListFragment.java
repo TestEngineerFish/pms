@@ -32,7 +32,10 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
     }
 
     protected void loadData() {
-        viewModel.loadCloseData().observe(getActivity(), patrols -> adapter.submitList(patrols));
+        viewModel.loadCloseData().observe(getActivity(), patrols -> {
+            adapter.submitList(patrols);
+            adapter.notifyDataSetChanged();
+        });
     }
 
     protected void initAdapter() {

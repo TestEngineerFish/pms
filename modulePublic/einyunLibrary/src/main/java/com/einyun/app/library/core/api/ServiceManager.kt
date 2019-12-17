@@ -28,6 +28,7 @@ class ServiceManager {
         addService(SERVICE_DASHBOARD, DashBoardServiceImpl())
         addService(SERVICE_WORK_ORDER, WorkOrderServiceImpl())
         addService(SERVICE_RESOURCE_WORK_ORDER, ResourceWorkOrderServiceImpl())
+        addService(SERVICE_RESOURCE,ResourceServiceImpl())
     }
 
     companion object {
@@ -37,6 +38,7 @@ class ServiceManager {
         const val SERVICE_UPLOAD: String = "upload"
         const val SERVICE_DASHBOARD: String = "dashboard"
         const val SERVICE_WORK_ORDER: String = "work-order"
+        const val SERVICE_RESOURCE:String="resource"
         const val SERVICE_RESOURCE_WORK_ORDER: String = "resource-work-order"
         private val services: HashMap<String, EinyunService>? = HashMap()
         private var instance: ServiceManager? = null

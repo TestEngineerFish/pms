@@ -100,6 +100,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
         return liveData;
     }
 
+
     /**
      * 获取巡查详情
      *

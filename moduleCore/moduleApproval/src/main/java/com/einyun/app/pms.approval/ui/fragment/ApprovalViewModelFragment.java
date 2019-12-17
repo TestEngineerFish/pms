@@ -98,6 +98,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     @Override
     protected void setUpView() {
         tabId = getArguments().getInt("tabId");
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         binding.swipeRefresh.setOnRefreshListener(() -> {
             initPage();
             binding.swipeRefresh.setRefreshing(false);

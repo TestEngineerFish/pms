@@ -1,6 +1,7 @@
 package com.einyun.app.base.util;
 
 import android.content.Context;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -30,6 +31,9 @@ public class ToastUtil {
             return;
         }
         if (toast == null) {
+            if(Looper.getMainLooper().getThread() != Thread.currentThread()){
+                Looper.prepare();
+            }
             toast = Toast.makeText(contextWeakReference.get().getApplicationContext(), msg, Toast.LENGTH_SHORT);
         } else {
             toast.setText(msg);

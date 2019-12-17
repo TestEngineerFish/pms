@@ -10,6 +10,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -44,7 +45,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER)
-public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel> implements PeriodizationView.OnPeriodSelectListener {
+public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrderBinding, SendOrderViewModel>{
     private String[] mTitles;//tab标题
     PeriodizationView periodizationView;
     private String blockName;
@@ -64,17 +65,13 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         mTitles=new String[]{getResources().getString(R.string.text_wait_handle),getResources().getString(R.string.text_already_handle)};
         setHeadTitle(R.string.text_send_order);
         setRightOption(R.drawable.scan);
-        blockName=SPUtils.get(this,"block_name","").toString();
-        if (!TextUtils.isEmpty(blockName)){
-            binding.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
-            binding.periodSelected.setText(blockName);
-        }
         final ArrayList<SendWorkOrderFragment> fragments = new ArrayList<>();
-        String fragmentTags[]=new String[]{FRAGMENT_SEND_OWRKORDER_PENDING,FRAGMENT_SEND_OWRKORDER_DONE};
+        int fragmentTags[]=new int[]{ListType.PENDING.getType(),ListType.DONE.getType()};
         for (int i = 0; i < mTitles.length; i++) {
-            Bundle bundle = new Bundle();
-            bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
-            fragments.add(SendWorkOrderFragment.newInstance(bundle));
+            int listType=fragmentTags[i];
+            SendWorkOrderFragment fragment=SendWorkOrderFragment.newInstance(listType);
+            fragment.setListType(fragmentTags[i]);
+            fragments.add(fragment);
         }
 
         binding.vpSendWork.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -99,7 +96,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         binding.tabSendOrder.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewModel.currentFragmentTag=fragmentTags[tab.getPosition()];
+                viewModel.listType=fragmentTags[tab.getPosition()];
             }
 
             @Override
@@ -112,30 +109,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
 
             }
         });
-        binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //弹出分期view
-                periodizationView=new PeriodizationView();
-                periodizationView.setPeriodListener(SendOrderActivity.this::onPeriodSelectListener);
-                periodizationView.show(getSupportFragmentManager(),"");
-            }
-        });
-        binding.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
-            //弹出筛选view
-            ConditionBuilder builder=new ConditionBuilder();
-            List<SelectModel> conditions= builder.addItem(SelectPopUpView.SELECT_LINE,viewModel.listAll)//条线
-                    .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                    .mergeLineRes(viewModel.resourceTypeBeans)
-                    .build();
-            new SelectPopUpView(SendOrderActivity.this,conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
-                @Override
-                public void onSelected(Map selected) {
-                    handleSelect(selected);
-                }
-            }).showAsDropDown(binding.sendWorkTabLn);
 
-        });
     }
 
     @Override
@@ -150,21 +124,9 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         return Color.WHITE;
     }
 
-    @Override
-    public void onPeriodSelectListener(OrgModel orgModel) {
-        binding.periodSelected.setText(orgModel.getName());
-        binding.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
-        viewModel.setOrgModel(orgModel);
-    }
 
 
 
-    /**
-     * 处理筛选返回数据
-     * */
-    private void handleSelect(Map selected) {
-        if (selected.size()>0){
-        binding.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));}
-        viewModel.onConditionSelected(selected);
-    }
+
+
 }

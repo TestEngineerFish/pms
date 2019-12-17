@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "patrol_digests",primaryKeys = {"ID_","userId"})
-public class Patrol{
+@Entity(tableName = "patrol_digests", primaryKeys = {"ID_", "userId", "listType"})
+public class Patrol {
     /**
      * proInsId : 485732
      * orderType : 2
@@ -20,58 +20,66 @@ public class Patrol{
      * taskId : 485753
      * taskNodeId : UserTask2
      */
-    private String proInsId;
     private int orderType;
-    private long createTime;
-    private long F_creation_date;
-    private int F_plan_work_order_state;
     @NonNull
     private String userId;
     @NonNull
+    private int listType;
+    private int F_plan_work_order_state;
+    private String F_line_name;
+    @NonNull
     private String ID_;
     private String subject;
-    private String F_house_code;
-    private String F_grid_name;
-    private String F_building_name;
-    private String F_unit_name;
-    private String F_floor;
+    private long F_creation_date;
+    private String F_line_code;
+    private String F_type_id;
+    private String auditor_;
+    private String F_type_name;
+    private String proInsId;
+    private String parentInstId;
+    private long createTime;
+    private String F_principal_name;
     private String F_plan_work_order_code;
-    private String taskName;
-    private String ownerId;
     private String F_inspection_work_plan_name;
-    private String assigneeId;
-    private String taskId;
-    private int listType;
+    private String auditor_name_;
     private String taskNodeId;
-    private long F_actual_completion_time;
     private boolean isCached;
-    private boolean isWarn;
+    private String taskId;
+    private String assigneeId;
+    private String ownerId;
 
-    private String F_type_name; //秩序巡更点巡查，环境巡更点巡查，客服巡更点巡查
-    private String F_type_id;  // inspection_group
-
-    public int getListType() {
-        return listType;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setListType(int listType) {
-        this.listType = listType;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
-    public String getF_type_name() {
-        return F_type_name;
+    public String getAssigneeId() {
+        return assigneeId;
     }
 
-    public void setF_type_name(String f_type_name) {
-        F_type_name = f_type_name;
+    public void setAssigneeId(String assigneeId) {
+        this.assigneeId = assigneeId;
     }
 
-    public String getF_type_id() {
-        return F_type_id;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setF_type_id(String f_type_id) {
-        F_type_id = f_type_id;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    private boolean warn;
+
+    public boolean isWarn() {
+        return warn;
+    }
+
+    public void setWarn(boolean warn) {
+        this.warn = warn;
     }
 
     public boolean isCached() {
@@ -82,44 +90,29 @@ public class Patrol{
         isCached = cached;
     }
 
-    public String getF_house_code() {
-        return F_house_code;
+    public int getOrderType() {
+        return orderType;
     }
 
-    public void setF_house_code(String f_house_code) {
-        F_house_code = f_house_code;
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
     }
 
-    public String getF_grid_name() {
-        return F_grid_name;
+    @NonNull
+    public String getUserId() {
+        return userId;
     }
 
-    public void setF_grid_name(String f_grid_name) {
-        F_grid_name = f_grid_name;
+    public void setUserId(@NonNull String userId) {
+        this.userId = userId;
     }
 
-    public String getF_building_name() {
-        return F_building_name;
+    public int getListType() {
+        return listType;
     }
 
-    public void setF_building_name(String f_building_name) {
-        F_building_name = f_building_name;
-    }
-
-    public String getF_unit_name() {
-        return F_unit_name;
-    }
-
-    public void setF_unit_name(String f_unit_name) {
-        F_unit_name = f_unit_name;
-    }
-
-    public String getF_floor() {
-        return F_floor;
-    }
-
-    public void setF_floor(String f_floor) {
-        F_floor = f_floor;
+    public void setListType(int listType) {
+        this.listType = listType;
     }
 
     public int getF_plan_work_order_state() {
@@ -130,44 +123,12 @@ public class Patrol{
         F_plan_work_order_state = f_plan_work_order_state;
     }
 
-    public long getF_actual_completion_time() {
-        return F_actual_completion_time;
+    public String getF_line_name() {
+        return F_line_name;
     }
 
-    public void setF_actual_completion_time(long f_actual_completion_time) {
-        F_actual_completion_time = f_actual_completion_time;
-    }
-
-    public String getProInsId() {
-        return proInsId;
-    }
-
-    public void setProInsId(String proInsId) {
-        this.proInsId = proInsId;
-    }
-
-    public int getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(int orderType) {
-        this.orderType = orderType;
-    }
-
-    public long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
-    public long getF_creation_date() {
-        return F_creation_date;
-    }
-
-    public void setF_creation_date(long f_creation_date) {
-        F_creation_date = f_creation_date;
+    public void setF_line_name(String f_line_name) {
+        F_line_name = f_line_name;
     }
 
     @NonNull
@@ -187,52 +148,100 @@ public class Patrol{
         this.subject = subject;
     }
 
+    public long getF_creation_date() {
+        return F_creation_date;
+    }
+
+    public void setF_creation_date(long f_creation_date) {
+        F_creation_date = f_creation_date;
+    }
+
+    public String getF_line_code() {
+        return F_line_code;
+    }
+
+    public void setF_line_code(String f_line_code) {
+        F_line_code = f_line_code;
+    }
+
+    public String getF_type_id() {
+        return F_type_id;
+    }
+
+    public void setF_type_id(String f_type_id) {
+        F_type_id = f_type_id;
+    }
+
+    public String getAuditor_() {
+        return auditor_;
+    }
+
+    public void setAuditor_(String auditor_) {
+        this.auditor_ = auditor_;
+    }
+
+    public String getF_type_name() {
+        return F_type_name;
+    }
+
+    public void setF_type_name(String f_type_name) {
+        F_type_name = f_type_name;
+    }
+
+    public String getProInsId() {
+        return proInsId;
+    }
+
+    public void setProInsId(String proInsId) {
+        this.proInsId = proInsId;
+    }
+
+    public String getParentInstId() {
+        return parentInstId;
+    }
+
+    public void setParentInstId(String parentInstId) {
+        this.parentInstId = parentInstId;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getF_principal_name() {
+        return F_principal_name;
+    }
+
+    public void setF_principal_name(String f_principal_name) {
+        F_principal_name = f_principal_name;
+    }
+
     public String getF_plan_work_order_code() {
         return F_plan_work_order_code;
     }
 
-    public void setF_plan_work_order_code(String F_plan_work_order_code) {
-        this.F_plan_work_order_code = F_plan_work_order_code;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public String getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setF_plan_work_order_code(String f_plan_work_order_code) {
+        F_plan_work_order_code = f_plan_work_order_code;
     }
 
     public String getF_inspection_work_plan_name() {
         return F_inspection_work_plan_name;
     }
 
-    public void setF_inspection_work_plan_name(String F_inspection_work_plan_name) {
-        this.F_inspection_work_plan_name = F_inspection_work_plan_name;
+    public void setF_inspection_work_plan_name(String f_inspection_work_plan_name) {
+        F_inspection_work_plan_name = f_inspection_work_plan_name;
     }
 
-    public String getAssigneeId() {
-        return assigneeId;
+    public String getAuditor_name_() {
+        return auditor_name_;
     }
 
-    public void setAssigneeId(String assigneeId) {
-        this.assigneeId = assigneeId;
-    }
-
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId( String taskId) {
-        this.taskId = taskId;
+    public void setAuditor_name_(String auditor_name_) {
+        this.auditor_name_ = auditor_name_;
     }
 
     public String getTaskNodeId() {
@@ -241,22 +250,5 @@ public class Patrol{
 
     public void setTaskNodeId(String taskNodeId) {
         this.taskNodeId = taskNodeId;
-    }
-
-    public boolean isWarn() {
-        return isWarn;
-    }
-
-    public void setWarn(boolean warn) {
-        isWarn = warn;
-    }
-
-    @NonNull
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(@NonNull String userId) {
-        this.userId = userId;
     }
 }

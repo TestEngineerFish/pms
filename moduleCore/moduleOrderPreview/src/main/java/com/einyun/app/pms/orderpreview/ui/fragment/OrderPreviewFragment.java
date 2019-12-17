@@ -140,6 +140,7 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
     }
 
     private void loadPagingData() {
+        binding.sendOrderRef.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         //初始化数据，LiveData自动感知，刷新页面
         binding.sendOrderRef.setRefreshing(true);
         String fragmentTag = getFragmentTag();

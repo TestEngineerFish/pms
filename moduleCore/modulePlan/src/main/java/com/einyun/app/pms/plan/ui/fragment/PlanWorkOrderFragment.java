@@ -138,6 +138,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
         binding.sendOrderRef.setRefreshing(true);
+        binding.sendOrderRef.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         String fragmentTag = getFragmentTag();
         if (viewModel.getOrgModel() != null) {
             viewModel.getRequest().setDivideId(viewModel.getOrgModel().getId());
