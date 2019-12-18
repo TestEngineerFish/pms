@@ -16,7 +16,9 @@ import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.uc.user.repository.UserRepository
 import com.einyun.app.library.workorder.model.BlocklogNums
+import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
+import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import com.einyun.app.library.workorder.repository.WorkOrderRepository
@@ -35,6 +37,17 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun repairTypeList(callBack: CallBack<DoorResult>): LiveData<DoorResult> {
+        return instance?.repairTypeList(callBack)!!
+    }
+
+    override fun startComplain(
+        request: CreateClientComplainOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.startComplain(request,callBack)!!
+    }
+
     override fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>> {
         return instance?.typeAndLineList(callBack)!!
     }

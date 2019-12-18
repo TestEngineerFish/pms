@@ -3,8 +3,11 @@ package com.einyun.app.library.core.api
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.workorder.model.BlocklogNums
+import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
+import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
+import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
 /**
@@ -29,4 +32,7 @@ interface WorkOrderService : EinyunService {
     ): LiveData<Map<String, GetMappingByUserIdsResponse>>
     fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>):LiveData<List<TypeAndLine>>
     fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun startRepair(request: CreateClientRepairOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun repairTypeList(callBack: CallBack<DoorResult>):LiveData<DoorResult>
 }

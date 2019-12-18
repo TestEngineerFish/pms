@@ -161,7 +161,12 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
         }
         List<String> txStrList = new ArrayList<>();
         for (DictDataModel data : dictComplainWayList) {
-            txStrList.add(data.getName());
+            if (!data.getKey().equals("400") &&
+                    !data.getKey().equals("proprietor_app") &&
+                    !data.getKey().equals("owner_app") &&
+                    !data.getKey().equals("mobile_association")) {
+                txStrList.add(data.getName());
+            }
         }
         BottomPicker.buildBottomPicker(this, txStrList, cwDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override

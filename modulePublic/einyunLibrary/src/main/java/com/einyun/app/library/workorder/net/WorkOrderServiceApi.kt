@@ -99,7 +99,7 @@ interface WorkOrderServiceApi {
      * 启动投诉
      */
     @POST(URLs.URL_TASK_RUN_START)
-    fun startComplain(@Body request: ComplainStartRequest): Flowable<BaseResponse<Any>>
+    fun startComplain(@Body request: CreateClientComplainOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      * 获取报修类别与条线
@@ -111,7 +111,7 @@ interface WorkOrderServiceApi {
      * 启动报修
      */
     @POST(URLs.URL_CUSTOMER_REPAIR_SUBMIT)
-    fun startRepair(@Body request: RepairStartRequest): Flowable<BaseResponse<Any>>
+    fun startRepair(@Body request: CreateClientRepairOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      * 启动问询

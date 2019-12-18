@@ -11,7 +11,7 @@
 
         <variable
             name="bean"
-            type="com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest" />
+            type="com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest" />
 
         <variable
             name="callBack"
@@ -51,7 +51,7 @@
 
                     <TextView
                         style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.divideName}" />
+                        app:setSelectTxt="@{bean.bizData.divideName}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
@@ -60,17 +60,15 @@
 
                 <LinearLayout
                     style="@style/ll_create_order"
-                    android:onClick="@{()->callBack.pleaseSelect(type.LINE)}">
-
-                    <TextView style="@style/tv_create_order_red_star" />
+                    android:onClick="@{()->callBack.pleaseSelect(type.HOUSE)}">
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="@string/text_line" />
+                        android:text="@string/text_house" />
 
                     <TextView
                         style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.txName}" />
+                        app:setSelectTxt="@{bean.bizData.house}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
@@ -78,143 +76,129 @@
                 <View style="@style/base_underline" />
 
                 <LinearLayout
-                    style="@style/ll_create_order"
-                    android:onClick="@{()->callBack.pleaseSelect(type.WORKY_TYPE)}">
+                    style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="@string/tv_order_type" />
+                        android:text="联系电话" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        style="@style/et_create_order_right"
+                        android:inputType="phone"/>
+                </LinearLayout>
+                <View style="@style/base_underline" />
+
+                <LinearLayout
+                    style="@style/ll_create_order">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="报修人" />
+
+                    <EditText
+                        android:id="@+id/user_name"
+                        style="@style/et_create_order_right" />
+                </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_WAY)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="报修方式" />
 
                     <TextView
                         style="@style/tv_create_order_select"
-                        app:setWorkTypeTxt="@{bean}" />
+                        app:setSelectTxt="@{bean.bizData.way}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
 
                 <View style="@style/base_underline" />
-
                 <LinearLayout
                     style="@style/ll_create_order"
-                    android:onClick="@{()->callBack.pleaseSelect(type.RESOURCE_TYPE)}">
+                    android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_LOCATION)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="@string/resource_type" />
-
-                    <TextView
-                        android:id="@+id/tv_resource"
-                        style="@style/tv_create_order_select" />
-
-                    <ImageView style="@style/tv_create_order_right_arrow" />
-                </LinearLayout>
-
-                <View style="@style/base_underline" />
-
-                <LinearLayout
-                    style="@style/ll_create_order"
-                    android:onClick="@{()->callBack.pleaseSelect(type.RESOURCE)}">
-
-                    <TextView
-                        style="@style/tv_create_order_name"
-                        android:text="@string/resource" />
+                        android:text="报修区域" />
 
                     <TextView
                         style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.resName}" />
+                        app:setSelectTxt="@{bean.bizData.area}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
 
                 <View style="@style/base_underline" />
-
                 <LinearLayout
                     style="@style/ll_create_order"
-                    android:onClick="@{()->callBack.pleaseSelect(type.DISPOSE_PERSON)}">
+                    android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_TYPE)}">
 
                     <TextView style="@style/tv_create_order_red_star" />
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="@string/dispose_person" />
+                        android:text="报修类别" />
 
                     <TextView
                         style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.procName}" />
+                        app:setSelectTxt="@{bean.bizData.cate}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
 
                 <View style="@style/base_underline" />
-
-                <LinearLayout style="@style/ll_create_order">
-
-                    <TextView style="@style/tv_create_order_red_star" />
-
-                    <TextView
-                        style="@style/tv_create_order_name"
-                        android:text="@string/overtime_rank" />
-
-                    <RadioGroup
-                        android:id="@+id/rgs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:setRg="@{bean.otLevel}"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rb_normal"
-                            android:layout_width="@dimen/px_120"
-                            android:layout_height="@dimen/px_50"
-                            android:background="@drawable/select_radio_button_normal"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:tag="1"
-                            android:text="普通"
-                            android:textColor="@drawable/select_radio_button_text"
-                            android:textSize="@dimen/font_size13" />
-
-                        <RadioButton
-                            android:id="@+id/rb_general"
-                            android:layout_width="@dimen/px_120"
-                            android:layout_height="@dimen/px_50"
-                            android:layout_marginLeft="@dimen/px_20"
-                            android:background="@drawable/select_radio_button_general"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:tag="2"
-                            android:text="一般"
-                            android:textColor="@drawable/select_radio_button_text"
-                            android:textSize="@dimen/font_size13" />
-
-                        <RadioButton
-                            android:id="@+id/rb_warning"
-                            android:layout_width="@dimen/px_120"
-                            android:layout_height="@dimen/px_50"
-                            android:layout_marginLeft="@dimen/px_20"
-                            android:background="@drawable/select_radio_button_warning"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:tag="3"
-                            android:text="严重"
-                            android:textColor="@drawable/select_radio_button_text"
-                            android:textSize="@dimen/font_size13" />
-                    </RadioGroup>
-                </LinearLayout>
-
-                <View style="@style/base_underline" />
-
                 <LinearLayout
                     style="@style/ll_create_order"
-                    android:layout_marginTop="@dimen/px_20">
+                    android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_NATURE)}">
 
                     <TextView style="@style/tv_create_order_red_star" />
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="@string/question_desc" />
+                        android:text="性质评估" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.bizData.propertyAss}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_TIME)}">
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="预约上门时间" />
+
+                    <TextView
+                        style="@style/tv_create_order_select"
+                        app:setSelectTxt="@{bean.bizData.propertyName}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    style="@style/ll_create_order">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="报修内容" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -226,30 +210,8 @@
                         android:id="@+id/lt_question_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:hintText="请输入问题描述"
+                        app:hintText="请输入报修内容"
                         app:maxNumber="500" />
-                </LinearLayout>
-
-                <View style="@style/base_underline" />
-
-                <LinearLayout style="@style/ll_create_order">
-
-                    <TextView
-                        style="@style/tv_create_order_name"
-                        android:text="@string/question_location" />
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/ll_create_order"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/px_30">
-
-                    <com.einyun.app.common.ui.component.limit.LimitInput
-                        android:id="@+id/lt_location_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:hintText="请输入位置信息"
-                        app:maxNumber="100" />
                 </LinearLayout>
 
                 <View style="@style/base_underline" />

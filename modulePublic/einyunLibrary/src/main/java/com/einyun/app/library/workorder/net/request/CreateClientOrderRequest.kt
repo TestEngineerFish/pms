@@ -57,10 +57,10 @@ class vars {
     var divideCode: String? = null
 }
 
-class startFlowParamObject {
+class startFlowParamObject(flowKey: String) {
     var vars: vars? =
         vars()
-    var flowKey: String? = "customer_enquiry_flow"
+    var flowKey: String? = flowKey
 }
 
 class CreateClientEnquiryOrderRequest {
@@ -68,7 +68,7 @@ class CreateClientEnquiryOrderRequest {
     var bizData: EnquiryOrderData? =
         EnquiryOrderData()
     var startFlowParamObject: startFlowParamObject? =
-        startFlowParamObject()
+        startFlowParamObject("customer_enquiry_flow")
 }
 
 class CreateClientComplainOrderRequest {
@@ -76,10 +76,10 @@ class CreateClientComplainOrderRequest {
     var bizData: ComplainOrderData? =
         ComplainOrderData()
     var startFlowParamObject: startFlowParamObject? =
-        startFlowParamObject()
+        startFlowParamObject("customer_complain_flow")
 }
 
-class ComplainOrderData{
+class ComplainOrderData {
     @SerializedName("F_ts_dk_id")
     var divideId: String? = null
     @SerializedName("F_ts_dk")
@@ -118,4 +118,71 @@ class ComplainOrderData{
     var propertyId: String? = null
     @SerializedName("F_ts_property")
     var propertyName: String? = null
+}
+
+class CreateClientRepairOrderRequest {
+    var withModelKey: Boolean? = false
+    var bizData: ComplainRepairData? =
+        ComplainRepairData()
+    var startFlowParamObject: startFlowParamObject? =
+        startFlowParamObject("customer_repair_flow")
+}
+
+class ComplainRepairData {
+    @SerializedName("bx_dk_id")
+    var divideId: String? = null
+    @SerializedName("bx_dk")
+    var divideName: String? = null
+    @SerializedName("state")
+    var state: String? = "added"
+    @SerializedName("bx_mobile")
+    var mobile: String? = null
+    @SerializedName("bx_user")
+    var userName: String? = null
+    @SerializedName("bx_way_id")
+    var wayId: String? = null
+    @SerializedName("line_key")
+    var lineKey: String? = null
+    @SerializedName("line_name")
+    var lineName: String? = null
+    @SerializedName("bx_build_id")
+    var buildId: String? = null
+    @SerializedName("bx_house_id")
+    var houseId: String? = null
+    @SerializedName("bx_unit_id")
+    var unitId: String? = null
+    @SerializedName("bx_house")
+    var house: String? = null
+    @SerializedName("bx_content")
+    var content: String? = null
+    @SerializedName("bx_way")
+    var way: String? = null
+    @SerializedName("bx_attachment")
+    var imageList: String? = null
+    @SerializedName("bx_appoint_time")
+    var appointTime: String? = null
+    @SerializedName("bx_area_id")
+    var areaId: String? = null
+    @SerializedName("bx_appoint_time_period_id")
+    var appointTimePeriodId: String? = null
+    @SerializedName("bx_property_ass_id")
+    var propertyAssId: String? = null
+    @SerializedName("bx_property_ass")
+    var propertyAss: String? = null
+    @SerializedName("bx_area")
+    var area: String? = null
+    @SerializedName("bx_appoint_time_period")
+    var appointTimePeriod: String? = null
+    @SerializedName("bx_cate_lv1")
+    var cateLv1: String? = null
+    @SerializedName("bx_cate_lv1_id")
+    var cateLv1Id: String? = null
+    @SerializedName("bx_cate_lv2")
+    var cateLv2: String? = null
+    @SerializedName("bx_cate_lv2_id")
+    var cateLv2Id: String? = null
+    @SerializedName("bx_cate_lv3")
+    var cateLv3: String? = null
+    @SerializedName("bx_cate_lv3_id")
+    var cateLv3Id: String? = null
 }

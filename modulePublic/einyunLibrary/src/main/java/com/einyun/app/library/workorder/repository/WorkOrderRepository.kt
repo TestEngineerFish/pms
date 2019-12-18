@@ -10,10 +10,7 @@ import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.net.WorkOrderServiceApi
-import com.einyun.app.library.workorder.net.request.ComplainAppendRequest
-import com.einyun.app.library.workorder.net.request.ComplainStartRequest
-import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
-import com.einyun.app.library.workorder.net.request.RepairStartRequest
+import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
 /**
@@ -30,6 +27,21 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    override fun startRepair(
+        request: CreateClientRepairOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.startRepair(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                callBack.call(it.isState)
+                liveData.postValue(it.isState)
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
+
     override fun getMappingByUserIds(
         request: List<String>,
         callBack: CallBack<Map<String, GetMappingByUserIdsResponse>>
@@ -312,41 +324,35 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 启动投诉流程
      */
-    fun startComplain(request: ComplainStartRequest, callBack: CallBack<Boolean>) {
+    override fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
         serviceApi?.startComplain(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
                 callBack.call(it.isState)
+                liveData.postValue(it.isState)
             }, {
                 callBack.onFaild(it)
             })
+        return liveData
     }
 
     /**
      * 获取报修类别与条线
      */
-    fun repairTypeList(callBack: CallBack<DoorResult>) {
+    override fun repairTypeList(callBack: CallBack<DoorResult>): LiveData<DoorResult> {
+        var liveData = MutableLiveData<DoorResult>()
         serviceApi?.repairTypeList()?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
                 if (it.isState) {
                     callBack.call(it.data)
+                    liveData.postValue(it.data)
                 } else {
                     callBack.onFaild(EinyunHttpException(it))
                 }
             }, {
                 callBack.onFaild(it)
             })
-    }
-
-    /**
-     * 启动报修流程
-     */
-    fun startRepair(request: RepairStartRequest, callBack: CallBack<Boolean>) {
-        serviceApi?.startRepair(request)?.compose(RxSchedulers.inIoMain())
-            ?.subscribe({
-                callBack.call(it.isState)
-            }, {
-                callBack.onFaild(it)
-            })
+        return liveData
     }
 
     /**
