@@ -180,7 +180,7 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
         }).onDenied(new Action() {
             @Override
             public void onAction(List<String> permissions) {
-                Toast.makeText(UserHeadShotViewModuleActivity.this, "没有相机权限", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserHeadShotViewModuleActivity.this, getString(R.string.tv_no_camera_permission), Toast.LENGTH_SHORT).show();
 
             }
         }).start();

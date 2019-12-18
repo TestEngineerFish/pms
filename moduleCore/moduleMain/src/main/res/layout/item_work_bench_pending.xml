@@ -195,7 +195,8 @@
                     <RelativeLayout
                         style="@style/base_wrap_style"
                         android:layout_width="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_CUSTOMER_INQUIRIES)}">
 
                         <LinearLayout
                             android:id="@+id/ll_work_jiahuaagongdan"

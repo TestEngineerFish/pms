@@ -17,11 +17,14 @@ import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
+import com.einyun.app.library.workorder.model.DoorResult;
+import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
 import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.library.workorder.model.TypeAndLine;
+import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest;
 import com.einyun.app.pms.create.viewmodel.contract.CreateViewModelContract;
 
 import org.jetbrains.annotations.NotNull;
@@ -192,6 +195,42 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         });
     }
 
+    public LiveData<Boolean> createClientComplainOrder(CreateClientComplainOrderRequest request, List<PicUrl> images) {
+        if (uploadManager != null) {
+            request.getBizData().setImageList(uploadManager.toJosnString(images));
+        }
+        showLoading();
+        return workOrderService.startComplain(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<Boolean> createClientRepairOrder(CreateClientRepairOrderRequest request, List<PicUrl> images) {
+        if (uploadManager != null) {
+            request.getBizData().setImageList(uploadManager.toJosnString(images));
+        }
+        showLoading();
+        return workOrderService.startRepair(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
     @Override
     public LiveData<List<ResourceTypeBean>> getResourceInfos(CreateSendOrderRequest request) {
         return resourceWorkOrderService.getResourceInfos(request.getDivideId(), request.getTxCode(), new CallBack<List<ResourceTypeBean>>() {
@@ -211,6 +250,23 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         return userCenterService.getDisposePerson(orgId, dimCode, new CallBack<List<OrgModel>>() {
             @Override
             public void call(List<OrgModel> data) {
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    /**
+     * 获取报修类别与条线
+     * @return
+     */
+    public LiveData<DoorResult> repairTypeList() {
+        return workOrderService.repairTypeList(new CallBack<DoorResult>() {
+            @Override
+            public void call(DoorResult data) {
             }
 
             @Override

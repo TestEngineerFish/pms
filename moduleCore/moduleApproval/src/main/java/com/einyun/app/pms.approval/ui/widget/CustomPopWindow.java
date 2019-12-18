@@ -3,13 +3,10 @@ package com.einyun.app.pms.approval.ui.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -31,8 +28,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Call;
 
 public class CustomPopWindow extends PopupWindow {
     private static final String TAG = "CustomPopWindow";
@@ -57,12 +52,19 @@ public class CustomPopWindow extends PopupWindow {
     List<GetByTypeKeyInnerAuditStatusModule> approvalAuditStateModule;
     List<GetByTypeKeyInnerAuditStatusModule> approvalSelectedAuditStateModule;
     private GetByTypeKeyForComBoModule mGetByTypeKeyForComBoModule;
-    public CustomPopWindow(Activity context, int tabId, List<GetByTypeKeyForComBoModule> approvalAuditTypeModule, List<GetByTypeKeyInnerAuditStatusModule> approvalAuditStateModule) {
+    public CustomPopWindow(Activity context, int tabId, List<GetByTypeKeyForComBoModule> approvalAuditTypeModule, List<GetByTypeKeyInnerAuditStatusModule> approvalAuditStateModule, int mApprovalTypePosition, int mApprovalChildTypePosition, int mApprovalStatusPosition, String auditType, String auditSubType, String auditStatus) {
         super(context);
         this.tabId=tabId;
         this.approvalAuditStateModule=approvalAuditStateModule;
         this.approvalAuditTypeModule=approvalAuditTypeModule;
-        mGetByTypeKeyForComBoModule=approvalAuditTypeModule.get(0);
+        this.mApprovalTypePosition=mApprovalTypePosition;
+        this.mApprovalChildTypePosition=mApprovalChildTypePosition;
+        this.mApprovalStatusPosition=mApprovalStatusPosition;
+        this.auditType =auditType;
+        this.auditSubType = auditSubType;
+        this.auditStatus = auditStatus;
+
+        mGetByTypeKeyForComBoModule=approvalAuditTypeModule.get(mApprovalTypePosition==-1?0:mApprovalTypePosition);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.custom_popwindow, null);//alt+ctrl+f
         this.context = context;
@@ -73,7 +75,7 @@ public class CustomPopWindow extends PopupWindow {
 
             @Override
             public void onDismiss() {
-                reSetdata();
+//                reSetdata();
             }
         });
 }
@@ -180,16 +182,33 @@ public class CustomPopWindow extends PopupWindow {
             @Override
             public void onClick(View v) {
                 mListener.setOnItemClick(v,getData(1,10));
-                mListener.onData(auditType,auditSubType,auditStatus);
+                mListener.onData(auditType,auditSubType,auditStatus,mApprovalTypePosition,mApprovalChildTypePosition,mApprovalStatusPosition);
                 dismiss();
             }
         });
+//        switch (tabId) {
+//            case 0:
+//                mApprovalChildTypePosition=1;
+//                break;
+//            case 1:
+//                mApprovalChildTypePosition=2;
+//                break;
+//
+//            case 2:
+//                mApprovalChildTypePosition=3;
+//                break;
+//        }
 
         //一级列表
         approvalTypeAdapter = new ApprovalTypeAdapter(context,approvalAuditTypeModule);
         gv_approval_type.setAdapter(approvalTypeAdapter);
         //二级列表
-        approvalChildTypeAdapter = new ApprovalChildTypeAdapter(context,approvalAuditTypeModule.get(0));
+        if (mApprovalTypePosition==-1) {
+            approvalChildTypeAdapter = new ApprovalChildTypeAdapter(context,approvalAuditTypeModule.get(0));
+        }else {
+            approvalChildTypeAdapter = new ApprovalChildTypeAdapter(context,approvalAuditTypeModule.get(mApprovalTypePosition));
+
+        }
         gv_approval_child_type.setAdapter(approvalChildTypeAdapter);
         //三级列表  已审批 只显示 已审批  已驳回
         approvalSelectedAuditStateModule=new ArrayList<>();
@@ -294,7 +313,7 @@ public class CustomPopWindow extends PopupWindow {
 
     public interface OnItemClickListener {
         void setOnItemClick(View v,ApprovalBean data);
-        void onData(String auditType,String auditSubType,String auditStatus);
+        void onData(String auditType, String auditSubType, String auditStatus, int mApprovalTypePosition, int mApprovalChildTypePosition, int mApprovalStatusPosition);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

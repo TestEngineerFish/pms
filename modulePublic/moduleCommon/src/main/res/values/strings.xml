@@ -137,6 +137,16 @@
     <string name="text_ordered">有序</string>
     <string name="text_unordered">无序</string>
 
+    <string name="alert_submit_client_complain_order_success">客户投诉工单创建成功</string>
+    <string name="alert_submit_client_repair_order_success">客户报修工单创建成功</string>
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
+    <string name="text_repairs_type">报修类别</string>
+    <string-array name="customer_inquiries_list">
+        <item>待跟进</item>
+        <item>待反馈</item>
+        <item>已跟进</item>
+        <item>已办结</item>
+        <item>抄送我</item>
+    </string-array>
 </resources>

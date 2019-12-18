@@ -4,54 +4,62 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
-import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
-import com.einyun.app.common.ui.widget.SelectWorkOrderTypeView;
+import com.einyun.app.common.ui.widget.SelectHouseView;
+import com.einyun.app.common.ui.widget.SelectRepairsTypeView;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
-import com.einyun.app.library.resource.workorder.model.ResourceChildBean;
-import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
-import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
+import com.einyun.app.library.workorder.model.Door;
+import com.einyun.app.library.workorder.model.DoorResult;
+import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
+import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.library.workorder.model.TypeAndLine;
+import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest;
+import com.einyun.app.pms.create.Constants;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.SelectType;
 import com.einyun.app.pms.create.databinding.ActivityCreateClientRepairsOrderBinding;
-import com.einyun.app.pms.create.databinding.ActivityCreateSendOrderBinding;
 import com.einyun.app.pms.create.viewmodel.CreateViewModel;
 import com.einyun.app.pms.create.viewmodel.CreateViewModelFactory;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
- * 创建客户报修
+ * 创建客户询问
  */
 @Route(path = RouterUtils.ACTIVITY_CREATE_CLIENT_REPAIRS_ORDER)
-public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateClientRepairsOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
+public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateClientRepairsOrderBinding, CreateViewModel> implements PeriodizationView.OnPeriodSelectListener {
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
-    private CreateSendOrderRequest request;
-    private List<DictDataModel> dictDataModelList = new ArrayList<>();
-    private List<DictDataModel> dictDataModelWorkTypeList = new ArrayList<>();
-    private List<DictDataModel> lineDictDataModelList = new ArrayList<>();
+    private CreateClientRepairOrderRequest request;
+    private List<DictDataModel> dictWayList = new ArrayList<>();
+    private List<DictDataModel> dictNatureList = new ArrayList<>();
+    private List<DictDataModel> dictLocationList = new ArrayList<>();
+    private List<DictDataModel> dictTimeList = new ArrayList<>();
+    private DoorResult doorResult;
 
     @Override
     protected CreateViewModel initViewModel() {
@@ -66,21 +74,29 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle(R.string.create_send_order_title);
-        request = new CreateSendOrderRequest();
+        setHeadTitle(R.string.create_repairs_order_title);
+        request = new CreateClientRepairOrderRequest();
         binding.setCallBack(this);
-        binding.rgs.setOnCheckedChangeListener(this);
-//        viewModel.getByTypeKey().observe(this, dictDataModels -> {
-//            for (DictDataModel model : dictDataModels) {
-//                if (model.getParentId().equals(model.getTypeId())) {
-//                    dictDataModelList.add(model);
-//                }
-//            }
-//            dictDataModelWorkTypeList = dictDataModels;
-//        });
-//        viewModel.getTypesListByKey().observe(this, dictDataModels -> {
-//            lineDictDataModelList = dictDataModels;
-//        });
+        //获取投诉、问询、报修方式
+        viewModel.getByTypeKey(Constants.ENQUIRY_WAY).observe(this, dictDataModels -> {
+            dictWayList = dictDataModels;
+        });
+        //获取报修区域
+        viewModel.getByTypeKey(Constants.REPAIR_AREA).observe(this, dictDataModels -> {
+            dictLocationList = dictDataModels;
+        });
+        //获取报修类别与条线
+        viewModel.repairTypeList().observe(this, doorResult -> {
+            this.doorResult = doorResult;
+        });
+        //获取报修性质评估
+        viewModel.getByTypeKey(Constants.REPAIR_NATURE).observe(this, dictDataModels -> {
+            dictNatureList = dictDataModels;
+        });
+        //获取预约上门时间
+        viewModel.getByTypeKey(Constants.REPAIR_TIME).observe(this, dictDataModels -> {
+            dictTimeList = dictDataModels;
+        });
         selectPng();
     }
 
@@ -127,150 +143,195 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 //分期
                 aging();
                 break;
-            case LINE:
-                //条线
-                line();
+            case REPAIRS_WAY:
+                //问询方式
+                complainWay();
                 break;
-            case WORKY_TYPE:
-                //工单类型：
-                workTable();
+            case REPAIRS_TYPE:
+                repairType();
                 break;
-            case RESOURCE_TYPE:
-                resourceType();
+            case REPAIRS_NATURE:
+                complainNature();
                 break;
-            case RESOURCE:
-                resource();
+            case HOUSE:
+                selectHouse();
                 break;
-            case DISPOSE_PERSON:
-                chooseDisposePerson();
+            case REPAIRS_LOCATION:
+                complainLocation();
+                break;
+            case REPAIRS_TIME:
+                repairTime();
                 break;
         }
     }
 
-    private void chooseDisposePerson() {
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).
-                withString(RouteKey.KEY_ORG_ID, request.getDivideId()).
-                withString(RouteKey.KEY_DIM_CODE, request.getTxCode()).
-                navigation(this, RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE);
-    }
-
-    private int rsDefaultPos = 0;
-
-    /**
-     * 选择资源
-     */
-    private void resource() {
-        List<String> resourceList = new ArrayList<>();
-        List<ResourceChildBean> children = (List<ResourceChildBean>) resourceTypeBean.getChildren();
-        for (ResourceChildBean childBean : children) {
-            resourceList.add(childBean.getResourceName());
-        }
-        if (resourceList.size() == 0) {
-            ToastUtil.show(this, "暂无资源");
+    private void repairType() {
+        if (doorResult == null) {
+            ToastUtil.show(this, "暂无报修类别");
             return;
         }
-
-        BottomPicker.buildBottomPicker(this, resourceList, rsDefaultPos, new BottomPicker.OnItemPickListener() {
+        List<Door> doors;
+        if ("outdoor".equals(request.getBizData().getAreaId())) {
+            doors = doorResult.getOutdoor();
+        } else if ("indoor".equals(request.getBizData().getAreaId())) {
+            doors = doorResult.getIndoor();
+        } else {
+            ToastUtil.show(this, "该地区下报修类别无配置");
+            return;
+        }
+        SelectRepairsTypeView view = new SelectRepairsTypeView(doors);
+        view.setWorkTypeListener(new SelectRepairsTypeView.OnWorkTypeSelectListener() {
             @Override
-            public void onPick(int position, String label) {
-                rsDefaultPos = position;
-                for (ResourceChildBean childBean : children) {
-                    if (childBean.getResourceName().equals(resourceList.get(position))) {
-                        request.setResId(childBean.getId());
-                        request.setResName(childBean.getResourceName());
-                    }
-                }
+            public void onWorkTypeSelectListener(List<Door> model) {
+                request.getBizData().setLineKey(model.get(0).getExpand().getMajorLine().getKey());
+                request.getBizData().setLineName(model.get(0).getExpand().getMajorLine().getName());
+                request.getBizData().setCateLv1(model.get(0).getDataName());
+                request.getBizData().setCateLv1Id(model.get(0).getDataKey());
+                request.getBizData().setCateLv2(model.get(1).getDataName());
+                request.getBizData().setCateLv2Id(model.get(1).getDataKey());
+                request.getBizData().setCateLv3(model.get(2).getDataName());
+                request.getBizData().setCateLv3Id(model.get(2).getDataKey());
+            }
+        });
+        view.show(getSupportFragmentManager(), "");
+    }
+
+    int rtTimeDefaultPos = 0;
+    int rtDateDefaultPos = 0;
+
+    private void repairTime() {
+        if (dictTimeList == null || dictTimeList.size() == 0) {
+            ToastUtil.show(this, "暂无预约上门时间");
+            return;
+        }
+        List<BottomPickerModel> models = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            BottomPickerModel model = new BottomPickerModel();
+            model.setData(getOldDate(i));
+            List<String> dataList = new ArrayList<>();
+            for (DictDataModel data : dictTimeList) {
+                dataList.add(data.getName());
+            }
+            model.setDataList(dataList);
+            models.add(model);
+        }
+
+        BottomPicker.buildBottomPicker(this, models, rtDateDefaultPos, rtTimeDefaultPos, new BottomPicker.OnItemDoublePickListener() {
+            @Override
+            public void onPick(int position1, int position2) {
+                rtDateDefaultPos = position1;
+                rtTimeDefaultPos = position2;
+                BottomPickerModel model = models.get(position1);
+                binding.time.setText(model.getData() + " " + model.getDataList().get(position2));
+                request.getBizData().setAppointTime(model.getData());
+                request.getBizData().setAppointTimePeriodId(dictTimeList.get(position2).getKey());
+                request.getBizData().setAppointTimePeriod(dictTimeList.get(position2).getName());
+            }
+        });
+    }
+
+    private void selectHouse() {
+        SelectHouseView view = new SelectHouseView(request.getBizData().getDivideId());
+        view.setWorkTypeListener(new SelectHouseView.OnWorkTypeSelectListener() {
+            @Override
+            public void onWorkTypeSelectListener(List<HouseModel> model) {
+                request.getBizData().setBuildId(model.get(0).getId());
+                request.getBizData().setUnitId(model.get(1).getId());
+                request.getBizData().setHouseId(model.get(2).getId());
+                request.getBizData().setHouse(model.get(2).getName());
                 binding.setBean(request);
             }
         });
+        view.show(getSupportFragmentManager(), "");
     }
 
-    private int rsTypeDefaultPos = 0;
-    private ResourceTypeBean resourceTypeBean;
+    int cnDefaultPos = 0;
 
     /**
-     * 资源类型
+     * 报修性质
      */
-    private void resourceType() {
-        viewModel.getResourceInfos(request).observe(this, resourceTypeBeans -> {
-            if (resourceTypeBeans.size() == 0) {
-                ToastUtil.show(this, "暂无资源分类");
-                return;
-            }
-            List<String> resourceTypeList = new ArrayList<>();
-            for (ResourceTypeBean bean : resourceTypeBeans) {
-                resourceTypeList.add(bean.getName());
-            }
-            BottomPicker.buildBottomPicker(this, resourceTypeList, rsTypeDefaultPos, new BottomPicker.OnItemPickListener() {
-                @Override
-                public void onPick(int position, String label) {
-                    if (position != rsTypeDefaultPos) {
-                        clearRequest(SelectType.RESOURCE_TYPE);
-                    }
-                    rsTypeDefaultPos = position;
-                    for (ResourceTypeBean bean : resourceTypeBeans) {
-                        if (bean.getName().equals(resourceTypeList.get(position))) {
-                            resourceTypeBean = bean;
-                        }
-                    }
-                    binding.tvResource.setText(resourceTypeBean.getName());
-                }
-            });
-        });
-    }
-
-    /**
-     * 工单类型
-     */
-    private void workTable() {
-        SelectWorkOrderTypeView selectWorkOrderTypeView = new SelectWorkOrderTypeView(dictDataModelWorkTypeList, dictDataModelList.get(txDefaultPos).getId());
-        selectWorkOrderTypeView.setWorkTypeListener(new SelectWorkOrderTypeView.OnWorkTypeSelectListener() {
-            @Override
-            public void onWorkTypeSelectListener(List<DictDataModel> model) {
-                clearRequest(SelectType.WORKY_TYPE);
-                request.setType(model.get(0).getKey());
-                request.setTypeName(model.get(0).getName());
-                if (model.size() == 3) {
-                    request.setEnvType2Code(model.get(1).getKey());
-                    request.setEnvType2Name(model.get(1).getName());
-                    request.setEnvType3Code(model.get(2).getKey());
-                    request.setEnvType3Name(model.get(2).getName());
-                }
-                binding.setBean(request);
-            }
-        });
-        selectWorkOrderTypeView.show(getSupportFragmentManager(), "");
-    }
-
-    int txDefaultPos = 0;
-
-    /**
-     * 条线选择
-     */
-    private void line() {
-        if (dictDataModelList.size() == 0) {
-            ToastUtil.show(this, "暂无条线");
+    private void complainNature() {
+        if (dictNatureList.size() == 0) {
+            ToastUtil.show(this, "暂无投诉性质");
             return;
         }
         List<String> txStrList = new ArrayList<>();
-        for (DictDataModel data : dictDataModelList) {
+        for (DictDataModel data : dictNatureList) {
             txStrList.add(data.getName());
         }
-        BottomPicker.buildBottomPicker(this, txStrList, txDefaultPos, new BottomPicker.OnItemPickListener() {
+        BottomPicker.buildBottomPicker(this, txStrList, cnDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
-                if (position != txDefaultPos) {
-                    clearRequest(SelectType.LINE);
-                }
-                txDefaultPos = position;
+                cnDefaultPos = position;
                 //获取条线id
-                if (lineDictDataModelList.size() != 0) {
-                    for (DictDataModel model : lineDictDataModelList) {
-                        if (model.getTypeKey().equals(dictDataModelList.get(txDefaultPos).getKey().replace("_map", ""))) {
-                            request.setTxId(model.getId());
-                            request.setTxCode(model.getTypeKey());
-                            request.setTxName(model.getName());
-                        }
+                for (DictDataModel childBean : dictNatureList) {
+                    if (childBean.getName().equals(txStrList.get(position))) {
+                        request.getBizData().setPropertyAss(childBean.getName());
+                        request.getBizData().setPropertyAssId(childBean.getKey());
+                    }
+                }
+                binding.setBean(request);
+            }
+        });
+    }
+
+    int cwDefaultPos = 0;
+
+    /**
+     * 报修方式
+     */
+    private void complainWay() {
+        if (dictWayList.size() == 0) {
+            ToastUtil.show(this, "暂无投诉方式");
+            return;
+        }
+        List<String> txStrList = new ArrayList<>();
+        for (DictDataModel data : dictWayList) {
+            if (!data.getKey().equals("400") &&
+                    !data.getKey().equals("proprietor_app") &&
+                    !data.getKey().equals("owner_app") &&
+                    !data.getKey().equals("mobile_association")) {
+                txStrList.add(data.getName());
+            }
+        }
+        BottomPicker.buildBottomPicker(this, txStrList, cwDefaultPos, new BottomPicker.OnItemPickListener() {
+            @Override
+            public void onPick(int position, String label) {
+                cwDefaultPos = position;
+                //获取条线id
+                for (DictDataModel childBean : dictWayList) {
+                    if (childBean.getName().equals(txStrList.get(position))) {
+                        request.getBizData().setWay(childBean.getName());
+                        request.getBizData().setWayId(childBean.getKey());
+                    }
+                }
+                binding.setBean(request);
+            }
+        });
+    }
+
+    int clDefaultPos = 0;
+
+    /**
+     * 报修区域
+     */
+    private void complainLocation() {
+        if (dictLocationList.size() == 0) {
+            ToastUtil.show(this, "暂无报修区域");
+            return;
+        }
+        List<String> txStrList = new ArrayList<>();
+        for (DictDataModel data : dictLocationList) {
+            txStrList.add(data.getName());
+        }
+        BottomPicker.buildBottomPicker(this, txStrList, clDefaultPos, new BottomPicker.OnItemPickListener() {
+            @Override
+            public void onPick(int position, String label) {
+                clDefaultPos = position;
+                for (DictDataModel data : dictLocationList) {
+                    if (data.getName().equals(txStrList.get(position))) {
+                        request.getBizData().setArea(data.getName());
+                        request.getBizData().setAreaId(data.getKey());
                     }
                 }
                 binding.setBean(request);
@@ -290,28 +351,21 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
 
     private void clearRequest(SelectType type) {
         if (SelectType.AGING == type) {
-            request = new CreateSendOrderRequest();
-            resourceTypeBean = null;
+            request.getBizData().setBuildId("");
+            request.getBizData().setUnitId("");
+            request.getBizData().setHouseId("");
+            request.getBizData().setHouse("");
         }
-        if (SelectType.LINE == type) {
-            CreateSendOrderRequest copy = new CreateSendOrderRequest();
-            copy.setDivideId(request.getDivideId());
-            copy.setDivideCode(request.getDivideCode());
-            copy.setDivideName(request.getDivideName());
-            request = copy;
-            resourceTypeBean = null;
-        }
-        if (SelectType.WORKY_TYPE == type) {
-            request.setType("");
-            request.setTypeName("");
-            request.setEnvType2Code("");
-            request.setEnvType2Name("");
-            request.setEnvType3Code("");
-            request.setEnvType3Name("");
-        }
-        if (SelectType.RESOURCE_TYPE == type) {
-            request.setResId("");
-            request.setResName("");
+        if (SelectType.REPAIRS_LOCATION == type) {
+            //清除报修类别
+            request.getBizData().setLineKey("");
+            request.getBizData().setLineName("");
+            request.getBizData().setCateLv1("");
+            request.getBizData().setCateLv1Id("");
+            request.getBizData().setCateLv2("");
+            request.getBizData().setCateLv2Id("");
+            request.getBizData().setCateLv3("");
+            request.getBizData().setCateLv3Id("");
         }
     }
 
@@ -319,23 +373,16 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
      * 工单类型和负责人前置校验
      */
     private boolean selectCheck(SelectType selectType) {
-        if (selectType == SelectType.AGING) {
-            return true;
+        if (selectType == SelectType.HOUSE) {
+            if (!StringUtil.isNullStr(request.getBizData().getDivideId())) {
+                ToastUtil.show(this, "请先选择分期");
+                return false;
+            }
         }
-        if (!StringUtil.isNullStr(request.getDivideId())) {
-            ToastUtil.show(this, "请先选择分期");
-            return false;
-        }
-        if (selectType == SelectType.LINE) {
-            return true;
-        }
-        if (!StringUtil.isNullStr(request.getTxId())) {
-            ToastUtil.show(this, "请先选择条线");
-            return false;
-        }
-        if (selectType == SelectType.RESOURCE) {
-            if (resourceTypeBean == null) {
-                ToastUtil.show(this, "请先选择资源分类");
+        if (selectType == SelectType.REPAIRS_TYPE) {
+            //判断是否有报修区域
+            if (!StringUtil.isNullStr(request.getBizData().getAreaId())) {
+                ToastUtil.show(this, "请先选择报修区域");
                 return false;
             }
         }
@@ -348,33 +395,44 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
      * @return
      */
     private boolean checkData() {
-        if (!StringUtil.isNullStr(request.getTxId())) {
-            ToastUtil.show(this, "请选择条线");
+        if (!StringUtil.isNullStr(request.getBizData().getDivideName())) {
+            ToastUtil.show(this, "请选择分期");
             return false;
         }
-        if (!StringUtil.isNullStr(request.getType())) {
-            ToastUtil.show(this, "请选择工单类型");
+        if (!StringUtil.isNullStr(binding.phone.getText().toString())) {
+            ToastUtil.show(this, "请填写联系电话");
             return false;
         }
-        if ("环境".equals(request.getTxName()) && !StringUtil.isNullStr(request.getEnvType2Code())) {
-            ToastUtil.show(this, "请选择二级工单类型");
+        if (!StringUtil.isNullStr(binding.userName.getText().toString())) {
+            ToastUtil.show(this, "请填写报修人");
             return false;
         }
-        if ("环境".equals(request.getTxName()) && !StringUtil.isNullStr(request.getEnvType3Code())) {
-            ToastUtil.show(this, "请选择三级工单类型");
+        if (!StringUtil.isNullStr(request.getBizData().getWay())) {
+            ToastUtil.show(this, "请选择报修方式");
             return false;
         }
-        if (!StringUtil.isNullStr(request.getProcId())) {
-            ToastUtil.show(this, "请选择负责人");
+        if (!StringUtil.isNullStr(request.getBizData().getAreaId())) {
+            ToastUtil.show(this, "请选择报修区域");
             return false;
         }
-        if (!StringUtil.isNullStr(request.getOtLevel())) {
-            ToastUtil.show(this, "请选择超时级别");
+        if (!StringUtil.isNullStr(request.getBizData().getCateLv3())) {
+            ToastUtil.show(this, "请选择报修类别");
             return false;
+        }
+        if (!StringUtil.isNullStr(request.getBizData().getPropertyAssId())) {
+            ToastUtil.show(this, "请选择性质评估");
+            return false;
+        }
+        //如果是室内报修  必须选择预约上门时间
+        if ("indoor".equals(request.getBizData().getAreaId())){
+            if (!StringUtil.isNullStr(request.getBizData().getAppointTime())) {
+                ToastUtil.show(this, "请选择预约上门时间");
+                return false;
+            }
         }
         String problemDescription = binding.ltQuestionDesc.getString();
         if (!StringUtil.isNullStr(problemDescription)) {
-            ToastUtil.show(this, "请填写派出任务的具体描述信息");
+            ToastUtil.show(this, "请填写报修内容");
             return false;
         }
         return true;
@@ -387,15 +445,6 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         uploadImages();
     }
 
-    /***
-     * 超时级别选择
-     * @param radioGroup
-     * @param i
-     */
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        request.setOtLevel(String.valueOf(i + 1));
-    }
 
     /**
      * 分期回调
@@ -404,11 +453,11 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
      */
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-        if (!orgModel.getId().equals(request.getDivideId())) {
+        if (!orgModel.getId().equals(request.getBizData().getDivideId())) {
             clearRequest(SelectType.AGING);
-            request.setDivideId(orgModel.getId());
-            request.setDivideCode(orgModel.getCode());
-            request.setDivideName(orgModel.getName());
+            request.getBizData().setDivideId(orgModel.getId());
+            request.getStartFlowParamObject().getVars().setDivideCode(orgModel.getCode());
+            request.getBizData().setDivideName(orgModel.getName());
             binding.setBean(request);
         }
     }
@@ -421,11 +470,11 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                viewModel.createSendOrder(buidRequest(), data).observe(this, flag -> {
+                viewModel.createClientRepairOrder(buidRequest(), data).observe(this, flag -> {
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
-                        ToastUtil.show(getApplicationContext(), R.string.alert_submit_work_order_success);
+                        ToastUtil.show(getApplicationContext(), R.string.alert_submit_client_repair_order_success);
                         finish();
                     }
                 });
@@ -435,9 +484,10 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         });
     }
 
-    private CreateSendOrderRequest buidRequest() {
-        request.setDesc(binding.ltQuestionDesc.getString());
-        request.setLocation(binding.ltLocationInfo.getString());
+    private CreateClientRepairOrderRequest buidRequest() {
+        request.getBizData().setContent(binding.ltQuestionDesc.getString());
+        request.getBizData().setMobile(binding.phone.getText().toString());
+        request.getBizData().setUserName(binding.userName.getText().toString());
         return request;
     }
 
@@ -452,14 +502,21 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 photoSelectAdapter.addPhotos(uris);
             }
         }
-        if (requestCode == RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE && data != null) {
-            Bundle bundle = data.getBundleExtra(DataConstants.KEY_CHOOSE_DISPOSE_PERSON_CONTENT);
-            OrgModel orgModel = (OrgModel) bundle.getSerializable(DataConstants.KEY_CHOOSE_DISPOSE_PERSON_CONTENT);
-            request.setProcId(orgModel.getId());
-            request.setProcName(orgModel.getName());
-            binding.setBean(request);
-        }
     }
 
+    public static String getOldDate(int distanceDay) {
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+        Date beginDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(beginDate);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
+        Date endDate = null;
+        try {
+            endDate = dft.parse(dft.format(date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dft.format(endDate);
+    }
 
 }

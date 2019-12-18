@@ -398,7 +398,15 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
      */
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        request.setOtLevel(String.valueOf(i + 1));
+        if (R.id.rb_normal == i){
+            request.setOtLevel("1");
+        }
+        if (R.id.rb_general == i){
+            request.setOtLevel("2");
+        }
+        if (R.id.rb_warning == i){
+            request.setOtLevel("3");
+        }
     }
 
     /**

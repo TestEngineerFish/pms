@@ -11,6 +11,7 @@
             type="com.einyun.app.pms.approval.ui.ApprovalViewModuleActivity" />
     </data>
      <LinearLayout
+         android:background="@color/activity_bg_color"
          android:orientation="vertical"
          android:layout_width="match_parent"
          android:layout_height="match_parent">

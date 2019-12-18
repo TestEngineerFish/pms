@@ -272,6 +272,7 @@ project.module_plan= ":moduleCore:modulePlan"
 project.module_mine= ":moduleCore:moduleMine"
 project.module_orderpreview=":moduleCore:moduleOrderPreview"
 project.module_operatepercent=":moduleCore:moduleOperatePercent"
+project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
 deps.project = project
 
 def server =[:]

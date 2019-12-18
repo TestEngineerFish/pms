@@ -2,6 +2,7 @@ package com.einyun.app.library.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
@@ -99,19 +100,19 @@ interface WorkOrderServiceApi {
      * 启动投诉
      */
     @POST(URLs.URL_TASK_RUN_START)
-    fun startComplain(@Body request: ComplainStartRequest): Flowable<BaseResponse<Any>>
+    fun startComplain(@Body request: CreateClientComplainOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      * 获取报修类别与条线
      */
     @GET(URLs.URL_REPAIR_TYPE_MAP_LIST)
-    fun repairTypeList(): Flowable<DoorListResponse>
+    fun repairTypeList(): Flowable<DoorResult>
 
     /**
      * 启动报修
      */
     @POST(URLs.URL_CUSTOMER_REPAIR_SUBMIT)
-    fun startRepair(@Body request: RepairStartRequest): Flowable<BaseResponse<Any>>
+    fun startRepair(@Body request: CreateClientRepairOrderRequest): Flowable<BaseResponse<Any>>
 
     /**
      * 启动问询

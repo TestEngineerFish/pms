@@ -77,6 +77,9 @@ public class RouterUtils {
     public static final String ACTIVITY_USER_HEAD_SHOT = "/mine/userHeadShot";
     public static final String ACTIVITY_ADVICE_FEED_BACK = "/mine/advcieFeedBack";
 
+    /**********************客户问询****************************/
+    public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
+
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;

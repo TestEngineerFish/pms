@@ -15,6 +15,7 @@ public enum SelectType {
     ENQUIRY_TYPE("问询类别","ENQUIRY_Type"),
     REPAIRS_TYPE("报修类别","REPAIRS_TYPE"),
     REPAIRS_WAY("报修方式","REPAIRS_WAY"),
+    REPAIRS_NATURE("报修性质","REPAIRS_NATURE"),
     REPAIRS_LOCATION("报修区域","REPAIRS_LOCATION"),
     REPAIRS_TIME("预约上门时间","REPAIRS_TIME");
     // 成员变量  

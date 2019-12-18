@@ -75,7 +75,7 @@ public class ApprovalViewModuleActivity extends BaseHeadViewModelActivity<Activi
         approvalPagerAdapter=new ApprovalPagerAdapter(getSupportFragmentManager(),fragmentList);
         binding.viewpagerApproval.setAdapter(approvalPagerAdapter);
         binding.viewpagerApproval.addOnPageChangeListener(pageChangeListener);
-        binding.viewpagerApproval.setOffscreenPageLimit(0);
+        binding.viewpagerApproval.setOffscreenPageLimit(3);
         binding.rgApproval.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {

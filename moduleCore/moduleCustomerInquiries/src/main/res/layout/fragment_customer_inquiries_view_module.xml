@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="CusInquiriesFragmentViewModel"
+            type="com.einyun.app.pms.customerinquiries.viewmodule.CusInquiriesFragmentViewModel" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.customerinquiries.ui.fragment.CustomerInquiriesViewModuleFragment" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <LinearLayout
+             android:layout_marginTop="5dp"
+             android:orientation="vertical"
+             android:id="@+id/ll_table_line"
+             android:layout_width="match_parent"
+             android:layout_height="2dp"/>
+         <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <LinearLayout
+                 android:onClick="@{()->callBack.onPlotClick()}"
+                 android:layout_width="wrap_content"
+                 android:layout_height="38.5dp">
+                 <TextView
+                     android:id="@+id/tv_divide"
+                     android:textSize="13sp"
+                     android:layout_marginLeft="25dp"
+                     android:layout_gravity="center_vertical"
+                     android:text="@string/tv_approval_installment"
+                     android:textColor="@color/greyTextColor"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <ImageView
+                     android:src="@drawable/iv_approval_sel_type"
+                     android:layout_marginLeft="7dp"
+                     android:layout_marginRight="5dp"
+                     android:layout_gravity="center_vertical"
+                     android:layout_width="8.8dp"
+                     android:layout_height="5.55dp"/>
+
+             </LinearLayout>
+             <LinearLayout
+                 android:id="@+id/installment"
+                 android:onClick="@{()->callBack.onInstallmentClick()}"
+                 android:layout_width="wrap_content"
+                 android:layout_height="38.5dp">
+                 <TextView
+                     android:id="@+id/tv_select"
+                     android:textSize="13sp"
+                     android:layout_marginLeft="30dp"
+                     android:layout_gravity="center_vertical"
+                     android:text="@string/tv_approval_filter"
+                     android:textColor="@color/greyTextColor"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <ImageView
+                     android:src="@drawable/iv_approval_sel_type"
+                     android:layout_marginLeft="7dp"
+                     android:layout_marginRight="5dp"
+                     android:layout_gravity="center_vertical"
+                     android:layout_width="8.8dp"
+                     android:layout_height="5.55dp"/>
+
+             </LinearLayout>
+         </LinearLayout>
+         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+             android:id="@+id/swipe_refresh"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/inquiries_list"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
+             </LinearLayout>
+
+
+         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+     </LinearLayout>
+</layout>
