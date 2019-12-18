@@ -153,7 +153,7 @@
 
                     <TextView
                         style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.bizData.cate}" />
+                        app:setSelectTxt="@{bean.bizData.cateLv3}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>

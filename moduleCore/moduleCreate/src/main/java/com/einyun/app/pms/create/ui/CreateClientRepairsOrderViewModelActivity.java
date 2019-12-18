@@ -20,8 +20,11 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
+import com.einyun.app.common.ui.widget.SelectRepairsTypeView;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.workorder.model.Door;
+import com.einyun.app.library.workorder.model.DoorResult;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -56,6 +59,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     private List<DictDataModel> dictNatureList = new ArrayList<>();
     private List<DictDataModel> dictLocationList = new ArrayList<>();
     private List<DictDataModel> dictTimeList = new ArrayList<>();
+    private DoorResult doorResult;
 
     @Override
     protected CreateViewModel initViewModel() {
@@ -83,7 +87,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         });
         //获取报修类别与条线
         viewModel.repairTypeList().observe(this, doorResult -> {
-
+            this.doorResult = doorResult;
         });
         //获取报修性质评估
         viewModel.getByTypeKey(Constants.REPAIR_NATURE).observe(this, dictDataModels -> {
@@ -144,7 +148,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 complainWay();
                 break;
             case REPAIRS_TYPE:
-
+                repairType();
                 break;
             case REPAIRS_NATURE:
                 complainNature();
@@ -159,6 +163,37 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 repairTime();
                 break;
         }
+    }
+
+    private void repairType() {
+        if (doorResult == null) {
+            ToastUtil.show(this, "暂无报修类别");
+            return;
+        }
+        List<Door> doors;
+        if ("outdoor".equals(request.getBizData().getAreaId())) {
+            doors = doorResult.getOutdoor();
+        } else if ("indoor".equals(request.getBizData().getAreaId())) {
+            doors = doorResult.getIndoor();
+        } else {
+            ToastUtil.show(this, "该地区下报修类别无配置");
+            return;
+        }
+        SelectRepairsTypeView view = new SelectRepairsTypeView(doors);
+        view.setWorkTypeListener(new SelectRepairsTypeView.OnWorkTypeSelectListener() {
+            @Override
+            public void onWorkTypeSelectListener(List<Door> model) {
+                request.getBizData().setLineKey(model.get(0).getExpand().getMajorLine().getKey());
+                request.getBizData().setLineName(model.get(0).getExpand().getMajorLine().getName());
+                request.getBizData().setCateLv1(model.get(0).getDataName());
+                request.getBizData().setCateLv1Id(model.get(0).getDataKey());
+                request.getBizData().setCateLv2(model.get(1).getDataName());
+                request.getBizData().setCateLv2Id(model.get(1).getDataKey());
+                request.getBizData().setCateLv3(model.get(2).getDataName());
+                request.getBizData().setCateLv3Id(model.get(2).getDataKey());
+            }
+        });
+        view.show(getSupportFragmentManager(), "");
     }
 
     int rtTimeDefaultPos = 0;
@@ -388,9 +423,13 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
             ToastUtil.show(this, "请选择性质评估");
             return false;
         }
-
         //如果是室内报修  必须选择预约上门时间
-
+        if ("indoor".equals(request.getBizData().getAreaId())){
+            if (!StringUtil.isNullStr(request.getBizData().getAppointTime())) {
+                ToastUtil.show(this, "请选择预约上门时间");
+                return false;
+            }
+        }
         String problemDescription = binding.ltQuestionDesc.getString();
         if (!StringUtil.isNullStr(problemDescription)) {
             ToastUtil.show(this, "请填写报修内容");

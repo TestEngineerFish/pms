@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -151,14 +152,19 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
                 if (StringUtil.isNullStr(keyId)) {
                     if (RouteKey.KEY_PLAN.equals(keyId)) {
                         viewModel.applyLatePlan(request, data).observe(this, o -> {
-                            ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
-                            finish();
+                            if ("0".equals(o.getCode())) {
+                                ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                                finish();
+                            }
+
                         });
                     }
                 } else {
                     viewModel.applyLate(request, data).observe(this, o -> {
-                        ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
-                        finish();
+                        if ("0".equals(o.getCode())) {
+                            ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                            finish();
+                        }
                     });
                 }
             } else {

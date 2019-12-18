@@ -142,14 +142,15 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             }, { error -> callBack.onFaild(error) })
         return liveData
     }
+
     //巡查处理
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
         serviceApi?.patrolSubmit(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 {
-                    if(it.isState){
+                    if (it.isState) {
                         callBack.call(it.isState)
-                    }else{
+                    } else {
                         callBack.onFaild(EinyunHttpException(it))
                     }
                 }, {
@@ -176,7 +177,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error -> callBack.onFaild(error) })
-        return liveData    }
+        return liveData
+    }
 
     /**
      * 获取工作预览计划工单列表
@@ -201,10 +203,14 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
 
     //巡查处理
     override fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
-        serviceApi?.planSubmit(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.planSubmit(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 {
-                    callBack.call(it.isState)
+                    if (it.isState) {
+                        callBack.call(it.isState)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(it))
+                    }
                 }, {
                     callBack.onFaild(it)
                 }
@@ -226,8 +232,9 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                     callBack.onFaild(it)
                 }
             )
-        return liveData;       }
-//转派工单
+        return liveData; }
+
+    //转派工单
     override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderResponse>
@@ -236,12 +243,12 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         serviceApi?.resendOrder(request)?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
-                        callBack.call(response)
+                    callBack.call(response)
                 }, {
                     callBack.onFaild(it)
                 }
             )
-        return liveData;    }
+        return liveData; }
 
     override fun exten(
         request: ExtenDetialRequest,
@@ -250,8 +257,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<BaseResponse<Object>>()
         serviceApi?.exten(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
-                    liveData.postValue(response)
-                    callBack.call(response)
+                liveData.postValue(response)
+                callBack.call(response)
             }, { error -> {} })
         return liveData;
     }
@@ -600,8 +607,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeOrder(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
-                    callBack.call(response)
-                    liveData.postValue(response)
+                callBack.call(response)
+                liveData.postValue(response)
             }, { error ->
                 callBack.onFaild(error)
             })
