@@ -1,5 +1,6 @@
 package com.einyun.app.library.workorder.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
@@ -352,8 +353,9 @@ class WorkOrderRepository : WorkOrderService {
         var liveData = MutableLiveData<DoorResult>()
         serviceApi?.repairTypeList()?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
-                callBack.call(it)
-                liveData.postValue(it)
+                Log.e("1111",it.toString())
+//                callBack.call(it)
+//                liveData.postValue(it)
             }, {
                 callBack.onFaild(it)
             })

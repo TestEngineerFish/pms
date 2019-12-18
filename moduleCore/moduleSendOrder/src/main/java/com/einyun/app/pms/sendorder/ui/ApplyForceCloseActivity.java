@@ -74,9 +74,17 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_close);
         request = new ApplyCloseRequest();
-        request.setId(id);
-        request.setApplyTaskId(taskId);
-        request.setInstId(proInsId);
+        if (StringUtil.isNullStr(keyId) && RouteKey.KEY_PLAN.equals(keyId)){
+            request.setID(id);
+            request.setTaskId(taskId);
+            request.setInstId(proInsId);
+            request.setMessageType("1");
+        }else{
+            request.setId(id);
+            request.setApplyTaskId(taskId);
+            request.setInstId(proInsId);
+        }
+
         selectPng();
     }
 
@@ -128,7 +136,8 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
             @Override
             public void onClick(View v) {
                 request.setApplicationDescription(binding.applyCloseReason.getString());
-                if (TextUtils.isEmpty(request.getApplicationDescription())) {
+                request.setEndReason(binding.applyCloseReason.getString());
+                if (TextUtils.isEmpty(binding.applyCloseReason.getString())) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
                 } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);

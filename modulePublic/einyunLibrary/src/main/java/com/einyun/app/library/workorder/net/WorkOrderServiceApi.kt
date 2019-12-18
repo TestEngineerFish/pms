@@ -7,6 +7,7 @@ import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
+import org.json.JSONObject
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -107,7 +108,7 @@ interface WorkOrderServiceApi {
      * 获取报修类别与条线
      */
     @GET(URLs.URL_REPAIR_TYPE_MAP_LIST)
-    fun repairTypeList(): Flowable<DoorResult>
+    fun repairTypeList(): Flowable<JSONObject>
 
     /**
      * 启动报修
