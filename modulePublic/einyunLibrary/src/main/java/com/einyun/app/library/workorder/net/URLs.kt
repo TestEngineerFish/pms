@@ -58,5 +58,16 @@ class URLs {
 
         //通过UserId批量查询待处理工单
         const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
+        //客户报修-待跟进
+        const val URL_REPORT_REPAIRS_WAIT_FOLLOW="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_repair_flow/NORMAL,DELIVERTO"
+        //客户报修-抢单
+        const val URL_REPORT_REPAIRS_GRAB="/workOrder/workOrder/task/v1/getGrabListAlia"
+        //客户报修-已跟进
+        const val URL_REPORT_REPAIRS_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAlia/customer_repair_flow"
+        //客户报修-已办结
+        const val URL_REPORT_REPAIRS_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompleteAlia/customer_repair_flow"
+        //客户报修-抄送我的
+        const val URL_REPORT_REPAIRS_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_repair_flow"
+
     }
 }

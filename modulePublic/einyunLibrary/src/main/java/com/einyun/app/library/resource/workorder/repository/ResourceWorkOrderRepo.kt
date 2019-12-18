@@ -35,6 +35,7 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+
     //巡查已办详情
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
         serviceApi?.patrolDoneDetial(request)?.compose(RxSchedulers.inIo())

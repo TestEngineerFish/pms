@@ -50,6 +50,8 @@ public class RouterUtils {
     public static final String ACTIVITY_ORDER_PREVIEW ="/orderPreview/OrderPreviewActivity";
     /***********************运营收缴率************************************/
     public static final String ACTIVITY_OPERATE_PERCENT ="/operatePercent/OperatePercentActivity";
+    public static final String ACTIVITY_OPERATE_TODAY_ALL_GET ="/operatePercent/AllChargeActivity";
+
     /**********************派工单****************************/
     //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";

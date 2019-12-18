@@ -74,9 +74,9 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_close);
         request = new ApplyCloseRequest();
-        request.setID(id);
-        request.setTaskID(taskId);
-        request.setProInsID(proInsId);
+        request.setId(id);
+        request.setApplyTaskId(taskId);
+        request.setInstId(proInsId);
         selectPng();
     }
 
@@ -127,8 +127,8 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         binding.applyCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request.setDesc(binding.applyCloseReason.getString());
-                if (TextUtils.isEmpty(request.getDesc())) {
+                request.setApplicationDescription(binding.applyCloseReason.getString());
+                if (TextUtils.isEmpty(request.getApplicationDescription())) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
                 } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);

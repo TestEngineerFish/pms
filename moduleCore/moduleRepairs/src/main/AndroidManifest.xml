@@ -3,7 +3,8 @@
     package="com.einyun.app.pms.repairs">
 
     <application>
-        <activity android:name=".ui.RepairsActivity"></activity>
+        <activity android:name=".ui.RepairsDetailActivity"></activity>
+        <activity android:name=".ui.RepairsActivity" />
     </application>
 
 </manifest>

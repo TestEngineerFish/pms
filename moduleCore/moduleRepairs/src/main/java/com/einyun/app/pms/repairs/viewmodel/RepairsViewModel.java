@@ -3,36 +3,51 @@ package com.einyun.app.pms.repairs.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-import com.einyun.app.base.BaseViewModel;
-import com.einyun.app.base.paging.bean.PageBean;
+
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
-import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.workorder.model.RepairsModel;
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.repairs.repository.DataSourceFactory;
 
 /**
  *RepairsViewModel
  */
-public class RepairsViewModel extends BasePageListViewModel {
+public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
     // TODO: Implement the ViewModel
 
-    LiveData<PagedList<DictDataModel>> liveData;
-
+    LiveData<PagedList<RepairsModel>> liveData;
+    RepairsPageRequest request;
     public void refresh(){
         if(liveData!=null){
-            liveData.getValue().getDataSource().invalidate();
         }
     }
+
+    public RepairsPageRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(RepairsPageRequest request) {
+        this.request = request;
+    }
+
     /**
      * 获取Paging LiveData
      * @return LiveData
      */
-    public LiveData<PagedList<DictDataModel>> loadPadingData(){
-        if(liveData==null){
-            liveData= new LivePagedListBuilder(new DataSourceFactory(), config)
+    public LiveData<PagedList<RepairsModel>> loadPagingData(RepairsPageRequest repairsPageRequest){
+            liveData= new LivePagedListBuilder(new DataSourceFactory(repairsPageRequest), config)
 //                .setBoundaryCallback(null)
 //                .setFetchExecutor(null)
                     .build();
-        }
         return liveData;
     }
+
+    /**
+     * 抢单
+     * */
+//    public
+
+    /**
+     * 抢单
+     * */
 }

@@ -8,8 +8,12 @@ import com.einyun.app.base.paging.bean.*
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.net.WorkOrderServiceApi
+import com.einyun.app.library.workorder.net.request.*
+import com.einyun.app.library.workorder.net.request.ComplainAppendRequest
+import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
@@ -41,6 +45,8 @@ class WorkOrderRepository : WorkOrderService {
             })
         return liveData
     }
+
+
 
     override fun getMappingByUserIds(
         request: List<String>,
@@ -502,5 +508,148 @@ class WorkOrderRepository : WorkOrderService {
         return builder
     }
 
+    /**
+     * 报修待跟进
+     */
+    override fun getRepairWaitFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<RepairsPage>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getRepairsWaitFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     * 报修抢单
+     */
+    override fun getRepairGrab(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getRepairsGrab(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *报修-已跟进
+     * */
+    override fun getRepaiAlreadyFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyFollowPageResult>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getRepairsAlreadyFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *报修-已办结
+     * */
+    override fun getRepaiAlreadyDone(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyDonePageResult>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getRepairAlreadyDone(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *报修-抄送我
+     * */
+
+    override fun getRepairCopyMe(
+        request: RepairsPageRequest,
+        callBack: CallBack<RepairCopyMePageResullt>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getRepairCopyMe(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    private fun queryRepairBuilder(
+        request: RepairsPageRequest
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "bx_dk_id",
+            request.bx_dk_id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+            .addQueryItem(
+                "bx_area_id",
+                request.bx_area_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "bx_cate_lv1_id",
+                request.bx_cate_lv1_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "bx_cate_lv2_id",
+                request.bx_cate_lv2_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+//            .addSort("bx_time", request.DESC)
+            .setPageBean(request.pageBean)
+        return builder
+    }
 
 }

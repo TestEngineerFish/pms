@@ -1,6 +1,5 @@
 package com.einyun.app.pms.repairs.net;
 
-import com.einyun.app.pms.repairs.net.request.RepairsRequest;
 import com.einyun.app.pms.repairs.net.response.RepairsResponse;
 
 import io.reactivex.Flowable;
@@ -19,7 +18,7 @@ public interface RepairsServiceApi {
      * 登陆
      * @param request
      * @return
-     */
+     *//*
     @POST(URLs.URL_REPAIRS_COMPLETED)
-    Flowable<RepairsResponse> completedList(@Body RepairsRequest request);
+    Flowable<RepairsResponse> completedList(@Body RepairsRequest request);*/
 }

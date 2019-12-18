@@ -2,6 +2,7 @@ package com.einyun.app.library.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
@@ -143,4 +144,31 @@ interface WorkOrderServiceApi {
      */
     @POST(URLs.URL_GET_MAPPING_BY_USERIDS)
     fun getMappingByUserIds(@Body request: List<String>): Flowable<BaseResponse<Map<String, GetMappingByUserIdsResponse>>>
+    /**
+     * 客户报修-待跟进
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_WAIT_FOLLOW)
+    fun getRepairsWaitFollow(@Body request: Query):Flowable<RepairsResponse>
+    /**
+     * 客户报修-抢单
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_GRAB)
+    fun getRepairsGrab(@Body request: Query):Flowable<RepairsResponse>
+
+    /**
+     * 客户报修-已跟进
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_ALREADY_FOLLOW)
+    fun getRepairsAlreadyFollow(@Body request: Query):Flowable<AlreadyFollowResponse>
+
+    /**
+     * 客户报修-已办结
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_ALREADY_DONE)
+    fun getRepairAlreadyDone(@Body request: Query):Flowable<AlreadyDoneResponse>
+    /**
+     * 客户报修-抄送我
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_COPY_ME)
+    fun getRepairCopyMe(@Body request: Query):Flowable<RepairCopyMeResponse>
 }

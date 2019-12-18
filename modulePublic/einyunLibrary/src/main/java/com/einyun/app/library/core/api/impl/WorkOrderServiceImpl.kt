@@ -2,12 +2,11 @@ package com.einyun.app.library.core.api.impl
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.core.api.DashBoardService
-import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.core.api.WorkOrderService
-import com.einyun.app.library.core.api.proxy.DashBoardServiceImplProxy
-import com.einyun.app.library.core.api.proxy.UCSericeImplProxy
 import com.einyun.app.library.core.api.proxy.WorkOrderServiceImplProxy
+import com.einyun.app.library.workorder.model.RepairsPage
+import com.einyun.app.library.workorder.model.*
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
@@ -38,6 +37,59 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+
+    /**
+     *客户报修-抄送我
+     * */
+    override fun getRepairCopyMe(
+        request: RepairsPageRequest,
+        callBack: CallBack<RepairCopyMePageResullt>
+    ) {
+        return proxy.getRepairCopyMe(
+            request, callBack
+        )         }
+
+    /**
+     *客户报修-已办结
+     * */
+    override fun getRepaiAlreadyDone(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyDonePageResult>
+    ) {
+        return proxy.getRepaiAlreadyDone(
+            request, callBack
+        )       }
+
+    /**
+     *客户报修-已跟进
+    * */
+    override fun getRepaiAlreadyFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyFollowPageResult>
+    ) {
+        return proxy.getRepaiAlreadyFollow(
+            request, callBack
+        )    }
+
+    /**
+     * 客户报修-抢单
+     * */
+    override fun getRepairGrab(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        return proxy.getRepairGrab(
+            request, callBack
+        )    }
+
+    /**
+     * 客户报修-待跟进
+     * */
+    override fun getRepairWaitFollow(
+        request:RepairsPageRequest, callBack: CallBack<RepairsPage>
+    ) {
+        return proxy.getRepairWaitFollow(
+            request, callBack
+        )
+    }
+
     override fun startRepair(
         request: CreateClientRepairOrderRequest,
         callBack: CallBack<Boolean>

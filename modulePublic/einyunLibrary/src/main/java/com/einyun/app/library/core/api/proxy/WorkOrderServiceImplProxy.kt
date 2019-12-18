@@ -2,9 +2,10 @@ package com.einyun.app.library.core.api.proxy
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.core.api.DashBoardService
-import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.core.api.WorkOrderService
+import com.einyun.app.library.workorder.model.RepairsPage
+import com.einyun.app.library.workorder.model.*
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
@@ -38,6 +39,48 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun getRepairCopyMe(
+        request: RepairsPageRequest,
+        callBack: CallBack<RepairCopyMePageResullt>
+    ) {
+        return instance?.getRepairCopyMe(
+            request,
+            callBack
+        )!!       }
+
+    override fun getRepaiAlreadyDone(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyDonePageResult>
+    ) {
+        return instance?.getRepaiAlreadyDone(
+            request,
+            callBack
+        )!!    }
+
+    override fun getRepaiAlreadyFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyFollowPageResult>
+    ) {
+        return instance?.getRepaiAlreadyFollow(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepairGrab(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        return instance?.getRepairGrab(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepairWaitFollow(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        return instance?.getRepairWaitFollow(
+            request,
+            callBack
+        )!!
+    }
+
     override fun startRepair(
         request: CreateClientRepairOrderRequest,
         callBack: CallBack<Boolean>

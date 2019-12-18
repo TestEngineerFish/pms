@@ -1,36 +1,50 @@
 package com.einyun.app.pms.repairs.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
+import com.einyun.app.common.utils.FormatUtil;
+import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.library.workorder.model.RepairsModel;
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
+import com.einyun.app.pms.repairs.BR;
 import com.einyun.app.pms.repairs.R;
+import com.einyun.app.pms.repairs.databinding.ItemOrderRepairBinding;
 import com.einyun.app.pms.repairs.databinding.RepairsFragmentBinding;
 import com.einyun.app.pms.repairs.viewmodel.RepairsViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
 /**
  * Paging Demo
  * Paging Component
  */
-public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding,RepairsViewModel> {
+public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding,RepairsViewModel> implements ItemClickListener<RepairsModel> {
+    RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
 
-    public static RepairsViewModelFragment newInstance() {
-        return new RepairsViewModelFragment();
+    public static RepairsViewModelFragment newInstance(Bundle bundle) {
+        RepairsViewModelFragment fragment = new RepairsViewModelFragment();
+        fragment.setArguments(bundle);
+        Logger.d("setBundle->"+bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
+        return fragment;
     }
-    RepairsPageListAdapter adapter;//Paging PageListAdapter,auto paging
+
     @Override
     public int getLayoutId() {
         return R.layout.repairs_fragment;
@@ -40,92 +54,117 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     @Override
     protected void init() {
         super.init();
-        //初始化组件
-        adapter=new RepairsPageListAdapter();
-        RecyclerView mRecyclerView = binding.repairsList;
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapter);
+
     }
 
     @Override
     protected void setUpView() {
         binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
-        binding.swipeRefresh.setOnRefreshListener(() -> {
-            binding.swipeRefresh.setRefreshing(false);
-            viewModel.refresh();
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.swipeRefresh.setRefreshing(false);
+                loadPagingData();
+            }
         });
     }
 
     private void loadPagingData(){
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPadingData().observe(this, dataBeans -> adapter.submitList(dataBeans));
+        RepairsPageRequest request=new RepairsPageRequest();
+        /*request.setBx_area_id("1");
+        request.setBx_cate_lv1_id("1");
+        request.setBx_cate_lv2_id("1");
+        request.setBx_dk_id("1");
+        request.setBx_time(Query.SORT_DESC);
+        request.setNode_id_("1");
+        request.setDESC("1");
+        request.setState("1");*/
+        viewModel.loadPagingData(request).observe(this,dataBeans->{
+            adapter.submitList(dataBeans);
+        });
     }
 
     @Override
     protected void setUpData() {
+        //停止刷新
+        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH,Boolean.class).observe(getActivity(), shown -> {
+            if(!shown){
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
+
+        RecyclerView mRecyclerView = binding.repairsList;
+        RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        if (adapter == null) {
+            adapter = new RVPageListAdapter<ItemOrderRepairBinding, RepairsModel>(getActivity(), BR.repair, mDiffCallback) {
+
+                @Override
+                public void onBindItem(ItemOrderRepairBinding binding, RepairsModel repairsModel) {
+                    if(FRAGMENT_SEND_OWRKORDER_DONE.equals(getFragmentTag())){
+                        binding.itemResendRe.setVisibility(View.GONE);
+                    }
+                    binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            ARouter.getInstance()
+//                                    .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+//                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
+//                                    .withString(RouteKey.KEY_ORDER_ID,repairsModel.getID_())
+//                                    .withString(RouteKey.KEY_DIVIDE_ID,distribute.getF_DIVIDE_ID())
+//                                    .withString(RouteKey.KEY_PROJECT_ID,distribute.getF_PROJECT_ID())
+//                                    .navigation();
+                        }
+                    });
+                    binding.itemRepairGrab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                          viewModel.loadPagingData()
+                        }
+                    });
+                    binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getCreateTime()));
+                }
+
+                @Override
+                public int getLayoutId() {
+                    return R.layout.item_order_repair;
+                }
+            };
+        }
+        RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.repairsList);
+        binding.repairsList.setAdapter(adapter);
+        adapter.setOnItemClick(this);
         loadPagingData();
     }
 
 
-
+    protected String getFragmentTag(){
+        return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
+    }
     @Override
     protected RepairsViewModel initViewModel() {
        return new ViewModelProvider(this, new ViewModelFactory()).get(RepairsViewModel.class);
     }
 
-    //Paging PageListAdapter,auto paging
-    class RepairsPageListAdapter extends PagedListAdapter<DictDataModel,RepairsViewHolder>{
-
-        protected RepairsPageListAdapter() {
-            super(mDiffCallback);
-        }
-
-        @NonNull
-        @Override
-        public RepairsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_2,null);
-            RepairsViewHolder holder = new RepairsViewHolder(view);
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RepairsViewHolder holder, int position) {
-            DictDataModel model=getItem(position);
-            holder.text1.setText(String.valueOf(model.getId()));
-            holder.text2.setText(String.valueOf(model.getName()));
-        }
-    }
-
-    /**
-     * ViewHolder
-     */
-    private class RepairsViewHolder extends RecyclerView.ViewHolder {
-        public TextView text1;
-        public TextView text2;
-        public RepairsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            //viewholder view setup
-            text1 = itemView.findViewById(android.R.id.text1);
-            text1.setTextColor(Color.RED);
-
-            text2 = itemView.findViewById(android.R.id.text2);
-            text2.setTextColor(Color.BLUE);
-        }
-    }
 
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<DictDataModel> mDiffCallback = new DiffUtil.ItemCallback<DictDataModel>() {
+    private DiffUtil.ItemCallback<RepairsModel> mDiffCallback = new DiffUtil.ItemCallback<RepairsModel>() {
 
         @Override
-        public boolean areItemsTheSame(@NonNull DictDataModel oldItem, @NonNull DictDataModel newItem) {
-            return oldItem.getId() == newItem.getId();
+        public boolean areItemsTheSame(@NonNull RepairsModel oldItem, @NonNull RepairsModel newItem) {
+            return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull DictDataModel oldItem, @NonNull DictDataModel newItem) {
+        public boolean areContentsTheSame(@NonNull RepairsModel oldItem, @NonNull RepairsModel newItem) {
             return oldItem==newItem;
         }
     };
+
+    @Override
+    public void onItemClicked(View veiw, RepairsModel data) {
+
+    }
 }

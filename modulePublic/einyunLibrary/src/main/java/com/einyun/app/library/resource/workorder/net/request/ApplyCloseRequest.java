@@ -1,34 +1,34 @@
 package com.einyun.app.library.resource.workorder.net.request;
 
 public class ApplyCloseRequest {
-    private String ID;
-    private String taskID;
-    private String proInsID;
+    private String id;
+    private String applyTaskId;
+    private String instId;
     private String applyFiles;
-    private String desc;
+    private String applicationDescription;
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTaskID() {
-        return taskID;
+    public String getApplyTaskId() {
+        return applyTaskId;
     }
 
-    public void setTaskID(String taskID) {
-        this.taskID = taskID;
+    public void setApplyTaskId(String applyTaskId) {
+        this.applyTaskId = applyTaskId;
     }
 
-    public String getProInsID() {
-        return proInsID;
+    public String getInstId() {
+        return instId;
     }
 
-    public void setProInsID(String proInsID) {
-        this.proInsID = proInsID;
+    public void setInstId(String instId) {
+        this.instId = instId;
     }
 
     public String getApplyFiles() {
@@ -39,11 +39,11 @@ public class ApplyCloseRequest {
         this.applyFiles = applyFiles;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getApplicationDescription() {
+        return applicationDescription;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setApplicationDescription(String applicationDescription) {
+        this.applicationDescription = applicationDescription;
     }
 }

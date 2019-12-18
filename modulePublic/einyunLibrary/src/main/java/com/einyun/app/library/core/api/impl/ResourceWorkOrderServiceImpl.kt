@@ -25,6 +25,7 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
 
+
     /**
      *
      * 工作预览-巡查工单
@@ -33,7 +34,8 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         request: OrderPreviewRequest,
         callBack: CallBack<OrderPreviewPage>
     ): LiveData<OrderPreviewPage> {
-        return proxy.getPlanPreviewList(request, callBack)    }
+        return proxy.getPlanPreviewList(request, callBack)
+    }
 
     /**
      *
@@ -87,18 +89,19 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
     }
 
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        proxy.patrolDoneDetial(request,callBack)
+        proxy.patrolDoneDetial(request, callBack)
     }
 
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
-        proxy.patrolSubmit(request,callBack)
+        proxy.patrolSubmit(request, callBack)
     }
 
     override fun getHistroy(
         intstId: String,
         callBack: CallBack<List<HistoryModel>>
     ): LiveData<List<HistoryModel>> {
-        return proxy.getHistroy(intstId, callBack)    }
+        return proxy.getHistroy(intstId, callBack)
+    }
 
     override fun resendOrder(
         request: ResendOrderRequest,

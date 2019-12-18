@@ -2,6 +2,9 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.library.workorder.model.RepairsPage
+import com.einyun.app.library.workorder.model.*
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
@@ -30,6 +33,30 @@ interface WorkOrderService : EinyunService {
         request: List<String>,
         callBack: CallBack<Map<String, GetMappingByUserIdsResponse>>
     ): LiveData<Map<String, GetMappingByUserIdsResponse>>
+
+    //获取报修代跟进列表
+    fun getRepairWaitFollow(
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
+    )
+
+    //获取报修抢单进列表
+    fun getRepairGrab(
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
+    )
+
+    //获取报修已跟进列表
+    fun getRepaiAlreadyFollow(
+        request: RepairsPageRequest, callBack: CallBack<AlreadyFollowPageResult>
+    )
+    //获取报修已办结列表
+    fun getRepaiAlreadyDone(
+        request: RepairsPageRequest, callBack: CallBack<AlreadyDonePageResult>
+    )
+    //获取报修抄送我
+    fun getRepairCopyMe(
+        request: RepairsPageRequest, callBack: CallBack<RepairCopyMePageResullt>
+    )
+
     fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>):LiveData<List<TypeAndLine>>
     fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
