@@ -36,6 +36,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -161,9 +162,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             reject(binding, model);
 
                             if (!TextUtils.isEmpty(model.result)) {
-                                if (model.result.equals(WorkNode.RESULT_REJECT)) {
+                                if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onReject(binding);
-                                } else if (model.result.equals(WorkNode.RESULT_PASS)) {
+                                } else if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onAgree(binding);
                                 }
                             }
@@ -189,7 +190,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 protected void reject(ItemPlanWorkNodeBinding binding, WorkNode model) {
                     binding.btnReject.setOnClickListener(v -> {
                         onReject(binding);
-                        model.setResult(WorkNode.RESULT_REJECT);
+                        model.setResult(ResultState.RESULT_FAILD);
                     });
                 }
 
@@ -197,7 +198,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 protected void agree(ItemPlanWorkNodeBinding binding, WorkNode model) {
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
-                        model.setResult(WorkNode.RESULT_PASS);
+                        model.setResult(ResultState.RESULT_FAILD);
                     });
                 }
 

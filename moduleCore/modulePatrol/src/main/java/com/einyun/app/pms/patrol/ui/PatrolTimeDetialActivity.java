@@ -1,11 +1,12 @@
 package com.einyun.app.pms.patrol.ui;
 
-
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
@@ -14,20 +15,18 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeWorkNodeBinding;
 import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
+
 /**
  * 巡更详情，巡更（更：时间，打更），按时进行巡查
  */
 @Route(path = RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-public class PatrolTimeHandleActivity extends PatrolDetialActivity {
-    @Autowired
-    IUserModuleService userModuleService;
+public class PatrolTimeDetialActivity extends PatrolHandleActivity{
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
@@ -39,9 +38,25 @@ public class PatrolTimeHandleActivity extends PatrolDetialActivity {
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType= ListType.PENDING.getType();
+
+    protected void setListType(int listType){
+        super.setListType(listType);
+    }
+
+    protected void setOrderId(String orderId){
+        super.setOrderId(orderId);
+    }
+
     @Override
     protected PatrolViewModel initViewModel() {
         return new ViewModelProvider(this,new ViewModelFactory()).get(PatrolViewModel.class);
+    }
+
+
+    @Override
+    public void initViews(Bundle savedInstanceState) {
+        super.initViews(savedInstanceState);
+        setHeadTitle(R.string.title_patrol_time);
     }
 
     protected void initRequest() {
@@ -50,6 +65,18 @@ public class PatrolTimeHandleActivity extends PatrolDetialActivity {
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
+    }
+
+    @Override
+    protected void switchStateUI() {
+        super.switchStateUI();
+        binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
+        binding.itemOrdered.setVisibility(View.VISIBLE);
+        binding.llGrid.setVisibility(View.GONE);
+        binding.llPlanName.setVisibility(View.GONE);
+        binding.llWorkGuide.setVisibility(View.GONE);
+        binding.llTypes.setVisibility(View.GONE);
+        binding.itemCaptures.setVisibility(View.GONE);
     }
 
     @Override
@@ -108,7 +135,7 @@ public class PatrolTimeHandleActivity extends PatrolDetialActivity {
                  */
                 protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
                     //是否需要拍照
-                    if(ResultState.RESULT_SUCCESS.equals(model.is_photo)){//需要拍照
+                    if(model.is_photo>0){//需要拍照
                         if(!TextUtils.isEmpty(model.pic_url)){//是否已有拍照记录，有拍照记录，显示已拍照
                             binding.llPhotoComplete.setVisibility(View.VISIBLE);
                             binding.llCapture.setVisibility(View.GONE);

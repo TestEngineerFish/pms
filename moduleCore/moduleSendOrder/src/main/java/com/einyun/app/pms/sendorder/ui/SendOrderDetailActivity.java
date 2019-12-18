@@ -249,6 +249,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      */
     private void showApply() {
         if (isNeedCheckAccept()) {//如果验收人是自己，显示验收
+            binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.checkAndAccept.getRoot().setVisibility(View.VISIBLE);//显示验收
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);//显示处理信息

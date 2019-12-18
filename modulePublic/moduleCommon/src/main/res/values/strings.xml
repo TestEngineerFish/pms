@@ -115,6 +115,7 @@
     <string name="text_alert_handle_node">请选择工作节点 %s 的处理结果</string>
     <string name="text_no">序号</string>
     <string name="text_work_items">工作事项/节点</string>
+    <string name="text_patrol_time_manager">巡更点处理</string>
     <string name="text_work_time_items">寻根点名称/位置</string>
     <string name="text_handle_pic">处理后图片</string>
     <string name="text_resolve_result">处理结果</string>

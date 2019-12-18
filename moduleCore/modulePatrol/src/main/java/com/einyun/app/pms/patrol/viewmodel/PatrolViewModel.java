@@ -57,6 +57,8 @@ public class PatrolViewModel extends BaseUploadViewModel {
                         index.getF_WK_ID(),
                         index.getF_WK_CONTENT(),
                         index.getF_WK_NODE(),
+                        index.getSign_type(),
+                        index.getIs_photo(),
                         index.getF_WK_RESULT(),
                         index.getSign_time(),
                         index.getSort(),

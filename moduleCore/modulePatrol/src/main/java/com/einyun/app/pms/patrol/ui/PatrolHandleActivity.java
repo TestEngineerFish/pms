@@ -4,13 +4,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
@@ -22,6 +18,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
@@ -40,8 +37,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * 巡查处理
+ */
 @Route(path = RouterUtils.ACTIVITY_PATROL_HANDLE)
-public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends PatrolDetialActivity {
+public class PatrolHandleActivity extends PatrolDetialActivity {
     @Autowired
     IUserModuleService userModuleService;
     @Autowired(name = RouteKey.KEY_TASK_ID)
@@ -56,6 +56,14 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType= ListType.PENDING.getType();
+
+    protected void setListType(int listType){
+        super.setListType(listType);
+    }
+
+    protected void setOrderId(String orderId){
+        super.setOrderId(orderId);
+    }
 
     @Override
     protected PatrolViewModel initViewModel() {
@@ -75,8 +83,8 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
     }
 
     protected void initRequest() {
-        super.orderId=orderId;
-        super.listType=listType;
+        super.setListType(listType);
+        super.setOrderId(orderId);
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
@@ -100,9 +108,9 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
                         reject(binding, model);
 
                         if (!TextUtils.isEmpty(model.result)) {
-                            if (model.result.equals(WorkNode.RESULT_REJECT)) {
+                            if (ResultState.RESULT_FAILD.equals(model.result)) {
                                 onReject(binding);
-                            } else if (model.result.equals(WorkNode.RESULT_PASS)) {
+                            } else if (ResultState.RESULT_FAILD.equals(model.result)) {
                                 onAgree(binding);
                             }
                         }
@@ -127,7 +135,7 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
                 protected void reject(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnReject.setOnClickListener(v -> {
                         onReject(binding);
-                        model.setResult(WorkNode.RESULT_REJECT);
+                        model.setResult(ResultState.RESULT_FAILD);
                         saveLocalUserData();
                     });
                 }
@@ -136,7 +144,7 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
                 protected void agree(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
-                        model.setResult(WorkNode.RESULT_PASS);
+                        model.setResult(ResultState.RESULT_SUCCESS);
                         saveLocalUserData();
                     });
                 }
@@ -290,26 +298,6 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
         }
     }
 
-
-//    /**
-//     * 保存本地数据
-//     */
-//    protected void saveLocalUserData(){
-//        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
-//        List<String> images = new ArrayList<>();
-//        for (Uri uri : uris) {
-//            images.add(uri.toString());
-//        }
-//        if(patrolLocal==null){
-//            patrolLocal=new PatrolLocal();
-//            patrolLocal.setOrderId(orderId);
-//            patrolLocal.setUserId(userModuleService.getUserId());
-//        }
-//        patrolLocal.setImages(images);
-//        patrolLocal.setNote(binding.limitInput.getString());
-//        patrolLocal.setNodes(nodesAdapter.getDataList());
-//        viewModel.saveLocal(patrolLocal);
-//    }
 
     /**
      * 提交

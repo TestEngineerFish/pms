@@ -22,6 +22,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -62,11 +63,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     protected int listType= ListType.PENDING.getType();
-
     protected PhotoSelectAdapter photoSelectAdapter;
     protected final int MAX_PHOTO_SIZE = 4;
 
-    protected RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode> nodesAdapter;
+    protected RVBindingAdapter nodesAdapter;
     protected PatrolLocal patrolLocal;
     protected PatrolInfo patrolInfo;
     protected AlertDialog alertDialog;
@@ -91,7 +91,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     @Override
     protected void initData() {
         super.initData();
-
         setUpPhotoList();
         //工作节点适配
         setUpWorkNodes();
@@ -100,17 +99,27 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         loadData();
     }
 
+    /**
+     * 初始化request
+     */
     protected void initRequest() {
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
     }
 
+    /**
+     * UI切换
+     */
     protected void switchStateUI() {
         binding.panelHandleForm.setVisibility(View.GONE);
+        binding.itemOrdered.setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
     }
 
+    /**
+     * 表单图片列表，添加上传图片
+     */
     protected void setUpPhotoList() {
         photoSelectAdapter = new PhotoSelectAdapter(this);
         binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
@@ -120,6 +129,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
     }
 
+    /**
+     * 工作节点
+     */
     protected void setUpWorkNodes() {
         if (nodesAdapter == null) {
             nodesAdapter = new RVBindingAdapter<ItemPatrolWorkNodeBinding, WorkNode>(this, com.einyun.app.pms.patrol.BR.node) {
@@ -131,7 +143,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                     } else {
                         //处理节点
                         tableItem(binding, position);
-                        if (WorkNode.RESULT_PASS.equals(model.getResult())) {
+                        if (ResultState.RESULT_SUCCESS.equals(model.getResult())) {
                             onAgree(binding);
                         } else {
                             onReject(binding);
@@ -202,6 +214,14 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
     }
 
+    protected void setListType(int listType){
+        this.listType=listType;
+    }
+
+    protected void setOrderId(String orderId){
+        this.orderId=orderId;
+    }
+
     protected void updateUI(PatrolInfo patrol) {
         if (patrol == null) {
             return;
@@ -244,8 +264,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected void uploadPostponeUI(PatrolInfo patrol, ExtensionApplicationConvert convert) {
         if (patrol.getDelayExtensionApplication() != null) {
             binding.panelPostponeInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.panelHandleForm.setVisibility(View.GONE);
-            binding.btnSubmit.setVisibility(View.GONE);
             binding.panelPostponeInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getDelayExtensionApplication())));
         }
     }
@@ -260,8 +278,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected ExtensionApplicationConvert updateForceCloseUI(PatrolInfo patrol,ExtensionApplicationConvert convert) {
         if (patrol.getExtensionApplication() != null) {
             binding.panelCloseInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.panelHandleForm.setVisibility(View.GONE);
-            binding.btnSubmit.setVisibility(View.GONE);
             binding.panelCloseInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getExtensionApplication())));
         }
         return convert;
