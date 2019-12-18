@@ -55,19 +55,23 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
     PhotoSelectAdapter photoSelectAdapter;
     private final int MAX_PHOTO_SIZE = 4;
 
-    private int getExtDays() {
+    private void getExtDays(ActivityApplyLateBinding binding) {
         int i = 0;
+        int j = 0;
         if (extensionApplication == null || extensionApplication.size() == 0) {
-            return i;
+            binding.applyDate.setText( "0天");
+            binding.applyNum.setText("0次");
+            return;
         }
         List<ExtensionApplication> exts = new ArrayList<>();
         for (ExtensionApplication ext : extensionApplication) {
             if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null) {
+                j++;
                 i = i + Integer.valueOf(ext.getExtensionDays());
             }
         }
-
-        return i;
+        binding.applyDate.setText( i + "天");
+        binding.applyNum.setText(j + "次");
     }
 
     @Override
@@ -87,7 +91,8 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         setHeadTitle(R.string.text_apply_postpone);
         binding.setCallBack(this);
         selectPng();
-        binding.applyDate.setText(getExtDays() + "天");
+        getExtDays(binding);
+
     }
 
     /**

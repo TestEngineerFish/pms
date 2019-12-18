@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,6 +18,7 @@ import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
@@ -413,7 +415,14 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         //如果是室内报修  必须选择预约上门时间
         if ("indoor".equals(request.getBizData().getAreaId())) {
             if (!StringUtil.isNullStr(request.getBizData().getAppointTime())) {
-                ToastUtil.show(this, "请选择预约上门时间");
+                new AlertDialog(this).builder().
+                        setTitle(getResources().getString(R.string.tip))
+            .setMsg("请选择预约上门时间").setPositiveButton("我知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 return false;
             }
         }
