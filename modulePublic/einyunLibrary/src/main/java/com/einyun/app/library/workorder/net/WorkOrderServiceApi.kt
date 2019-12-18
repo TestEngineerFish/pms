@@ -2,6 +2,7 @@ package com.einyun.app.library.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
@@ -105,7 +106,7 @@ interface WorkOrderServiceApi {
      * 获取报修类别与条线
      */
     @GET(URLs.URL_REPAIR_TYPE_MAP_LIST)
-    fun repairTypeList(): Flowable<DoorListResponse>
+    fun repairTypeList(): Flowable<DoorResult>
 
     /**
      * 启动报修

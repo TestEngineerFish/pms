@@ -324,7 +324,10 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 启动投诉流程
      */
-    override fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean> {
+    override fun startComplain(
+        request: CreateClientComplainOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
         var liveData = MutableLiveData<Boolean>()
         serviceApi?.startComplain(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
@@ -343,12 +346,8 @@ class WorkOrderRepository : WorkOrderService {
         var liveData = MutableLiveData<DoorResult>()
         serviceApi?.repairTypeList()?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
-                if (it.isState) {
-                    callBack.call(it.data)
-                    liveData.postValue(it.data)
-                } else {
-                    callBack.onFaild(EinyunHttpException(it))
-                }
+                callBack.call(it)
+                liveData.postValue(it)
             }, {
                 callBack.onFaild(it)
             })
@@ -358,7 +357,10 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 启动问询流程
      */
-    override fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean> {
+    override fun startEnquiry(
+        request: CreateClientEnquiryOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
         var liveData = MutableLiveData<Boolean>()
         serviceApi?.startEnquiry(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
