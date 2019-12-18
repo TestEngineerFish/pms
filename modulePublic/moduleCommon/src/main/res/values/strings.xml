@@ -136,6 +136,8 @@
     <string name="text_ordered">有序</string>
     <string name="text_unordered">无序</string>
 
+    <string name="alert_submit_client_complain_order_success">客户投诉工单创建成功</string>
+    <string name="alert_submit_client_repair_order_success">客户报修工单创建成功</string>
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
 

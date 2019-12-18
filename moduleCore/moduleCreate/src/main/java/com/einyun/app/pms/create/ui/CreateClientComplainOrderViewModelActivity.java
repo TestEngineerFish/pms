@@ -21,6 +21,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -45,7 +46,7 @@ import java.util.List;
 public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateClientComplainOrderBinding, CreateViewModel> implements PeriodizationView.OnPeriodSelectListener {
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
-    private CreateClientEnquiryOrderRequest request;
+    private CreateClientComplainOrderRequest request;
     private List<DictDataModel> dictComplainWayList = new ArrayList<>();
     private List<DictDataModel> dictComplainNatureList = new ArrayList<>();
     private List<TypeAndLine> lines = new ArrayList<>();
@@ -64,7 +65,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.create_complain_order_title);
-        request = new CreateClientEnquiryOrderRequest();
+        request = new CreateClientComplainOrderRequest();
         binding.setCallBack(this);
         //获取投诉、问询、报修方式
         viewModel.getByTypeKey(Constants.ENQUIRY_WAY).observe(this, dictDataModels -> {
@@ -175,8 +176,8 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
                 //获取条线id
                 for (DictDataModel childBean : dictComplainNatureList) {
                     if (childBean.getName().equals(txStrList.get(position))) {
-                        request.getBizData().setWay(childBean.getName());
-                        request.getBizData().setWayId(childBean.getKey());
+                        request.getBizData().setPropertyName(childBean.getName());
+                        request.getBizData().setPropertyId(childBean.getKey());
                     }
                 }
                 binding.setBean(request);
@@ -196,7 +197,12 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
         }
         List<String> txStrList = new ArrayList<>();
         for (DictDataModel data : dictComplainWayList) {
-            txStrList.add(data.getName());
+            if (!data.getKey().equals("400") &&
+                    !data.getKey().equals("proprietor_app") &&
+                    !data.getKey().equals("owner_app") &&
+                    !data.getKey().equals("mobile_association")) {
+                txStrList.add(data.getName());
+            }
         }
         BottomPicker.buildBottomPicker(this, txStrList, cwDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
@@ -292,20 +298,24 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
             return false;
         }
         if (!StringUtil.isNullStr(binding.userName.getText().toString())) {
-            ToastUtil.show(this, "请填写问询人");
+            ToastUtil.show(this, "请填写投诉人");
             return false;
         }
         if (!StringUtil.isNullStr(request.getBizData().getWay())) {
-            ToastUtil.show(this, "请选择问询方式");
+            ToastUtil.show(this, "请选择投诉方式");
             return false;
         }
         if (!StringUtil.isNullStr(request.getBizData().getCate())) {
-            ToastUtil.show(this, "请选择问询类别");
+            ToastUtil.show(this, "请选择投诉类别");
+            return false;
+        }
+        if (!StringUtil.isNullStr(request.getBizData().getPropertyName())) {
+            ToastUtil.show(this, "请选择投诉性质");
             return false;
         }
         String problemDescription = binding.ltQuestionDesc.getString();
         if (!StringUtil.isNullStr(problemDescription)) {
-            ToastUtil.show(this, "请填写问询内容");
+            ToastUtil.show(this, "请填写投诉内容");
             return false;
         }
         return true;
@@ -343,11 +353,11 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                viewModel.createClientEnquiryOrder(buidRequest(), data).observe(this, flag -> {
+                viewModel.createClientComplainOrder(buidRequest(), data).observe(this, flag -> {
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
-                        ToastUtil.show(getApplicationContext(), R.string.alert_submit_client_enquire_order_success);
+                        ToastUtil.show(getApplicationContext(), R.string.alert_submit_client_complain_order_success);
                         finish();
                     }
                 });
@@ -357,7 +367,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
         });
     }
 
-    private CreateClientEnquiryOrderRequest buidRequest() {
+    private CreateClientComplainOrderRequest buidRequest() {
         request.getBizData().setContent(binding.ltQuestionDesc.getString());
         request.getBizData().setMobile(binding.phone.getText().toString());
         request.getBizData().setUserName(binding.userName.getText().toString());
