@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -36,7 +37,11 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,7 +91,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         });
         //获取预约上门时间
         viewModel.getByTypeKey(Constants.REPAIR_TIME).observe(this, dictDataModels -> {
-
+            dictTimeList = dictDataModels;
         });
         selectPng();
     }
@@ -151,39 +156,43 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 complainLocation();
                 break;
             case REPAIRS_TIME:
-
+                repairTime();
                 break;
         }
     }
 
-    private void time(){
-        if (appointTimePeriodBeanList == null || appointTimePeriodBeanList.size() == 0) {
-            ToastUtil.show("暂无预约上门时间");
+    int rtTimeDefaultPos = 0;
+    int rtDateDefaultPos = 0;
+
+    private void repairTime() {
+        if (dictTimeList == null || dictTimeList.size() == 0) {
+            ToastUtil.show(this, "暂无预约上门时间");
             return;
         }
-        if (!ButtonUtils.isFastDoubleClick()) {
-            bottomPickerBeans = new ArrayList<>();
-            for (int i = 0; i < 7; i++) {
-                BottomPickerBean bottomPickerBean = new BottomPickerBean();
-                bottomPickerBean.setData(getOldDate(i));
-                List<String> dataList = new ArrayList<>();
-                for (int i1 = 0; i1 < appointTimePeriodBeanList.size(); i1++) {
-                    dataList.add(appointTimePeriodBeanList.get(i1).getName());
-                }
-                bottomPickerBean.setDataList(dataList);
-                bottomPickerBeans.add(bottomPickerBean);
+        List<BottomPickerModel> models = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            BottomPickerModel model = new BottomPickerModel();
+            model.setData(getOldDate(i));
+            List<String> dataList = new ArrayList<>();
+            for (DictDataModel data : dictTimeList) {
+                dataList.add(data.getName());
             }
-
-            BottomPicker.buildBottomPicker(this, bottomPickerBeans, dateDefaultPos, timeDefaultPos, new BottomPicker.OnItemDoublePickListener() {
-                @Override
-                public void onPick(int position1, int position2) {
-                    dateDefaultPos = position1;
-                    timeDefaultPos = position2;
-                    repairTvTime.setText(bottomPickerBeans.get(position1).getData() + " " + bottomPickerBeans.get(position1).getDataList().get(position2));
-                    appointTimePeriodBean = appointTimePeriodBeanList.get(position2);
-                }
-            });
+            model.setDataList(dataList);
+            models.add(model);
         }
+
+        BottomPicker.buildBottomPicker(this, models, rtDateDefaultPos, rtTimeDefaultPos, new BottomPicker.OnItemDoublePickListener() {
+            @Override
+            public void onPick(int position1, int position2) {
+                rtDateDefaultPos = position1;
+                rtTimeDefaultPos = position2;
+                BottomPickerModel model = models.get(position1);
+                binding.time.setText(model.getData() + " " + model.getDataList().get(position2));
+                request.getBizData().setAppointTime(model.getData());
+                request.getBizData().setAppointTimePeriodId(dictTimeList.get(position2).getKey());
+                request.getBizData().setAppointTimePeriod(dictTimeList.get(position2).getName());
+            }
+        });
     }
 
     private void selectHouse() {
@@ -202,6 +211,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     }
 
     int cnDefaultPos = 0;
+
     /**
      * 报修性质
      */
@@ -231,6 +241,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     }
 
     int cwDefaultPos = 0;
+
     /**
      * 报修方式
      */
@@ -265,6 +276,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     }
 
     int clDefaultPos = 0;
+
     /**
      * 报修区域
      */
@@ -453,5 +465,19 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         }
     }
 
+    public static String getOldDate(int distanceDay) {
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+        Date beginDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(beginDate);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
+        Date endDate = null;
+        try {
+            endDate = dft.parse(dft.format(date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dft.format(endDate);
+    }
 
 }

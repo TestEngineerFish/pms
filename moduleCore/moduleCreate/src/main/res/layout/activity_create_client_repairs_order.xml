@@ -185,8 +185,8 @@
                         android:text="预约上门时间" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.bizData.propertyName}" />
+                        android:id="@+id/time"
+                        style="@style/tv_create_order_select" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
