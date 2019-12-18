@@ -117,6 +117,9 @@
         <activity android:name=".mine.ui.UserHeadShotViewModuleActivity"/>
         <activity android:name=".mine.ui.UserInfoViewModuleActivity"/>
        <!-- Mine end       -->
+       <!--  客户问询开始      -->
+        <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
+       <!--  客户问询结束      -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.einyun.app.pms.fileprovider"

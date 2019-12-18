@@ -58,5 +58,11 @@ public class RouteKey {
 
     //审批
     public static final String APPROVAL_LIST_FROM = "APPROVAL_LIST_FROM";
+    //客户问询
+    public static final String FRAGMENT_TO_FOLLOW_UP = "FRAGMENT_TO_FOLLOW_UP";
+    public static final String FRAGMENT_TO_FEED_BACK = "FRAGMENT_TO_FEED_BACK";
+    public static final String FRAGMENT_HAVE_TO_FOLLOW_UP = "FRAGMENT_HAVE_TO_FOLLOW_UP";
+    public static final String FRAGMENT_TRANSFERRED_TO= "FRAGMENT_TRANSFERRED";//已办结
+    public static final String FRAGMENT_COPY_ME = "FRAGMENT_COPY_ME";
 
 }

@@ -4,28 +4,21 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.paging.bean.QueryBuilder;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.application.CommonApplication;
-import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
@@ -47,9 +40,7 @@ import com.einyun.app.pms.approval.viewmodule.ApprovalFragmentViewModel;
 import com.einyun.app.pms.approval.viewmodule.ApprovalViewModelFactory;
 
 
-import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +50,9 @@ import java.util.List;
  */
 public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApprovalBinding, ApprovalFragmentViewModel> implements CustomPopWindow.OnItemClickListener , ItemClickListener<ApprovalItemmodule> ,PeriodizationView.OnPeriodSelectListener{
 
-
+    public  int mApprovalTypePosition=-1;
+    public  int mApprovalChildTypePosition=-1;
+    public  int mApprovalStatusPosition=-1;
     private int tabId;
     RVPageListAdapter<ItemApprovalListBinding, ApprovalItemmodule> adapter;
     private ApprovalBean approvalBean;
@@ -286,7 +279,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 
                     if (approvalAuditStateModule.size()!=0&&approvalAuditTypeModule.size()!=0) {
                         if (customPopWindow==null) {
-                            customPopWindow=new CustomPopWindow(getActivity(),tabId,approvalAuditTypeModule,approvalAuditStateModule);
+                            customPopWindow=new CustomPopWindow(getActivity(),tabId,approvalAuditTypeModule,approvalAuditStateModule, mApprovalTypePosition, mApprovalChildTypePosition, mApprovalStatusPosition, auditType, auditSubType, auditStatus);
                             if (!customPopWindow.isShowing()) {
                                 customPopWindow.showAsDropDown(binding.llTableLine);
                                 customPopWindow.setOnItemClickListener(this);
@@ -304,7 +297,9 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 
 
         }else {
-            CustomPopWindow customPopWindow = new CustomPopWindow(getActivity(),tabId,approvalAuditTypeModule,approvalAuditStateModule);
+
+                customPopWindow = new CustomPopWindow(getActivity(),tabId,approvalAuditTypeModule,approvalAuditStateModule,mApprovalTypePosition,mApprovalChildTypePosition,mApprovalStatusPosition,auditType,auditSubType,auditStatus);
+
             if (!customPopWindow.isShowing()) {
                 customPopWindow.showAsDropDown(binding.llTableLine);
                 customPopWindow.setOnItemClickListener(this);
@@ -352,10 +347,13 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     *结合分期 根据个字段生成请求bean
     * */
     @Override
-    public void onData(String auditType, String auditSubType, String auditStatus) {
+    public void onData(String auditType, String auditSubType, String auditStatus, int mApprovalTypePosition, int mApprovalChildTypePosition, int mApprovalStatusPosition) {
         this.auditType=auditType;
         this.auditSubType=auditSubType;
         this.auditStatus=auditStatus;
+        this.mApprovalTypePosition=mApprovalTypePosition;
+        this.mApprovalChildTypePosition=mApprovalChildTypePosition;
+        this.mApprovalStatusPosition=mApprovalStatusPosition;
         initPage();
         if (auditType.equals("")&&auditStatus.equals("")&&auditStatus.equals("")) {
             binding.tvSelect.setTextColor(getResources().getColor(R.color.greyTextColor));

@@ -51,6 +51,7 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
             hodler.textview = (TextView) convertView.findViewById(R.id.tv_content);
             hodler.tvTopLine = (TextView) convertView.findViewById(R.id.tv_line_top);
             hodler.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
+            hodler.tvApprovalContent = (TextView) convertView.findViewById(R.id.tv_approval_content);
             hodler.texBottomLine = (TextView) convertView.findViewById(R.id.tv_line_bottom);
             hodler.tvState = (TextView) convertView.findViewById(R.id.tv_state);
             hodler.ivState = (ImageView) convertView.findViewById(R.id.iv_state);
@@ -69,6 +70,7 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
         }
         ApprovalDetailInfoBean.RowsBean rowsBean = rows.get(position);
         hodler.tvTime.setText( TimeUtil.getAllTime(rowsBean.getAudit_date(),true));
+        hodler.tvApprovalContent.setText(rowsBean.getComment());
         //富文本
         String content=rowsBean.getAuditor()+" ("+rowsBean.getApprovalRole()+ ")";
         SpannableString mSpannableString = new SpannableString(rowsBean.getAuditor()+" ("+rowsBean.getApprovalRole()+")");
@@ -101,6 +103,7 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
         TextView texBottomLine;
         TextView tvState;
         TextView tvTime;
+        TextView tvApprovalContent;
         ImageView ivState;
     }
 }
