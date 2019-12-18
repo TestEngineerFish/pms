@@ -117,7 +117,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             ?.subscribe({ response: PlanListResponse ->
                 if (response.isState) {
                     callBack.call(response.data)
-//                        liveData.postValue(response.value)
+                    liveData.postValue(response.value)
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
