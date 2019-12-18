@@ -3,11 +3,11 @@ package com.einyun.app.library.workorder.net
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
+import com.einyun.app.library.workorder.model.Door
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
-import org.json.JSONObject
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -108,7 +108,7 @@ interface WorkOrderServiceApi {
      * 获取报修类别与条线
      */
     @GET(URLs.URL_REPAIR_TYPE_MAP_LIST)
-    fun repairTypeList(): Flowable<JSONObject>
+    fun repairTypeList(): Flowable<BaseResponse<Door>>
 
     /**
      * 启动报修

@@ -103,7 +103,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         layoutParams.height = ScreenUtils.getMetricsHeight(getContext()) / 2;
         binding.type.setText(getResources().getString(R.string.text_house));
         binding.rvOrgList.setLayoutParams(layoutParams);
-        binding.periodSelectDefault.setVisibility(View.GONE);
+        binding.periodSelectDefault.setText("默认房产");
         binding.hintText.setVisibility(View.GONE);
         viewModel.getHouseByCondition(divideId, null).observe(this, houseModels -> {
             this.houseModels = houseModels;

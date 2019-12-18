@@ -61,5 +61,5 @@ interface WorkOrderService : EinyunService {
     fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun startRepair(request: CreateClientRepairOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
-    fun repairTypeList(callBack: CallBack<DoorResult>):LiveData<DoorResult>
+    fun repairTypeList(callBack: CallBack<Door>): LiveData<Door>
 }

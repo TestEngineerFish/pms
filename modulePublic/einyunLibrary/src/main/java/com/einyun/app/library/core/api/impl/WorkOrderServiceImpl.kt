@@ -97,7 +97,7 @@ class WorkOrderServiceImpl : WorkOrderService {
         return proxy.startRepair(request, callBack)
     }
 
-    override fun repairTypeList(callBack: CallBack<DoorResult>): LiveData<DoorResult> {
+    override fun repairTypeList(callBack: CallBack<Door>): LiveData<Door> {
         return proxy.repairTypeList(callBack)
     }
 

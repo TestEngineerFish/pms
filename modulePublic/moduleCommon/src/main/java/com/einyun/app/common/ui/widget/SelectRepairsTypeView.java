@@ -98,7 +98,7 @@ public class SelectRepairsTypeView extends DialogFragment implements ItemClickLi
 
     private void initData() {
         binding.type.setText(getResources().getString(R.string.text_repairs_type));
-        binding.periodSelectDefault.setVisibility(View.GONE);
+        binding.periodSelectDefault.setText("默认报修类型");
         ViewGroup.LayoutParams layoutParams = binding.rvOrgList.getLayoutParams();
         layoutParams.height = ScreenUtils.getMetricsHeight(getContext()) / 2;
         binding.rvOrgList.setLayoutParams(layoutParams);
@@ -237,7 +237,7 @@ public class SelectRepairsTypeView extends DialogFragment implements ItemClickLi
 
                 @Override
                 public int getLayoutId() {
-                    return R.layout.item_work_type_choose;
+                    return R.layout.item_repairs_type_choose;
                 }
             };
         }

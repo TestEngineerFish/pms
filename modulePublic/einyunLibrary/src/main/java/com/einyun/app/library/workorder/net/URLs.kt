@@ -43,7 +43,7 @@ class URLs {
         // 客户端启动投诉流程
         const val URL_TASK_RUN_START:String="/$DOMAIN/workOrder/taskRun/v1/start"
         //获取报修类别与条线
-        const val URL_REPAIR_TYPE_MAP_LIST:String="/$DOMAIN/workOrder/customerRepair/v1/getRepairTypeMapList"
+        const val URL_REPAIR_TYPE_MAP_LIST:String="/$DOMAIN/workOrder/customerRepair/v1/getRepairAreaAndType"
         //创建报修工单
         const val URL_CUSTOMER_REPAIR_SUBMIT:String="/$DOMAIN/workOrder/customerRepair/v1/start"
         //创建问询工单

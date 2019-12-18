@@ -48,7 +48,6 @@ class WorkOrderRepository : WorkOrderService {
     }
 
 
-
     override fun getMappingByUserIds(
         request: List<String>,
         callBack: CallBack<Map<String, GetMappingByUserIdsResponse>>
@@ -349,13 +348,14 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 获取报修类别与条线
      */
-    override fun repairTypeList(callBack: CallBack<DoorResult>): LiveData<DoorResult> {
-        var liveData = MutableLiveData<DoorResult>()
+    override fun repairTypeList(callBack: CallBack<Door>): LiveData<Door> {
+        var liveData = MutableLiveData<Door>()
         serviceApi?.repairTypeList()?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
-                Log.e("1111",it.toString())
-//                callBack.call(it)
-//                liveData.postValue(it)
+                if (it.isState){
+                    callBack.call(it.data)
+                    liveData.postValue(it.data)
+                }
             }, {
                 callBack.onFaild(it)
             })

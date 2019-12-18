@@ -17,6 +17,7 @@ import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
+import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.DoorResult;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
@@ -263,10 +264,10 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
      * 获取报修类别与条线
      * @return
      */
-    public LiveData<DoorResult> repairTypeList() {
-        return workOrderService.repairTypeList(new CallBack<DoorResult>() {
+    public LiveData<Door> repairTypeList() {
+        return workOrderService.repairTypeList(new CallBack<Door>() {
             @Override
-            public void call(DoorResult data) {
+            public void call(Door data) {
             }
 
             @Override
