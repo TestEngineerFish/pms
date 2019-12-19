@@ -25,6 +25,9 @@ public class ViewModelFactory extends BaseViewModelFactory {
         if(modelClass.isAssignableFrom(RepairsViewModel.class)){
             return (T)new RepairsViewModel();
         }
+        if (modelClass.isAssignableFrom(RepairDetailViewModel.class)){
+            return (T)new RepairDetailViewModel();
+        }
         return super.create(modelClass);
     }
 }

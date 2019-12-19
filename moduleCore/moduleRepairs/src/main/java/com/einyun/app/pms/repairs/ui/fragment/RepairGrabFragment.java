@@ -14,7 +14,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -23,7 +22,6 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.base.BaseViewModelFragment;
-import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.repairs.BR;
@@ -42,26 +40,25 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_D
  * Paging Demo
  * Paging Component
  */
-public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel> {
+public class RepairGrabFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel> {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
 
-    public static RepairsViewModelFragment newInstance(Bundle bundle) {
+    /*public static RepairGrabFragment newInstance(Bundle bundle) {
         RepairsViewModelFragment fragment = new RepairsViewModelFragment();
         fragment.setArguments(bundle);
         Logger.d("setBundle->" + bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
         return fragment;
-    }
+    }*/
 
     @Override
     public int getLayoutId() {
-        return R.layout.repairs_fragment;
+        return R.layout.item_order_repair;
     }
 
 
     @Override
     protected void init() {
         super.init();
-
     }
 
     @Override
@@ -79,21 +76,20 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         } else {
             binding.repairOrerTabLn.setVisibility(View.VISIBLE);
         }
-        binding.repairsList.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 30));
     }
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
         RepairsPageRequest request = new RepairsPageRequest();
-        request.setBx_area_id("");
-        request.setBx_cate_lv1_id("");
-        request.setBx_cate_lv2_id("");
-        request.setBx_dk_id("");
+        /*request.setBx_area_id("1");
+        request.setBx_cate_lv1_id("1");
+        request.setBx_cate_lv2_id("1");
+        request.setBx_dk_id("1");
         request.setBx_time(Query.SORT_DESC);
-        request.setNode_id_("");
-        request.setDESC(Query.SORT_DESC);
-        request.setState("");
-        viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
+        request.setNode_id_("1");
+        request.setDESC("1");
+        request.setState("1");*/
+        viewModel.loadPagingData(request,getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
     }
@@ -115,35 +111,11 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
                 @Override
                 public void onBindItem(ItemOrderRepairBinding binding, RepairsModel repairsModel) {
-                    if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
-                        binding.itemGrabRe.setVisibility(View.VISIBLE);
-                    } else {
-                        binding.itemContactOrFeedRe.setVisibility(View.VISIBLE);
-                    }
-                    binding.itemContactOrFeedRe.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                                    .withString(RouteKey.KEY_PRO_INS_ID,repairsModel.getProInsId())
-                                   .navigation();
-                        }
-                    });
-                    binding.itemRepairDetail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                                    .withString(RouteKey.KEY_PRO_INS_ID,repairsModel.getProInsId())
-                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
-                                    .navigation();
-                        }
-                    });
                     binding.itemRepairGrab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            viewModel.grabRepair(repairsModel.getTaskId()).observe(getActivity(), status -> {
-                                if (status.booleanValue()) {
+                            viewModel.grabRepair(repairsModel.getTaskId()).observe(getActivity(),status->{
+                                if (status.booleanValue()){
                                     new AlertDialog(getActivity()).builder().setTitle(getResources().getString(R.string.tip))
                                             .setMsg(getResources().getString(R.string.text_grab_success)).
                                             setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
@@ -153,7 +125,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                                                 }
                                             }).show();
 
-                                } else {
+                                }else {
                                     new AlertDialog(getActivity()).builder().setTitle(getResources().getString(R.string.tip))
                                             .setMsg(getResources().getString(R.string.text_grab_faile)).
                                             setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {

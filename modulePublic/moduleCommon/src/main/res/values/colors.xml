@@ -64,4 +64,5 @@
     <color name="greenTextColor">#20CD70</color>
     <color name="grayFrameColor">#D4D4D4</color>
     <color name="redTextColor">#F03D3D</color>
+    <color name="material_txt_color">#666666</color>
 </resources>
