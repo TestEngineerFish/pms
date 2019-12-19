@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.databinding.BindingAdapter;
 
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -26,7 +27,10 @@ import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequ
  * @Version: 1.0
  */
 public class CreateOrderBindiAdapter {
-
+    @BindingAdapter("setTime")
+    public static void setTime(TextView view, Long value) {
+        view.setText(FormatUtil.formatDate(value));
+    }
     @BindingAdapter("setSelectTxt")
     public static void setSelectTxt(TextView view, String value) {
         if (StringUtil.isNullStr(value)) {

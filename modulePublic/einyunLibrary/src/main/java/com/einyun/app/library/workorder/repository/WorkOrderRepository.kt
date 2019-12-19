@@ -49,7 +49,8 @@ class WorkOrderRepository : WorkOrderService {
             }, {
                 callBack.onFaild(it)
             })
-        return liveData     }
+        return liveData
+    }
 
 
     override fun postCommunication(
@@ -316,24 +317,27 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 根据参数（如：手机号）查询处理中的投诉列表
      */
-    fun complainWorkListdPage(
+    override fun complainWorkListdPage(
         pageBean: PageBean,
         mobile: String,
         callBack: CallBack<ComplainModelPageResult>
-    ) {
+    ): LiveData<ComplainModelPageResult> {
         var builder = QueryBuilder()
         builder.addQueryItem("F_ts_mobile", mobile)
         builder.addSort("F_ts_time", Query.SORT_DESC)
+        var liveData = MutableLiveData<ComplainModelPageResult>()
         serviceApi?.complainWorkListdPage(builder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)
+                    liveData.postValue(response.data)
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, {
                 callBack.onFaild(it)
             })
+        return liveData;
     }
 
     /**
@@ -659,6 +663,96 @@ class WorkOrderRepository : WorkOrderService {
     }
 
     /**
+     * 投诉待跟进
+     */
+    fun getComplainWaitFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<ComplainPage>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getComplainWaitFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *投诉-已跟进
+     * */
+    fun getComplainAlreadyFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<ComplainPage>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getComplainAlreadyFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *投诉-已办结
+     * */
+    fun getComplainAlreadyDone(
+        request: RepairsPageRequest,
+        callBack: CallBack<ComplainPage>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getComplainAlreadyDone(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *投诉-抄送我
+     * */
+    fun getComplainCopyMe(
+        request: RepairsPageRequest,
+        callBack: CallBack<ComplainPage>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getComplainCopyMe(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *投诉-待反馈
+     * */
+    fun getComplainWaitFeed(
+        request: RepairsPageRequest,
+        callBack: CallBack<ComplainPage>
+    ) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getComplainWaitFeed(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
      * 抢单
      * */
     override fun grabRepair(taskId: String, callBack: CallBack<Boolean>): MutableLiveData<Boolean> {
@@ -673,10 +767,14 @@ class WorkOrderRepository : WorkOrderService {
             })
         return liveData
     }
+
     /**
      * 查看报修详情
      * */
-    override fun getRepairDetail(instId: String, callBack: CallBack<RepairsDetailModel>): LiveData<RepairsDetailModel> {
+    override fun getRepairDetail(
+        instId: String,
+        callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel> {
         var liveData = MutableLiveData<RepairsDetailModel>()
         var url = URLs.URL_REPAIR_DETAIL + instId
         serviceApi?.getRepairDetail(url)?.compose(RxSchedulers.inIoMain())
@@ -722,7 +820,8 @@ class WorkOrderRepository : WorkOrderService {
             .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
-            .addSort("bx_time", request.DESC)
+            .addSort("bx_time",request.DESC)
+            .addSort("F_ts_time", request.DESC)
             .setPageBean(request.pageBean)
         return builder
     }

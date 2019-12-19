@@ -3,6 +3,7 @@ package com.einyun.app.library.workorder.net
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
+import com.einyun.app.library.workorder.model.ComplainPage
 import com.einyun.app.library.workorder.model.Door
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
@@ -194,4 +195,31 @@ interface WorkOrderServiceApi {
 
     @POST(URLs.URL_INITIATE_COMMUNICATION)
     fun postCommunication(@Body request:PostCommunicationRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 客户报修-待跟进
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_WAIT_FOLLOW)
+    fun getComplainWaitFollow(@Body request: Query):Flowable<ComplainPage>
+    /**
+     * 客户报修-待反馈
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_WAIT_FOLLOW)
+    fun getComplainWaitFeed(@Body request: Query):Flowable<ComplainPage>
+    /**
+     * 客户报修-已跟进
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_ALREADY_FOLLOW)
+    fun getComplainAlreadyFollow(@Body request: Query):Flowable<ComplainPage>
+
+    /**
+     * 客户报修-已办结
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_ALREADY_DONE)
+    fun getComplainAlreadyDone(@Body request: Query):Flowable<ComplainPage>
+    /**
+     * 客户报修-抄送我
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_COPY_ME)
+    fun getComplainCopyMe(@Body request: Query):Flowable<ComplainPage>
 }

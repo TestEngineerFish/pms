@@ -15,5 +15,5 @@ class RepairsPageRequest : PageRquest() {
     var DESC: String? = null
     var tag: String? = null
 
-
+    var ts_time: String? = null
 }

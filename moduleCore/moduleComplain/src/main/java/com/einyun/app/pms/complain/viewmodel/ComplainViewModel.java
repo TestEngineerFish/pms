@@ -10,15 +10,16 @@ import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.complain.repository.DataSourceFactory;
 
 /**
- *RepairsViewModel
+ * RepairsViewModel
  */
 public class ComplainViewModel extends BasePageListViewModel<RepairsModel> {
     // TODO: Implement the ViewModel
 
     LiveData<PagedList<RepairsModel>> liveData;
     RepairsPageRequest request;
-    public void refresh(){
-        if(liveData!=null){
+
+    public void refresh() {
+        if (liveData != null) {
         }
     }
 
@@ -32,11 +33,12 @@ public class ComplainViewModel extends BasePageListViewModel<RepairsModel> {
 
     /**
      * 获取Paging LiveData
+     *
      * @return LiveData
      */
-    public LiveData<PagedList<RepairsModel>> loadPagingData(RepairsPageRequest repairsPageRequest){
-            liveData= new LivePagedListBuilder(new DataSourceFactory(repairsPageRequest), config)
-                    .build();
+    public LiveData<PagedList<RepairsModel>> loadPagingData(RepairsPageRequest repairsPageRequest, String tag) {
+        liveData = new LivePagedListBuilder(new DataSourceFactory(repairsPageRequest, tag), config)
+                .build();
         return liveData;
     }
 

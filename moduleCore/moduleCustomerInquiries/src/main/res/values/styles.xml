@@ -1,31 +1,4 @@
 <resources>
 
-    <style name="style_text_approval_left">
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginLeft">@dimen/px_20</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/greyTextColor</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="style_text_approval_right">
-        <item name="android:layout_marginLeft">@dimen/px_222</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_marginRight">@dimen/px_20</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/blackTextColor</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="style_tv_turn_order">
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/blueTextColor</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
 
 </resources>

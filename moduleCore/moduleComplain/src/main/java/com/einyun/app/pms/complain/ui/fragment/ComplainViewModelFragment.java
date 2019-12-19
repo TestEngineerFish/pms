@@ -11,13 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.model.BasicData;
+import com.einyun.app.common.model.SelectModel;
+import com.einyun.app.common.ui.widget.ConditionBuilder;
+import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
+import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
@@ -29,19 +38,24 @@ import com.einyun.app.pms.complain.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
+import java.util.Map;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
 /**
  * Paging Demo
  * Paging Component
  */
-public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFragmentBinding, ComplainViewModel> implements ItemClickListener<RepairsModel> {
+public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFragmentBinding, ComplainViewModel> implements PeriodizationView.OnPeriodSelectListener, ItemClickListener<RepairsModel> {
     RVPageListAdapter<ItemOrderComplainBinding, RepairsModel> adapter;
 
     public static ComplainViewModelFragment newInstance(Bundle bundle) {
         ComplainViewModelFragment fragment = new ComplainViewModelFragment();
         fragment.setArguments(bundle);
-        Logger.d("setBundle->"+bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
+        Logger.d("setBundle->" + bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
         return fragment;
     }
 
@@ -54,7 +68,40 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     @Override
     protected void init() {
         super.init();
+        binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出分期view
+                PeriodizationView periodizationView = new PeriodizationView();
+                periodizationView.setPeriodListener(ComplainViewModelFragment.this::onPeriodSelectListener);
+                periodizationView.show(getParentFragmentManager(), "");
+            }
+        });
+        binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
+            BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                @Override
+                public void call(BasicData data) {
+                    //弹出筛选view
+                    ConditionBuilder builder = new ConditionBuilder();
+                    List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+                            .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                            .mergeLineRes(data.getResources())
+                            .build();
+                    new SelectPopUpView(getActivity(), conditions)
+                            .setOnSelectedListener(selected -> handleSelect(selected))
+                            .showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                }
 
+                @Override
+                public void onFaild(Throwable throwable) {
+
+                }
+            });
+
+        });
+    }
+
+    private void handleSelect(Map<String, SelectModel> selected) {
     }
 
     @Override
@@ -69,18 +116,18 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         });
     }
 
-    private void loadPagingData(){
+    private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        RepairsPageRequest request=new RepairsPageRequest();
-        /*request.setBx_area_id("1");
-        request.setBx_cate_lv1_id("1");
-        request.setBx_cate_lv2_id("1");
-        request.setBx_dk_id("1");
-        request.setBx_time(Query.SORT_DESC);
-        request.setNode_id_("1");
-        request.setDESC("1");
-        request.setState("1");*/
-        viewModel.loadPagingData(request).observe(this,dataBeans->{
+        RepairsPageRequest request = new RepairsPageRequest();
+        request.setBx_area_id("");
+        request.setBx_cate_lv1_id("");
+        request.setBx_cate_lv2_id("");
+        request.setBx_dk_id("");
+        request.setTs_time(Query.SORT_DESC);
+        request.setNode_id_("");
+        request.setDESC(Query.SORT_DESC);
+        request.setState("");
+        viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
     }
@@ -88,8 +135,8 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     @Override
     protected void setUpData() {
         //停止刷新
-        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH,Boolean.class).observe(getActivity(), shown -> {
-            if(!shown){
+        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(getActivity(), shown -> {
+            if (!shown) {
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
@@ -102,27 +149,25 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
                 @Override
                 public void onBindItem(ItemOrderComplainBinding binding, RepairsModel repairsModel) {
-                    if(FRAGMENT_SEND_OWRKORDER_DONE.equals(getFragmentTag())){
-                        binding.itemResendRe.setVisibility(View.GONE);
+                    if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(getFragmentTag())) {
+                        binding.line.setVisibility(View.VISIBLE);
+                        binding.llTalkOrTurnSingle.setVisibility(View.VISIBLE);
+                        //转单
+                        binding.tvTurnOrder.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
+                        //沟通
+                        binding.tvTalk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
                     }
-                    binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-//                            ARouter.getInstance()
-//                                    .build(RouterUtils.ACTIVITY_RESEND_ORDER)
-//                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
-//                                    .withString(RouteKey.KEY_ORDER_ID,repairsModel.getID_())
-//                                    .withString(RouteKey.KEY_DIVIDE_ID,distribute.getF_DIVIDE_ID())
-//                                    .withString(RouteKey.KEY_PROJECT_ID,distribute.getF_PROJECT_ID())
-//                                    .navigation();
-                        }
-                    });
-                    binding.itemRepairGrab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-//                          viewModel.loadPagingData()
-                        }
-                    });
+                    if (FRAGMENT_REPAIR_WAIT_FEED.equals(getFragmentTag())) {
+                        binding.rlFeedBack.setVisibility(View.VISIBLE);
+                    }
                     binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getCreateTime()));
                 }
 
@@ -139,12 +184,13 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     }
 
 
-    protected String getFragmentTag(){
+    protected String getFragmentTag() {
         return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
     }
+
     @Override
     protected ComplainViewModel initViewModel() {
-       return new ViewModelProvider(this, new ViewModelFactory()).get(ComplainViewModel.class);
+        return new ViewModelProvider(this, new ViewModelFactory()).get(ComplainViewModel.class);
     }
 
 
@@ -159,12 +205,17 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         @SuppressLint("DiffUtilEquals")
         @Override
         public boolean areContentsTheSame(@NonNull RepairsModel oldItem, @NonNull RepairsModel newItem) {
-            return oldItem==newItem;
+            return oldItem == newItem;
         }
     };
 
     @Override
     public void onItemClicked(View veiw, RepairsModel data) {
+
+    }
+
+    @Override
+    public void onPeriodSelectListener(OrgModel orgModel) {
 
     }
 }
