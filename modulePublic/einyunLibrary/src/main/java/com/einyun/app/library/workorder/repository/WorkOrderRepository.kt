@@ -32,6 +32,26 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    override fun postCommunication(
+        request: PostCommunicationRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.postCommunication(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState) {
+                    callBack.call(it.isState)
+                    liveData.postValue(it.isState)
+                } else {
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
+
     override fun startRepair(
         request: CreateClientRepairOrderRequest,
         callBack: CallBack<Boolean>
@@ -352,7 +372,7 @@ class WorkOrderRepository : WorkOrderService {
         var liveData = MutableLiveData<Door>()
         serviceApi?.repairTypeList()?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
-                if (it.isState){
+                if (it.isState) {
                     callBack.call(it.data)
                     liveData.postValue(it.data)
                 }

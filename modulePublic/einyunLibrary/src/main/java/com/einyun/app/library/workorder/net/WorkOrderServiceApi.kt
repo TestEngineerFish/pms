@@ -172,4 +172,7 @@ interface WorkOrderServiceApi {
      * */
     @POST(URLs.URL_REPORT_REPAIRS_COPY_ME)
     fun getRepairCopyMe(@Body request: Query):Flowable<RepairCopyMeResponse>
+
+    @POST(URLs.URL_INITIATE_COMMUNICATION)
+    fun postCommunication(@Body request:PostCommunicationRequest):Flowable<BaseResponse<Any>>
 }

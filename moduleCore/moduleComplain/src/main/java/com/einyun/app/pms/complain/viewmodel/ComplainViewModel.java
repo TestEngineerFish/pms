@@ -1,4 +1,4 @@
-package com.einyun.app.pms.repairs.viewmodel;
+package com.einyun.app.pms.complain.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -7,12 +7,12 @@ import androidx.paging.PagedList;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
-import com.einyun.app.pms.repairs.repository.DataSourceFactory;
+import com.einyun.app.pms.complain.repository.DataSourceFactory;
 
 /**
  *RepairsViewModel
  */
-public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
+public class ComplainViewModel extends BasePageListViewModel<RepairsModel> {
     // TODO: Implement the ViewModel
 
     LiveData<PagedList<RepairsModel>> liveData;
@@ -36,18 +36,8 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
      */
     public LiveData<PagedList<RepairsModel>> loadPagingData(RepairsPageRequest repairsPageRequest){
             liveData= new LivePagedListBuilder(new DataSourceFactory(repairsPageRequest), config)
-//                .setBoundaryCallback(null)
-//                .setFetchExecutor(null)
                     .build();
         return liveData;
     }
 
-    /**
-     * 抢单
-     * */
-//    public
-
-    /**
-     * 抢单
-     * */
 }

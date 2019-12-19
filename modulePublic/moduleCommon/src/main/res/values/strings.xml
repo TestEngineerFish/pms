@@ -149,7 +149,7 @@
     <string name="text_already_follow">已跟进</string>
     <string name="text_report_repair_people">报修人</string>
     <string name="text_create_time">创建时间</string>
-
+    <string name="text_initiate_communication">发起沟通</string>
     <string name="text_repairs_type">报修类别</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>

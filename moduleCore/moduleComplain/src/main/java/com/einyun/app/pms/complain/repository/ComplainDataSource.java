@@ -1,4 +1,4 @@
-package com.einyun.app.pms.repairs.repository;
+package com.einyun.app.pms.complain.repository;
 
 import androidx.annotation.NonNull;
 
@@ -24,10 +24,10 @@ import com.einyun.app.base.paging.bean.PageBean;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class RepairsDataSource extends BaseDataSource<DictDataModel> {
+public class ComplainDataSource extends BaseDataSource<DictDataModel> {
     private RepairsPageRequest request;
 
-    public RepairsDataSource(RepairsPageRequest request) {
+    public ComplainDataSource(RepairsPageRequest request) {
         this.request = request;
     }
 

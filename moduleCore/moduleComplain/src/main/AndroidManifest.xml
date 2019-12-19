@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.einyun.app.pms.complain" />
+    package="com.einyun.app.pms.complain" >
+    <application>
+        <activity android:name=".ui.ComplainDetailActivity"></activity>
+        <activity android:name=".ui.ComplainActivity" />
+    </application>
+</manifest>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.complain.ui.CommunicationActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:onClick="@{()->callBack.selectPerson()}">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="沟通人员" />
+
+            <TextView
+                android:id="@+id/tv_person"
+                style="@style/tv_create_order_select"/>
+
+            <ImageView style="@style/tv_create_order_right_arrow" />
+        </LinearLayout>
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:onClick="@{()->callBack.selectTime()}">
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="答复时间" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/tv_create_order_select" />
+
+            <ImageView style="@style/tv_create_order_right_arrow" />
+        </LinearLayout>
+
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="沟通内容" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/px_30">
+
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/delay_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hintText="请输入沟通内容"
+                app:maxNumber="300" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="@style/submit_btn"
+                android:layout_alignParentBottom="true"
+                android:onClick="@{()->callBack.submit()}"
+                android:text="@string/text_submit" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

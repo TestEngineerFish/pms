@@ -1,4 +1,4 @@
-package com.einyun.app.pms.repairs.repository;
+package com.einyun.app.pms.complain.repository;
 
 import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
@@ -28,6 +28,6 @@ public class DataSourceFactory extends DataSource.Factory<Integer, DictDataModel
     @NonNull
     @Override
     public DataSource<Integer, DictDataModel> create() {
-        return new RepairsDataSource(request);
+        return new ComplainDataSource(request);
     }
 }

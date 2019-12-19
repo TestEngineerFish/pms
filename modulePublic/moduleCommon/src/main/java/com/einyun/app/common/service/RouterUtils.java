@@ -88,6 +88,7 @@ public class RouterUtils {
     public static final int ACTIVITY_REQUEST_PERSON_CHOOSE = 105;
 
 
+    public static final String ACTIVITY_COMMUNICATION="/complain/CommunicationActivity";
     /**********************Fragment*********************************/
     public static final String FRAGMENT_REPAIRS_PAGING="/repairs/RepairsFragment";
 

@@ -6,7 +6,6 @@ import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.api.proxy.WorkOrderServiceImplProxy
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
-import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
@@ -18,9 +17,7 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
-import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest
+import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
 /**
@@ -37,6 +34,14 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+    override fun postCommunication(
+        request: PostCommunicationRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.postCommunication(
+            request, callBack
+        )
+    }
 
     /**
      *客户报修-抄送我

@@ -1,4 +1,4 @@
-package com.einyun.app.pms.repairs.viewmodel;
+package com.einyun.app.pms.complain.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -22,8 +22,11 @@ public class ViewModelFactory extends BaseViewModelFactory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(RepairsViewModel.class)){
-            return (T)new RepairsViewModel();
+        if(modelClass.isAssignableFrom(ComplainViewModel.class)){
+            return (T)new ComplainViewModel();
+        }
+        if(modelClass.isAssignableFrom(DetailViewModel.class)){
+            return (T)new DetailViewModel();
         }
         return super.create(modelClass);
     }

@@ -69,5 +69,6 @@ class URLs {
         //客户报修-抄送我的
         const val URL_REPORT_REPAIRS_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_repair_flow"
 
+        const val URL_INITIATE_COMMUNICATION="/bpm-runtime/runtime/task/v1/communicate"
     }
 }

@@ -5,7 +5,6 @@ import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
-import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
@@ -19,9 +18,7 @@ import com.einyun.app.library.uc.user.repository.UserRepository
 import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
-import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest
+import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import com.einyun.app.library.workorder.repository.WorkOrderRepository
 
@@ -39,6 +36,16 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun postCommunication(
+        request: PostCommunicationRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.postCommunication(
+            request,
+            callBack
+        )!!
+    }
+
     override fun getRepairCopyMe(
         request: RepairsPageRequest,
         callBack: CallBack<RepairCopyMePageResullt>

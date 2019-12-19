@@ -2,16 +2,16 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
-import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
-import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest
+import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
+import io.reactivex.Flowable
+import retrofit2.http.Body
 
 /**
  *
@@ -62,4 +62,5 @@ interface WorkOrderService : EinyunService {
     fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun startRepair(request: CreateClientRepairOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun repairTypeList(callBack: CallBack<Door>): LiveData<Door>
+    fun postCommunication(request: PostCommunicationRequest,callBack: CallBack<Boolean>): LiveData<Boolean>
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -26,7 +27,6 @@ import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequ
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
-import com.einyun.app.pms.create.Constants;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.SelectType;
 import com.einyun.app.pms.create.databinding.ActivityCreateClientComplainOrderBinding;
