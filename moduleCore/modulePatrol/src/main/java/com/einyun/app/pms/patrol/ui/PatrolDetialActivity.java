@@ -3,12 +3,14 @@ package com.einyun.app.pms.patrol.ui;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -43,15 +45,17 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 巡查详情
  */
 @Route(path = RouterUtils.ACTIVITY_PATROL_DETIAL)
 public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatrolDetialBinding, PatrolViewModel> {
-    @Autowired
-    protected IUserModuleService userModuleService;
     @Autowired(name = RouteKey.KEY_TASK_ID)
     protected String taskId;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
@@ -335,7 +339,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         if(patrolLocal==null){
             patrolLocal=new PatrolLocal();
             patrolLocal.setOrderId(orderId);
-            patrolLocal.setUserId(userModuleService.getUserId());
         }
         patrolLocal.setImages(images);
         patrolLocal.setNote(binding.limitInput.getString());

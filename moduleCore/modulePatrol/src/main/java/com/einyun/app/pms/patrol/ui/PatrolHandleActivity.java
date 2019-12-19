@@ -20,7 +20,6 @@ import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -42,8 +41,6 @@ import java.util.List;
  */
 @Route(path = RouterUtils.ACTIVITY_PATROL_HANDLE)
 public class PatrolHandleActivity extends PatrolDetialActivity {
-    @Autowired
-    IUserModuleService userModuleService;
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
@@ -78,7 +75,10 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     }
 
     protected void switchStateUI() {
+        super.switchStateUI();
+        binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
         binding.btnSubmit.setVisibility(View.VISIBLE);
+        binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
     }
 
@@ -260,9 +260,9 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     private void acceptForm(PatrolInfo patrol){
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
         patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.APPLY.getState());
-        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
-        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
-        Logger.d("data->"+new Gson().toJson(patrol));
+        patrol.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
+        patrol.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
+//        Logger.d("data->"+new Gson().toJson(patrol));
         String base64=Base64Util.encodeBase64(new Gson().toJson(patrol));
         PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrol.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {

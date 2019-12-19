@@ -60,6 +60,10 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void setRightOption(int iconId){
         headBinding.ivRightOption.setImageResource(iconId);
     }
+
+    protected void hideRightOption(){
+        headBinding.ivRightOption.setVisibility(View.GONE);
+    }
     /**
      * 设置标题栏颜色
     * */

@@ -29,6 +29,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.pointcheck.R;
@@ -43,6 +44,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,14 +63,14 @@ import java.util.List;
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_POINT_CHECK_CREATE)
-public class CreatePointCheckActivity extends BaseHeadViewModelActivity<ActivityPointCheckCreateBinding, CreateCheckViewModel> implements PeriodizationView.OnPeriodSelectListener{
+public class CreatePointCheckActivity extends BaseHeadViewModelActivity<ActivityPointCheckCreateBinding, CreateCheckViewModel> implements PeriodizationView.OnPeriodSelectListener {
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private String divideId;
     private String divideCode;
     private String divideName;
-    public static int RESULT_PARAMS_RANG=1;
-    public static int RESULT_PARAMS_SELECT=2;
+    public static int RESULT_PARAMS_RANG = 1;
+    public static int RESULT_PARAMS_SELECT = 2;
     //    ProjectContentAdapter contentAdapter;
     RVBindingAdapter<ItemPointCheckProjectEditBinding, ProjectContentItemModel> adapter;
 
@@ -96,6 +98,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
+        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration());
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
         photoSelectAdapter.setAddListener(selectedSize -> {
             if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
@@ -107,7 +110,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -150,7 +153,6 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                 } else {
                                     binding.pointCheckRangSplit.setVisibility(View.VISIBLE);
                                     binding.pointCheckRangContainer.setVisibility(View.VISIBLE);
-                                    binding.edCheckResult.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
                                     binding.tvCheckRange.setText(model.getMinValue() + "-" + model.getMaxVal());
                                     binding.edCheckResult.setVisibility(View.VISIBLE);
                                     binding.btnAgree.setVisibility(View.GONE);
@@ -170,20 +172,22 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                     @Override
                                     public void afterTextChanged(Editable s) {
                                         String value = s.toString();
-                                        model.setCheckResult(Float.parseFloat(value));
+                                        if (!TextUtils.isEmpty(value)) {
+                                            model.setCheckResult(Float.parseFloat(value));
+                                        }
                                     }
                                 });
 
                             }
 
-                            protected void onReject(ItemPointCheckProjectEditBinding binding){
+                            protected void onReject(ItemPointCheckProjectEditBinding binding) {
                                 binding.btnAgree.setBackgroundResource(R.drawable.shape_frame_corners_gray);
                                 binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.normal_main_text_icon_color));
                                 binding.btnReject.setBackgroundResource(R.drawable.corners_red_large);
                                 binding.btnReject.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
                             }
 
-                            protected void onAgree(ItemPointCheckProjectEditBinding binding){
+                            protected void onAgree(ItemPointCheckProjectEditBinding binding) {
                                 binding.btnAgree.setBackgroundResource(R.drawable.corners_green_large);
                                 binding.btnAgree.setTextColor(binding.btnAgree.getResources().getColor(R.color.white));
                                 binding.btnReject.setBackgroundResource(R.drawable.shape_frame_corners_gray);
@@ -216,11 +220,11 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                 photoSelectAdapter.addPhotos(uris);
             }
         }
-        if(resultCode==RESULT_OK){
-            if(requestCode==RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE){
-                divideId=data.getStringExtra(DataConstants.KEY_BLOCK_ID);
-                divideName=data.getStringExtra(DataConstants.KEY_BLOCK_NAME);
-                divideCode=data.getStringExtra(DataConstants.KEY_BLOCK_CODE);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE) {
+                divideId = data.getStringExtra(DataConstants.KEY_BLOCK_ID);
+                divideName = data.getStringExtra(DataConstants.KEY_BLOCK_NAME);
+                divideCode = data.getStringExtra(DataConstants.KEY_BLOCK_CODE);
                 binding.tvCheckDivide.setText(divideName);
             }
         }
@@ -232,14 +236,14 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
 //                .withString(RouteKey.KEY_USER_ID, userModuleService.getUserId())
 //                .navigation(this, RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE);
         //弹出分期view
-        PeriodizationView periodizationView=new PeriodizationView();
+        PeriodizationView periodizationView = new PeriodizationView();
         periodizationView.setPeriodListener(CreatePointCheckActivity.this::onPeriodSelectListener);
-        periodizationView.show(getSupportFragmentManager(),"");
+        periodizationView.show(getSupportFragmentManager(), "");
     }
 
     public void onProjectClick() {
         if (TextUtils.isEmpty(divideId)) {
-            ToastUtil.show(getApplication(),R.string.alert_choose_massif);
+            ToastUtil.show(getApplication(), R.string.alert_choose_massif);
             return;
         }
         //加载所有点检事项
@@ -295,15 +299,15 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         //开始上传照片
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
-            if (data!=null) {
-                viewModel.create(buidRequest(),data).observe(this, flag -> {
+            if (data != null) {
+                viewModel.create(buidRequest(), data).observe(this, flag -> {
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
                         finish();
                     }
                 });
-            }else{
+            } else {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_failed);
             }
         });
@@ -312,6 +316,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
 
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+
     /**
      * CreatePointCheckRequest
      *
@@ -334,8 +339,8 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
             ProjectResultModel resultModel = new ProjectResultModel();
             resultModel.setCheckContentId(model.getId());
             resultModel.setCheckResult(model.getCheckResult() + "");
-            if(model.getCheckType()==RESULT_PARAMS_SELECT){
-                resultModel.setCheckResult((int)model.getCheckResult() + "");
+            if (model.getCheckType() == RESULT_PARAMS_SELECT) {
+                resultModel.setCheckResult((int) model.getCheckResult() + "");
             }
             list.add(resultModel);
         }
@@ -344,9 +349,9 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-        divideId=orgModel.getId();
-        divideName=orgModel.getName();
-        divideCode=orgModel.getCode();
+        divideId = orgModel.getId();
+        divideName = orgModel.getName();
+        divideCode = orgModel.getCode();
         binding.tvCheckDivide.setText(divideName);
     }
 }

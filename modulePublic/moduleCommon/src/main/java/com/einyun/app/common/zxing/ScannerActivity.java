@@ -23,25 +23,31 @@ import com.einyun.app.common.databinding.ActivityScannerBinding;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.google.zxing.Result;
+import com.orhanobut.logger.Logger;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 @Route(path = RouterUtils.ACTIVITY_SCANNER)
 public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBinding, BaseViewModel> {
-    private boolean mFlash;
+    protected boolean mFlash;
 
-    private ZXingScannerView.ResultHandler mResultHandler = new ZXingScannerView.ResultHandler() {
+    protected ZXingScannerView.ResultHandler mResultHandler = new ZXingScannerView.ResultHandler() {
         @Override
         public void handleResult(Result result) {
             binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
-            Intent intent = new Intent();
-            intent.putExtra(DataConstants.KEY_SCANNER_CONTENT, result.getText());
-            Log.e("shmshmshm扫码内容", result.getText());
-            Log.e("shmshmshm扫码格式", result.getBarcodeFormat().toString());
-            setResult(RESULT_OK, intent);
-            finish();
+            Logger.d("扫码内容", result.getText());
+            Logger.d("扫码格式", result.getBarcodeFormat().toString());
+            onScanResult(result.getText());
         }
     };
+
+    protected void onScanResult(String result){
+        Intent intent = new Intent();
+        intent.putExtra(DataConstants.KEY_SCANNER_CONTENT, result);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 
     @Override
     protected void initData() {

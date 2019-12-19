@@ -12,5 +12,19 @@
     <string name="text_patrol_time_handle">巡更点处理</string>
     <string name="text_require">要求:</string>
     <string name="text_duration">%d分钟</string>
+    <string name="text_qr_sign_in">二维码签到</string>
+    <string name="text_patrol_time_name">巡更点名称</string>
+    <string name="text_patrol_time_position">巡更点位置</string>
+    <string name="text_sample_pic">参考标准图片</string>
+    <string name="text_capture_pic">现场拍照对比</string>
+    <string name="text_patrol_check_nodes">巡更检查项</string>
+    <string name="text_patrol_time_signin">巡更签到</string>
+    <string name="text_signin_success">恭喜您！签到成功</string>
+    <string name="text_signin_failed">签到失败！请扫描正确的二维码</string>
+    <string name="text_auto_return">3s后自动返回</string>
+    <string name="text_need_order_sign_in">请按照顺序签到</string>
+    <string name="text_need_order_capture">请按照顺序拍照</string>
+    <string name="text_sign_in_ed">已签到</string>
+    <string name="text_un_sign_in">未签到</string>
 
 </resources>

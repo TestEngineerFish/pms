@@ -12,6 +12,7 @@ import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.Result;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
@@ -20,6 +21,8 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.pms.patrol.convert.PatrolInfoTypeConvert;
+import com.einyun.app.pms.patrol.model.SignCheckResult;
+import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
 import com.google.gson.Gson;
 
@@ -31,12 +34,16 @@ import java.util.List;
 import io.reactivex.Observable;
 
 public class PatrolViewModel extends BaseUploadViewModel {
-    PatrolRepo repo = new PatrolRepo();
+    protected PatrolRepo repo = new PatrolRepo();
     ResourceWorkOrderService service;
     MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public PatrolDetialRequest request;
+    protected MutableLiveData<PatrolLocal> localData=new MutableLiveData<>();
+    public IUserModuleService getUserService(){
+        return userModuleService;
+    }
 
     public PatrolViewModel(){
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
@@ -216,6 +223,24 @@ public class PatrolViewModel extends BaseUploadViewModel {
         return liveData;
     }
 
+    public boolean hasSignIn(WorkNode workNode){
+        if(SignInType.QR.equals(workNode.sign_type)){
+            if(SignCheckResult.F_WK_RESULT_SUCCESS==workNode.sign_result){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasCapture(WorkNode workNode){
+        if(workNode.is_photo>0){
+            if(!TextUtils.isEmpty(workNode.pic_url)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 获取用户本地输入数据
@@ -224,11 +249,10 @@ public class PatrolViewModel extends BaseUploadViewModel {
      * @return
      */
     public LiveData<PatrolLocal> loadLocalUserData(String orderId) {
-        MutableLiveData<PatrolLocal> liveData=new MutableLiveData<>();
          repo.loadLocalUserData(orderId,userModuleService.getUserId(), new CallBack<PatrolLocal>() {
              @Override
              public void call(PatrolLocal data) {
-                liveData.postValue(data);
+                 localData.postValue(data);
              }
 
              @Override
@@ -236,7 +260,32 @@ public class PatrolViewModel extends BaseUploadViewModel {
 
              }
          });
-        return liveData;
+        return localData;
+    }
+
+    /**
+     * 巡更点签到成功
+     * @param orderId
+     * @param pointId
+     */
+    public void signInSuccess(String orderId,String pointId){
+        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
+            @Override
+            public void call(PatrolLocal data) {
+                List<WorkNode> nodes=data.getNodes();
+                for(WorkNode node:nodes){
+                    if(pointId.equals(node.patrol_point_id)){
+                        node.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
+                        repo.saveLocalData(data);
+                    }
+                }
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
     }
 
     /**
@@ -245,6 +294,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
      * @param local
      */
     public void saveLocal(PatrolLocal local) {
+        local.setUserId(userModuleService.getUserId());
         repo.saveLocalData(local);
     }
 

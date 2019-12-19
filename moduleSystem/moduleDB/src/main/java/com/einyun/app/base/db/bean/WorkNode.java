@@ -1,6 +1,11 @@
 package com.einyun.app.base.db.bean;
 
-public class WorkNode {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class WorkNode implements Serializable {
     private int id;
     public  String number;
     public  String workThings;
@@ -21,6 +26,8 @@ public class WorkNode {
     public String pic_url;
     public int sign_result;
     public String sign_time;
+    private List<String> cachedImages;
+    private int F_WK_RESULT;
 
     public WorkNode(){}
 
@@ -43,6 +50,14 @@ public class WorkNode {
         this.patrol_point_id=patrol_point_id;
         this.pic_example_url=pic_example_url;
         this.patrol_items=patrol_items;
+    }
+
+    public List<String> getCachedImages() {
+        return cachedImages;
+    }
+
+    public void setCachedImages(List<String> cachedImages) {
+        this.cachedImages = cachedImages;
     }
 
     public int getIs_photo() {
@@ -164,4 +179,13 @@ public class WorkNode {
     public void setResult(String result) {
         this.result = result;
     }
+
+    public int getF_WK_RESULT() {
+        return F_WK_RESULT;
+    }
+
+    public void setF_WK_RESULT(int f_WK_RESULT) {
+        F_WK_RESULT = f_WK_RESULT;
+    }
+
 }

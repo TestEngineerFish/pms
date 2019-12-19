@@ -142,6 +142,7 @@
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
     <string name="text_repairs_type">报修类别</string>
+    <string name="text_know">我知道了</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>

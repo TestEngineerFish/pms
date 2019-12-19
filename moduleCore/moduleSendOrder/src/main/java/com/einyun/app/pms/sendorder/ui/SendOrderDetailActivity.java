@@ -145,6 +145,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
+        binding.orderForm.sendOrderImgList.addItemDecoration(new SpacesItemDecoration(18));
         binding.orderForm.sendOrderImgList.setAdapter(photoListFormAdapter);
 
     }
@@ -299,6 +300,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.postponeInfo.sendOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.postponeInfo.sendOrderPostponePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
@@ -321,6 +323,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.forceCloseInfo.sendOrderClosePicList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.forceCloseInfo.sendOrderClosePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extForceClose.getApplyFiles());

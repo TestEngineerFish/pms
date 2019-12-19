@@ -9,14 +9,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
-import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeWorkNodeBinding;
+import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
@@ -25,7 +26,7 @@ import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 /**
  * 巡更详情，巡更（更：时间，打更），按时进行巡查
  */
-@Route(path = RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
+@Route(path = RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
 public class PatrolTimeDetialActivity extends PatrolHandleActivity{
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
@@ -59,6 +60,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         setHeadTitle(R.string.title_patrol_time);
     }
 
+
     protected void initRequest() {
         setListType(listType);
         setOrderId(orderId);
@@ -70,7 +72,9 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
     @Override
     protected void switchStateUI() {
         super.switchStateUI();
-        binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
+        binding.panelHandleForm.setVisibility(View.GONE);
+        binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        binding.btnSubmit.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.VISIBLE);
         binding.llGrid.setVisibility(View.GONE);
         binding.llPlanName.setVisibility(View.GONE);
@@ -91,7 +95,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                         tableHead(binding);
                     } else {
                         //处理节点
-                        tableItem(binding, position);
+                        tableItem(binding,model, position);
                         //设置签到
                         setUpSignIn(binding,model);
                         //设置拍照
@@ -100,11 +104,15 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                 }
 
                 //处理节点
-                protected void tableItem(ItemPatrolTimeWorkNodeBinding binding, int position) {
+                protected void tableItem(ItemPatrolTimeWorkNodeBinding binding,WorkNode node, int position) {
                     binding.tvNumber.setText(position + "");
                     binding.tvWorkNode.setVisibility(View.VISIBLE);
                     binding.tvResult.setVisibility(View.GONE);
                     binding.tvWorkThings.setGravity(Gravity.LEFT);
+                    binding.llSign.setVisibility(View.GONE);
+                    binding.llCapture.setVisibility(View.GONE);
+                    binding.tvWorkNode.setOnClickListener(v -> navigatSignInDetial(node));
+                    binding.tvWorkThings.setOnClickListener(v -> navigatSignInDetial(node));
                 }
 
                 /**
@@ -118,11 +126,9 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                         binding.llSign.setVisibility(View.GONE);
                         binding.llSignComplete.setVisibility(View.GONE);
                     }else if(SignInType.QR.equals(model.sign_type)){//扫码签到
-                        if(ResultState.RESULT_SUCCESS.equals(model.sign_result)){//是否已签到，已签到
-                            binding.llSign.setVisibility(View.GONE);
+                        if(SignCheckResult.SIGN_IN_SUCCESS==model.sign_result){//是否已签到，已签到
                             binding.llSignComplete.setVisibility(View.VISIBLE);
                         }else{//未签到
-                            binding.llSign.setVisibility(View.VISIBLE);
                             binding.llSignComplete.setVisibility(View.GONE);
                         }
                     }
@@ -136,12 +142,10 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                 protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
                     //是否需要拍照
                     if(model.is_photo>0){//需要拍照
-                        if(!TextUtils.isEmpty(model.pic_url)){//是否已有拍照记录，有拍照记录，显示已拍照
+                        if(!TextUtils.isEmpty(model.pic_url)||model.getCachedImages()!=null){//是否已有拍照记录，有拍照记录，显示已拍照
                             binding.llPhotoComplete.setVisibility(View.VISIBLE);
-                            binding.llCapture.setVisibility(View.GONE);
-                        }else{//无拍照记录，显示拍照按钮，进行拍照
+                        }else{//无拍照记录
                             binding.llPhotoComplete.setVisibility(View.GONE);
-                            binding.llCapture.setVisibility(View.VISIBLE);
                         }
                     }else{//不需要拍照，不显示任何拍照按钮
                         binding.llPhotoComplete.setVisibility(View.GONE);
@@ -159,6 +163,8 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                     binding.tvWorkThings.setTextSize(14);
                     binding.llSign.setVisibility(View.GONE);
                     binding.llCapture.setVisibility(View.GONE);
+                    binding.llSignComplete.setVisibility(View.GONE);
+                    binding.llPhotoComplete.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -168,5 +174,19 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
             };
         }
         binding.rvNodes.setAdapter(nodesAdapter);
+    }
+
+    /**
+     * 签到详情
+     * @param node
+     */
+    protected void navigatSignInDetial(WorkNode node){
+        saveLocalUserData();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(RouteKey.KEY_PATROL_TIME_WORKNODE, node);
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_QR_SIGNIN_DETIAL)
+                .withString(RouteKey.KEY_ORDER_ID, orderId)
+                .withBundle(RouteKey.KEY_PARAMS, bundle)
+                .navigation(this, RouterUtils.ACTIVITY_REQUEST_SIGN_IN);
     }
 }

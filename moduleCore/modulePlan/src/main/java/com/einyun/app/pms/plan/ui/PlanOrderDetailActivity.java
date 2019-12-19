@@ -44,6 +44,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 
@@ -372,6 +373,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.itemApplyLateInfo.imgList.addItemDecoration(new com.einyun.app.common.ui.widget.SpacesItemDecoration());
                 binding.itemApplyLateInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
@@ -413,6 +415,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.itemCloseOrderInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extForceClose.getApplyFiles());
