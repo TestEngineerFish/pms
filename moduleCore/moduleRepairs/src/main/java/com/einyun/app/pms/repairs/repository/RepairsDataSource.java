@@ -12,6 +12,9 @@ import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.library.workorder.repository.WorkOrderRepository;
 import com.einyun.app.base.paging.bean.PageBean;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_GRAB;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.pms.repairs.repository
@@ -26,31 +29,55 @@ import com.einyun.app.base.paging.bean.PageBean;
  */
 public class RepairsDataSource extends BaseDataSource<DictDataModel> {
     private RepairsPageRequest request;
-
-    public RepairsDataSource(RepairsPageRequest request) {
+    private String tag;
+    public RepairsDataSource(RepairsPageRequest request,String tag) {
         this.request = request;
+        this.tag=tag;
     }
 
     //根据页数获取数据
-    public  <T> void loadData(PageBean pageBean,@NonNull T callback){
+    public  <T> void loadData(PageBean pageBean,@NonNull T callback) {
         WorkOrderRepository repository = new WorkOrderRepository();
         request.setPageBean(pageBean);
-        repository.getRepairGrab(request,new CallBack<RepairsPage>() {
-            @Override
-            public void call(RepairsPage data) {
-                if(callback instanceof LoadInitialCallback){
-                    LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
-                    loadInitialCallback.onResult(data.getRows(),0,(int)data.getTotal());
-                }else if(callback instanceof LoadRangeCallback){
-                    LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
-                    loadInitialCallback.onResult(data.getRows());
+        if (tag.equals(FRAGMENT_REPAIR_GRAB)) {
+            repository.getRepairGrab(request, new CallBack<RepairsPage>() {
+                @Override
+                public void call(RepairsPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
                 }
-            }
 
-            @Override
-            public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
-            }
-        });
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+        }
+        if (tag.equals(FRAGMENT_REPAIR_WAIT_FOLLOW)) {
+            repository.getRepairWaitFollow(request, new CallBack<RepairsPage>() {
+                @Override
+                public void call(RepairsPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+        }
+
     }
-}
+    }
+

@@ -67,7 +67,7 @@
             android:src="@drawable/pd_view" />
 
         <LinearLayout
-            android:id="@+id/item_work_send_detail"
+            android:id="@+id/item_repair_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -159,11 +159,12 @@
                 android:background="@color/thin_divider_color" />
 
             <RelativeLayout
-                android:id="@+id/item_resend_re"
+                android:id="@+id/item_grab_re"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_90"
                 android:layout_marginLeft="@dimen/px_30"
-                android:layout_marginRight="@dimen/px_30">
+                android:layout_marginRight="@dimen/px_30"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/item_repair_grab"
@@ -175,6 +176,29 @@
                     android:layout_marginRight="@dimen/px_20"
                     android:layout_marginBottom="@dimen/px_20"
                     android:src="@drawable/grab_order" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/item_contact_or_feed_re"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_30"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="@string/text_contact"
+                    android:textColor="@color/blueTextColor" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/right_arrow" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

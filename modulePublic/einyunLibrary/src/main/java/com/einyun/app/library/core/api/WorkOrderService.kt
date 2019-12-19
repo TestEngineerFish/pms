@@ -48,15 +48,29 @@ interface WorkOrderService : EinyunService {
     fun getRepaiAlreadyFollow(
         request: RepairsPageRequest, callBack: CallBack<AlreadyFollowPageResult>
     )
+
     //获取报修已办结列表
     fun getRepaiAlreadyDone(
         request: RepairsPageRequest, callBack: CallBack<AlreadyDonePageResult>
     )
+
     //获取报修抄送我
     fun getRepairCopyMe(
         request: RepairsPageRequest, callBack: CallBack<RepairCopyMePageResullt>
     )
 
+    //抢单
+    fun grabRepair(
+        taskId: String, callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
+    //获取报修详情接口
+    fun getRepairDetail(
+        instId: String, callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel>
+
+    //报修-派单
+    fun repaireSend(request: RepairSendOrderRequest,callBack: CallBack<Boolean>): LiveData<Boolean>
     fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>):LiveData<List<TypeAndLine>>
     fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>

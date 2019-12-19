@@ -13,6 +13,9 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
     public SpacesItemDecoration(int spaceLeft,int spaceRight,int spaceTop,int spaceBottom ) {
         this.spaceLeft = spaceLeft;
+        this.spaceRight=spaceRight;
+        this.spaceTop=spaceTop;
+        this.spaceBottom=spaceBottom;
     }
 
     @Override

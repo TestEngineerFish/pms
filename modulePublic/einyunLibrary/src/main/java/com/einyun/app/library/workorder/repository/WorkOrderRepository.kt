@@ -1,5 +1,6 @@
 package com.einyun.app.library.workorder.repository
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,12 +12,14 @@ import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
+import com.einyun.app.library.workorder.net.URLs
 import com.einyun.app.library.workorder.net.WorkOrderServiceApi
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.request.ComplainAppendRequest
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
+import retrofit2.http.Url
 
 /**
  *
@@ -32,6 +35,23 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+
+    //报修-派单
+    override fun repaireSend(
+        request: RepairSendOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.repairSend(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                callBack.call(it.isState)
+                liveData.postValue(it.isState)
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData     }
+
+
     override fun postCommunication(
         request: PostCommunicationRequest,
         callBack: CallBack<Boolean>
@@ -638,6 +658,39 @@ class WorkOrderRepository : WorkOrderService {
             )
     }
 
+    /**
+     * 抢单
+     * */
+    override fun grabRepair(taskId: String, callBack: CallBack<Boolean>): MutableLiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        var url = URLs.URL_REPAIR_GRAB + taskId
+        serviceApi?.grabRepair(url)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                callBack.call(it.isState)
+                liveData.postValue(it.isState)
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
+    /**
+     * 查看报修详情
+     * */
+    override fun getRepairDetail(instId: String, callBack: CallBack<RepairsDetailModel>): LiveData<RepairsDetailModel> {
+        var liveData = MutableLiveData<RepairsDetailModel>()
+        var url = URLs.URL_REPAIR_DETAIL + instId
+        serviceApi?.getRepairDetail(url)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { callBack.onFaild(it) }
+            )
+        return liveData
+    }
+
     private fun queryRepairBuilder(
         request: RepairsPageRequest
     ): QueryBuilder {
@@ -669,7 +722,7 @@ class WorkOrderRepository : WorkOrderService {
             .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
-//            .addSort("bx_time", request.DESC)
+            .addSort("bx_time", request.DESC)
             .setPageBean(request.pageBean)
         return builder
     }

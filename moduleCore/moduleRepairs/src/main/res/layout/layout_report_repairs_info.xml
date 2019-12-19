@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="workOrder"
-            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
 
     <LinearLayout
@@ -43,7 +43,7 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/txt_blue_color"
                 android:textSize="@dimen/px_30"
-                app:order_status="@{workOrder.data.info.status}" />
+                 />
         </RelativeLayout>
 
         <ImageView
@@ -64,7 +64,8 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.orderNo}" />
+                android:text="@{repairs.data.customer_repair_model.bx_time}"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -76,7 +77,8 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.divideName}" />
+                android:text="@{repairs.data.customer_repair_model.bx_recorder}"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -88,7 +90,8 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.txName}" />
+                android:text="@{repairs.data.customer_repair_model.bx_way}"
+                 />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -100,8 +103,14 @@
                 android:text="报修区域" />
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:drawableRight="@drawable/edit"
-                android:text="@{workOrder.data.info.typeName}" />
+                android:layout_width="wrap_content"
+                android:text="@{repairs.data.customer_repair_model.bx_area}"/>
+                <ImageView
+                    android:layout_width="@dimen/px_20"
+                    android:layout_height="@dimen/px_22"
+                    android:src="@drawable/edit"
+                    android:layout_gravity="center_vertical"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -113,11 +122,15 @@
                 android:text="报修类别" />
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.typeName}" />
-            <TextView
-                style="@style/work_order_detail_txt_right"
-                android:drawableRight="@drawable/edit"
-                android:text="@{workOrder.data.info.createTime}" />
+                android:layout_width="wrap_content"
+                android:text="@{repairs.data.customer_repair_model.bx_cate_lv1}"
+                 />
+            <ImageView
+                android:layout_width="@dimen/px_20"
+                android:layout_height="@dimen/px_22"
+                android:src="@drawable/edit"
+                android:layout_gravity="center_vertical"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -177,16 +190,20 @@
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
-            <TextView style="@style/tv_create_order_red_star"
-                android:layout_marginTop="@dimen/px_30"/>
             <TextView
                 style="@style/work_order_detail_left_txt"
                 android:layout_marginLeft="@dimen/px_0"
                 android:text="预约上门时间" />
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:drawableRight="@drawable/edit"
-                android:text="@{workOrder.data.info.typeName}" />
+                android:text="@{repairs.data.customer_repair_model.bx_appoint_time_period}"
+                 />
+            <ImageView
+                android:layout_width="@dimen/px_20"
+                android:layout_height="@dimen/px_22"
+                android:src="@drawable/edit"
+                android:layout_gravity="center_vertical"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -197,7 +214,8 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.location}" />
+                android:text="@{repairs.data.customer_repair_model.bx_content}"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -215,7 +233,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/send_order_detail_list"
+                android:id="@+id/repair_order_detail_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px_30"

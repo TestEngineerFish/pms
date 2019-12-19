@@ -11,6 +11,7 @@ import io.reactivex.Flowable
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Url
 
 /**
  *
@@ -172,6 +173,24 @@ interface WorkOrderServiceApi {
      * */
     @POST(URLs.URL_REPORT_REPAIRS_COPY_ME)
     fun getRepairCopyMe(@Body request: Query):Flowable<RepairCopyMeResponse>
+
+    /**
+     * 客户报修-抢单动作
+     * */
+    @GET
+    fun grabRepair(@Url url: String):Flowable<BaseResponse<Any>>
+
+    /**
+     * 客户报修-查看详情
+     * */
+    @GET
+    fun getRepairDetail(@Url url: String):Flowable<RepairDetailResponse>
+
+    /**
+     * 客户报修-派单
+     * */
+    @POST(URLs.URL_REPAIR_SEND)
+    fun repairSend(@Body request: RepairSendOrderRequest):Flowable<BaseResponse<Any>>
 
     @POST(URLs.URL_INITIATE_COMMUNICATION)
     fun postCommunication(@Body request:PostCommunicationRequest):Flowable<BaseResponse<Any>>

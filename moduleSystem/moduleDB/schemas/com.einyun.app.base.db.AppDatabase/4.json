@@ -1,0 +1,746 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "1f4d6c0e7d8b92a725d502982e8937c5",
+    "entities": [
+      {
+        "tableName": "users",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_name` TEXT, `password` TEXT, `update_time` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userName",
+            "columnName": "user_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "update_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_users_user_name",
+            "unique": true,
+            "columnNames": [
+              "user_name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_users_user_name` ON `${TABLE_NAME}` (`user_name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "patrol_digests",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`orderType` INTEGER NOT NULL, `userId` TEXT NOT NULL, `listType` INTEGER NOT NULL, `F_plan_work_order_state` INTEGER NOT NULL, `F_line_name` TEXT, `ID_` TEXT NOT NULL, `subject` TEXT, `F_creation_date` INTEGER NOT NULL, `F_line_code` TEXT, `F_type_id` TEXT, `auditor_` TEXT, `F_type_name` TEXT, `proInsId` TEXT, `parentInstId` TEXT, `createTime` INTEGER NOT NULL, `F_principal_name` TEXT, `F_plan_work_order_code` TEXT, `F_inspection_work_plan_name` TEXT, `auditor_name_` TEXT, `taskNodeId` TEXT, `isCached` INTEGER NOT NULL, `taskId` TEXT, `assigneeId` TEXT, `ownerId` TEXT, `F_patrol_line_id` TEXT, `warn` INTEGER NOT NULL, PRIMARY KEY(`ID_`, `userId`, `listType`))",
+        "fields": [
+          {
+            "fieldPath": "orderType",
+            "columnName": "orderType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listType",
+            "columnName": "listType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_plan_work_order_state",
+            "columnName": "F_plan_work_order_state",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_line_name",
+            "columnName": "F_line_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ID_",
+            "columnName": "ID_",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subject",
+            "columnName": "subject",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_creation_date",
+            "columnName": "F_creation_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_line_code",
+            "columnName": "F_line_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_type_id",
+            "columnName": "F_type_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "auditor_",
+            "columnName": "auditor_",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_type_name",
+            "columnName": "F_type_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "proInsId",
+            "columnName": "proInsId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentInstId",
+            "columnName": "parentInstId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_principal_name",
+            "columnName": "F_principal_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_plan_work_order_code",
+            "columnName": "F_plan_work_order_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_inspection_work_plan_name",
+            "columnName": "F_inspection_work_plan_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "auditor_name_",
+            "columnName": "auditor_name_",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskNodeId",
+            "columnName": "taskNodeId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isCached",
+            "columnName": "isCached",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "taskId",
+            "columnName": "taskId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "assigneeId",
+            "columnName": "assigneeId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ownerId",
+            "columnName": "ownerId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_patrol_line_id",
+            "columnName": "F_patrol_line_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "warn",
+            "columnName": "warn",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ID_",
+            "userId",
+            "listType"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "search_history",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_content` TEXT, `type` INTEGER, `update_time` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "searchContent",
+            "columnName": "search_content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "update_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "patrols_info",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`taskId` TEXT, `id` TEXT NOT NULL, `data` TEXT, `extensionApplication` TEXT, `buttons` TEXT, `delayExtensionApplication` TEXT, `userId` TEXT NOT NULL, PRIMARY KEY(`id`, `userId`))",
+        "fields": [
+          {
+            "fieldPath": "taskId",
+            "columnName": "taskId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "extensionApplication",
+            "columnName": "extensionApplication",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "buttons",
+            "columnName": "buttons",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "delayExtensionApplication",
+            "columnName": "delayExtensionApplication",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id",
+            "userId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "patrol_local",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note` TEXT, `userId` TEXT NOT NULL, `orderId` TEXT NOT NULL, `images` TEXT, `nodes` TEXT, PRIMARY KEY(`orderId`, `userId`))",
+        "fields": [
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderId",
+            "columnName": "orderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "images",
+            "columnName": "images",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nodes",
+            "columnName": "nodes",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "orderId",
+            "userId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "distributes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`F_CHECK_CONTENT` TEXT, `subject` TEXT, `F_TYPE` TEXT, `F_PROJECT_ID` TEXT, `ownerId` TEXT, `F_PROJECT_NAME` TEXT, `proInsId` TEXT, `F_CHECK_ID` TEXT, `F_EVALUATION` TEXT, `F_PROC_NAME` TEXT, `F_RETURN_REASON` TEXT, `REF_ID_` TEXT, `F_DIVIDE_ID` TEXT, `F_TIT_NAME` TEXT, `taskNodeId` TEXT, `F_LOCATION` TEXT, `F_TX_ID` TEXT, `ID_` TEXT NOT NULL, `F_DESC` TEXT, `F_PROC_CONTENT` TEXT, `F_STATUS` INTEGER NOT NULL, `F_RES_NAME` TEXT, `assigneeId` TEXT, `F_CHECK_NAME` TEXT, `F_RES_ID` TEXT, `F_DIVIDE_NAME` TEXT, `F_TIT_ID` TEXT, `F_BEF_PIC` TEXT, `F_PROC_ID` TEXT, `createTime` INTEGER, `F_TX_NAME` TEXT, `F_ORDER_NO` TEXT, `taskName` TEXT, `F_AFT_PIC` TEXT, `taskId` TEXT, `F_CHECK_RESULT` TEXT, `F_CREATE_TIME` INTEGER, `F_CHECK_DATE` INTEGER, `F_PROC_DATE` TEXT, `F_EXT_STATUS` INTEGER NOT NULL, `isReply` INTEGER NOT NULL, `userId` TEXT NOT NULL, `orderType` INTEGER NOT NULL, PRIMARY KEY(`ID_`, `userId`, `orderType`))",
+        "fields": [
+          {
+            "fieldPath": "F_CHECK_CONTENT",
+            "columnName": "F_CHECK_CONTENT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subject",
+            "columnName": "subject",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_TYPE",
+            "columnName": "F_TYPE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_PROJECT_ID",
+            "columnName": "F_PROJECT_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ownerId",
+            "columnName": "ownerId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_PROJECT_NAME",
+            "columnName": "F_PROJECT_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "proInsId",
+            "columnName": "proInsId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_CHECK_ID",
+            "columnName": "F_CHECK_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_EVALUATION",
+            "columnName": "F_EVALUATION",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_PROC_NAME",
+            "columnName": "F_PROC_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_RETURN_REASON",
+            "columnName": "F_RETURN_REASON",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "REF_ID_",
+            "columnName": "REF_ID_",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_DIVIDE_ID",
+            "columnName": "F_DIVIDE_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_TIT_NAME",
+            "columnName": "F_TIT_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskNodeId",
+            "columnName": "taskNodeId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_LOCATION",
+            "columnName": "F_LOCATION",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_TX_ID",
+            "columnName": "F_TX_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ID_",
+            "columnName": "ID_",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_DESC",
+            "columnName": "F_DESC",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_PROC_CONTENT",
+            "columnName": "F_PROC_CONTENT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_STATUS",
+            "columnName": "F_STATUS",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_RES_NAME",
+            "columnName": "F_RES_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "assigneeId",
+            "columnName": "assigneeId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_CHECK_NAME",
+            "columnName": "F_CHECK_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_RES_ID",
+            "columnName": "F_RES_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_DIVIDE_NAME",
+            "columnName": "F_DIVIDE_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_TIT_ID",
+            "columnName": "F_TIT_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_BEF_PIC",
+            "columnName": "F_BEF_PIC",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_PROC_ID",
+            "columnName": "F_PROC_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_TX_NAME",
+            "columnName": "F_TX_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_ORDER_NO",
+            "columnName": "F_ORDER_NO",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskName",
+            "columnName": "taskName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_AFT_PIC",
+            "columnName": "F_AFT_PIC",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskId",
+            "columnName": "taskId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_CHECK_RESULT",
+            "columnName": "F_CHECK_RESULT",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_CREATE_TIME",
+            "columnName": "F_CREATE_TIME",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_CHECK_DATE",
+            "columnName": "F_CHECK_DATE",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_PROC_DATE",
+            "columnName": "F_PROC_DATE",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_EXT_STATUS",
+            "columnName": "F_EXT_STATUS",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isReply",
+            "columnName": "isReply",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderType",
+            "columnName": "orderType",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ID_",
+            "userId",
+            "orderType"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "checkpoints",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `userId` TEXT NOT NULL, `checkRecordCode` TEXT, `massifId` TEXT, `remark` TEXT, `isUnusual` INTEGER NOT NULL, `createTime` TEXT, `createId` TEXT, `massifName` TEXT, `createName` TEXT, `checkName` TEXT, `specificLocation` TEXT, `isPic` INTEGER NOT NULL, `resourceName` TEXT, PRIMARY KEY(`id`, `userId`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "checkRecordCode",
+            "columnName": "checkRecordCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "massifId",
+            "columnName": "massifId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "remark",
+            "columnName": "remark",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isUnusual",
+            "columnName": "isUnusual",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createId",
+            "columnName": "createId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "massifName",
+            "columnName": "massifName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createName",
+            "columnName": "createName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "checkName",
+            "columnName": "checkName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "specificLocation",
+            "columnName": "specificLocation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isPic",
+            "columnName": "isPic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resourceName",
+            "columnName": "resourceName",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id",
+            "userId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1f4d6c0e7d8b92a725d502982e8937c5')"
+    ]
+  }
+}

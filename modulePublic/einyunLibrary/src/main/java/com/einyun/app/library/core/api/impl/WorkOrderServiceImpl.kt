@@ -44,6 +44,32 @@ class WorkOrderServiceImpl : WorkOrderService {
     }
 
     /**
+     * 报修-派单
+     * */
+    override fun repaireSend(
+        request: RepairSendOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.repaireSend(
+            request, callBack
+        )      }
+
+    override fun getRepairDetail(instId: String, callBack: CallBack<RepairsDetailModel>): LiveData<RepairsDetailModel> {
+        return proxy.getRepairDetail(
+            instId, callBack
+        )    }
+
+    /**
+     *
+     * 抢单
+     * */
+    override fun grabRepair(taskId: String, callBack: CallBack<Boolean>): LiveData<Boolean> {
+        return proxy.grabRepair(
+            taskId, callBack
+        )
+    }
+
+    /**
      *客户报修-抄送我
      * */
     override fun getRepairCopyMe(
@@ -52,7 +78,8 @@ class WorkOrderServiceImpl : WorkOrderService {
     ) {
         return proxy.getRepairCopyMe(
             request, callBack
-        )         }
+        )
+    }
 
     /**
      *客户报修-已办结
@@ -63,18 +90,20 @@ class WorkOrderServiceImpl : WorkOrderService {
     ) {
         return proxy.getRepaiAlreadyDone(
             request, callBack
-        )       }
+        )
+    }
 
     /**
      *客户报修-已跟进
-    * */
+     * */
     override fun getRepaiAlreadyFollow(
         request: RepairsPageRequest,
         callBack: CallBack<AlreadyFollowPageResult>
     ) {
         return proxy.getRepaiAlreadyFollow(
             request, callBack
-        )    }
+        )
+    }
 
     /**
      * 客户报修-抢单
@@ -82,13 +111,14 @@ class WorkOrderServiceImpl : WorkOrderService {
     override fun getRepairGrab(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
         return proxy.getRepairGrab(
             request, callBack
-        )    }
+        )
+    }
 
     /**
      * 客户报修-待跟进
      * */
     override fun getRepairWaitFollow(
-        request:RepairsPageRequest, callBack: CallBack<RepairsPage>
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
     ) {
         return proxy.getRepairWaitFollow(
             request, callBack

@@ -69,7 +69,8 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                         @Override
                         public void onClick(View v) {
                             LiveDataBusUtils.postResendOrderUser(model);
-                            ActivityUtil.finishToActivity(ResendOrderActivity.class);
+                            ActivityUtil.finishLastTwoActivity();
+//                            ActivityUtil.finishToActivity(ResendOrderActivity.class);
                         }
                     });
                 }
