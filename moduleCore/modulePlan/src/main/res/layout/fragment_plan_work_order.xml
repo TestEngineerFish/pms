@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <include layout="@layout/layout_condition" android:id="@+id/panel_condition"/>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/send_order_ref"
             android:layout_width="match_parent"

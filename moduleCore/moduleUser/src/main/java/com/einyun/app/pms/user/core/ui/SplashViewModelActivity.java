@@ -83,14 +83,4 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         return Color.TRANSPARENT;
     }
 
-    @Override
-    protected void initData() {
-        super.initData();
-    }
-
-    @Override
-    protected boolean fullWindowFlag() {
-        return true;
-    }
-
 }

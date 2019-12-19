@@ -1,108 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_90"
-        android:background="@color/white">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/px_20"
-            android:gravity="center_vertical"
-            android:text="今日收缴完成情况"
-            android:textSize="@dimen/font_size16" />
+    <data>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px_20"
-            android:textSize="@dimen/font_size12"
-            android:textColor="@color/normal_main_text_icon_color"
-            android:gravity="center_vertical"
-            android:text="单位：万元" />
-    </RelativeLayout>
+    </data>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/pd_view" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="今日收缴完成情况"
+                android:textSize="@dimen/font_size16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:textSize="@dimen/font_size12"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:gravity="center_vertical"
+                android:text="单位：万元" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="今日收缴率"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_40"
-            android:textSize="@dimen/font_size12"
-            android:textColor="@color/today_txt_color"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/txt_black_order"
-            android:textSize="@dimen/font_size23"
-            android:textStyle="bold"
-            android:layout_marginLeft="@dimen/px_40"
-            android:layout_marginTop="@dimen/px_54"
-            android:text="45%"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="增长20%"
-            android:layout_marginTop="@dimen/px_10"
-            android:layout_marginLeft="@dimen/px_40"
-            android:textSize="@dimen/font_size12"
-            android:textColor="@color/today_txt_color"
-            />
-    </LinearLayout>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px_150"
-            android:orientation="vertical">
-            <TextView
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="今日增幅排名:8"
-                android:layout_marginTop="@dimen/px_20"
-                android:layout_marginLeft="@dimen/px_40"
-                android:textSize="@dimen/font_size12"
-                android:textColor="@color/today_txt_color"
-                />
-            <TextView
-                android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日收缴率"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_40"
+                    android:textSize="@dimen/font_size12"
+                    android:textColor="@color/today_txt_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size23"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/px_40"
+                    android:layout_marginTop="@dimen/px_54"
+                    android:text="45%" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="增长20%"
+                    android:layout_marginTop="@dimen/px_10"
+                    android:layout_marginLeft="@dimen/px_40"
+                    android:textSize="@dimen/font_size12"
+                    android:textColor="@color/today_txt_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/txt_black_order"
-                android:textSize="@dimen/font_size23"
-                android:textStyle="bold"
-                android:layout_marginLeft="@dimen/px_40"
-                android:layout_marginTop="@dimen/px_54"
-                android:text="45%"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="增长20%"
-                android:layout_marginTop="@dimen/px_10"
-                android:layout_marginLeft="@dimen/px_40"
-                android:textSize="@dimen/font_size12"
-                android:textColor="@color/today_txt_color"
-                />
+                android:layout_marginLeft="@dimen/px_150"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日增幅排名:8"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_40"
+                    android:textSize="@dimen/font_size12"
+                    android:textColor="@color/today_txt_color" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/operate_all_get_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
-</LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</layout>

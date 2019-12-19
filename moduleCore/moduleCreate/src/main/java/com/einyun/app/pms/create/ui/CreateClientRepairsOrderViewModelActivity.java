@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
@@ -30,7 +33,6 @@ import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest;
-import com.einyun.app.pms.create.Constants;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.SelectType;
 import com.einyun.app.pms.create.databinding.ActivityCreateClientRepairsOrderBinding;
@@ -57,9 +59,8 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     private CreateClientRepairOrderRequest request;
     private List<DictDataModel> dictWayList = new ArrayList<>();
     private List<DictDataModel> dictNatureList = new ArrayList<>();
-    private List<DictDataModel> dictLocationList = new ArrayList<>();
     private List<DictDataModel> dictTimeList = new ArrayList<>();
-    private DoorResult doorResult;
+    private List<Door> doorResult;
 
     @Override
     protected CreateViewModel initViewModel() {
@@ -81,13 +82,9 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         viewModel.getByTypeKey(Constants.ENQUIRY_WAY).observe(this, dictDataModels -> {
             dictWayList = dictDataModels;
         });
-        //获取报修区域
-        viewModel.getByTypeKey(Constants.REPAIR_AREA).observe(this, dictDataModels -> {
-            dictLocationList = dictDataModels;
-        });
         //获取报修类别与条线
         viewModel.repairTypeList().observe(this, doorResult -> {
-            this.doorResult = doorResult;
+            this.doorResult = doorResult.getChildren();
         });
         //获取报修性质评估
         viewModel.getByTypeKey(Constants.REPAIR_NATURE).observe(this, dictDataModels -> {
@@ -120,7 +117,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -166,20 +163,11 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
     }
 
     private void repairType() {
-        if (doorResult == null) {
+        if (doorResult.get(clDefaultPos).getChildren() == null || doorResult.get(clDefaultPos).getChildren().size() == 0) {
             ToastUtil.show(this, "暂无报修类别");
             return;
         }
-        List<Door> doors;
-        if ("outdoor".equals(request.getBizData().getAreaId())) {
-            doors = doorResult.getOutdoor();
-        } else if ("indoor".equals(request.getBizData().getAreaId())) {
-            doors = doorResult.getIndoor();
-        } else {
-            ToastUtil.show(this, "该地区下报修类别无配置");
-            return;
-        }
-        SelectRepairsTypeView view = new SelectRepairsTypeView(doors);
+        SelectRepairsTypeView view = new SelectRepairsTypeView(doorResult.get(clDefaultPos).getChildren());
         view.setWorkTypeListener(new SelectRepairsTypeView.OnWorkTypeSelectListener() {
             @Override
             public void onWorkTypeSelectListener(List<Door> model) {
@@ -191,6 +179,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 request.getBizData().setCateLv2Id(model.get(1).getDataKey());
                 request.getBizData().setCateLv3(model.get(2).getDataName());
                 request.getBizData().setCateLv3Id(model.get(2).getDataKey());
+                binding.setBean(request);
             }
         });
         view.show(getSupportFragmentManager(), "");
@@ -316,22 +305,22 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
      * 报修区域
      */
     private void complainLocation() {
-        if (dictLocationList.size() == 0) {
+        if (doorResult.size() == 0) {
             ToastUtil.show(this, "暂无报修区域");
             return;
         }
         List<String> txStrList = new ArrayList<>();
-        for (DictDataModel data : dictLocationList) {
-            txStrList.add(data.getName());
+        for (Door data : doorResult) {
+            txStrList.add(data.getDataName());
         }
         BottomPicker.buildBottomPicker(this, txStrList, clDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
                 clDefaultPos = position;
-                for (DictDataModel data : dictLocationList) {
-                    if (data.getName().equals(txStrList.get(position))) {
-                        request.getBizData().setArea(data.getName());
-                        request.getBizData().setAreaId(data.getKey());
+                for (Door data : doorResult) {
+                    if (data.getDataName().equals(txStrList.get(position))) {
+                        request.getBizData().setArea(data.getDataName());
+                        request.getBizData().setAreaId(data.getDataKey());
                     }
                 }
                 binding.setBean(request);
@@ -424,9 +413,16 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
             return false;
         }
         //如果是室内报修  必须选择预约上门时间
-        if ("indoor".equals(request.getBizData().getAreaId())){
+        if ("indoor".equals(request.getBizData().getAreaId())) {
             if (!StringUtil.isNullStr(request.getBizData().getAppointTime())) {
-                ToastUtil.show(this, "请选择预约上门时间");
+                new AlertDialog(this).builder().
+                        setTitle(getResources().getString(R.string.tip))
+            .setMsg("请选择预约上门时间").setPositiveButton("我知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 return false;
             }
         }

@@ -8,6 +8,7 @@ import androidx.paging.PagedList;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
@@ -48,9 +50,14 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
     public List<ResourceTypeBean> resourceTypeBeans = new ArrayList<>();
     private OrgModel orgModel;
     private DistributePageRequest request=new DistributePageRequest();
+    private DistributePageRequest requestDone=new DistributePageRequest();
 
-    public DistributePageRequest getRequest() {
-        return request;
+    public DistributePageRequest getRequest(String fragmentTag) {
+        if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+            return request;
+        }else{
+            return requestDone;
+        }
     }
 
     public void setRequest(DistributePageRequest request) {
@@ -61,8 +68,14 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
         return orgModel;
     }
 
-    public void setOrgModel(OrgModel orgModel) {
+    public void setOrgModel(String fragmentTag, OrgModel orgModel) {
         this.orgModel = orgModel;
+        if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+            request.setDivideId(orgModel.getId());
+        }else{
+            requestDone.setDivideId(orgModel.getId());
+        }
+        refreshUI();
     }
 
     public List<SelectModel> listAll = new ArrayList<>();
@@ -137,7 +150,7 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
         return tiaoxianList;
     }
 
-    public void onConditionSelected(Map<String,SelectModel> selected){
+    public void onConditionSelected(DistributePageRequest request, Map<String, SelectModel> selected){
         request.resetConditions();
         if (selected.get(SELECT_DATE) != null){
             String date = selected.get(SELECT_DATE).getKey();

@@ -159,4 +159,6 @@ interface ResourceWorkOrderService : EinyunService {
     fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>)
 
     fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>)
+
+
 }

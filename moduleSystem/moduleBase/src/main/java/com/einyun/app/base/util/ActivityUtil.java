@@ -372,6 +372,11 @@ public class ActivityUtil {
         backMap = new HashMap<>();
     }
 
+    public static void finishLastTwoActivity(){
+        finish(activityList.get(activityList.size()-1));
+        finish(activityList.get(activityList.size()-1));
+    }
+
     /**
      * finish 到 cls
      */

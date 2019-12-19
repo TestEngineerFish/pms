@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -38,7 +39,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBinding, OperatePercentViewModel> implements ItemClickListener<OrderPreviewModel> {
+public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBinding, OperatePercentViewModel>  implements View.OnClickListener {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
@@ -84,6 +85,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
                 loadPagingData();
             }
         });
+        binding.operatePercentAllGet.setOnClickListener(this);
     }
 
     @Override
@@ -104,35 +106,15 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     }
 
+
     private void loadPagingData() {
 //        //初始化数据，LiveData自动感知，刷新页面
 //        binding.reportFormRefresh.setRefreshing(true);
 
     }
 
-
-    /**
-     * 列表Item 点击，跳转进入详情
-     * 代办详情进入(taskId)，已办详情(taskNodeTd,proInsId)
-     *
-     * @param veiw
-     * @param data
-     */
     @Override
-    public void onItemClicked(View veiw, OrderPreviewModel data) {
-    }
-
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view,
-                                   RecyclerView parent, RecyclerView.State state) {
-            outRect.bottom = space;
-        }
+    public void onClick(View v) {
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_TODAY_ALL_GET).navigation();
     }
 }

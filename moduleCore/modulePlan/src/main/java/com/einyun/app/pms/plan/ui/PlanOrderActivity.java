@@ -45,7 +45,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_P
  * @Version: 1.0
  */
 @Route(path = RouterUtils.ACTIVITY_PLAN_ORDER)
-public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrderBinding, PlanOrderViewModel> implements PeriodizationView.OnPeriodSelectListener {
+public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrderBinding, PlanOrderViewModel> {
     private String[] mTitles;//tab标题
 
 
@@ -109,37 +109,6 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
             }
         });
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
-        binding.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //弹出分期view
-                PeriodizationView periodizationView=new PeriodizationView();
-                periodizationView.setPeriodListener(PlanOrderActivity.this::onPeriodSelectListener);
-                periodizationView.show(getSupportFragmentManager(),"");
-            }
-        });
-        binding.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
-            //弹出筛选view
-            ConditionBuilder builder=new ConditionBuilder();
-            List<SelectModel> conditions= builder.addLines(BasicDataManager.getInstance().loadCache().getLines())//条线
-                    .addItem(SelectPopUpView.SELECT_DATE)
-                    .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                    .mergeLineRes(BasicDataManager.getInstance().loadCache().getResources())
-                    .build();
-            new SelectPopUpView(PlanOrderActivity.this,conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
-                @Override
-                public void onSelected(Map selected) {
-                    handleSelect(selected);
-                }
-            }).showAsDropDown(binding.sendWorkTabLn);
-
-        });
-        binding.search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LiveDataBusUtils.search(tag);
-            }
-        });
     }
 
 
@@ -156,18 +125,4 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         return Color.WHITE;
     }
 
-    @Override
-    public void onPeriodSelectListener(OrgModel orgModel) {
-        binding.periodSelected.setText(orgModel.getName());
-        viewModel.setOrgModel(orgModel);
-        viewModel.refreshUI();
-    }
-
-
-    /**
-     * 处理筛选返回数据
-     * */
-    private void handleSelect(Map selected) {
-        viewModel.onConditionSelected(selected);
-    }
 }

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="repair"
+            type="com.einyun.app.library.workorder.model.RepairsModel"
+            />
+    </data>
+
+
+    <LinearLayout
+        android:id="@+id/item_repair_ln"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_bg"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/item_repair_subject"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginRight="@dimen/px_40"
+                android:gravity="center_vertical"
+                android:maxLength="10"
+                android:text="@{repair.subject}"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/px_32" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/px_136"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="@dimen/px_136"
+                    android:layout_height="@dimen/px_48"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            android:id="@+id/item_repair_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_report_repair_people" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blackTextColor"
+                    android:text="@{repair.bx_user}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_house" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blackTextColor"
+                   />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_order_num" />
+
+                <TextView
+                    android:id="@+id/repair_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{repair.bx_code}"
+                    android:textColor="@color/blackTextColor" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_create_time" />
+
+                <TextView
+                    android:id="@+id/repair_create_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blackTextColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/thin_divider_color" />
+
+            <RelativeLayout
+                android:id="@+id/item_grab_re"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_30"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/item_repair_grab"
+                    android:layout_width="@dimen/px_140"
+                    android:layout_height="@dimen/px_56"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_20"
+                    android:src="@drawable/grab_order" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/item_contact_or_feed_re"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_30"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="@string/text_contact"
+                    android:textColor="@color/blueTextColor" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/right_arrow" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

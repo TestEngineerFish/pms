@@ -55,6 +55,8 @@ public class RouterUtils {
     public static final String ACTIVITY_ORDER_PREVIEW ="/orderPreview/OrderPreviewActivity";
     /***********************运营收缴率************************************/
     public static final String ACTIVITY_OPERATE_PERCENT ="/operatePercent/OperatePercentActivity";
+    public static final String ACTIVITY_OPERATE_TODAY_ALL_GET ="/operatePercent/AllChargeActivity";
+
     /**********************派工单****************************/
     //派工单首页
     public static final String ACTIVITY_SEND_ORDER="/sendOrder/SendOrderActivity";
@@ -82,6 +84,8 @@ public class RouterUtils {
 
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
+    /**********************客户报修****************************/
+    public static final String ACTIVITY_CUSTOMER_REPAIR_DETAIL = "/repairs/RepairsDetailActivity";
 
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
@@ -92,6 +96,7 @@ public class RouterUtils {
     public static final int ACTIVITY_REQUEST_SIGN_IN = 106;
 
 
+    public static final String ACTIVITY_COMMUNICATION="/complain/CommunicationActivity";
     /**********************Fragment*********************************/
     public static final String FRAGMENT_REPAIRS_PAGING="/repairs/RepairsFragment";
 

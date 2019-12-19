@@ -43,7 +43,7 @@ class URLs {
         // 客户端启动投诉流程
         const val URL_TASK_RUN_START:String="/$DOMAIN/workOrder/taskRun/v1/start"
         //获取报修类别与条线
-        const val URL_REPAIR_TYPE_MAP_LIST:String="/$DOMAIN/workOrder/customerRepair/v1/getRepairTypeMapList"
+        const val URL_REPAIR_TYPE_MAP_LIST:String="/$DOMAIN/workOrder/customerRepair/v1/getRepairAreaAndType"
         //创建报修工单
         const val URL_CUSTOMER_REPAIR_SUBMIT:String="/$DOMAIN/workOrder/customerRepair/v1/start"
         //创建问询工单
@@ -58,5 +58,23 @@ class URLs {
 
         //通过UserId批量查询待处理工单
         const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
+        //客户报修-待跟进
+        const val URL_REPORT_REPAIRS_WAIT_FOLLOW="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_repair_flow/NORMAL,DELIVERTO"
+        //客户报修-抢单
+        const val URL_REPORT_REPAIRS_GRAB="/workOrder/workOrder/task/v1/getGrabListAlia"
+        //客户报修-已跟进
+        const val URL_REPORT_REPAIRS_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAlia/customer_repair_flow"
+        //客户报修-已办结
+        const val URL_REPORT_REPAIRS_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompleteAlia/customer_repair_flow"
+        //客户报修-抄送我的
+        const val URL_REPORT_REPAIRS_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_repair_flow"
+        //客户报修-抢单动作
+        const val URL_REPAIR_GRAB="/workOrder/workOrder/customerRepair/v1/orderGrab?taskId="
+        //客户报修-查看详情
+        const val URL_REPAIR_DETAIL="/bpm-runtime/runtime/instance/v1/getInstBO?proInstId="
+        //客户报修-派单，响应
+        const val URL_REPAIR_SEND="/workOrder/workOrder/customerRepair/v1/complete"
+
+        const val URL_INITIATE_COMMUNICATION="/bpm-runtime/runtime/task/v1/communicate"
     }
 }

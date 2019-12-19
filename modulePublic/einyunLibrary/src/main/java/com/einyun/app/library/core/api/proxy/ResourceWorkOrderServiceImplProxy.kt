@@ -29,13 +29,15 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
         request: OrderPreviewRequest,
         callBack: CallBack<OrderPreviewPage>
     ): LiveData<OrderPreviewPage> {
-        return instance?.getPlanPreviewList(request, callBack)!!        }
+        return instance?.getPlanPreviewList(request, callBack)!!
+    }
 
     override fun getPlanPreviewList(
         request: OrderPreviewRequest,
         callBack: CallBack<OrderPreviewPage>
     ): LiveData<OrderPreviewPage> {
-        return instance?.getPlanPreviewList(request, callBack)!!     }
+        return instance?.getPlanPreviewList(request, callBack)!!
+    }
 
     override fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
         return instance?.planSubmit(request, callBack)!!
@@ -78,24 +80,26 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     }
 
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        instance?.patrolDoneDetial(request,callBack)
+        instance?.patrolDoneDetial(request, callBack)
     }
 
     override fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
-       instance?.patrolSubmit(request,callBack)
+        instance?.patrolSubmit(request, callBack)
     }
 
     override fun getHistroy(
         intstId: String,
         callBack: CallBack<List<HistoryModel>>
     ): LiveData<List<HistoryModel>> {
-        return instance?.getHistroy(intstId, callBack)!!     }
+        return instance?.getHistroy(intstId, callBack)!!
+    }
 
     override fun resendOrder(
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderResponse>
     ): LiveData<ResendOrderResponse> {
-        return instance?.resendOrder(request, callBack)!!    }
+        return instance?.resendOrder(request, callBack)!!
+    }
 
 
     override fun applyClose(

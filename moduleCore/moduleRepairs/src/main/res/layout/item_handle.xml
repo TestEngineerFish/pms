@@ -1,0 +1,74 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+    <variable
+        name="material"
+        type="com.einyun.app.pms.repairs.model.MaterialModel" />
+    </data>
+
+    <com.einyun.app.common.ui.widget.SwipeItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp">
+
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="螺丝刀"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="10。00"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="10.00"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="10.00"
+                    android:textColor="@color/normal_main_text_icon_color" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/stick"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="置顶"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </com.einyun.app.common.ui.widget.SwipeItemLayout>
+</layout>

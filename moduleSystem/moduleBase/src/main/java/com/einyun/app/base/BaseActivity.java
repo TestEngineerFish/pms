@@ -1,8 +1,11 @@
 package com.einyun.app.base;
 
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.WindowManager;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -30,7 +33,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
         setContentView(getLayoutId());
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, getColorPrimary());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            if (fullWindowFlag()){
+                //需要设置这个flag contentView才能延伸到状态栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
+            //状态栏覆盖在contentView上面，设置透明使contentView的背景透出来
+            getWindow().setStatusBarColor(getColorPrimary());
+        }
         initViews(savedInstanceState);
         initListener();
         initData();
@@ -99,5 +112,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                 loadingDialog.dismiss();
             }
         }
+    }
+
+    /**
+     * 是否设置全屏模式
+     * @return
+     */
+    protected boolean fullWindowFlag(){
+        return false;
     }
 }

@@ -226,4 +226,5 @@ interface ResourceWorkOrderServiceApi {
      * */
     @POST(URLs.URL_WORK_PREVIEW_PATRO_ORDER)
     fun getPatroPreviewOrders(@Body request: OrderPreviewRequest):Flowable<OrderPreviewResponse>
+
 }

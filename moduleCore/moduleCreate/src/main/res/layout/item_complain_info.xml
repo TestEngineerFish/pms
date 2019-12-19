@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.einyun.app.library.workorder.model.ComplainModel" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/px_10"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:id="@+id/item_order_ln"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:maxLength="10"
+                    android:text="@{model.f_ts_cate}"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/px_32" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/px_136"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        app:status="@{model.f_state}" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pd_view" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_70"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_order_num"
+                    android:textColor="#FF9DA3B4"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{model.f_ts_code}"
+                    android:textColor="#FF132D42"
+                    android:textSize="28px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_150"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_create_time"
+                    android:textColor="#FF9DA3B4"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/select_order_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    app:setTime="@{model.createTime}"
+                    android:textColor="#FF132D42"
+                    android:textSize="28px"/>
+            </LinearLayout>
+
+            <View style="@style/base_underline"/>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="@dimen/px_0"
+                android:paddingRight="@dimen/px_0">
+
+                <TextView style="@style/tv_create_order_red_star" />
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="投诉内容" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/px_0"
+                android:paddingRight="@dimen/px_0"
+                android:paddingBottom="@dimen/px_30">
+
+                <com.einyun.app.common.ui.component.limit.LimitInput
+                    android:id="@+id/lt_question_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:hintText="请填写投诉内容"
+                    app:maxNumber="300" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
