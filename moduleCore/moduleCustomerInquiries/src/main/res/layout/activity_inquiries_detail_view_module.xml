@@ -263,7 +263,7 @@
              android:focusableInTouchMode="true"
              android:layout_marginBottom="20dp"
              android:layout_marginTop="10dp"
-             android:visibility="gone"
+             android:visibility="visible"
              android:background="@drawable/shape_white_bg"
              android:layout_marginLeft="15dp"
              android:layout_marginRight="15dp"
@@ -307,7 +307,7 @@
              android:layout_margin="@dimen/px_30"
              android:background="@drawable/shape_white_bg"
              android:orientation="vertical"
-             android:visibility="gone">
+             android:visibility="visible">
 
              <RelativeLayout
                  android:layout_width="match_parent"
@@ -419,7 +419,7 @@
          </LinearLayout>
          <!--         回复内容-->
          <LinearLayout
-             android:visibility="gone"
+             android:visibility="visible"
              android:id="@+id/ll_reply_content"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
@@ -455,7 +455,7 @@
         </LinearLayout>
          <!--         强制关闭-->
          <LinearLayout
-             android:visibility="gone"
+             android:visibility="visible"
              android:id="@+id/ll_forse_close"
              style="@style/ll_create_order"
              android:layout_margin="@dimen/px_30"
@@ -471,7 +471,7 @@
          </LinearLayout>
          <!--         提交-->
          <LinearLayout
-             android:visibility="gone"
+             android:visibility="visible"
              android:id="@+id/ll_pass"
              android:layout_marginTop="20dp"
              android:layout_marginBottom="20dp"

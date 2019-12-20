@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:text="@string/tv_evaluation"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size16" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务态度"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_75"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/rating_off"
+                    app:starFill="@mipmap/rating_on"
+                    app:starHalf="@mipmap/rating_off"
+                    app:starImageSize="@dimen/px_26"
+                    app:starPadding="@dimen/px_12"
+                    app:starStep="5"
+                    app:stepSize="Full" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_deal_result"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+
+                    <RadioGroup
+                        android:id="@+id/radiogroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_solve"
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_marginLeft="@dimen/px_75"
+                            android:background="@drawable/select_inquiries_solve"
+                            android:button="@null"
+                            android:padding="@dimen/px_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/px_5"
+                            android:text="@string/tv_had_solve"
+                            android:textColor="@color/txt_black_order" />
+
+                        <RadioButton
+                            android:id="@+id/rb_un_solve"
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_marginLeft="@dimen/px_40"
+                            android:background="@drawable/select_inquiries_unsolve"
+                            android:button="@null"
+                            android:padding="@dimen/px_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/px_5"
+                            android:text="@string/tv_un_solve"
+                            android:textColor="@color/txt_black_order" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:paddingLeft="@dimen/px_0">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不满意原因"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/et_limit_suggestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_30"
+                        app:hintText="@string/tv_enter"
+                        app:maxNumber="300" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/base_underline" />
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务质量"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_75"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/rating_off"
+                    app:starFill="@mipmap/rating_on"
+                    app:starHalf="@mipmap/rating_off"
+                    app:starImageSize="@dimen/px_26"
+                    app:starPadding="@dimen/px_12"
+                    app:starStep="5"
+                    app:stepSize="Full" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_deal_result"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_marginLeft="@dimen/px_75"
+                            android:background="@drawable/select_inquiries_solve"
+                            android:button="@null"
+                            android:padding="@dimen/px_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/px_5"
+                            android:text="@string/tv_had_solve"
+                            android:textColor="@color/txt_black_order" />
+
+                        <RadioButton
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_marginLeft="@dimen/px_40"
+                            android:background="@drawable/select_inquiries_unsolve"
+                            android:button="@null"
+                            android:padding="@dimen/px_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/px_5"
+                            android:text="@string/tv_un_solve"
+                            android:textColor="@color/txt_black_order" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:paddingLeft="@dimen/px_0">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不满意原因"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_30"
+                        app:hintText="@string/tv_enter"
+                        app:maxNumber="300" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

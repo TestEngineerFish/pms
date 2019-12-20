@@ -13,10 +13,10 @@
         android:textColorHint="@color/hint_text_color"
         android:textSize = "14sp"
         android:gravity="start"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="30dp"
+        android:paddingTop="@dimen/px_20"
+        android:paddingLeft="@dimen/px_30"
+        android:paddingRight="@dimen/px_30"
+        android:paddingBottom="@dimen/px_60"
         android:background="@color/activity_bg_color"
       />
 

@@ -176,6 +176,12 @@
     <string name="tv_for_respone">待评价</string>
     <string name="text_know">我知道了</string>
     <string name="text_re_scan">重新扫码</string>
+    <string name="tv_deal_result">处理结果</string>
+    <string name="tv_had_solve">已解决</string>
+    <string name="tv_un_solve">未解决</string>
+    <string name="tv_evaluation">评价</string>
+    <string name="tv_instructions">说明</string>
+    <string name="tv_enter">请输入文字信息</string>
     <string name="text_need_divide_selected">请先选择分期</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
