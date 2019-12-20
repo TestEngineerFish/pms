@@ -29,6 +29,7 @@ class ServiceManager {
         addService(SERVICE_WORK_ORDER, WorkOrderServiceImpl())
         addService(SERVICE_RESOURCE_WORK_ORDER, ResourceWorkOrderServiceImpl())
         addService(SERVICE_RESOURCE,ResourceServiceImpl())
+        addService(SERVICE_MDM,MdmServiceImpl())
     }
 
     companion object {
@@ -40,6 +41,7 @@ class ServiceManager {
         const val SERVICE_WORK_ORDER: String = "work-order"
         const val SERVICE_RESOURCE:String="resource"
         const val SERVICE_RESOURCE_WORK_ORDER: String = "resource-work-order"
+        const val SERVICE_MDM:String="mdm"
         private val services: HashMap<String, EinyunService>? = HashMap()
         private var instance: ServiceManager? = null
 

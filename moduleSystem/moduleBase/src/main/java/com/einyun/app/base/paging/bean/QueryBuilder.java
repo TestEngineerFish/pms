@@ -2,6 +2,8 @@ package com.einyun.app.base.paging.bean;
 
 import android.text.TextUtils;
 
+import org.mockito.internal.matchers.Any;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,16 +49,16 @@ public class QueryBuilder {
         return builder;
     }
 
-    public QueryBuilder addQueryItem(String property, String value) {
-        if (!TextUtils.isEmpty(value)) {
-            QueryItem<String> item = new QueryItem();
-            item.setProperty(property);
-            item.setValue(value);
-            checkItems();
-            items.add(item);
-        }
+    public QueryBuilder addQueryItem(String property, Object value) {
+        QueryItem<Object> item = new QueryItem();
+        item.setProperty(property);
+        item.setValue(value);
+        checkItems();
+        items.add(item);
         return builder;
     }
+
+
 
     private void checkItems() {
         if (items == null) {

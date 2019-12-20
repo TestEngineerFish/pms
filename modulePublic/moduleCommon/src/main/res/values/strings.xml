@@ -35,6 +35,8 @@
     <string name="text_plan_name">计划名称</string>
     <string name="text_work_guide">工作指导</string>
     <string name="text_grid">网格</string>
+    <string name="text_building">楼栋</string>
+    <string name="text_unit">单元</string>
     <string name="text_order_person">工单处理人</string>
     <string name="text_order_create_time">工单创建时间</string>
     <string name="text_end_time">完成截止时间</string>
@@ -174,6 +176,7 @@
     <string name="tv_for_respone">待评价</string>
     <string name="text_know">我知道了</string>
     <string name="text_re_scan">重新扫码</string>
+    <string name="text_need_divide_selected">请先选择分期</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>

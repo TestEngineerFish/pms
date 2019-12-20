@@ -98,7 +98,7 @@
                     <ImageView
                         android:layout_width="13.5dp"
                         android:layout_height="13.5dp"
-                        android:src="@mipmap/icon_scan"
+                        android:src="@mipmap/icon_qr_scan"
                         android:layout_marginLeft="14dp"
                         android:layout_gravity="center_vertical">
                     </ImageView>
