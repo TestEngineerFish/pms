@@ -64,7 +64,7 @@ public class AddComplainInfoActivity extends BaseHeadViewModelActivity<ActivityA
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_client_complain_order;
+        return R.layout.activity_add_complain_info;
     }
 
     @Override

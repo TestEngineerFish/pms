@@ -2,6 +2,7 @@ package com.einyun.app.library.core.api.impl
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.api.proxy.WorkOrderServiceImplProxy
 import com.einyun.app.library.workorder.model.RepairsPage
@@ -34,6 +35,16 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+    override fun complainWorkListdPage(
+        pageBean: PageBean,
+        mobile: String,
+        callBack: CallBack<ComplainModelPageResult>
+    ): LiveData<ComplainModelPageResult> {
+        return proxy.complainWorkListdPage(
+            pageBean, mobile, callBack
+        )
+    }
+
     override fun postCommunication(
         request: PostCommunicationRequest,
         callBack: CallBack<Boolean>
@@ -52,12 +63,17 @@ class WorkOrderServiceImpl : WorkOrderService {
     ): LiveData<Boolean> {
         return proxy.repaireSend(
             request, callBack
-        )      }
+        )
+    }
 
-    override fun getRepairDetail(instId: String, callBack: CallBack<RepairsDetailModel>): LiveData<RepairsDetailModel> {
+    override fun getRepairDetail(
+        instId: String,
+        callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel> {
         return proxy.getRepairDetail(
             instId, callBack
-        )    }
+        )
+    }
 
     /**
      *

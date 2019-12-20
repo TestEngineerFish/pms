@@ -22,14 +22,13 @@ import java.util.ArrayList;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_ALREDY_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_COPY_ME;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_GRAB;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 
 /**
  * demo of paging
  */
-@Route(path = RouterUtils.ACTIVITY_REPAIRS_PAGING)
+@Route(path = RouterUtils.ACTIVITY_COMPLAIN_PAGING)
 public class ComplainActivity extends BaseHeadViewModelActivity<ComplainActivityBinding, ComplainViewModel> {
     private String[] mTitles;//tab标题
 
@@ -37,10 +36,10 @@ public class ComplainActivity extends BaseHeadViewModelActivity<ComplainActivity
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle(R.string.text_work_repair);
-        mTitles=new String[]{getResources().getString(R.string.text_grab_order),getResources().getString(R.string.text_wait_follow),getResources().getString(R.string.text_wait_feedback),getResources().getString(R.string.text_already_follow),getResources().getString(R.string.text_already_done),getResources().getString(R.string.text_copy_me)};
+        setHeadTitle(R.string.text_work_complain);
+        mTitles=new String[]{getResources().getString(R.string.text_wait_follow),getResources().getString(R.string.text_wait_feedback),getResources().getString(R.string.text_already_follow),getResources().getString(R.string.text_already_done),getResources().getString(R.string.text_copy_me)};
         final ArrayList<ComplainViewModelFragment> fragments = new ArrayList<>();
-        String fragmentTags[]=new String[]{FRAGMENT_REPAIR_GRAB,FRAGMENT_REPAIR_WAIT_FOLLOW,FRAGMENT_REPAIR_WAIT_FEED,FRAGMENT_REPAIR_ALREADY_FOLLOW,FRAGMENT_REPAIR_ALREDY_DONE,FRAGMENT_REPAIR_COPY_ME};
+        String fragmentTags[]=new String[]{FRAGMENT_REPAIR_WAIT_FOLLOW,FRAGMENT_REPAIR_WAIT_FEED,FRAGMENT_REPAIR_ALREADY_FOLLOW,FRAGMENT_REPAIR_ALREDY_DONE,FRAGMENT_REPAIR_COPY_ME};
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
             bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);

@@ -14,7 +14,9 @@
         <include
             android:id="@id/head_bar"
             layout="@layout/include_layout_activity_head" />
+
         <View style="@style/base_underline" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
@@ -22,10 +24,11 @@
             android:paddingBottom="@dimen/px_30">
 
         </androidx.recyclerview.widget.RecyclerView>
+
         <Button
             android:id="@+id/bt_login"
             style="@style/submit_btn"
-            android:onClick="@{()->callBack.submit()}"
-            android:text="@string/text_submit" />    </LinearLayout>
+            android:text="@string/text_submit" />
+    </LinearLayout>
 
 </layout>

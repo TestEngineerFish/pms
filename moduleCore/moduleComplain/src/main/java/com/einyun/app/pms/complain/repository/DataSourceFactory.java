@@ -21,13 +21,16 @@ import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 public class DataSourceFactory extends DataSource.Factory<Integer, DictDataModel> {
     RepairsPageRequest request;
 
-    public DataSourceFactory(RepairsPageRequest request) {
+    String tag;
+
+    public DataSourceFactory(RepairsPageRequest request, String tag) {
         this.request = request;
+        this.tag = tag;
     }
 
     @NonNull
     @Override
     public DataSource<Integer, DictDataModel> create() {
-        return new ComplainDataSource(request);
+        return new ComplainDataSource(request, tag);
     }
 }

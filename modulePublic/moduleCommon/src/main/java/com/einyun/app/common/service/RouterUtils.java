@@ -75,6 +75,7 @@ public class RouterUtils {
     public static final String ACTIVITY_CREATE_CLIENT_REPAIRS_ORDER = "/create/clientRepairsOrder";
     public static final String ACTIVITY_CREATE_CLIENT_ENQUIRY_ORDER = "/create/clientEnquiryOrder";
     public static final String ACTIVITY_CHOOSE_DISPOSE_PERSON = "/create/choosePerson";
+    public static final String ACTIVITY_ADD_COMPLAIN_INFO = "/create/AddComplainInfoActivity";
     /**********************Mine****************************/
     public static final String ACTIVITY_MINE_SETTING = "/mine/setting";
     public static final String ACTIVITY_USER_INFO = "/mine/userinfo";
@@ -87,6 +88,8 @@ public class RouterUtils {
     /**********************客户报修****************************/
     public static final String ACTIVITY_CUSTOMER_REPAIR_DETAIL = "/repairs/RepairsDetailActivity";
 
+    //客户投诉
+    public static final String ACTIVITY_COMPLAIN_PAGING="/complain/ComplainActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;

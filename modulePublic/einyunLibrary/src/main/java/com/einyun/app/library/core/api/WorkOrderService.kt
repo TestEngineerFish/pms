@@ -3,6 +3,7 @@ package com.einyun.app.library.core.api
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.model.BlocklogNums
@@ -77,4 +78,9 @@ interface WorkOrderService : EinyunService {
     fun startRepair(request: CreateClientRepairOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun repairTypeList(callBack: CallBack<Door>): LiveData<Door>
     fun postCommunication(request: PostCommunicationRequest,callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun complainWorkListdPage(
+        pageBean: PageBean,
+        mobile: String,
+        callBack: CallBack<ComplainModelPageResult>
+    ): LiveData<ComplainModelPageResult>
 }
