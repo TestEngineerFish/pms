@@ -9,6 +9,12 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.customerinquiries.constants.URLS;
+import com.einyun.app.pms.customerinquiries.module.DealRequest;
+import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
+import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
+import com.einyun.app.pms.customerinquiries.module.FeedBackModule;
+import com.einyun.app.pms.customerinquiries.module.FeedBackRequest;
+import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
 import com.einyun.app.pms.customerinquiries.module.InquiriesListModule;
 import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
 import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
@@ -84,5 +90,108 @@ public class CustomerInquiriesRepository {
                 }, error -> {
                     callBack.onFaild(error);
                 });
+    }
+    /**
+     * get
+     * 获取问询详情基本信息
+     */
+    public void getInquiriesBasicInfo(String id, CallBack<InquiriesDetailModule> callBack) {
+        String url = URLS.URL_GET_INQUIRIES_DETAIL_INFO+id;
+        serviceApi.getInquiriesDetailInfo(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
+     * 处理
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> dealSubmit(DealRequest request, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.dealSubmit(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    /**
+     * 处理保存
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> dealSave(DealSaveRequest request, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.dealSave(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+
+    /**
+     * 评价
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> Evaluation(EvaluationRequest request, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.Evaluation(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    /**
+     * get
+     * 获取问询详情基本信息
+     */
+    public void getFeedbackInfo(String id, CallBack<FeedBackModule> callBack) {
+        String url = URLS.URL_GET_FEEDBACK_INFO+id;
+        serviceApi.getFeedbackInfo(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
+     * 处理
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> feedback(FeedBackRequest request, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.feedbacksubmit(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
     }
 }

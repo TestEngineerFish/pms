@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="module"
+            type="com.einyun.app.pms.customerinquiries.module.FeedBackModule" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.customerinquiries.ui.FeedBackViewModuleActivity" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <LinearLayout
+             android:id="@+id/tab_customer_inquiries"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+             <RelativeLayout style="@style/style_rl_feedback">
+                 <TextView
+                     android:text="@string/tv_sender"
+                     style="@style/style_text_feedback_left" />
+                 <TextView
+                     android:id="@+id/tv_communication"
+                     style="@style/style_text_feedback_right" />
+             </RelativeLayout>
+             <RelativeLayout
+                 style="@style/style_rl_feedback">
+                 <TextView
+
+                     android:text="@string/tv_send_time"
+                     style="@style/style_text_feedback_left" />
+                 <TextView
+                     android:id="@+id/tv_send_time"
+                     style="@style/style_text_feedback_right" />
+             </RelativeLayout>
+             <RelativeLayout
+                 style="@style/style_rl_feedback">
+                 <TextView
+
+                     android:text="@string/tv_feedback_time"
+                     style="@style/style_text_feedback_left" />
+                 <TextView
+                     android:id="@+id/tv_back_time"
+                     style="@style/style_text_feedback_right" />
+             </RelativeLayout>
+             <RelativeLayout
+                 style="@style/style_rl_feedback">
+                 <TextView
+
+                     android:text="@string/tv_communicate_content"
+                     style="@style/style_text_feedback_left" />
+                 <TextView
+                     android:id="@+id/tv_communication_content"
+                     style="@style/style_text_feedback_right" />
+             </RelativeLayout>
+             <RelativeLayout
+                 android:background="@color/white"
+                 android:layout_marginTop="10dp"
+                 android:layout_width="match_parent"
+                 android:layout_height="180dp">
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:gravity="center_vertical"
+                     android:layout_height="45dp">
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginRight="2dp"
+                         android:text="*"
+                         style="@style/style_devcie_tv_left"
+                         android:textColor="#FFE02020"
+                         android:textSize="20sp" />
+                     <TextView
+                         android:layout_marginLeft="0dp"
+                         android:gravity="center"
+                         android:layout_height="match_parent"
+                         android:text="@string/tv_feedback_content"
+                         style="@style/style_devcie_tv_left"/>
+                 </LinearLayout>
+
+                 <com.einyun.app.common.ui.component.limit.LimitInput
+                     android:id="@+id/et_limit_input"
+                     android:layout_marginTop="46dp"
+                     app:hintText="请输入文字"
+                     android:layout_marginLeft="25dp"
+                     android:layout_marginRight="25dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+             </RelativeLayout>
+             <Button
+                 android:onClick="@{()->callBack.onSubmitClick()}"
+                 android:text="@string/text_commit"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/px_90"
+                 style="@style/submit_btn"/>
+         </LinearLayout>
+     </LinearLayout>
+</layout>
