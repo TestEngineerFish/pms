@@ -3,10 +3,16 @@ package com.einyun.app.pms.complain.ui;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.einyun.app.base.util.DateConverter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
@@ -40,7 +46,6 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
     String divideID;
     @Autowired(name = RouteKey.KEY_PROJECT_ID)
     String projectID;
-    private List<DictDataModel> dictTimeList = new ArrayList<>();
 
     @Override
     protected DetailViewModel initViewModel() {
@@ -58,10 +63,6 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_initiate_communication);
         binding.setCallBack(this);
-        //获取预约上门时间
-        viewModel.getByTypeKey(Constants.REPAIR_TIME).observe(this, dictDataModels -> {
-            dictTimeList = dictDataModels;
-        });
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
             binding.tvPerson.setText(model.getFullname());
             request.setUserId(model.getId());
@@ -70,37 +71,21 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
 
     PostCommunicationRequest request = new PostCommunicationRequest();
 
-    int rtTimeDefaultPos = 0;
-    int rtDateDefaultPos = 0;
 
     public void selectTime() {
-        if (dictTimeList == null || dictTimeList.size() == 0) {
-            ToastUtil.show(this, "暂无预约上门时间");
-            return;
-        }
-        List<BottomPickerModel> models = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            BottomPickerModel model = new BottomPickerModel();
-            model.setData(getOldDate(i));
-            List<String> dataList = new ArrayList<>();
-            for (DictDataModel data : dictTimeList) {
-                dataList.add(data.getName());
-            }
-            model.setDataList(dataList);
-            models.add(model);
-        }
-
-        BottomPicker.buildBottomPicker(this, models, rtDateDefaultPos, rtTimeDefaultPos, new BottomPicker.OnItemDoublePickListener() {
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
-            public void onPick(int position1, int position2) {
-                rtDateDefaultPos = position1;
-                rtTimeDefaultPos = position2;
-                BottomPickerModel model = models.get(position1);
-                binding.tvTime.setText(model.getData() + " " + model.getDataList().get(position2));
-                request.setExpectTime(model.getData() + " " + model.getDataList().get(position2));
+            public void onTimeSelect(Date date, View v) {
+                SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                request.setExpectTime(dft.format(date));
             }
-        });
+        }).setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
+                .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
+                .build();
+        pvTime.show();
     }
+
     public void selectPerson() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)

@@ -82,8 +82,8 @@ versions.permission_dispatcher ="4.6.0"
 versions.permission_dispatcher_processor ="4.6.0"
 versions.skin ="4.0.4"
 versions.luban ="1.1.8"
+versions.picker = "4.1.9"
 ext.versions = versions
-
 
 
 def deps = [:]
@@ -217,6 +217,7 @@ deps.permission_dispatcher ="org.permissionsdispatcher:permissionsdispatcher:$ve
 deps.permission_dispatcher_processor ="org.permissionsdispatcher:permissionsdispatcher-processor:$versions.permission_dispatcher_processor"
 //图片压缩
 deps.luban            ="top.zibin:Luban:$versions.luban"
+deps.picker ="com.contrarywind:Android-PickerView:$versions.picker"
 ext.deps = deps
 
 def build_versions = [:]

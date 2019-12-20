@@ -76,6 +76,7 @@ dependencies {
     api deps.mpchat        //图表
     api deps.pickerview    //菜单选择
     api deps.x5            //腾讯x5浏览器内核
+    api deps.picker //选择器
     //页面路由ARouter
     implementation(deps.arouter_api) {
         exclude group: 'com.android.support'
