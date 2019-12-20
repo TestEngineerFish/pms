@@ -8,13 +8,17 @@ import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
+import com.einyun.app.base.util.Base64Util;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
@@ -22,12 +26,18 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeWorkNodeBinding;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 /**
  * 巡更详情，巡更（更：时间，打更），按时进行巡查
@@ -65,6 +75,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     protected void switchStateUI() {
         super.switchStateUI();
         binding.btnSubmit.setVisibility(View.VISIBLE);
+        binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
     }
 
@@ -75,6 +86,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             nodesAdapter = new RVBindingAdapter<ItemPatrolTimeWorkNodeBinding, WorkNode>(this, com.einyun.app.pms.patrol.BR.node) {
                 @Override
                 public void onBindItem(ItemPatrolTimeWorkNodeBinding binding, WorkNode model, int position) {
+                    model.setPos(position);
                     //处理列表头
                     if (position == 0) {
                         tableHead(binding);
@@ -135,9 +147,10 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding, WorkNode front, WorkNode model) {
                     //是否需要拍照
                     if (model.is_photo > 0) {//需要拍照
-                        if (!TextUtils.isEmpty(model.pic_url)) {//是否已有拍照记录，有拍照记录，显示已拍照
+                        if (!TextUtils.isEmpty(model.pic_url)||(model.getCachedImages()!=null&&model.getCachedImages().size()>0)) {//是否已有拍照记录，有拍照记录，显示已拍照
                             binding.llPhotoComplete.setVisibility(View.VISIBLE);
                             binding.llCapture.setVisibility(View.GONE);
+                            binding.llPhotoComplete.setOnClickListener(v -> navigatSignIn(front, model));//已拍照，点击可以进入修改照片
                         } else {//无拍照记录，显示拍照按钮，进行拍照
                             binding.llPhotoComplete.setVisibility(View.GONE);
                             binding.llCapture.setVisibility(View.VISIBLE);
@@ -193,6 +206,14 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 }
             }
         }
+        if (ordered > 0) {
+            if (frontWorkNode != null) {//第一个忽略
+                if (SignInType.QR.equals(frontWorkNode.sign_type) && !viewModel.hasSignIn(frontWorkNode)) {
+                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+                    return;
+                }
+            }
+        }
         Bundle bundle = new Bundle();
         bundle.putSerializable(RouteKey.KEY_PATROL_TIME_WORKNODE, node);
         ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_QR_SIGNIN_HANDLE)
@@ -216,6 +237,14 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             if (frontWorkNode != null) {//第一个忽略
                 if (SignInType.QR.equals(frontWorkNode.sign_type) && !viewModel.hasSignIn(frontWorkNode)) {
                     ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+                    return;
+                }
+            }
+        }
+        if (ordered > 0) {
+            if (frontWorkNode != null) {//第一个忽略
+                if (frontWorkNode.is_photo > 0 && !viewModel.hasCapture(frontWorkNode)) {
+                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
                     return;
                 }
             }
@@ -248,5 +277,96 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
      */
     private void signInSuccess(String pointId) {
         viewModel.signInSuccess(orderId, pointId);
+    }
+
+    private boolean hasNodeHandled(WorkNode workNode){
+        if(SignInType.QR.equals(workNode.sign_type)){
+            if(workNode.getSign_result()!=SignCheckResult.SIGN_IN_SUCCESS){
+                String msg=String.format(getString(R.string.text_lose_node_signin),workNode.getPos());
+                ToastUtil.show(this, msg);
+                return false;
+            }
+        }
+        if(workNode.is_photo>0){
+            if(workNode.getCachedImages()==null||workNode.getCachedImages().size()==0){
+                String msg=String.format(getString(R.string.text_lose_node_pic),workNode.getPos());
+                ToastUtil.show(this, msg);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 校验巡根点
+     * @return
+     */
+    private boolean validateWorkNodes(){
+        List<WorkNode> nodes=nodesAdapter.getDataList();
+        for(WorkNode workNode:nodes){
+            if(!hasNodeHandled(workNode)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 表单校验
+     * @return
+     */
+    private boolean validateForm(){
+        if(TextUtils.isEmpty(binding.limitInput.getString())){
+            ToastUtil.show(this, R.string.text_alert_handle_content);
+            binding.limitInput.requestFocus();
+            return false;
+        }
+        return validateWorkNodes();
+    }
+
+    /**
+     * 上传所有巡更点图片
+     * @param nodes
+     */
+    private void uploadImage(List<WorkNode> nodes){
+        if(nodes==null){
+            return;
+        }
+        viewModel.uploadWorkNodesImages(nodes).observe(this, nodes1 -> submitForm(nodes1));
+    }
+
+    private void submitForm(List<WorkNode> nodes){
+        createRequest();
+        List<SubInspectionWorkOrderFlowNode> flowNodes=viewModel.wrapWorkOrderFlowNodes(patrolInfo.getData().getZyxcgd().getSub_inspection_work_order_flow_node(),nodes);
+        patrolInfo.getData().getZyxcgd().setSub_inspection_work_order_flow_node(flowNodes);
+        String base64= Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
+        PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrolInfo.getData().getZyxcgd().getId_());
+        viewModel.submit(request).observe(this, aBoolean -> {
+            if(aBoolean){
+                viewModel.finishTask(orderId);
+                tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
+                tipDialog.setTipDialogListener(dialog -> {
+                    finish();
+                });
+                tipDialog.show();
+            }
+        });
+    }
+
+    private void createRequest(){
+        patrolInfo.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());//处理时间
+        patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());//关闭状态
+        patrolInfo.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());//处理人
+        patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());//处理人姓名
+        patrolInfo.getData().getZyxcgd().setF_processing_instructions(binding.limitInput.getString());//处理意见
+    }
+
+    @Override
+    public void onSubmitClick() {
+        if(validateForm()){
+            if(nodesAdapter!=null){
+                uploadImage(nodesAdapter.getDataList());
+            }
+        }
     }
 }

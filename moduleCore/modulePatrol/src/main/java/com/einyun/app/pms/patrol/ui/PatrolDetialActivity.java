@@ -24,12 +24,16 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
+import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.pms.patrol.R;
@@ -68,6 +72,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     protected int listType= ListType.PENDING.getType();
     protected PhotoSelectAdapter photoSelectAdapter;
+    protected PhotoListAdapter photoListAdapter;
     protected final int MAX_PHOTO_SIZE = 4;
 
     protected RVBindingAdapter nodesAdapter;
@@ -130,7 +135,16 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
+        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration());
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
+
+        photoListAdapter=new PhotoListAdapter(this);
+        binding.panelHandleInfo.patrolHandlePicList.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false));//设置横向
+        binding.panelHandleInfo.patrolHandlePicList.addItemDecoration(new SpacesItemDecoration());
+        binding.panelHandleInfo.patrolHandlePicList.setAdapter(photoListAdapter);
     }
 
     /**
@@ -293,6 +307,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      */
     protected void updateHandleResultUI(PatrolInfo patrol) {
         binding.panelHandleInfo.setPatrol(patrol.getData().getZyxcgd());
+        String images=patrol.getData().getZyxcgd().getF_files();
+        if(!TextUtils.isEmpty(images)){
+            PicUrlModelConvert convert = new PicUrlModelConvert();
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(images);
+            photoListAdapter.updateList(modelList);
+        }
     }
 
     /**

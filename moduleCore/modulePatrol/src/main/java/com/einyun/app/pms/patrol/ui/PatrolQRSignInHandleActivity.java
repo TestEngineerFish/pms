@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -22,6 +20,7 @@ import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.viewmodel.PatrolSignInViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,7 +122,7 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
             String pointId = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
             boolean sacnResult = data.getBooleanExtra(DataConstants.KEY_QR_SCAN_RESULT, false);
             if (sacnResult) {
-                workNode.setSign_result(SignCheckResult.F_WK_RESULT_SUCCESS);
+                workNode.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
                 binding.setNode(workNode);
                 initScan();
                 signInSuccess(pointId);

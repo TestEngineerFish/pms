@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class WorkNode implements Serializable {
+    private int pos;
     private int id;
     public  String number;
     public  String workThings;
@@ -38,11 +39,12 @@ public class WorkNode implements Serializable {
         this.result = result;
     }
 
-    public WorkNode(String number, String workThings, String workNode,String sign_type,int is_photo,String result,String sign_time,int sort,String patrol_point_id,String pic_example_url,String patrol_items) {
+    public WorkNode(String number, String workThings, String workNode,String sign_type,int sign_result,int is_photo,String result,String sign_time,int sort,String patrol_point_id,String pic_example_url,String patrol_items) {
         this.number = number;
         this.workThings = workThings;
         this.workNode = workNode;
         this.sign_type=sign_type;
+        this.sign_result=sign_result;
         this.is_photo=is_photo;
         this.result = result;
         this.sign_time=sign_time;
@@ -188,4 +190,11 @@ public class WorkNode implements Serializable {
         F_WK_RESULT = f_WK_RESULT;
     }
 
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
 }

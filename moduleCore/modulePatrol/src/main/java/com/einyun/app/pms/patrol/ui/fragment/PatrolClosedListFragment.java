@@ -3,17 +3,21 @@ package com.einyun.app.pms.patrol.ui.fragment;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 /**
  * 巡查工单已办列表
@@ -39,6 +43,12 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
         viewModel.loadCloseData().observe(getActivity(), patrols -> {
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
+        });
+        /**
+         * 刷新列表
+         */
+        LiveEventBus.get(LiveDataBusKey.POST_PATROL_CLOSED_REFRESH,Boolean.class).observe(this, flag -> {
+            viewModel.refreshClosedList();
         });
     }
 

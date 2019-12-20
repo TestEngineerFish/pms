@@ -14,8 +14,6 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +21,10 @@ public class PatrolSignInViewModel extends PatrolViewModel {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userService;
     PatrolRepo repo=new PatrolRepo();
+
+    public PatrolSignInViewModel(){
+        setUserModuleService(userService);
+    }
 
     /**
      * 缓存图片

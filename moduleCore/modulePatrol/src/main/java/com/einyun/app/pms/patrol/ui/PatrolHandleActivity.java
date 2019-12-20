@@ -259,11 +259,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     private void acceptForm(PatrolInfo patrol){
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
-        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.APPLY.getState());
+        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
         patrol.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
         patrol.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
 //        Logger.d("data->"+new Gson().toJson(patrol));
-        String base64=Base64Util.encodeBase64(new Gson().toJson(patrol));
+        String base64=Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrol.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if(aBoolean){
@@ -284,7 +284,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     /**
      * 是否创建派工单
      */
-    private void createSendOrder() {
+    protected void createSendOrder() {
         if(alertDialog==null){
             alertDialog=new AlertDialog(PatrolHandleActivity.this).builder()
                     .setTitle(getString(R.string.text_alert))

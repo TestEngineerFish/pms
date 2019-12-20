@@ -26,5 +26,7 @@
     <string name="text_need_order_capture">请按照顺序拍照</string>
     <string name="text_sign_in_ed">已签到</string>
     <string name="text_un_sign_in">未签到</string>
+    <string name="text_lose_node_pic">第%d个巡更节点缺少拍照信息</string>
+    <string name="text_lose_node_signin">第%d个巡更节点还未签到</string>
 
 </resources>

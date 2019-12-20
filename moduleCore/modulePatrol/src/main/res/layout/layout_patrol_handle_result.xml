@@ -81,7 +81,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{patrol.f_processing_date}" />
+                    android:text="@{patrol.f_actual_completion_time}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">

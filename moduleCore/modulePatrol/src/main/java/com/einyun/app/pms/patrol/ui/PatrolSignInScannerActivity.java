@@ -21,6 +21,7 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
     @Autowired(name = RouteKey.KEY_QR_ID)
     String qrId;
     boolean scanResult;
+    private Runnable runnable;
 
     /**
      * 扫码识别结果处理
@@ -39,9 +40,12 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
         /**
          * 3秒自动退出扫码
          */
-        handler.postDelayed(() -> {
-            setScanResult();
-        },3*1000);
+        if(runnable==null){
+            runnable= () -> setScanResult();
+        }else{
+            handler.removeCallbacks(runnable);
+        }
+        handler.postDelayed(runnable,3*1000);
     }
 
     /**
@@ -80,10 +84,11 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
                     .setTitle(getString(R.string.text_signin_success))
                     .setMsg(getString(R.string.text_auto_return))
                     .setNegativeButton(getString(R.string.text_know), v -> {
-                        handler.removeCallbacksAndMessages(null);
+                        setScanResult();
+                        finish();
                     });
-            alertDialog.show();
         }
+        alertDialog.show();
     }
 
     /**
@@ -95,10 +100,11 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
                     .setTitle(getString(R.string.text_signin_failed))
                     .setMsg(getString(R.string.text_auto_return))
                     .setNegativeButton(getString(R.string.text_know), v -> {
-                        handler.removeCallbacksAndMessages(null);
+                        setScanResult();
+                        finish();
                     });
-            alertDialog.show();
         }
+        alertDialog.show();
     }
 
     @Override
@@ -107,14 +113,17 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
         if(alertDialog!=null){
             alertDialog.dismiss();
         }
+        setScanResult();
         if(handler!=null){
-            handler.removeCallbacksAndMessages(null);
+            if(runnable!=null){
+                handler.removeCallbacks(runnable);
+            }
         }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        setScanResult();
     }
 }
