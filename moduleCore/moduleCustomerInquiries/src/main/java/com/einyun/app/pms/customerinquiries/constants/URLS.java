@@ -28,4 +28,6 @@ public class URLS {
     public static final String URL_GET_INQUIRIES_DEAL_EVALUATION ="/workOrder/workOrder/customerEnquiry/v1/complete";
     //获取反馈
     public static final String URL_GET_FEEDBACK_INFO ="/bpm-runtime/runtime/task/v1/getTaskCommu?taskId=";
+    //提交反馈
+    public static final String URL_GET_FEEDBACK_SUBMIT ="/bpm-runtime/runtime/instance/v1/doNext";
 }

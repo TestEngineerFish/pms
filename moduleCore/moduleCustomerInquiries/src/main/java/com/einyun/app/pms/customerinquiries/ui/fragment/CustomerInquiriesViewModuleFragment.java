@@ -168,14 +168,17 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                                 .navigation();
 
                     });
-                    binding.tvTalk.setOnClickListener(view -> {});
+                    binding.tvTalk.setOnClickListener(view -> {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
+                                .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
+                                .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
+                                .navigation();
+                    });
                     binding.rlFeedBack.setOnClickListener(view -> {
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
-                                .withString(RouteKey.KEY_ORDER_ID,inquiriesItemModule.getID_())
-                                .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
-                                .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
                                 .navigation();
 
                     });

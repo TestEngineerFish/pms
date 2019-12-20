@@ -69,8 +69,18 @@ String taskID;
         viewModel.queryFeedbackInfo(taskID).observe(this,module->{
             Log.e("module", "initData: "+module );
             feedBackModule = module;
+            UpdateUI(module);
         });
     }
+
+    private void UpdateUI(FeedBackModule module) {
+        if (module == null) {
+            return;
+        }
+        binding.setModule(module);
+
+    }
+
     /**
      * 提交
      * */
@@ -83,14 +93,24 @@ String taskID;
         if (feedBackModule.getTaskCommu()==null) {
             return;
         }
+        String option = binding.etLimitInput.getString();
+        if (option.isEmpty()) {
+            ToastUtil.show(this, getString(R.string.tv_empty_content));
+            return;
+        }
         FeedBackRequest feedBackRequest = new FeedBackRequest();
         feedBackRequest.setAccount(feedBackModule.getTaskCommu().getSender());
         feedBackRequest.setTaskId(taskID);
-        feedBackRequest.setOpinion("content");
+        feedBackRequest.setOpinion(option);
         feedBackRequest.setNotifyType("inner");
         feedBackRequest.setActionName("commu");
         viewModel.feedBack(feedBackRequest).observe(this,module->{
             Log.e("module", "initData: "+module );
+            if (module) {
+                finish();
+            }else {
+                ToastUtil.show(this, "反馈失败");
+            }
         });
     }
     @Override

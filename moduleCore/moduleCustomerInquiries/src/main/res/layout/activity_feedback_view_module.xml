@@ -26,6 +26,7 @@
                      android:text="@string/tv_sender"
                      style="@style/style_text_feedback_left" />
                  <TextView
+                     android:text="@{module.taskCommu.sender}"
                      android:id="@+id/tv_communication"
                      style="@style/style_text_feedback_right" />
              </RelativeLayout>
@@ -36,6 +37,7 @@
                      android:text="@string/tv_send_time"
                      style="@style/style_text_feedback_left" />
                  <TextView
+                     android:text="@{module.taskCommu.createtime}"
                      android:id="@+id/tv_send_time"
                      style="@style/style_text_feedback_right" />
              </RelativeLayout>
@@ -56,6 +58,7 @@
                      android:text="@string/tv_communicate_content"
                      style="@style/style_text_feedback_left" />
                  <TextView
+                     android:text="@{module.taskCommu.opinion}"
                      android:id="@+id/tv_communication_content"
                      style="@style/style_text_feedback_right" />
              </RelativeLayout>

@@ -43,7 +43,7 @@ public interface CustomerInquiriesServiceApi {
     Flowable<GetInquiriesTypesResponse> getTypes(@Url String url);
 
     /**
-     * 待审批列表
+     * 列表
      * @param request
      * @return
      */
@@ -91,6 +91,6 @@ public interface CustomerInquiriesServiceApi {
      * @param
      * @return
      */
-    @POST(URLS.URL_GET_INQUIRIES_DEAL)
+    @POST(URLS.URL_GET_FEEDBACK_SUBMIT)
     Flowable<BaseResponse> feedbacksubmit(@Body FeedBackRequest bean);
 }
