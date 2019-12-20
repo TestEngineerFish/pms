@@ -88,7 +88,7 @@ public class SignSetViewModuleActivity extends BaseHeadViewModelActivity<Activit
     /**
      * 完成按钮
      */
-    public void onOptionClick(View view){
+    public void onRightOptionClick(View view){
         if (binding.etText.getText().toString().trim().isEmpty()) {
             ToastUtil.show(this, getString(R.string.tv_pl_set_sign));
             return;

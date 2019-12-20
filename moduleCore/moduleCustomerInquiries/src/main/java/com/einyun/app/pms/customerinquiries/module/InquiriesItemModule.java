@@ -1,6 +1,8 @@
 package com.einyun.app.pms.customerinquiries.module;
 
-public class InquiriesItemModule {
+import java.io.Serializable;
+
+public class InquiriesItemModule implements Serializable {
     public int unsatisfy_version;
     public String subject;
     public String line_key;

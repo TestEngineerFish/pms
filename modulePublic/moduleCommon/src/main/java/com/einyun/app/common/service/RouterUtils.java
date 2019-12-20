@@ -77,6 +77,8 @@ public class RouterUtils {
 
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
+    public static final String ACTIVITY_INQUIRIES_DETAIL = "/customerInquiries/InquiriesDetailActivity";
+    public static final String ACTIVITY_INQUIRIES_FEEDBACK = "/customerInquiries/FeedBackActivity";
 
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

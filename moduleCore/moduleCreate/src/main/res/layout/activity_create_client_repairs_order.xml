@@ -152,8 +152,7 @@
                         android:text="报修类别" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
-                        app:setSelectTxt="@{bean.bizData.cate}" />
+                        style="@style/tv_create_order_select" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
