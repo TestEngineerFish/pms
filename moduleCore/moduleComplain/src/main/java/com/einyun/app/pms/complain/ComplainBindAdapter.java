@@ -11,71 +11,49 @@ import androidx.databinding.BindingAdapter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
+import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 
 public class ComplainBindAdapter {
-    /**
-     * 列表状态
-     *
-     * @param view
-     * @param value
-     */
-    @BindingAdapter("status")
-    public static void status(TextView view, String value) {
-        if (!StringUtil.isNullStr(value)) {
-            return;
-        }
-        int state = Integer.parseInt(value);
-        if (state == OrderState.NEW.getState()) {
-            view.setText(R.string.text_state_new);
-        } else if (state == OrderState.HANDING.getState()) {
-            view.setText(R.string.text_state_processing);
-        } else if (state == OrderState.APPLY.getState()) {
-            view.setText(R.string.text_apply);
-        } else if (state == OrderState.CLOSED.getState()) {
-            view.setText(R.string.text_state_closed);
-        }
-
-    }
-
-    /**
-     * 派工单详情显示状态
-     *
-     * @param view
-     * @param value
-     */
-    @BindingAdapter("order_status")
-    public static void order_status(TextView view, String value) {
-        if (TextUtils.isEmpty(value)) {
-            return;
-        }
-        int state = Integer.parseInt(value);
-        if (state == OrderState.NEW.getState()) {
-            view.setText(R.string.text_state_new);
-        } else if (state == OrderState.HANDING.getState()) {
-            view.setText(R.string.text_state_processing);
-        } else if (state == OrderState.APPLY.getState()) {
-            view.setText(R.string.text_approval_wait);
-        } else if (state == OrderState.CLOSED.getState()) {
-            view.setText(R.string.text_state_closed);
-        }
-
-    }
+//    /**
+//     * 派工单详情显示状态
+//     *
+//     * @param view
+//     * @param value
+//     */
+//    @BindingAdapter("order_status")
+//    public static void order_status(TextView view, String value) {
+//        if (TextUtils.isEmpty(value)) {
+//            return;
+//        }
+//        int state = Integer.parseInt(value);
+//        if (state == OrderState.NEW.getState()) {
+//            view.setText(R.string.text_state_new);
+//        } else if (state == OrderState.HANDING.getState()) {
+//            view.setText(R.string.text_state_processing);
+//        } else if (state == OrderState.APPLY.getState()) {
+//            view.setText(R.string.text_approval_wait);
+//        } else if (state == OrderState.CLOSED.getState()) {
+//            view.setText(R.string.text_state_closed);
+//        }
+//
+//    }
 
     @BindingAdapter("status")
     public static void status(ImageView view, String value) {
         if (TextUtils.isEmpty(value)) {
             return;
         }
-        int state = Integer.parseInt(value);
-        if (state == OrderState.NEW.getState()) {
+        if (value.equals(ComplainOrderState.ADD.getState())) {
             view.setImageResource(R.mipmap.icon_new);
-        } else if (state == OrderState.HANDING.getState()) {
-            view.setImageResource(R.mipmap.icon_processing);
-        } else if (state == OrderState.APPLY.getState()) {
-            view.setImageResource(R.mipmap.icon_work_order_apply);
-        } else if (state == OrderState.CLOSED.getState()) {
+        } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
             view.setImageResource(R.mipmap.icon_state_closed);
+        } else if (value.equals(ComplainOrderState.DEALING.getState())) {
+            view.setImageResource(R.mipmap.icon_processing);
+        } else if (value.equals(ComplainOrderState.RESPONSE.getState())) {
+            view.setImageResource(R.mipmap.icon_work_order_apply);
+        } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
+            view.setImageResource(R.mipmap.icon_evaluate);
         }
     }
 
@@ -83,8 +61,23 @@ public class ComplainBindAdapter {
     public static void setTime(TextView view, Long value) {
         view.setText(FormatUtil.formatDate(value));
     }
-//    @BindingAdapter("setUserName")
-//    public static void status(TextView view, GetMappingByUserIdsResponse value) {
-//        view.setText(value.getFullname() + "(" + value.getAccount() + ")");
-//    }
+
+    @BindingAdapter("status")
+    public static void status(TextView view, String value) {
+        if (TextUtils.isEmpty(value)) {
+            return;
+        }
+        if (value.equals(ComplainOrderState.ADD.getState())) {
+            view.setText("新生成");
+        } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
+            view.setText("已关闭");
+        } else if (value.equals(ComplainOrderState.DEALING.getState())) {
+            view.setText("处理中");
+        } else if (value.equals(ComplainOrderState.RESPONSE.getState())) {
+            view.setText("待响应");
+        } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
+            view.setText("待评价");
+        }
+
+    }
 }

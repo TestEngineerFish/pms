@@ -28,15 +28,9 @@
     <string name="tv_reset">重置</string>
     <string name="tv_pic">图片</string>
     <string name="tv_feed_history">回复历史</string>
-    <string name="tv_evaluation">评价</string>
-    <string name="tv_instructions">说明</string>
-    <string name="tv_enter">请输入文字信息</string>
     <string name="tv_feed_content">回复内容</string>
     <string name="tv_forse_close">强制关闭</string>
     <string name="tv_save">保存</string>
-    <string name="tv_deal_result">处理结果</string>
-    <string name="tv_had_solve">已解决</string>
-    <string name="tv_un_solve">未解决</string>
     <string name="tv_feedback">反馈</string>
     <string name="tv_sender">沟通发送人</string>
     <string name="tv_send_time">发送时间</string>

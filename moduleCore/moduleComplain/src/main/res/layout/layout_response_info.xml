@@ -23,10 +23,10 @@
         android:paddingBottom="@dimen/px_30">
 
         <LinearLayout
-            android:id="@+id/repairs_work_order_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -39,18 +39,10 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/px_20"
                     android:gravity="center_vertical"
-                    android:text="工单信息"
+                    android:text="响应信息"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size16" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/px_20"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/txt_blue_color"
-                    android:textSize="@dimen/px_30" />
+                    android:textSize="@dimen/font_size16"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <ImageView
@@ -60,65 +52,39 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/pd_view" />
 
-            <LinearLayout
-                style="@style/work_order_detail_ln"
-                android:background="@color/white">
+
+            <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:text="工单编号" />
+                    android:text="响应人" />
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                    android:text="@{repairs.data.customer_repair_model.response_user}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:text="分期" />
+                    android:text="响应时间" />
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_dk}" />
+                    android:text="@{repairs.data.customer_repair_model.response_time}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:text="@string/text_house" />
+                    android:text="首次沟通结果" />
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_dk}" />
+                    android:text="@{repairs.data.customer_repair_model.response_result}" />
             </LinearLayout>
-
-            <LinearLayout style="@style/work_order_detail_ln">
-
-                <TextView
-                    style="@style/work_order_detail_left_txt"
-                    android:text="联系电话" />
-
-                <TextView
-                    style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_mobile}" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/work_order_detail_ln"
-                android:layout_marginBottom="@dimen/px_30">
-
-                <TextView
-                    style="@style/work_order_detail_left_txt"
-                    android:text="投诉人" />
-
-                <TextView
-                    style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_user}" />
-            </LinearLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

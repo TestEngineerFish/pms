@@ -194,7 +194,6 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.repairsList);
         binding.repairsList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        binding.repairsList.addItemDecoration(new SpacesItemDecoration(30));
         loadPagingData();
     }
 
@@ -232,21 +231,5 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
 
-    }
-
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view,
-                                   RecyclerView parent, RecyclerView.State state) {
-            outRect.bottom = space;
-            if (parent.getChildPosition(view) == 0)
-                outRect.top = space;
-        }
     }
 }
