@@ -10,6 +10,7 @@ import com.einyun.app.base.paging.bean.*
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.net.URLs
@@ -35,6 +36,20 @@ import retrofit2.http.Url
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    //报修-处理保存
+    override fun saveHandler(
+        request: SaveHandleRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.repairHandleSave(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                callBack.call(it.isState)
+                liveData.postValue(it.isState)
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData       }
 
     //报修-派单
     override fun repaireSend(
@@ -596,7 +611,7 @@ class WorkOrderRepository : WorkOrderService {
      * */
     override fun getRepaiAlreadyFollow(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyFollowPageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         var queryBuilder = queryRepairBuilder(
             request
@@ -618,7 +633,7 @@ class WorkOrderRepository : WorkOrderService {
      * */
     override fun getRepaiAlreadyDone(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyDonePageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         var queryBuilder = queryRepairBuilder(
             request
@@ -641,7 +656,7 @@ class WorkOrderRepository : WorkOrderService {
 
     override fun getRepairCopyMe(
         request: RepairsPageRequest,
-        callBack: CallBack<RepairCopyMePageResullt>
+        callBack: CallBack<RepairsPage>
     ) {
         var queryBuilder = queryRepairBuilder(
             request

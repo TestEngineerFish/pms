@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/repairs_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_30"
+        android:paddingBottom="@dimen/px_30"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/repair_pay_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="材料费(元)" />
+
+                <EditText
+                    style="@style/tv_handle_order_select"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:hint="请输入"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="人工费(元)" />
+
+                <EditText
+                    style="@style/tv_handle_order_select"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:hint="请输入"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="费用总计(元)" />
+
+                <TextView
+                    style="@style/tv_create_order_select"
+                    android:layout_marginLeft="@dimen/px_30"
+                     />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="付款方式" />
+
+                <TextView
+                    style="@style/tv_create_order_select"
+                    android:layout_marginLeft="@dimen/px_30"
+                    />
+                <ImageView style="@style/tv_create_order_right_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="付款日期" />
+
+                <TextView
+                    style="@style/tv_create_order_select"
+                    android:layout_marginLeft="@dimen/px_30"
+                    />
+                <ImageView style="@style/tv_create_order_right_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="联合处理人" />
+
+                <EditText
+                    style="@style/tv_handle_order_select"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:hint="请输入"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:background="@color/activity_bg_color" />
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:paddingLeft="@dimen/px_0">
+
+            <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"/>
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="处理结果"
+                />
+        </LinearLayout>
+
+        <com.einyun.app.common.ui.component.limit.LimitInput
+            android:id="@+id/repair_response_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_30"
+            app:hintText="请输入处理结果"
+            app:maxNumber="300" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:text="(最多四张)"
+                android:textSize="@dimen/font_size12" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_img_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

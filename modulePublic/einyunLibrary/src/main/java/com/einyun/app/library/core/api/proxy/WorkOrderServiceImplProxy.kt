@@ -36,6 +36,15 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun saveHandler(
+        request: SaveHandleRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.saveHandler(
+            request,
+            callBack
+        )!!       }
+
     override fun repaireSend(
         request: RepairSendOrderRequest,
         callBack: CallBack<Boolean>
@@ -70,7 +79,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun getRepairCopyMe(
         request: RepairsPageRequest,
-        callBack: CallBack<RepairCopyMePageResullt>
+        callBack: CallBack<RepairsPage>
     ) {
         return instance?.getRepairCopyMe(
             request,
@@ -80,7 +89,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun getRepaiAlreadyDone(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyDonePageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         return instance?.getRepaiAlreadyDone(
             request,
@@ -90,7 +99,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun getRepaiAlreadyFollow(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyFollowPageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         return instance?.getRepaiAlreadyFollow(
             request,

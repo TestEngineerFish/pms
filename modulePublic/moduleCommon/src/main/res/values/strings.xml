@@ -154,9 +154,14 @@
     <string name="text_initiate_communication">发起沟通</string>
     <string name="text_repairs_type">报修类别</string>
     <string name="text_contact">沟通</string>
-    <string name="text_please_enter_reason">请填写响应结果</string>
+    <string name="text_please_enter_reason">请填写结果</string>
     <string name="text_response_success">响应成功</string>
     <string name="text_select_material">选择材料</string>
+    <string name="text_wait_response">待响应</string>
+    <string name="text_handling">处理中</string>
+    <string name="text_wait_send">待派单</string>
+    <string name="text_wait_evaluate">待评价</string>
+    <string name="text_wait_grab">待抢单</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>

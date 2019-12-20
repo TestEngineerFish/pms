@@ -34,6 +34,18 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+
+    /**
+     * 报修-处理保存
+     * */
+    override fun saveHandler(
+        request: SaveHandleRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.saveHandler(
+            request, callBack
+        )    }
+
     override fun postCommunication(
         request: PostCommunicationRequest,
         callBack: CallBack<Boolean>
@@ -74,7 +86,7 @@ class WorkOrderServiceImpl : WorkOrderService {
      * */
     override fun getRepairCopyMe(
         request: RepairsPageRequest,
-        callBack: CallBack<RepairCopyMePageResullt>
+        callBack: CallBack<RepairsPage>
     ) {
         return proxy.getRepairCopyMe(
             request, callBack
@@ -86,7 +98,7 @@ class WorkOrderServiceImpl : WorkOrderService {
      * */
     override fun getRepaiAlreadyDone(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyDonePageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         return proxy.getRepaiAlreadyDone(
             request, callBack
@@ -98,7 +110,7 @@ class WorkOrderServiceImpl : WorkOrderService {
      * */
     override fun getRepaiAlreadyFollow(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyFollowPageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         return proxy.getRepaiAlreadyFollow(
             request, callBack

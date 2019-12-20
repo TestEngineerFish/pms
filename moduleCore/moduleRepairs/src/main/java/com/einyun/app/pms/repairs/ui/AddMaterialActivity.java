@@ -5,13 +5,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.pms.repairs.R;
+import com.einyun.app.pms.repairs.databinding.ActivityAddMaterialBinding;
 import com.einyun.app.pms.repairs.databinding.ActivityRepairsDetailBinding;
 import com.einyun.app.pms.repairs.viewmodel.RepairDetailViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
-
-public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityRepairsDetailBinding, RepairDetailViewModel> {
+@Route(path = RouterUtils.ACTIVITY_CUSTOMER_ADD_MATERIAL)
+public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMaterialBinding, RepairDetailViewModel> {
 
 
     @Override

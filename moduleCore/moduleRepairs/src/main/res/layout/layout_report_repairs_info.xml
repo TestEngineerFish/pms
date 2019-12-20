@@ -96,6 +96,7 @@
 
         <LinearLayout style="@style/work_order_detail_ln">
             <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"
                 android:layout_marginTop="@dimen/px_30"/>
             <TextView
                 style="@style/work_order_detail_left_txt"
@@ -106,15 +107,18 @@
                 android:layout_width="wrap_content"
                 android:text="@{repairs.data.customer_repair_model.bx_area}"/>
                 <ImageView
-                    android:layout_width="@dimen/px_20"
-                    android:layout_height="@dimen/px_22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
                     android:src="@drawable/edit"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginTop="@dimen/px_10"
                     android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
             <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"
                 android:layout_marginTop="@dimen/px_30"/>
             <TextView
                 style="@style/work_order_detail_left_txt"
@@ -126,16 +130,18 @@
                 android:text="@{repairs.data.customer_repair_model.bx_cate_lv1}"
                  />
             <ImageView
-                android:layout_width="@dimen/px_20"
-                android:layout_height="@dimen/px_22"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_30"
                 android:src="@drawable/edit"
-                android:layout_gravity="center_vertical"
-                />
+                android:layout_marginTop="@dimen/px_10"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"
                 android:layout_marginTop="@dimen/px_30"/>
             <TextView
                 style="@style/work_order_detail_left_txt"
@@ -192,7 +198,6 @@
         <LinearLayout style="@style/work_order_detail_ln">
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginLeft="@dimen/px_0"
                 android:text="预约上门时间" />
             <TextView
                 style="@style/work_order_detail_txt_right"

@@ -81,7 +81,7 @@ public class RouterUtils {
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
     /**********************客户报修****************************/
     public static final String ACTIVITY_CUSTOMER_REPAIR_DETAIL = "/repairs/RepairsDetailActivity";
-
+    public static final String ACTIVITY_CUSTOMER_ADD_MATERIAL = "/repairs/AddMaterialActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;

@@ -33,9 +33,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/px_20"
                 android:gravity="center_vertical"
-                android:text="派单信息"
-                android:textStyle="bold"
+                android:text="响应信息"
                 android:textColor="@color/txt_black_order"
+                android:textStyle="bold"
                 android:textSize="@dimen/font_size16" />
         </RelativeLayout>
 
@@ -52,7 +52,7 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:text="派单人" />
+                android:text="工单归属" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
@@ -63,34 +63,34 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:text="派单时间" />
+                android:text="响应人" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.pd_time}" />
+                android:text="@{repairs.data.customer_repair_model.response_user}" />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:text="指派人" />
+                android:text="响应时间" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.assign_grab_user}" />
+                android:text="@{repairs.data.customer_repair_model.response_time}" />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln"
-           >
+            >
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:text="派单备注" />
+                android:text="首次沟通结果" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.pd_remark}" />
+                android:text="@{repairs.data.customer_repair_model.response_result}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

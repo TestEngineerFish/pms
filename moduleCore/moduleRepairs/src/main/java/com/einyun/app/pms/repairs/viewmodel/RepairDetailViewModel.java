@@ -13,6 +13,7 @@ import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.net.request.RepairSendOrderRequest;
+import com.einyun.app.library.workorder.net.request.SaveHandleRequest;
 
 public class RepairDetailViewModel extends BaseUploadViewModel {
 
@@ -51,6 +52,27 @@ public class RepairDetailViewModel extends BaseUploadViewModel {
         MutableLiveData<Boolean> liveData = new MutableLiveData<Boolean>();
         showLoading();
         workOrderService.repaireSend(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return liveData;
+    }
+
+    /**
+     * 处理保存
+     * */
+    public LiveData<Boolean> saveHandler(SaveHandleRequest request){
+        MutableLiveData<Boolean> liveData = new MutableLiveData<Boolean>();
+        showLoading();
+        workOrderService.saveHandler(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
                 hideLoading();

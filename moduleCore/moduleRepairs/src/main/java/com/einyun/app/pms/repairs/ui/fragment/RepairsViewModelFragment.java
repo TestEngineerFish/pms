@@ -112,7 +112,6 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (adapter == null) {
             adapter = new RVPageListAdapter<ItemOrderRepairBinding, RepairsModel>(getActivity(), BR.repair, mDiffCallback) {
-
                 @Override
                 public void onBindItem(ItemOrderRepairBinding binding, RepairsModel repairsModel) {
                     if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
@@ -120,22 +119,15 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     } else {
                         binding.itemContactOrFeedRe.setVisibility(View.VISIBLE);
                     }
-                    binding.itemContactOrFeedRe.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                                    .withString(RouteKey.KEY_PRO_INS_ID,repairsModel.getProInsId())
-                                   .navigation();
-                        }
-                    });
                     binding.itemRepairDetail.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                                    .withString(RouteKey.KEY_PRO_INS_ID,repairsModel.getProInsId())
-                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID, repairsModel.getID_())
+                                    .withString(RouteKey.KEY_PRO_INS_ID, repairsModel.getProInsId())
+                                    .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                    .withString(RouteKey.KEY_TASK_NODE_ID, repairsModel.getTaskNodeId())
                                     .navigation();
                         }
                     });
@@ -209,6 +201,9 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     public void onItemClicked(View veiw, RepairsModel data) {
-
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+                .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                .navigation();
     }
 }

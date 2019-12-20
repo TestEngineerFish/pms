@@ -46,17 +46,17 @@ interface WorkOrderService : EinyunService {
 
     //获取报修已跟进列表
     fun getRepaiAlreadyFollow(
-        request: RepairsPageRequest, callBack: CallBack<AlreadyFollowPageResult>
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
     )
 
     //获取报修已办结列表
     fun getRepaiAlreadyDone(
-        request: RepairsPageRequest, callBack: CallBack<AlreadyDonePageResult>
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
     )
 
     //获取报修抄送我
     fun getRepairCopyMe(
-        request: RepairsPageRequest, callBack: CallBack<RepairCopyMePageResullt>
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
     )
 
     //抢单
@@ -69,12 +69,33 @@ interface WorkOrderService : EinyunService {
         instId: String, callBack: CallBack<RepairsDetailModel>
     ): LiveData<RepairsDetailModel>
 
+    //获取报修详情接口
+    fun saveHandler(
+        request: SaveHandleRequest, callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
     //报修-派单
-    fun repaireSend(request: RepairSendOrderRequest,callBack: CallBack<Boolean>): LiveData<Boolean>
-    fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>):LiveData<List<TypeAndLine>>
-    fun startEnquiry(request: CreateClientEnquiryOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
-    fun startComplain(request: CreateClientComplainOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
-    fun startRepair(request: CreateClientRepairOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun repaireSend(request: RepairSendOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+
+    fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>>
+    fun startEnquiry(
+        request: CreateClientEnquiryOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
+    fun startComplain(
+        request: CreateClientComplainOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
+    fun startRepair(
+        request: CreateClientRepairOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
     fun repairTypeList(callBack: CallBack<Door>): LiveData<Door>
-    fun postCommunication(request: PostCommunicationRequest,callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun postCommunication(
+        request: PostCommunicationRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
 }

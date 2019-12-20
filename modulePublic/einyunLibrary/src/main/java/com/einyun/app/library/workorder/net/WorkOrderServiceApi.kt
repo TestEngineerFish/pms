@@ -161,18 +161,18 @@ interface WorkOrderServiceApi {
      * 客户报修-已跟进
      * */
     @POST(URLs.URL_REPORT_REPAIRS_ALREADY_FOLLOW)
-    fun getRepairsAlreadyFollow(@Body request: Query):Flowable<AlreadyFollowResponse>
+    fun getRepairsAlreadyFollow(@Body request: Query):Flowable<RepairsResponse>
 
     /**
      * 客户报修-已办结
      * */
     @POST(URLs.URL_REPORT_REPAIRS_ALREADY_DONE)
-    fun getRepairAlreadyDone(@Body request: Query):Flowable<AlreadyDoneResponse>
+    fun getRepairAlreadyDone(@Body request: Query):Flowable<RepairsResponse>
     /**
      * 客户报修-抄送我
      * */
     @POST(URLs.URL_REPORT_REPAIRS_COPY_ME)
-    fun getRepairCopyMe(@Body request: Query):Flowable<RepairCopyMeResponse>
+    fun getRepairCopyMe(@Body request: Query):Flowable<RepairsResponse>
 
     /**
      * 客户报修-抢单动作
@@ -191,6 +191,12 @@ interface WorkOrderServiceApi {
      * */
     @POST(URLs.URL_REPAIR_SEND)
     fun repairSend(@Body request: RepairSendOrderRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 客户报修-处理保存
+     * */
+    @POST(URLs.URL_REPAIR_HANDLE_SAVE)
+    fun repairHandleSave(@Body request:SaveHandleRequest ):Flowable<BaseResponse<Any>>
 
     @POST(URLs.URL_INITIATE_COMMUNICATION)
     fun postCommunication(@Body request:PostCommunicationRequest):Flowable<BaseResponse<Any>>
