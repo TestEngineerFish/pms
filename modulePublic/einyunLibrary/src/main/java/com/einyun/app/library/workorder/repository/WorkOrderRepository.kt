@@ -666,16 +666,20 @@ class WorkOrderRepository : WorkOrderService {
      * 投诉待跟进
      */
     fun getComplainWaitFollow(
-        request: RepairsPageRequest,
+        request: ComplainPageRequest,
         callBack: CallBack<ComplainPage>
     ) {
-        var queryBuilder = queryRepairBuilder(
+        var queryBuilder = queryComplainBuilder(
             request
         )
         serviceApi?.getComplainWaitFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
-                    callBack.call(response)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
                 }, { callBack.onFaild(it) }
             )
     }
@@ -684,16 +688,20 @@ class WorkOrderRepository : WorkOrderService {
      *投诉-已跟进
      * */
     fun getComplainAlreadyFollow(
-        request: RepairsPageRequest,
+        request: ComplainPageRequest,
         callBack: CallBack<ComplainPage>
     ) {
-        var queryBuilder = queryRepairBuilder(
+        var queryBuilder = queryComplainBuilder(
             request
         )
         serviceApi?.getComplainAlreadyFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
-                    callBack.call(response)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
                 }, { callBack.onFaild(it) }
             )
     }
@@ -702,16 +710,20 @@ class WorkOrderRepository : WorkOrderService {
      *投诉-已办结
      * */
     fun getComplainAlreadyDone(
-        request: RepairsPageRequest,
+        request: ComplainPageRequest,
         callBack: CallBack<ComplainPage>
     ) {
-        var queryBuilder = queryRepairBuilder(
+        var queryBuilder = queryComplainBuilder(
             request
         )
         serviceApi?.getComplainAlreadyDone(queryBuilder.build())?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
-                    callBack.call(response)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
                 }, { callBack.onFaild(it) }
             )
     }
@@ -720,16 +732,20 @@ class WorkOrderRepository : WorkOrderService {
      *投诉-抄送我
      * */
     fun getComplainCopyMe(
-        request: RepairsPageRequest,
+        request: ComplainPageRequest,
         callBack: CallBack<ComplainPage>
     ) {
-        var queryBuilder = queryRepairBuilder(
+        var queryBuilder = queryComplainBuilder(
             request
         )
         serviceApi?.getComplainCopyMe(queryBuilder.build())?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
-                    callBack.call(response)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
                 }, { callBack.onFaild(it) }
             )
     }
@@ -738,16 +754,20 @@ class WorkOrderRepository : WorkOrderService {
      *投诉-待反馈
      * */
     fun getComplainWaitFeed(
-        request: RepairsPageRequest,
+        request: ComplainPageRequest,
         callBack: CallBack<ComplainPage>
     ) {
-        var queryBuilder = queryRepairBuilder(
+        var queryBuilder = queryComplainBuilder(
             request
         )
         serviceApi?.getComplainWaitFeed(queryBuilder.build())?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
-                    callBack.call(response)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
                 }, { callBack.onFaild(it) }
             )
     }
@@ -820,7 +840,42 @@ class WorkOrderRepository : WorkOrderService {
             .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
-            .addSort("bx_time",request.DESC)
+            .addSort("bx_time", request.DESC)
+            .setPageBean(request.pageBean)
+        return builder
+    }
+
+    private fun queryComplainBuilder(
+        request: ComplainPageRequest
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "ts_dk_id",
+            request.ts_dk_id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+            .addQueryItem(
+                "ts_area_id",
+                request.ts_area_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "ts_cate_lv1_id",
+                request.ts_cate_lv1_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "ts_cate_lv2_id",
+                request.ts_cate_lv2_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addSort("F_ts_time", request.DESC)
             .setPageBean(request.pageBean)
         return builder

@@ -85,6 +85,8 @@ public class RouterUtils {
 
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
+    public static final String ACTIVITY_INQUIRIES_DETAIL = "/customerInquiries/InquiriesDetailActivity";
+    public static final String ACTIVITY_INQUIRIES_FEEDBACK = "/customerInquiries/FeedBackActivity";
     /**********************客户报修****************************/
     public static final String ACTIVITY_CUSTOMER_REPAIR_DETAIL = "/repairs/RepairsDetailActivity";
 

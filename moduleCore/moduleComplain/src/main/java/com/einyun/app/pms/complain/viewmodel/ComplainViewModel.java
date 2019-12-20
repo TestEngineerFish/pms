@@ -5,17 +5,19 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
+import com.einyun.app.library.workorder.net.request.ComplainPageRequest;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.complain.repository.DataSourceFactory;
 
 /**
  * RepairsViewModel
  */
-public class ComplainViewModel extends BasePageListViewModel<RepairsModel> {
+public class ComplainViewModel extends BasePageListViewModel<ComplainModel> {
     // TODO: Implement the ViewModel
 
-    LiveData<PagedList<RepairsModel>> liveData;
+    LiveData<PagedList<ComplainModel>> liveData;
     RepairsPageRequest request;
 
     public void refresh() {
@@ -36,8 +38,8 @@ public class ComplainViewModel extends BasePageListViewModel<RepairsModel> {
      *
      * @return LiveData
      */
-    public LiveData<PagedList<RepairsModel>> loadPagingData(RepairsPageRequest repairsPageRequest, String tag) {
-        liveData = new LivePagedListBuilder(new DataSourceFactory(repairsPageRequest, tag), config)
+    public LiveData<PagedList<ComplainModel>> loadPagingData(ComplainPageRequest request, String tag) {
+        liveData = new LivePagedListBuilder(new DataSourceFactory(request, tag), config)
                 .build();
         return liveData;
     }

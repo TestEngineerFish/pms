@@ -1,6 +1,7 @@
 package com.einyun.app.pms.complain.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
@@ -19,6 +22,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
+import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
@@ -29,7 +33,9 @@ import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
+import com.einyun.app.library.workorder.net.request.ComplainPageRequest;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
+import com.einyun.app.pms.complain.BR;
 import com.einyun.app.pms.complain.R;
 import com.einyun.app.pms.complain.databinding.ComplainFragmentBinding;
 import com.einyun.app.pms.complain.databinding.ItemOrderComplainBinding;
@@ -41,6 +47,8 @@ import com.orhanobut.logger.Logger;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Route;
+
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
@@ -49,8 +57,8 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_D
  * Paging Demo
  * Paging Component
  */
-public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFragmentBinding, ComplainViewModel> implements PeriodizationView.OnPeriodSelectListener, ItemClickListener<RepairsModel> {
-    RVPageListAdapter<ItemOrderComplainBinding, RepairsModel> adapter;
+public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFragmentBinding, ComplainViewModel> implements PeriodizationView.OnPeriodSelectListener, ItemClickListener<ComplainModel> {
+    RVPageListAdapter<ItemOrderComplainBinding, ComplainModel> adapter;
 
     public static ComplainViewModelFragment newInstance(Bundle bundle) {
         ComplainViewModelFragment fragment = new ComplainViewModelFragment();
@@ -118,11 +126,11 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        RepairsPageRequest request = new RepairsPageRequest();
-        request.setBx_area_id("");
-        request.setBx_cate_lv1_id("");
-        request.setBx_cate_lv2_id("");
-        request.setBx_dk_id("");
+        ComplainPageRequest request = new ComplainPageRequest();
+        request.setTs_area_id("");
+        request.setTs_cate_lv1_id("");
+        request.setTs_cate_lv2_id("");
+        request.setTs_dk_id("");
         request.setTs_time(Query.SORT_DESC);
         request.setNode_id_("");
         request.setDESC(Query.SORT_DESC);
@@ -145,10 +153,10 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (adapter == null) {
-            adapter = new RVPageListAdapter<ItemOrderComplainBinding, RepairsModel>(getActivity(), com.einyun.app.pms.complain.BR.repair, mDiffCallback) {
+            adapter = new RVPageListAdapter<ItemOrderComplainBinding, ComplainModel>(getActivity(), BR.complain, mDiffCallback) {
 
                 @Override
-                public void onBindItem(ItemOrderComplainBinding binding, RepairsModel repairsModel) {
+                public void onBindItem(ItemOrderComplainBinding binding, ComplainModel complainModel) {
                     if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(getFragmentTag())) {
                         binding.line.setVisibility(View.VISIBLE);
                         binding.llTalkOrTurnSingle.setVisibility(View.VISIBLE);
@@ -162,13 +170,19 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                         binding.tvTalk.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                        .withString(RouteKey.KEY_TASK_ID,complainModel.getTaskId())
+                                        .withString(RouteKey.KEY_DIVIDE_ID,complainModel.getF_ts_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID,complainModel.getU_project_id())
+                                .navigation();
                             }
                         });
                     }
                     if (FRAGMENT_REPAIR_WAIT_FEED.equals(getFragmentTag())) {
+                        binding.line.setVisibility(View.VISIBLE);
                         binding.rlFeedBack.setVisibility(View.VISIBLE);
                     }
-                    binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getCreateTime()));
+                    binding.repairCreateTime.setText(FormatUtil.formatDate(complainModel.getCreateTime()));
                 }
 
                 @Override
@@ -180,6 +194,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.repairsList);
         binding.repairsList.setAdapter(adapter);
         adapter.setOnItemClick(this);
+        binding.repairsList.addItemDecoration(new SpacesItemDecoration(30));
         loadPagingData();
     }
 
@@ -195,27 +210,43 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
 
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<RepairsModel> mDiffCallback = new DiffUtil.ItemCallback<RepairsModel>() {
+    private DiffUtil.ItemCallback<ComplainModel> mDiffCallback = new DiffUtil.ItemCallback<ComplainModel>() {
 
         @Override
-        public boolean areItemsTheSame(@NonNull RepairsModel oldItem, @NonNull RepairsModel newItem) {
+        public boolean areItemsTheSame(@NonNull ComplainModel oldItem, @NonNull ComplainModel newItem) {
             return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull RepairsModel oldItem, @NonNull RepairsModel newItem) {
+        public boolean areContentsTheSame(@NonNull ComplainModel oldItem, @NonNull ComplainModel newItem) {
             return oldItem == newItem;
         }
     };
 
     @Override
-    public void onItemClicked(View veiw, RepairsModel data) {
+    public void onItemClicked(View veiw, ComplainModel data) {
 
     }
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
 
+    }
+
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            outRect.bottom = space;
+            if (parent.getChildPosition(view) == 0)
+                outRect.top = space;
+        }
     }
 }
