@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="repair"
-            type="com.einyun.app.library.workorder.model.RepairsModel" />
+            name="complain"
+            type="com.einyun.app.library.workorder.model.ComplainModel" />
     </data>
 
 
@@ -32,7 +32,7 @@
                 android:layout_marginRight="@dimen/px_40"
                 android:gravity="center_vertical"
                 android:maxLength="10"
-                android:text="@{repair.subject}"
+                android:text="@{complain.subject}"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/px_32" />
 
@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@{repair.bx_user}"
+                    android:text="@{complain.f_ts_user}"
                     android:textColor="@color/blackTextColor" />
             </LinearLayout>
 
@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@{repair.bx_code}"
+                    android:text="@{complain.f_ts_code}"
                     android:textColor="@color/blackTextColor" />
             </LinearLayout>
 
@@ -161,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_81"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_talk"
@@ -191,13 +191,13 @@
                     android:textColor="@color/blueTextColor"
                     android:textSize="@dimen/font_size15" />
 
-                <TextView
+                <ImageView
                     android:layout_width="@dimen/px_25"
                     android:layout_height="@dimen/px_25"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/px_28"
-                    android:background="@drawable/right_arrow" />
+                    android:src="@mipmap/icon_arrow_right" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

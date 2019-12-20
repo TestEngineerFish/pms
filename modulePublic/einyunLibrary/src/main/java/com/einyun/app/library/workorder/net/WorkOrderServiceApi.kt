@@ -200,26 +200,26 @@ interface WorkOrderServiceApi {
      * 客户报修-待跟进
      * */
     @POST(URLs.URL_REPORT_COMPLAIN_WAIT_FOLLOW)
-    fun getComplainWaitFollow(@Body request: Query):Flowable<ComplainPage>
+    fun getComplainWaitFollow(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
     /**
      * 客户报修-待反馈
      * */
-    @POST(URLs.URL_REPORT_COMPLAIN_WAIT_FOLLOW)
-    fun getComplainWaitFeed(@Body request: Query):Flowable<ComplainPage>
+    @POST(URLs.URL_COMPLAIN_FEEDBACK_PENDING)
+    fun getComplainWaitFeed(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
     /**
      * 客户报修-已跟进
      * */
     @POST(URLs.URL_REPORT_COMPLAIN_ALREADY_FOLLOW)
-    fun getComplainAlreadyFollow(@Body request: Query):Flowable<ComplainPage>
+    fun getComplainAlreadyFollow(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
 
     /**
      * 客户报修-已办结
      * */
     @POST(URLs.URL_REPORT_COMPLAIN_ALREADY_DONE)
-    fun getComplainAlreadyDone(@Body request: Query):Flowable<ComplainPage>
+    fun getComplainAlreadyDone(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
     /**
      * 客户报修-抄送我
      * */
     @POST(URLs.URL_REPORT_COMPLAIN_COPY_ME)
-    fun getComplainCopyMe(@Body request: Query):Flowable<ComplainPage>
+    fun getComplainCopyMe(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
 }
