@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.library.core.api.DictService;
@@ -17,6 +18,7 @@ import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
+import com.einyun.app.library.workorder.model.ComplainModelPageResult;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.DoorResult;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
@@ -223,6 +225,19 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
             @Override
             public void call(Boolean data) {
                 hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<ComplainModelPageResult> complainWorkListdPage(String mobile) {
+        return workOrderService.complainWorkListdPage(new PageBean(PageBean.DEFAULT_PAGE,PageBean.MAX_PAGE_SIZE), mobile, new CallBack<ComplainModelPageResult>() {
+            @Override
+            public void call(ComplainModelPageResult data) {
             }
 
             @Override

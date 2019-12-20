@@ -14,5 +14,6 @@ public class LiveDataBusKey {
 
     public static final String POST_RESEND_ORDER_USER = "POST_RESEND_ORDER_USER";
     public static final String POST_PLAN_SEARCH = "POST_PLAN_SEARCH";
+    public static final String POST_PATROL_CLOSED_REFRESH="POST_PATROL_CLOSED_REFRESH";
 
 }

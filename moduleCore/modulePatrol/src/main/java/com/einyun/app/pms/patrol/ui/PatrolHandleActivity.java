@@ -4,13 +4,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
@@ -22,8 +18,8 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -40,10 +36,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * 巡查处理
+ */
 @Route(path = RouterUtils.ACTIVITY_PATROL_HANDLE)
-public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends PatrolDetialActivity {
-    @Autowired
-    IUserModuleService userModuleService;
+public class PatrolHandleActivity extends PatrolDetialActivity {
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
@@ -56,6 +53,14 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType= ListType.PENDING.getType();
+
+    protected void setListType(int listType){
+        super.setListType(listType);
+    }
+
+    protected void setOrderId(String orderId){
+        super.setOrderId(orderId);
+    }
 
     @Override
     protected PatrolViewModel initViewModel() {
@@ -70,13 +75,16 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
     }
 
     protected void switchStateUI() {
+        super.switchStateUI();
+        binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
         binding.btnSubmit.setVisibility(View.VISIBLE);
+        binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
     }
 
     protected void initRequest() {
-        super.orderId=orderId;
-        super.listType=listType;
+        super.setListType(listType);
+        super.setOrderId(orderId);
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
@@ -100,9 +108,9 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
                         reject(binding, model);
 
                         if (!TextUtils.isEmpty(model.result)) {
-                            if (model.result.equals(WorkNode.RESULT_REJECT)) {
+                            if (ResultState.RESULT_FAILD.equals(model.result)) {
                                 onReject(binding);
-                            } else if (model.result.equals(WorkNode.RESULT_PASS)) {
+                            } else if (ResultState.RESULT_FAILD.equals(model.result)) {
                                 onAgree(binding);
                             }
                         }
@@ -127,7 +135,7 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
                 protected void reject(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnReject.setOnClickListener(v -> {
                         onReject(binding);
-                        model.setResult(WorkNode.RESULT_REJECT);
+                        model.setResult(ResultState.RESULT_FAILD);
                         saveLocalUserData();
                     });
                 }
@@ -136,7 +144,7 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
                 protected void agree(ItemPatrolWorkNodeBinding binding, WorkNode model) {
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
-                        model.setResult(WorkNode.RESULT_PASS);
+                        model.setResult(ResultState.RESULT_SUCCESS);
                         saveLocalUserData();
                     });
                 }
@@ -251,11 +259,11 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
 
     private void acceptForm(PatrolInfo patrol){
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
-        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.APPLY.getState());
-        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
-        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
-        Logger.d("data->"+new Gson().toJson(patrol));
-        String base64=Base64Util.encodeBase64(new Gson().toJson(patrol));
+        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
+        patrol.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
+        patrol.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
+//        Logger.d("data->"+new Gson().toJson(patrol));
+        String base64=Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrol.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if(aBoolean){
@@ -276,7 +284,7 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
     /**
      * 是否创建派工单
      */
-    private void createSendOrder() {
+    protected void createSendOrder() {
         if(alertDialog==null){
             alertDialog=new AlertDialog(PatrolHandleActivity.this).builder()
                     .setTitle(getString(R.string.text_alert))
@@ -290,26 +298,6 @@ public class PatrolHandleActivity<V extends ViewDataBinding, VM extends BaseView
         }
     }
 
-
-//    /**
-//     * 保存本地数据
-//     */
-//    protected void saveLocalUserData(){
-//        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
-//        List<String> images = new ArrayList<>();
-//        for (Uri uri : uris) {
-//            images.add(uri.toString());
-//        }
-//        if(patrolLocal==null){
-//            patrolLocal=new PatrolLocal();
-//            patrolLocal.setOrderId(orderId);
-//            patrolLocal.setUserId(userModuleService.getUserId());
-//        }
-//        patrolLocal.setImages(images);
-//        patrolLocal.setNote(binding.limitInput.getString());
-//        patrolLocal.setNodes(nodesAdapter.getDataList());
-//        viewModel.saveLocal(patrolLocal);
-//    }
 
     /**
      * 提交

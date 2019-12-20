@@ -2,6 +2,7 @@ package com.einyun.app.library.core.api.proxy
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
@@ -36,6 +37,17 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun complainWorkListdPage(
+        pageBean: PageBean,
+        mobile: String,
+        callBack: CallBack<ComplainModelPageResult>
+    ): LiveData<ComplainModelPageResult> {
+        return instance?.complainWorkListdPage(
+            pageBean,mobile,
+            callBack
+        )!!
+    }
+
     override fun saveHandler(
         request: SaveHandleRequest,
         callBack: CallBack<Boolean>

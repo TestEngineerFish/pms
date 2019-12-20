@@ -164,7 +164,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         binding.rlApprovalTime.setVisibility(View.GONE);//隐藏审批时间
                     } else if (checkPointModel.getStatus().equals("approve")) {//通过
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
-                        binding.tvApprovalState.setText(getString(R.string.tv_had_approval));
+                        binding.tvApprovalState.setText(getString(R.string.tv_had_pass));
                     } else if (checkPointModel.getStatus().equals("reject")) {//驳回
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_unpass);
                         binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));

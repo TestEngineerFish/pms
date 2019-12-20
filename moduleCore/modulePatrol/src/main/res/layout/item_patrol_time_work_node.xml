@@ -19,6 +19,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:minWidth="@dimen/px_90"
                 android:background="@drawable/shape_frame_gray"
                 android:gravity="center"
                 android:paddingTop="8dp"
@@ -29,7 +30,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_content"
-                android:layout_width="316dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="8"
@@ -45,19 +46,21 @@
                     android:id="@+id/tv_work_things"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_10"
                     android:layout_marginBottom="@dimen/px_10"
                     android:text="@{node.workThings}"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/font_size12"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_work_node"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_10"
                     android:text="@{node.workNode}"
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/font_size12" />
 
             </LinearLayout>
             <LinearLayout
@@ -114,6 +117,8 @@
                     android:id="@+id/ll_sign_complete"
                     android:layout_width="@dimen/px_133"
                     android:layout_height="@dimen/px_50"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_20"
                     android:minHeight="@dimen/px_75"
                     android:gravity="center"
                     android:visibility="gone"
@@ -158,6 +163,8 @@
                     android:layout_width="@dimen/px_133"
                     android:layout_height="@dimen/px_50"
                     android:minHeight="@dimen/px_75"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginBottom="@dimen/px_20"
                     android:gravity="center"
                     android:visibility="gone"
                     android:background="@drawable/shape_frame_corners_gray">

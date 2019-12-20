@@ -22,6 +22,7 @@ class URLs {
         const val URL_APPROVAL_PENDING_NUMS:String= "/$DOMAIN/workOrder/task/v1/getUserAuditCount"
         //获取用户待办工单的数量(GET)
         const val URL_BACKLOG_NUMS:String= "/$DOMAIN/workOrder/task/v1/getMapByUcDivKeys?defKeys=customer_repair_flow,customer_enquiry_flow,customer_complain_flow"
+
         // 客户投诉列表 待跟进
         const val URL_COMPLAIN_FLOW_PENDING:String="/$DOMAIN/workOrder/task/v1/getTodoListAliaForApp/customer_complain_flow/NORMAL,DELIVERTO"
         // 客户投诉列表 待反馈
@@ -32,6 +33,7 @@ class URLs {
         const val URL_COMPLAIN_COMPLETE:String="/$DOMAIN/workOrder/task/v1/getCompletedAliaForApp/customer_complain_flow"
         // 客户投诉列表 抄送我的
         const val URL_COMPLAIN_COPY:String="/$DOMAIN/workOrder/task/v1/getReceiverCopyToForApp/customer_complain_flow"
+
         //获取投诉工单列表
         const val URL_COMPLAIN_LIST:String="/$DOMAIN/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_complain_flow"
         //根据参数（如：手机号）查询处理中的投诉列表
@@ -55,9 +57,19 @@ class URLs {
         //我发起的
         const val URL_APPROVE_INITIATED_LIST:String="/$DOMAIN/workOrder/workOrderInnerAudit/v1/getIInitiated"
 
+        //客户报修-待跟进
+        const val URL_REPORT_COMPLAIN_WAIT_FOLLOW="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_complain_flow/NORMAL,DELIVERTO"
+        //客户报修-已跟进
+        const val URL_REPORT_COMPLAIN_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAlia/customer_complain_flow"
+        //客户报修-已办结
+        const val URL_REPORT_COMPLAIN_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompleteAlia/customer_complain_flow"
+        //客户报修-抄送我的
+        const val URL_REPORT_COMPLAIN_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_complain_flow"
 
         //通过UserId批量查询待处理工单
         const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
+        //客户报修-待反馈
+        const val URL_REPORT_REPAIRS_WAIT_FEED="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_repair_flow/COMMU"
 
         //客户报修-抢单列表
         const val URL_REPORT_REPAIRS_GRAB="/workOrder/workOrder/task/v1/getGrabListAlia"

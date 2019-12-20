@@ -60,6 +60,10 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void setRightOption(int iconId){
         headBinding.ivRightOption.setImageResource(iconId);
     }
+
+    protected void hideRightOption(){
+        headBinding.ivRightOption.setVisibility(View.GONE);
+    }
     /**
      * 设置标题栏颜色
     * */
@@ -78,6 +82,12 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void setTxtColor(int resId){
         headBinding.tvHeaderTitle.setTextColor(resId);
     }
+    /**
+     * 设置右侧文字颜色
+     * */
+    protected void setRightTxtColor(int resId){
+        headBinding.tvRightTitle.setTextColor(getResources().getColor(resId));
+    }
 
     /**
      * 设置最右侧文字
@@ -92,6 +102,7 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
         super.initListener();
         headBinding.back.setOnClickListener(v -> onBackOnClick(v));
         headBinding.ivRightOption.setOnClickListener(v->onOptionClick(v));
+        headBinding.tvRightTitle.setOnClickListener(v->onRightOptionClick(v));
     }
 
     @Override
@@ -110,6 +121,12 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
      * 右侧功能按钮
      */
     public void onOptionClick(View view){
+
+    }
+    /**
+     * 右侧文字按钮
+     */
+    public void onRightOptionClick(View view){
 
     }
 }

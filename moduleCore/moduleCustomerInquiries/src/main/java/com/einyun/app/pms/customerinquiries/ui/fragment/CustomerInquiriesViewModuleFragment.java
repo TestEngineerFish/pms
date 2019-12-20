@@ -39,9 +39,11 @@ import com.einyun.app.pms.customerinquiries.databinding.FragmentCustomerInquirie
 import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriesListBinding;
 import com.einyun.app.pms.customerinquiries.module.InquiriesItemModule;
 import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
+import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
 import com.einyun.app.pms.customerinquiries.ui.CustomerInquiriesViewModuleActivity;
 import com.einyun.app.pms.customerinquiries.viewmodule.CusInquiriesFragmentViewModel;
 import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewModelFactory;
+import com.einyun.app.pms.customerinquiries.widget.InquiriesTypeSelectPopWindow;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -66,11 +68,13 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<FragmentCustomerInquiriesViewModuleBinding, CusInquiriesFragmentViewModel>  implements ItemClickListener<InquiriesItemModule>,PeriodizationView.OnPeriodSelectListener{
+public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<FragmentCustomerInquiriesViewModuleBinding, CusInquiriesFragmentViewModel>  implements ItemClickListener<InquiriesItemModule>,PeriodizationView.OnPeriodSelectListener, InquiriesTypeSelectPopWindow.OnItemClickListener {
     RVPageListAdapter<ItemInquiriesListBinding, InquiriesItemModule> adapter;
     private CustomerInquiriesViewModuleActivity activity;
     private String divideId="";
     private String divideName="";
+    private int mPosition=-1;
+    private String cate="";
 
     public static CustomerInquiriesViewModuleFragment newInstance(Bundle bundle) {
         CustomerInquiriesViewModuleFragment fragment = new CustomerInquiriesViewModuleFragment();
@@ -101,13 +105,12 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
     protected void setUpView() {
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
-            loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),getFragmentTag()); });
+            loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag()); });
         binding.inquiriesList.setLayoutManager(new LinearLayoutManager(
                 getActivity(),
                 LinearLayoutManager.VERTICAL,
                 false));
         binding.inquiriesList.setAdapter(adapter);
-
 
     }
 
@@ -119,24 +122,25 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                 //                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemInquiriesListBinding binding, InquiriesItemModule inquiriesItemModule) {
-                    switch (inquiriesItemModule.state) {
+                    switch (inquiriesItemModule.taskNodeId) {
                         case Constants.INQUIRIES_STATE_DEALING:
                             binding.tvApprovalState.setText(getString(R.string.tv_dealing));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_processing);
                             break;
-                        case Constants.INQUIRIES_STATE_CLOSED:
-                            binding.tvApprovalState.setText(getString(R.string.tv_closed));
-                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_closed);
-                            break;
-                        case Constants.INQUIRIES_STATE_FOR_RESPONE:
+
+                        case Constants.INQUIRIES_STATE_RETURN_VISIT:
                             binding.tvApprovalState.setText(getString(R.string.tv_for_respone));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_new);
+                            break;
+                        default:
+                            binding.tvApprovalState.setText(getString(R.string.tv_closed));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_closed);
                             break;
                     }
                     switch (getFragmentTag()) {
                         case FRAGMENT_TO_FOLLOW_UP://待跟进
                            binding.llTalkOrTurnSingle.setVisibility(View.VISIBLE);
-                           binding.rlFeedBack.setVisibility(View.GONE);
+                           binding.rlFeedBack.setVisibility(View.VISIBLE);
                             break;
                         case FRAGMENT_TO_FEED_BACK://待反馈
                             binding.llTalkOrTurnSingle.setVisibility(View.GONE);
@@ -164,8 +168,20 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                                 .navigation();
 
                     });
-                    binding.tvTalk.setOnClickListener(view -> {});
-                    binding.rlFeedBack.setOnClickListener(view -> {});
+                    binding.tvTalk.setOnClickListener(view -> {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
+                                .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
+                                .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
+                                .navigation();
+                    });
+                    binding.rlFeedBack.setOnClickListener(view -> {
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
+                                .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
+                                .navigation();
+
+                    });
 
 
                 }
@@ -230,7 +246,14 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      * 筛选按钮点击
      * */
     public void onInstallmentClick(){
+        CustomerInquiriesViewModuleActivity activity = (CustomerInquiriesViewModuleActivity) getActivity();
+        if (activity.mInquiriesTypesModule==null||activity.mInquiriesTypesModule.size()==0) {
 
+            return;
+        }
+        InquiriesTypeSelectPopWindow inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
+        inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
+        inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
     }
     /*
      * 分期按钮点击
@@ -257,8 +280,25 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      */
     @Override
     public void onItemClicked(View veiw, InquiriesItemModule data) {
-
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
+                .withSerializable(Constants.INQUIRIES_BEAN,data)
+                .navigation();
     }
 
+    /**
+     * 筛选过后的position
+     */
+    @Override
+    public void onData(String dataKey,int position) {
+        Log.e("onData", "onData:dataKey=== "+dataKey );
+        cate = dataKey;
+        mPosition = position;
+        loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag());
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

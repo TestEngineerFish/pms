@@ -14,7 +14,12 @@ public class CustomerInquiriesViewModelFactory implements ViewModelProvider.Fact
         if (modelClass.isAssignableFrom(CusInquiriesFragmentViewModel.class)) {
             return (T) new CusInquiriesFragmentViewModel();
         }
-
+        if (modelClass.isAssignableFrom(InquiriesDetailViewModel.class)) {
+            return (T) new InquiriesDetailViewModel();
+        }
+        if (modelClass.isAssignableFrom(FeedBackViewModel.class)) {
+            return (T) new FeedBackViewModel();
+        }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

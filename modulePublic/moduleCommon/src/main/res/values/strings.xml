@@ -115,6 +115,7 @@
     <string name="text_alert_handle_node">请选择工作节点 %s 的处理结果</string>
     <string name="text_no">序号</string>
     <string name="text_work_items">工作事项/节点</string>
+    <string name="text_patrol_time_manager">巡更点处理</string>
     <string name="text_work_time_items">寻根点名称/位置</string>
     <string name="text_handle_pic">处理后图片</string>
     <string name="text_resolve_result">处理结果</string>
@@ -141,6 +142,7 @@
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
     <string name="text_work_repair">客户报修</string>
+    <string name="text_work_complain">客户投诉</string>
     <string name="text_grab_order">抢单</string>
     <string name="text_wait_feedback">待反馈</string>
     <string name="text_copy_me">抄送我</string>
@@ -157,6 +159,27 @@
     <string name="text_please_enter_reason">请填写结果</string>
     <string name="text_response_success">响应成功</string>
     <string name="text_select_material">选择材料</string>
+
+    <string name="tv_customer_inquiries">客户问询</string>
+    <string name="tv_in_process">处理中</string>
+    <string name="tv_real_estate">房产</string>
+    <string name="tv_asking_people">问询人</string>
+    <string name="tv_work_num">工单号</string>
+    <string name="tv_create_time">创建时间</string>
+    <string name="tv_turn_order">转单</string>
+    <string name="tv_talk">沟通</string>
+    <string name="tv_feed_back">反馈</string>
+    <string name="tv_dealing">待处理</string>
+    <string name="tv_closed">已关闭</string>
+    <string name="tv_for_respone">待评价</string>
+    <string name="text_know">我知道了</string>
+    <string name="text_re_scan">重新扫码</string>
+    <string name="tv_deal_result">处理结果</string>
+    <string name="tv_had_solve">已解决</string>
+    <string name="tv_un_solve">未解决</string>
+    <string name="tv_evaluation">评价</string>
+    <string name="tv_instructions">说明</string>
+    <string name="tv_enter">请输入文字信息</string>
     <string name="text_wait_response">待响应</string>
     <string name="text_handling">处理中</string>
     <string name="text_wait_send">待派单</string>
