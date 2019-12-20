@@ -74,9 +74,17 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_apply_close);
         request = new ApplyCloseRequest();
-        request.setID(id);
-        request.setTaskID(taskId);
-        request.setProInsID(proInsId);
+        if (StringUtil.isNullStr(keyId) && RouteKey.KEY_PLAN.equals(keyId)){
+            request.setID(id);
+            request.setTaskId(taskId);
+            request.setInstId(proInsId);
+            request.setMessageType("1");
+        }else{
+            request.setId(id);
+            request.setApplyTaskId(taskId);
+            request.setInstId(proInsId);
+        }
+
         selectPng();
     }
 
@@ -100,7 +108,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -127,8 +135,9 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         binding.applyCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request.setDesc(binding.applyCloseReason.getString());
-                if (TextUtils.isEmpty(request.getDesc())) {
+                request.setApplicationDescription(binding.applyCloseReason.getString());
+                request.setEndReason(binding.applyCloseReason.getString());
+                if (TextUtils.isEmpty(binding.applyCloseReason.getString())) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
                 } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);

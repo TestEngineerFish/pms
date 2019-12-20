@@ -1,34 +1,70 @@
 package com.einyun.app.library.resource.workorder.net.request;
 
 public class ApplyCloseRequest {
-    private String ID;
-    private String taskID;
-    private String proInsID;
+    private String id;
+    private String applyTaskId;
+    private String instId;
     private String applyFiles;
-    private String desc;
+    private String applicationDescription;
+    private String taskId;
+    private String endReason;
+    private String messageType;
+    private String ID_;
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getEndReason() {
+        return endReason;
+    }
+
+    public void setEndReason(String endReason) {
+        this.endReason = endReason;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
 
     public String getID() {
-        return ID;
+        return ID_;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.ID_ = ID;
     }
 
-    public String getTaskID() {
-        return taskID;
+    public String getId() {
+        return id;
     }
 
-    public void setTaskID(String taskID) {
-        this.taskID = taskID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getProInsID() {
-        return proInsID;
+    public String getApplyTaskId() {
+        return applyTaskId;
     }
 
-    public void setProInsID(String proInsID) {
-        this.proInsID = proInsID;
+    public void setApplyTaskId(String applyTaskId) {
+        this.applyTaskId = applyTaskId;
+    }
+
+    public String getInstId() {
+        return instId;
+    }
+
+    public void setInstId(String instId) {
+        this.instId = instId;
     }
 
     public String getApplyFiles() {
@@ -39,11 +75,11 @@ public class ApplyCloseRequest {
         this.applyFiles = applyFiles;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getApplicationDescription() {
+        return applicationDescription;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setApplicationDescription(String applicationDescription) {
+        this.applicationDescription = applicationDescription;
     }
 }

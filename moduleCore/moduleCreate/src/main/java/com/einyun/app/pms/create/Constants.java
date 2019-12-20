@@ -15,12 +15,5 @@ package com.einyun.app.pms.create;
 public class Constants {
     public static final String AGING = "AGING";
     public static final String LINE = "LINE";
-    //获取投诉、问询、报修方式
-    public static final String ENQUIRY_WAY = "complaint_method";
-    public static final String WORK_TYPE = "pgdlx";
-    public static final String RESOURCE_TYPE = "RESOURCE_TYPE";
-    public static final String COMPLAIN_WAY = "complain_property";
-    public static final String REPAIR_AREA = "repair_area";
-    public static final String REPAIR_NATURE = "repair_nature_assessment";
-    public static final String REPAIR_TIME = "appoint_time_period";
+
 }

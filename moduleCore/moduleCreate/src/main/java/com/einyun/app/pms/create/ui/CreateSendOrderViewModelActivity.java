@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RadioGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -25,28 +24,22 @@ import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectWorkOrderTypeView;
 import com.einyun.app.common.utils.Glide4Engine;
-import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceChildBean;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.pms.create.Constants;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.SelectType;
 import com.einyun.app.pms.create.viewmodel.CreateViewModel;
 import com.einyun.app.pms.create.viewmodel.CreateViewModelFactory;
 import com.einyun.app.pms.create.databinding.ActivityCreateSendOrderBinding;
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Route(path = RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
 public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateSendOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
@@ -108,7 +101,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -398,7 +391,15 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
      */
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        request.setOtLevel(String.valueOf(i + 1));
+        if (R.id.rb_normal == i){
+            request.setOtLevel("1");
+        }
+        if (R.id.rb_general == i){
+            request.setOtLevel("2");
+        }
+        if (R.id.rb_warning == i){
+            request.setOtLevel("3");
+        }
     }
 
     /**

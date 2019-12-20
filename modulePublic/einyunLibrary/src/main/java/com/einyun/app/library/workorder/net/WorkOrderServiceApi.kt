@@ -2,12 +2,17 @@ package com.einyun.app.library.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
+import com.einyun.app.library.workorder.model.ComplainPage
+import com.einyun.app.library.workorder.model.Door
+import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Url
 
 /**
  *
@@ -105,7 +110,7 @@ interface WorkOrderServiceApi {
      * 获取报修类别与条线
      */
     @GET(URLs.URL_REPAIR_TYPE_MAP_LIST)
-    fun repairTypeList(): Flowable<DoorListResponse>
+    fun repairTypeList(): Flowable<BaseResponse<Door>>
 
     /**
      * 启动报修
@@ -142,4 +147,79 @@ interface WorkOrderServiceApi {
      */
     @POST(URLs.URL_GET_MAPPING_BY_USERIDS)
     fun getMappingByUserIds(@Body request: List<String>): Flowable<BaseResponse<Map<String, GetMappingByUserIdsResponse>>>
+    /**
+     * 客户报修-待跟进
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_WAIT_FOLLOW)
+    fun getRepairsWaitFollow(@Body request: Query):Flowable<RepairsResponse>
+    /**
+     * 客户报修-抢单
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_GRAB)
+    fun getRepairsGrab(@Body request: Query):Flowable<RepairsResponse>
+
+    /**
+     * 客户报修-已跟进
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_ALREADY_FOLLOW)
+    fun getRepairsAlreadyFollow(@Body request: Query):Flowable<AlreadyFollowResponse>
+
+    /**
+     * 客户报修-已办结
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_ALREADY_DONE)
+    fun getRepairAlreadyDone(@Body request: Query):Flowable<AlreadyDoneResponse>
+    /**
+     * 客户报修-抄送我
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_COPY_ME)
+    fun getRepairCopyMe(@Body request: Query):Flowable<RepairCopyMeResponse>
+
+    /**
+     * 客户报修-抢单动作
+     * */
+    @GET
+    fun grabRepair(@Url url: String):Flowable<BaseResponse<Any>>
+
+    /**
+     * 客户报修-查看详情
+     * */
+    @GET
+    fun getRepairDetail(@Url url: String):Flowable<RepairDetailResponse>
+
+    /**
+     * 客户报修-派单
+     * */
+    @POST(URLs.URL_REPAIR_SEND)
+    fun repairSend(@Body request: RepairSendOrderRequest):Flowable<BaseResponse<Any>>
+
+    @POST(URLs.URL_INITIATE_COMMUNICATION)
+    fun postCommunication(@Body request:PostCommunicationRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 客户报修-待跟进
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_WAIT_FOLLOW)
+    fun getComplainWaitFollow(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
+    /**
+     * 客户报修-待反馈
+     * */
+    @POST(URLs.URL_COMPLAIN_FEEDBACK_PENDING)
+    fun getComplainWaitFeed(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
+    /**
+     * 客户报修-已跟进
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_ALREADY_FOLLOW)
+    fun getComplainAlreadyFollow(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
+
+    /**
+     * 客户报修-已办结
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_ALREADY_DONE)
+    fun getComplainAlreadyDone(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
+    /**
+     * 客户报修-抄送我
+     * */
+    @POST(URLs.URL_REPORT_COMPLAIN_COPY_ME)
+    fun getComplainCopyMe(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
 }

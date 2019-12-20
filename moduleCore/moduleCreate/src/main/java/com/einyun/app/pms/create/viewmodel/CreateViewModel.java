@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.library.core.api.DictService;
@@ -17,6 +18,8 @@ import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
+import com.einyun.app.library.workorder.model.ComplainModelPageResult;
+import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.DoorResult;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
@@ -231,6 +234,19 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         });
     }
 
+    public LiveData<ComplainModelPageResult> complainWorkListdPage(String mobile) {
+        return workOrderService.complainWorkListdPage(new PageBean(PageBean.DEFAULT_PAGE,PageBean.MAX_PAGE_SIZE), mobile, new CallBack<ComplainModelPageResult>() {
+            @Override
+            public void call(ComplainModelPageResult data) {
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
     @Override
     public LiveData<List<ResourceTypeBean>> getResourceInfos(CreateSendOrderRequest request) {
         return resourceWorkOrderService.getResourceInfos(request.getDivideId(), request.getTxCode(), new CallBack<List<ResourceTypeBean>>() {
@@ -263,10 +279,10 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
      * 获取报修类别与条线
      * @return
      */
-    public LiveData<DoorResult> repairTypeList() {
-        return workOrderService.repairTypeList(new CallBack<DoorResult>() {
+    public LiveData<Door> repairTypeList() {
+        return workOrderService.repairTypeList(new CallBack<Door>() {
             @Override
-            public void call(DoorResult data) {
+            public void call(Door data) {
             }
 
             @Override

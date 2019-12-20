@@ -1,5 +1,6 @@
 package com.einyun.app.pms.create;
 
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -7,7 +8,10 @@ import android.widget.TextView;
 import androidx.databinding.BindingAdapter;
 
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
 
 /**
@@ -23,7 +27,10 @@ import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequ
  * @Version: 1.0
  */
 public class CreateOrderBindiAdapter {
-
+    @BindingAdapter("setTime")
+    public static void setTime(TextView view, Long value) {
+        view.setText(FormatUtil.formatDate(value));
+    }
     @BindingAdapter("setSelectTxt")
     public static void setSelectTxt(TextView view, String value) {
         if (StringUtil.isNullStr(value)) {
@@ -57,5 +64,24 @@ public class CreateOrderBindiAdapter {
         } else {
             view.clearCheck();
         }
+    }
+
+    @BindingAdapter("status")
+    public static void status(TextView view, String value) {
+        if (TextUtils.isEmpty(value)) {
+            return;
+        }
+        if (value == ComplainOrderState.ADD.getState()) {
+            view.setText("新生成");
+        } else if (value == ComplainOrderState.CLOSED.getState()) {
+            view.setText("已关闭");
+        }else if (value == ComplainOrderState.DEALING.getState()) {
+            view.setText("处理中");
+        }else if (value == ComplainOrderState.RESPONSE.getState()) {
+            view.setText("待响应");
+        }else if (value == ComplainOrderState.RETURN_VISIT.getState()) {
+            view.setText("待评价");
+        }
+
     }
 }

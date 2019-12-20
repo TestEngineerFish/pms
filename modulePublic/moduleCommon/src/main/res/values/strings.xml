@@ -140,7 +140,37 @@
     <string name="alert_submit_client_repair_order_success">客户报修工单创建成功</string>
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
+    <string name="text_work_repair">客户报修</string>
+    <string name="text_work_complain">客户投诉</string>
+    <string name="text_grab_order">抢单</string>
+    <string name="text_wait_feedback">待反馈</string>
+    <string name="text_copy_me">抄送我</string>
+    <string name="text_already_done">已办结</string>
+    <string name="text_wait_follow">待跟进</string>
+    <string name="text_already_follow">已跟进</string>
+    <string name="text_report_repair_people">报修人</string>
+    <string name="text_create_time">创建时间</string>
+    <string name="text_grab_success">抢单成功，请在"待跟进"中查看</string>
+    <string name="text_grab_faile">抢单失败</string>
+    <string name="text_initiate_communication">发起沟通</string>
+    <string name="text_repairs_type">报修类别</string>
+    <string name="text_contact">沟通</string>
+    <string name="text_please_enter_reason">请填写响应结果</string>
+    <string name="text_response_success">响应成功</string>
+    <string name="text_select_material">选择材料</string>
 
+    <string name="tv_customer_inquiries">客户问询</string>
+    <string name="tv_in_process">处理中</string>
+    <string name="tv_real_estate">房产</string>
+    <string name="tv_asking_people">问询人</string>
+    <string name="tv_work_num">工单号</string>
+    <string name="tv_create_time">创建时间</string>
+    <string name="tv_turn_order">转单</string>
+    <string name="tv_talk">沟通</string>
+    <string name="tv_feed_back">反馈</string>
+    <string name="tv_dealing">待处理</string>
+    <string name="tv_closed">已关闭</string>
+    <string name="tv_for_respone">待评价</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>

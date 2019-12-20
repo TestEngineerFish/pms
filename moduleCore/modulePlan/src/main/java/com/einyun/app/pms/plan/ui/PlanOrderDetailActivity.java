@@ -143,23 +143,27 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     } else {
                         //处理节点
                         tableItem(binding, position);
-                        if (nodes.get(position).getResult() != null) {
-                            //成功
-                            if ("1".equals(nodes.get(position).getResult())) {
-                                //选中通过
-                                onAgree(binding);
+                        //选中通过
+                        agree(binding, model);
+                        //选中不通过
+                        reject(binding, model);
+                        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
+                            if (!TextUtils.isEmpty(model.result)) {
+                                //成功
+                                if ("1".equals(nodes.get(position).getResult())) {
+                                    //选中通过
+                                    onAgree(binding);
+                                    binding.btnReject.setVisibility(View.GONE);
+                                } else if ("0".equals(nodes.get(position).getResult())) {
+                                    //选中不通过
+                                    onReject(binding);
+                                    binding.btnAgree.setVisibility(View.GONE);
+                                }
+                            } else {
                                 binding.btnReject.setVisibility(View.GONE);
-                            } else if ("0".equals(nodes.get(position).getResult())) {
-                                //选中不通过
-                                onReject(binding);
                                 binding.btnAgree.setVisibility(View.GONE);
                             }
-                        } else{
-                            //选中通过
-                            agree(binding, model);
-                            //选中不通过
-                            reject(binding, model);
-
+                        } else {
                             if (!TextUtils.isEmpty(model.result)) {
                                 if (model.result.equals(WorkNode.RESULT_REJECT)) {
                                     onReject(binding);
@@ -248,7 +252,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         binding.rvResource.setAdapter(resourceAdapter);
     }
 
-    private void requestData(){
+    private void requestData() {
         //加载数据
         viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
             updateUI(planInfo);
@@ -302,7 +306,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -318,9 +322,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         showResult();
         showPostpone();
         showForceClose();
-        nodes = viewModel.loadNodes(planInfo);
-        nodes.add(0, new WorkNode());
-        nodesAdapter.setDataList(nodes);
+        if (nodes.size() <1){
+            nodes = viewModel.loadNodes(planInfo);
+            nodes.add(0, new WorkNode());
+            nodesAdapter.setDataList(nodes);
+        }
+
         binding.setDetail(planInfo.getData().getZyjhgd());
     }
 

@@ -2,9 +2,10 @@ package com.einyun.app.library.core.api.proxy
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.core.api.DashBoardService
-import com.einyun.app.library.core.api.UCService
+import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.library.core.api.WorkOrderService
+import com.einyun.app.library.workorder.model.RepairsPage
+import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
@@ -18,9 +19,7 @@ import com.einyun.app.library.uc.user.repository.UserRepository
 import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
-import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
-import com.einyun.app.library.workorder.net.request.CreateClientRepairOrderRequest
+import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import com.einyun.app.library.workorder.repository.WorkOrderRepository
 
@@ -38,6 +37,93 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun complainWorkListdPage(
+        pageBean: PageBean,
+        mobile: String,
+        callBack: CallBack<ComplainModelPageResult>
+    ): LiveData<ComplainModelPageResult> {
+        return instance?.complainWorkListdPage(
+            pageBean,mobile,
+            callBack
+        )!!
+    }
+
+    override fun repaireSend(
+        request: RepairSendOrderRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.repaireSend(
+            request,
+            callBack
+        )!!       }
+
+    override fun getRepairDetail(instId: String, callBack: CallBack<RepairsDetailModel>): LiveData<RepairsDetailModel> {
+        return instance?.getRepairDetail(
+            instId,
+            callBack
+        )!!    }
+
+    override fun grabRepair(taskId: String, callBack: CallBack<Boolean>): LiveData<Boolean> {
+        return instance?.grabRepair(
+            taskId,
+            callBack
+        )!!
+    }
+
+    override fun postCommunication(
+        request: PostCommunicationRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.postCommunication(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepairCopyMe(
+        request: RepairsPageRequest,
+        callBack: CallBack<RepairCopyMePageResullt>
+    ) {
+        return instance?.getRepairCopyMe(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepaiAlreadyDone(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyDonePageResult>
+    ) {
+        return instance?.getRepaiAlreadyDone(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepaiAlreadyFollow(
+        request: RepairsPageRequest,
+        callBack: CallBack<AlreadyFollowPageResult>
+    ) {
+        return instance?.getRepaiAlreadyFollow(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepairGrab(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        return instance?.getRepairGrab(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getRepairWaitFollow(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        return instance?.getRepairWaitFollow(
+            request,
+            callBack
+        )!!
+    }
+
     override fun startRepair(
         request: CreateClientRepairOrderRequest,
         callBack: CallBack<Boolean>
@@ -45,7 +131,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
         return instance?.startRepair(request, callBack)!!
     }
 
-    override fun repairTypeList(callBack: CallBack<DoorResult>): LiveData<DoorResult> {
+    override fun repairTypeList(callBack: CallBack<Door>): LiveData<Door> {
         return instance?.repairTypeList(callBack)!!
     }
 

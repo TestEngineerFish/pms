@@ -56,13 +56,12 @@ public class PageResult<T> {
     }
 
     public Integer getTotal() {
-        if (total == -1) {
+        if (total == null || total ==-1)
             if (rows == null){
                 total = 0;
             }else{
                 total = rows.size();
             }
-        }
         return total;
     }
 

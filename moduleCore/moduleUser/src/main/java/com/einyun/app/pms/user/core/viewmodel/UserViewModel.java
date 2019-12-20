@@ -106,7 +106,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
 
             @Override
             public void onFaild(Throwable throwable) {
-
+                ThrowableParser.onFailed(throwable);
             }
         });
     }

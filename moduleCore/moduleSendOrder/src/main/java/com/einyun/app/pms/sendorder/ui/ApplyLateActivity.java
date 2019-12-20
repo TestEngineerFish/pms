@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -54,19 +55,23 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
     PhotoSelectAdapter photoSelectAdapter;
     private final int MAX_PHOTO_SIZE = 4;
 
-    private int getExtDays() {
+    private void getExtDays(ActivityApplyLateBinding binding) {
         int i = 0;
+        int j = 0;
         if (extensionApplication == null || extensionApplication.size() == 0) {
-            return i;
+            binding.applyDate.setText( "0天");
+            binding.applyNum.setText("0次");
+            return;
         }
         List<ExtensionApplication> exts = new ArrayList<>();
         for (ExtensionApplication ext : extensionApplication) {
             if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null) {
+                j++;
                 i = i + Integer.valueOf(ext.getExtensionDays());
             }
         }
-
-        return i;
+        binding.applyDate.setText( i + "天");
+        binding.applyNum.setText(j + "次");
     }
 
     @Override
@@ -86,7 +91,8 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         setHeadTitle(R.string.text_apply_postpone);
         binding.setCallBack(this);
         selectPng();
-        binding.applyDate.setText(getExtDays() + "天");
+        getExtDays(binding);
+
     }
 
     /**
@@ -109,7 +115,7 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE)
+                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -151,14 +157,19 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
                 if (StringUtil.isNullStr(keyId)) {
                     if (RouteKey.KEY_PLAN.equals(keyId)) {
                         viewModel.applyLatePlan(request, data).observe(this, o -> {
-                            ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
-                            finish();
+                            if ("0".equals(o.getCode())) {
+                                ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                                finish();
+                            }
+
                         });
                     }
                 } else {
                     viewModel.applyLate(request, data).observe(this, o -> {
-                        ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
-                        finish();
+                        if ("0".equals(o.getCode())) {
+                            ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                            finish();
+                        }
                     });
                 }
             } else {

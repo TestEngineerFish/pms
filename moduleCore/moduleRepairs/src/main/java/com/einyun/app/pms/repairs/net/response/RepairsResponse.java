@@ -1,6 +1,6 @@
 package com.einyun.app.pms.repairs.net.response;
 
-import com.einyun.app.pms.repairs.model.RepairsModel;
+import com.einyun.app.library.workorder.model.RepairsModel;
 
 import java.util.List;
 

@@ -15,8 +15,7 @@ package com.einyun.app.base.paging.bean;
 public class SortItem {
     private String direction;
     private String property;
-
-    public SortItem(String direction, String property) {
+    public SortItem(String property, String direction) {
         this.direction = direction;
         this.property = property;
     }

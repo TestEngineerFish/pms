@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/repairs_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_30"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="工单信息"
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/txt_blue_color"
+                android:textSize="@dimen/px_30"
+                app:order_status="@{workOrder.data.info.status}" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="工单编号" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.orderNo}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="分期" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.divideName}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="@string/text_house" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.txName}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="联系电话" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.typeName}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:layout_marginBottom="@dimen/px_30">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="报修人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.createTime}" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

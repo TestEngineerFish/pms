@@ -22,6 +22,7 @@ class URLs {
         const val URL_APPROVAL_PENDING_NUMS:String= "/$DOMAIN/workOrder/task/v1/getUserAuditCount"
         //获取用户待办工单的数量(GET)
         const val URL_BACKLOG_NUMS:String= "/$DOMAIN/workOrder/task/v1/getMapByUcDivKeys?defKeys=customer_repair_flow,customer_enquiry_flow,customer_complain_flow"
+
         // 客户投诉列表 待跟进
         const val URL_COMPLAIN_FLOW_PENDING:String="/$DOMAIN/workOrder/task/v1/getTodoListAliaForApp/customer_complain_flow/NORMAL,DELIVERTO"
         // 客户投诉列表 待反馈
@@ -32,6 +33,7 @@ class URLs {
         const val URL_COMPLAIN_COMPLETE:String="/$DOMAIN/workOrder/task/v1/getCompletedAliaForApp/customer_complain_flow"
         // 客户投诉列表 抄送我的
         const val URL_COMPLAIN_COPY:String="/$DOMAIN/workOrder/task/v1/getReceiverCopyToForApp/customer_complain_flow"
+
         //获取投诉工单列表
         const val URL_COMPLAIN_LIST:String="/$DOMAIN/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_complain_flow"
         //根据参数（如：手机号）查询处理中的投诉列表
@@ -43,7 +45,7 @@ class URLs {
         // 客户端启动投诉流程
         const val URL_TASK_RUN_START:String="/$DOMAIN/workOrder/taskRun/v1/start"
         //获取报修类别与条线
-        const val URL_REPAIR_TYPE_MAP_LIST:String="/$DOMAIN/workOrder/customerRepair/v1/getRepairTypeMapList"
+        const val URL_REPAIR_TYPE_MAP_LIST:String="/$DOMAIN/workOrder/customerRepair/v1/getRepairAreaAndType"
         //创建报修工单
         const val URL_CUSTOMER_REPAIR_SUBMIT:String="/$DOMAIN/workOrder/customerRepair/v1/start"
         //创建问询工单
@@ -55,8 +57,36 @@ class URLs {
         //我发起的
         const val URL_APPROVE_INITIATED_LIST:String="/$DOMAIN/workOrder/workOrderInnerAudit/v1/getIInitiated"
 
+        //客户报修-待跟进
+        const val URL_REPORT_COMPLAIN_WAIT_FOLLOW="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_complain_flow/NORMAL,DELIVERTO"
+        //客户报修-已跟进
+        const val URL_REPORT_COMPLAIN_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAlia/customer_complain_flow"
+        //客户报修-已办结
+        const val URL_REPORT_COMPLAIN_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompleteAlia/customer_complain_flow"
+        //客户报修-抄送我的
+        const val URL_REPORT_COMPLAIN_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_complain_flow"
 
         //通过UserId批量查询待处理工单
         const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
+        //客户报修-待反馈
+        const val URL_REPORT_REPAIRS_WAIT_FEED="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_repair_flow/COMMU"
+        //客户报修-待跟进
+        const val URL_REPORT_REPAIRS_WAIT_FOLLOW="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_repair_flow/NORMAL,DELIVERTO"
+        //客户报修-抢单
+        const val URL_REPORT_REPAIRS_GRAB="/workOrder/workOrder/task/v1/getGrabListAlia"
+        //客户报修-已跟进
+        const val URL_REPORT_REPAIRS_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAlia/customer_repair_flow"
+        //客户报修-已办结
+        const val URL_REPORT_REPAIRS_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompleteAlia/customer_repair_flow"
+        //客户报修-抄送我的
+        const val URL_REPORT_REPAIRS_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_repair_flow"
+        //客户报修-抢单动作
+        const val URL_REPAIR_GRAB="/workOrder/workOrder/customerRepair/v1/orderGrab?taskId="
+        //客户报修-查看详情
+        const val URL_REPAIR_DETAIL="/bpm-runtime/runtime/instance/v1/getInstBO?proInstId="
+        //客户报修-派单，响应
+        const val URL_REPAIR_SEND="/workOrder/workOrder/customerRepair/v1/complete"
+
+        const val URL_INITIATE_COMMUNICATION="/bpm-runtime/runtime/task/v1/communicate"
     }
 }
