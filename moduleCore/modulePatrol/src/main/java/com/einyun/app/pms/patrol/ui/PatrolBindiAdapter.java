@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.pms.patrol.R;
+import com.einyun.app.pms.patrol.model.SignCheckResult;
 
 
 /**
@@ -31,6 +32,17 @@ public class PatrolBindiAdapter {
           view.setVisibility(View.VISIBLE);
         }else{
            view.setVisibility(View.GONE);
+        }
+    }
+
+    @BindingAdapter("isSignIn")
+    public static void isSignIn(TextView view,int signInResult){
+        if(SignCheckResult.SIGN_IN_SUCCESS==signInResult){
+            view.setText(R.string.text_sign_in_ed);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
+        }else{
+            view.setText(R.string.text_un_sign_in);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blueTextColor));
         }
     }
 

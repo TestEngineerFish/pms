@@ -9,4 +9,5 @@ class MdmRepository {
         serviceApi=EinyunHttpService.getInstance().getServiceApi(MdmServiceApi::class.java)
     }
 
+
 }

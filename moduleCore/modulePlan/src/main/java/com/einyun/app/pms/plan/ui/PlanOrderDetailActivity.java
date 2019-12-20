@@ -36,6 +36,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -43,6 +44,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 
@@ -165,9 +167,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             }
                         } else {
                             if (!TextUtils.isEmpty(model.result)) {
-                                if (model.result.equals(WorkNode.RESULT_REJECT)) {
+                                if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onReject(binding);
-                                } else if (model.result.equals(WorkNode.RESULT_PASS)) {
+                                } else if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onAgree(binding);
                                 }
                             }
@@ -193,7 +195,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 protected void reject(ItemPlanWorkNodeBinding binding, WorkNode model) {
                     binding.btnReject.setOnClickListener(v -> {
                         onReject(binding);
-                        model.setResult(WorkNode.RESULT_REJECT);
+                        model.setResult(ResultState.RESULT_FAILD);
                     });
                 }
 
@@ -201,7 +203,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 protected void agree(ItemPlanWorkNodeBinding binding, WorkNode model) {
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
-                        model.setResult(WorkNode.RESULT_PASS);
+                        model.setResult(ResultState.RESULT_FAILD);
                     });
                 }
 
@@ -371,6 +373,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.itemApplyLateInfo.imgList.addItemDecoration(new com.einyun.app.common.ui.widget.SpacesItemDecoration());
                 binding.itemApplyLateInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
@@ -412,6 +415,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.itemCloseOrderInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extForceClose.getApplyFiles());

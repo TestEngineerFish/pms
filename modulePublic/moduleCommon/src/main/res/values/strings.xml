@@ -115,6 +115,7 @@
     <string name="text_alert_handle_node">请选择工作节点 %s 的处理结果</string>
     <string name="text_no">序号</string>
     <string name="text_work_items">工作事项/节点</string>
+    <string name="text_patrol_time_manager">巡更点处理</string>
     <string name="text_work_time_items">寻根点名称/位置</string>
     <string name="text_handle_pic">处理后图片</string>
     <string name="text_resolve_result">处理结果</string>
@@ -171,6 +172,8 @@
     <string name="tv_dealing">待处理</string>
     <string name="tv_closed">已关闭</string>
     <string name="tv_for_respone">待评价</string>
+    <string name="text_know">我知道了</string>
+    <string name="text_re_scan">重新扫码</string>
     <string name="tv_deal_result">处理结果</string>
     <string name="tv_had_solve">已解决</string>
     <string name="tv_un_solve">未解决</string>

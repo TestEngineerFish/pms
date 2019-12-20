@@ -4,16 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.media.ExifInterface;
+import android.util.Log;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -394,5 +398,56 @@ public class BitmapUtil {
                 break;
         }
         return null;
+    }
+
+    /**
+     * 添加时间水印
+     * @param mBitmap
+     * @return mNewBitmap
+     */
+    private static Bitmap AddTimeWatermark(Bitmap mBitmap) {
+        //获取原始图片与水印图片的宽与高
+        int mBitmapWidth = mBitmap.getWidth();
+        int mBitmapHeight = mBitmap.getHeight();
+        Bitmap mNewBitmap = Bitmap.createBitmap(mBitmapWidth, mBitmapHeight, Bitmap.Config.RGB_565);
+        Canvas mCanvas = new Canvas(mNewBitmap);
+        //向位图中开始画入MBitmap原始图片
+        mCanvas.drawBitmap(mBitmap,0,0,null);
+        //添加文字
+        Paint mPaint = new Paint();
+        String mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
+        //String mFormat = TingUtils.getTime()+"\n"+" 纬度:"+GpsService.latitude+"  经度:"+GpsService.longitude;
+        mPaint.setColor(Color.WHITE);
+        mPaint.setTextSize(100);
+        //水印的位置坐标
+        mCanvas.drawText(mFormat, (mBitmapWidth * 1) / 10,mBitmapHeight-(mBitmapHeight*14)/15,mPaint);
+        mCanvas.save();
+        mCanvas.restore();
+
+        return mNewBitmap;
+    }
+
+    public static boolean saveBitmapAsFile(File saveFile, Bitmap bitmap) {
+        boolean saved = false;
+        FileOutputStream os = null;
+        try {
+            Log.d("FileCache", "Saving File To Cache " + saveFile.getPath());
+            os = new FileOutputStream(saveFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, os);
+            os.flush();
+            os.close();
+            saved = true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return saved;
+    }
+
+    public static void AddTimeWatermark(File imageFile){
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        bitmap=AddTimeWatermark(bitmap);
+        saveBitmapAsFile(imageFile,bitmap);
     }
 }
