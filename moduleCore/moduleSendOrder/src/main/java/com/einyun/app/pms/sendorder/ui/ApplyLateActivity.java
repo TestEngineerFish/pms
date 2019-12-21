@@ -145,7 +145,6 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
         uploadImages();
     }
 
-
     /**
      * 上传照片
      */
@@ -161,7 +160,6 @@ public class ApplyLateActivity extends BaseHeadViewModelActivity<ActivityApplyLa
                                 ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
                                 finish();
                             }
-
                         });
                     }
                 } else {

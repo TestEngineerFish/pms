@@ -28,13 +28,14 @@ import java.util.List;
 public class DetailViewModel extends BaseUploadViewModel {
     private WorkOrderService workOrderService;
     private DictService dictService;
+
     public DetailViewModel() {
         workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
         dictService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DICT);
     }
 
     public LiveData<Boolean> postCommunication(PostCommunicationRequest request) {
-            showLoading();
+        showLoading();
         return workOrderService.postCommunication(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
@@ -50,12 +51,12 @@ public class DetailViewModel extends BaseUploadViewModel {
     }
 
     /**
-     *报修详情
-     * */
-    public LiveData<RepairsDetailModel> getComplainDetail(String instId){
+     * 报修详情
+     */
+    public LiveData<RepairsDetailModel> getComplainDetail(String instId, String taskId) {
         MutableLiveData<RepairsDetailModel> liveData = new MutableLiveData<>();
         showLoading();
-        workOrderService.getRepairDetail(instId, new CallBack<RepairsDetailModel>() {
+        workOrderService.getClientOrderDetail(instId, taskId, new CallBack<RepairsDetailModel>() {
             @Override
             public void call(RepairsDetailModel data) {
                 hideLoading();

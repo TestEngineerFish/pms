@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
+    <data>
         <variable
-            name="repairs"
-            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+            name="complain"
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -72,7 +72,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                    android:text="@{complain.f_ts_time}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -84,7 +84,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_recorder}" />
+                    android:text="@{complain.f_ts_recorder}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -96,7 +96,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_way}" />
+                    android:text="@{complain.f_ts_way}" />
             </LinearLayout>
 
 
@@ -104,17 +104,18 @@
 
                 <TextView
                     style="@style/tv_create_order_red_star"
+                    android:layout_marginLeft="@dimen/px_20"
                     android:layout_marginTop="@dimen/px_30" />
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:layout_marginLeft="@dimen/px_0"
+                    android:layout_marginLeft="@dimen/px_6"
                     android:text="投诉类别" />
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:text="@{repairs.data.customer_repair_model.bx_cate_lv1}" />
+                    android:text="@{complain.f_ts_cate}" />
 
                 <ImageView
                     android:layout_width="@dimen/px_20"
@@ -127,18 +128,19 @@
 
                 <TextView
                     style="@style/tv_create_order_red_star"
-                    android:layout_marginTop="@dimen/px_30" />
+                    android:layout_marginTop="@dimen/px_30"
+                    android:layout_marginLeft="@dimen/px_20"/>
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:layout_marginLeft="@dimen/px_0"
+                    android:layout_marginLeft="@dimen/px_6"
                     android:text="投诉性质" />
 
                 <RadioGroup
                     android:id="@+id/rgs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_30"
+                    android:layout_marginTop="@dimen/px_20"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -151,6 +153,7 @@
                         android:gravity="center"
                         android:tag="2"
                         android:text="一般"
+                        android:enabled="false"
                         android:textColor="@drawable/select_radio_button_text"
                         android:textSize="@dimen/font_size13" />
 
@@ -164,6 +167,7 @@
                         android:gravity="center"
                         android:tag="3"
                         android:text="严重"
+                        android:enabled="false"
                         android:textColor="@drawable/select_radio_button_text"
                         android:textSize="@dimen/font_size13" />
                 </RadioGroup>
@@ -177,7 +181,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.bx_content}" />
+                    android:text="@{complain.f_ts_content}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -195,7 +199,7 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/repair_order_detail_list"
+                    android:id="@+id/rv_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_30"
