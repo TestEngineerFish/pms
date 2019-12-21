@@ -84,6 +84,8 @@ class URLs {
         const val URL_REPAIR_GRAB="/workOrder/workOrder/customerRepair/v1/orderGrab?taskId="
         //客户报修-查看详情
         const val URL_REPAIR_DETAIL="/bpm-runtime/runtime/instance/v1/getInstBO?proInstId="
+        //客户-查看详情
+        const val URL_CLIENT_DETAIL="/workOrder/workOrder/task/v1/getOrderDetail"
         //客户报修-派单，响应
         const val URL_REPAIR_SEND="/workOrder/workOrder/customerRepair/v1/complete"
 

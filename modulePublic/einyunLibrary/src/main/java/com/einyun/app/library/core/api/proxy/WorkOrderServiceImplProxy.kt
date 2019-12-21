@@ -37,6 +37,16 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun getClientOrderDetail(
+        instId: String,
+        taskId: String,
+        callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel> {
+        return instance?.getClientOrderDetail(
+            instId, taskId, callBack
+        )!!
+    }
+
     override fun complainWorkListdPage(
         pageBean: PageBean,
         mobile: String,

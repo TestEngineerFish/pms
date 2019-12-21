@@ -31,11 +31,9 @@
             <LinearLayout style="@style/ll_create_order"
                 android:paddingLeft="@dimen/px_20">
 
-                <TextView style="@style/tv_create_order_red_star" />
-
                 <TextView
                     style="@style/tv_create_order_name"
-                    android:text="首次沟通结果"
+                    android:text="处理"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size16"
                     android:textStyle="bold" />
@@ -51,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_30"
-                    app:hintText="请输入沟通结果"
+                    app:hintText="请输入文字原因"
                     app:maxNumber="300" />
             </LinearLayout>
 

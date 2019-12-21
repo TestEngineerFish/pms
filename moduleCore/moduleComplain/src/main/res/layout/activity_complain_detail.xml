@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="closeExtApplication"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+        <variable
+            name="applyExtApplication"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+        <variable
             name="complain"
-            type="com.einyun.app.library.workorder.model.ComplainModel" />
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
         <variable
             name="callBack"
             type="com.einyun.app.pms.complain.ui.ComplainDetailActivity" />
@@ -60,40 +66,63 @@
 
                     <include
                         android:id="@+id/layout_complain_order_info"
-                        layout="@layout/layout_complain_order_info" />
+                        layout="@layout/layout_complain_order_info"
+                        app:complain="@{complain}"/>
 
                     <include
                         android:id="@+id/layout_report_complain_info"
-                        layout="@layout/layout_report_complain_info" />
+                        layout="@layout/layout_report_complain_info"
+                        app:complain="@{complain}"/>
 
+                    <!-- 追加投诉信息 -->
+                    <include
+                        android:id="@+id/layout_add_complain_info"
+                        layout="@layout/layout_add_complain_info"
+                        android:visibility="gone"/>
+                    <!-- 响应信息 -->
                     <include
                         android:id="@+id/layout_response_info"
                         layout="@layout/layout_response_info" />
-
+                    <!-- 投诉历史 -->
                     <include
                         android:id="@+id/layout_complain_history"
                         layout="@layout/layout_complain_history" />
-
-                    <include
-                        android:id="@+id/layout_complain_response"
-                        layout="@layout/layout_complain_response"
-                        android:visibility="gone" />
-
+                    <!-- 评价详情 -->
                     <include
                         android:id="@+id/complain_evaluate"
                         layout="@layout/layout_complain_evaluate"
                         android:visibility="gone" />
-
+                    <!-- 延期 -->
                     <include
                         android:id="@+id/layout_apply_late_info"
                         layout="@layout/layout_apply_late_info"
                         android:visibility="gone" />
-
+                    <!-- 闭单 -->
                     <include
                         android:id="@+id/layout_apply_close_info"
                         layout="@layout/layout_apply_close_info"
                         android:visibility="gone" />
+                    <!-- 首次沟通 -->
+                    <include
+                        android:id="@+id/layout_complain_response"
+                        layout="@layout/layout_complain_response"
+                        android:visibility="gone" />
+                    <!-- 处理 -->
+                    <include
+                        android:id="@+id/layout_complain_deadline"
+                        layout="@layout/layout_complain_deadline"
+                        android:visibility="gone" />
+                    <!-- 评价 -->
+                    <include
+                        android:id="@+id/layout_already_complain_evaluate"
+                        layout="@layout/layout_already_complain_evaluate"
+                        android:visibility="gone" />
 
+                    <!-- 按钮 -->
+                    <include
+                        android:id="@+id/layout_apply_close_btn"
+                        layout="@layout/layout_apply_close_btn"
+                        android:visibility="gone" />
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/px_140" />
@@ -102,7 +131,7 @@
 
 
             <Button
-                android:id="@+id/send_order_detail_submit"
+                android:id="@+id/submit"
                 style="@style/submit_btn"
                 android:layout_alignParentBottom="true"
                 android:text="@string/text_submit" />
