@@ -35,6 +35,16 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+    override fun getClientOrderDetail(
+        instId: String,
+        taskId: String,
+        callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel> {
+        return proxy.getClientOrderDetail(
+            instId, taskId, callBack
+        )
+    }
+
     override fun complainWorkListdPage(
         pageBean: PageBean,
         mobile: String,

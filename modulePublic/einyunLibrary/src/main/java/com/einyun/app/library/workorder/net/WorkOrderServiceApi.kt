@@ -6,6 +6,7 @@ import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
 import com.einyun.app.library.workorder.model.ComplainPage
 import com.einyun.app.library.workorder.model.Door
 import com.einyun.app.library.workorder.model.DoorResult
+import com.einyun.app.library.workorder.model.RepairsDetailModel
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
@@ -222,4 +223,7 @@ interface WorkOrderServiceApi {
      * */
     @POST(URLs.URL_REPORT_COMPLAIN_COPY_ME)
     fun getComplainCopyMe(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
+
+    @GET(URLs.URL_CLIENT_DETAIL)
+    fun getClientOrderDetail(@retrofit2.http.Query("procInstId") procInstId: String, @retrofit2.http.Query("taskId") taskId: String): Flowable<BaseResponse<RepairsDetailModel>>
 }

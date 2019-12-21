@@ -83,4 +83,9 @@ interface WorkOrderService : EinyunService {
         mobile: String,
         callBack: CallBack<ComplainModelPageResult>
     ): LiveData<ComplainModelPageResult>
+
+    //获取报修详情接口
+    fun getClientOrderDetail(
+        instId: String,taskId:String, callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel>
 }
