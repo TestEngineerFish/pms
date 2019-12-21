@@ -35,7 +35,8 @@
                     android:layout_alignParentLeft="true"
                     android:gravity="center_vertical"
                     android:text="@string/tv_evaluation"
-                    android:textColor="@color/blackTextColor"
+                    android:textColor="@color/txt_black_order"
+                    android:textStyle="bold"
                     android:textSize="@dimen/font_size16" />
 
             </RelativeLayout>

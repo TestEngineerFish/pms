@@ -31,7 +31,9 @@
                     android:layout_marginLeft="@dimen/px_20"
                     android:gravity="center_vertical"
                     android:text="申请延期信息"
-                    android:textSize="@dimen/px_32" />
+                    android:textSize="@dimen/px_32"
+                    android:textColor="@color/txt_black_order"
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
 

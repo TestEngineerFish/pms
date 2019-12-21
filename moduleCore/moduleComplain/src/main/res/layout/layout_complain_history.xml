@@ -37,7 +37,8 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:text="追加投诉信息"
-                    android:textColor="@color/blackTextColor"
+                    android:textColor="@color/txt_black_order"
+                    android:textStyle="bold"
                     android:textSize="16sp" />
 
                 <ImageView

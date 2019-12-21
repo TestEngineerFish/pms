@@ -37,11 +37,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
-                    android:textColor="@color/txt_black_order"
                     android:layout_marginLeft="@dimen/px_20"
                     android:gravity="center_vertical"
                     android:text="投诉信息"
-                    android:textSize="@dimen/font_size16" />
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -41,8 +41,8 @@
                     android:gravity="center_vertical"
                     android:text="响应信息"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size16"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
             </RelativeLayout>
 
             <ImageView
