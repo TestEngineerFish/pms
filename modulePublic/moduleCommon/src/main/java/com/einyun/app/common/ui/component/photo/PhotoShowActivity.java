@@ -1,5 +1,7 @@
 package com.einyun.app.common.ui.component.photo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,9 +17,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.einyun.app.common.R;
+import com.einyun.app.common.constants.DataConstants;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PhotoShowActivity extends AppCompatActivity {
 
@@ -27,6 +31,16 @@ public class PhotoShowActivity extends AppCompatActivity {
 
     private int position;
     private ArrayList<String> mDatas;
+
+    public static void start(Context context, int position, ArrayList<String> images){
+        if(images!=null&&images.size()>0){
+            Intent starter = new Intent(context, PhotoShowActivity.class);
+            //传递当前点击的图片的位置、图片路径集合
+            starter.putExtra(DataConstants.KEY_POSITION, position);
+            starter.putStringArrayListExtra(DataConstants.KEY_IAMGES, images);
+            context.startActivity(starter);
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

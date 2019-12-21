@@ -1,6 +1,5 @@
 package com.einyun.app.library.resource.workorder.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
@@ -14,9 +13,6 @@ import com.einyun.app.library.resource.workorder.net.ResourceWorkOrderServiceApi
 import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.*
-import com.einyun.app.library.resource.workorder.net.response.*
-import io.reactivex.Flowable
-import java.util.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
@@ -35,6 +31,48 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun forceClose(
+        workOrderType: String,
+        request: ApplyCloseRequest,
+        callBack: CallBack<Boolean>
+    ) {
+        serviceApi?.forceClose(workOrderType, request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.isState)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    override fun postpone(
+        workOrderType: String,
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ) {
+        serviceApi?.postpone(workOrderType, request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.isState)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    override fun isClosed(request: IsClosedRequest, callBack: CallBack<Boolean>) {
+        serviceApi?.isClosed(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response.data)
+                }, { callBack.onFaild(it) }
+            )
+    }
 
     //巡查已办详情
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {

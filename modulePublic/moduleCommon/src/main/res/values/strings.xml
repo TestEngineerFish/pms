@@ -47,7 +47,8 @@
     <string name="text_apply_postpone">申请延期</string>
     <string name="text_house">房产</string>
     <string name="text_apply_force_close">强制关闭</string>
-
+    <string name="text_apply_late">申请延期</string>
+    <string name="text_apply_close">申请闭单</string>
     <string-array name="order_list">
         <item>待跟进</item>
         <item>已跟进</item>
@@ -128,6 +129,7 @@
     <string name="text_location">位置</string>
     <string name="text_alert">提示</string>
     <string name="text_applying">审批中</string>
+    <string name="text_applying_wait">审批中,请等待</string>
     <string name="text_state_pass">通过</string>
     <string name="text_state_reject">驳回</string>
     <string name="text_work_order_apply">验收</string>

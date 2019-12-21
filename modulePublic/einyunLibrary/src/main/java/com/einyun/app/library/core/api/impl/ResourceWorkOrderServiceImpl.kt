@@ -24,6 +24,25 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun forceClose(
+        workOrderType: String,
+        request: ApplyCloseRequest,
+        callBack: CallBack<Boolean>
+    ) {
+       proxy.forceClose(workOrderType,request,callBack)
+    }
+
+    override fun postpone(
+        workOrderType: String,
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ) {
+        proxy.postpone(workOrderType,request,callBack)
+    }
+
+    override fun isClosed(request: IsClosedRequest, callBack: CallBack<Boolean>) {
+        proxy.isClosed(request,callBack)
+    }
 
 
     /**

@@ -6,19 +6,15 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
@@ -27,26 +23,25 @@ import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
-import com.einyun.app.library.resource.model.LineType;
-import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
-import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.patrol.databinding.FragmentPatrolPendingBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 import com.einyun.app.pms.patrol.R;
-import com.einyun.app.pms.patrol.ui.PatrolListActivity;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_GRID;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
 
 /**
  * 巡查待办
@@ -201,20 +196,32 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
-        viewModel.request.setDivideId(orgModel.getId());
-        binding.panelCondition.periodSelected.setText(orgModel.getName());
-        viewModel.requestDone.setDivideId(orgModel.getId());
+         wrapDivideId(orgModel.getId(),viewModel.request);
         viewModel.onCondition();
     }
 
     /**
      * 处理筛选返回数据
      */
-    private void handleSelect(Map selected) {
+    protected void handleSelect(Map selected) {
         if (selected.size() > 0) {
             binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         }
-//        viewModel.onConditionSelected(selected);
+        wrapCondition(selected,viewModel.request);
+        viewModel.onCondition();
+    }
+
+    protected void wrapDivideId(String divideId, PatrolPageRequest request){
+        request.setDivideId(divideId);
+    }
+
+    protected void wrapCondition(Map<String,SelectModel> selected,PatrolPageRequest request){
+        String gridId=selected.get(SELECT_GRID)==null?null:selected.get(SELECT_GRID).getId();
+        String budingId=selected.get(SELECT_BUILDING)==null?null:selected.get(SELECT_BUILDING).getId();
+        String unitId=selected.get(SELECT_UNIT)==null?null:selected.get(SELECT_UNIT).getId();
+        request.setGridId(gridId);
+        request.setBuildingId(budingId);
+        request.setUnitId(unitId);
     }
 
     @Override

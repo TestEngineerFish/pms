@@ -40,7 +40,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
     private LayoutInflater inflater;
     private WeakReference<Activity> weakReference;
     public static int maxSize=4;
-
+    private PhotoListItemListener itemClickListener;
     public void setActivity(Activity activity) {
         weakReference=new WeakReference<>(activity);
     }
@@ -124,6 +124,9 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             if(activity==null){
                 return;
             }
+            if(itemClickListener!=null){
+                holder.itemView.setOnClickListener(v -> itemClickListener.OnItemClick(holder.itemView,position));
+            }
             holder.imgRemove.setOnClickListener(v -> {
                 new AlertDialog(activity).builder()
                         .setTitle("提示")
@@ -167,6 +170,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
         weakReference=new WeakReference<>(activity);
     }
 
+    public void setOnItemListener(PhotoListItemListener listener){
+        this.itemClickListener=listener;
+    }
+
     public void addPhotos(List<Uri> photoUri) {
         selectedPhotos.addAll(photoUri);
         notifyDataSetChanged();
@@ -177,6 +184,16 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 //        return selectedPhotos.size() < maxSize ? selectedPhotos.size() + 1 : maxSize;
         int count = selectedPhotos.size() + 1;
         return count;
+    }
+
+    public List<String> getImagePaths(){
+        List<String> paths=new ArrayList<>();
+        if(selectedPhotos!=null){
+            for(Uri uri:selectedPhotos){
+                paths.add(uri.toString());
+            }
+        }
+        return paths;
     }
 
     public List<Uri> getSelectedPhotos() {

@@ -26,14 +26,17 @@ import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoListItemListener;
 import com.einyun.app.common.ui.component.photo.PhotoLocalListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolTimeSigninBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeCheckNodeBinding;
 import com.einyun.app.pms.patrol.model.PatrolCheckItem;
+import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.viewmodel.PatrolSignInViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 import com.google.gson.Gson;
@@ -172,6 +175,11 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
     protected void updateUI() {
         workNode = (WorkNode) bundle.get(RouteKey.KEY_PATROL_TIME_WORKNODE);
         binding.setNode(workNode);
+        if(SignCheckResult.SIGN_IN_SUCCESS!=workNode.getSign_result()){
+            binding.llPatrolSigninTime.setVisibility(View.GONE);
+        }else{
+            binding.llPatrolSigninTime.setVisibility(View.VISIBLE);
+        }
         updateSamplePic();
         updateCapturePic();
         updateCheckNodes();
@@ -221,6 +229,9 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                 uris.add(uri);
             }
             photoLocalListAdapter.updateList(uris);
+            photoLocalListAdapter.setOnItemListener((v, position) -> {
+                PhotoShowActivity.start(this,position, (ArrayList<String>) photoLocalListAdapter.getImagePaths());
+            });
         }
     }
 
@@ -233,6 +244,9 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
         PicUrlModelConvert convert = new PicUrlModelConvert();
         List<PicUrlModel> modelList = convert.stringToSomeObjectList(pic_url);
         photoListAdapterUpload.updateList(modelList);
+        photoListAdapterUpload.setOnItemListener((v, position) -> {
+            PhotoShowActivity.start(this,position, (ArrayList<String>) photoListAdapterUpload.getImagePaths());
+        });
     }
 
     @Override

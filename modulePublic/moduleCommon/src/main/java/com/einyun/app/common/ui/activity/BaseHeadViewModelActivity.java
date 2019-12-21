@@ -59,6 +59,7 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
      * */
     protected void setRightOption(int iconId){
         headBinding.ivRightOption.setImageResource(iconId);
+        headBinding.ivRightOption.setVisibility(View.VISIBLE);
     }
 
     protected void hideRightOption(){

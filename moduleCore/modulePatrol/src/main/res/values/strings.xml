@@ -14,6 +14,8 @@
     <string name="text_duration">%d分钟</string>
     <string name="text_qr_sign_in">二维码签到</string>
     <string name="text_patrol_time_name">巡更点名称</string>
+    <string name="text_patrol_signin_result">签到结果</string>
+    <string name="text_patrol_signin_time">签到时间</string>
     <string name="text_patrol_time_position">巡更点位置</string>
     <string name="text_sample_pic">参考标准图片</string>
     <string name="text_capture_pic">现场拍照对比</string>
