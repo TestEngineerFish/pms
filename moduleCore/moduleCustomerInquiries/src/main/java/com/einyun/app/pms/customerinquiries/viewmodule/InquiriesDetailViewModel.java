@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.pms.customerinquiries.constants.URLS;
 import com.einyun.app.pms.customerinquiries.module.DealRequest;
 import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
 import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
 import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
 import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
+import com.einyun.app.pms.customerinquiries.module.OrderDetailInfoModule;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
 
 import java.util.List;
@@ -41,7 +43,7 @@ public class InquiriesDetailViewModel extends BaseViewModel {
      * 处理接口
      * */
     private MutableLiveData<Boolean> deal=new MutableLiveData<>();
-    public LiveData<Boolean> Deal(DealRequest dealRequest){
+    public LiveData<Boolean> deal(DealRequest dealRequest){
         showLoading();
         repository.dealSubmit(dealRequest, new CallBack<Boolean>() {
             @Override
@@ -60,8 +62,8 @@ public class InquiriesDetailViewModel extends BaseViewModel {
     /*
      * 处理保存接口
      * */
-    private MutableLiveData<Boolean> dealSave=new MutableLiveData<>();
-    public LiveData<Boolean> DealSave(DealSaveRequest dealSaveRequest){
+     MutableLiveData<Boolean> dealSave=new MutableLiveData<>();
+    public LiveData<Boolean> dealSave(DealSaveRequest dealSaveRequest){
         showLoading();
         repository.dealSave(dealSaveRequest, new CallBack<Boolean>() {
             @Override
@@ -81,9 +83,9 @@ public class InquiriesDetailViewModel extends BaseViewModel {
      * 评价
      * */
     private MutableLiveData<Boolean> evaluation=new MutableLiveData<>();
-    public LiveData<Boolean> Evaluation(EvaluationRequest evaluationRequest){
+    public LiveData<Boolean> evaluation(EvaluationRequest evaluationRequest){
         showLoading();
-        repository.Evaluation(evaluationRequest, new CallBack<Boolean>() {
+        repository.evaluation(evaluationRequest, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
                 hideLoading();
@@ -96,5 +98,43 @@ public class InquiriesDetailViewModel extends BaseViewModel {
             }
         });
         return evaluation;
+    }
+    private MutableLiveData<OrderDetailInfoModule> queryOrderInfo=new MutableLiveData<>();
+    public LiveData<OrderDetailInfoModule> queryOrderInfo(String procInstId,String taskId){
+        showLoading();
+        repository.getOrderInfo(procInstId,taskId, new CallBack<OrderDetailInfoModule>() {
+            @Override
+            public void call(OrderDetailInfoModule data) {
+                hideLoading();
+                queryOrderInfo.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return queryOrderInfo;
+    }
+    /*
+     * 评价
+     * */
+    private MutableLiveData<Boolean> isCanApply=new MutableLiveData<>();
+    public LiveData<Boolean> isCanApply(String  id,String type){
+        showLoading();
+        String url= URLS.URL_GET_IS_CAN_APPLY_CLOSE_ORDER+id+"&auditSubType="+type;
+        repository.isCanApply(url, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                isCanApply.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return isCanApply;
     }
 }

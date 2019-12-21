@@ -147,7 +147,7 @@ public class InquiriesItemModule implements Serializable {
     }
 
     public String getTaskNodeId() {
-        return taskNodeId;
+        return taskNodeId==null?"":taskNodeId;
     }
 
     public void setTaskNodeId(String taskNodeId) {
@@ -211,7 +211,7 @@ public class InquiriesItemModule implements Serializable {
     }
 
     public String getTaskId() {
-        return taskId;
+        return taskId==null?"":taskId;
     }
 
     public void setTaskId(String taskId) {

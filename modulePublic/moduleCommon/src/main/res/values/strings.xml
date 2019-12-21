@@ -171,6 +171,7 @@
     <string name="tv_dealing">待处理</string>
     <string name="tv_closed">已关闭</string>
     <string name="tv_for_respone">待评价</string>
+    <string name="tv_load_more" >加载更多</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>

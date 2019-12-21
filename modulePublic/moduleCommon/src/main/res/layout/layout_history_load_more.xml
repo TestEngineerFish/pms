@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="ext"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/tv_load_more"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_100">
+        <View
+            android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@color/thin_divider_color"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_centerInParent="true"
+            android:text="@string/tv_load_more"
+            android:textColor="@color/blueTextColor"
+            android:gravity="center"
+            android:textSize="@dimen/font_size14"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:background="@drawable/iv_arrow_blue_down"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_more"
+            android:textColor="@color/blueTextColor"
+            android:layout_width="@dimen/px_26"
+            android:layout_height="@dimen/px_16"/>
+    </RelativeLayout>
+</layout>

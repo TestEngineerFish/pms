@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.pms.customerinquiries.R;
@@ -99,7 +101,7 @@ String taskID;
             return;
         }
         FeedBackRequest feedBackRequest = new FeedBackRequest();
-        feedBackRequest.setAccount(feedBackModule.getTaskCommu().getSender());
+        feedBackRequest.setAccount((String) SPUtils.get(this, SPKey.KEY_ACCOUNT,""));
         feedBackRequest.setTaskId(taskID);
         feedBackRequest.setOpinion(option);
         feedBackRequest.setNotifyType("inner");
