@@ -19,6 +19,8 @@ import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.PageBean;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
@@ -30,6 +32,7 @@ import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
@@ -152,21 +155,38 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                if(TextUtils.isEmpty(viewModel.request.getDivideId())){
+                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_divide_selected);
+                    return;
+                }
+                BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(), new CallBack<DivideGrid>() {
                     @Override
-                    public void call(BasicData data) {
-                        ConditionBuilder builder = new ConditionBuilder();
-                        List<SelectModel> conditions = builder.addLines(data.getLines())//条线
-                                .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                                .mergeLineRes(data.getResources())
-                                .addLineTypesItem(data.getListLineTypes())
-                                .build();
-                        new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                    public void call(DivideGrid divideGrid) {
+                        BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
                             @Override
-                            public void onSelected(Map selected) {
-                                handleSelect(selected);
+                            public void call(BasicData data) {
+                                ConditionBuilder builder = new ConditionBuilder();
+                                List<SelectModel> conditions = builder
+                                        .addDivideGrid(divideGrid) //网格-楼栋-单元
+                                        .addLines(data.getLines())//条线
+                                        .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                                        .mergeLineRes(data.getResources())
+                                        .addLineTypesItem(data.getListLineTypes())
+                                        .build();
+                                new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                                    @Override
+                                    public void onSelected(Map selected) {
+                                        handleSelect(selected);
+                                    }
+                                }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                             }
-                        }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -174,7 +194,6 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
                     }
                 });
-
             }
         });
     }

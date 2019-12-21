@@ -4,14 +4,23 @@ import android.text.TextUtils;
 import com.einyun.app.common.R;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.model.SelectModel;
+import com.einyun.app.library.mdm.model.BuildingUnit;
+import com.einyun.app.library.mdm.model.DivideGrid;
+import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_GRID;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE_TYPES;
@@ -19,6 +28,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE1;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ROOT;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_TIME_CIRCLE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
 
 public class ConditionBuilder {
     public static final String RESULT_YES = "1";
@@ -95,7 +105,7 @@ public class ConditionBuilder {
      * @param key
      * @param selectModels
      */
-    protected void addLineItem(String key, List<SelectModel> selectModels) {
+    protected ConditionBuilder addLineItem(String key, List<SelectModel> selectModels) {
         if (key.equals(SELECT_LINE)) {//条线数据
             if (!selectModelMap.containsKey(SELECT_LINE)) {
                 lineRoot = new SelectModel();
@@ -110,6 +120,73 @@ public class ConditionBuilder {
                 conditions.add(lineRoot);
             }
         }
+        return this;
+    }
+
+    /**
+     * 添加网格数据 网格-楼栋-单元
+     * @param divideGrid
+     * @return
+     */
+    public ConditionBuilder addDivideGrid(DivideGrid divideGrid){
+        if (!selectModelMap.containsKey(SELECT_GRID)) {
+            SelectModel root=new SelectModel();
+            root.setType(CommonApplication.getInstance().getResources().getString(R.string.text_grid));
+            root.setConditionType(SELECT_ROOT);
+            List<SelectModel> grids = buildGrids(divideGrid);
+            root.setSelectModelList(grids);
+            selectModelMap.put(SELECT_GRID, root);
+            conditions.add(root);
+        }
+        return this;
+    }
+
+    /**
+     * 构建网格数据
+     * @param divideGrid
+     * @return
+     */
+    @NotNull
+    protected List<SelectModel> buildGrids(DivideGrid divideGrid) {
+        List<SelectModel> grids=new ArrayList<>();
+        for(GridModel grid:divideGrid.getGrids()){
+            SelectModel gridModel=new SelectModel();
+            gridModel.setType(CommonApplication.getInstance().getResources().getString(R.string.text_building));
+            gridModel.setConditionType(SELECT_GRID);
+            gridModel.setContent(grid.getGridName());
+            gridModel.setKey(grid.getId());
+            gridModel.setId(grid.getId());
+            grids.add(gridModel);
+            List<BuildingUnit> childs=grid.getChildren();
+            buildUnits(gridModel,childs);
+        }
+        return grids;
+    }
+
+    /**
+     * 构建楼栋/单元
+     * @param root
+     */
+    protected void buildUnits(SelectModel root,List<BuildingUnit> units){
+        List<SelectModel> childs=new ArrayList<>();
+        if(units!=null){
+            for(BuildingUnit unit:units){
+                SelectModel selectModel=new SelectModel();
+                if(unit.getLevel()==DivideGrid.LEVEL_BUILDING){
+                    selectModel.setConditionType(SELECT_BUILDING);
+                    selectModel.setType(CommonApplication.getInstance().getResources().getString(R.string.text_unit));
+                }else if((unit.getLevel()==DivideGrid.LEVEL_UNIT)){
+                    selectModel.setConditionType(SELECT_UNIT);
+                }
+                selectModel.setContent(unit.getName());
+                selectModel.setKey(unit.getId());
+                selectModel.setId(unit.getId());
+                childs.add(selectModel);
+                List<BuildingUnit> items=unit.getChildren();
+                buildUnits(selectModel,items);
+            }
+        }
+        root.setSelectModelList(childs);
     }
 
     public ConditionBuilder mergeLineRes(List<ResourceTypeBean> allResources) {

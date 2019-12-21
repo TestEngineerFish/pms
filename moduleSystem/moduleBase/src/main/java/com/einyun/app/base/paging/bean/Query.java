@@ -17,7 +17,7 @@ import java.util.List;
 public class Query {
     public static String OPERATION_EQUAL="EQUAL";
     public static String RELATION_AND="AND";
-
+    public static String GROUP="one";
     public static String SORT_DESC="DESC";
     public static String SORT_ASC="ASC";
     private PageBean pageBean;
