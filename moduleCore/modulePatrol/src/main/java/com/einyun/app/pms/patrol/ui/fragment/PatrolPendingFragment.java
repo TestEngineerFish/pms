@@ -6,19 +6,17 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
@@ -27,34 +25,42 @@ import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
-import com.einyun.app.library.resource.model.LineType;
-import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
-import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.resource.workorder.model.PatrolWorkOrder;
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
+import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.pms.patrol.BR;
 import com.einyun.app.pms.patrol.databinding.FragmentPatrolPendingBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 import com.einyun.app.pms.patrol.R;
-import com.einyun.app.pms.patrol.ui.PatrolListActivity;
+import com.einyun.app.pms.patrol.databinding.ItemWorkPatrolBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_GRID;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
+
 /**
  * 巡查待办
  */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> implements ItemClickListener<Patrol>, PeriodizationView.OnPeriodSelectListener {
 
-    protected int listType= ListType.PENDING.getType();
+    protected int listType = ListType.PENDING.getType();
     protected RVPageListAdapter<ItemPatrolListBinding, Patrol> adapter;
+    protected PageSearchFragment<ItemWorkPatrolBinding, Patrol> searchFragment;
 
     public static PatrolPendingFragment newInstance() {
         return new PatrolPendingFragment();
@@ -72,6 +78,14 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.swiperefresh.setOnRefreshListener(() -> {
             binding.swiperefresh.setRefreshing(false);
             viewModel.refresh();
+        });
+
+        binding.panelCondition.search.setVisibility(View.VISIBLE);
+        binding.panelCondition.search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
         });
     }
 
@@ -155,7 +169,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(viewModel.request.getDivideId())){
+                if (TextUtils.isEmpty(viewModel.request.getDivideId())) {
                     ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_divide_selected);
                     return;
                 }
@@ -201,20 +215,66 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
-        viewModel.request.setDivideId(orgModel.getId());
-        binding.panelCondition.periodSelected.setText(orgModel.getName());
-        viewModel.requestDone.setDivideId(orgModel.getId());
+        wrapDivideId(orgModel.getId(), viewModel.request);
         viewModel.onCondition();
+    }
+
+    private void search() {
+        if (searchFragment == null) {
+            searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
+                @Override
+                public LiveData<PagedList<Patrol>> search(String search) {
+                    viewModel.request.setSearchValue(search);
+                    if (listType == ListType.PENDING.getType()) {
+                        return viewModel.loadPendingData();
+                    } else {
+                        return viewModel.loadCloseData();
+                    }
+                }
+
+                @Override
+                public void onItemClick(Patrol model) {
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                            .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                            .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                            .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                            .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+                            .withInt(RouteKey.KEY_LIST_TYPE, listType)
+                            .navigation();
+                }
+
+                @Override
+                public int getLayoutId() {
+                    return R.layout.item_work_patrol;
+                }
+            });
+            searchFragment.setHint("请搜索工单编号或计划名称");
+        }
+        searchFragment.show(getActivity().getSupportFragmentManager(), "");
     }
 
     /**
      * 处理筛选返回数据
      */
-    private void handleSelect(Map selected) {
+    protected void handleSelect(Map selected) {
         if (selected.size() > 0) {
             binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         }
-//        viewModel.onConditionSelected(selected);
+        wrapCondition(selected, viewModel.request);
+        viewModel.onCondition();
+    }
+
+    protected void wrapDivideId(String divideId, PatrolPageRequest request) {
+        request.setDivideId(divideId);
+    }
+
+    protected void wrapCondition(Map<String, SelectModel> selected, PatrolPageRequest request) {
+        String gridId = selected.get(SELECT_GRID) == null ? null : selected.get(SELECT_GRID).getId();
+        String budingId = selected.get(SELECT_BUILDING) == null ? null : selected.get(SELECT_BUILDING).getId();
+        String unitId = selected.get(SELECT_UNIT) == null ? null : selected.get(SELECT_UNIT).getId();
+        request.setGridId(gridId);
+        request.setBuildingId(budingId);
+        request.setUnitId(unitId);
     }
 
     @Override
@@ -224,15 +284,15 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
     @Override
     public void onItemClicked(View veiw, Patrol data) {
-        if(!TextUtils.isEmpty(data.getF_patrol_line_id())){
+        if (!TextUtils.isEmpty(data.getF_patrol_line_id())) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
                     .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
                     .withString(RouteKey.KEY_ORDER_ID, data.getID_())
-                    .withInt(RouteKey.KEY_LIST_TYPE,listType)
+                    .withInt(RouteKey.KEY_LIST_TYPE, listType)
                     .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                     .navigation();
-        }else{
+        } else {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
                     .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
                     .withString(RouteKey.KEY_ORDER_ID, data.getID_())

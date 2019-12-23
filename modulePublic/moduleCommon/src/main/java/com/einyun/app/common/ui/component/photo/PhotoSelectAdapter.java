@@ -40,7 +40,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
     private LayoutInflater inflater;
     private WeakReference<Activity> weakReference;
     public static int maxSize=4;
-
+    private PhotoListItemListener itemClickListener;
     public void setActivity(Activity activity) {
         weakReference=new WeakReference<>(activity);
     }
@@ -89,7 +89,11 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             holder.layoutAdd.setVisibility(View.VISIBLE);
             holder.imgPhoto.setVisibility(View.INVISIBLE);
             holder.imgRemove.setVisibility(View.INVISIBLE);
-
+            if(getItemCount()>=maxSize+1){
+                holder.itemView.setVisibility(View.GONE);
+            }else{
+                holder.itemView.setVisibility(View.VISIBLE);
+            }
             holder.layoutAdd.setOnClickListener(v -> {
                 if (listener != null) {
                     Activity activity=weakReference.get();
@@ -116,6 +120,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
                 }
             });
         } else {
+            holder.itemView.setVisibility(View.VISIBLE);
             holder.layoutAdd.setVisibility(View.INVISIBLE);
             holder.imgPhoto.setVisibility(View.VISIBLE);
             holder.imgRemove.setVisibility(View.VISIBLE);
@@ -123,6 +128,9 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             Activity activity=weakReference.get();
             if(activity==null){
                 return;
+            }
+            if(itemClickListener!=null){
+                holder.itemView.setOnClickListener(v -> itemClickListener.OnItemClick(holder.itemView,position));
             }
             holder.imgRemove.setOnClickListener(v -> {
                 new AlertDialog(activity).builder()
@@ -151,6 +159,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
         }
     }
 
+
     public interface ItemChangeListener {
         void onChange(List<Uri> urs);
     }
@@ -167,6 +176,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
         weakReference=new WeakReference<>(activity);
     }
 
+    public void setOnItemListener(PhotoListItemListener listener){
+        this.itemClickListener=listener;
+    }
+
     public void addPhotos(List<Uri> photoUri) {
         selectedPhotos.addAll(photoUri);
         notifyDataSetChanged();
@@ -177,6 +190,16 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 //        return selectedPhotos.size() < maxSize ? selectedPhotos.size() + 1 : maxSize;
         int count = selectedPhotos.size() + 1;
         return count;
+    }
+
+    public List<String> getImagePaths(){
+        List<String> paths=new ArrayList<>();
+        if(selectedPhotos!=null){
+            for(Uri uri:selectedPhotos){
+                paths.add(uri.toString());
+            }
+        }
+        return paths;
     }
 
     public List<Uri> getSelectedPhotos() {

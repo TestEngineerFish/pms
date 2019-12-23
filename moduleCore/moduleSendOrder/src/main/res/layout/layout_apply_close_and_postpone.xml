@@ -14,8 +14,9 @@
             android:id="@+id/send_order_apply_late"
             android:layout_width="@dimen/px_110"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px_125"
-            android:layout_marginTop="@dimen/px_40"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -24,7 +25,7 @@
                 android:src="@drawable/apply_late" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_38"
                 android:layout_marginTop="@dimen/px_20"
                 android:text="申请延期"
@@ -36,8 +37,9 @@
             android:id="@+id/apply_postpone"
             android:layout_width="@dimen/px_110"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px_220"
-            android:layout_marginTop="@dimen/px_40"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -46,7 +48,7 @@
                 android:src="@drawable/force_close" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_38"
                 android:layout_marginTop="@dimen/px_20"
                 android:text="强制关闭"

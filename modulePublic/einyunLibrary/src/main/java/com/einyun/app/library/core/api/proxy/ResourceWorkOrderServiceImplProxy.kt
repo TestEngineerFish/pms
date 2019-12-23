@@ -24,6 +24,25 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun forceClose(
+        workOrderType: String,
+        request: ApplyCloseRequest,
+        callBack: CallBack<Boolean>
+    ) {
+        instance?.forceClose(workOrderType,request,callBack)
+    }
+
+    override fun postpone(
+        workOrderType: String,
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ) {
+        instance?.postpone(workOrderType,request,callBack)
+    }
+
+    override fun isClosed(request: IsClosedRequest, callBack: CallBack<Boolean>) {
+        instance?.isClosed(request,callBack)
+    }
 
     override fun getPatroPreviewList(
         request: OrderPreviewRequest,

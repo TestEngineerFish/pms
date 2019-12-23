@@ -49,11 +49,20 @@ public class Distribute{
     private String F_PROC_DATE;
     private int F_EXT_STATUS;
     private int isReply;
+    private int is_coming_timeout;
     @NonNull
     private String userId;
 
     @NonNull
     private int orderType;
+
+    public int getIs_coming_timeout() {
+        return is_coming_timeout;
+    }
+
+    public void setIs_coming_timeout(int is_coming_timeout) {
+        this.is_coming_timeout = is_coming_timeout;
+    }
 
     @NonNull
     public int getOrderType() {

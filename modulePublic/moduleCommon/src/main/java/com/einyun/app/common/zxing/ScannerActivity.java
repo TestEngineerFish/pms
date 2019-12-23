@@ -34,14 +34,22 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
     protected ZXingScannerView.ResultHandler mResultHandler = new ZXingScannerView.ResultHandler() {
         @Override
         public void handleResult(Result result) {
-            binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+            resumeCameraPreview();
             Logger.d("扫码内容->"+ result.getText());
             Logger.d("扫码格式"+ result.getBarcodeFormat().toString());
             onScanResult(result.getText());
         }
     };
 
-    protected void onScanResult(String result){
+    protected void resumeCameraPreview(){
+        binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+    }
+
+    protected void stopCameraPreview(){
+        binding.scannerView.stopCameraPreview();
+    }
+
+   protected void onScanResult(String result){
         Intent intent = new Intent();
         intent.putExtra(DataConstants.KEY_SCANNER_CONTENT, result);
         setResult(RESULT_OK, intent);

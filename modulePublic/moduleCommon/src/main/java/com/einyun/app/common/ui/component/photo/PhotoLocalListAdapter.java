@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.einyun.app.common.R;
+import com.einyun.app.common.model.PicUrlModel;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoLocalListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
@@ -59,6 +62,16 @@ public class PhotoLocalListAdapter extends RecyclerView.Adapter<PhotoViewHolder>
             picList.addAll(list);
         }
         notifyDataSetChanged();
+    }
+
+    public List<String> getImagePaths(){
+        List<String> paths=new ArrayList<>();
+        if(picList!=null){
+            for(Uri uri:picList){
+                paths.add(uri.toString());
+            }
+        }
+        return paths;
     }
 
     public void setOnItemListener(PhotoListItemListener listener){

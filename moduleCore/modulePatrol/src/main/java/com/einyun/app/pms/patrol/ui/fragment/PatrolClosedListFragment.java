@@ -19,6 +19,8 @@ import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
+import java.util.Map;
+
 /**
  * 巡查工单已办列表
  */
@@ -50,6 +52,17 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
         LiveEventBus.get(LiveDataBusKey.POST_PATROL_CLOSED_REFRESH,Boolean.class).observe(this, flag -> {
             viewModel.refreshClosedList();
         });
+    }
+
+    /**
+     * 处理筛选返回数据
+     */
+    protected void handleSelect(Map selected) {
+        if (selected.size() > 0) {
+            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+        }
+        wrapCondition(selected,viewModel.requestDone);
+        viewModel.onCondition();
     }
 
     protected void initAdapter() {

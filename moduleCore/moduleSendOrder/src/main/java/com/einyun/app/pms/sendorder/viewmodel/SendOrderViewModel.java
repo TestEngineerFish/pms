@@ -221,7 +221,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      * @return LiveData
      */
     public LiveData<List<WorkOrderTypeModel>> getOrderType() {
-        showLoading();
+//        showLoading();
         resourceWorkOrderService.getWorkOrderType(new CallBack<List<WorkOrderTypeModel>>() {
             @Override
             public void call(List<WorkOrderTypeModel> data) {

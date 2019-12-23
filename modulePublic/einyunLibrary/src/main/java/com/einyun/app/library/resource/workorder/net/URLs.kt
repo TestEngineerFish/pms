@@ -63,8 +63,8 @@ class URLs {
         //计划工单完成数量 GET(userId=)
         const val URL_RESOURCE_WORKORDER_PLAN_ORDER_NUMS_DONE =
             "/$DOMAIN/res-order/plan/getOrderDoneCount"
-        //派工单是否关闭
-        const val URL_RESOURCE_WORKORDER_DISTRIBUTE_CLOSE = "/$DOMAIN/res-order/distribute/isClosed"
+        //工单是否关闭
+        const val URL_RESOURCE_WORKORDER_IS_CLOSE = "/$DOMAIN/res-order/distribute/isClosed"
         //派工单代办详情 GET
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DETIAL_INFO =
             "/$DOMAIN/res-order/distribute/detailById/"
@@ -118,5 +118,16 @@ class URLs {
         //工作预览-巡查工单
         const val URL_WORK_PREVIEW_PATRO_ORDER =
             "resource/api/resource/v1/inspectionWorkOrderPreview/list"
+
+        /**
+         * 通用强制关闭
+         */
+        const val URL_WORK_ORDER_FORCE_CLOSE ="/$DOMAIN/res-order/{workOrder}/close"
+
+        /**
+         * 通过申请延期
+         */
+        const val URL_WORK_ORDER_FORCE_POSTPONE ="/$DOMAIN/res-order/{workOrder}/exten"
+
     }
 }
