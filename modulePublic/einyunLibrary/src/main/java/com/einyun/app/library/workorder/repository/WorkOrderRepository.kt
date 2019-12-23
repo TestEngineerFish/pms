@@ -10,6 +10,7 @@ import com.einyun.app.base.paging.bean.*
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
@@ -36,6 +37,21 @@ import retrofit2.http.Url
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    //客户报修-筛选数据
+    override fun getAreaType(callBack: CallBack<AreaModel>): LiveData<AreaModel> {
+        val liveData = MutableLiveData<AreaModel>()
+        serviceApi?.getAreaType()?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData    }
+
+
     //报修-处理保存
     override fun saveHandler(
         request: SaveHandleRequest,
@@ -49,7 +65,8 @@ class WorkOrderRepository : WorkOrderService {
             }, {
                 callBack.onFaild(it)
             })
-        return liveData       }
+        return liveData
+    }
 
     //报修-派单
     override fun repaireSend(
@@ -643,6 +660,25 @@ class WorkOrderRepository : WorkOrderService {
             request
         )
         serviceApi?.getRepairAlreadyDone(queryBuilder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                }, { callBack.onFaild(it) }
+            )
+    }
+
+    /**
+     *报修-待反馈
+     * */
+    override fun getRepairWaitFeed(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        serviceApi?.getRepairWaitFeed(queryBuilder.build())?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 { response ->
                     if (response.isState) {

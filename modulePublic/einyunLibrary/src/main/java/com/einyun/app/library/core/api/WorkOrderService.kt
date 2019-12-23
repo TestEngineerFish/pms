@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.PageBean
+import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.workorder.model.RepairsPage
 import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.model.BlocklogNums
@@ -55,6 +56,11 @@ interface WorkOrderService : EinyunService {
         request: RepairsPageRequest, callBack: CallBack<RepairsPage>
     )
 
+    //获取报修待反馈
+    fun getRepairWaitFeed(
+        request: RepairsPageRequest, callBack: CallBack<RepairsPage>
+    )
+
     //获取报修抄送我
     fun getRepairCopyMe(
         request: RepairsPageRequest, callBack: CallBack<RepairsPage>
@@ -95,5 +101,17 @@ interface WorkOrderService : EinyunService {
     ): LiveData<Boolean>
 
     fun repairTypeList(callBack: CallBack<Door>): LiveData<Door>
-    fun postCommunication(request: PostCommunicationRequest,callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun postCommunication(
+        request: PostCommunicationRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
+    fun complainWorkListdPage(
+        pageBean: PageBean,
+        mobile: String,
+        callBack: CallBack<ComplainModelPageResult>
+    ): LiveData<ComplainModelPageResult>
+
+    //客户报修筛选数据
+    fun getAreaType(callBack: CallBack<AreaModel>): LiveData<AreaModel>
 }

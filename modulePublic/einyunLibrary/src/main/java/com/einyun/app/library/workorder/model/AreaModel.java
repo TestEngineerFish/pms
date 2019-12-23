@@ -1,4 +1,4 @@
-package com.einyun.app.common.model;
+package com.einyun.app.library.workorder.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectModel implements Cloneable{
+public class AreaModel implements Cloneable{
 
     private int grade;
     private String id="";//标签id
@@ -21,17 +21,61 @@ public class SelectModel implements Cloneable{
     private String parentId;
     private String open;
     private String text;
-    private List<?> children;
+    private List<AreaModel> children;
     private String isParent;
     private String categoryId;
     private String dataName;
     private String dataKey;
     private String enabledFlag;
-    private String expand;
-    private String sn;
-//    private SelectModel parent;
-    private List<SelectModel> selectModelList=new ArrayList<>();
-    public SelectModel() {
+
+    public void setChildren(List<AreaModel> children) {
+        this.children = children;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getDataName() {
+        return dataName;
+    }
+
+    public void setDataName(String dataName) {
+        this.dataName = dataName;
+    }
+
+    public String getDataKey() {
+        return dataKey;
+    }
+
+    public void setDataKey(String dataKey) {
+        this.dataKey = dataKey;
+    }
+
+    public String getEnabledFlag() {
+        return enabledFlag;
+    }
+
+    public void setEnabledFlag(String enabledFlag) {
+        this.enabledFlag = enabledFlag;
+    }
+
+    public int getSn() {
+        return sn;
+    }
+
+    public void setSn(int sn) {
+        this.sn = sn;
+    }
+
+    private int sn;
+    //    private SelectModel parent;
+    private List<AreaModel> selectModelList=new ArrayList<>();
+    public AreaModel() {
 
     }
 
@@ -73,7 +117,7 @@ public class SelectModel implements Cloneable{
         this.isCheck = isCheck;
     }
 
-    public SelectModel(String id, String content, boolean isCheck) {
+    public AreaModel(String id, String content, boolean isCheck) {
         this.id = id;
         this.content = content;
         this.isCheck = isCheck;
@@ -81,8 +125,8 @@ public class SelectModel implements Cloneable{
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        SelectModel model=(SelectModel)obj;
-       return this.id.equals(model.id);
+        AreaModel model=(AreaModel)obj;
+        return this.id.equals(model.id);
 
     }
 
@@ -102,11 +146,11 @@ public class SelectModel implements Cloneable{
         isCheck = check;
     }
 
-    public List<SelectModel> getSelectModelList() {
+    public List<AreaModel> getSelectModelList() {
         return selectModelList;
     }
 
-    public void setSelectModelList(List<SelectModel> selectModelList) {
+    public void setSelectModelList(List<AreaModel> selectModelList) {
         this.selectModelList = selectModelList;
     }
 
@@ -170,14 +214,6 @@ public class SelectModel implements Cloneable{
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public List<?> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<?> children) {
-        this.children = children;
     }
 
     public String getIsParent() {

@@ -18,6 +18,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_ALREADY_F
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_ALREDY_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_GRAB;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 
 /**
@@ -111,7 +112,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                 public void call(RepairsPage data) {
                     if (callback instanceof LoadInitialCallback) {
                         LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
-                        Log.d("test",data.getRows().size()+"");
+                        Log.d("test", data.getRows().size() + "");
                         loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
                     } else if (callback instanceof LoadRangeCallback) {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
@@ -125,9 +126,9 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                 }
             });
         }
-        //抄送我
-        if (tag.equals(FRAGMENT_REPAIR_COPY_ME)) {
-            repository.getRepairCopyMe(request, new CallBack<RepairsPage>() {
+        //待反馈
+        if (tag.equals(FRAGMENT_REPAIR_WAIT_FEED)) {
+            repository.getRepairWaitFeed(request, new CallBack<RepairsPage>() {
                 @Override
                 public void call(RepairsPage data) {
                     if (callback instanceof LoadInitialCallback) {
@@ -144,8 +145,28 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                     ThrowableParser.onFailed(throwable);
                 }
             });
-        }
+            //抄送我
+            if (tag.equals(FRAGMENT_REPAIR_COPY_ME)) {
+                repository.getRepairCopyMe(request, new CallBack<RepairsPage>() {
+                    @Override
+                    public void call(RepairsPage data) {
+                        if (callback instanceof LoadInitialCallback) {
+                            LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                            loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                        } else if (callback instanceof LoadRangeCallback) {
+                            LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                            loadInitialCallback.onResult(data.getRows());
+                        }
+                    }
 
+                    @Override
+                    public void onFaild(Throwable throwable) {
+                        ThrowableParser.onFailed(throwable);
+                    }
+                });
+            }
+
+        }
     }
     }
 

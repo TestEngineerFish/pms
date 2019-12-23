@@ -79,7 +79,7 @@ public class RouteKey {
     public static final String REPAIR_STATUS_RESPONSE = "Response";
     public static final String REPAIR_STATUS_HANDLE = "Handle";
     public static final String REPAIR_STATUS_EVALUATE= "ReturnVisit";
-
+    public static final String REPAIR_STATUS_WAIT_GRAB= "WorkOrderPoolGrab";
 
 
 

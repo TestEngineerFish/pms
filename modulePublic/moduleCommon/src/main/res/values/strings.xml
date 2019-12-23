@@ -192,4 +192,32 @@
         <item>已办结</item>
         <item>抄送我</item>
     </string-array>
+    <string name="text_send_order">派工单</string>
+    <string name="text_turn_order">转单</string>
+    <string name="text_resend_to">转派至</string>
+    <string name="text_please_select">请选择</string>
+    <string name="text_resend_reason">转派原因</string>
+    <string name="text_enter_reason">请输入转派原因</string>
+    <string name="text_wait_handle">待跟进</string>
+    <string name="text_already_handle">已跟进</string>
+    <string name="text_resend_order">转派工单</string>
+    <string name="text_histroy">历史流程</string>
+    <string name="text_take_order_success">接单成功</string>
+    <string name="text_alert_handle_result">请输入处理结果</string>
+    <string name="text_alert_handle_pic">请选择处理后图片</string>
+    <string name="text_add_people">添加人员</string>
+    <string name="text_pending_work_order">待处理工单：</string>
+    <string name="text_apply_late">申请延期</string>
+    <string name="text_apply_close">申请闭单</string>
+
+
+    <string name="text_alert_input_suggestion">请输入验收意见</string>
+    <string name="text_check_success">验收成功</string>
+    <string name="text_alert_check_result">请输入验收结论</string>
+    <string name="text_reply_success">批复成功</string>
+    <string name="text_work_order_reply">批复</string>
+    <string name="text_pay_online">线上支付</string>
+    <string name="text_pay_under_line">线下支付</string>
+    <string name="text_padding">-</string>
+    <string name="text_padding_empty">  </string>
 </resources>

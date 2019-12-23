@@ -70,7 +70,7 @@
                         layout="@layout/layout_complain_response" />
 
                     <include
-                        android:id="@+id/response_order_info"
+                        android:id="@+id/response_order_info1"
                         layout="@layout/layout_response_info" />
 
                     <include

@@ -68,9 +68,6 @@ class URLs {
 
         //通过UserId批量查询待处理工单
         const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
-        //客户报修-待反馈
-        const val URL_REPORT_REPAIRS_WAIT_FEED="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_repair_flow/COMMU"
-
         //客户报修-抢单列表
         const val URL_REPORT_REPAIRS_GRAB="/workOrder/workOrder/task/v1/getGrabListAlia"
         //客户报修-待跟进
@@ -86,11 +83,13 @@ class URLs {
         //客户报修-抢单动作
         const val URL_REPAIR_GRAB="/workOrder/workOrder/customerRepair/v1/orderGrab?taskId="
         //客户报修-查看详情
-        const val URL_REPAIR_DETAIL="/bpm-runtime/runtime/instance/v1/getInstBO?proInstId="
+        const val URL_REPAIR_DETAIL="/workOrder/workOrder/task/v1/getOrderDetail?"
         //客户报修-派单，响应
         const val URL_REPAIR_SEND="/workOrder/workOrder/customerRepair/v1/complete"
         //客户报修-处理
         const val URL_REPAIR_HANDLE_SAVE="/workOrder/workOrder/saveDraft/v1/saveHandle"
+        //获取客户报修筛选数据
+        const val URL_REPAIR_SELECT="/workOrder/workOrder/customerRepair/v1/getRepairAreaAndType"
         const val URL_INITIATE_COMMUNICATION="/bpm-runtime/runtime/task/v1/communicate"
     }
 }

@@ -3,6 +3,7 @@ package com.einyun.app.library.workorder.net
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
+import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse
 import com.einyun.app.library.workorder.model.ComplainPage
 import com.einyun.app.library.workorder.model.Door
 import com.einyun.app.library.workorder.model.DoorResult
@@ -174,6 +175,11 @@ interface WorkOrderServiceApi {
      * */
     @POST(URLs.URL_REPORT_REPAIRS_COPY_ME)
     fun getRepairCopyMe(@Body request: Query):Flowable<RepairsResponse>
+    /**
+     * 客户报修-抄送我
+     * */
+    @POST(URLs.URL_REPORT_REPAIRS_WAIT_FEED)
+    fun getRepairWaitFeed(@Body request: Query):Flowable<RepairsResponse>
 
     /**
      * 客户报修-抢单动作
@@ -228,4 +234,10 @@ interface WorkOrderServiceApi {
      * */
     @POST(URLs.URL_REPORT_COMPLAIN_COPY_ME)
     fun getComplainCopyMe(@Body request: Query):Flowable<BaseResponse<ComplainPage>>
+
+    /**
+     * 客户报修-筛选
+     * */
+    @GET(URLs.URL_REPAIR_SELECT)
+    fun getAreaType():Flowable<AreaResponse>
 }

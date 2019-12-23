@@ -59,11 +59,13 @@
 
                     <include
                         android:id="@+id/order_info"
-                        layout="@layout/layout_repairs_order_info" />
+                        layout="@layout/layout_repairs_order_info"
+                        android:visibility="gone"/>
 
                     <include
                         android:id="@+id/repairs_info"
-                        layout="@layout/layout_report_repairs_info" />
+                        layout="@layout/layout_report_repairs_info"
+                        android:visibility="gone"/>
 
 
                     <include
@@ -86,19 +88,41 @@
                         layout="@layout/layout_response_info"
                         android:visibility="gone"/>
                     <include
+                        android:id="@+id/repair_handle_info"
+                        layout="@layout/layout_handle_info"
+                        android:visibility="gone"/>
+                    <include
                         android:id="@+id/repair_handle"
                         layout="@layout/layout_handle"
+                        android:visibility="gone"/>
+                    <include
+                        android:id="@+id/repair_use_material"
+                        layout="@layout/layout_material_used"
+                        android:visibility="gone"/>
+                    <include
+                        android:id="@+id/repair_handle_paid"
+                        layout="@layout/layout_handle_paid"
                         android:visibility="gone"/>
                     <include
                         android:id="@+id/repair_handle_result"
                         layout="@layout/layout_handle_result"
                         android:visibility="gone"/>
-
+                    <include
+                        android:id="@+id/repair_handle_history"
+                        layout="@layout/layout_handle_histroy"
+                        android:visibility="gone"/>
+                    <include
+                        android:id="@+id/repair_evaluate"
+                        layout="@layout/layout_complain_evaluate"
+                        android:visibility="gone"/>
                     <include
                         android:id="@+id/repair_close_postpone"
                         layout="@layout/layout_apply_close_postpone"
                         android:visibility="gone"/>
-
+                    <include
+                        android:id="@+id/repair_evaluate_info"
+                        layout="@layout/layout_already_complain_evaluate"
+                        android:visibility="gone"/>
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/px_140" />
@@ -111,7 +135,7 @@
                 style="@style/submit_btn"
                 android:layout_alignParentBottom="true"
                 android:visibility="gone"
-                android:text="@string/text_get_order" />
+                android:text="@string/text_submit" />
             <LinearLayout
                 android:id="@+id/handle_save_submit"
                 android:layout_width="match_parent"

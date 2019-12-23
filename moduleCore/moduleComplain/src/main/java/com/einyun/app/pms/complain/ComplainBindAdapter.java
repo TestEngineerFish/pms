@@ -53,7 +53,7 @@ public class ComplainBindAdapter {
         } else if (value.equals(ComplainOrderState.RESPONSE.getState())) {
             view.setImageResource(R.mipmap.icon_work_order_apply);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-            view.setImageResource(R.mipmap.icon_evaluate);
+//            view.setImageResource(R.mipmap.icon_evaluate);
         }
     }
 
