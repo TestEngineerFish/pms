@@ -124,6 +124,17 @@ class URLs {
          */
         const val URL_WORK_ORDER_FORCE_CLOSE ="/$DOMAIN/res-order/{workOrder}/close"
 
+
+        /**
+         * 客户端通用关闭
+         */
+        const val URL_WORK_ORDER_FORCE_CLOSE_CUSTOME ="/$DOMAIN/workOrder/{workOrder}/v1/applyFclose"
+
+        /**
+         * 客户端通用延期
+         */
+        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME ="/$DOMAIN/workOrder/{workOrder}/v1/applyFclose"
+
         /**
          * 通过申请延期
          */

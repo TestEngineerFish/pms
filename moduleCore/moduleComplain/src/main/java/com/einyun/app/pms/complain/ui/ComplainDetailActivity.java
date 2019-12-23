@@ -21,8 +21,10 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -34,9 +36,11 @@ import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.workorder.model.ComplainAppendBean;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.CustomerComplainModelBean;
+import com.einyun.app.library.workorder.model.ForceCloseInfo;
 import com.einyun.app.library.workorder.model.HandleListModel;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
@@ -64,7 +68,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     String fragmentKey;
     CustomerComplainModelBean detail;
     ExtensionApplication applyExtApplication;
-    ExtensionApplication closeExtApplication;
+    ForceCloseInfo closeExtApplication;
     List<ComplainAppendBean> complainAppendList;
     List<HandleListModel> handleList;
     private String createTime;
@@ -119,12 +123,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.setApplyExtApplication(applyExtApplication);
             }
             //闭单
-            closeExtApplication = repairsDetailModel.getExtApplication(ApplyType.FORCECLOSE.getState());
+            closeExtApplication = repairsDetailModel.getForceCloseInfo();
             if (closeExtApplication == null) {
                 binding.layoutApplyCloseInfo.getRoot().setVisibility(View.GONE);
             } else {
                 binding.layoutApplyCloseInfo.getRoot().setVisibility(View.VISIBLE);
                 binding.setCloseExtApplication(closeExtApplication);
+                setImageList(binding.layoutApplyCloseInfo.sendOrderClosePicList, closeExtApplication.getAttachment());
             }
             //处理历史
             handleList = repairsDetailModel.getHandleList();
@@ -222,6 +227,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                     binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 }
             }
+            binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
+            binding.layoutApplyCloseBtn.llClose.setOnClickListener(this);
             binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
             binding.setComplain(detail);
             setImageList(binding.layoutReportComplainInfo.rvPhoto, detail.getF_ts_attachment());
@@ -429,7 +436,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             }
             request.getBizData().setF_handle_result(reasonString);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-            if (request.getBizData().getC_is_solve() == -1){
+            if (request.getBizData().getC_is_solve() == -1) {
                 ToastUtil.show(this, "请先选择处理结果");
                 return;
             }
@@ -482,6 +489,30 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         }
         if (v.getId() == R.id.ll_complain_nature_2) {
             complainNature();
+        }
+        if (v.getId() == R.id.ll_apply_late) {
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(id);
+            request.setType(WorkOrder.POSTPONED_COMPLAIN);
+            viewModel.isClosed(request).observe(this, isClosedState -> {
+                if (isClosedState.isClosed()) {
+
+                } else {
+                    ToastUtil.show(this, "正在审批中");
+                }
+            });
+        }
+        if (v.getId() == R.id.ll_close) {
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(id);
+            request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
+            viewModel.isClosed(request).observe(this, isClosedState -> {
+                if (isClosedState.isClosed()) {
+
+                } else {
+                    ToastUtil.show(this, "正在审批中");
+                }
+            });
         }
     }
 

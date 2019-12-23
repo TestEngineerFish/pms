@@ -21,7 +21,7 @@ class RepairsDetailModel {
     var opinionList: Any? = null
     var permission: Any? = null
     val buttons: List<Buttons>? = null
-    val forceCloseInfo: ExtensionApplication? = null
+    val forceCloseInfo: ForceCloseInfo? = null
     var extensionApplication: ArrayList<ExtensionApplication>? = null
 
     /**
