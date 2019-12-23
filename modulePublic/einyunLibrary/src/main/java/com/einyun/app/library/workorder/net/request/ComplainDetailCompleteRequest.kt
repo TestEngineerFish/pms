@@ -1,5 +1,6 @@
 package com.einyun.app.library.workorder.net.request
 
+import com.einyun.app.library.workorder.model.ComplainAppendBean
 import com.einyun.app.library.workorder.model.CustomerComplainModelBean
 
 /**
@@ -43,13 +44,13 @@ class ComplainDetailCompleteRequest {
         var F_line_name: String? = null
         var F_response_result: String? = null
         var F_handle_result: String? = null
-        var sub_complain_append: List<CustomerComplainModelBean.InitDataBean.ComplainAppendBean>? =
+        var sub_complain_append: List<ComplainAppendBean>? =
             null
         var service_quality_content: String? = null
         var service_quality_score: Int = 0
         var F_return_score: Int = 0
         var service_attitude_content: String? = null
-        var c_is_solve: Int = 0
+        var c_is_solve: Int = -1
         var F_return_result: String? = null
     }
 

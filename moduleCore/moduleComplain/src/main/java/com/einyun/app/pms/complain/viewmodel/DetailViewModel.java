@@ -100,6 +100,8 @@ public class DetailViewModel extends BaseUploadViewModel {
     public LiveData<RepairsDetailModel> getComplainDetail(String instId, String taskId) {
         MutableLiveData<RepairsDetailModel> liveData = new MutableLiveData<>();
         showLoading();
+        if (taskId == null)
+            taskId = "";
         workOrderService.getClientOrderDetail(instId, taskId, new CallBack<RepairsDetailModel>() {
             @Override
             public void call(RepairsDetailModel data) {

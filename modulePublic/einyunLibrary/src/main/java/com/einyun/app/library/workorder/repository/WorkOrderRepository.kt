@@ -825,9 +825,9 @@ class WorkOrderRepository : WorkOrderService {
         return liveData
     }
 
-    override fun getClientOrderDetail(procInstId:String, taskId:String, callBack: CallBack<RepairsDetailModel>):LiveData<RepairsDetailModel>{
+    override fun getClientOrderDetail(instId:String, taskId:String, callBack: CallBack<RepairsDetailModel>):LiveData<RepairsDetailModel>{
         var liveData = MutableLiveData<RepairsDetailModel>()
-        serviceApi?.getClientOrderDetail(procInstId,taskId)?.compose(RxSchedulers.inIoMain())
+        serviceApi?.getClientOrderDetail(instId,taskId)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
                 if (it.isState){
                     liveData.postValue(it.data)

@@ -15,11 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
+import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
@@ -32,12 +34,14 @@ import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.workorder.model.ComplainAppendBean;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.CustomerComplainModelBean;
 import com.einyun.app.library.workorder.model.HandleListModel;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 import com.einyun.app.library.workorder.net.request.ComplainDetailCompleteRequest;
+import com.einyun.app.pms.complain.BR;
 import com.einyun.app.pms.complain.R;
 import com.einyun.app.pms.complain.databinding.ActivityComplainDetailBinding;
 import com.einyun.app.pms.complain.viewmodel.DetailViewModel;
@@ -61,12 +65,14 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     CustomerComplainModelBean detail;
     ExtensionApplication applyExtApplication;
     ExtensionApplication closeExtApplication;
-    List<CustomerComplainModelBean.InitDataBean.ComplainAppendBean> complainAppendList;
+    List<ComplainAppendBean> complainAppendList;
     List<HandleListModel> handleList;
     private String createTime;
     ComplainDetailCompleteRequest request = new ComplainDetailCompleteRequest();
     private List<DictDataModel> dictComplainNatureList = new ArrayList<>();
     private List<TypeAndLine> lines = new ArrayList<>();
+    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, HandleListModel> adapter;
+    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, ComplainAppendBean> addAdapter;
 
     @Override
     public int getLayoutId() {
@@ -200,10 +206,10 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.VISIBLE);
                 binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.GONE);
                 binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.GONE);
-                binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
                 binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
-                binding.layoutComplainResponse.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
@@ -212,8 +218,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 if (value.equals(ComplainOrderState.CLOSED.getState())) {
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
                 }
-                if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())){
-                    binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 }
             }
             binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
@@ -229,17 +235,126 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     private void handleList() {
         if (handleList != null && handleList.size() != 0) {
             binding.layoutComplainHistory.getRoot().setVisibility(View.VISIBLE);
+            initHistoryList();
         } else {
             binding.layoutComplainHistory.getRoot().setVisibility(View.GONE);
         }
     }
 
+    private void initHistoryList() {
+        //一级列表适配器
+        adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, HandleListModel>(this, com.einyun.app.common.BR.history) {
+            @Override
+            public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, HandleListModel model, int position) {
+                if (position == 0) {
+                    binding.ivFirst.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.ivFirst.setVisibility(View.VISIBLE);
+                }
+                if (position == adapter.getDataList().size() - 1) {
+                    binding.itemHistroyImg.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.itemHistroyImg.setVisibility(View.VISIBLE);
+                }
+                binding.tvContent.setText(model.getHandle_result());
+                binding.tvName.setText(model.getHandle_user());
+                binding.tvTime.setText(TimeUtil.getAllTime(model.getHandle_time()));
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_feedback_history_layout;
+            }
+
+        };
+        binding.layoutComplainHistory.rlLoadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.layoutComplainHistory.rlLoadMore.setVisibility(View.GONE);
+                adapter.setDataList(handleList);
+            }
+        });
+        binding.layoutComplainHistory.listHistory.setLayoutManager(new LinearLayoutManager(this));
+        binding.layoutComplainHistory.listHistory.setAdapter(adapter);
+        List<HandleListModel> handleListThreeData = new ArrayList<>();
+        if (handleList.size() > 3) {//只展示三条
+            binding.layoutComplainHistory.rlLoadMore.setVisibility(View.VISIBLE);
+            for (int i = 0; i < 3; i++) {
+                handleListThreeData.add(handleList.get(i));
+            }
+            adapter.setDataList(handleListThreeData);
+        } else {
+            binding.layoutComplainHistory.rlLoadMore.setVisibility(View.GONE);
+            adapter.setDataList(handleList);
+        }
+        binding.layoutComplainHistory.rlLoadMore.setOnClickListener(view -> {
+            adapter.setDataList(handleList);
+            binding.layoutComplainHistory.rlLoadMore.setVisibility(View.GONE);
+        });
+
+    }
+
+
     private void complainAppendList() {
         if (complainAppendList != null && complainAppendList.size() != 0) {
             binding.layoutAddComplainInfo.getRoot().setVisibility(View.VISIBLE);
+            initAddComplainInfo();
         } else {
             binding.layoutAddComplainInfo.getRoot().setVisibility(View.GONE);
         }
+    }
+
+    private void initAddComplainInfo() {
+        //一级列表适配器
+        addAdapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, ComplainAppendBean>(this, com.einyun.app.common.BR.history) {
+            @Override
+            public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, ComplainAppendBean model, int position) {
+                if (position == 0) {
+                    binding.ivFirst.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.ivFirst.setVisibility(View.VISIBLE);
+                }
+                if (position == addAdapter.getDataList().size() - 1) {
+                    binding.itemHistroyImg.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.itemHistroyImg.setVisibility(View.VISIBLE);
+                }
+                binding.tvContent.setText(model.getF_ac_content());
+                binding.tvName.setText(model.getF_ac_user());
+                binding.tvTime.setText(model.getF_ac_time());
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_feedback_history_layout;
+            }
+
+        };
+        binding.layoutAddComplainInfo.rlLoadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.layoutAddComplainInfo.rlLoadMore.setVisibility(View.GONE);
+                addAdapter.setDataList(complainAppendList);
+            }
+        });
+        binding.layoutAddComplainInfo.listHistory.setLayoutManager(new LinearLayoutManager(this));
+        binding.layoutAddComplainInfo.listHistory.setAdapter(addAdapter);
+        List<ComplainAppendBean> complainAppendListThreeData = new ArrayList<>();
+        if (complainAppendList.size() > 3) {//只展示三条
+            binding.layoutAddComplainInfo.rlLoadMore.setVisibility(View.VISIBLE);
+            for (int i = 0; i < 3; i++) {
+                complainAppendListThreeData.add(complainAppendList.get(i));
+            }
+            addAdapter.setDataList(complainAppendListThreeData);
+        } else {
+            binding.layoutAddComplainInfo.rlLoadMore.setVisibility(View.GONE);
+            addAdapter.setDataList(complainAppendList);
+        }
+        binding.layoutAddComplainInfo.rlLoadMore.setOnClickListener(view -> {
+            addAdapter.setDataList(complainAppendList);
+            binding.layoutAddComplainInfo.rlLoadMore.setVisibility(View.GONE);
+        });
+
     }
 
     private void setImageList(RecyclerView view, String files) {
@@ -314,9 +429,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             }
             request.getBizData().setF_handle_result(reasonString);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-            if (request.getBizData().getC_is_solve() == 0){
-                if (!StringUtil.isNullStr(binding.complainEvaluate.ltExplain.getString())){
-                    ToastUtil.show(this,"请输入说明内容");
+            if (request.getBizData().getC_is_solve() == -1){
+                ToastUtil.show(this, "请先选择处理结果");
+                return;
+            }
+            if (request.getBizData().getC_is_solve() == 0) {
+                if (!StringUtil.isNullStr(binding.complainEvaluate.ltExplain.getString())) {
+                    ToastUtil.show(this, "请输入说明内容");
                     return;
                 }
                 request.getBizData().setF_return_result(binding.complainEvaluate.ltExplain.getString());
@@ -344,6 +463,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         request.getBizData().setSub_complain_append(detail.getSub_complain_append());
         viewModel.complainDetailSave(request).observe(this, aBoolean -> {
             if (aBoolean) {
+                binding.layoutComplainDeadline.ltResponseReason.setText("");
                 fresh();
             }
         });
@@ -430,13 +550,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (checkedId == R.id.rb_solve || checkedId == R.id.tv_solve){
+        if (checkedId == R.id.rb_solve || checkedId == R.id.tv_solve) {
             request.getBizData().setC_is_solve(1);
             binding.complainEvaluate.llExplain.setVisibility(View.GONE);
             binding.complainEvaluate.llExplainSecond.setVisibility(View.GONE);
             binding.complainEvaluate.vExplain.setVisibility(View.GONE);
         }
-        if (checkedId == R.id.rb_un_solve || checkedId == R.id.tv_un_solve){
+        if (checkedId == R.id.rb_un_solve || checkedId == R.id.tv_un_solve) {
             request.getBizData().setC_is_solve(0);
             binding.complainEvaluate.llExplain.setVisibility(View.VISIBLE);
             binding.complainEvaluate.vExplain.setVisibility(View.VISIBLE);

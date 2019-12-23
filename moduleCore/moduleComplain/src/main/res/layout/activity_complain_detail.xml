@@ -65,6 +65,7 @@
                             android:id="@+id/tv_handle_time"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            style="@style/submit_btn"
                             android:gravity="center_vertical"
                             android:textColor="@color/important_red_color" />
                     </LinearLayout>

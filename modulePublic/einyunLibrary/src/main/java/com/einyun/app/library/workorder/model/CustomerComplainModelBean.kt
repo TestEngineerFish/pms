@@ -193,7 +193,7 @@ class CustomerComplainModelBean {
     var F_fclose_applyer: Any? = null
     var c_is_solve: Int = 0
     var initData: InitDataBean? = null
-    var sub_complain_append: List<InitDataBean.ComplainAppendBean>? = null
+    var sub_complain_append: List<ComplainAppendBean>? = null
 
     class InitDataBean {
         /**
@@ -202,18 +202,19 @@ class CustomerComplainModelBean {
 
         var complain_append: ComplainAppendBean? = null
 
-        class ComplainAppendBean {
-            /**
-             * F_ac_time :
-             * F_ac_content :
-             * F_ac_user :
-             * F_ac_user_id :
-             */
 
-            var F_ac_time: String? = null
-            var F_ac_content: String? = null
-            var F_ac_user: String? = null
-            var F_ac_user_id: String? = null
-        }
     }
+}
+class ComplainAppendBean {
+    /**
+     * F_ac_time :
+     * F_ac_content :
+     * F_ac_user :
+     * F_ac_user_id :
+     */
+
+    var F_ac_time: String? = null
+    var F_ac_content: String? = null
+    var F_ac_user: String? = null
+    var F_ac_user_id: String? = null
 }
