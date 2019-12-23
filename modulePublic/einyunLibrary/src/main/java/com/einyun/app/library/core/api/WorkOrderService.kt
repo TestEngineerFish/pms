@@ -116,7 +116,8 @@ interface WorkOrderService : EinyunService {
     fun getClientOrderDetail(
         instId: String,taskId:String, callBack: CallBack<RepairsDetailModel>
     ): LiveData<RepairsDetailModel>
-
+    //客户报修-筛选
+    fun getAreaType(callBack: CallBack<AreaModel>):LiveData<AreaModel>
     fun complainDetailComplete(request:ComplainDetailCompleteRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun complainDetailSave(request:ComplainDetailCompleteRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
 
