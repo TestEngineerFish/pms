@@ -38,7 +38,7 @@ public class EvaluationRequest {
          */
 
         private int c_is_solve;
-        private String handle_cont;
+        private String return_result;
 
         public int getC_is_solve() {
             return c_is_solve;
@@ -48,12 +48,13 @@ public class EvaluationRequest {
             this.c_is_solve = c_is_solve;
         }
 
-        public String getHandle_cont() {
-            return handle_cont;
+
+        public String getReturn_result() {
+            return return_result;
         }
 
-        public void setHandle_cont(String handle_cont) {
-            this.handle_cont = handle_cont;
+        public void setReturn_result(String return_result) {
+            this.return_result = return_result;
         }
     }
 

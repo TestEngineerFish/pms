@@ -30,4 +30,8 @@ public class URLS {
     public static final String URL_GET_FEEDBACK_INFO ="/bpm-runtime/runtime/task/v1/getTaskCommu?taskId=";
     //提交反馈
     public static final String URL_GET_FEEDBACK_SUBMIT ="/bpm-runtime/runtime/instance/v1/doNext";
+    //获取工单详情
+    public static final String URL_GET_ORDER_DETAIL_INFO ="/workOrder/workOrder/task/v1/getOrderDetail?procInstId=";
+    //是否可以申请强制闭单
+    public static final String URL_GET_IS_CAN_APPLY_CLOSE_ORDER="/workOrder/workOrder/workOrderInnerAudit/v1/checkAudit?applyBizId=";
 }

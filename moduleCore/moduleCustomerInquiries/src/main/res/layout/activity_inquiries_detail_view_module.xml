@@ -48,7 +48,6 @@
          <!--         工单信息-->
          <LinearLayout
              android:visibility="visible"
-             android:layout_marginTop="@dimen/px_20"
              android:background="@drawable/shape_white_bg"
              android:layout_marginLeft="@dimen/px_30"
              android:layout_marginRight="@dimen/px_30"
@@ -137,6 +136,7 @@
          </LinearLayout>
          <!--         问询信息-->
          <LinearLayout
+             android:layout_marginTop="@dimen/px_20"
              android:background="@drawable/shape_white_bg"
              android:layout_marginLeft="@dimen/px_30"
              android:layout_marginRight="@dimen/px_30"
@@ -296,8 +296,151 @@
                  android:dividerHeight="0dp"
                  android:divider="@null"
                  android:layout_width="match_parent"
-                 android:layout_marginBottom="20dp"
-                 android:layout_height="match_parent"/>
+                 android:layout_height="wrap_content"/>
+
+<!--             <include layout="@layout/layout_history_load_more" android:id="@+id/rl_load_more"/>-->
+             <RelativeLayout
+                 android:visibility="gone"
+                 android:id="@+id/rl_load_more"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/px_100">
+                 <View
+                     android:layout_marginLeft="@dimen/px_20"
+                     android:layout_marginRight="@dimen/px_20"
+                     android:background="@color/thin_divider_color"
+                     android:layout_width="match_parent"
+                     android:layout_height="1dp"/>
+                 <TextView
+                     android:id="@+id/tv_more"
+                     android:layout_centerInParent="true"
+                     android:text="@string/tv_load_more"
+                     android:textColor="@color/blueTextColor"
+                     android:gravity="center"
+                     android:textSize="@dimen/font_size14"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"/>
+                 <TextView
+                     android:background="@drawable/iv_arrow_blue_down"
+                     android:layout_centerVertical="true"
+                     android:layout_toRightOf="@id/tv_more"
+                     android:textColor="@color/blueTextColor"
+                     android:layout_width="@dimen/px_26"
+                     android:layout_height="@dimen/px_16"/>
+             </RelativeLayout>
+         </LinearLayout>
+<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
+        <!--        强制闭单信息 -->
+         <LinearLayout
+             android:visibility="gone"
+             android:id="@+id/forceCloseInfo"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="@dimen/px_30"
+                 android:background="@drawable/bg_shadow"
+                 android:orientation="vertical">
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_90"
+                     android:background="@color/white">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:layout_alignParentLeft="true"
+                         android:layout_marginLeft="@dimen/px_20"
+                         android:gravity="center_vertical"
+                         android:text="申请闭单信息"
+                         android:textSize="@dimen/px_32" />
+
+                 </RelativeLayout>
+
+                 <ImageView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:src="@drawable/pd_view" />
+
+                 <LinearLayout
+                     style="@style/work_order_detail_ln"
+                     android:background="@color/white">
+
+                     <TextView
+                         style="@style/work_order_detail_txt_left"
+                         android:text="审批结果" />
+
+                     <TextView
+                         android:id="@+id/tv_approval_result"
+                         style="@style/work_order_detail_txt_right" />
+                 </LinearLayout>
+
+                 <LinearLayout style="@style/work_order_detail_ln">
+
+                     <TextView
+                         style="@style/work_order_detail_txt_left"
+                         android:text="审批时间" />
+
+                     <TextView
+                         android:id="@+id/tv_approval_time"
+                         style="@style/work_order_detail_txt_right"
+                         />
+                 </LinearLayout>
+
+
+                 <LinearLayout style="@style/work_order_detail_ln">
+
+                     <TextView
+                         style="@style/work_order_detail_txt_left"
+                         android:text="申请人" />
+
+                     <TextView style="@style/work_order_detail_txt_right"
+                         android:id="@+id/tv_approvaler"
+                         />
+                 </LinearLayout>
+
+                 <LinearLayout style="@style/work_order_detail_ln">
+
+                     <TextView
+                         style="@style/work_order_detail_txt_left"
+                         android:text="申请时间" />
+
+                     <TextView style="@style/work_order_detail_txt_right"
+                         android:id="@+id/tv_apply_time"
+                         />
+                 </LinearLayout>
+
+                 <LinearLayout style="@style/work_order_detail_ln">
+
+                     <TextView
+                         style="@style/work_order_detail_txt_left"
+                         android:text="申请原因" />
+
+                     <TextView style="@style/work_order_detail_txt_right"
+                         android:id="@+id/tv_approval_reason"
+                         />
+                 </LinearLayout>
+
+                 <LinearLayout style="@style/work_order_detail_ln">
+
+                     <TextView
+                         style="@style/work_order_detail_txt_left"
+                         android:text="申请照片" />
+                 </LinearLayout>
+                 <LinearLayout style="@style/work_order_detail_ln">
+                     <androidx.recyclerview.widget.RecyclerView
+                         android:id="@+id/list_apply_pic"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginBottom="@dimen/px_30"
+                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                         />
+                 </LinearLayout>
+             </LinearLayout>
          </LinearLayout>
         <!--         评价-->
          <LinearLayout
@@ -417,6 +560,95 @@
                      android:layout_height="@dimen/px_90"
                      style="@style/submit_btn"/>
          </LinearLayout>
+         <!--         评价闭单状态-->
+         <LinearLayout
+             android:id="@+id/ll_evaluation_close"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="@dimen/px_30"
+             android:background="@drawable/shape_white_bg"
+             android:orientation="vertical"
+             android:visibility="gone">
+
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/px_90">
+
+                 <TextView
+                     style="@style/tv_create_order_name"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:layout_alignParentLeft="true"
+                     android:layout_marginLeft="@dimen/px_20"
+                     android:gravity="center_vertical"
+                     android:text="@string/tv_evaluation"
+                     android:textColor="@color/blackTextColor"
+                     android:textSize="@dimen/px_32" />
+
+             </RelativeLayout>
+
+             <ImageView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dp"
+                 android:layout_marginRight="10dp"
+                 android:src="@drawable/pd_view" />
+             <LinearLayout
+                 android:background="@drawable/shape_white_bg"
+                 style="@style/ll_create_order">
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/tv_evaluation_time"
+                     android:textColor="@color/blackTextColor"
+                     android:textSize="@dimen/font_size14" />
+                 <TextView
+                     android:id="@+id/tv_evaluation_time"
+                     android:layout_marginLeft="@dimen/px_75"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textColor="@color/blackTextColor"
+                     android:textSize="@dimen/font_size14" />
+
+             </LinearLayout>
+
+             <LinearLayout
+                 android:background="@drawable/shape_white_bg"
+                 style="@style/ll_create_order">
+
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/tv_deal_result"
+                     android:textColor="@color/blackTextColor"
+                     android:textSize="@dimen/font_size14" />
+                 <RadioGroup
+                     android:gravity="center_vertical"
+                     android:orientation="horizontal"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+                     <RadioButton
+                         android:checked="true"
+                         android:layout_width="@dimen/px_30"
+                         android:layout_height="@dimen/px_30"
+                         android:padding="@dimen/px_5"
+                         android:layout_marginLeft="@dimen/px_75"
+                         android:button="@null"
+                         android:background="@drawable/select_inquiries_solve"
+                         />
+                     <TextView
+                         android:textColor="@color/blackTextColor"
+                         android:text="@string/tv_had_solve"
+                         android:padding="@dimen/px_5"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+
+                 </RadioGroup>
+
+             </LinearLayout>
+
+         </LinearLayout>
          <!--         回复内容-->
          <LinearLayout
              android:visibility="visible"
@@ -430,6 +662,7 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
              <LinearLayout
+                 android:background="@drawable/shape_white_bg"
                  android:layout_height="35dp"
                  style="@style/ll_create_order">
 
