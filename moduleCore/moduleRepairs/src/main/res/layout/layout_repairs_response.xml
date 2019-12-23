@@ -31,6 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/px_20"
                 android:text="响应"
                 android:textColor="@color/txt_black_order"
                 android:textStyle="bold"
@@ -61,11 +62,14 @@
             android:paddingLeft="@dimen/px_0"
             >
 
-            <TextView style="@style/tv_create_order_red_star" />
+            <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"/>
 
             <TextView
                 style="@style/tv_create_order_name"
                 android:text="工单归属"
+                android:layout_weight="0"
+                android:textSize="@dimen/font_size14"
                 android:textStyle="normal"
                 android:textColor="@color/blackTextColor"/>
             <RadioGroup
@@ -73,30 +77,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/px_90"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rb_normal"
-                    android:layout_width="@dimen/px_120"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/px_50"
-                    android:background="@drawable/select_radio_button_normal"
+                    android:background="@drawable/radio_group_order_own"
                     android:button="@null"
                     android:gravity="center"
                     android:tag="1"
+                    android:checked="true"
                     android:text="工程维保"
                     android:textColor="@drawable/select_radio_button_text"
+                    android:paddingLeft="@dimen/px_20"
+                    android:paddingRight="@dimen/px_20"
                     android:textSize="@dimen/font_size13" />
 
                 <RadioButton
                     android:id="@+id/rb_general"
-                    android:layout_width="@dimen/px_120"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/px_50"
                     android:layout_marginLeft="@dimen/px_20"
-                    android:background="@drawable/select_radio_button_general"
+                    android:background="@drawable/radio_group_order_own"
                     android:button="@null"
                     android:gravity="center"
                     android:tag="2"
                     android:text="地产维保"
+                    android:paddingLeft="@dimen/px_20"
+                    android:paddingRight="@dimen/px_20"
                     android:textColor="@drawable/select_radio_button_text"
                     android:textSize="@dimen/font_size13" />
             </RadioGroup>
@@ -107,11 +117,13 @@
             android:paddingLeft="@dimen/px_0"
             >
 
-            <TextView style="@style/tv_create_order_red_star" />
+            <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"/>
 
             <TextView
                 style="@style/tv_create_order_name"
                 android:text="首次沟通结果"
+                android:textSize="@dimen/font_size14"
                 android:textStyle="normal"
                 android:textColor="@color/blackTextColor"/>
         </LinearLayout>
@@ -120,6 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px_30"
+            android:layout_marginLeft="@dimen/px_20"
             app:hintText="请输入申请原因"
             app:maxNumber="300" />
     </LinearLayout>

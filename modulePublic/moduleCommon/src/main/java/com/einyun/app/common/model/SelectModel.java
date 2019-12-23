@@ -23,6 +23,12 @@ public class SelectModel implements Cloneable{
     private String text;
     private List<?> children;
     private String isParent;
+    private String categoryId;
+    private String dataName;
+    private String dataKey;
+    private String enabledFlag;
+    private String expand;
+    private String sn;
 //    private SelectModel parent;
     private List<SelectModel> selectModelList=new ArrayList<>();
     public SelectModel() {

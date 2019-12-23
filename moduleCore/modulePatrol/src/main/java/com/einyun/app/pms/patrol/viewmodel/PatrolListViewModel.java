@@ -129,4 +129,13 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
         return pageListClosed;
     }
 
+    /**
+     * 搜索
+     * @param key
+     * @return
+     */
+    public LiveData<PagedList<Patrol>> search(String key){
+       return  new LivePagedListBuilder(repo.search(requestDone.getUserId(), listType,key), config).build();
+    }
+
 }

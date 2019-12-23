@@ -3,12 +3,13 @@
     <data>
     <variable
         name="material"
-        type="com.einyun.app.pms.repairs.model.MaterialModel" />
+        type="com.einyun.app.library.workorder.model.RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean" />
     </data>
 
     <com.einyun.app.common.ui.widget.SwipeItemLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp">
+        android:layout_height="@dimen/px_90"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/main"
@@ -26,7 +27,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="螺丝刀"
+                    android:text="@{material.name}"
                     android:textColor="@color/normal_main_text_icon_color" />
 
                 <TextView
@@ -34,7 +35,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="10。00"
+                    android:text="@{material.price}"
                     android:textColor="@color/normal_main_text_icon_color" />
 
                 <TextView
@@ -42,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="10.00"
+                    android:text="@{material.quantity}"
                     android:textColor="@color/normal_main_text_icon_color" />
 
                 <TextView
@@ -50,7 +51,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="10.00"
+                    android:text="@{material.total_price}"
                     android:textColor="@color/normal_main_text_icon_color" />
             </LinearLayout>
 
@@ -61,12 +62,14 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/stick"
-                android:layout_width="100dp"
+                android:id="@+id/left_to_delete"
+                android:layout_width="@dimen/px_70"
                 android:layout_height="match_parent"
-                android:text="置顶"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:text="删除"
+                android:background="@color/white"
+                android:textColor="@color/red_delete"
+                android:gravity="center"
+                android:textSize="@dimen/font_size13" />
 
         </LinearLayout>
 

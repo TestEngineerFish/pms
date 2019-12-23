@@ -1,5 +1,6 @@
 package com.einyun.app.pms.repairs.viewmodel;
 
+import android.hardware.Camera;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -12,10 +13,14 @@ import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.WorkOrderService;
+import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.net.request.WorkOrderHanlerRequest;
+import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.repairs.repository.DataSourceFactory;
+
+import java.util.List;
 
 /**
  *RepairsViewModel
@@ -72,6 +77,27 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
             public void onFaild(Throwable throwable) {
                 hideLoading();
                 liveData.postValue(false);
+            }
+        });
+        return liveData;
+    }
+
+    /**
+     * 获取筛选数据
+     * */
+    public LiveData<AreaModel> getAreaType(){
+        MutableLiveData<AreaModel> liveData = new MutableLiveData<>();
+        showLoading();
+        workOrderService.getAreaType( new CallBack<AreaModel>() {
+            @Override
+            public void call(AreaModel data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
             }
         });
         return liveData;

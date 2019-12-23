@@ -126,13 +126,13 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                     binding.btnAgree.setOnClickListener(v -> {
                                         onAgree(binding);
                                         model.setCheckResult(1);
-                                        validateForm(false);
+//                                        validateForm(false);
                                     });
 
                                     binding.btnReject.setOnClickListener(v -> {
                                         onReject(binding);
                                         model.setCheckResult(0);
-                                        validateForm(false);
+//                                        validateForm(false);
                                     });
 
                                 } else {
@@ -162,7 +162,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                         }else{
                                             model.setCheckResult(-1);
                                         }
-                                        validateForm(false);
+//                                        validateForm(false);
                                     }
                                 });
 
@@ -281,7 +281,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
      * 表单验证
      */
     private boolean validateForm(boolean showToast) {
-        binding.btnSubmmit.setEnabled(false);
+//        binding.btnSubmmit.setEnabled(false);
         if (TextUtils.isEmpty(binding.tvCheckDivide.getText())) {
             if(showToast){
                 ToastUtil.show(getApplicationContext(), R.string.alert_choose_massif);
@@ -297,7 +297,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         if (!validateProjectItems(showToast)) {
             return false;
         }
-        binding.btnSubmmit.setEnabled(true);
+//        binding.btnSubmmit.setEnabled(true);
 //        if(photoSelectAdapter.getSelectedPhotos()==null||photoSelectAdapter.getSelectedPhotos().size()<=0){
 //            ToastUtil.show(R.string.alert_choose_pic);
 //            return false;

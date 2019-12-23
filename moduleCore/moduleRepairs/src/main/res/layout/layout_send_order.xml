@@ -33,6 +33,7 @@
                 android:gravity="center_vertical"
                 android:text="派单"
                 android:textColor="@color/txt_black_order"
+                android:layout_marginLeft="@dimen/px_20"
                 android:textStyle="bold"
                 android:textSize="@dimen/font_size16" />
 
@@ -61,7 +62,8 @@
             android:paddingLeft="@dimen/px_0"
           >
 
-            <TextView style="@style/tv_create_order_red_star" />
+            <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"/>
 
             <TextView
                 style="@style/tv_create_order_name"
@@ -80,7 +82,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px_0"
+                android:layout_marginLeft="@dimen/px_20"
                 android:textSize="@dimen/font_size14"
                 android:textColor="@color/blackTextColor"
                 android:layout_marginBottom="@dimen/px_20"
@@ -90,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px_30"
-                app:hintText="请输入申请原因"
+                android:layout_marginLeft="@dimen/px_20"
+                app:hintText="请输入备注内容"
                 app:maxNumber="300" />
     </LinearLayout>
 </layout>

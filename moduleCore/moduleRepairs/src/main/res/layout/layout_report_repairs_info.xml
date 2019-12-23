@@ -32,6 +32,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/px_20"
                 android:gravity="center_vertical"
+                android:textColor="@color/blackTextColor"
+                android:textStyle="bold"
                 android:text="报修信息"
                 android:textSize="@dimen/font_size16" />
 
@@ -58,12 +60,11 @@
             android:background="@color/white">
 
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
+                style="@style/repair_order_detail_left_txt"
                 android:text="报修时间" />
 
             <TextView
-                style="@style/work_order_detail_txt_right"
+                style="@style/repair_order_detail_txt_right"
                 android:text="@{repairs.data.customer_repair_model.bx_time}"
                 />
         </LinearLayout>
@@ -71,12 +72,11 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
+                style="@style/repair_order_detail_left_txt"
                 android:text="记录人" />
 
             <TextView
-                style="@style/work_order_detail_txt_right"
+                style="@style/repair_order_detail_txt_right"
                 android:text="@{repairs.data.customer_repair_model.bx_recorder}"
                 />
         </LinearLayout>
@@ -84,70 +84,96 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
+                style="@style/repair_order_detail_left_txt"
                 android:text="报修方式" />
 
             <TextView
-                style="@style/work_order_detail_txt_right"
+                style="@style/repair_order_detail_txt_right"
                 android:text="@{repairs.data.customer_repair_model.bx_way}"
                  />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
             <TextView style="@style/tv_create_order_red_star"
-                android:layout_marginTop="@dimen/px_30"/>
+                android:id="@+id/repair_report_area_red"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                />
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginLeft="@dimen/px_0"
+                style="@style/repair_order_detail_left_txt"
                 android:text="报修区域" />
             <TextView
-                style="@style/work_order_detail_txt_right"
+                android:id="@+id/repair_report_area"
+                style="@style/repair_order_detail_txt_right"
                 android:layout_width="wrap_content"
+
+                android:layout_weight="0"
                 android:text="@{repairs.data.customer_repair_model.bx_area}"/>
                 <ImageView
-                    android:layout_width="@dimen/px_20"
-                    android:layout_height="@dimen/px_22"
+                    android:id="@+id/repari_report_area_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
                     android:src="@drawable/edit"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:visibility="gone"
                     android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
             <TextView style="@style/tv_create_order_red_star"
-                android:layout_marginTop="@dimen/px_30"/>
+                android:id="@+id/repair_report_kind_red"
+                android:layout_marginLeft="@dimen/px_20"
+                android:visibility="gone"
+              />
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginLeft="@dimen/px_0"
+                style="@style/repair_order_detail_left_txt"
                 android:text="报修类别" />
             <TextView
-                style="@style/work_order_detail_txt_right"
+                android:id="@+id/repair_type"
+                style="@style/repair_order_detail_txt_right"
                 android:layout_width="wrap_content"
+                android:layout_weight="0"
                 android:text="@{repairs.data.customer_repair_model.bx_cate_lv1}"
                  />
             <ImageView
-                android:layout_width="@dimen/px_20"
-                android:layout_height="@dimen/px_22"
+                android:id="@+id/repair_report_kind_change"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_30"
                 android:src="@drawable/edit"
-                android:layout_gravity="center_vertical"
-                />
+                android:layout_marginLeft="@dimen/px_20"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
 
-            <TextView style="@style/tv_create_order_red_star"
-                android:layout_marginTop="@dimen/px_30"/>
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginLeft="@dimen/px_0"
+                android:id="@+id/repair_report_nature_red"
+                style="@style/tv_create_order_red_star"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/px_20"
+             />
+            <TextView
+                style="@style/repair_order_detail_left_txt"
                 android:text="性质评估" />
-
+            <TextView
+                android:id="@+id/repair_asses_txt"
+                style="@style/repair_order_detail_txt_right"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/px_0"
+                android:text="@{repairs.data.customer_repair_model.bx_property_ass}"
+                android:visibility="gone"
+                />
             <RadioGroup
                 android:id="@+id/rgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px_30"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone">
 
                 <RadioButton
                     android:id="@+id/rb_normal"
@@ -191,29 +217,31 @@
 
         <LinearLayout style="@style/work_order_detail_ln">
             <TextView
-                style="@style/work_order_detail_left_txt"
-                android:layout_marginLeft="@dimen/px_0"
+                style="@style/repair_order_detail_left_txt"
                 android:text="预约上门时间" />
             <TextView
-                style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_appoint_time_period}"
+                android:id="@+id/repair_appoint_time_period"
+                style="@style/repair_order_detail_txt_right"
+                android:layout_weight="0"
+                android:text="@{repairs.data.customer_repair_model.bx_appoint_time+@string/text_padding+repairs.data.customer_repair_model.bx_appoint_time_period}"
                  />
             <ImageView
-                android:layout_width="@dimen/px_20"
-                android:layout_height="@dimen/px_22"
+                android:id="@+id/repair_report_appoint_change"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_30"
                 android:src="@drawable/edit"
-                android:layout_gravity="center_vertical"
-                />
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_left_txt"
+                style="@style/repair_order_detail_left_txt"
                 android:text="报修内容" />
 
             <TextView
-                style="@style/work_order_detail_txt_right"
+                style="@style/repair_order_detail_txt_right"
                 android:text="@{repairs.data.customer_repair_model.bx_content}"
                 />
         </LinearLayout>
