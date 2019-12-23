@@ -1725,7 +1725,7 @@ public class OrderDetailInfoModule {
             private Object invalidReasonCategory;
 
             public String getApplyDate() {
-                return applyDate;
+                return applyDate==null?"":applyDate;
             }
 
             public void setApplyDate(String applyDate) {
@@ -1733,7 +1733,7 @@ public class OrderDetailInfoModule {
             }
 
             public String getApplyUser() {
-                return applyUser;
+                return applyUser==null?"":applyUser;
             }
 
             public void setApplyUser(String applyUser) {
@@ -1749,7 +1749,7 @@ public class OrderDetailInfoModule {
             }
 
             public Object getAuditDate() {
-                return auditDate;
+                return auditDate==null?"":auditDate;
             }
 
             public void setAuditDate(Object auditDate) {
@@ -1765,7 +1765,7 @@ public class OrderDetailInfoModule {
             }
 
             public String getStatusStr() {
-                return statusStr;
+                return statusStr==null?"":statusStr;
             }
 
             public void setStatusStr(String statusStr) {
@@ -1773,7 +1773,7 @@ public class OrderDetailInfoModule {
             }
 
             public String getApplyReason() {
-                return applyReason;
+                return applyReason==null?"":applyReason;
             }
 
             public void setApplyReason(String applyReason) {

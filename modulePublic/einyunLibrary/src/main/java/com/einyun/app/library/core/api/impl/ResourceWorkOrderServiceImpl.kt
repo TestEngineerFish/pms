@@ -117,7 +117,12 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
     ): LiveData<ApplyCloseResponse> {
         return proxy.applyClose(request, callBack)
     }
-
+    override fun applyCustomerClose(
+        request: ApplyCusCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        return proxy.applyCustomerClose(request, callBack)
+    }
 
     override fun exten(
         request: ExtenDetialRequest,

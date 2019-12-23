@@ -68,6 +68,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     String fragment;
     private InquiriesItemModule inquiriesItemModule;
     private PhotoListAdapter photoListInfoAdapter;
+    private PhotoListAdapter forseClosephotoListInfoAdapter;
     private int evaluation;
     private AlertDialog alertDialog;
     private OrderDetailInfoModule orderDetailInfoModule;
@@ -132,12 +133,19 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         super.initData();
         binding.setCallBack(this);
         photoListInfoAdapter = new PhotoListAdapter(this);
+        forseClosephotoListInfoAdapter = new PhotoListAdapter(this);
         binding.listPic.setLayoutManager(new LinearLayoutManager(
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));
         binding.listPic.addItemDecoration(new SpacesItemDecoration(18));
         binding.listPic.setAdapter(photoListInfoAdapter);
+        binding.listApplyPic.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false));
+        binding.listApplyPic.addItemDecoration(new SpacesItemDecoration(18));
+        binding.listApplyPic.setAdapter(forseClosephotoListInfoAdapter);
         /**
          * 获取详情信息
          */
@@ -158,8 +166,8 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 }
 
             initHistoryList(orderDetailInfoModule);
+            isCanApplyClose(orderDetailInfoModule);
         });
-        isCanApplyClose();
 
     }
 
@@ -248,8 +256,9 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
 
     /**
      * 是否可以申请强制闭单
-     * */
-    public  void isCanApplyClose() {
+     *
+     * @param orderDetailInfoModule*/
+    public  void isCanApplyClose(OrderDetailInfoModule orderDetailInfoModule) {
         viewModel.isCanApply(inquiriesItemModule.ID_,"FORCE_CLOSE_ENQUIRY").observe(this,module->{
 
             isApplyForseClose = module;
@@ -261,6 +270,17 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             }else {//
 //                binding.llForseClose.setVisibility(View.GONE);
                 binding.forceCloseInfo.setVisibility(View.VISIBLE);
+                OrderDetailInfoModule.ForceCloseInfoBean forceCloseInfo = orderDetailInfoModule.getForceCloseInfo();
+                if (forceCloseInfo!=null) {
+                    binding.tvApprovalResult.setText(forceCloseInfo.getStatusStr());
+                    binding.tvApprovalTime.setText(forceCloseInfo.getAuditDate().toString());
+                    binding.tvApplyer.setText(forceCloseInfo.getApplyUser());
+                    binding.tvApplyTime.setText(forceCloseInfo.getApplyDate());
+                    binding.tvApplyReason.setText(forceCloseInfo.getApplyReason());
+                }
+                PicUrlModelConvert convert = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = convert.stringToSomeObjectList(orderDetailInfoModule.getForceCloseInfo().getAttachment());
+                forseClosephotoListInfoAdapter.updateList(modelList);
             }
 
         });
@@ -309,6 +329,14 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 finish();
             }
         });
+    }
+    /**
+     * 申请强制闭单
+     */
+    public void onForseCloseClick(){
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString("key","key")
+                .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.taskId)
+                .navigation();
     }
     /**
      * 处理保存

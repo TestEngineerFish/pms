@@ -118,5 +118,7 @@ class URLs {
         //工作预览-巡查工单
         const val URL_WORK_PREVIEW_PATRO_ORDER =
             "resource/api/resource/v1/inspectionWorkOrderPreview/list"
+        //客户问询申请闭单
+        const val URL_CLOSE_CUSTOMER_ORDER = "/workOrder/workOrder/{workOrder}/v1/applyFclose"
     }
 }

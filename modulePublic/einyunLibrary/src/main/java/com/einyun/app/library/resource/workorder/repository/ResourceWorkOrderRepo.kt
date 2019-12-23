@@ -615,5 +615,19 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             })
         return liveData
     }
+    override fun applyCustomerClose(
+        request: ApplyCusCloseRequest,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse> {
+        val liveData = MutableLiveData<ApplyCloseResponse>()
+        serviceApi?.closeCustomerOrder(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                callBack.call(response)
+                liveData.postValue(response)
+            }, { error ->
+                callBack.onFaild(error)
+            })
+        return liveData
+    }
 
 }

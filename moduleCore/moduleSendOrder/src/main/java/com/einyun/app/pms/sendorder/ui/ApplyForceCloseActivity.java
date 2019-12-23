@@ -26,6 +26,7 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
+import com.einyun.app.library.resource.workorder.net.request.ApplyCusCloseRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivityApplyForceCloseBinding;
@@ -52,6 +53,8 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
     String taskId;
     @Autowired(name = RouteKey.KEY_CLOSE_ID)
     String keyId;
+    @Autowired(name = "key")
+    String key;
     @Override
     protected ApplyCloseViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(ApplyCloseViewModel.class);
@@ -156,9 +159,20 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                if (StringUtil.isNullStr(keyId)) {
-                    if (RouteKey.KEY_PLAN.equals(keyId)){
-                        viewModel.applyClosePlan(request, data).observe(this, model -> {
+                if (!StringUtil.isNullStr(key)) {
+                    if (StringUtil.isNullStr(keyId)) {
+                        if (RouteKey.KEY_PLAN.equals(keyId)) {
+                            viewModel.applyClosePlan(request, data).observe(this, model -> {
+                                if (model.getCode().equals("0")) {
+                                    ToastUtil.show(this, R.string.apply_close_success);
+                                    this.finish();
+                                } else {
+                                    ToastUtil.show(this, model.getMsg());
+                                }
+                            });
+                        }
+                    } else {
+                        viewModel.applyClose(request, data).observe(this, model -> {
                             if (model.getCode().equals("0")) {
                                 ToastUtil.show(this, R.string.apply_close_success);
                                 this.finish();
@@ -167,8 +181,11 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                             }
                         });
                     }
-                } else {
-                    viewModel.applyClose(request, data).observe(this, model -> {
+                }else {
+                    ApplyCusCloseRequest applyCusCloseRequest = new ApplyCusCloseRequest(new ApplyCusCloseRequest.BizDataBean(),new ApplyCusCloseRequest.DoNextParamBean());
+                    applyCusCloseRequest.getDoNextParam().setTaskId(taskId);
+                    applyCusCloseRequest.getBizData().setFclose_apply_reason(binding.applyCloseReason.getString());
+                    viewModel.applyCustomerClose(applyCusCloseRequest, data).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(this, R.string.apply_close_success);
                             this.finish();
@@ -177,7 +194,6 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                         }
                     });
                 }
-
             }
         });
     }
