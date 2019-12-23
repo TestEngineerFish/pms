@@ -16,4 +16,9 @@ public class LiveDataBusUtils {
     public static void search(String tag) {
         LiveEventBus.get(LiveDataBusKey.POST_PLAN_SEARCH).post(tag);
     }
+
+    public static void postPatrolClosedRefresh(){
+        LiveEventBus.get(LiveDataBusKey.POST_PATROL_CLOSED_REFRESH)
+                .post(true);
+    }
 }

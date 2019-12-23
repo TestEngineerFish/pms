@@ -15,6 +15,9 @@ public class ViewModelFactory extends BaseViewModelFactory {
         if (modelClass.isAssignableFrom(PatrolViewModel.class)) {
             return (T) new PatrolViewModel();
         }
+        if(modelClass.isAssignableFrom(PatrolSignInViewModel.class)){
+            return (T) new PatrolSignInViewModel();
+        }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

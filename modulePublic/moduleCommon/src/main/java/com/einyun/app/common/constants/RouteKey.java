@@ -45,6 +45,9 @@ public class RouteKey {
     public static final String KEY_PROJECT_ID="projectId";
     public static final String KEY_LATER_ID="KEY_LATER_ID";
     public static final String KEY_CLOSE_ID="KEY_CLOSE_ID";
+    public static final String KEY_PATROL_TIME_WORKNODE ="workNode";
+    public static final String KEY_QR_ID="qrId";
+
     public static final String KEY_PLAN = "KEY_PLAN";
     public static final String KEY_SEND_ORDER = "KEY_SEND_ORDER";
     //选择处理人

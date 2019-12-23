@@ -1,68 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/activity_bg_color"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <include
-        android:id="@id/head_bar"
-        layout="@layout/include_layout_activity_head" />
-    <RelativeLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="closeExtApplication"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+        <variable
+            name="applyExtApplication"
+            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+        <variable
+            name="complain"
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.complain.ui.ComplainDetailActivity" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <include
+            android:id="@id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            >
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_80"
-                    android:orientation="horizontal"
-                    >
-                    <TextView
-                        android:id="@+id/tv_clys"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@color/grayBgColor"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="5dp"
-                        android:text="处理用时:"
-                        android:textColor="@color/important_red_color" />
-                    <TextView
-                        android:id="@+id/tv_handle_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/important_red_color"
-                        />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_80"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_clys"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/grayBgColor"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="5dp"
+                            android:text="处理用时:"
+                            android:textColor="@color/important_red_color" />
+
+                        <TextView
+                            android:id="@+id/tv_handle_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/important_red_color" />
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/layout_complain_order_info"
+                        layout="@layout/layout_complain_order_info"
+                        app:complain="@{complain}"/>
+
+                    <include
+                        android:id="@+id/layout_report_complain_info"
+                        layout="@layout/layout_report_complain_info"
+                        app:complain="@{complain}"/>
+
+                    <!-- 追加投诉信息 -->
+                    <include
+                        android:id="@+id/layout_add_complain_info"
+                        layout="@layout/layout_add_complain_info"
+                        android:visibility="gone"/>
+                    <!-- 响应信息 -->
+                    <include
+                        android:id="@+id/layout_response_info"
+                        layout="@layout/layout_response_info" />
+                    <!-- 投诉历史 -->
+                    <include
+                        android:id="@+id/layout_complain_history"
+                        layout="@layout/layout_complain_history" />
+                    <!-- 评价详情 -->
+                    <include
+                        android:id="@+id/complain_evaluate"
+                        layout="@layout/layout_complain_evaluate"
+                        android:visibility="gone" />
+                    <!-- 延期 -->
+                    <include
+                        android:id="@+id/layout_apply_late_info"
+                        layout="@layout/layout_apply_late_info"
+                        android:visibility="gone" />
+                    <!-- 闭单 -->
+                    <include
+                        android:id="@+id/layout_apply_close_info"
+                        layout="@layout/layout_apply_close_info"
+                        android:visibility="gone" />
+                    <!-- 首次沟通 -->
+                    <include
+                        android:id="@+id/layout_complain_response"
+                        layout="@layout/layout_complain_response"
+                        android:visibility="gone" />
+                    <!-- 处理 -->
+                    <include
+                        android:id="@+id/layout_complain_deadline"
+                        layout="@layout/layout_complain_deadline"
+                        android:visibility="gone" />
+                    <!-- 评价 -->
+                    <include
+                        android:id="@+id/layout_already_complain_evaluate"
+                        layout="@layout/layout_already_complain_evaluate"
+                        android:visibility="gone" />
+
+                    <!-- 按钮 -->
+                    <include
+                        android:id="@+id/layout_apply_close_btn"
+                        layout="@layout/layout_apply_close_btn"
+                        android:visibility="gone" />
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_140" />
                 </LinearLayout>
-                <include layout="@layout/layout_complain_order_info" android:id="@+id/order_info"/>
-                <include layout="@layout/layout_report_complain_info" android:id="@+id/repairs_info"/>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_140"/>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
 
-        <Button
-            android:id="@+id/send_order_detail_submit"
-            style="@style/submit_btn"
-            android:layout_alignParentBottom="true"
-            android:text="@string/text_get_order"
-            android:visibility="gone"
-            />
+            <Button
+                android:id="@+id/submit"
+                style="@style/submit_btn"
+                android:layout_alignParentBottom="true"
+                android:text="@string/text_submit" />
 
-    </RelativeLayout>
-</LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

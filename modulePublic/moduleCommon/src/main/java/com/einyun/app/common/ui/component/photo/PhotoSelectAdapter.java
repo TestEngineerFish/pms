@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.einyun.app.common.R;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +38,11 @@ import java.util.List;
 public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private Activity activity;
+    private WeakReference<Activity> weakReference;
     public static int maxSize=4;
 
     public void setActivity(Activity activity) {
-        this.activity = activity;
+        weakReference=new WeakReference<>(activity);
     }
 
     public void setItemChangeListener(ItemChangeListener itemChangeListener) {
@@ -66,7 +67,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
     }
 
     public PhotoSelectAdapter(Activity activity) {
-        this.activity = activity;
+        if(weakReference!=null){
+            weakReference.clear();
+        }
+        weakReference=new WeakReference<>(activity);
     }
 
     @NonNull
@@ -88,6 +92,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 
             holder.layoutAdd.setOnClickListener(v -> {
                 if (listener != null) {
+                    Activity activity=weakReference.get();
+                    if(activity==null){
+                        return;
+                    }
                     if (Build.VERSION.SDK_INT >= 23) {
                         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             //先判断有没有权限 ，没有就在这里进行权限的申请
@@ -112,7 +120,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             holder.imgPhoto.setVisibility(View.VISIBLE);
             holder.imgRemove.setVisibility(View.VISIBLE);
             Uri photo = selectedPhotos.get(position);
-
+            Activity activity=weakReference.get();
+            if(activity==null){
+                return;
+            }
             holder.imgRemove.setOnClickListener(v -> {
                 new AlertDialog(activity).builder()
                         .setTitle("提示")
@@ -133,7 +144,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
                 }).show();
 
             });
-            Glide.with(inflater.getContext()).load(photo).into(holder.imgPhoto);
+            Glide.with(inflater.getContext()).load(photo)
+                    .load(photo).centerCrop().placeholder(R.mipmap.place_holder_img)
+                    .error(R.mipmap.place_holder_img)
+                    .into(holder.imgPhoto);
         }
     }
 
@@ -147,7 +161,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 
     public void setAddListener(AddPhotoClickListener listener, Activity activity) {
         this.listener = listener;
-        this.activity = activity;
+        if(weakReference!=null){
+            weakReference.clear();
+        }
+        weakReference=new WeakReference<>(activity);
     }
 
     public void addPhotos(List<Uri> photoUri) {

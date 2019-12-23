@@ -788,6 +788,22 @@ class WorkOrderRepository : WorkOrderService {
         return liveData
     }
 
+    override fun getClientOrderDetail(procInstId:String, taskId:String, callBack: CallBack<RepairsDetailModel>):LiveData<RepairsDetailModel>{
+        var liveData = MutableLiveData<RepairsDetailModel>()
+        serviceApi?.getClientOrderDetail(procInstId,taskId)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    liveData.postValue(it.data)
+                    callBack.call(it.data)
+                }else{
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
+
     /**
      * 查看报修详情
      * */

@@ -145,6 +145,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
+        binding.orderForm.sendOrderImgList.addItemDecoration(new SpacesItemDecoration(18));
         binding.orderForm.sendOrderImgList.setAdapter(photoListFormAdapter);
 
     }
@@ -249,6 +250,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      */
     private void showApply() {
         if (isNeedCheckAccept()) {//如果验收人是自己，显示验收
+            binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.checkAndAccept.getRoot().setVisibility(View.VISIBLE);//显示验收
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);//显示处理信息
@@ -298,6 +300,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.postponeInfo.sendOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.postponeInfo.sendOrderPostponePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
@@ -320,6 +323,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
+                binding.forceCloseInfo.sendOrderClosePicList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.forceCloseInfo.sendOrderClosePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extForceClose.getApplyFiles());

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_30"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/px_30">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:text="响应信息"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:text="响应人" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{repairs.data.customer_repair_model.response_user}" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/work_order_detail_ln">
+
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:text="响应时间" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{repairs.data.customer_repair_model.response_time}" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:layout_marginBottom="@dimen/px_30">
+
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:text="首次沟通结果" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{repairs.data.customer_repair_model.response_result}" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

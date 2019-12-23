@@ -181,6 +181,15 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                     if (FRAGMENT_REPAIR_WAIT_FEED.equals(getFragmentTag())) {
                         binding.line.setVisibility(View.VISIBLE);
                         binding.rlFeedBack.setVisibility(View.VISIBLE);
+                        binding.rlFeedBack.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
+                                        .withString(RouteKey.KEY_TASK_ID,complainModel.getTaskId())
+                                        .navigation();
+                            }
+                        });
                     }
                     binding.repairCreateTime.setText(FormatUtil.formatDate(complainModel.getCreateTime()));
                 }
@@ -194,7 +203,6 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.repairsList);
         binding.repairsList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        binding.repairsList.addItemDecoration(new SpacesItemDecoration(30));
         loadPagingData();
     }
 
@@ -226,27 +234,14 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
     @Override
     public void onItemClicked(View veiw, ComplainModel data) {
-
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
+                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .navigation();
     }
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
 
-    }
-
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view,
-                                   RecyclerView parent, RecyclerView.State state) {
-            outRect.bottom = space;
-            if (parent.getChildPosition(view) == 0)
-                outRect.top = space;
-        }
     }
 }

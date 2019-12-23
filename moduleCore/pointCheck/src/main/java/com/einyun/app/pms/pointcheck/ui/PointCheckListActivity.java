@@ -93,7 +93,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
 
                 @Override
                 public void onBindItem(ItemPointCheckBriefBinding binding, CheckPoint checkPointModel) {
-
+                    binding.itemCheckAddress.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -133,10 +133,9 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
             return oldItem.getId().equals(newItem.getId());
         }
 
-        @SuppressLint("DiffUtilEquals")
         @Override
         public boolean areContentsTheSame(@NonNull CheckPoint oldItem, @NonNull CheckPoint newItem) {
-            return oldItem==newItem;
+            return oldItem.getId().equals(newItem.getId());
         }
 
         @Nullable

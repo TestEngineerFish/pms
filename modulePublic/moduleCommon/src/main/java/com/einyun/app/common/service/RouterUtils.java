@@ -36,9 +36,14 @@ public class RouterUtils {
 
     /**********************巡查工单*************************/
     public static final String ACTIVITY_PATROL_LIST ="/patrol/PatrolListActivity";
+    public static final String ACTIVITY_PATROL_DETIAL="/patrol/PatrolDetialActivity";
     public static final String ACTIVITY_PATROL_HANDLE="/patrol/PatrolHandleActivity";
     public static final String ACTIVITY_PATROL_TIME_HANDLE="/patrol/PatrolTimeHandleActivity";
-    public static final String ACTIVITY_PATROL_DETIAL="/patrol/PatrolDetialActivity";
+    public static final String ACTIVITY_PATROL_TIME_DETIAL="/patrol/PatrolTimeDtialActivity";
+    public static final String ACTIVITY_PATROL_TIME_QR_SIGNIN_HANDLE ="/patrol/PatrolQRSignInActivity";
+    public static final String ACTIVITY_PATROL_TIME_QR_SIGNIN_DETIAL="/patrol/PatrolQRSignInDetialActivity";
+    public static final String ACTIVITY_PATROL_TIME_QR_SCANNER="/patrol/PatrolSignInScannerActivity";
+
 
     //计划工单
     public static final String ACTIVITY_PLAN_ORDER="/plan/PlanOrderActivity";
@@ -87,12 +92,14 @@ public class RouterUtils {
 
     //客户投诉
     public static final String ACTIVITY_COMPLAIN_PAGING="/complain/ComplainActivity";
+    public static final String ACTIVITY_CUSTOMER_COMPLAIN_DETAIL = "/repairs/ComplainDetailActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
     public static final int ACTIVITY_REQUEST_REQUEST_PIC_PICK = 103;
     public static final int ACTIVITY_REQUEST_SCANNER = 104;
     public static final int ACTIVITY_REQUEST_PERSON_CHOOSE = 105;
+    public static final int ACTIVITY_REQUEST_SIGN_IN = 106;
 
 
     public static final String ACTIVITY_COMMUNICATION="/complain/CommunicationActivity";

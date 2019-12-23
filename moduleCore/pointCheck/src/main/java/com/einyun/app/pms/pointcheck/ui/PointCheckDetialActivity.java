@@ -24,6 +24,7 @@ import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.HttpUrlUtil;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.pointcheck.BR;
@@ -157,6 +158,7 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
                     this,
                     LinearLayoutManager.HORIZONTAL,
                     false));
+            binding.rvPhotoSelector.addItemDecoration(new SpacesItemDecoration());
             binding.rvPhotoSelector.setAdapter(spphotoAdapter);
         }else{
             spphotoAdapter.updateList(detialModel.getImages());
