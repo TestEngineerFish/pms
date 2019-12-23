@@ -94,6 +94,7 @@ public class PatrolListRepo {
     }
 
 
+
     /**
      * 初始化数据
      * @param patrols
@@ -104,6 +105,14 @@ public class PatrolListRepo {
             patrolDao.insertDigest(patrols);
         });
 
+    }
+
+    /**
+     * 搜索
+     * @return
+     */
+    public DataSource.Factory<Integer,Patrol> search(@NonNull String userId, int listType,String search){
+        return patrolDao.search(userId,listType,search);
     }
 
     /**

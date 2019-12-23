@@ -219,28 +219,17 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         viewModel.onCondition();
     }
 
-    private void search() {
+    protected void search() {
         if (searchFragment == null) {
             searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
                 @Override
                 public LiveData<PagedList<Patrol>> search(String search) {
-                    viewModel.request.setSearchValue(search);
-                    if (listType == ListType.PENDING.getType()) {
-                        return viewModel.loadPendingData();
-                    } else {
-                        return viewModel.loadCloseData();
-                    }
+                    return viewModel.search(search);
                 }
 
                 @Override
                 public void onItemClick(Patrol model) {
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-                            .withString(RouteKey.KEY_ORDER_ID, model.getID_())
-                            .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
-                            .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
-                            .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
-                            .withInt(RouteKey.KEY_LIST_TYPE, listType)
-                            .navigation();
+                    onItemClicked(null,model);
                 }
 
                 @Override

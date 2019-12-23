@@ -361,7 +361,6 @@
                 android:layout_marginBottom="@dimen/px_40"
                 android:onClick="@{()->callBack.onSubmitClick()}"
                 android:text="@string/text_submmit"
-                android:enabled="false"
                 android:textColor="@color/white" />
         </RelativeLayout>
     </LinearLayout>
