@@ -13,6 +13,7 @@ import com.einyun.app.pms.customerinquiries.respone.FeedBackResponse;
 import com.einyun.app.pms.customerinquiries.respone.GetInquiriesTypesResponse;
 import com.einyun.app.pms.customerinquiries.respone.InquiriesDetailResponse;
 import com.einyun.app.pms.customerinquiries.respone.InquiriesListResponse;
+import com.einyun.app.pms.customerinquiries.respone.OrderResponse;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -78,7 +79,13 @@ public interface CustomerInquiriesServiceApi {
      * @return
      */
     @POST(URLS.URL_GET_INQUIRIES_DEAL_EVALUATION)
-    Flowable<BaseResponse> Evaluation(@Body EvaluationRequest bean);
+    Flowable<BaseResponse> Evaluation(@Body EvaluationRequest bean);    /**
+     * 是否可以申请
+     * @param
+     * @return
+     */
+    @GET
+    Flowable<BaseResponse> isCanApply(@Url String url);
     /**
      * 获取反馈信息
      * @param
@@ -93,4 +100,11 @@ public interface CustomerInquiriesServiceApi {
      */
     @POST(URLS.URL_GET_FEEDBACK_SUBMIT)
     Flowable<BaseResponse> feedbacksubmit(@Body FeedBackRequest bean);
+    /**
+     * 获取order信息
+     * @param
+     * @return
+     */
+    @GET
+    Flowable<OrderResponse> getOrderInfo(@Url String url);
 }

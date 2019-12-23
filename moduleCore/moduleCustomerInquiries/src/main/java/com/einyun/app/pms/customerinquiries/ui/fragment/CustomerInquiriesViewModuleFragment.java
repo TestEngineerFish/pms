@@ -122,7 +122,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                 //                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemInquiriesListBinding binding, InquiriesItemModule inquiriesItemModule) {
-                    switch (inquiriesItemModule.taskNodeId) {
+                    switch (inquiriesItemModule.getTaskNodeId()) {
                         case Constants.INQUIRIES_STATE_DEALING:
                             binding.tvApprovalState.setText(getString(R.string.tv_dealing));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_processing);
@@ -140,7 +140,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     switch (getFragmentTag()) {
                         case FRAGMENT_TO_FOLLOW_UP://待跟进
                            binding.llTalkOrTurnSingle.setVisibility(View.VISIBLE);
-                           binding.rlFeedBack.setVisibility(View.VISIBLE);
+                           binding.rlFeedBack.setVisibility(View.GONE);
                             break;
                         case FRAGMENT_TO_FEED_BACK://待反馈
                             binding.llTalkOrTurnSingle.setVisibility(View.GONE);
@@ -284,8 +284,12 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                 .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
                 .withSerializable(Constants.INQUIRIES_BEAN,data)
                 .navigation();
+        String taskId = data.getTaskId();
+        String proInsId = data.getProInsId();
+        Log.e(TAG, "onItemClicked: "+"taskId  "+taskId);
     }
 
+    private static final String TAG = "CustomerInquiriesViewMo";
     /**
      * 筛选过后的position
      */

@@ -18,6 +18,7 @@ import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
 import com.einyun.app.pms.customerinquiries.module.InquiriesListModule;
 import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
 import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
+import com.einyun.app.pms.customerinquiries.module.OrderDetailInfoModule;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -131,16 +132,15 @@ public class CustomerInquiriesRepository {
      * @param callBack
      * @return
      */
-    public LiveData<Boolean> dealSave(DealSaveRequest request, CallBack<Boolean> callBack) {
+    public void dealSave(DealSaveRequest request, CallBack<Boolean> callBack) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
         serviceApi.dealSave(request).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
-                    liveData.postValue(response.isState());
+//                    liveData.postValue(response.isState());
                     callBack.call(response.isState());
                 }, error -> {
                     callBack.onFaild(error);
                 });
-        return liveData;
     }
 
     /**
@@ -149,7 +149,7 @@ public class CustomerInquiriesRepository {
      * @param callBack
      * @return
      */
-    public LiveData<Boolean> Evaluation(EvaluationRequest request, CallBack<Boolean> callBack) {
+    public LiveData<Boolean> evaluation(EvaluationRequest request, CallBack<Boolean> callBack) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
         serviceApi.Evaluation(request).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
@@ -194,4 +194,40 @@ public class CustomerInquiriesRepository {
                 });
         return liveData;
     }
+    /**
+     * get
+     * 获取工单历史信息
+     */
+    public void getOrderInfo(String procInstId,String taskId, CallBack<OrderDetailInfoModule> callBack) {
+        String url = URLS.URL_GET_ORDER_DETAIL_INFO+procInstId+"&taskId="+taskId;
+        serviceApi.getOrderInfo(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                    Log.e(TAG, "getOrderInfo: "+error.getMessage());
+                });
+    }
+    /**
+     * 评价
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> isCanApply(String url,CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.isCanApply(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    private static final String TAG = "CustomerInquiriesReposi";
 }
