@@ -109,6 +109,12 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPagingData();
+    }
+
     private void handleSelect(Map<String, SelectModel> selected) {
     }
 
@@ -237,6 +243,8 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                 .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .withString(RouteKey.ID,data.getID_())
+                .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
                 .navigation();
     }
 

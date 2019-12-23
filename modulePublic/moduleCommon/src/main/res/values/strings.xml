@@ -49,6 +49,7 @@
     <string name="text_apply_force_close">强制关闭</string>
     <string name="text_apply_late">申请延期</string>
     <string name="text_apply_close">申请闭单</string>
+    <string name="text_save">保存</string>
     <string-array name="order_list">
         <item>待跟进</item>
         <item>已跟进</item>

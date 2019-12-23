@@ -16,6 +16,7 @@
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_30"
+        app:contentPaddingBottom="@dimen/px_20"
         android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
@@ -36,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:text="追加投诉信息"
+                    android:text="处理历史"
                     android:textColor="@color/txt_black_order"
                     android:textStyle="bold"
                     android:textSize="16sp" />
@@ -55,9 +56,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="20dp"
                 android:divider="@null"
                 android:dividerHeight="0dp" />
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rl_load_more"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_100">
+                <View
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:background="@color/thin_divider_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:id="@+id/tv_more"
+                    android:layout_centerInParent="true"
+                    android:text="@string/tv_load_more"
+                    android:textColor="@color/blueTextColor"
+                    android:gravity="center"
+                    android:textSize="@dimen/font_size14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:background="@drawable/iv_arrow_blue_down"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_more"
+                    android:textColor="@color/blueTextColor"
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_16"/>
+            </RelativeLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>
