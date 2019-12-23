@@ -73,5 +73,6 @@ public class RouteKey {
     public static final String FRAGMENT_HAVE_TO_FOLLOW_UP = "FRAGMENT_HAVE_TO_FOLLOW_UP";
     public static final String FRAGMENT_TRANSFERRED_TO= "FRAGMENT_TRANSFERRED";//已办结
     public static final String FRAGMENT_COPY_ME = "FRAGMENT_COPY_ME";
+    public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
 
 }

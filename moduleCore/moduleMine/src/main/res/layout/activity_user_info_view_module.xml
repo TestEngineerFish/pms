@@ -88,9 +88,9 @@
                  android:text="@string/tv_sign_name"
                  style="@style/style_userinfo_tv_left"/>
              <TextView
-                 android:singleLine="true"
                  android:textColor="@color/greyTextColor"
                  android:text="请输入"
+                 android:layout_width="@dimen/px_400"
                  android:id="@+id/et_sign_name"
                  style="@style/style_userinfo_right_text" />
          </RelativeLayout>

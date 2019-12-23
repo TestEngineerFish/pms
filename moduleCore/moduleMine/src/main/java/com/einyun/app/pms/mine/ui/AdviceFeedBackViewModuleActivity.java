@@ -71,7 +71,7 @@ public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<
         typeList.add(getString(R.string.tv_optimization_suggestions));
         typeList.add(getString(R.string.tv_function_error));
         typeList.add(getString(R.string.tv_other));
-        BottomPicker.buildBottomPicker(this, typeList, typeDefaultPos, new BottomPicker.OnItemPickListener() {
+        BottomPicker.buildBottomPicker(this, typeList, 0, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
                 typeDefaultPos = position;
@@ -83,10 +83,10 @@ public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<
      * 确认提交
      */
     public void btnConfirm(){
-        if(typeDefaultPos<0){
-            ToastUtil.show(this, R.string.tv_select_ques_type);
-            return;
-        }
+//        if(typeDefaultPos<0){
+//            ToastUtil.show(this, R.string.tv_select_ques_type);
+//            return;
+//        }
         if (binding.etLimitInput.getString().isEmpty()) {
             ToastUtil.show(this, R.string.tv_write_your_advice);
             return;

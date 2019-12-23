@@ -2,6 +2,7 @@ package com.einyun.app.pms.customerinquiries.ui;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -15,9 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -26,6 +30,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.searchhistory.SingleSearchFragment;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -59,6 +64,8 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
 //    Serializable data;
     @Autowired(name = Constants.INQUIRIES_BEAN)
     Serializable data;
+    @Autowired(name = RouteKey.FRAGMENT_TAG)
+    String fragment;
     private InquiriesItemModule inquiriesItemModule;
     private PhotoListAdapter photoListInfoAdapter;
     private int evaluation;
@@ -66,7 +73,8 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     private OrderDetailInfoModule orderDetailInfoModule;
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean> adapter;
     private boolean isApplyForseClose;
-
+    private String createTime;
+    private InquiriesDetailModule.DataBean.CustomerEnquiryModelBean detail;
 
     @Override
     protected InquiriesDetailViewModel initViewModel() {
@@ -91,27 +99,31 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
 
         switch (inquiriesItemModule.getTaskNodeId()) {
             case Constants.INQUIRIES_STATE_DEALING:
-                binding.llReplyContent.setVisibility(View.VISIBLE);
-                binding.llPass.setVisibility(View.VISIBLE);
-                binding.llForseClose.setVisibility(View.VISIBLE);
-                binding.llEvaluation.setVisibility(View.GONE);
+                if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
+                    binding.llReplyContent.setVisibility(View.VISIBLE);
+                    binding.llPass.setVisibility(View.VISIBLE);
+//                    binding.llForseClose.setVisibility(View.VISIBLE);
+                    binding.llEvaluation.setVisibility(View.GONE);
+                }
                 binding.tvDealState.setText(getString(R.string.tv_dealing));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
                 break;
 
             case Constants.INQUIRIES_STATE_RETURN_VISIT:
-                binding.llReplyContent.setVisibility(View.GONE);
-                binding.llPass.setVisibility(View.GONE);
-                binding.llHistory.setVisibility(View.VISIBLE);
-                binding.llEvaluation.setVisibility(View.VISIBLE);
+                if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
+                    binding.llReplyContent.setVisibility(View.GONE);
+                    binding.llPass.setVisibility(View.GONE);
+//                binding.llHistory.setVisibility(View.VISIBLE);
+                    binding.llEvaluation.setVisibility(View.VISIBLE);
+                }
                 binding.tvDealState.setText(getString(R.string.tv_for_respone));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.blueTextColor));
                 break;
             default:
                 binding.tvDealState.setText(getString(R.string.tv_closed));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
-                binding.llHistory.setVisibility(View.VISIBLE);
-                binding.forceCloseInfo.setVisibility(View.VISIBLE);
+//                binding.llHistory.setVisibility(View.VISIBLE);
+//                binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -148,6 +160,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             initHistoryList(orderDetailInfoModule);
         });
         isCanApplyClose();
+
     }
 
     private void initHistoryList(OrderDetailInfoModule orderDetailInfoModule) {
@@ -203,6 +216,17 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         if (inquiriesDetailModule == null) {
             return;
         }
+        //处理时长
+        detail = inquiriesDetailModule.getData().getCustomer_enquiry_model();
+
+        createTime = detail.getWx_time();
+        if (ComplainOrderState.CLOSED.getState().equals(detail.getState())) {
+            if (StringUtil.isNullStr(detail.getClose_time()))
+                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detail.getWx_time(), detail.getClose_time()));
+        } else {
+            binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detail.getWx_time()));
+            runnable.run();
+        }
         binding.setModule(inquiriesDetailModule);
         PicUrlModelConvert convert = new PicUrlModelConvert();
         List<PicUrlModel> modelList = convert.stringToSomeObjectList(inquiriesDetailModule.getData().getCustomer_enquiry_model().getWx_attachment());
@@ -212,6 +236,16 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     protected int getColorPrimary() {
         return getResources().getColor(R.color.white);
     }
+
+    @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_HISTORY)
+                .withString(RouteKey.KEY_PRO_INS_ID, inquiriesItemModule.proInsId)
+                .navigation();
+    }
+
     /**
      * 是否可以申请强制闭单
      * */
@@ -221,7 +255,9 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             isApplyForseClose = module;
             Log.e("isCanApplyClose", "isCanApplyClose: "+isApplyForseClose );
             if (isApplyForseClose) {
-//                binding.llForseClose.setVisibility(View.VISIBLE);
+                if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
+                    binding.llForseClose.setVisibility(View.VISIBLE);
+                }
             }else {//
 //                binding.llForseClose.setVisibility(View.GONE);
                 binding.forceCloseInfo.setVisibility(View.VISIBLE);
@@ -339,4 +375,14 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             outRect.left = space;
         }
     }
+    //立即调用方法
+    Handler handler = new Handler();
+    public Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(runnable, 1000);
+            //计算时间
+            binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
+        }
+    };
 }

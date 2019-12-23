@@ -41,7 +41,11 @@ public class AdviceFeedBackViewModel extends BaseViewModel {
         jsonObject.put("feedbackName" ,name );
         jsonObject.put("feedbackPhone" ,mobile );
         jsonObject.put("feedbackId" , userId);
-        jsonObject.put("issueType" ,position);
+        if (position==0) {
+
+        }else {
+            jsonObject.put("issueType" ,position);
+        }
         return new Gson().fromJson(jsonObject.toString(),FeedBackBean.class);
     }
 }
