@@ -22,9 +22,8 @@
         <item name="android:layout_marginTop">@dimen/px_20</item>
     </style>
     <style name="ll_slide_show_view">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
     </style>

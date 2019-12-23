@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -175,11 +176,7 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
         if(detialModel==null){
             return;
         }
-        Intent starter = new Intent(this, PhotoShowActivity.class);
-        //传递当前点击的图片的位置、图片路径集合
-        starter.putExtra("position", position);
-        starter.putStringArrayListExtra("mImages", (ArrayList<String>) detialModel.getImagePaths());
-        startActivity(starter);
+        PhotoShowActivity.start(this,position,(ArrayList<String>) detialModel.getImagePaths());
     }
 
 

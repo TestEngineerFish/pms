@@ -16,13 +16,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
@@ -31,11 +34,14 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoListItemListener;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.convert.ExtensionApplicationConvert;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolDetialBinding;
@@ -81,6 +87,14 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected AlertDialog alertDialog;
     protected TipDialog tipDialog;
 
+    protected void setProInsId(String proInsId) {
+        this.proInsId = proInsId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     @Override
     protected PatrolViewModel initViewModel() {
         return new ViewModelProvider(this, new ViewModelFactory()).get(PatrolViewModel.class);
@@ -95,6 +109,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.title_patrol);
+        setRightOption(R.drawable.histroy);
+        switchStateUI();
     }
 
     @Override
@@ -104,7 +120,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         //工作节点适配
         setUpWorkNodes();
         initRequest();
-        switchStateUI();
         loadData();
     }
 
@@ -137,6 +152,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 false));//设置横向
         binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration());
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
+        photoSelectAdapter.setOnItemListener((v, position) -> {
+            PhotoShowActivity.start(this,position, (ArrayList<String>) photoSelectAdapter.getImagePaths());
+        });
 
         photoListAdapter=new PhotoListAdapter(this);
         binding.panelHandleInfo.patrolHandlePicList.setLayoutManager(new LinearLayoutManager(
@@ -230,6 +248,18 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 updateUI(patrolInfo);
             });
         }
+
+        viewModel.isClosedLiveData.observe(this, isClosedState -> {
+            if(isClosedState.isClosed()){
+                if(isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PATROL)){
+                    navigatApply(RouterUtils.ACTIVITY_PATROL_FORCE_CLOSE);//强制关闭
+                }else if(isClosedState.getType().equals(WorkOrder.POSTPONED_PATROL)){
+                    navigatApply(RouterUtils.ACTIVITY_PATROL_POSTPONE);//申请延期
+                }
+            }else{
+                ToastUtil.show(CommonApplication.getInstance(),R.string.text_applying_wait);
+            }
+        });
     }
 
     protected void setListType(int listType){
@@ -297,6 +327,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         if (patrol.getExtensionApplication() != null) {
             binding.panelCloseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.panelCloseInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getExtensionApplication())));
+            PhotoListAdapter adapter=new PhotoListAdapter(this);
+            binding.panelCloseInfo.sendOrderClosePicList.setAdapter(adapter);
+            binding.panelCloseInfo.sendOrderClosePicList.addItemDecoration(new SpacesItemDecoration());
+            String images=patrol.getExtensionApplication().getApplyFiles();
+            if(!TextUtils.isEmpty(images)){
+                PicUrlModelConvert convertPic = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = convertPic.stringToSomeObjectList(images);
+                adapter.updateList(modelList);
+                adapter.setOnItemListener((v, position) -> {
+                    PhotoShowActivity.start(this,position, (ArrayList<String>) adapter.getImagePaths());
+                });
+            }
+
         }
         return convert;
     }
@@ -312,6 +355,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             PicUrlModelConvert convert = new PicUrlModelConvert();
             List<PicUrlModel> modelList = convert.stringToSomeObjectList(images);
             photoListAdapter.updateList(modelList);
+            photoListAdapter.setOnItemListener((v, position) -> {
+                PhotoShowActivity.start(this,position, (ArrayList<String>) photoListAdapter.getImagePaths());
+            });
         }
     }
 
@@ -379,6 +425,18 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     @Override
+    public void onOptionClick(View view) {
+        super.onOptionClick(view);
+        if(!TextUtils.isEmpty(proInsId)){
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_HISTORY)
+                    .withString(RouteKey.KEY_ORDER_ID, orderId)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .navigation();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
@@ -388,6 +446,38 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 photoSelectAdapter.addPhotos(uris);
                 saveLocalUserData();
             }
+        }else if(requestCode==RouterUtils.ACTIVITY_REQUEST_OPTION){
+            if(data==null){
+                return;
+            }
+            boolean flag=data.getBooleanExtra(DataConstants.KEY_OPTION_RESULT,false);
+            if(flag){
+                viewModel.loadPendingDetial(orderId);
+            }
         }
+    }
+
+    /**
+     * 强制闭单
+     */
+    public void onForceClose(){
+        viewModel.isClosed(new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_PATROL));
+    }
+
+    /**
+     * 申请延期
+     */
+    public void onPostpone(){
+        viewModel.isClosed(new IsClosedRequest(orderId, WorkOrder.POSTPONED_PATROL));
+    }
+
+    private void navigatApply(String activityPatrolForceClose) {
+        ARouter.getInstance()
+                .build(activityPatrolForceClose)
+                .withString(RouteKey.KEY_ORDER_ID, orderId)
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
+                .navigation(this,RouterUtils.ACTIVITY_REQUEST_OPTION);
     }
 }

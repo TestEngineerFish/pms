@@ -48,6 +48,15 @@ public class Patrol {
     private String assigneeId;
     private String ownerId;
     private String F_patrol_line_id;
+    private int is_coming_timeout;
+
+    public int getIs_coming_timeout() {
+        return is_coming_timeout;
+    }
+
+    public void setIs_coming_timeout(int is_coming_timeout) {
+        this.is_coming_timeout = is_coming_timeout;
+    }
 
     public String getF_patrol_line_id() {
         return F_patrol_line_id;
@@ -79,16 +88,6 @@ public class Patrol {
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
-    }
-
-    private boolean warn;
-
-    public boolean isWarn() {
-        return warn;
-    }
-
-    public void setWarn(boolean warn) {
-        this.warn = warn;
     }
 
     public boolean isCached() {

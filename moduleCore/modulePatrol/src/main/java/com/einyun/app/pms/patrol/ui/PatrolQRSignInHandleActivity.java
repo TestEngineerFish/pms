@@ -15,7 +15,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.component.photo.PhotoListItemListener;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.viewmodel.PatrolSignInViewModel;
@@ -74,7 +76,6 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
         }
     }
 
-    //现场拍照对比
     protected void initCapturePhotos() {
         binding.rvCaptureImages.setLayoutManager(new LinearLayoutManager(
                 this,
@@ -84,6 +85,9 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
             photoSelectAdapter = new PhotoSelectAdapter(this);
         }
         binding.rvCaptureImages.setAdapter(photoSelectAdapter);
+        photoListAdapter.setOnItemListener((v, position) -> {
+            PhotoShowActivity.start(this,position, (ArrayList<String>) photoListAdapter.getImagePaths());
+        });
     }
 
     protected void updateCapturePic(){

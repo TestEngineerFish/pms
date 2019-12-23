@@ -13,6 +13,7 @@ import com.einyun.app.common.R;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.utils.HttpUrlUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
@@ -61,6 +62,18 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
             picList.addAll(list);
         }
         notifyDataSetChanged();
+    }
+
+    public List<String> getImagePaths(){
+        List<String> paths=new ArrayList<>();
+        if(picList!=null){
+            for(PicUrlModel model:picList){
+                if(model!=null){
+                    paths.add(HttpUrlUtil.getImageServerUrl(model.getPath()));
+                }
+            }
+        }
+        return paths;
     }
 
     public void setOnItemListener(PhotoListItemListener listener){

@@ -7,6 +7,7 @@ import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse
 import com.einyun.app.library.workorder.model.ComplainPage
 import com.einyun.app.library.workorder.model.Door
 import com.einyun.app.library.workorder.model.DoorResult
+import com.einyun.app.library.workorder.model.RepairsDetailModel
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
@@ -240,4 +241,13 @@ interface WorkOrderServiceApi {
      * */
     @GET(URLs.URL_REPAIR_SELECT)
     fun getAreaType():Flowable<AreaResponse>
+
+    @GET(URLs.URL_CLIENT_DETAIL)
+    fun getClientOrderDetail(@retrofit2.http.Query("procInstId") procInstId: String, @retrofit2.http.Query("taskId") taskId: String): Flowable<BaseResponse<RepairsDetailModel>>
+
+    @POST(URLs.URL_COMPLAIN_DETAIL_COMPLETE)
+    fun complainDetailComplete(@Body request: ComplainDetailCompleteRequest):Flowable<BaseResponse<Any>>
+
+    @POST(URLs.URL_COMPLAIN_DETAIL_SAVE)
+    fun complainDetailSave(@Body request: ComplainDetailCompleteRequest):Flowable<BaseResponse<Any>>
 }

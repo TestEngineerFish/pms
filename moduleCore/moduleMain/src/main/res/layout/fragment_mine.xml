@@ -28,13 +28,18 @@
             android:layout_height="@dimen/px_46"
             android:layout_gravity="right"
             android:layout_marginTop="@dimen/px_25"
-            android:src="@mipmap/img_message_center" />
+            android:src="@mipmap/img_message_center"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_20"/>
 
         <RelativeLayout
-            android:onClick="@{()->callBack.userInfoOnClick()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_36">
+            android:layout_marginTop="@dimen/px_36"
+            android:onClick="@{()->callBack.userInfoOnClick()}">
 
             <ImageView
                 android:id="@+id/user_head_image"
@@ -62,20 +67,20 @@
                     tools:text="楠木李" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
-                android:layout_width="0dp"
-                android:layout_height="@dimen/px_26"
-                android:layout_marginLeft="@dimen/px_22"
-                android:id="@+id/rating_bar"
-                android:layout_weight="1"
-                app:clickable="false"
-                app:starCount="5"
-                app:starEmpty="@mipmap/rating_off"
-                app:starHalf="@mipmap/rating_off"
-                app:starFill="@mipmap/rating_on"
-                app:starImageSize="@dimen/px_26"
-                app:starPadding="@dimen/px_12"
-                app:starStep="5"
-                app:stepSize="Full" />
+                    android:id="@+id/rating_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_marginLeft="@dimen/px_22"
+                    android:layout_weight="1"
+                    app:clickable="false"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/rating_off"
+                    app:starFill="@mipmap/rating_on"
+                    app:starHalf="@mipmap/rating_off"
+                    app:starImageSize="@dimen/px_26"
+                    app:starPadding="@dimen/px_12"
+                    app:starStep="5"
+                    app:stepSize="Full" />
 
                 <ImageView
                     android:layout_width="@dimen/px_26"
@@ -94,87 +99,117 @@
                 android:layout_toRightOf="@id/user_head_image"
                 android:onClick="@{()->callBack.changeWorkStatus()}"
                 android:src="@mipmap/img_mine_working"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
         <LinearLayout
-            android:background="@drawable/shape_white_bg"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_marginTop="24dp"
+            android:background="@drawable/shape_white_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
                 android:onClick="@{()->callBack.approvalOnClick()}"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/px_60"
+                        android:layout_height="@dimen/px_60"
+                        android:src="@mipmap/img_mine_approve" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_26"
+                        android:text="@string/tv_mine_approve"
+                        android:textColor="@color/txt_black_order"
+                        android:textSize="@dimen/font_size14" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/px_60"
-                    android:layout_height="@dimen/px_60"
-                    android:src="@mipmap/img_mine_approve" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_26"
-                    android:text="@string/tv_mine_approve"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
                 android:onClick="@{()->callBack.adviceFeedBack()}"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/px_60"
+                        android:layout_height="@dimen/px_60"
+                        android:src="@mipmap/img_feedback" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_26"
+                        android:text="@string/tv_feedback"
+                        android:textColor="@color/txt_black_order"
+                        android:textSize="@dimen/font_size14" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/px_60"
-                    android:layout_height="@dimen/px_60"
-                    android:src="@mipmap/img_feedback" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_26"
-                    android:text="@string/tv_feedback"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
                 android:onClick="@{()->callBack.Setting()}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                app:cardElevation="0dp">
 
-                <ImageView
-                    android:layout_width="@dimen/px_60"
-                    android:layout_height="@dimen/px_60"
-                    android:src="@mipmap/img_setting" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_26"
-                    android:text="@string/tv_setting"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14" />
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="@dimen/px_60"
+                        android:layout_height="@dimen/px_60"
+                        android:src="@mipmap/img_setting" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_26"
+                        android:text="@string/tv_setting"
+                        android:textColor="@color/txt_black_order"
+                        android:textSize="@dimen/font_size14" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </LinearLayout>

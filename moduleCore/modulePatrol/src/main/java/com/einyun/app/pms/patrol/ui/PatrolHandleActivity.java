@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
@@ -15,7 +18,9 @@ import com.einyun.app.base.util.Base64Util;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.GetUploadJson;
+import com.einyun.app.common.model.IsClosedState;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
@@ -23,6 +28,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.R;
@@ -76,15 +82,19 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     protected void switchStateUI() {
         super.switchStateUI();
+        hideRightOption();
         binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
     }
 
     protected void initRequest() {
         super.setListType(listType);
         super.setOrderId(orderId);
+        super.setProInsId(proInsId);
+        super.setTaskId(taskId);
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
@@ -110,7 +120,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                         if (!TextUtils.isEmpty(model.result)) {
                             if (ResultState.RESULT_FAILD.equals(model.result)) {
                                 onReject(binding);
-                            } else if (ResultState.RESULT_FAILD.equals(model.result)) {
+                            } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                 onAgree(binding);
                             }
                         }

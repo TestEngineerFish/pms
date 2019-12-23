@@ -38,6 +38,10 @@ public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Pa
         loadData(BaseBoundaryCallBack.DATA_TYPE_SYNC);
     }
 
+    public void search(String key){
+
+    }
+
     /**
      * 数据初始化
      */

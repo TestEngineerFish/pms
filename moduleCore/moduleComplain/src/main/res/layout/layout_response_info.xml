@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="repairs"
-            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+            name="complain"
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -61,7 +60,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.response_user}" />
+                    android:text="@{complain.f_response_user}" />
             </LinearLayout>
 
             <LinearLayout style="@style/work_order_detail_ln">
@@ -72,10 +71,12 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.response_time}" />
+                    android:text="@{complain.f_response_time}" />
             </LinearLayout>
 
-            <LinearLayout style="@style/work_order_detail_ln">
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:layout_marginBottom="@dimen/px_30">
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
@@ -83,7 +84,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.response_result}" />
+                    android:text="@{complain.f_response_result}" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

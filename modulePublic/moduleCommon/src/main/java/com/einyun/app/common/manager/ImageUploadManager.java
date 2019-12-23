@@ -58,6 +58,7 @@ public class ImageUploadManager {
                 FileUtil.compress(filePath, new CallBack<File>() {
                     @Override
                     public void call(File data) {
+                        long fileSize=data.length();
                         PicUrl picUrl=new PicUrl();
                         picUrl.setOriginUrl(uri.toString());
                         picUrl.setCompressed(filePath);

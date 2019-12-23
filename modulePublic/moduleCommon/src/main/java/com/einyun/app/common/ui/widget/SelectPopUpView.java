@@ -40,6 +40,9 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     public static final String SELECT_ORDER_TYPE3 = "SELECT_ORDER_TYPE3";//工单类型3
     public static final String SELECT_IS_OVERDUE = "SELECT_IS_OVERDUE";//是否超期;
     public static final String SELECT_TIME_CIRCLE = "SELECT_TIME_CIRCLE";//周期;
+    public static final String SELECT_GRID= "SELECT_GRID";//网格;
+    public static final String SELECT_BUILDING= "SELECT_BUILDING";//楼栋;
+    public static final String SELECT_UNIT= "SELECT_UNIT";//单元;
     public static final String SELECT_DATE = "SELECT_DATE";
     private View view;
     private Activity context;

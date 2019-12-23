@@ -19,10 +19,12 @@ import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.Result;
+import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
@@ -46,7 +48,7 @@ import java.util.concurrent.Executors;
 
 import io.reactivex.Observable;
 
-public class PatrolViewModel extends BaseUploadViewModel {
+public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
     protected PatrolRepo repo = new PatrolRepo();
     ResourceWorkOrderService service;
     MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
@@ -61,6 +63,7 @@ public class PatrolViewModel extends BaseUploadViewModel {
         this.userModuleService=userModuleService;
     }
     public PatrolViewModel(){
+        workOrderType= WorkOrderType.PATROL.type();
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         request=new PatrolDetialRequest();
     }

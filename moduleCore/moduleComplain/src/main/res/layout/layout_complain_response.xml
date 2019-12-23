@@ -28,106 +28,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center_vertical"
-                    android:text="响应"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/px_20"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/txt_blue_color"
-                    android:textSize="@dimen/px_30" />
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/pd_view" />
-
-
-            <LinearLayout
-                android:id="@+id/repair_select_people"
-                style="@style/ll_create_order"
-                android:paddingLeft="@dimen/px_0">
-
-                <TextView style="@style/tv_create_order_red_star" />
-
-                <TextView
-                    style="@style/tv_create_order_name"
-                    android:text="工单归属"
-                    android:textColor="@color/blackTextColor"
-                    android:textStyle="normal" />
-
-                <RadioGroup
-                    android:id="@+id/rgs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_normal"
-                        android:layout_width="@dimen/px_120"
-                        android:layout_height="@dimen/px_50"
-                        android:background="@drawable/select_radio_button_normal"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:tag="1"
-                        android:text="工程维保"
-                        android:textColor="@drawable/select_radio_button_text"
-                        android:textSize="@dimen/font_size13" />
-
-                    <RadioButton
-                        android:id="@+id/rb_general"
-                        android:layout_width="@dimen/px_120"
-                        android:layout_height="@dimen/px_50"
-                        android:layout_marginLeft="@dimen/px_20"
-                        android:background="@drawable/select_radio_button_general"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:tag="2"
-                        android:text="地产维保"
-                        android:textColor="@drawable/select_radio_button_text"
-                        android:textSize="@dimen/font_size13" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:paddingLeft="@dimen/px_0">
+            <LinearLayout style="@style/ll_create_order"
+                android:paddingLeft="@dimen/px_20">
 
                 <TextView style="@style/tv_create_order_red_star" />
 
                 <TextView
                     style="@style/tv_create_order_name"
                     android:text="首次沟通结果"
-                    android:textColor="@color/blackTextColor"
-                    android:textStyle="normal" />
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <com.einyun.app.common.ui.component.limit.LimitInput
-                android:id="@+id/repair_response_reason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/px_30"
-                app:hintText="请输入申请原因"
-                app:maxNumber="300" />
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="@dimen/px_20"
+                android:layout_height="wrap_content">
+
+                <com.einyun.app.common.ui.component.limit.LimitInput
+                    android:id="@+id/lt_response_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_30"
+                    app:hintText="请输入沟通结果"
+                    app:maxNumber="300" />
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

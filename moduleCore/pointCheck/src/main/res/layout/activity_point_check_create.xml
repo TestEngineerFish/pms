@@ -281,6 +281,7 @@
                             android:id="@+id/et_limit_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            app:hintText="请输入备注内容"
                             android:layout_marginLeft="@dimen/px_20"
                             android:layout_marginTop="@dimen/px_20" />
 
@@ -320,7 +321,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/px_15"
                                 android:text="@string/text_pic_max"
-                                android:textColor="@color/important_red_color" />
+                                 />
 
                         </LinearLayout>
 

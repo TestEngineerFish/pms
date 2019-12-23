@@ -26,14 +26,7 @@ import com.einyun.app.pms.patrol.model.SignCheckResult;
  */
 public class PatrolBindiAdapter {
 
-    @BindingAdapter("isWarn")
-    public static void isWarn(ImageView view,boolean value){
-        if(value){
-          view.setVisibility(View.VISIBLE);
-        }else{
-           view.setVisibility(View.GONE);
-        }
-    }
+
 
     @BindingAdapter("isSignIn")
     public static void isSignIn(TextView view,int signInResult){

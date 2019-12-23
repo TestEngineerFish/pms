@@ -60,11 +60,11 @@ class URLs {
         //客户报修-待跟进
         const val URL_REPORT_COMPLAIN_WAIT_FOLLOW="workOrder/workOrder/task/v1/getTodoListAliaForApp/customer_complain_flow/NORMAL,DELIVERTO"
         //客户报修-已跟进
-        const val URL_REPORT_COMPLAIN_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAlia/customer_complain_flow"
+        const val URL_REPORT_COMPLAIN_ALREADY_FOLLOW="/workOrder/workOrder/task/v1/getDoneListAliaForApp/customer_complain_flow"
         //客户报修-已办结
-        const val URL_REPORT_COMPLAIN_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompleteAlia/customer_complain_flow"
+        const val URL_REPORT_COMPLAIN_ALREADY_DONE="/workOrder/workOrder/task/v1/getCompletedAliaForApp/customer_complain_flow"
         //客户报修-抄送我的
-        const val URL_REPORT_COMPLAIN_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyTo/customer_complain_flow"
+        const val URL_REPORT_COMPLAIN_COPY_ME="/workOrder/workOrder/task/v1/getReceiverCopyToForApp/customer_complain_flow"
 
         //通过UserId批量查询待处理工单
         const val URL_GET_MAPPING_BY_USERIDS="/$DOMAIN/workOrder/userWorkorderCtn/v1/getMappingByUserIds"
@@ -84,6 +84,9 @@ class URLs {
         const val URL_REPAIR_GRAB="/workOrder/workOrder/customerRepair/v1/orderGrab?taskId="
         //客户报修-查看详情
         const val URL_REPAIR_DETAIL="/workOrder/workOrder/task/v1/getOrderDetail?"
+//        const val URL_REPAIR_DETAIL="/bpm-runtime/runtime/instance/v1/getInstBO?proInstId="
+        //客户-查看详情
+        const val URL_CLIENT_DETAIL="/workOrder/workOrder/task/v1/getOrderDetail"
         //客户报修-派单，响应
         const val URL_REPAIR_SEND="/workOrder/workOrder/customerRepair/v1/complete"
         //客户报修-处理
@@ -91,5 +94,10 @@ class URLs {
         //获取客户报修筛选数据
         const val URL_REPAIR_SELECT="/workOrder/workOrder/customerRepair/v1/getRepairAreaAndType"
         const val URL_INITIATE_COMMUNICATION="/bpm-runtime/runtime/task/v1/communicate"
+
+        //详情处理响应评价
+        const val URL_COMPLAIN_DETAIL_COMPLETE="/workOrder/workOrder/taskRun/v1/complete"
+        //详情处理响应评价
+        const val URL_COMPLAIN_DETAIL_SAVE="/workOrder/workOrder/saveDraft/v1/saveHandle"
     }
 }

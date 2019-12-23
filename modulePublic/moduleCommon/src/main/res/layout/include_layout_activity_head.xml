@@ -32,14 +32,18 @@
             android:textColor="@color/txt_black_order"
             android:textStyle="bold"
             android:textSize="18sp" />
-
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
         <ImageView
             android:id="@+id/iv_right_option"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:visibility="visible"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:adjustViewBounds="true"
             />
@@ -54,10 +58,10 @@
             android:gravity="center"
             android:maxLines="1"
             android:text=""
-            android:textColor="@color/whiteTextColor"
+            android:textColor="@color/white"
             android:textSize="15sp"
-            android:visibility="gone" />
-
+            android:visibility="visible" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>
 

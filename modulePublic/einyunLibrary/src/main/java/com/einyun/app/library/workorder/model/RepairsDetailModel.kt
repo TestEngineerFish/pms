@@ -1,5 +1,9 @@
 package com.einyun.app.library.workorder.model
 
+import com.einyun.app.library.resource.workorder.model.Buttons
+import com.einyun.app.library.resource.workorder.model.Data
+import com.einyun.app.library.resource.workorder.model.ExtensionApplication
+
 class RepairsDetailModel {
 
     /**
@@ -26,9 +30,26 @@ class RepairsDetailModel {
     var data: DataBean? = null
     var opinionList: Any? = null
     var permission: Any? = null
+    val buttons: List<Buttons>? = null
+    var extensionApplication: ArrayList<ExtensionApplication>? = null
     var delayInfo: DelayInfoBean? = null
     var forceCloseInfo: ForceCloseInfoBean? = null
     var handleList: List<HandleListBean>? = null
+
+    /**
+     * 获取强制逼单或申请延期信息
+     */
+    fun getExtApplication(applyType:Int): ExtensionApplication? {
+        if(extensionApplication==null||extensionApplication?.size==0){
+            return null
+        }
+        for(ext in extensionApplication!!){
+            if(applyType==ext.applyType){
+                return ext
+            }
+        }
+        return null
+    }
 
     class DataBean {
         /**
@@ -36,6 +57,8 @@ class RepairsDetailModel {
          */
 
         var customer_repair_model: CustomerRepairModelBean? = null
+
+        var customer_complain_model: CustomerComplainModelBean? = null
 
         class CustomerRepairModelBean {
             /**
@@ -112,62 +135,62 @@ class RepairsDetailModel {
              * return_result : null
              * is_grab_overtime : null
              * artificial_cost : null
-             * bx_cate_lv2 : 保洁类
-             * response_user_id : 65260234913873925
-             * bx_cate_lv1 : 环境类
+             * bx_cate_lv2 : 电器
+             * response_user_id : null
+             * bx_cate_lv1 : 户内报修类
              * bx_property_ass_id : slight
              * service_quality_score : 0
-             * bx_cate_lv3 : 公区保洁类
+             * bx_cate_lv3 : 电热水器
              * material_cost : null
              * project_fee : null
              * work_order_timeout : null
-             * id_ : 66661198484997124
-             * receive_user : 胡文越
+             * id_ : 66496797874324485
+             * receive_user : null
              * joint_processor : null
              * u_project_id : 63872468703510533
-             * receive_time : 2019-12-20 19:27:08
+             * receive_time : null
              * close_time : null
              * grid_name : null
-             * unit_name : 1单元
+             * unit_name : null
              * return_way_id : null
-             * bx_house_id : fc054df5-b4a4-4dc4-b11d-29579f5b4cd5
-             * bx_appoint_time : 2019-12-20
+             * bx_house_id : null
+             * bx_appoint_time : 2019-12-18
              * project_rate : null
-             * handle_is_paid : 0
-             * bx_way_id : visit
+             * handle_is_paid : null
+             * bx_way_id : call_in
              * bx_recorder_seat_number : null
-             * fclose_applyer : 胡文越
-             * handle_user_id : 65260234913873925
-             * u_region_id : 63872374214230021
-             * bx_recorder_id : 65260234913873925
+             * fclose_applyer : null
+             * handle_user_id : null
+             * u_region_id : null
+             * bx_recorder_id : 63879813097586693
              * handle_pay_type : null
-             * c_deadline_time : 2019-12-28 01:15:17
-             * bx_mobile : 15388038196
-             * fclose_approve_id : 66685032332264452
+             * c_deadline_time : 2019-12-25 18:46:08
+             * bx_mobile : 52359038680
+             * fclose_approve_id : null
              * c_return_visit_status : null
              * return_way : null
-             * receive_user_id : 65260234913873925
+             * receive_user_id : null
              * return_visit_num : null
-             * bx_user_id : c434f564-09f0-11ea-9165-005056a13fb9
-             * bx_house :
-             * pd_user : 胡文越
+             * bx_user_id : null
+             * bx_house : null
+             * pd_user : null
              * ot_pd_user : null
-             * handle_result : 3232323
+             * handle_result : null
              * ot_pd_time : null
-             * bx_content : 123
-             * u_city_area_id : 63872430048804869
+             * bx_content : ceshi
+             * u_city_area_id : null
              * handle_timeout : null
              * bx_attachment : null
-             * bx_appoint_time_period_id : 11_12
+             * bx_appoint_time_period_id : 21_22
              * close_remark : null
-             * bx_cate_lv2_id : cleaning
-             * pd_time : 2019-12-20 19:27:01
-             * response_time : 2019-12-20 19:27:08
-             * response_user : 胡文越
-             * assign_grab_user_id : 65260234913873925
-             * fclose_apply_time : 2019-12-20 19:27:57
-             * fclose_is_applying : 1
-             * work_ascription_code : Engineering_Maintenance
+             * bx_cate_lv2_id : electrical_equipment
+             * pd_time : null
+             * response_time : null
+             * response_user : null
+             * assign_grab_user_id : 63879813097586693
+             * fclose_apply_time : null
+             * fclose_is_applying : 0
+             * work_ascription_code : null
              * handle_attach : null
              * sub_repair_materials : []
              * initData : {"repair_materials":{"MAKTX":"","quantity":"","LABST":"","total_price":"","LGORT":"","WERKS":"","LGOBE":"","MEINS":"","NAME1":"","NETPR":"","price":"","name":"","MATKL":"","MATNR":""}}
@@ -348,6 +371,7 @@ class RepairsDetailModel {
                 }
             }
         }
+
     }
 
 

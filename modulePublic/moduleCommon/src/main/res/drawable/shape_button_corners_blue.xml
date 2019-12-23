@@ -3,8 +3,8 @@
 
     <gradient
         android:angle="90"
-        android:endColor="@color/main_color"
-        android:startColor="@color/main_color_dark"
+        android:endColor="@color/button_signin_color"
+        android:startColor="@color/button_signin_color"
         android:type="linear" />
 
     <corners android:radius="15dp"></corners>

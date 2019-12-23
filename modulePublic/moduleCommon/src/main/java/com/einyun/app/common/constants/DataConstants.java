@@ -18,6 +18,7 @@ public class DataConstants {
     public static final String KEY_BLOCK_NAME = "block_name";
     public static final String KEY_BLOCK_CODE = "block_code";
     public static final String KEY_QR_SCAN_RESULT="qr_scan_result";
+    public static final String KEY_OPTION_RESULT="option_result";
     public static final String KEY_ORG_HQ = "ORG_ZongBu";
 
     public static final String KEY_ORG_DIVIDE = "organization_type_divide";
@@ -31,4 +32,6 @@ public class DataConstants {
     public static final String KEY_CHOOSE_DISPOSE_PERSON_CONTENT = "CHOOSE_DISPOSE_PERSON_CONTENT";
 
     public static final String WORK_ORDER_LIST_TYPE_CREATE = "WORK_ORDER_LIST_TYPE_CREATE";
+    public static final String KEY_POSITION="position";
+    public static final String KEY_IAMGES="mImages";
 }

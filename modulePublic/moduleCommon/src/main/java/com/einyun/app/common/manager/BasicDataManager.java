@@ -1,10 +1,14 @@
 package com.einyun.app.common.manager;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.paging.bean.PageResult;
 import com.einyun.app.common.model.BasicData;
+import com.einyun.app.library.core.api.MdmService;
 import com.einyun.app.library.core.api.ResourceService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.mdm.model.DivideGrid;
+import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
@@ -21,32 +25,35 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class BasicDataManager {
     private static BasicDataManager instance;
-    private static Lock lock=new ReentrantLock();
+    private static Lock lock = new ReentrantLock();
     private BasicData basicData;
     private ResourceWorkOrderService resourceWorkOrderService;
     private ResourceService resourceService;
+    private MdmService mdmService;
     private CountDownLatch latch;
     private ExecutorService fixedThreadPool;
-    private final int THREADS=3;
-    private volatile boolean reload=false;//
+    private final int THREADS = 3;
+    private volatile boolean reload = false;//
 
-    private BasicDataManager(){
-        basicData=new BasicData();
-        latch=new CountDownLatch(THREADS);//目前三类数据，增加一种数据，此处加一
-        fixedThreadPool= Executors.newFixedThreadPool(5);
+    private BasicDataManager() {
+        basicData = new BasicData();
+        latch = new CountDownLatch(THREADS);//目前三类数据，增加一种数据，此处加一
+        fixedThreadPool = Executors.newFixedThreadPool(5);
         resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
-        resourceService=ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE);
+        resourceService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE);
+        mdmService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_MDM);
     }
 
     /**
      * 单例
+     *
      * @return
      */
-    public static BasicDataManager getInstance(){
-        if(instance==null){
+    public static BasicDataManager getInstance() {
+        if (instance == null) {
             lock.lock();
-            if(instance==null){
-                instance=new BasicDataManager();
+            if (instance == null) {
+                instance = new BasicDataManager();
             }
             lock.unlock();
         }
@@ -55,23 +62,25 @@ public class BasicDataManager {
 
     /**
      * 刷新基础数据/从新获取基础数据
+     *
      * @param callBack
      */
-    public void reload(CallBack<BasicData> callBack){
-        reload=true;
-        latch=new CountDownLatch(THREADS);
+    public void reload(CallBack<BasicData> callBack) {
+        reload = true;
+        latch = new CountDownLatch(THREADS);
         loadBasicData(callBack);
     }
 
     /**
      * 获取基础数据，并缓存内存,如果有缓存直接返回缓存数据
+     *
      * @param callBack
      */
-    public void loadBasicData(CallBack<BasicData> callBack){
+    public void loadBasicData(CallBack<BasicData> callBack) {
         /**
          * 判断数据是否已经初始化
          */
-        if(hasInit()&&!reload){
+        if (hasInit() && !reload) {
             callBack.call(basicData);
             return;
         }
@@ -84,13 +93,14 @@ public class BasicDataManager {
 
     /**
      * 获取基础数据
+     *
      * @param callBack
      */
     protected void loadResult(CallBack<BasicData> callBack) {
         fixedThreadPool.execute(() -> {
             try {
                 latch.await();
-                reload=false;
+                reload = false;
                 callBack.call(basicData);
             } catch (InterruptedException e) {
                 callBack.onFaild(e);
@@ -136,7 +146,7 @@ public class BasicDataManager {
     }
 
     /**
-     *加载所有资源数据
+     * 加载所有资源数据
      */
     protected void loadResources() {
         fixedThreadPool.execute(() -> resourceWorkOrderService.getTiaoXian(new CallBack<List<ResourceTypeBean>>() {
@@ -154,20 +164,47 @@ public class BasicDataManager {
     }
 
     /**
+     * 获取分期下面的网格信息
+     * @param divideId
+     * @param callBack
+     */
+    public void loadDivideGrid(String divideId, CallBack<DivideGrid> callBack) {
+        DivideGrid divideGrid = basicData.getDivideGridMap().get(divideId);
+        if (divideGrid == null||divideGrid.isEmpty()) {
+            mdmService.gridPage(divideId, new CallBack<PageResult<GridModel>>() {
+                @Override
+                public void call(PageResult<GridModel> data) {
+                    DivideGrid gridData=new DivideGrid(data);
+                    basicData.getDivideGridMap().put(divideId,gridData);
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    callBack.call(null);
+                }
+            });
+        } else {
+            callBack.call(divideGrid);
+        }
+    }
+
+    /**
      * 获取缓存
+     *
      * @return
      */
-    public BasicData loadCache(){
+    public BasicData loadCache() {
         return basicData;
     }
 
     /**
      * 判断是否初始化有数据
+     *
      * @return
      */
-    public boolean hasInit(){
-        if(basicData!=null){
-            if(basicData.getLines()!=null&&basicData.getListLineTypes()!=null&basicData.getResources()!=null){
+    public boolean hasInit() {
+        if (basicData != null) {
+            if (basicData.getLines() != null && basicData.getListLineTypes() != null & basicData.getResources() != null) {
                 return true;
             }
         }

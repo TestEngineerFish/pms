@@ -57,6 +57,34 @@ class WorkOrderServiceImpl : WorkOrderService {
             request, callBack
         )    }
 
+    override fun complainDetailSave(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.complainDetailSave(
+            request, callBack
+        )
+    }
+
+    override fun complainDetailComplete(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.complainDetailComplete(
+            request, callBack
+        )
+    }
+
+    override fun getClientOrderDetail(
+        instId: String,
+        taskId: String,
+        callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel> {
+        return proxy.getClientOrderDetail(
+            instId, taskId, callBack
+        )
+    }
+
     override fun complainWorkListdPage(
         pageBean: PageBean,
         mobile: String,

@@ -24,7 +24,9 @@ import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoListItemListener;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
@@ -90,32 +92,16 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         divideId = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_ID, "").toString();
         divideName = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_NAME, "").toString();
         binding.tvCheckDivide.setText(divideName);
-        photoSelectAdapter = new PhotoSelectAdapter(this);//图片选择适配器
-        binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
-                this,
-                LinearLayoutManager.HORIZONTAL,
-                false));//设置横向
-        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration());
-        binding.pointCkImglist.setAdapter(photoSelectAdapter);
-        photoSelectAdapter.setAddListener(selectedSize -> {
-            if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
-                ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
-                return;
-            }
-            Matisse.from(this) //加号添加图片
-                    .choose(MimeType.ofImage())
-                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
-                    .capture(true)
-                    .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
-                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                    .thumbnailScale(0.85f)
-                    .imageEngine(new Glide4Engine())
-                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
-        }, CreatePointCheckActivity.this);
+        //初始化图片
+        initPhotoList();
 
         //点检事项集加载
+        initPointItems();
+
+    }
+
+    //点检事项集加载
+    protected void initPointItems() {
         viewModel.projectItems.observe(this, items -> {
             BottomPicker.buildBottomPicker(this, items, (position, label) -> {
 
@@ -140,11 +126,13 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                     binding.btnAgree.setOnClickListener(v -> {
                                         onAgree(binding);
                                         model.setCheckResult(1);
+//                                        validateForm(false);
                                     });
 
                                     binding.btnReject.setOnClickListener(v -> {
                                         onReject(binding);
                                         model.setCheckResult(0);
+//                                        validateForm(false);
                                     });
 
                                 } else {
@@ -171,7 +159,10 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                                         String value = s.toString();
                                         if (!TextUtils.isEmpty(value)) {
                                             model.setCheckResult(Float.parseFloat(value));
+                                        }else{
+                                            model.setCheckResult(-1);
                                         }
+//                                        validateForm(false);
                                     }
                                 });
 
@@ -204,7 +195,39 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                 });
             });
         });
+    }
 
+    protected void initPhotoList() {
+        photoSelectAdapter = new PhotoSelectAdapter(this);//图片选择适配器
+        binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false));//设置横向
+        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration());
+        binding.pointCkImglist.setAdapter(photoSelectAdapter);
+        photoSelectAdapter.setAddListener(selectedSize -> {
+            if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
+                ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
+                return;
+            }
+            Matisse.from(this) //加号添加图片
+                    .choose(MimeType.ofImage())
+                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
+                    .capture(true)
+                    .countable(true)
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
+                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .thumbnailScale(0.85f)
+                    .imageEngine(new Glide4Engine())
+                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+        }, CreatePointCheckActivity.this);
+        photoSelectAdapter.setOnItemListener(new PhotoListItemListener() {
+            @Override
+            public void OnItemClick(View v, int position) {
+                PhotoShowActivity.start(CreatePointCheckActivity.this,position,(ArrayList<String>) photoSelectAdapter.getImagePaths());
+            }
+        });
     }
 
     @Override
@@ -248,7 +271,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
     }
 
     public void onSubmitClick() {
-        if (!validateForm()) {
+        if (!validateForm(true)) {
             return;
         }
         uploadImages();
@@ -257,18 +280,24 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
     /**
      * 表单验证
      */
-    private boolean validateForm() {
+    private boolean validateForm(boolean showToast) {
+//        binding.btnSubmmit.setEnabled(false);
         if (TextUtils.isEmpty(binding.tvCheckDivide.getText())) {
-            ToastUtil.show(getApplicationContext(), R.string.alert_choose_massif);
+            if(showToast){
+                ToastUtil.show(getApplicationContext(), R.string.alert_choose_massif);
+            }
             return false;
         }
         if (TextUtils.isEmpty(binding.tvCheckProject.getText())) {
-            ToastUtil.show(getApplicationContext(), R.string.alert_choose_project);
+            if(showToast) {
+                ToastUtil.show(getApplicationContext(), R.string.alert_choose_project);
+            }
             return false;
         }
-        if (!validateProjectItems()) {
+        if (!validateProjectItems(showToast)) {
             return false;
         }
+//        binding.btnSubmmit.setEnabled(true);
 //        if(photoSelectAdapter.getSelectedPhotos()==null||photoSelectAdapter.getSelectedPhotos().size()<=0){
 //            ToastUtil.show(R.string.alert_choose_pic);
 //            return false;
@@ -276,12 +305,14 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         return true;
     }
 
-    private boolean validateProjectItems() {
+    private boolean validateProjectItems(boolean showToast) {
         List<ProjectContentItemModel> models = adapter.getItemModels();
         if (models != null) {
             for (ProjectContentItemModel model : models) {
                 if (model.getCheckResult() < 0) {
-                    ToastUtil.show(getApplication(), R.string.alert_input_result);
+                    if(showToast){
+                        ToastUtil.show(getApplication(), R.string.alert_input_result);
+                    }
                     return false;
                 }
             }

@@ -70,6 +70,7 @@
                                     android:layout_centerVertical="true">
 
                                     <TextView
+                                        android:visibility="visible"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -87,6 +88,54 @@
                                 android:layout_marginBottom="@dimen/px_30"
                                 android:src="@drawable/dotted_line" />
 
+                            <LinearLayout
+                                android:id="@+id/ll_patrol_signin_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                >
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_signin_result"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/txt_black_order"
+                                    app:isSignIn="@{node.sign_result}"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/ll_patrol_signin_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:visibility="gone"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_signin_time"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/txt_black_order"
+                                    android:text="@{node.sign_time}"
+                                    />
+                            </LinearLayout>
                             <LinearLayout
                                 android:id="@+id/ll_patrol_road_name"
                                 android:layout_width="match_parent"

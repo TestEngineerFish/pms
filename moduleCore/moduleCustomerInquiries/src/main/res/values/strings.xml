@@ -38,4 +38,8 @@
     <string name="tv_communicate_content">沟通内容</string>
     <string name="tv_feedback_content">反馈内容</string>
     <string name="tv_empty_content">反馈内容不能为空</string>
+    <string name="tv_empty_feedback_content">回复内容不能为空</string>
+    <string name="tv_save_suc">保存数据成功</string>
+    <string name="tv_svae_fail">保存失败</string>
+    <string name="tv_evaluation_time">评价时间</string>
 </resources>

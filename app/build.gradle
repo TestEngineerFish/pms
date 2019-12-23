@@ -49,20 +49,16 @@ android {
         debug {
             minifyEnabled false
             versionNameSuffix "-dev"
-//            applicationIdSuffix '.dev'
             manifestPlaceholders=[APP_NAME:app_name+"Dev"]
         }
         debugTest.initWith(buildTypes.debug)
-       /* debugTest {
+        debugTest {
             versionNameSuffix "-test"
-//            applicationIdSuffix '.test'
             manifestPlaceholders=[APP_NAME:app_name+"Test"]
         }
         //请勿删除，提测uat环境，上线开启
-
- /*       uat {
+        uat {
             versionNameSuffix "-uat"
-//            applicationIdSuffix '.uat'
             manifestPlaceholders=[APP_NAME:app_name+"Uat"]
             minifyEnabled true   //开启混淆
             zipAlignEnabled true  //压缩优化
@@ -74,7 +70,7 @@ android {
         release {
             versionNameSuffix ""
             manifestPlaceholders=[APP_NAME:app_name]
-        }*/
+        }
     }
 
     dataBinding {

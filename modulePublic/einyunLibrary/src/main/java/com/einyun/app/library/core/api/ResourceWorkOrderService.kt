@@ -160,5 +160,20 @@ interface ResourceWorkOrderService : EinyunService {
 
     fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>)
 
+    /**
+     * 通用强制闭单
+     */
+    fun forceClose(workOrderType:String,request: ApplyCloseRequest,callBack: CallBack<Boolean>)
+
+    /**
+     * 通用申请延期
+     */
+    fun postpone(workOrderType:String,request: ExtenDetialRequest,callBack: CallBack<Boolean>)
+
+    /**
+     * 判断 当前的工单 是否可以申请闭单 或者 是否可以申请延期
+     *返回true可以发起审批，返回false表示当前正在审批，不可再次申请
+     */
+    fun isClosed(request:IsClosedRequest,callBack: CallBack<Boolean>)
 
 }

@@ -35,6 +35,8 @@
     <string name="text_plan_name">计划名称</string>
     <string name="text_work_guide">工作指导</string>
     <string name="text_grid">网格</string>
+    <string name="text_building">楼栋</string>
+    <string name="text_unit">单元</string>
     <string name="text_order_person">工单处理人</string>
     <string name="text_order_create_time">工单创建时间</string>
     <string name="text_end_time">完成截止时间</string>
@@ -45,7 +47,7 @@
     <string name="text_apply_postpone">申请延期</string>
     <string name="text_house">房产</string>
     <string name="text_apply_force_close">强制关闭</string>
-
+    <string name="text_save">保存</string>
     <string-array name="order_list">
         <item>待跟进</item>
         <item>已跟进</item>
@@ -126,6 +128,7 @@
     <string name="text_location">位置</string>
     <string name="text_alert">提示</string>
     <string name="text_applying">审批中</string>
+    <string name="text_applying_wait">审批中,请等待</string>
     <string name="text_state_pass">通过</string>
     <string name="text_state_reject">驳回</string>
     <string name="text_work_order_apply">验收</string>
@@ -172,6 +175,7 @@
     <string name="tv_dealing">待处理</string>
     <string name="tv_closed">已关闭</string>
     <string name="tv_for_respone">待评价</string>
+    <string name="tv_load_more" >加载更多</string>
     <string name="text_know">我知道了</string>
     <string name="text_re_scan">重新扫码</string>
     <string name="tv_deal_result">处理结果</string>
@@ -185,6 +189,7 @@
     <string name="text_wait_send">待派单</string>
     <string name="text_wait_evaluate">待评价</string>
     <string name="text_wait_grab">待抢单</string>
+    <string name="text_need_divide_selected">请先选择分期</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>
