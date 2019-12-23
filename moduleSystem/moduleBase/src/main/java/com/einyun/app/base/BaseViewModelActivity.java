@@ -32,7 +32,6 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         ActivityUtil.addActivity(this);
         viewModel = initViewModel();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             if (fullWindowFlag()) {
@@ -50,7 +49,6 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
             }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         }
-
         initViews(savedInstanceState);
         initData();
         initListener();

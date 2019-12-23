@@ -278,13 +278,11 @@ deps.project = project
 
 def server =[:]
 //开发调式环境
-//server.debug = "\"http://172.16.0.123\""https://smcloud.shimaowy.com/
-server.debug = "\"http://120.79.213.146\""
-//server.debug = "\"https://bms.einyun.com\""
+server.debug = "\"http://172.16.0.123\""
 //测试环境
 server.debug_test = "\"http://120.79.213.146\""
 //UAT环境
-server.uat = "\"https://bpm.somelink.cn/xx\""
+server.uat = "\"http://testbms.einyun.com\""
 //正式环境
 server.release = "\"https://bpm.somelink.cn/xxxx\""
 deps.server = server

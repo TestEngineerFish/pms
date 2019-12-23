@@ -39,6 +39,8 @@
                     android:layout_width="@dimen/px_30"
                     android:layout_height="@dimen/px_30"
                     android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    app:isComingTimeout="@{workOrder.is_coming_timeout}"
                     android:src="@drawable/warning" />
 
                 <TextView

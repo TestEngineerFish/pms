@@ -66,6 +66,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     protected void initRequest() {
         setListType(listType);
         setOrderId(orderId);
+        setProInsId(proInsId);
+        setTaskId(taskId);
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
@@ -74,9 +76,11 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     @Override
     protected void switchStateUI() {
         super.switchStateUI();
+        hideRightOption();
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -48,7 +48,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
 
     @VisibleForTesting
-    public static final String DATABASE_NAME = "pms-db";
+    public static final String DATABASE_NAME = "pms2-db";
 
     public abstract UserDao userDao();
 

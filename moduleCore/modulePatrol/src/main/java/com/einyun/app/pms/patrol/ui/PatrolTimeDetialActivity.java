@@ -58,12 +58,14 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.title_patrol_time);
+        setRightOption(R.drawable.histroy);
     }
 
 
     protected void initRequest() {
         setListType(listType);
         setOrderId(orderId);
+        setProInsId(proInsId);
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
@@ -81,6 +83,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         binding.llWorkGuide.setVisibility(View.GONE);
         binding.llTypes.setVisibility(View.GONE);
         binding.itemCaptures.setVisibility(View.GONE);
+        binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
     }
 
     @Override
@@ -189,4 +192,5 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                 .withBundle(RouteKey.KEY_PARAMS, bundle)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_SIGN_IN);
     }
+
 }

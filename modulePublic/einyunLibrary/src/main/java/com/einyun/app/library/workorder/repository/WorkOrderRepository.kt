@@ -35,6 +35,43 @@ import retrofit2.http.Url
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    override fun complainDetailComplete(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.complainDetailComplete(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    callBack.call(it.isState)
+                    liveData.postValue(it.isState)
+                }else{
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
+
+    override fun complainDetailSave(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.complainDetailSave(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    callBack.call(it.isState)
+                    liveData.postValue(it.isState)
+                }else{
+                 callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
 
     //报修-派单
     override fun repaireSend(
@@ -788,9 +825,9 @@ class WorkOrderRepository : WorkOrderService {
         return liveData
     }
 
-    override fun getClientOrderDetail(procInstId:String, taskId:String, callBack: CallBack<RepairsDetailModel>):LiveData<RepairsDetailModel>{
+    override fun getClientOrderDetail(instId:String, taskId:String, callBack: CallBack<RepairsDetailModel>):LiveData<RepairsDetailModel>{
         var liveData = MutableLiveData<RepairsDetailModel>()
-        serviceApi?.getClientOrderDetail(procInstId,taskId)?.compose(RxSchedulers.inIoMain())
+        serviceApi?.getClientOrderDetail(instId,taskId)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
                 if (it.isState){
                     liveData.postValue(it.data)

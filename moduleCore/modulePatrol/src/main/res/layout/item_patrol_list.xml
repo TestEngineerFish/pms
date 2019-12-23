@@ -20,7 +20,7 @@
         app:cardCornerRadius="@dimen/px_10"
         android:focusable="true"
         android:clickable="true"
-        android:foreground = "?attr/selectableItemBackground"
+        android:foreground = "?attr/selectableItemBackgroundBorderless"
         >
 
         <LinearLayout
@@ -33,21 +33,24 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_90"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginRight="@dimen/px_20">
 
                 <ImageView
                     android:id="@+id/iv_has_warn"
-                    android:layout_width="@dimen/px_20"
-                    android:layout_height="@dimen/px_20"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
                     android:layout_centerVertical="true"
-                    app:isWarn="@{patrol.warn}" />
+                    android:src="@drawable/warning"
+                    app:isComingTimeout="@{patrol.is_coming_timeout}" />
 
                 <TextView
                     android:id="@+id/tv_order_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_toRightOf="@id/iv_has_warn"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/px_32"
                     android:text="@{patrol.f_inspection_work_plan_name}" />

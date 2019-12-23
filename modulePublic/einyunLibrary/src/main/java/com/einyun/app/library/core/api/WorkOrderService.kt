@@ -88,4 +88,8 @@ interface WorkOrderService : EinyunService {
     fun getClientOrderDetail(
         instId: String,taskId:String, callBack: CallBack<RepairsDetailModel>
     ): LiveData<RepairsDetailModel>
+
+    fun complainDetailComplete(request:ComplainDetailCompleteRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun complainDetailSave(request:ComplainDetailCompleteRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+
 }

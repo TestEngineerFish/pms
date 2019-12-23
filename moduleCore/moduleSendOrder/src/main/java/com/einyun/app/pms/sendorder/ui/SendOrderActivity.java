@@ -115,8 +115,8 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
     @Override
     protected void initData() {
         super.initData();
-        viewModel.getTiaoXian();
-        viewModel.getOrderType();
+//        viewModel.getTiaoXian();
+//        viewModel.getOrderType();
     }
 
     @Override

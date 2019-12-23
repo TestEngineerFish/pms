@@ -37,4 +37,5 @@ class PatrolWorkOrder {
     var assigneeId: String? = null
     var ownerId: String? = null
     var F_patrol_line_id:String?=null
+    var is_coming_timeout:Int=0
 }

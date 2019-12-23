@@ -45,8 +45,8 @@
     <color name="main_bottom_tab_text_select_color">#185cc7</color>
     <color name="normal_blue_btn_start_color">#185cc7</color>
     <color name="normal_blue_btn_end_color">#5c9bff</color>
-    <color name="pressd_blue_btn_start_color">#326BC3</color>
-    <color name="pressd_blue_btn_end_color">#4B82D8</color>
+    <color name="pressd_blue_btn_start_color">#3B7DE4</color>
+    <color name="pressd_blue_btn_end_color">#5898FC</color>
     <color name="enabled_blue_btn_start_color">#9DBEF1</color>
     <color name="enabled_blue_btn_end_color">#ACCBFD</color>
     <color name="today_txt_color">#9ea4b4</color>

@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="repairs"
-            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+            name="complain"
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -51,31 +50,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/pd_view" />
 
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:paddingLeft="0dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="服务态度"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <com.einyun.app.common.ui.component.rating.RatingBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_75"
-                    app:starCount="5"
-                    app:starEmpty="@mipmap/rating_off"
-                    app:starFill="@mipmap/rating_on"
-                    app:starHalf="@mipmap/rating_off"
-                    app:starImageSize="@dimen/px_26"
-                    app:starPadding="@dimen/px_12"
-                    app:starStep="5"
-                    app:stepSize="Full" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +58,6 @@
 
                 <LinearLayout
                     style="@style/ll_create_order"
-                    android:layout_height="wrap_content"
                     android:paddingLeft="0dp">
 
 
@@ -112,6 +85,7 @@
                             android:padding="@dimen/px_5" />
 
                         <TextView
+                            android:id="@+id/tv_solve"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/px_5"
@@ -128,6 +102,7 @@
                             android:padding="@dimen/px_5" />
 
                         <TextView
+                            android:id="@+id/tv_un_solve"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/px_5"
@@ -137,7 +112,68 @@
                     </RadioGroup>
 
                 </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_30"
+                    android:paddingLeft="0dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="服务态度"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+
+                    <com.einyun.app.common.ui.component.rating.RatingBar
+                        android:id="@+id/rb_first"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_75"
+                        app:starCount="5"
+                        app:starEmpty="@mipmap/rating_off"
+                        app:starFill="@mipmap/rating_on"
+                        app:starHalf="@mipmap/rating_off"
+                        app:starImageSize="@dimen/px_26"
+                        app:starPadding="@dimen/px_12"
+                        app:starStep="5"
+                        app:stepSize="Full" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_explain"
+                    style="@style/ll_create_order"
+                    android:paddingLeft="@dimen/px_0"
+                    android:visibility="gone">
+                    <TextView style="@style/tv_create_order_red_star" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="说明"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_explain_second"
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10"
+                    android:visibility="gone">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/lt_explain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_30"
+                        app:hintText="@string/tv_enter"
+                        app:maxNumber="300" />
+                </LinearLayout>
+                <View android:id="@+id/v_explain" android:visibility="gone" style="@style/base_underline" />
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:paddingLeft="@dimen/px_0">
@@ -157,12 +193,12 @@
                     android:paddingRight="@dimen/px_10">
 
                     <com.einyun.app.common.ui.component.limit.LimitInput
-                        android:id="@+id/et_limit_suggestion"
+                        android:id="@+id/lt_reason_attitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/px_30"
                         app:hintText="@string/tv_enter"
-                        app:maxNumber="300" />
+                        app:maxNumber="300" />no_
                 </LinearLayout>
             </LinearLayout>
 
@@ -180,6 +216,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/rb_second"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_75"
@@ -199,62 +236,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    style="@style/ll_create_order"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="0dp">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_deal_result"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:textSize="@dimen/font_size14" />
-
-                    <RadioGroup
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:layout_width="@dimen/px_30"
-                            android:layout_height="@dimen/px_30"
-                            android:layout_marginLeft="@dimen/px_75"
-                            android:background="@drawable/select_inquiries_solve"
-                            android:button="@null"
-                            android:padding="@dimen/px_5" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/px_5"
-                            android:text="@string/tv_had_solve"
-                            android:textColor="@color/txt_black_order" />
-
-                        <RadioButton
-                            android:layout_width="@dimen/px_30"
-                            android:layout_height="@dimen/px_30"
-                            android:layout_marginLeft="@dimen/px_40"
-                            android:background="@drawable/select_inquiries_unsolve"
-                            android:button="@null"
-                            android:padding="@dimen/px_5" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/px_5"
-                            android:text="@string/tv_un_solve"
-                            android:textColor="@color/txt_black_order" />
-
-                    </RadioGroup>
-
-                </LinearLayout>
 
                 <LinearLayout
                     style="@style/ll_create_order"
-                    android:paddingLeft="@dimen/px_0">
+                    android:paddingLeft="@dimen/px_0"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -267,10 +253,12 @@
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_30"
                     android:paddingLeft="@dimen/px_10"
                     android:paddingRight="@dimen/px_10">
 
                     <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/lt_no_reason_quality"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/px_30"

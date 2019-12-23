@@ -232,4 +232,23 @@ interface ResourceWorkOrderServiceApi {
     @POST(URLs.URL_WORK_PREVIEW_PATRO_ORDER)
     fun getPatroPreviewOrders(@Body request: OrderPreviewRequest):Flowable<OrderPreviewResponse>
 
+    /**
+     * 通用强制关闭
+     * */
+    @POST(URLs.URL_WORK_ORDER_FORCE_CLOSE)
+    fun forceClose(@Path("workOrder") orderType:String,@Body request:ApplyCloseRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 通用申请延期
+     * */
+    @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE)
+    fun postpone(@Path("workOrder") orderType:String,@Body request:ExtenDetialRequest):Flowable<BaseResponse<Any>>
+
+    /**
+     * 判断 当前的工单 是否可以申请闭单 或者 是否可以申请延期
+     *返回true可以发起审批，返回false表示当前正在审批，不可再次申请
+     */
+    @POST(URLs.URL_RESOURCE_WORKORDER_IS_CLOSE)
+    fun isClosed(@Body request: IsClosedRequest):Flowable<BaseResponse<Boolean>>
+
 }

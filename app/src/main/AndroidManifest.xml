@@ -83,10 +83,14 @@
             />
         <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"/>
 
+        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyForceCloseActivity"/>
+        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity"/>
 
+        <!--点检Start-->
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
         <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
+        <!--点检End-->
 
         <!--计划工单Start-->
         <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderActivity"/>
@@ -102,6 +106,8 @@
         <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity"/>
         <activity android:name=".patrol.ui.PatrolSignInScannerActivity"/>
         <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity"/>
+        <activity android:name=".patrol.ui.PatrolForceCloseActivity"/>
+        <activity android:name=".patrol.ui.PatrolPostPoneActivity"/>
         <!--巡查工单End-->
 
         <!-- 创建工单 Start-->

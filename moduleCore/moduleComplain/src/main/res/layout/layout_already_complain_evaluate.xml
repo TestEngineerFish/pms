@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
+    <data>
         <variable
-            name="repairs"
-            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+            name="complain"
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -66,7 +66,8 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14" />
+                    android:textSize="@dimen/font_size14"
+                    android:text="@{complain.f_return_time}"/>
 
             </LinearLayout>
 
@@ -98,8 +99,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/px_5"
-                        android:text="@string/tv_had_solve"
-                        android:textColor="@color/txt_black_order" />
+                        android:text="@{complain.f_handle_result}"
+                        android:textColor="@color/txt_black_order"
+                        android:textSize="@dimen/font_size14"/>
 
                 </RadioGroup>
 
@@ -124,7 +126,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:clickable="false"
-                    app:starCount="5"
                     app:starEmpty="@mipmap/rating_off"
                     app:starFill="@mipmap/rating_on"
                     app:starHalf="@mipmap/rating_off"
@@ -132,6 +133,7 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
+                <!--                    app:starCount="@{complain.f_return_score}"-->
 
 
             </LinearLayout>
@@ -155,7 +157,8 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14" />
+                    android:textSize="@dimen/font_size14"
+                    android:text="@{complain.service_attitude_content}"/>
 
             </LinearLayout>
 
@@ -177,7 +180,7 @@
                 <com.einyun.app.common.ui.component.rating.RatingBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:starCount="5"
+                    android:clickable="false"
                     app:starEmpty="@mipmap/rating_off"
                     app:starFill="@mipmap/rating_on"
                     app:starHalf="@mipmap/rating_off"
@@ -185,6 +188,7 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
+<!--                app:starCount="@{complain.service_quality_score}"-->
 
             </LinearLayout>
 
@@ -207,6 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
+                    android:text="@{complain.service_quality_content}"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size14" />
             </LinearLayout>

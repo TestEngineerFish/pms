@@ -30,6 +30,9 @@ public interface PatrolDao {
     @Query("select * from patrol_digests where userId=:userId and listType=:listType")
     DataSource.Factory<Integer,Patrol> queryAll(@NonNull String userId, @NonNull int listType);
 
+    @Query("select * from patrol_digests where userId=:userId and listType=:listType and (F_plan_work_order_code LIKE '%' || :search || '%' or F_inspection_work_plan_name LIKE '%' || :search || '%')")
+    DataSource.Factory<Integer,Patrol> search(@NonNull String userId, @NonNull int listType,String search);
+
     @Query("update patrol_digests set isCached=1 where ID_=:orderId and userId=:userId")
     void updateCachedState(String orderId,String userId);
 

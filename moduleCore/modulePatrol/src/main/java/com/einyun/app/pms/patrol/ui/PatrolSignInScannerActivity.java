@@ -33,6 +33,7 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
         if(qrId.equals(result)){
             scanResult=true;
             showSuccess();
+            stopCameraPreview();
         }else{
             scanResult=false;
             showFaild();
@@ -100,8 +101,7 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
                     .setTitle(getString(R.string.text_signin_failed))
                     .setMsg(getString(R.string.text_auto_return))
                     .setNegativeButton(getString(R.string.text_know), v -> {
-                        setScanResult();
-                        finish();
+                        removeAutoClose();
                     });
         }
         alertDialog.show();
@@ -114,12 +114,16 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
             alertDialog.dismiss();
         }
         setScanResult();
+        removeAutoClose();
+
+    }
+
+    private void removeAutoClose() {
         if(handler!=null){
             if(runnable!=null){
                 handler.removeCallbacks(runnable);
             }
         }
-
     }
 
     @Override

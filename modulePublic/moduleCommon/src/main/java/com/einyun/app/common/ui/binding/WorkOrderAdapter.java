@@ -35,6 +35,15 @@ public class WorkOrderAdapter {
 
     }
 
+    @BindingAdapter("isComingTimeout")
+    public static void isComingTimeout(ImageView view, int value){
+        if(value>0){
+            view.setVisibility(View.VISIBLE);
+        }else{
+            view.setVisibility(View.GONE);
+        }
+    }
+
     /**
      * 列表状态
      * @param view
