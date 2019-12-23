@@ -30,7 +30,7 @@
 
             <LinearLayout style="@style/ll_create_order"
                 android:paddingLeft="@dimen/px_20">
-
+                <TextView style="@style/tv_create_order_red_star" />
                 <TextView
                     style="@style/tv_create_order_name"
                     android:text="处理"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content">
 
                 <com.einyun.app.common.ui.component.limit.LimitInput
-                    android:id="@+id/repair_response_reason"
+                    android:id="@+id/lt_response_reason"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_30"

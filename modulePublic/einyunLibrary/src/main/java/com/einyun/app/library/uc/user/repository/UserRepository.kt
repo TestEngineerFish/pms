@@ -50,6 +50,7 @@ class UserRepository :UCService{
                         liveData.postValue(tentantResponse.getData())
                         callBack.call(tentantResponse.getData())
                     } else {
+                        tentantResponse.msg = "企业编码填写错误"
                         callBack.onFaild(EinyunHttpException(tentantResponse))
                     }
                 }, { error -> callBack.onFaild(error) })

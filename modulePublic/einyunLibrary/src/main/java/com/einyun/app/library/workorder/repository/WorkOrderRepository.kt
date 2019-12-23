@@ -35,6 +35,43 @@ import retrofit2.http.Url
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    override fun complainDetailComplete(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.complainDetailComplete(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    callBack.call(it.isState)
+                    liveData.postValue(it.isState)
+                }else{
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
+
+    override fun complainDetailSave(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
+        serviceApi?.complainDetailSave(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    callBack.call(it.isState)
+                    liveData.postValue(it.isState)
+                }else{
+                 callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
 
     //报修-派单
     override fun repaireSend(

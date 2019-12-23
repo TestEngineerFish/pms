@@ -176,7 +176,7 @@ class CustomerComplainModelBean {
     var F_ts_attachment: String? = null
     var F_handle_result: String? = null
     var F_ts_recorder_id: String? = null
-    var F_return_score: Any? = null
+    var F_return_score: String? = null
     var F_response_time: String? = null
     var u_city_area_id: Any? = null
     var F_response_user: String? = null

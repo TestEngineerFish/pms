@@ -35,6 +35,24 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+    override fun complainDetailSave(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.complainDetailSave(
+            request, callBack
+        )
+    }
+
+    override fun complainDetailComplete(
+        request: ComplainDetailCompleteRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.complainDetailComplete(
+            request, callBack
+        )
+    }
+
     override fun getClientOrderDetail(
         instId: String,
         taskId: String,

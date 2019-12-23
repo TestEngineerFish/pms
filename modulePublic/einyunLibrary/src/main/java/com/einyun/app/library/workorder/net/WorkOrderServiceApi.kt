@@ -226,4 +226,10 @@ interface WorkOrderServiceApi {
 
     @GET(URLs.URL_CLIENT_DETAIL)
     fun getClientOrderDetail(@retrofit2.http.Query("procInstId") procInstId: String, @retrofit2.http.Query("taskId") taskId: String): Flowable<BaseResponse<RepairsDetailModel>>
+
+    @POST(URLs.URL_COMPLAIN_DETAIL_COMPLETE)
+    fun complainDetailComplete(@Body request: ComplainDetailCompleteRequest):Flowable<BaseResponse<Any>>
+
+    @POST(URLs.URL_COMPLAIN_DETAIL_SAVE)
+    fun complainDetailSave(@Body request: ComplainDetailCompleteRequest):Flowable<BaseResponse<Any>>
 }

@@ -90,5 +90,10 @@ class URLs {
         const val URL_REPAIR_SEND="/workOrder/workOrder/customerRepair/v1/complete"
 
         const val URL_INITIATE_COMMUNICATION="/bpm-runtime/runtime/task/v1/communicate"
+
+        //详情处理响应评价
+        const val URL_COMPLAIN_DETAIL_COMPLETE="/workOrder/workOrder/taskRun/v1/complete"
+        //详情处理响应评价
+        const val URL_COMPLAIN_DETAIL_SAVE="/workOrder/workOrder/saveDraft/v1/saveHandle"
     }
 }

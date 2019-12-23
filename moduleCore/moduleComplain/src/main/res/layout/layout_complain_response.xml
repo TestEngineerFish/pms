@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content">
 
                 <com.einyun.app.common.ui.component.limit.LimitInput
-                    android:id="@+id/repair_response_reason"
+                    android:id="@+id/lt_response_reason"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_30"

@@ -19,6 +19,8 @@ import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
+import com.einyun.app.library.workorder.model.TypeAndLine;
+import com.einyun.app.library.workorder.net.request.ComplainDetailCompleteRequest;
 import com.einyun.app.library.workorder.net.request.PostCommunicationRequest;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.complain.repository.DataSourceFactory;
@@ -45,6 +47,48 @@ public class DetailViewModel extends BaseUploadViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<List<TypeAndLine>> typeAndLineList() {
+        return workOrderService.typeAndLineList(new CallBack<List<TypeAndLine>>() {
+            @Override
+            public void call(List<TypeAndLine> data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<Boolean> complainDetailComplete(ComplainDetailCompleteRequest request){
+        return workOrderService.complainDetailComplete(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<Boolean> complainDetailSave(ComplainDetailCompleteRequest request){
+        return workOrderService.complainDetailSave(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
                 ThrowableParser.onFailed(throwable);
             }
         });

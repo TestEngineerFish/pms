@@ -6,6 +6,10 @@
 
     <data>
         <variable
+            name="request"
+            type="com.einyun.app.library.workorder.net.request.ComplainDetailCompleteRequest" />
+
+        <variable
             name="complain"
             type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
     </data>
@@ -98,14 +102,36 @@
                     style="@style/work_order_detail_txt_right"
                     android:text="@{complain.f_ts_way}" />
             </LinearLayout>
+            <LinearLayout style="@style/work_order_detail_ln" android:id="@+id/ll_complain_type_1">
+
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:text="投诉类别" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:layout_width="wrap_content"
+                    android:text="@{complain.f_ts_cate}" />
+
+            </LinearLayout>
+            <LinearLayout style="@style/work_order_detail_ln" android:id="@+id/ll_complain_nature_1">
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:text="投诉性质" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{complain.f_ts_property}" />
+            </LinearLayout>
 
 
-            <LinearLayout style="@style/work_order_detail_ln">
+            <LinearLayout style="@style/work_order_detail_ln" android:id="@+id/ll_complain_type_2">
 
                 <TextView
                     style="@style/tv_create_order_red_star"
                     android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginTop="@dimen/px_30" />
+                    android:layout_marginTop="@dimen/px_30"
+                    />
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
@@ -113,9 +139,10 @@
                     android:text="投诉类别" />
 
                 <TextView
+                    android:id="@+id/tv_complain_type"
                     style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:text="@{complain.f_ts_cate}" />
+                    android:text="@{request.bizData.f_ts_cate}"/>
 
                 <ImageView
                     android:layout_width="@dimen/px_20"
@@ -124,55 +151,31 @@
                     android:src="@drawable/edit" />
             </LinearLayout>
 
-            <LinearLayout style="@style/work_order_detail_ln">
+            <LinearLayout style="@style/work_order_detail_ln" android:id="@+id/ll_complain_nature_2">
 
                 <TextView
                     style="@style/tv_create_order_red_star"
+                    android:layout_marginLeft="@dimen/px_20"
                     android:layout_marginTop="@dimen/px_30"
-                    android:layout_marginLeft="@dimen/px_20"/>
+                    />
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
                     android:layout_marginLeft="@dimen/px_6"
                     android:text="投诉性质" />
 
-                <RadioGroup
-                    android:id="@+id/rgs"
+                <TextView
+                    android:id="@+id/tv_complain_nature"
+                    style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_20"
-                    android:orientation="horizontal">
+                    android:text="@{request.bizData.f_ts_property}"/>
 
-                    <RadioButton
-                        android:id="@+id/rb_general"
-                        android:layout_width="@dimen/px_120"
-                        android:layout_height="@dimen/px_50"
-                        android:layout_marginLeft="@dimen/px_20"
-                        android:background="@drawable/select_radio_button_general"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:tag="2"
-                        android:text="一般"
-                        android:enabled="false"
-                        android:textColor="@drawable/select_radio_button_text"
-                        android:textSize="@dimen/font_size13" />
-
-                    <RadioButton
-                        android:id="@+id/rb_warning"
-                        android:layout_width="@dimen/px_120"
-                        android:layout_height="@dimen/px_50"
-                        android:layout_marginLeft="@dimen/px_20"
-                        android:background="@drawable/select_radio_button_warning"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:tag="3"
-                        android:text="严重"
-                        android:enabled="false"
-                        android:textColor="@drawable/select_radio_button_text"
-                        android:textSize="@dimen/font_size13" />
-                </RadioGroup>
+                <ImageView
+                    android:layout_width="@dimen/px_20"
+                    android:layout_height="@dimen/px_22"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/edit" />
             </LinearLayout>
-
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
