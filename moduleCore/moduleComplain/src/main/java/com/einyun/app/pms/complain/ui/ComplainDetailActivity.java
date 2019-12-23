@@ -134,7 +134,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             complainAppendList = repairsDetailModel.getData().getCustomer_complain_model().getSub_complain_append();
             complainAppendList();
 
-//隐藏展示
+            //隐藏展示
             String value = detail.getF_state();
             //只有待跟进才能操作   其余无法操作
             if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(fragmentKey)) {
