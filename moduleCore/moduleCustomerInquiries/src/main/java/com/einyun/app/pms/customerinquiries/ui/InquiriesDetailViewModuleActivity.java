@@ -139,7 +139,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             orderDetailInfoModule = module;
             int c_is_solve = orderDetailInfoModule.getData().getCustomer_repair_model().getC_is_solve();
 
-                if (c_is_solve ==1) {
+                if (c_is_solve ==1) {//1 已解决  0 未解决
                     binding.llEvaluationClose.setVisibility(View.VISIBLE);
                     String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
                     binding.tvEvaluationTime.setText(return_time);
