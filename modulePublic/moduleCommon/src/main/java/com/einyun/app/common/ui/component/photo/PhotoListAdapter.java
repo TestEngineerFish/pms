@@ -68,7 +68,9 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
         List<String> paths=new ArrayList<>();
         if(picList!=null){
             for(PicUrlModel model:picList){
-                paths.add(HttpUrlUtil.getImageServerUrl(model.getPath()));
+                if(model!=null){
+                    paths.add(HttpUrlUtil.getImageServerUrl(model.getPath()));
+                }
             }
         }
         return paths;

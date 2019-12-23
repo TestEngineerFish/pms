@@ -28,4 +28,5 @@ class PatrolPageRequest :PageRquest(){
     var floor:String?=null
     @SerializedName("F_massif_id")
     var divideId: String? = null
+    var searchValue: String? = null
 }

@@ -89,7 +89,11 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             holder.layoutAdd.setVisibility(View.VISIBLE);
             holder.imgPhoto.setVisibility(View.INVISIBLE);
             holder.imgRemove.setVisibility(View.INVISIBLE);
-
+            if(getItemCount()>=maxSize+1){
+                holder.itemView.setVisibility(View.GONE);
+            }else{
+                holder.itemView.setVisibility(View.VISIBLE);
+            }
             holder.layoutAdd.setOnClickListener(v -> {
                 if (listener != null) {
                     Activity activity=weakReference.get();
@@ -116,6 +120,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
                 }
             });
         } else {
+            holder.itemView.setVisibility(View.VISIBLE);
             holder.layoutAdd.setVisibility(View.INVISIBLE);
             holder.imgPhoto.setVisibility(View.VISIBLE);
             holder.imgRemove.setVisibility(View.VISIBLE);
@@ -153,6 +158,7 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
                     .into(holder.imgPhoto);
         }
     }
+
 
     public interface ItemChangeListener {
         void onChange(List<Uri> urs);

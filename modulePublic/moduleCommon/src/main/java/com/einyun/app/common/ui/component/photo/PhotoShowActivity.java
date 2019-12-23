@@ -16,6 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.einyun.app.base.BaseActivity;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -23,7 +24,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoShowActivity extends AppCompatActivity {
+public class PhotoShowActivity extends BaseActivity {
 
     HackyViewPager hViewPager;
     ImageView back;
@@ -42,15 +43,20 @@ public class PhotoShowActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_show);
+    public void initViews(Bundle savedInstanceState) {
+        super.initViews(savedInstanceState);
         hViewPager=findViewById(R.id.hViewPager);
         back=findViewById(R.id.back);
         llPoint=findViewById(R.id.ll_point);
         getFrontPageData();
         initViews();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_photo_show;
     }
 
     private void initViews() {
@@ -71,9 +77,9 @@ public class PhotoShowActivity extends AppCompatActivity {
 
     public void getFrontPageData() {
         //点击图片的位置
-        position = getIntent().getIntExtra("position", 0);
+        position = getIntent().getIntExtra(DataConstants.KEY_POSITION, 0);
         //获取传递过来的图片地址
-        mDatas = getIntent().getStringArrayListExtra("mImages");
+        mDatas = getIntent().getStringArrayListExtra(DataConstants.KEY_IAMGES);
 
         if (mDatas.size() == 1) {
             // 只有一张图片 就不显示圆点

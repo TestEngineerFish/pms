@@ -55,4 +55,5 @@ open class DistributeWorkOrder {
      var F_PROC_DATE: String?=null
      var F_EXT_STATUS: Int = 0
      var isReply:Int=0
+     var is_coming_timeout:Int=0
 }
