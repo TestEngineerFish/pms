@@ -102,7 +102,6 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     private void fresh() {
         viewModel.getComplainDetail(proInsId, taskId).observe(this, repairsDetailModel -> {
             this.detail = repairsDetailModel.getData().getCustomer_complain_model();
-
             //处理时长
             createTime = detail.getF_ts_time();
             if (ComplainOrderState.CLOSED.getState().equals(detail.getF_state())) {

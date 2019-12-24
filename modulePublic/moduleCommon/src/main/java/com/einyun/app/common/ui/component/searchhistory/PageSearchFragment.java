@@ -39,6 +39,11 @@ import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 
 import java.util.List;
 
+/**
+ * 分页搜索
+ * @param <D>
+ * @param <M>
+ */
 public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFragment implements TextWatcher {
     private RecyclerView recycleView;
     private EditText etSearch;

@@ -16,6 +16,7 @@ import com.einyun.app.library.resource.workorder.net.request.DistributeSubmitReq
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.WorkOrderHanlerRequest;
+import com.einyun.app.library.resource.workorder.net.request.formDataExten;
 import com.einyun.app.library.resource.workorder.net.response.HistroyResponse;
 import com.einyun.app.library.upload.model.PicUrl;
 
@@ -261,5 +262,29 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
         return histroyList;
     }
 
+    public LiveData<formDataExten> getApplyDateInfo(String id){
+        return service.getApplyDateInfo(id, new CallBack<formDataExten>() {
+            @Override
+            public void call(formDataExten data) {
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+    }
+
+    public LiveData<Boolean> postApplyDateInfo(String orderType,ExtenDetialRequest request){
+        return service.postApplyDateInfo(orderType,request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+    }
 }

@@ -78,7 +78,9 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
             @Override
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                request.setExpectTime(dft.format(date));
+                String format = dft.format(date);
+                request.setExpectTime(format);
+                binding.tvTime.setText(format);
             }
         }).setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
@@ -111,20 +113,5 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
         viewModel.postCommunication(request).observe(this, b -> {
             finish();
         });
-    }
-
-    public static String getOldDate(int distanceDay) {
-        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
-        Date beginDate = new Date();
-        Calendar date = Calendar.getInstance();
-        date.setTime(beginDate);
-        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
-        Date endDate = null;
-        try {
-            endDate = dft.parse(dft.format(date.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dft.format(endDate);
     }
 }

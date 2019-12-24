@@ -138,7 +138,11 @@ public class RatingBar extends LinearLayout {
         if (!StringUtil.isNullStr(mTypedArray.getString(R.styleable.RatingBar_starCount))){
             starCount = 5;
         }else{
-            starCount = Integer.parseInt(mTypedArray.getString(R.styleable.RatingBar_starCount));
+            try {
+                starCount = Integer.parseInt(mTypedArray.getString(R.styleable.RatingBar_starCount));
+            }catch (Exception e){
+                starCount = 5;
+            }
         }
         starEmptyDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starEmpty);
         starFillDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starFill);

@@ -1,6 +1,7 @@
 package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.portal.dictdata.net.URLS
 import com.einyun.app.library.resource.workorder.model.ApplyCloseModel
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder
@@ -255,4 +256,9 @@ interface ResourceWorkOrderServiceApi {
     @POST(URLs.URL_RESOURCE_WORKORDER_IS_CLOSE)
     fun isClosed(@Body request: IsClosedRequest):Flowable<BaseResponse<Boolean>>
 
+    @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME_INFO)
+    fun getApplyDateInfo(@Body request: Query):Flowable<BaseResponse<formDataExten>>
+
+    @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE)
+    fun postApplyDateInfo(@Path("workOrder") orderType:String,@Body request:ExtenDetialRequest):Flowable<BaseResponse<Boolean>>
 }

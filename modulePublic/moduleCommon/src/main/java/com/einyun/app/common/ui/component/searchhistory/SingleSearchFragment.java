@@ -40,6 +40,11 @@ import com.einyun.app.common.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 单页搜索
+ * @param <D>
+ * @param <M>
+ */
 public class SingleSearchFragment<D extends ViewDataBinding, M> extends DialogFragment implements TextWatcher {
     private RecyclerView recycleView;
     private EditText etSearch;
