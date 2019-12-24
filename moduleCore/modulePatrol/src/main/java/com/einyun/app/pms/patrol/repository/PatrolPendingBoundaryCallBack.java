@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static com.einyun.app.common.repository.DatabaseRepo.DATA_TYPE_INIT;
+import static com.einyun.app.common.repository.DatabaseRepo.DATA_TYPE_SYNC;
+
 /**
  * paging,data from network and db
  */
@@ -35,7 +38,7 @@ public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Pa
     }
 
     public void refresh() {
-        loadData(BaseBoundaryCallBack.DATA_TYPE_SYNC);
+        loadData(DATA_TYPE_SYNC);
     }
 
     public void search(String key){
@@ -48,7 +51,7 @@ public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Pa
     @Override
     public void onZeroItemsLoaded() {
         super.onZeroItemsLoaded();
-        loadData(BaseBoundaryCallBack.DATA_TYPE_INIT);
+        loadData(DATA_TYPE_INIT);
     }
 
     protected void loadData(final int dataType) {
@@ -61,9 +64,9 @@ public class PatrolPendingBoundaryCallBack extends PagedList.BoundaryCallback<Pa
                 PatrolListTypeConvert convert = new PatrolListTypeConvert();
                 List<Patrol> patrols = convert.stringToSomeObject(new Gson().toJson(data.getRows()));
                 wrapList(patrols);
-                if (dataType == BaseBoundaryCallBack.DATA_TYPE_INIT) {
+                if (dataType ==DATA_TYPE_INIT) {
                     patrolRepo.initData(patrols, request.getUserId(), listType);
-                } else if (dataType == BaseBoundaryCallBack.DATA_TYPE_SYNC) {
+                } else if (dataType == DATA_TYPE_SYNC) {
                     //同步数据
                     patrolRepo.sync(patrols, request.getUserId(), listType, null);
                 }

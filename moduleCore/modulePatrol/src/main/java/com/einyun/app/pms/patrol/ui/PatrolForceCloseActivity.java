@@ -1,6 +1,5 @@
 package com.einyun.app.pms.patrol.ui;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -15,7 +14,6 @@ import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
-import com.google.gson.Gson;
 
 import java.util.List;
 

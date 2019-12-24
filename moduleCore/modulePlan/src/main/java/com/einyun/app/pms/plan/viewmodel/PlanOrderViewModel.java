@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.einyun.app.base.db.entity.Distribute;
+import com.einyun.app.base.db.entity.Plan;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
@@ -25,11 +28,15 @@ import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.pms.plan.repository.DoneBoundaryCallBack;
 import com.einyun.app.pms.plan.repository.OrderDataSourceFactory;
+import com.einyun.app.pms.plan.repository.PendingBoundaryCallBack;
+import com.einyun.app.pms.plan.repository.PlanRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
@@ -42,23 +49,14 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3
 public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
     private ResourceWorkOrderRepo resourceWorkOrderRepo;
     LiveData<PagedList<PlanWorkOrder>> donePageList;
-    private ResourceWorkOrderService resourceWorkOrderService;
-    private LiveData<DistributeWorkOrderPage> workOrderListViewModel;
-    private MutableLiveData<List<ResourceTypeBean>> tiaoxianList = new MutableLiveData<>();//条线
-    private MutableLiveData<List<WorkOrderTypeModel>> workOrderTypeList = new MutableLiveData<>();//条线
-    public List<SelectModel> selectModelList = new ArrayList<>();
-    public List<ResourceTypeBean> resourceTypeBeans = new ArrayList<>();
     private OrgModel orgModel;
-    private DistributePageRequest request=new DistributePageRequest();
-    private DistributePageRequest requestDone=new DistributePageRequest();
+    private PlanRepository planRepository;
+    public DistributePageRequest request=new DistributePageRequest();
+    private PendingBoundaryCallBack pendingBoundaryCallBack;
+    private DoneBoundaryCallBack doneBoundaryCallBack;
 
-    public DistributePageRequest getRequest(String fragmentTag) {
-        if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-            return request;
-        }else{
-            return requestDone;
-        }
-    }
+    private LiveData<PagedList<Plan>> dbPendingPageList;
+    private LiveData<PagedList<Plan>> dbClosedPageList;
 
     public void setRequest(DistributePageRequest request) {
         this.request = request;
@@ -68,32 +66,82 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
         return orgModel;
     }
 
-    public void setOrgModel(String fragmentTag, OrgModel orgModel) {
+    public void setOrgModel(OrgModel orgModel) {
         this.orgModel = orgModel;
-        if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-            request.setDivideId(orgModel.getId());
-        }else{
-            requestDone.setDivideId(orgModel.getId());
-        }
-        refreshUI();
+        request.setDivideId(orgModel.getId());
+//        refreshUI();
     }
-
-    public List<SelectModel> listAll = new ArrayList<>();
-
-    public MutableLiveData<OrgnizationModel> orgnizationModelLiveData=new MutableLiveData<>();
     public PlanOrderViewModel() {
         this.resourceWorkOrderRepo = new ResourceWorkOrderRepo();
-        this.resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+        planRepository=new PlanRepository();
     }
 
     public MutableLiveData<List<JobModel>> jobModels=new MutableLiveData<>();
 
+    public void refresh(String fragmentTag){
+        if(fragmentTag.equals(RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)){
+            if(pendingBoundaryCallBack!=null){
+                pendingBoundaryCallBack.refresh();
+            }
+        }else{
+            if(doneBoundaryCallBack!=null){
+                doneBoundaryCallBack.refresh();
+            }
+        }
+    }
+
+    public void switchCondition(String fragmentTag){
+        if(fragmentTag.equals(RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)){
+            if(pendingBoundaryCallBack!=null){
+                pendingBoundaryCallBack.switchCondition();
+            }
+        }else{
+            if(doneBoundaryCallBack!=null){
+                doneBoundaryCallBack.switchCondition();
+            }
+        }
+    }
+
     /**
-     * * 获取代办列表
+     * 获取代办列表
+     * @return
+     */
+    public LiveData<PagedList<Plan>> loadPendingInDB() {
+        if(pendingBoundaryCallBack==null){
+            pendingBoundaryCallBack=new PendingBoundaryCallBack(request);
+        }
+        if(dbPendingPageList==null){
+            dbPendingPageList=new LivePagedListBuilder(planRepository.queryAll(request.getUserId(), ListType.PENDING.getType()), config)
+                    .setBoundaryCallback(pendingBoundaryCallBack)
+                    .setFetchExecutor(Executors.newFixedThreadPool(2))
+                    .build();
+        }
+        return dbPendingPageList;
+    }
+
+    /**
+     * 获取已办列表
+     * @return
+     */
+    public LiveData<PagedList<Plan>> loadDoneInDB(){
+        if(doneBoundaryCallBack==null){
+            doneBoundaryCallBack=new DoneBoundaryCallBack(request);
+        }
+        if(dbClosedPageList==null){
+           dbClosedPageList= new LivePagedListBuilder(planRepository.queryAll(request.getUserId(), ListType.DONE.getType()), config)
+                    .setBoundaryCallback(doneBoundaryCallBack)
+                    .setFetchExecutor(Executors.newFixedThreadPool(2))
+                    .build();
+        }
+        return dbClosedPageList;
+    }
+
+    /**
+     * * 在线搜索代办列表
      *
      * @return LiveData
      */
-    public LiveData<PagedList<PlanWorkOrder>> loadPadingData(DistributePageRequest request, String tag) {
+    public LiveData<PagedList<PlanWorkOrder>> loadPadingNetData(String tag) {
         if (!StringUtil.isNullStr(request.getDivideId())){
             request.setDivideId(null);
         }
@@ -104,139 +152,24 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
 
 
     /**
-     * 获取已办列表
-     * @param request
+     * 在线搜索已办列表
      * @return
      */
-    public LiveData<PagedList<PlanWorkOrder>> loadDonePagingData(DistributePageRequest request,String tag){
+    public LiveData<PagedList<PlanWorkOrder>> loadDonePagingNetData(String tag){
        donePageList= new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
                 .build();
        return donePageList;
     }
 
-//    /**
-//     * 获取Paging LiveData
-//     *
-//     * @return LiveData
-//     */
-//    public LiveData<PagedList<DistributeWorkOrder>> loadPadingData(DistributePageRequest request) {
-//
-//        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request), config)
-//                .build();
-//        return pageList;
-//    }
-
-    /**
-     * 获取跳线 LiveData
-     *
-     * @return LiveData
-     */
-    public LiveData<List<ResourceTypeBean>> getTiaoXian() {
-        showLoading();
-        resourceWorkOrderRepo.getTiaoXian(new CallBack<List<ResourceTypeBean>>() {
-            @Override
-            public void call(List<ResourceTypeBean> data) {
-                hideLoading();
-                tiaoxianList.postValue(data);
-                resourceTypeBeans = new ArrayList<>();
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-
-            }
-        });
-
-        return tiaoxianList;
-    }
-
-    public void onConditionSelected(DistributePageRequest request, Map<String, SelectModel> selected){
+    public void onConditionSelected(Map<String, SelectModel> selected){
         request.resetConditions();
-        if (selected.get(SELECT_DATE) != null){
-            String date = selected.get(SELECT_DATE).getKey();
-            request.setPeriod(date);
-        }
-        if(selected.get(SELECT_LINE)!=null){
-            String lineId=selected.get(SELECT_LINE).getKey();
-            request.setDivideId(lineId);
-        }
-        if(selected.get(SELECT_ORDER_TYPE)!=null){
-            String orderType=selected.get(SELECT_ORDER_TYPE).getKey();
-            request.setType(orderType);
-        }
-        if(selected.get(SELECT_ORDER_TYPE2)!=null){
-            request.setEnvType2(selected.get(SELECT_ORDER_TYPE2).getKey());
-        }
-        if(selected.get(SELECT_ORDER_TYPE3)!=null){
-            request.setEnvType3(selected.get(SELECT_ORDER_TYPE3).getKey());
-        }
-        if(selected.get(SELECT_IS_OVERDUE)!=null){
-            request.setFState(selected.get(SELECT_IS_OVERDUE).getKey());
-        }
-        refreshUI();
-    }
-
-    /**
-     * 获取跳线 LiveData
-     *
-     * @return LiveData
-     */
-    public LiveData<List<WorkOrderTypeModel>> getOrderType() {
-        showLoading();
-        resourceWorkOrderRepo.getWorkOrderType(new CallBack<List<WorkOrderTypeModel>>() {
-            @Override
-            public void call(List<WorkOrderTypeModel> data) {
-                hideLoading();
-                workOrderTypeList.postValue(data);
-                //先获取第一级别，并将其他级别按照parentid分组
-                listAll = new ArrayList<>();
-                for (WorkOrderTypeModel beanLoop : data) {
-                    SelectModel selectModel = new SelectModel();
-                    selectModel.setId(beanLoop.getId());
-                    selectModel.setIsCheck(false);
-                    selectModel.setContent(beanLoop.getText());
-                    selectModel.setType("");
-                    selectModel.setTypeId(beanLoop.getTypeId());
-                    selectModel.setKey(beanLoop.getKey());
-                    selectModel.setName(beanLoop.getName());
-                    selectModel.setParentId(beanLoop.getParentId());
-                    selectModel.setOpen(beanLoop.getOpen());
-                    selectModel.setText(beanLoop.getText());
-                    selectModel.setKey(beanLoop.getKey());
-                    listAll.add(selectModel);
-                }
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-
-            }
-        });
-
-        return workOrderTypeList;
-    }
-
-    /**
-     * 获取组织架构 LiveData
-     *
-     * @return LiveData
-     */
-    public MutableLiveData<OrgnizationModel> getOrgnization() {
-        showLoading();
-        resourceWorkOrderRepo.getOrgnization("63872495547056133",new CallBack<OrgnizationModel>() {
-            @Override
-            public void call(OrgnizationModel data) {
-                hideLoading();
-                orgnizationModelLiveData.postValue(data);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-
-            }
-        });
-
-        return orgnizationModelLiveData;
+        request.setPeriod(selected.get(SELECT_DATE)==null?null:selected.get(SELECT_DATE).getKey());
+        request.setDivideId(selected.get(SELECT_LINE)==null?null:selected.get(SELECT_LINE).getKey());
+        request.setType(selected.get(SELECT_ORDER_TYPE)==null?null:selected.get(SELECT_ORDER_TYPE).getKey());
+        request.setEnvType2(selected.get(SELECT_ORDER_TYPE2)==null?null:selected.get(SELECT_ORDER_TYPE2).getKey());
+        request.setEnvType3(selected.get(SELECT_ORDER_TYPE3)==null?null:selected.get(SELECT_ORDER_TYPE3).getKey());
+        request.setFState(selected.get(SELECT_IS_OVERDUE)==null?null:selected.get(SELECT_IS_OVERDUE).getKey());
+//        refreshUI();
     }
 
     /**

@@ -10,10 +10,13 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.repository.DatabaseRepo;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.pointcheck.model.CheckPointPage;
 import com.einyun.app.pms.pointcheck.net.CheckPointServiceApi;
 import com.einyun.app.pms.pointcheck.net.request.PageQueryRequest;
+
+import java.util.List;
 
 /**
  * @ProjectName: pms_old
@@ -27,7 +30,7 @@ import com.einyun.app.pms.pointcheck.net.request.PageQueryRequest;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class PointCheckListRepository {
+public class PointCheckListRepository extends DatabaseRepo<CheckPoint> {
     CheckPointServiceApi serviceApi;
     CheckPointDao dao;
 
@@ -50,7 +53,28 @@ public class PointCheckListRepository {
                 });
     }
 
+    @Override
+    public void deleteAll(String userId) {
+        dao.deleteAll(userId);
+    }
+
+    @Override
+    public void deleteAll(String userId, int listType) {
+
+    }
+
+    @Override
+    public void insert(List<CheckPoint> rows) {
+        dao.insert(rows);
+    }
+
+    @Override
+    public DataSource.Factory<Integer, CheckPoint> queryAll(@NonNull String userId, int listype) {
+        return null;
+    }
+
     public DataSource.Factory<Integer, CheckPoint> queryAll(@NonNull String userId){
         return dao.queryAll(userId);
     }
+
 }

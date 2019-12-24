@@ -13,23 +13,22 @@ import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.User;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.repository.CommonRepository;
+import com.einyun.app.common.repository.DatabaseRepo;
 import com.einyun.app.library.uc.user.model.UserModel;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SendOrderRespository extends CommonRepository {
-    AppDatabase db;
-    DistributeDao dao;
-    public SendOrderRespository() {
-        db=AppDatabase.getInstance(CommonApplication.getInstance());
-        dao=db.distributeDao();
-    }
+public class SendOrderRespository extends DatabaseRepo<Distribute> {
+    DistributeDao dao=getDb().distributeDao();
 
     /**
      *获取派工单数据源
      * @return
      */
+    @Override
     public DataSource.Factory<Integer, Distribute> queryAll(String userId,int orderType){
        return db.distributeDao().queryAll(userId,orderType);
     }
@@ -41,6 +40,11 @@ public class SendOrderRespository extends CommonRepository {
      */
     public void deleteAll(String userId,int orderType){
          dao.deleteAll(userId,orderType);
+    }
+
+    @Override
+    public void insert(List<Distribute> rows) {
+        dao.insert(rows);
     }
 
 }

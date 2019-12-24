@@ -21,6 +21,7 @@ import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
@@ -40,6 +41,7 @@ import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.pms.patrol.R;
@@ -54,6 +56,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,7 +89,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected PatrolInfo patrolInfo;
     protected AlertDialog alertDialog;
     protected TipDialog tipDialog;
-
+    protected File imageFile;
     protected void setProInsId(String proInsId) {
         this.proInsId = proInsId;
     }
@@ -379,17 +382,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
                 return;
             }
-            Matisse.from(this) //加号添加图片
-                    .choose(MimeType.ofImage())
-                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
-                    .capture(true)
-                    .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
-                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                    .thumbnailScale(0.85f)
-                    .imageEngine(new Glide4Engine())
-                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+            imageFile = CaptureUtils.startCapture(this);
         }, PatrolDetialActivity.this);
     }
 
@@ -439,13 +432,23 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
-            if (data == null) return;
-            List<Uri> uris = Matisse.obtainResult(data);
-            if (uris != null && uris.size() > 0) {
-                photoSelectAdapter.addPhotos(uris);
-                saveLocalUserData();
+        if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                uri = FileProvider.getUriForFile(this, DataConstants.DATA_PROVIDER_NAME, imageFile);
+            } else {
+                uri = Uri.fromFile(imageFile);
             }
+            Observable.just(imageFile).subscribeOn(Schedulers.io())
+                    .subscribe(file -> {
+                        BitmapUtil.AddTimeWatermark(file);
+                        runOnUiThread(() -> {
+                            if (uri != null) {
+                                photoSelectAdapter.addPhotos(Arrays.asList(uri));
+                                saveLocalUserData();
+                            }
+                        });
+                    });
         }else if(requestCode==RouterUtils.ACTIVITY_REQUEST_OPTION){
             if(data==null){
                 return;
