@@ -21,8 +21,10 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -34,10 +36,10 @@ import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.workorder.model.ComplainAppendBean;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.CustomerComplainModelBean;
-import com.einyun.app.library.workorder.model.HandleListModel;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 import com.einyun.app.library.workorder.net.request.ComplainDetailCompleteRequest;
@@ -64,14 +66,14 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     String fragmentKey;
     CustomerComplainModelBean detail;
     ExtensionApplication applyExtApplication;
-    ExtensionApplication closeExtApplication;
+    RepairsDetailModel.ForceCloseInfoBean closeExtApplication;
     List<ComplainAppendBean> complainAppendList;
-    List<HandleListModel> handleList;
+    List<RepairsDetailModel.HandleListBean> handleList;
     private String createTime;
     ComplainDetailCompleteRequest request = new ComplainDetailCompleteRequest();
     private List<DictDataModel> dictComplainNatureList = new ArrayList<>();
     private List<TypeAndLine> lines = new ArrayList<>();
-    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, HandleListModel> adapter;
+    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, RepairsDetailModel.HandleListBean> adapter;
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, ComplainAppendBean> addAdapter;
 
     @Override
@@ -119,12 +121,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.setApplyExtApplication(applyExtApplication);
             }
             //闭单
-            closeExtApplication = repairsDetailModel.getExtApplication(ApplyType.FORCECLOSE.getState());
+            closeExtApplication = repairsDetailModel.getForceCloseInfo();
             if (closeExtApplication == null) {
                 binding.layoutApplyCloseInfo.getRoot().setVisibility(View.GONE);
             } else {
                 binding.layoutApplyCloseInfo.getRoot().setVisibility(View.VISIBLE);
                 binding.setCloseExtApplication(closeExtApplication);
+                setImageList(binding.layoutApplyCloseInfo.sendOrderClosePicList, closeExtApplication.getAttachment());
             }
             //处理历史
             handleList = repairsDetailModel.getHandleList();
@@ -134,7 +137,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             complainAppendList = repairsDetailModel.getData().getCustomer_complain_model().getSub_complain_append();
             complainAppendList();
 
-//隐藏展示
+            //隐藏展示
             String value = detail.getF_state();
             //只有待跟进才能操作   其余无法操作
             if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(fragmentKey)) {
@@ -222,6 +225,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                     binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 }
             }
+            binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
+            binding.layoutApplyCloseBtn.llClose.setOnClickListener(this);
             binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
             binding.setComplain(detail);
             setImageList(binding.layoutReportComplainInfo.rvPhoto, detail.getF_ts_attachment());
@@ -243,9 +248,9 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
 
     private void initHistoryList() {
         //一级列表适配器
-        adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, HandleListModel>(this, com.einyun.app.common.BR.history) {
+        adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, RepairsDetailModel.HandleListBean>(this, com.einyun.app.common.BR.history) {
             @Override
-            public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, HandleListModel model, int position) {
+            public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, RepairsDetailModel.HandleListBean model, int position) {
                 if (position == 0) {
                     binding.ivFirst.setVisibility(View.INVISIBLE);
                 } else {
@@ -276,7 +281,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         });
         binding.layoutComplainHistory.listHistory.setLayoutManager(new LinearLayoutManager(this));
         binding.layoutComplainHistory.listHistory.setAdapter(adapter);
-        List<HandleListModel> handleListThreeData = new ArrayList<>();
+        List<RepairsDetailModel.HandleListBean> handleListThreeData = new ArrayList<>();
         if (handleList.size() > 3) {//只展示三条
             binding.layoutComplainHistory.rlLoadMore.setVisibility(View.VISIBLE);
             for (int i = 0; i < 3; i++) {
@@ -429,7 +434,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             }
             request.getBizData().setF_handle_result(reasonString);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-            if (request.getBizData().getC_is_solve() == -1){
+            if (request.getBizData().getC_is_solve() == -1) {
                 ToastUtil.show(this, "请先选择处理结果");
                 return;
             }
@@ -482,6 +487,30 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         }
         if (v.getId() == R.id.ll_complain_nature_2) {
             complainNature();
+        }
+        if (v.getId() == R.id.ll_apply_late) {
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(id);
+            request.setType(WorkOrder.POSTPONED_COMPLAIN);
+            viewModel.isClosed(request).observe(this, isClosedState -> {
+                if (isClosedState.isClosed()) {
+
+                } else {
+                    ToastUtil.show(this, "正在审批中");
+                }
+            });
+        }
+        if (v.getId() == R.id.ll_close) {
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(id);
+            request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
+            viewModel.isClosed(request).observe(this, isClosedState -> {
+                if (isClosedState.isClosed()) {
+
+                } else {
+                    ToastUtil.show(this, "正在审批中");
+                }
+            });
         }
     }
 

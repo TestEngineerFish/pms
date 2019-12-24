@@ -79,4 +79,14 @@ public class RouteKey {
     public static final String KEY_MID_URL_INQUIRIES = "customerEnquiry";
     public static final String KEY_MID_URL_COMPLAIN = "taskRun";
     public static final String KEY_MID_URL_REPAIRS= "customerRepair";
+    //客户报修状态
+    public static final String REPAIR_STATUS_SEND_ORDER = "ConfirmCateAndAssignOrBrab";
+    public static final String REPAIR_STATUS_SEND_ORDER_LATE = "OvertimeMandatoryAssign";
+    public static final String REPAIR_STATUS_RESPONSE = "Response";
+    public static final String REPAIR_STATUS_HANDLE = "Handle";
+    public static final String REPAIR_STATUS_EVALUATE= "ReturnVisit";
+    public static final String REPAIR_STATUS_WAIT_GRAB= "WorkOrderPoolGrab";
+
+
+
 }

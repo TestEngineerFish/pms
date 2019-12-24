@@ -45,7 +45,7 @@ public class RepairsModel {
     private String bx_cate_lv2_id;
     private String taskName;
     private String taskId;
-
+    private String u_project_id;
     public String getBx_dk_id() {
         return bx_dk_id;
     }
@@ -292,5 +292,13 @@ public class RepairsModel {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    public String getU_project_id() {
+        return u_project_id;
+    }
+
+    public void setU_project_id(String u_project_id) {
+        this.u_project_id = u_project_id;
     }
 }

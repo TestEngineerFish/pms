@@ -24,7 +24,10 @@ public class ResourceTypeBean {
     private int sn;
     private String text;
     private List<ResourceChildBean> children;
-
+    private String categoryId;
+    private String dataName;
+    private String dataKey;
+    private String enabledFlag;
     public String getCreateBy() {
         return createBy;
     }

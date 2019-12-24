@@ -17,7 +17,8 @@
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_30"
-        android:background="@drawable/bg_shadow"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/px_30"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -33,6 +34,8 @@
                 android:layout_marginLeft="@dimen/px_20"
                 android:gravity="center_vertical"
                 android:text="派单信息"
+                android:textStyle="bold"
+                android:textColor="@color/txt_black_order"
                 android:textSize="@dimen/font_size16" />
         </RelativeLayout>
 
@@ -78,7 +81,8 @@
                 android:text="@{repairs.data.customer_repair_model.assign_grab_user}" />
         </LinearLayout>
 
-        <LinearLayout style="@style/work_order_detail_ln">
+        <LinearLayout style="@style/work_order_detail_ln"
+           >
 
             <TextView
                 style="@style/work_order_detail_left_txt"
