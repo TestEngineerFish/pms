@@ -4,7 +4,7 @@
     <data>
         <variable
             name="close"
-            type="com.einyun.app.library.workorder.model.ForceCloseInfo" />
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel.ForceCloseInfoBean" />
     </data>
 
     <androidx.cardview.widget.CardView

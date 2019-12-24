@@ -40,8 +40,6 @@ import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.workorder.model.ComplainAppendBean;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.CustomerComplainModelBean;
-import com.einyun.app.library.workorder.model.ForceCloseInfo;
-import com.einyun.app.library.workorder.model.HandleListModel;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 import com.einyun.app.library.workorder.net.request.ComplainDetailCompleteRequest;
@@ -68,14 +66,14 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     String fragmentKey;
     CustomerComplainModelBean detail;
     ExtensionApplication applyExtApplication;
-    ForceCloseInfo closeExtApplication;
+    RepairsDetailModel.ForceCloseInfoBean closeExtApplication;
     List<ComplainAppendBean> complainAppendList;
-    List<HandleListModel> handleList;
+    List<RepairsDetailModel.HandleListBean> handleList;
     private String createTime;
     ComplainDetailCompleteRequest request = new ComplainDetailCompleteRequest();
     private List<DictDataModel> dictComplainNatureList = new ArrayList<>();
     private List<TypeAndLine> lines = new ArrayList<>();
-    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, HandleListModel> adapter;
+    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, RepairsDetailModel.HandleListBean> adapter;
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, ComplainAppendBean> addAdapter;
 
     @Override
@@ -250,9 +248,9 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
 
     private void initHistoryList() {
         //一级列表适配器
-        adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, HandleListModel>(this, com.einyun.app.common.BR.history) {
+        adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, RepairsDetailModel.HandleListBean>(this, com.einyun.app.common.BR.history) {
             @Override
-            public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, HandleListModel model, int position) {
+            public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, RepairsDetailModel.HandleListBean model, int position) {
                 if (position == 0) {
                     binding.ivFirst.setVisibility(View.INVISIBLE);
                 } else {
@@ -283,7 +281,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         });
         binding.layoutComplainHistory.listHistory.setLayoutManager(new LinearLayoutManager(this));
         binding.layoutComplainHistory.listHistory.setAdapter(adapter);
-        List<HandleListModel> handleListThreeData = new ArrayList<>();
+        List<RepairsDetailModel.HandleListBean> handleListThreeData = new ArrayList<>();
         if (handleList.size() > 3) {//只展示三条
             binding.layoutComplainHistory.rlLoadMore.setVisibility(View.VISIBLE);
             for (int i = 0; i < 3; i++) {

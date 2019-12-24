@@ -6,7 +6,7 @@
 
         <variable
             name="closeExtApplication"
-            type="com.einyun.app.library.workorder.model.ForceCloseInfo" />
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel.ForceCloseInfoBean" />
 
         <variable
             name="applyExtApplication"
@@ -87,7 +87,7 @@
                     <!-- 响应信息 -->
                     <include
                         android:id="@+id/layout_response_info"
-                        layout="@layout/layout_response_info"
+                        layout="@layout/layout_complain_response_info"
                         app:complain="@{complain}" />
                     <!-- 投诉历史 -->
                     <include
