@@ -307,19 +307,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             return;
         }
         customerRepair = detialModel.getData().getCustomer_repair_model();
-        binding.setRepairs(repairsOrderDetail);
-        binding.orderInfo.setRepairs(repairsOrderDetail);
-        binding.repairsInfo.setRepairs(repairsOrderDetail);
-        binding.sendOrder.setRepairs(repairsOrderDetail);
-        binding.repairResponseInfo.setRepairs(repairsOrderDetail);
-        binding.sendOrderInfo.setRepairs(repairsOrderDetail);
-        binding.repairResponseInfo.setRepairs(repairsOrderDetail);
-        binding.repairHandleInfo.setRepairs(repairsOrderDetail);
-        binding.repairHandleHistory.setRepairs(repairsOrderDetail);
-        binding.repairUseMaterial.setRepairs(repairsOrderDetail);
-        binding.repairEvaluateInfo.setRepairs(repairsOrderDetail);
-        binding.repairCloseInfo.setRepairs(repairsOrderDetail);
-        binding.repairLateInfo.setRepairs(repairsOrderDetail);
+        bindData(repairsOrderDetail);
         if (detialModel.getData().getCustomer_repair_model().getHandle_time() != null) {
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getCustomer_repair_model().getHandle_time().toString()));
         }
@@ -339,15 +327,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             materialAdapter.setDataList(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
         }
         //申请闭单信息
-        if (detialModel.getForceCloseInfo()!=null){
+        if (detialModel.getForceCloseInfo() != null) {
             binding.repairCloseInfo.getRoot().setVisibility(View.VISIBLE);
-            if (detialModel.getForceCloseInfo().getAttachment()!=null){
+            if (detialModel.getForceCloseInfo().getAttachment() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.repairCloseInfo.repairOrderClosePicList.setLayoutManager(new LinearLayoutManager(
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
-                binding.repairCloseInfo.repairOrderClosePicList.addItemDecoration(new SpacesItemDecoration(18,0,0,0));
+                binding.repairCloseInfo.repairOrderClosePicList.addItemDecoration(new SpacesItemDecoration(18, 0, 0, 0));
                 binding.repairCloseInfo.repairOrderClosePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(detialModel.getForceCloseInfo().getAttachment());
@@ -356,7 +344,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
 
         }
         //申请延期信息
-        if (detialModel.getDelayInfo()!=null) {
+        if (detialModel.getDelayInfo() != null) {
             binding.repairLateInfo.getRoot().setVisibility(View.VISIBLE);
             if (detialModel.getDelayInfo().getAttachment() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
@@ -817,6 +805,23 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         });
     }
 
-    /**/
+    /**
+     * 绑定数据源
+     */
+    private void bindData(RepairsDetailModel repairsOrderDetail) {
+        binding.setRepairs(repairsOrderDetail);
+        binding.orderInfo.setRepairs(repairsOrderDetail);
+        binding.repairsInfo.setRepairs(repairsOrderDetail);
+        binding.sendOrder.setRepairs(repairsOrderDetail);
+        binding.repairResponseInfo.setRepairs(repairsOrderDetail);
+        binding.sendOrderInfo.setRepairs(repairsOrderDetail);
+        binding.repairResponseInfo.setRepairs(repairsOrderDetail);
+        binding.repairHandleInfo.setRepairs(repairsOrderDetail);
+        binding.repairHandleHistory.setRepairs(repairsOrderDetail);
+        binding.repairUseMaterial.setRepairs(repairsOrderDetail);
+        binding.repairEvaluateInfo.setRepairs(repairsOrderDetail);
+        binding.repairCloseInfo.setRepairs(repairsOrderDetail);
+        binding.repairLateInfo.setRepairs(repairsOrderDetail);
+    }
 
 }
