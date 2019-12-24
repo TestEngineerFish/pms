@@ -140,5 +140,7 @@ class URLs {
          */
         const val URL_WORK_ORDER_FORCE_POSTPONE ="/$DOMAIN/res-order/{workOrder}/exten"
 
+        //客户问询申请闭单
+        const val URL_CLOSE_CUSTOMER_ORDER = "/workOrder/workOrder/{workOrder}/v1/applyFclose"
     }
 }

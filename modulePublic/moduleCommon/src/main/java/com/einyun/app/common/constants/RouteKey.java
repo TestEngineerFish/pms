@@ -73,6 +73,12 @@ public class RouteKey {
     public static final String FRAGMENT_HAVE_TO_FOLLOW_UP = "FRAGMENT_HAVE_TO_FOLLOW_UP";
     public static final String FRAGMENT_TRANSFERRED_TO= "FRAGMENT_TRANSFERRED";//已办结
     public static final String FRAGMENT_COPY_ME = "FRAGMENT_COPY_ME";
+    public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+    //三大类强制关闭midurl
+    public static final String KEY_MID_URL = "KEY_MID_URL";
+    public static final String KEY_MID_URL_INQUIRIES = "customerEnquiry";
+    public static final String KEY_MID_URL_COMPLAIN = "taskRun";
+    public static final String KEY_MID_URL_REPAIRS= "customerRepair";
     //客户报修状态
     public static final String REPAIR_STATUS_SEND_ORDER = "ConfirmCateAndAssignOrBrab";
     public static final String REPAIR_STATUS_SEND_ORDER_LATE = "OvertimeMandatoryAssign";

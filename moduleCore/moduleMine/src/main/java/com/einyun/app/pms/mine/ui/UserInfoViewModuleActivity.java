@@ -80,7 +80,7 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
         initInfo();
         viewModel.getStars(viewModel.getJsonObject(userID)).observe(this, model -> {
             float stars = (float) model.getStars();
-            binding.ratingBar.setStar(stars);
+            binding.ratingBar.setStar(5f);
 
         });
 

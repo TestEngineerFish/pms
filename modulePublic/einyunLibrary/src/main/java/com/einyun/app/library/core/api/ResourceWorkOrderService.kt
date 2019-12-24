@@ -119,6 +119,12 @@ interface ResourceWorkOrderService : EinyunService {
         request: ApplyCloseRequest,
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse>
+    //申请闭单
+    fun applyCustomerClose(
+        request: ApplyCusCloseRequest,
+        midUrl: String,
+        callBack: CallBack<ApplyCloseResponse>
+    ): LiveData<ApplyCloseResponse>
 
     fun exten(
         request: ExtenDetialRequest,
