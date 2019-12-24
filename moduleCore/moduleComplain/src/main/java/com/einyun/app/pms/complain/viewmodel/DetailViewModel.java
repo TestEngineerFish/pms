@@ -10,6 +10,7 @@ import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
@@ -27,7 +28,7 @@ import com.einyun.app.pms.complain.repository.DataSourceFactory;
 
 import java.util.List;
 
-public class DetailViewModel extends BaseUploadViewModel {
+public class DetailViewModel extends BaseWorkOrderHandelViewModel {
     private WorkOrderService workOrderService;
     private DictService dictService;
 

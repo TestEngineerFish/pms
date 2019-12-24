@@ -6,7 +6,7 @@
 
         <variable
             name="closeExtApplication"
-            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel.ForceCloseInfoBean" />
 
         <variable
             name="applyExtApplication"
@@ -65,7 +65,6 @@
                             android:id="@+id/tv_handle_time"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            style="@style/submit_btn"
                             android:gravity="center_vertical"
                             android:textColor="@color/important_red_color" />
                     </LinearLayout>
@@ -88,7 +87,7 @@
                     <!-- 响应信息 -->
                     <include
                         android:id="@+id/layout_response_info"
-                        layout="@layout/layout_response_info"
+                        layout="@layout/layout_complain_response_info"
                         app:complain="@{complain}" />
                     <!-- 投诉历史 -->
                     <include
@@ -98,15 +97,15 @@
                     <!-- 延期 -->
                     <include
                         android:id="@+id/layout_apply_late_info"
-                        layout="@layout/layout_apply_late_info"
+                        layout="@layout/layout_complain_apply_late_info"
                         android:visibility="gone"
                         app:ext="@{applyExtApplication}" />
                     <!-- 闭单 -->
                     <include
                         android:id="@+id/layout_apply_close_info"
-                        layout="@layout/layout_apply_close_info"
+                        layout="@layout/layout_complain_apply_close_info"
                         android:visibility="gone"
-                        app:ext="@{closeExtApplication}" />
+                        app:close="@{closeExtApplication}" />
                     <!-- 评价详情 -->
                     <include
                         android:id="@+id/layout_already_complain_evaluate"

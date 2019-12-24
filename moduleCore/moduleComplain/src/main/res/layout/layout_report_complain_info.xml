@@ -155,13 +155,15 @@
                     android:id="@+id/tv_complain_type"
                     style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:paddingTop="@dimen/px_30"
+                    android:layout_marginTop="@dimen/px_10"
+                    android:layout_marginLeft="@dimen/px_20"
                     android:text="@{request.bizData.f_ts_cate}"
                     />
+<!--                @{request.bizData.f_ts_cate}-->
                 <ImageView
                     android:layout_width="@dimen/px_20"
                     android:layout_height="@dimen/px_22"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/px_10"
                     android:src="@drawable/edit" />
             </LinearLayout>
 
@@ -187,12 +189,14 @@
                     android:id="@+id/tv_complain_nature"
                     style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:paddingTop="@dimen/px_30"
+                    android:layout_marginTop="@dimen/px_10"
+                    android:layout_marginLeft="@dimen/px_20"
                     android:text="@{request.bizData.f_ts_property}" />
 
                 <ImageView
                     android:layout_width="@dimen/px_20"
                     android:layout_height="@dimen/px_22"
+                    android:layout_marginTop="@dimen/px_10"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/edit" />
             </LinearLayout>

@@ -96,7 +96,6 @@ class ExtensionApplication : Serializable{
      var createdName: String? = null //创建人姓名
      var applyFiles: String? = null //申请附件
      var auditDate:String?=null  //审批时间
-
 }
 
 class DelayExtensionApplication{
