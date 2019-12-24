@@ -19,7 +19,7 @@
         <!--星星间距-->
         <attr name="starPadding" format="dimension" />
         <!--星星总数-->
-        <attr name="starCount" format="string" />
+        <attr name="starCount" format="integer" />
         <!--空白的星星资源文件值-->
         <attr name="starEmpty" format="reference" />
         <!--满星资源文件值-->

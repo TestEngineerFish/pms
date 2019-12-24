@@ -133,7 +133,6 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
-<!--                app:starCount="@{complain.f_return_score}"-->
 
 
             </LinearLayout>
@@ -188,7 +187,6 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
-<!--                app:starCount="@{complain.service_quality_score}"-->
 
             </LinearLayout>
 

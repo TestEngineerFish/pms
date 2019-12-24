@@ -117,7 +117,7 @@ class CustomerComplainModelBean {
     var F_return_way_id: Any? = null
     var service_quality_content: Any? = null
     var F_ts_property_id: String? = null
-    var service_quality_score: Any? = null
+    var service_quality_score: Int? = 5
     var F_fclose_approve_time: Any? = null
     var work_order_timeout: Int = 0
     var F_return_threshold: Any? = null
@@ -176,7 +176,7 @@ class CustomerComplainModelBean {
     var F_ts_attachment: String? = null
     var F_handle_result: String? = null
     var F_ts_recorder_id: String? = null
-    var F_return_score: String? = null
+    var F_return_score: Int? = 5
     var F_response_time: String? = null
     var u_city_area_id: Any? = null
     var F_response_user: String? = null
