@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,7 +37,7 @@ import java.util.HashMap;
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_MINE_SETTING)
-public class SettingViewModuleActivity extends BaseHeadViewModelActivity<ActivitySettingViewModuleBinding, SettingViewModel> {
+public class SettingViewModuleActivity extends BaseHeadViewModelActivity<ActivitySettingViewModuleBinding, SettingViewModel> implements CompoundButton.OnCheckedChangeListener {
 
     @Override
     protected SettingViewModel initViewModel() {
@@ -57,6 +58,7 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         setHeadTitle(getString(R.string.tv_setting));
         binding.setCallBack(this);
         binding.tvVersion.setText(viewModel.getVerName(this));
+        binding.checkbox.setOnCheckedChangeListener(this);
     }
     /**
     * 退出登录
@@ -93,4 +95,8 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         return getResources().getColor(R.color.white);
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        Logger.d("sssssss"+b);
+    }
 }

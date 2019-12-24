@@ -38,6 +38,7 @@ import com.einyun.app.pms.customerinquiries.constants.Constants;
 import com.einyun.app.pms.customerinquiries.databinding.ActivityCustomerInquiriesViewModuleBinding;
 import com.einyun.app.pms.customerinquiries.databinding.ActivityInquiriesDetailViewModuleBinding;
 import com.einyun.app.pms.customerinquiries.databinding.InquiriesPopwindowItemBinding;
+import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriseFeedbackHistoryLayoutBinding;
 import com.einyun.app.pms.customerinquiries.module.DealRequest;
 import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
 import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
@@ -72,7 +73,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     private int evaluation;
     private AlertDialog alertDialog;
     private OrderDetailInfoModule orderDetailInfoModule;
-    private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean> adapter;
+    private RVBindingAdapter<ItemInquiriseFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean> adapter;
     private boolean isApplyForseClose;
     private String createTime;
     private InquiriesDetailModule.DataBean.CustomerEnquiryModelBean detail;
@@ -146,6 +147,12 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 false));
         binding.listApplyPic.addItemDecoration(new SpacesItemDecoration(18));
         binding.listApplyPic.setAdapter(forseClosephotoListInfoAdapter);
+    }
+
+    private static final String TAG = "InquiriesDetailViewModu";
+    @Override
+    protected void onResume() {
+        super.onResume();
         /**
          * 获取详情信息
          */
@@ -155,27 +162,28 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         /**
          * 获取工单详情
          */
+
         viewModel.queryOrderInfo(inquiriesItemModule.proInsId,inquiriesItemModule.taskId==null?"":inquiriesItemModule.taskId).observe(this,module->{
+            Log.e(TAG, "onResume:proInsId--"+inquiriesItemModule.proInsId+"--taskId--"+inquiriesItemModule.taskId);
             orderDetailInfoModule = module;
             int c_is_solve = orderDetailInfoModule.getData().getCustomer_repair_model().getC_is_solve();
 
-                if (c_is_solve ==1) {//1 已解决  0 未解决
-                    binding.llEvaluationClose.setVisibility(View.VISIBLE);
-                    String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
-                    binding.tvEvaluationTime.setText(return_time);
-                }
+            if (c_is_solve ==1) {//1 已解决  0 未解决
+                binding.llEvaluationClose.setVisibility(View.VISIBLE);
+                String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
+                binding.tvEvaluationTime.setText(return_time);
+            }
 
             initHistoryList(orderDetailInfoModule);
             isCanApplyClose(orderDetailInfoModule);
         });
-
     }
 
     private void initHistoryList(OrderDetailInfoModule orderDetailInfoModule) {
         //一级列表适配器
-        adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean>(this, BR.module) {
+        adapter = new RVBindingAdapter<ItemInquiriseFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean>(this, BR.module) {
               @Override
-              public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, OrderDetailInfoModule.HandleListBean model, int position) {
+              public void onBindItem(ItemInquiriseFeedbackHistoryLayoutBinding binding, OrderDetailInfoModule.HandleListBean model, int position) {
                   if (position == 0) {
                       binding.ivFirst.setVisibility(View.INVISIBLE);
                   } else {
@@ -193,7 +201,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
 
               @Override
               public int getLayoutId() {
-                  return R.layout.item_feedback_history_layout;
+                  return R.layout.item_inquirise_feedback_history_layout;
               }
 
           };
@@ -281,10 +289,10 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                     binding.tvApplyer.setText(forceCloseInfo.getApplyUser());
                     binding.tvApplyTime.setText(forceCloseInfo.getApplyDate());
                     binding.tvApplyReason.setText(forceCloseInfo.getApplyReason());
+                    PicUrlModelConvert convert = new PicUrlModelConvert();
+                    List<PicUrlModel> modelList = convert.stringToSomeObjectList(forceCloseInfo.getAttachment());
+                    forseClosephotoListInfoAdapter.updateList(modelList);
                 }
-                PicUrlModelConvert convert = new PicUrlModelConvert();
-                List<PicUrlModel> modelList = convert.stringToSomeObjectList(orderDetailInfoModule.getForceCloseInfo().getAttachment());
-                forseClosephotoListInfoAdapter.updateList(modelList);
             }
 
         });
@@ -294,7 +302,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
      * */
     public void onPassClick(){
         if (binding.limitInput.getString().isEmpty()) {
-            ToastUtil.show(this,"回复内容不能为空");
+            ToastUtil.show(this,getString(R.string.tv_empty_feedback_content));
             return;
         }
         DealRequest dealRequest = new DealRequest();
@@ -302,11 +310,11 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         dealRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
         viewModel.deal(dealRequest).observe(this,module->{
             if (module) {
-
-                ToastUtil.show(this,"回复成功");
+                LiveEventBus.get(Constants.INQUIRIES_FRAGMENT_REFRESH, Boolean.class).post(true);
+                ToastUtil.show(this, getString(R.string.tv_feedback_suc));
                 finish();
             }else {
-                ToastUtil.show(this,"回复失败");
+                ToastUtil.show(this, getString(R.string.tv_feedback_fail));
 
             }
         });
@@ -318,7 +326,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         String content = binding.etLimitSuggestion.getString();
         if (evaluation==0) {
             if (content.isEmpty()) {
-                ToastUtil.show(this,"回复内容不能为空");
+                ToastUtil.show(this, getString(R.string.tv_empty_evaluation));
                 return;
             }
         }
@@ -328,9 +336,12 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         evaluationRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
         viewModel.evaluation(evaluationRequest).observe(this,module->{
             if (module) {
-
-                ToastUtil.show(this,"保存成功");
+                LiveEventBus.get(Constants.INQUIRIES_FRAGMENT_REFRESH, Boolean.class).post(true);
+                ToastUtil.show(this, getString(R.string.tv_evaluation_suc));
                 finish();
+            }else {
+                ToastUtil.show(this, getString(R.string.tv_evaluation_fail));
+
             }
         });
     }
@@ -347,7 +358,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
      */
     public  void onRejectClick() {
         if (binding.limitInput.getString().isEmpty()) {
-            ToastUtil.show(this,getString(R.string.tv_empty_feedback_content));
+            ToastUtil.show(this,getString(R.string.tv_empty_save_content));
             return;
         }
         DealSaveRequest dealRequest = new DealSaveRequest();

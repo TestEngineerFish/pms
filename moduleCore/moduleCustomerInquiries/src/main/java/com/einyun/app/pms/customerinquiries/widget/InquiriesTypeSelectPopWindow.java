@@ -74,6 +74,8 @@ public class InquiriesTypeSelectPopWindow extends PopupWindow {
             @Override
             public void onClick(View v) {
 
+                mPosition=-1;
+                adapter.notifyDataSetChanged();
 
             }
         });

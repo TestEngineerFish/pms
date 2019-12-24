@@ -32,50 +32,115 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
 
 public class CustomerInquiriesRepository {
     CustomerInquiriesServiceApi serviceApi;
-
+    public static int mPage1;
+    public static int mPage2;
+    public static int mPage3;
+    public static int mPage4;
+    public static int mPage5;
     public CustomerInquiriesRepository() {
         serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(CustomerInquiriesServiceApi.class);
     }
     public void pageQuery(InquiriesRequestBean page, String tag, CallBack<InquiriesListModule> callback) {
-//        QueryBuilder queryBuilder=new QueryBuilder();
-//        Query build = queryBuilder.addQueryItem("","").build();
-//        PageQueryRequest request = new PageQueryRequest();
-//        request.setPageBean(page);
         String url="";
         switch (tag) {
             case FRAGMENT_TO_FOLLOW_UP://待跟进
                 url = URLS.URL_GET_TO_FOLLOW_UP_LIST;
+                serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+                        .subscribe(response -> {
+                    if(response.isState()){
+                        if (mPage1==page.getPageBean().getPage()) {
+                        }else {
+                            mPage1=page.getPageBean().getPage();
+                            callback.call(response.getData());
+                        }
+                    }
+                        }, error -> {
+                            callback.onFaild(error);
+                            error.printStackTrace();
+                        });
                 break;
             case FRAGMENT_TO_FEED_BACK://待反馈
                 url = URLS.URL_GET_TO_FEED_BACK_LIST;
+                serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+                        .subscribe(response -> {
+                            if(response.isState()){
+                                if (mPage2==page.getPageBean().getPage()) {
+                                }else {
+                                    mPage2=page.getPageBean().getPage();
+                                    callback.call(response.getData());
+                                }
+                            }
+                        }, error -> {
+                            callback.onFaild(error);
+                            error.printStackTrace();
+                        });
                 break;
             case FRAGMENT_HAVE_TO_FOLLOW_UP://已跟进
                 url = URLS.URL_GET_HAVE_TO_FOLLOW_UP_LIST;
+                serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+                        .subscribe(response -> {
+                            if(response.isState()){
+                                if (mPage3==page.getPageBean().getPage()) {
+                                }else {
+                                    mPage3=page.getPageBean().getPage();
+                                    callback.call(response.getData());
+                                }
+                            }
+                        }, error -> {
+                            callback.onFaild(error);
+                            error.printStackTrace();
+                        });
                 break;
             case FRAGMENT_TRANSFERRED_TO://已办结
                 url = URLS.URL_GET_TRANSFERRED_TO_LIST;
+                serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+                        .subscribe(response -> {
+                            if(response.isState()){
+                                if (mPage4==page.getPageBean().getPage()) {
+                                }else {
+                                    mPage4=page.getPageBean().getPage();
+                                    callback.call(response.getData());
+                                }
+                            }
+                        }, error -> {
+                            callback.onFaild(error);
+                            error.printStackTrace();
+                        });
                 break;
             case FRAGMENT_COPY_ME://抄送我
                 url = URLS.URL_GET_COPY_ME_LIST;
+                serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+                        .subscribe(response -> {
+                            if(response.isState()){
+                                if (mPage5==page.getPageBean().getPage()) {
+                                }else {
+                                    mPage5=page.getPageBean().getPage();
+                                    callback.call(response.getData());
+                                }
+                            }
+                        }, error -> {
+                            callback.onFaild(error);
+                            error.printStackTrace();
+                        });
                 break;
         }
 
-            serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
-                    .subscribe(response -> {
-//                    if(response.isState()){
-//                        if (mPage1==page.getPageBean().getPage()) {
+//            serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+//                    .subscribe(response -> {
+////                    if(response.isState()){
+////                        if (mPage1==page.getPageBean().getPage()) {
+////
+////                        }else {
+////                            mPage1=page.getPageBean().getPage();
+//                            callback.call(response.getData());
+//                            Logger.d("ItemDataSourcce.0pageBean .."+page.getPageBean().getPage());
+////                        }
 //
-//                        }else {
-//                            mPage1=page.getPageBean().getPage();
-                            callback.call(response.getData());
-                            Logger.d("ItemDataSourcce.0pageBean .."+page.getPageBean().getPage());
-//                        }
-
-//                    }
-                    }, error -> {
-                        callback.onFaild(error);
-                        error.printStackTrace();
-                    });
+////                    }
+//                    }, error -> {
+//                        callback.onFaild(error);
+//                        error.printStackTrace();
+//                    });
 
 
     }
@@ -214,7 +279,7 @@ public class CustomerInquiriesRepository {
     }
     /**
      * 评价
-     * @param request
+     * @param
      * @param callBack
      * @return
      */
