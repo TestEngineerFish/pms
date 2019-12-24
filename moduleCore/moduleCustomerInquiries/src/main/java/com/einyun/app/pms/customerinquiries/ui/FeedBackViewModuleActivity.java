@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
@@ -80,7 +81,11 @@ String taskID;
             return;
         }
         binding.setModule(module);
-
+        List<FeedBackModule.CommuReceiversBean> commuReceivers = module.getCommuReceivers();
+        if (commuReceivers!=null&&commuReceivers.size()>0) {
+            long expectTime = commuReceivers.get(0).getExpectTime();
+            binding.tvBackTime.setText(TimeUtil.getAllTime(expectTime));
+        }
     }
 
     /**

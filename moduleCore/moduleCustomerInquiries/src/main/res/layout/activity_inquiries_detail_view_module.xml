@@ -399,7 +399,7 @@
                          android:text="申请人" />
 
                      <TextView style="@style/work_order_detail_txt_right"
-                         android:id="@+id/tv_approvaler"
+                         android:id="@+id/tv_applyer"
                          />
                  </LinearLayout>
 
@@ -421,7 +421,7 @@
                          android:text="申请原因" />
 
                      <TextView style="@style/work_order_detail_txt_right"
-                         android:id="@+id/tv_approval_reason"
+                         android:id="@+id/tv_apply_reason"
                          />
                  </LinearLayout>
 
@@ -434,6 +434,7 @@
                  <LinearLayout style="@style/work_order_detail_ln">
                      <androidx.recyclerview.widget.RecyclerView
                          android:id="@+id/list_apply_pic"
+                         android:layout_marginTop="@dimen/px_30"
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          android:layout_marginBottom="@dimen/px_30"
@@ -450,7 +451,7 @@
              android:layout_margin="@dimen/px_30"
              android:background="@drawable/shape_white_bg"
              android:orientation="vertical"
-             android:visibility="visible">
+             android:visibility="gone">
 
              <RelativeLayout
                  android:layout_width="match_parent"
@@ -651,7 +652,7 @@
          </LinearLayout>
          <!--         回复内容-->
          <LinearLayout
-             android:visibility="visible"
+             android:visibility="gone"
              android:id="@+id/ll_reply_content"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
@@ -688,7 +689,8 @@
         </LinearLayout>
          <!--         强制关闭-->
          <LinearLayout
-             android:visibility="visible"
+             android:onClick="@{()->callBack.onForseCloseClick()}"
+             android:visibility="gone"
              android:id="@+id/ll_forse_close"
              style="@style/ll_create_order"
              android:layout_margin="@dimen/px_30"
@@ -704,7 +706,7 @@
          </LinearLayout>
          <!--         提交-->
          <LinearLayout
-             android:visibility="visible"
+             android:visibility="gone"
              android:id="@+id/ll_pass"
              android:layout_marginTop="20dp"
              android:layout_marginBottom="20dp"

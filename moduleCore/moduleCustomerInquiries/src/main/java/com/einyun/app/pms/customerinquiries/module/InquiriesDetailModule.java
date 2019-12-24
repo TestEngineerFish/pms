@@ -206,7 +206,7 @@ public class InquiriesDetailModule {
             private String id_;
             private String u_project_id;
             private String u_project;
-            private Object close_time;
+            private String close_time;
             private Object grid_name;
             private Object unit_name;
             private Object return_way_id;
@@ -492,11 +492,11 @@ public class InquiriesDetailModule {
                 this.u_project = u_project;
             }
 
-            public Object getClose_time() {
+            public String getClose_time() {
                 return close_time;
             }
 
-            public void setClose_time(Object close_time) {
+            public void setClose_time(String close_time) {
                 this.close_time = close_time;
             }
 

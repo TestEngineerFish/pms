@@ -112,17 +112,18 @@
             android:id="@+id/ll_talk_or_turn_single"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_81">
-           <TextView
-               android:text="@string/tv_turn_order"
-               android:id="@+id/tv_turn_order"
-               style="@style/style_tv_turn_order" />
+            <TextView
+                android:text="@string/tv_talk"
+                android:id="@+id/tv_talk"
+                style="@style/style_tv_turn_order" />
+
             <View
                 android:background="@color/thin_divider_color"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"/>
             <TextView
-                android:text="@string/tv_talk"
-                android:id="@+id/tv_talk"
+                android:text="@string/tv_turn_order"
+                android:id="@+id/tv_turn_order"
                 style="@style/style_tv_turn_order" />
         </LinearLayout>
         <RelativeLayout

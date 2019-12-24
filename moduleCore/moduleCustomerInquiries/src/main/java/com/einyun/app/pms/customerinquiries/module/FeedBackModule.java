@@ -139,6 +139,16 @@ public class FeedBackModule {
         private String receiverId;
         private String status;
 
+        public long getExpectTime() {
+            return expectTime;
+        }
+
+        public void setExpectTime(long expectTime) {
+            this.expectTime = expectTime;
+        }
+
+        private long expectTime;
+
         public String getCommuId() {
             return commuId;
         }

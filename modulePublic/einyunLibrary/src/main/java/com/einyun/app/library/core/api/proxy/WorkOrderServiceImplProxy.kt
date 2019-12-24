@@ -11,6 +11,7 @@ import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.repository.DashBoardRepo
+import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
@@ -37,6 +38,22 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+
+    /**
+     * 获取报修筛选数据
+     * */
+    override fun getAreaType(callBack: CallBack<AreaModel>): LiveData<AreaModel> {
+        return instance?.getAreaType(
+            callBack
+        )!!    }
+
+    override fun getRepairWaitFeed(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
+        return instance?.getRepairWaitFollow(
+            request,
+            callBack
+        )!!
+       }
+
     override fun complainDetailSave(
         request: ComplainDetailCompleteRequest,
         callBack: CallBack<Boolean>
@@ -76,6 +93,15 @@ class WorkOrderServiceImplProxy : WorkOrderService {
         )!!
     }
 
+    override fun saveHandler(
+        request: SaveHandleRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.saveHandler(
+            request,
+            callBack
+        )!!       }
+
     override fun repaireSend(
         request: RepairSendOrderRequest,
         callBack: CallBack<Boolean>
@@ -110,7 +136,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun getRepairCopyMe(
         request: RepairsPageRequest,
-        callBack: CallBack<RepairCopyMePageResullt>
+        callBack: CallBack<RepairsPage>
     ) {
         return instance?.getRepairCopyMe(
             request,
@@ -120,7 +146,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun getRepaiAlreadyDone(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyDonePageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         return instance?.getRepaiAlreadyDone(
             request,
@@ -130,7 +156,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun getRepaiAlreadyFollow(
         request: RepairsPageRequest,
-        callBack: CallBack<AlreadyFollowPageResult>
+        callBack: CallBack<RepairsPage>
     ) {
         return instance?.getRepaiAlreadyFollow(
             request,

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="history"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel.HandleListBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_120"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="@dimen/px_96"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="@dimen/px_22"
+                android:layout_height="@dimen/px_22"
+                android:background="@drawable/iv_point">
+
+                <TextView
+                    android:id="@+id/item_histroy_step"
+                    android:layout_width="@dimen/px_22"
+                    android:layout_height="@dimen/px_22"
+                    android:textColor="@color/white"
+                    android:gravity="center" />
+            </RelativeLayout>
+            <ImageView
+                android:background="@color/blueTextColor"
+                android:id="@+id/item_histroy_img"
+                android:layout_width="@dimen/px_2"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_30"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14"
+                android:text="@{history.handle_result}"/>
+
+
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_40"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:background="@drawable/iv_deal_person"
+                        android:layout_width="@dimen/px_32"
+                        android:layout_height="@dimen/px_32"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="@dimen/px_120"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_10"
+                        android:textSize="@dimen/font_size12"
+                        android:text="@{history.handle_user}"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/material_txt_color"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:background="@drawable/iv_date"
+                        android:layout_width="@dimen/px_32"
+                        android:layout_height="@dimen/px_32"
+                        android:layout_marginLeft="@dimen/px_10"
+                        android:gravity="center_vertical"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_10"
+                        android:textSize="@dimen/font_size12"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/material_txt_color"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

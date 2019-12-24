@@ -124,10 +124,23 @@ class URLs {
          */
         const val URL_WORK_ORDER_FORCE_CLOSE ="/$DOMAIN/res-order/{workOrder}/close"
 
+
+        /**
+         * 客户端通用关闭
+         */
+        const val URL_WORK_ORDER_FORCE_CLOSE_CUSTOME ="/$DOMAIN/workOrder/{workOrder}/v1/applyFclose"
+
+        /**
+         * 客户端通用延期
+         */
+        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME ="/$DOMAIN/workOrder/{workOrder}/v1/applyFclose"
+
         /**
          * 通过申请延期
          */
         const val URL_WORK_ORDER_FORCE_POSTPONE ="/$DOMAIN/res-order/{workOrder}/exten"
 
+        //客户问询申请闭单
+        const val URL_CLOSE_CUSTOMER_ORDER = "/workOrder/workOrder/{workOrder}/v1/applyFclose"
     }
 }

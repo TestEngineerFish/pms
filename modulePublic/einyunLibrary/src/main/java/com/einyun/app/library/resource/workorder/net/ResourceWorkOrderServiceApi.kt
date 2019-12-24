@@ -208,6 +208,11 @@ interface ResourceWorkOrderServiceApi {
      * */
     @POST(URLs.URL_CLOSE_ORDER)
     fun closeOrder(@Body request:ApplyCloseRequest):Flowable<ApplyCloseResponse>
+    /**
+     * 客户问询申请闭单
+     * */
+    @POST(URLs.URL_CLOSE_CUSTOMER_ORDER)
+    fun closeCustomerOrder(@Path("workOrder") orderType:String,@Body request:ApplyCusCloseRequest):Flowable<ApplyCloseResponse>
 
     /**
      * 获取历史流程

@@ -282,6 +282,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
     public void onItemClicked(View veiw, InquiriesItemModule data) {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
+                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
                 .withSerializable(Constants.INQUIRIES_BEAN,data)
                 .navigation();
         String taskId = data.getTaskId();

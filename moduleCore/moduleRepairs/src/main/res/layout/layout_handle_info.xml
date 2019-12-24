@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/panel_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_30"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="处理信息"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/txt_blue_color"
+                android:textSize="@dimen/px_30" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="是否有偿" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.handle_is_paid}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="维修工时" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.handle_man_hour}" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:background="@color/thin_divider_color" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="使用材料"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size16"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_70"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="材料名称"
+                android:textColor="@color/material_txt_color" />
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="单价(元)"
+                android:textColor="@color/material_txt_color" />
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="数量"
+                android:textColor="@color/material_txt_color" />
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="总价"
+                android:textColor="@color/material_txt_color" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repair_handled_rec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="材料费(元)" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="人工费(元)" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="费用总计(元)" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="付款方式" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="付款日期" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginTop="@dimen/px_30"
+                android:text="联合处理人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:layout_marginBottom="@dimen/px_20"
+                android:text="图片" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/repair_order_detail_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_30"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
