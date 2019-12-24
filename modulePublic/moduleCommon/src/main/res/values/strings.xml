@@ -161,8 +161,9 @@
     <string name="text_contact">沟通</string>
     <string name="text_please_enter_reason">请填写结果</string>
     <string name="text_response_success">响应成功</string>
+    <string name="text_save_success">保存成功</string>
     <string name="text_select_material">选择材料</string>
-
+    <string name="text_submit_success">提交成功</string>
     <string name="tv_customer_inquiries">客户问询</string>
     <string name="tv_in_process">处理中</string>
     <string name="tv_real_estate">房产</string>
@@ -223,6 +224,8 @@
     <string name="text_work_order_reply">批复</string>
     <string name="text_pay_online">线上支付</string>
     <string name="text_pay_under_line">线下支付</string>
+    <string name="text_submit_fale">提交失败</string>
+    <string name="text_late_send_order">超时派单</string>
     <string name="text_padding">-</string>
     <string name="text_padding_empty">  </string>
 </resources>

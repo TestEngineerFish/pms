@@ -72,9 +72,9 @@ public class RepairGrabFragment extends BaseViewModelFragment<RepairsFragmentBin
             }
         });
         if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
-            binding.repairOrerTabLn.setVisibility(View.GONE);
+            binding.repairOrderTabLn.setVisibility(View.GONE);
         } else {
-            binding.repairOrerTabLn.setVisibility(View.VISIBLE);
+            binding.repairOrderTabLn.setVisibility(View.VISIBLE);
         }
     }
 

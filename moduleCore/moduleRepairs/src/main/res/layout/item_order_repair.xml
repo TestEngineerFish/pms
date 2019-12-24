@@ -118,6 +118,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/blackTextColor"
+                    android:text="@{repair.bx_house}"
                    />
             </LinearLayout>
 

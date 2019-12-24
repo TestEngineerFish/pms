@@ -23,8 +23,10 @@ public class RepairBindingAdapter {
             view.setText(R.string.text_wait_evaluate);
         } else if (value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             view.setText(R.string.text_wait_send);
-        }else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)){
+        }else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)||value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)){
             view.setText(R.string.text_wait_grab);
+        }else {
+
         }
 
     }

@@ -11,7 +11,7 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:id="@+id/send_order_apply_late"
+            android:id="@+id/repair_apply_late"
             android:layout_width="@dimen/px_110"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/px_125"

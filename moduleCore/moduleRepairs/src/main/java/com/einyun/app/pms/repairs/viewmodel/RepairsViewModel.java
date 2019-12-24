@@ -10,6 +10,8 @@ import androidx.paging.PagedList;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.common.model.SelectModel;
+import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.WorkOrderService;
@@ -20,6 +22,7 @@ import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.repairs.repository.DataSourceFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +31,8 @@ import java.util.List;
 public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
     // TODO: Implement the ViewModel
     private WorkOrderService workOrderService;
-
+    //public List<SelectModel> selectModels=new ArrayList<>();
+    public SelectModel areaModel;
     LiveData<PagedList<RepairsModel>> liveData;
     RepairsPageRequest request;
     public void refresh(){
@@ -93,6 +97,9 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
             public void call(AreaModel data) {
                 hideLoading();
                 liveData.postValue(data);
+                areaModel=turnToSelectModel(data);
+                //selectModels.add(turnToSelectModel(data));
+
             }
 
             @Override
@@ -101,6 +108,46 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
             }
         });
         return liveData;
+    }
+
+    /**
+     * 递归转成SelectModel
+     * */
+    int grade=0;
+    public SelectModel turnToSelectModel(AreaModel model){
+        SelectModel selectModel=new SelectModel();
+        selectModel.setId(model.getId());
+        selectModel.setName(model.getDataName());
+        if(model.getParentId().equals("-")){
+            selectModel.setConditionType(SelectPopUpView.SELECT_ROOT);
+            selectModel.setType("报修区域");
+//            selectModel.setKey();
+            selectModel.setGrade(0);
+            model.setGrade(0);
+        }
+
+        selectModel.setContent(model.getDataName());
+        selectModel.setConditionType(model.getDataName());
+
+        if (model.getChildren()!=null){
+            List<SelectModel> selectModelList=new ArrayList<>();
+            for (AreaModel model1:model.getChildren()){
+                model1.setGrade(model.getGrade()+1);
+                SelectModel child=turnToSelectModel(model1);
+                if(model1.getGrade()==1){
+                    child.setType("报修大类");
+                }else if(model1.getGrade()==2){
+                    child.setType("报修小类");
+                }else if(model1.getGrade()==3){
+                    child.setType("");
+                }
+                selectModelList.add(child);
+            }
+            selectModel.setSelectModelList(selectModelList);
+        }
+
+        return selectModel;
+
     }
 
 }

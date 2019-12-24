@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_GRID;
@@ -140,6 +141,21 @@ public class ConditionBuilder {
         }
         return this;
     }
+
+    /**
+     * 添加区域数据
+     * @return
+     */
+    public ConditionBuilder addArea(SelectModel selectModel){
+        if (!selectModelMap.containsKey(SELECT_AREA)) {
+            selectModel.setType("报修区域");
+            selectModel.setConditionType(SELECT_ROOT);
+            selectModelMap.put(SELECT_AREA, selectModel);
+            conditions.add(selectModel);
+        }
+        return this;
+    }
+
 
     /**
      * 构建网格数据

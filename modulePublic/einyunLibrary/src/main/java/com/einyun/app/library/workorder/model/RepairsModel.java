@@ -46,6 +46,7 @@ public class RepairsModel {
     private String taskName;
     private String taskId;
     private String u_project_id;
+    private String bx_house;
     public String getBx_dk_id() {
         return bx_dk_id;
     }
@@ -300,5 +301,13 @@ public class RepairsModel {
 
     public void setU_project_id(String u_project_id) {
         this.u_project_id = u_project_id;
+    }
+
+    public String getBx_house() {
+        return bx_house;
+    }
+
+    public void setBx_house(String bx_house) {
+        this.bx_house = bx_house;
     }
 }

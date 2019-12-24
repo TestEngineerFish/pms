@@ -114,7 +114,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         setRightOption(R.drawable.iv_histroy);
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
-        nodeId=RouteKey.REPAIR_STATUS_EVALUATE;
         setView(nodeId);//根据状态值显示相应布局
         //选择人员
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
@@ -636,6 +635,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            binding.sendOrder.repairSendTxt.setText(R.string.text_late_send_order);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             return;
