@@ -4,6 +4,7 @@ import com.einyun.app.base.db.converter.DistributeListConvert;
 import com.einyun.app.base.db.dao.DistributeDao;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.paging.bean.PageResult;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.repository.BaseBoundaryCallBack;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
@@ -18,41 +19,21 @@ import java.util.List;
  * 派工单代办数据源
  */
 public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
-    protected DistributeDao dao;
     protected ResourceWorkOrderService service;
     protected int orderType = Distribute.ORDER_TYPE_PENDING;
 
     public PendingBoundaryCallBack(DistributePageRequest request) {
         super(request);
+        repo=new SendOrderRespository();
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
-        dao = db.distributeDao();
     }
 
-    /**
-     * 刷新数据
-     */
-    public void refresh() {
-        initData();
-    }
-
-    /**
-     * 切换筛选条件
-     */
-    public void switchCondition() {
-        clearAll();
-        initData();
-    }
 
     /**
      * 清空数据缓存
      */
     protected void clearAll() {
-        db.runInTransaction(new Runnable() {
-            @Override
-            public void run() {
-                dao.deleteAll(request.getUserId(), orderType);
-            }
-        });
+       repo.deleteAll(request.getUserId(),orderType);
     }
 
     /**
@@ -61,50 +42,33 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
      * @param dataType
      */
     protected void loadData(int dataType, CallBack<Integer> callBack) {
-        lock.lock();
-        request.setPage(pageBean.getPage());
         service.distributeWaitPage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
-                if(data.isEmpty()){
-                    clearAll();
-                }
-                if (data.hasNextPage()) {
-                    callBack.call(data.nextPage());
-                }
-                lock.unlock();
-                DistributeListConvert convert = new DistributeListConvert();
-                List<Distribute> rows = convert.stringToSomeObjectList(new Gson().toJson(data.getRows()));
-                if (rows.size() > 0) {
-                    wrapList(rows);
-                    persistence(rows, dataType);
-                }
+                onDataLoaded(dataType,data,callBack);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
                 ThrowableParser.onFailed(throwable);
-                lock.unlock();
             }
         });
     }
 
-    /**
-     * 数据持久化
-     *
-     * @param rows
-     * @param dataType
-     */
-    protected void persistence(List<Distribute> rows, int dataType) {
-        lock.lock();
-        db.runInTransaction(() -> {
-            if (dataType == DATA_TYPE_INIT) {//初始化清空数据
-                dao.deleteAll(request.getUserId(), orderType);
-            }
-            dao.insert(rows);//追加数据
-            lock.unlock();
-        });
-
+    @Override
+    protected void onDataLoaded(int dataType, PageResult data, CallBack<Integer> callBack) {
+        if(data.isEmpty()){
+            clearAll();
+        }
+        if (data.hasNextPage()) {
+            callBack.call(data.nextPage());
+        }
+        DistributeListConvert convert = new DistributeListConvert();
+        List<Distribute> rows = convert.stringToSomeObjectList(new Gson().toJson(data.getRows()));
+        if (rows.size() > 0) {
+            wrapList(rows);
+            repo.persistence(rows,request.getUserId(),dataType);
+        }
     }
 
 

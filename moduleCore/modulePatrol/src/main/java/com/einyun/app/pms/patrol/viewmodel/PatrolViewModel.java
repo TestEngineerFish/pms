@@ -116,14 +116,14 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
             liveData.postValue(patrolInfo);
         }
         if (patrolInfo == null) {
-            showLoading();
+//            showLoading();
         }
         service.patrolDoneDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
             @Override
             public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
                 PatrolInfo patrolInfo = saveCache(data, orderId);
                 liveData.postValue(patrolInfo);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
@@ -146,14 +146,14 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
             liveData.postValue(patrolInfo);
         }
         if (patrolInfo == null) {
-            showLoading();
+//            showLoading();
         }
         service.patrolPendingDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
             @Override
             public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
                 PatrolInfo patrolInfo = saveCache(data, orderId);
                 liveData.postValue(patrolInfo);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override

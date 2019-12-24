@@ -49,9 +49,9 @@ interface UserCenterServiceApi {
     fun searchUserByCondition(@Body request: SearchUserRequest):Flowable<BaseResponse<PageResult<GetMappingByUserIdsResponse>>>
 
     @GET(URLs.URL_GET_HOUSE_BY_CONDITION)
-    fun getHouseByCondition(@Query("divide") divide: String,@Query("id") id: String):Flowable<BaseResponse<List<HouseModel>>>
+    fun getHouseByCondition(@Query("divideId") divide: String,@Query("id") id: String):Flowable<BaseResponse<List<HouseModel>>>
 
     @GET(URLs.URL_GET_HOUSE_BY_CONDITION)
-    fun getHouseByCondition(@Query("divide") divide: String):Flowable<BaseResponse<List<HouseModel>>>
+    fun getHouseByCondition(@Query("divideId") divide: String):Flowable<BaseResponse<List<HouseModel>>>
 
 }

@@ -167,9 +167,13 @@ public class CustomPopWindow extends PopupWindow {
         TextView ok = view.findViewById(R.id.ok);
         ImageView iv_close = view.findViewById(R.id.iv_close);
         LinearLayout llState = view.findViewById(R.id.ll_approval_state);
+        LinearLayout llChirldType = view.findViewById(R.id.ll_chirld_type);
         gv_approval_type = view.findViewById(R.id.gv_approval_type);
         gv_approval_child_type = view.findViewById(R.id.gv_approval_child_type);
         gv_approval_status = view.findViewById(R.id.gv_approval_status);
+        if (mApprovalChildTypePosition!=-1) {
+            llChirldType.setVisibility(View.VISIBLE);
+        }
         iv_close.setOnClickListener(view1 -> {dismiss();});
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,14 +222,14 @@ public class CustomPopWindow extends PopupWindow {
             }
         }
         if (tabId==1) {
-            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalSelectedAuditStateModule);
+            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalAuditStateModule);
             gv_approval_status.setAdapter(approvalStatusAdapter);
         }else if (tabId==2){
             approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalAuditStateModule);
             gv_approval_status.setAdapter(approvalStatusAdapter);
         }else if (tabId==0) {
-                llState.setVisibility(View.GONE);
-            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalAuditStateModule);
+//                llState.setVisibility(View.GONE);
+            approvalStatusAdapter = new ApprovalStatusAdapter(context,approvalSelectedAuditStateModule);
             gv_approval_status.setAdapter(approvalStatusAdapter);
         }
 
@@ -241,7 +245,7 @@ public class CustomPopWindow extends PopupWindow {
                  approvalChildTypeAdapter.setData(mGetByTypeKeyForComBoModule);//给child传数据
                  mApprovalChildTypePosition=-1;
                  approvalTypeAdapter.notifyDataSetChanged();
-
+                 llChirldType.setVisibility(View.VISIBLE);
                  //bean 请求参数数据处理
                 auditType= mGetByTypeKeyForComBoModule.getKey();
 

@@ -71,7 +71,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
      */
     protected void handleSelect(Map selected) {
         if (selected.size() > 0) {
-            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueConditionColor));
         }
         wrapCondition(selected,viewModel.requestDone);
         viewModel.onCondition();

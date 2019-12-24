@@ -104,7 +104,6 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         binding.type.setText(getResources().getString(R.string.text_house));
         binding.rvOrgList.setLayoutParams(layoutParams);
         binding.periodSelectDefault.setText("默认房产");
-        binding.hintText.setVisibility(View.GONE);
         viewModel.getHouseByCondition(divideId, null).observe(this, houseModels -> {
             this.houseModels = houseModels;
             loadData();
@@ -126,23 +125,19 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         if (selectOrgs.size() >= 1) {
             selectOrgs.remove(selectOrgs.size() - 1);
         }
-        if (selectOrgs.size() == 3) {
+        if (selectOrgs.size() == 3 || model.getChildren() == null || model.getChildren().size() == 0) {
             selectOrgs.add(model);
             onWorkTypeSelectListener.onWorkTypeSelectListener(selectOrgs);
             this.dismiss();
         } else {
             selectOrgs.add(model);
-            binding.hintText.setVisibility(View.VISIBLE);
-            binding.hintText.setText(selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
-
+            binding.hintText.setText(String.format(getContext().getResources().getString(R.string.text_choose_work_order_type), selectOrgs.size() == 1 ? "二" : selectOrgs.size() == 2 ? "三" : "一"));
             HouseModel orgModel1 = new HouseModel();
             orgModel1.setName(selectOrgs.size() == 0 ? "请选择楼栋" : selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
             selectOrgs.add(orgModel1);
 
             loadTags();
-            viewModel.getHouseByCondition(divideId, model.getId()).observe(this, houseModels -> {
-                adapter.setDataList(houseModels);
-            });
+            adapter.setDataList(model.getChildren());
         }
     }
 
@@ -219,24 +214,14 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
             list.add(data);
         }
         selectOrgs = list;
-        if (selectOrgs.size() == 0) {
-            selectOrgs = new ArrayList<>();
-            binding.hintText.setVisibility(View.GONE);
-        } else {
-            binding.hintText.setVisibility(View.VISIBLE);
-            binding.hintText.setText(selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
-        }
-
-
+        binding.hintText.setText(String.format(getContext().getResources().getString(R.string.text_choose_work_order_type), selectOrgs.size() == 1 ? "二" : selectOrgs.size() == 2 ? "三" : "一"));
         HouseModel orgModel1 = new HouseModel();
         orgModel1.setName(selectOrgs.size() == 0 ? "请选择楼栋" : selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
         selectOrgs.add(orgModel1);
         if (selectOrgs.size() == 1) {
             adapter.setDataList(houseModels);
         } else {
-            viewModel.getHouseByCondition(divideId, model.getId()).observe(this, houseModels -> {
-                adapter.setDataList(houseModels);
-            });
+            adapter.setDataList(model.getChildren());
         }
         loadTags();
     }

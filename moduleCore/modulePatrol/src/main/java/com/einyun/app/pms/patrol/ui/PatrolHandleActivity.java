@@ -301,11 +301,18 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                     .setMsg(getString(R.string.text_request_create_distribute))
                     .setPositiveButton(getString(R.string.ok), v -> {
                          //goPaiGongDan(); 跳转至创建派工单
+                        navigatSendWorkOrder();
+                        finish();
                     }).setNegativeButton(getString(R.string.cancel), v -> {
                         finish();
                     });
             alertDialog.show();
         }
+    }
+
+    private void navigatSendWorkOrder(){
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                .navigation();
     }
 
 

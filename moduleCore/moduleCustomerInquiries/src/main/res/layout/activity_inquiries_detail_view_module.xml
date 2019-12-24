@@ -83,11 +83,14 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"/>
              <RelativeLayout
+
                  style="@style/style_rl_normal">
+
                  <TextView
 
-                     android:text="@string/tv_work_nums"
-                     style="@style/style_text_approval_left" />
+                     style="@style/style_text_approval_left"
+                     android:layout_marginBottom="12dp"
+                     android:text="@string/tv_work_nums" />
                  <TextView
                      android:id="@+id/tv_work_num"
                      android:text="@{module.data.customer_enquiry_model.wx_code}"
@@ -95,18 +98,22 @@
              </RelativeLayout>
              <RelativeLayout
                  style="@style/style_rl_normal">
+
                  <TextView
-                     android:text="@string/tv_divide"
                      style="@style/style_text_approval_left"
-                     />
+                     android:layout_alignParentBottom="true"
+                     android:layout_marginBottom="12dp"
+                     android:text="@string/tv_divide" />
                  <TextView
                      android:id="@+id/tv_divide"
                      android:text="@{module.data.customer_enquiry_model.wx_dk}"
                      style="@style/style_text_approval_right"/>
              </RelativeLayout>
-             <RelativeLayout style="@style/style_rl_normal">
+             <RelativeLayout
+                 style="@style/style_rl_normal">
                  <TextView
                      android:text="@string/tv_real_estate"
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"/>
                  <TextView
                      android:text="@{module.data.customer_enquiry_model.wx_house}"
@@ -116,6 +123,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_phone" />
                  <TextView
@@ -126,6 +134,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_asking_people" />
                  <TextView
@@ -170,6 +179,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_complaint_time" />
                  <TextView
@@ -180,6 +190,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_record_person" />
                  <TextView
@@ -190,6 +201,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_ask_way" />
                  <TextView
@@ -200,6 +212,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_ask_type" />
                  <TextView
@@ -210,6 +223,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_finish_time" />
                  <TextView
@@ -220,6 +234,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_current_deal_person" />
                  <TextView
@@ -230,6 +245,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
+                     android:layout_marginBottom="12dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_inquiries_content" />
                  <TextView
@@ -371,23 +387,25 @@
                      android:background="@color/white">
 
                      <TextView
-                         style="@style/work_order_detail_txt_left"
+                         style="@style/work_order_detail_txt_left2"
                          android:text="审批结果" />
 
                      <TextView
+                         android:gravity="center_vertical"
                          android:id="@+id/tv_approval_result"
-                         style="@style/work_order_detail_txt_right" />
+                         style="@style/work_order_detail_txt_right2" />
                  </LinearLayout>
 
                  <LinearLayout style="@style/work_order_detail_ln">
 
                      <TextView
-                         style="@style/work_order_detail_txt_left"
+                         style="@style/work_order_detail_txt_left2"
                          android:text="审批时间" />
 
                      <TextView
+                         android:gravity="center_vertical"
                          android:id="@+id/tv_approval_time"
-                         style="@style/work_order_detail_txt_right"
+                         style="@style/work_order_detail_txt_right2"
                          />
                  </LinearLayout>
 
@@ -395,10 +413,12 @@
                  <LinearLayout style="@style/work_order_detail_ln">
 
                      <TextView
-                         style="@style/work_order_detail_txt_left"
+                         style="@style/work_order_detail_txt_left2"
                          android:text="申请人" />
 
-                     <TextView style="@style/work_order_detail_txt_right"
+                     <TextView
+                         android:gravity="center_vertical"
+                         style="@style/work_order_detail_txt_right2"
                          android:id="@+id/tv_applyer"
                          />
                  </LinearLayout>
@@ -406,10 +426,12 @@
                  <LinearLayout style="@style/work_order_detail_ln">
 
                      <TextView
-                         style="@style/work_order_detail_txt_left"
+                         style="@style/work_order_detail_txt_left2"
                          android:text="申请时间" />
 
-                     <TextView style="@style/work_order_detail_txt_right"
+                     <TextView
+                         android:gravity="center_vertical"
+                         style="@style/work_order_detail_txt_right2"
                          android:id="@+id/tv_apply_time"
                          />
                  </LinearLayout>
@@ -417,10 +439,12 @@
                  <LinearLayout style="@style/work_order_detail_ln">
 
                      <TextView
-                         style="@style/work_order_detail_txt_left"
+                         style="@style/work_order_detail_txt_left2"
                          android:text="申请原因" />
 
-                     <TextView style="@style/work_order_detail_txt_right"
+                     <TextView
+                         android:gravity="center_vertical"
+                         style="@style/work_order_detail_txt_right2"
                          android:id="@+id/tv_apply_reason"
                          />
                  </LinearLayout>
@@ -428,7 +452,7 @@
                  <LinearLayout style="@style/work_order_detail_ln">
 
                      <TextView
-                         style="@style/work_order_detail_txt_left"
+                         style="@style/work_order_detail_txt_left2"
                          android:text="申请照片" />
                  </LinearLayout>
                  <LinearLayout style="@style/work_order_detail_ln">

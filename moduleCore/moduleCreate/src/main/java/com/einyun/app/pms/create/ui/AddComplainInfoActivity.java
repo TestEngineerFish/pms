@@ -32,6 +32,7 @@ import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
+import com.einyun.app.library.workorder.net.request.ComplainAppendRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.pms.create.BR;
 import com.einyun.app.pms.create.R;
@@ -53,9 +54,8 @@ import java.util.List;
  */
 @Route(path = RouterUtils.ACTIVITY_ADD_COMPLAIN_INFO)
 public class AddComplainInfoActivity extends BaseHeadViewModelActivity<ActivityAddComplainInfoBinding, CreateViewModel>  {
-    @Autowired(name = RouteKey.KEY_PHONE)
-    String phone;
-    RVBindingAdapter<ItemComplainInfoBinding, ComplainModel> adapter;
+    @Autowired(name = RouteKey.ID)
+    String id;
 
     @Override
     protected CreateViewModel initViewModel() {
@@ -70,23 +70,8 @@ public class AddComplainInfoActivity extends BaseHeadViewModelActivity<ActivityA
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle(R.string.create_complain_order_title);
-        if (adapter == null){
-            adapter = new RVBindingAdapter<ItemComplainInfoBinding, ComplainModel>(this,BR.model) {
-                @Override
-                public void onBindItem(ItemComplainInfoBinding binding, ComplainModel model, int position) {
+        setHeadTitle("追加投诉信息");
 
-                }
-
-                @Override
-                public int getLayoutId() {
-                    return R.layout.item_complain_info;
-                }
-            };
-        }
-        viewModel.complainWorkListdPage(phone).observe(this, result -> {
-            adapter.setDataList(result.getRows());
-        });
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +83,16 @@ public class AddComplainInfoActivity extends BaseHeadViewModelActivity<ActivityA
 
 
     public void submit() {
+        if (!StringUtil.isNullStr(binding.ltQuestionDesc.getString())){
+            ToastUtil.show(this,"请填写投诉内容");
+            return;
+        }
+        ComplainAppendRequest request = new ComplainAppendRequest();
+        request.setBoId(id);
+        request.setDesc(binding.ltQuestionDesc.getString());
+        viewModel.appendComplain(request).observe(this,aBoolean -> {
+            finish();
+        });
 
     }
 }

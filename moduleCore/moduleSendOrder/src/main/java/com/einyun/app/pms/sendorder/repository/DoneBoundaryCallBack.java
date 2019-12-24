@@ -19,23 +19,10 @@ public class DoneBoundaryCallBack extends PendingBoundaryCallBack {
     @Override
     protected void loadData(int dataType,CallBack<Integer> callBack) {
         lock.lock();
-        request.setPage(pageBean.getPage());
         service.distributeDonePage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
-                if(data.isEmpty()){
-                    clearAll();
-                }
-                if (data.hasNextPage()) {
-                    callBack.call(data.nextPage());
-                }
-                lock.unlock();
-                DistributeListConvert convert = new DistributeListConvert();
-                List<Distribute> rows = convert.stringToSomeObjectList(new Gson().toJson(data.getRows()));
-                if(rows.size()>0){
-                    wrapList(rows);
-                    persistence(rows,dataType);
-                }
+               onDataLoaded(dataType,data,callBack);
             }
 
             @Override

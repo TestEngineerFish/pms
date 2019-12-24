@@ -15,9 +15,6 @@ package com.einyun.app.library.uc.usercenter.model
  */
 class HouseModel {
     var id: String? = null
-    var code: String? = null
     var name: String? = null
-    var level: Int? = null
-    var checked: Int? = null
-    var parentId: Int? = null
+    var children: List<HouseModel>? = null
 }

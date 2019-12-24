@@ -321,6 +321,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
     private void updateUI(PlanInfo planInfo) {
         this.planInfo = planInfo;
+        binding.frameSpace.setVisibility(View.GONE);
         showResult();
         showPostpone();
         showForceClose();
