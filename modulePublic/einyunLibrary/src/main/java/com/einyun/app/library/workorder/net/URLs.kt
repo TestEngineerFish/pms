@@ -41,7 +41,7 @@ class URLs {
         //获取投诉、问询工单类别与条线
         const val URL_BIZDATA_BASE_LIST:String="/$DOMAIN/workOrder/bizData/v1/getBaseList?categoryKey=workorder_type_and_line"
         //提交追加投诉
-        const val URL_COMPLAIN_SUBMIT:String="/$DOMAIN/workOrder/task/v1/appendComplain"
+        const val URL_COMPLAIN_SUBMIT:String="/$DOMAIN/workOrder/task/v1/appendWorkOrder"
         // 客户端启动投诉流程
         const val URL_TASK_RUN_START:String="/$DOMAIN/workOrder/taskRun/v1/start"
         //获取报修类别与条线
@@ -99,5 +99,8 @@ class URLs {
         const val URL_COMPLAIN_DETAIL_COMPLETE="/workOrder/workOrder/taskRun/v1/complete"
         //详情处理响应评价
         const val URL_COMPLAIN_DETAIL_SAVE="/workOrder/workOrder/saveDraft/v1/saveHandle"
+
+        //根据房产ID来查询用户
+        const val URL_USERINFO_BY_HOUSE_ID="/mdm/api/mdm/v1/houseClientRef/getListByHouseId"
     }
 }

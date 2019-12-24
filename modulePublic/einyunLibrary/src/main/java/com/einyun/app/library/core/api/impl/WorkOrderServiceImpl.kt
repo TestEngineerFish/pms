@@ -36,6 +36,25 @@ import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
  * @Version:        1.0
  */
 class WorkOrderServiceImpl : WorkOrderService {
+    override fun appendComplain(
+        request: ComplainAppendRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.appendComplain(
+            request,
+            callBack
+        )
+    }
+
+    override fun getUserInfoByHouseId(
+        houseId: String,
+        callBack: CallBack<List<UserInfoByHouseIdModel>>
+    ): LiveData<List<UserInfoByHouseIdModel>> {
+        return proxy.getUserInfoByHouseId(
+            houseId,
+            callBack
+        )
+    }
 
     /**
      * 获取报修筛选数据

@@ -17,17 +17,33 @@
 
         <View style="@style/base_underline" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
+        <LinearLayout
+            style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="投诉内容" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_create_order"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/px_30">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/lt_question_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hintText="请填写投诉内容"
+                app:maxNumber="300" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/bt_login"
             style="@style/submit_btn"
+            android:layout_marginTop="@dimen/px_140"
             android:text="@string/text_submit" />
     </LinearLayout>
 

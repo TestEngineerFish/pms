@@ -139,10 +139,22 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
             @Override
             public void onWorkTypeSelectListener(List<HouseModel> model) {
                 request.getBizData().setBuildId(model.get(0).getId());
-                request.getBizData().setUnitId(model.get(1).getId());
-                request.getBizData().setHouseId(model.get(2).getId());
-                request.getBizData().setHouse(model.get(2).getName());
+                if (model.size() >= 2) {
+                    request.getBizData().setUnitId(model.get(1).getId());
+                }
+                if (model.size() >= 3) {
+                    request.getBizData().setHouseId(model.get(2).getId());
+                    request.getBizData().setHouse(model.get(2).getName());
+                }
                 binding.setBean(request);
+                if (StringUtil.isNullStr(request.getBizData().getHouseId())) {
+                    viewModel.getUserInfoByHouseId(request.getBizData().getHouseId()).observe(CreateClientEnquiryOrderViewModelActivity.this, users -> {
+                        if (users != null && users.size()!=0){
+                            binding.phone.setText(users.get(0).getCellphone());
+                            binding.userName.setText(users.get(0).getName());
+                        }
+                    });
+                }
             }
         });
         view.show(getSupportFragmentManager(), "");
