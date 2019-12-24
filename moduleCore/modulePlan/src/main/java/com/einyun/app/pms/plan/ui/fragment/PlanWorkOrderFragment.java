@@ -75,6 +75,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     PageSearchFragment<ItemWorkPlanBinding, PlanWorkOrder> searchFragment;
+    protected SelectPopUpView selectPopUpView;
 
     public static PlanWorkOrderFragment newInstance(Bundle bundle) {
         PlanWorkOrderFragment fragment = new PlanWorkOrderFragment();
@@ -107,14 +108,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 @Override
                 public void call(BasicData data) {
                     //弹出筛选view
-                    ConditionBuilder builder = new ConditionBuilder();
-                    List<SelectModel> conditions = builder.addLines(data.getLines())//条线
-                            .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                            .mergeLineRes(data.getResources())
-                            .build();
-                    new SelectPopUpView(getActivity(), conditions)
-                            .setOnSelectedListener(selected -> handleSelect(selected))
-                            .showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                    showConditionView(data);
                 }
 
                 @Override
@@ -132,6 +126,20 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
             }
         });
 
+    }
+
+    protected void showConditionView(BasicData data) {
+        if(selectPopUpView==null){
+            ConditionBuilder builder = new ConditionBuilder();
+            List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+                    .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
+                    .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                    .mergeLineRes(data.getResources())
+                    .build();
+            selectPopUpView= new SelectPopUpView(getActivity(), conditions)
+                    .setOnSelectedListener(selected -> handleSelect(selected));
+        }
+        selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
     }
 
     private void search() {

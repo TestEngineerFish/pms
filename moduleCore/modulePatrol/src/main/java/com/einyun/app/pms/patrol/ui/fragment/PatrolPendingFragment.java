@@ -57,7 +57,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
  * 巡查待办
  */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> implements ItemClickListener<Patrol>, PeriodizationView.OnPeriodSelectListener {
-
+    protected SelectPopUpView selectPopUpView;
     protected int listType = ListType.PENDING.getType();
     protected RVPageListAdapter<ItemPatrolListBinding, Patrol> adapter;
     protected PageSearchFragment<ItemWorkPatrolBinding, Patrol> searchFragment;
@@ -169,54 +169,70 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(viewModel.request.getDivideId())) {
-                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_divide_selected);
-                    return;
-                }
-                BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(), new CallBack<DivideGrid>() {
-                    @Override
-                    public void call(DivideGrid divideGrid) {
-                        BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
-                            @Override
-                            public void call(BasicData data) {
-                                ConditionBuilder builder = new ConditionBuilder();
-                                List<SelectModel> conditions = builder
-                                        .addDivideGrid(divideGrid) //网格-楼栋-单元
-                                        .addLines(data.getLines())//条线
-                                        .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                                        .mergeLineRes(data.getResources())
-                                        .addLineTypesItem(data.getListLineTypes())
-                                        .build();
-                                new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
-                                    @Override
-                                    public void onSelected(Map selected) {
-                                        handleSelect(selected);
-                                    }
-                                }).showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
-                            }
-
-                            @Override
-                            public void onFaild(Throwable throwable) {
-
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onFaild(Throwable throwable) {
-
-                    }
-                });
+                showConditionView();
             }
         });
+    }
+
+    /**
+     * 显示筛选条件
+     */
+    protected void showConditionView() {
+        if (TextUtils.isEmpty(viewModel.request.getDivideId())) {
+            ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_divide_selected);
+            return;
+        }
+        if(selectPopUpView==null){
+            BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(), new CallBack<DivideGrid>() {
+                @Override
+                public void call(DivideGrid divideGrid) {
+                    BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                        @Override
+                        public void call(BasicData data) {
+                            ConditionBuilder builder = new ConditionBuilder();
+                            List<SelectModel> conditions = builder
+                                    .addDivideGrid(divideGrid) //网格-楼栋-单元
+                                    .addLines(data.getLines())//条线
+                                    .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                                    .mergeLineRes(data.getResources())
+                                    .addLineTypesItem(data.getListLineTypes())
+                                    .build();
+                           selectPopUpView= new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                                @Override
+                                public void onSelected(Map selected) {
+                                    handleSelect(selected);
+                                }
+                            });
+                           selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                        }
+
+                        @Override
+                        public void onFaild(Throwable throwable) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+
+                }
+            });
+        }
+        else{
+            selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+        }
+
     }
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+        binding.panelCondition.periodSelected.setText(orgModel.getName());
         wrapDivideId(orgModel.getId(), viewModel.request);
         viewModel.onCondition();
+        BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(),null);//预先加载筛选条件的网格数据
     }
 
     protected void search() {

@@ -10,15 +10,21 @@
         android:background="@color/white"
         >
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/back"
-            android:layout_width="60dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/px_150"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            app:srcCompat="@mipmap/icon_back_blue"
-            android:adjustViewBounds="true"
-            />
+            android:gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                app:srcCompat="@mipmap/icon_back_blue"
+                android:adjustViewBounds="true"
+                />
+
+        </LinearLayout>
 
 
         <TextView
@@ -37,6 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/iv_right_option"
             android:layout_width="20dp"
@@ -54,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/px_30"
             android:gravity="center"
             android:maxLines="1"
             android:text=""
