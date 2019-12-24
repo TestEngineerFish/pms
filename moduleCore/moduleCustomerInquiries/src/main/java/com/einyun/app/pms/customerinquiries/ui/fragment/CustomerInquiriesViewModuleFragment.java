@@ -165,6 +165,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                                 .withString(RouteKey.KEY_ORDER_ID,inquiriesItemModule.getID_())
                                 .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
                                 .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
+                                .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER,RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                                 .navigation();
 
                     });

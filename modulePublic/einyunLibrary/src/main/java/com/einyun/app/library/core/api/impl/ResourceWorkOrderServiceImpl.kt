@@ -128,7 +128,12 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
     ): LiveData<ResendOrderResponse> {
         return proxy.resendOrder(request, callBack)
     }
-
+    override fun resendCusOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse> {
+        return proxy.resendCusOrder(request, callBack)
+    }
 
     override fun applyClose(
         request: ApplyCloseRequest,

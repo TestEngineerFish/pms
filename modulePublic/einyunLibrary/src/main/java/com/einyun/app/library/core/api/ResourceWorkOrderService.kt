@@ -113,6 +113,11 @@ interface ResourceWorkOrderService : EinyunService {
         request: ResendOrderRequest,
         callBack: CallBack<ResendOrderResponse>
     ): LiveData<ResendOrderResponse>
+    //客服类转派工单
+    fun resendCusOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse>
 
     //申请闭单
     fun applyClose(

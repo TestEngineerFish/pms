@@ -119,7 +119,12 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     ): LiveData<ResendOrderResponse> {
         return instance?.resendOrder(request, callBack)!!
     }
-
+    override fun resendCusOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse> {
+        return instance?.resendCusOrder(request, callBack)!!
+    }
 
     override fun applyClose(
         request: ApplyCloseRequest,
