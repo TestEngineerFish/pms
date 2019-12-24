@@ -103,6 +103,8 @@ class URLs {
         const val URL_SELECT_BY_JOB = "user-center/api/usercenter/v1/ucOrgJob/filterJobByOrgId"
         //转派
         const val URL_RESEND_ORDER = "/$DOMAIN/res-order/distribute/direct"
+        //客服类转派
+        const val URL_RESEND_ORDER_CUS = "/bpm-runtime/runtime/task/v1/delegate"
         //申请闭单
         const val URL_CLOSE_ORDER = "/$DOMAIN/res-order/distribute/close"
         //派工单-延期
@@ -124,16 +126,15 @@ class URLs {
          */
         const val URL_WORK_ORDER_FORCE_CLOSE ="/$DOMAIN/res-order/{workOrder}/close"
 
-
-        /**
-         * 客户端通用关闭
-         */
-        const val URL_WORK_ORDER_FORCE_CLOSE_CUSTOME ="/$DOMAIN/workOrder/{workOrder}/v1/applyFclose"
-
         /**
          * 客户端通用延期
          */
-        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME ="/$DOMAIN/workOrder/{workOrder}/v1/applyFclose"
+        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME ="/workOrder/workOrder/workOrderInnerAudit/v1/startSubProcess"
+
+        /**
+         * 客户端通用获取延期信息
+         */
+        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME_INFO ="/workOrder/workOrder/task/v1/getDelayByCondition"
 
         /**
          * 通过申请延期

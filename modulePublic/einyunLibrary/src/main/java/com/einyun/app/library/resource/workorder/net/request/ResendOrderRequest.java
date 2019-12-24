@@ -7,6 +7,16 @@ public class ResendOrderRequest {
         private String userName="";
         private String taskId="";
 
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
+
+    private String messageType="";
+
         public String getId() {
             return id;
         }

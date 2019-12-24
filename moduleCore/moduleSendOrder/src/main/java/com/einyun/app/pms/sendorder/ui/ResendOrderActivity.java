@@ -11,6 +11,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
@@ -40,7 +41,8 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     String divideID;
     @Autowired(name = RouteKey.KEY_PROJECT_ID)
     String projectID;
-
+    @Autowired(name = RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+    String reSendKey;
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -51,7 +53,11 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         ARouter.getInstance().inject(this);
-        setHeadTitle(R.string.text_resend_order);
+        if (!StringUtil.isNullStr(reSendKey)) {
+            setHeadTitle(R.string.text_resend_order);
+        }else {
+            setHeadTitle(R.string.text_resend_cus_order);
+        }
         resendOrderRequest = new ResendOrderRequest();
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
             binding.resendName.setText(model.getFullname());
@@ -60,6 +66,9 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
             resendOrderRequest.setTaskId(taskId);
             resendOrderRequest.setUserId(model.getId());
             resendOrderRequest.setUserName(model.getFullname());
+            if (!reSendKey.isEmpty()) {
+                resendOrderRequest.setMessageType("inner,app_push");//固定值
+            }
         });
     }
 
@@ -86,14 +95,25 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                 ToastUtil.show(ResendOrderActivity.this, R.string.txt_plese_enter_reason);
             } else {
                 resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
-                viewModel.resendOrder(resendOrderRequest).observe(this, model -> {
-                    if (model.getCode().equals("0")) {
-                        ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
-                        this.finish();
-                    } else {
-                        ToastUtil.show(ResendOrderActivity.this, model.getMsg());
-                    }
-                });
+                if (!StringUtil.isNullStr(reSendKey)) {
+                    viewModel.resendOrder(resendOrderRequest).observe(this, model -> {
+                        if (model.getCode().equals("0")) {
+                            ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
+                            this.finish();
+                        } else {
+                            ToastUtil.show(ResendOrderActivity.this, model.getMsg());
+                        }
+                    });
+                }else {//客服三大类转派工单
+                    viewModel.resendCusOrder(resendOrderRequest).observe(this, model -> {
+                        if (model.getCode().equals("0")) {
+                            ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
+                            this.finish();
+                        } else {
+                            ToastUtil.show(ResendOrderActivity.this, model.getMsg());
+                        }
+                    });
+                }
             }
         } else {
             ARouter.getInstance()

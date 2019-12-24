@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
+import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.base.paging.bean.QueryBuilder
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
@@ -31,6 +33,53 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun postApplyDateInfo(
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        val liveData = MutableLiveData<Boolean>()
+        serviceApi?.postApplyDateInfo(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.isState)
+                    liveData.postValue(response.isState)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+
+            }, { error ->
+                callBack.onFaild(error)
+            })
+        return liveData
+    }
+
+    override fun getApplyDateInfo(
+        id: String,
+        callBack: CallBack<formDataExten>
+    ): LiveData<formDataExten> {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "parent_id",
+            id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+        val liveData = MutableLiveData<formDataExten>()
+        serviceApi?.getApplyDateInfo(builder.build())?.compose(RxSchedulers.inIo())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+
+            }, { error ->
+                callBack.onFaild(error)
+            })
+        return liveData
+    }
+
     override fun forceClose(
         workOrderType: String,
         request: ApplyCloseRequest,
@@ -288,7 +337,21 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
         return liveData; }
-
+    //三大客服转派工单
+    override fun resendCusOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse> {
+        val liveData = MutableLiveData<ResendOrderResponse>()
+        serviceApi?.resendCusOrder(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
+        return liveData; }
     override fun exten(
         request: ExtenDetialRequest,
         callBack: CallBack<BaseResponse<Object>>
@@ -653,13 +716,14 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             })
         return liveData
     }
+
     override fun applyCustomerClose(
         request: ApplyCusCloseRequest,
         midUrl: String,
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse> {
         val liveData = MutableLiveData<ApplyCloseResponse>()
-        serviceApi?.closeCustomerOrder(midUrl,request)?.compose(RxSchedulers.inIo())
+        serviceApi?.closeCustomerOrder(midUrl, request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 callBack.call(response)
                 liveData.postValue(response)

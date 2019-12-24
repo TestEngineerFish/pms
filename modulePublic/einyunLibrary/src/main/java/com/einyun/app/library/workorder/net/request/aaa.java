@@ -4,116 +4,46 @@ public class aaa {
 
 
     /**
-     * applyDate : 2019-12-23 11:32:19.0
-     * applyUser : 李淑杰
-     * applyUserId : 63879813097586693
-     * auditDate : null
-     * status : submit
-     * statusStr : 审批中
-     * applyReason : null
-     * attachment : null
-     * setToInvalid : 否
-     * invalidReasonCategory : null
-     * delayTime : null
+     * delay_number : 0
+     * delay_sum_time : 0
+     * delay_time : 5
+     * apply_reason  : 申请5天延期
      */
 
-    private String applyDate;
-    private String applyUser;
-    private String applyUserId;
-    private Object auditDate;
-    private String status;
-    private String statusStr;
-    private Object applyReason;
-    private Object attachment;
-    private String setToInvalid;
-    private Object invalidReasonCategory;
-    private Object delayTime;
+    private int delay_number;
+    private int delay_sum_time;
+    private String delay_time;
+    private String apply_reason;
 
-    public String getApplyDate() {
-        return applyDate;
+    public int getDelay_number() {
+        return delay_number;
     }
 
-    public void setApplyDate(String applyDate) {
-        this.applyDate = applyDate;
+    public void setDelay_number(int delay_number) {
+        this.delay_number = delay_number;
     }
 
-    public String getApplyUser() {
-        return applyUser;
+    public int getDelay_sum_time() {
+        return delay_sum_time;
     }
 
-    public void setApplyUser(String applyUser) {
-        this.applyUser = applyUser;
+    public void setDelay_sum_time(int delay_sum_time) {
+        this.delay_sum_time = delay_sum_time;
     }
 
-    public String getApplyUserId() {
-        return applyUserId;
+    public String getDelay_time() {
+        return delay_time;
     }
 
-    public void setApplyUserId(String applyUserId) {
-        this.applyUserId = applyUserId;
+    public void setDelay_time(String delay_time) {
+        this.delay_time = delay_time;
     }
 
-    public Object getAuditDate() {
-        return auditDate;
+    public String getApply_reason() {
+        return apply_reason;
     }
 
-    public void setAuditDate(Object auditDate) {
-        this.auditDate = auditDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatusStr() {
-        return statusStr;
-    }
-
-    public void setStatusStr(String statusStr) {
-        this.statusStr = statusStr;
-    }
-
-    public Object getApplyReason() {
-        return applyReason;
-    }
-
-    public void setApplyReason(Object applyReason) {
-        this.applyReason = applyReason;
-    }
-
-    public Object getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(Object attachment) {
-        this.attachment = attachment;
-    }
-
-    public String getSetToInvalid() {
-        return setToInvalid;
-    }
-
-    public void setSetToInvalid(String setToInvalid) {
-        this.setToInvalid = setToInvalid;
-    }
-
-    public Object getInvalidReasonCategory() {
-        return invalidReasonCategory;
-    }
-
-    public void setInvalidReasonCategory(Object invalidReasonCategory) {
-        this.invalidReasonCategory = invalidReasonCategory;
-    }
-
-    public Object getDelayTime() {
-        return delayTime;
-    }
-
-    public void setDelayTime(Object delayTime) {
-        this.delayTime = delayTime;
+    public void setApply_reason(String apply_reason) {
+        this.apply_reason = apply_reason;
     }
 }

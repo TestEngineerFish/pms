@@ -212,5 +212,27 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         });
         return resend;
     }
+    /**
+     * 三大客服类转单 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<ResendOrderResponse> resendCusOrder(ResendOrderRequest request) {
+        showLoading();
+        MutableLiveData<ResendOrderResponse> resend = new MutableLiveData<>();
+        resourceWorkOrderService.resendCusOrder(request, new CallBack<ResendOrderResponse>() {
+            @Override
+            public void call(ResendOrderResponse data) {
+                hideLoading();
+                resend.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return resend;
+    }
 }

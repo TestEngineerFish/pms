@@ -35,7 +35,8 @@
                     android:layout_width="@dimen/px_22"
                     android:layout_height="@dimen/px_22"
                     android:textColor="@color/white"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    />
             </RelativeLayout>
             <ImageView
                 android:background="@color/blueTextColor"

@@ -24,6 +24,20 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun postApplyDateInfo(
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return proxy.postApplyDateInfo(request,callBack)
+    }
+
+    override fun getApplyDateInfo(
+        id: String,
+        callBack: CallBack<formDataExten>
+    ): LiveData<formDataExten> {
+        return proxy.getApplyDateInfo(id,callBack)
+    }
+
     override fun forceClose(
         workOrderType: String,
         request: ApplyCloseRequest,
@@ -128,7 +142,12 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
     ): LiveData<ResendOrderResponse> {
         return proxy.resendOrder(request, callBack)
     }
-
+    override fun resendCusOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse> {
+        return proxy.resendCusOrder(request, callBack)
+    }
 
     override fun applyClose(
         request: ApplyCloseRequest,

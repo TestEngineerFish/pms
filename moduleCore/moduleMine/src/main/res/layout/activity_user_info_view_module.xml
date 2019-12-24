@@ -28,7 +28,6 @@
               style="@style/style_userinfo_tv_left" />
           <ImageView
               android:id="@+id/iv_head_shot"
-              android:src="@drawable/iv_default_head_shot"
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
               android:layout_marginRight="32.5dp"
