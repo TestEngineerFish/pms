@@ -97,7 +97,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
      * @return
      */
     @Override
-    public LiveData<TenantModel> getTenantId(String code) {
+    public LiveData<TenantModel> getTenantId(String code, boolean splash) {
         //temp code for tenantid
         return mUCService.getTenantId(code, new CallBack<TenantModel>() {
             @Override
@@ -110,7 +110,9 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             @Override
             public void onFaild(Throwable throwable) {
                 ThrowableParser.onFailed(throwable);
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                if (splash){
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                }
             }
         });
     }

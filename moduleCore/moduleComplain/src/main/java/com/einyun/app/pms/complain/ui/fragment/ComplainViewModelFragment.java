@@ -72,6 +72,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         return R.layout.complain_fragment;
     }
 
+    SelectPopUpView view;
 
     @Override
     protected void init() {
@@ -89,15 +90,17 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
             BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
                 @Override
                 public void call(BasicData data) {
-                    //弹出筛选view
-                    ConditionBuilder builder = new ConditionBuilder();
-                    List<SelectModel> conditions = builder.addLines(data.getLines())//条线
-                            .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                            .mergeLineRes(data.getResources())
-                            .build();
-                    new SelectPopUpView(getActivity(), conditions)
-                            .setOnSelectedListener(selected -> handleSelect(selected))
-                            .showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                    if (view == null) {
+                        //弹出筛选view
+                        ConditionBuilder builder = new ConditionBuilder();
+                        List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+                                .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
+                                .mergeLineRes(data.getResources())
+                                .build();
+                        view = new SelectPopUpView(getActivity(), conditions);
+                        view.setOnSelectedListener(selected -> handleSelect(selected));
+                    }
+                    view.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                 }
 
                 @Override
@@ -258,6 +261,8 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
+//        binding.panelCondition.periodSelected.setText(orgModel.getName());
+//        binding.panelCondition.setPeriodSelected(true);
 
     }
 }

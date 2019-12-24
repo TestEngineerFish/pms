@@ -225,7 +225,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      * 登陆事件
      */
     public void onLoginClick() {
-        viewModel.getTenantId(binding.etOrgCode.getText().toString()).observe(this,
+        viewModel.getTenantId(binding.etOrgCode.getText().toString(), false).observe(this,
                 tenantModel -> {
 //                    ToastUtil.show(this, "tentantId" + tenantModel.getId());
                     UserModel model = binding.getUserModel();

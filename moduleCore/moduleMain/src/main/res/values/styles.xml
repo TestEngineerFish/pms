@@ -69,7 +69,7 @@
         <item name="android:src">@mipmap/img_light_warn</item>
         <item name="android:layout_marginLeft">@dimen/px_10</item>
         <item name="android:layout_marginBottom">@dimen/px_40</item>
-        <item name="android:visibility">visible</item>
+        <item name="android:visibility">invisible</item>
     </style>
     <style name="vertical_line">
         <item name="android:layout_width">@dimen/px_2</item>

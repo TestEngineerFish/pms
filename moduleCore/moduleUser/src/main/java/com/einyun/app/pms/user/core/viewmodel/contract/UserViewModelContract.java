@@ -23,7 +23,7 @@ public interface UserViewModelContract {
      */
     LiveData<UserModel> login(String username, String password, boolean isShowLoading);
 
-    LiveData<TenantModel> getTenantId(String code);
+    LiveData<TenantModel> getTenantId(String code, boolean splash);
 
     void deleteUser(String userName);
 
