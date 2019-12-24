@@ -40,6 +40,7 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.FragmentPlanWorkOrderBinding;
+import com.einyun.app.pms.plan.databinding.ItemSearchWorkPlanBinding;
 import com.einyun.app.pms.plan.databinding.ItemWorkPlanBinding;
 import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderViewModel;

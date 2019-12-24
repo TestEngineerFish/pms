@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
+import androidx.databinding.BindingAdapter;
+
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.R;
 
@@ -135,15 +137,7 @@ public class RatingBar extends LinearLayout {
         starPadding = mTypedArray.getDimension(R.styleable.RatingBar_starPadding, 10);
         starStep = mTypedArray.getFloat(R.styleable.RatingBar_starStep, 1.0f);
         stepSize = StepSize.fromStep(mTypedArray.getInt(R.styleable.RatingBar_stepSize, 1));
-        if (!StringUtil.isNullStr(mTypedArray.getString(R.styleable.RatingBar_starCount))){
-            starCount = 5;
-        }else{
-            try {
-                starCount = Integer.parseInt(mTypedArray.getString(R.styleable.RatingBar_starCount));
-            }catch (Exception e){
-                starCount = 5;
-            }
-        }
+        starCount = mTypedArray.getInt(R.styleable.RatingBar_starCount, 5);
         starEmptyDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starEmpty);
         starFillDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starFill);
         starHalfDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starHalf);
@@ -214,6 +208,7 @@ public class RatingBar extends LinearLayout {
 
     }
 
+
     /**
      * 设置星星的个数
      *
@@ -247,7 +242,7 @@ public class RatingBar extends LinearLayout {
         }
     }
 
-    public float getSelectedStarts(){
+    public float getSelectedStarts() {
         return this.starStep;
     }
 
