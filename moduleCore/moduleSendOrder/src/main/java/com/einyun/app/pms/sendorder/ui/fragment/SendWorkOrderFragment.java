@@ -85,10 +85,12 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 //    String blockName;
 //    String blockId;
 
-    public SendWorkOrderFragment(int listType){
-        this.listType=listType;
+    public SendWorkOrderFragment(int listType) {
+        this.listType = listType;
     }
+
     boolean hasInit;
+
     public static SendWorkOrderFragment newInstance(int listType) {
         return new SendWorkOrderFragment(listType);
     }
@@ -108,10 +110,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     @Override
     public void onResume() {
         super.onResume();
-        if(hasInit){
+        if (hasInit) {
             viewModel.refresh();
         }
-        hasInit=true;
+        hasInit = true;
     }
 
     @Override
@@ -128,10 +130,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     @Override
     protected void setUpData() {
-        viewModel.listType=listType;
+        viewModel.listType = listType;
         //停止刷新
-        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH,Boolean.class).observe(getActivity(), shown -> {
-            if(!shown){
+        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(getActivity(), shown -> {
+            if (!shown) {
                 binding.sendOrderRef.setRefreshing(false);
             }
         });
@@ -144,7 +146,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
                 @Override
                 public void onBindItem(ItemWorkSendBinding binding, Distribute distribute) {
-                    if(listType==ListType.DONE.getType()){
+                    if (listType == ListType.DONE.getType()) {
                         binding.itemResendRe.setVisibility(View.GONE);
                     }
                     binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
@@ -152,10 +154,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
-                                    .withString(RouteKey.KEY_TASK_ID,distribute.getTaskId())
-                                    .withString(RouteKey.KEY_ORDER_ID,distribute.getID_())
-                                    .withString(RouteKey.KEY_DIVIDE_ID,distribute.getF_DIVIDE_ID())
-                                    .withString(RouteKey.KEY_PROJECT_ID,distribute.getF_PROJECT_ID())
+                                    .withString(RouteKey.KEY_TASK_ID, distribute.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID, distribute.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, distribute.getF_DIVIDE_ID())
+                                    .withString(RouteKey.KEY_PROJECT_ID, distribute.getF_PROJECT_ID())
                                     .navigation();
                         }
                     });
@@ -182,9 +184,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             @Override
             public void onClick(View v) {
                 //弹出分期view
-                PeriodizationView periodizationView=new PeriodizationView();
+                PeriodizationView periodizationView = new PeriodizationView();
                 periodizationView.setPeriodListener(SendWorkOrderFragment.this::onPeriodSelectListener);
-                periodizationView.show(getParentFragmentManager(),"");
+                periodizationView.show(getParentFragmentManager(), "");
             }
         });
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
@@ -198,13 +200,13 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             @Override
             public void call(BasicData data) {
                 //弹出筛选view
-                if(selectPopUpView==null){
-                    ConditionBuilder builder=new ConditionBuilder();
-                    List<SelectModel> conditions= builder.addLines(data.getLines())//条线
+                if (selectPopUpView == null) {
+                    ConditionBuilder builder = new ConditionBuilder();
+                    List<SelectModel> conditions = builder.addLines(data.getLines())//条线
                             .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                             .mergeLineRes(data.getResources())
                             .build();
-                    selectPopUpView= new SelectPopUpView(getActivity(),conditions)
+                    selectPopUpView = new SelectPopUpView(getActivity(), conditions)
                             .setOnSelectedListener(selected -> handleSelect(selected));
                 }
                 selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
@@ -219,12 +221,12 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     private void loadPagingData() {
         viewModel.getRequest().setUserId(userModuleService.getUserId());
-        if(listType==ListType.PENDING.getType()){
+        if (listType == ListType.PENDING.getType()) {
             viewModel.loadPadingData().observe(this, dataBeans -> {
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
-        }else{
+        } else {
             viewModel.loadDonePagingData().observe(this, dataBeans -> {
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
@@ -263,23 +265,24 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     /**
      * 列表Item 点击，跳转进入详情
      * 代办详情进入(taskId)，已办详情(taskNodeTd,proInsId)
+     *
      * @param veiw
      * @param data
      */
     @Override
     public void onItemClicked(View veiw, Distribute data) {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-                    .withString(RouteKey.KEY_ORDER_ID,data.getID_())
-                    .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
-                    .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
-                    .withInt(RouteKey.KEY_LIST_TYPE,listType)
-                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
-                    .navigation();
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
+                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                .withInt(RouteKey.KEY_LIST_TYPE, listType)
+                .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                .navigation();
     }
 
     public void setListType(int listType) {
-        this.listType=listType;
+        this.listType = listType;
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
@@ -298,11 +301,11 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     /**
      * 超出10个字显示省略号
-     * */
-    public String LimitText(String txts){
-        if (txts.length()>10){
-            return txts.substring(0,10)+"...";
-        }else {
+     */
+    public String LimitText(String txts) {
+        if (txts.length() > 10) {
+            return txts.substring(0, 10) + "...";
+        } else {
             return txts;
         }
 
@@ -311,18 +314,20 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.panelCondition.periodSelected.setText(orgModel.getName());
-        binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+        binding.panelCondition.setPeriodSelected(true);
         viewModel.setOrgModel(orgModel);
     }
 
 
-
     /**
      * 处理筛选返回数据
-     * */
+     */
     private void handleSelect(Map selected) {
-        if (selected.size()>0){
-            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));}
+        if (selected.size() > 0) {
+            binding.panelCondition.setConditionSelected(true);
+        }else{
+            binding.panelCondition.setConditionSelected(false);
+        }
         viewModel.onConditionSelected(selected);
     }
 }

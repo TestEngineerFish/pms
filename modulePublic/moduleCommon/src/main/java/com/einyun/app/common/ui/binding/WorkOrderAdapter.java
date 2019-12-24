@@ -35,6 +35,34 @@ public class WorkOrderAdapter {
 
     }
 
+    /**
+     * 筛选条件是否选择，分期是否选择
+     * @param textView
+     * @param state
+     */
+    @BindingAdapter("condition_select")
+    public static void condition_select(TextView textView,boolean state){
+        if(state){
+            textView.setTextColor(textView.getContext().getResources().getColor(R.color.blueConditionColor));
+        }else{
+            textView.setTextColor(textView.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+        }
+    }
+
+    /**
+     * 筛选条件是否选择，分期是否选择
+     * @param view
+     * @param state
+     */
+    @BindingAdapter("condition_select")
+    public static void condition_select(ImageView view,boolean state){
+        if(state){
+           view.setImageResource(R.mipmap.icon_down_selected);
+        }else{
+            view.setImageResource(R.drawable.down);
+        }
+    }
+
     @BindingAdapter("isComingTimeout")
     public static void isComingTimeout(ImageView view, int value){
         if(value>0){

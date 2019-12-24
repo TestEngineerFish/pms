@@ -228,7 +228,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-        binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+        binding.panelCondition.setPeriodSelected(true);
         binding.panelCondition.periodSelected.setText(orgModel.getName());
         wrapDivideId(orgModel.getId(), viewModel.request);
         viewModel.onCondition();
@@ -263,7 +263,9 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
      */
     protected void handleSelect(Map selected) {
         if (selected.size() > 0) {
-            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.panelCondition.setConditionSelected(true);
+        }else{
+            binding.panelCondition.setConditionSelected(false);
         }
         wrapCondition(selected, viewModel.request);
         viewModel.onCondition();
