@@ -135,7 +135,7 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
      *
      * @return LiveData
      */
-    public MutableLiveData<ApplyCloseResponse> applyCustomerClose(ApplyCusCloseRequest request, List<PicUrl> images) {
+    public MutableLiveData<ApplyCloseResponse> applyCustomerClose(ApplyCusCloseRequest request,String midUrl, List<PicUrl> images) {
         if (uploadManager != null) {
             request.getBizData().setFclose_apply_attach(uploadManager.toJosnString(images));
 
@@ -143,7 +143,7 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
 //        Log.e("", "applyCustomerClose: "+new Gson().toJson(ApplyCusCloseRequest.class) );
         showLoading();
         MutableLiveData<ApplyCloseResponse> resend=new MutableLiveData<>();
-        resourceWorkOrderRepo.applyCustomerClose(request,new CallBack<ApplyCloseResponse>() {
+        resourceWorkOrderRepo.applyCustomerClose(request,midUrl,new CallBack<ApplyCloseResponse>() {
             @Override
             public void call(ApplyCloseResponse data) {
                 hideLoading();

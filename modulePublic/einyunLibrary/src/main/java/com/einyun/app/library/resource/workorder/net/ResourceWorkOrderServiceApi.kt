@@ -212,7 +212,7 @@ interface ResourceWorkOrderServiceApi {
      * 客户问询申请闭单
      * */
     @POST(URLs.URL_CLOSE_CUSTOMER_ORDER)
-    fun closeCustomerOrder(@Body request:ApplyCusCloseRequest):Flowable<ApplyCloseResponse>
+    fun closeCustomerOrder(@Path("workOrder") orderType:String,@Body request:ApplyCusCloseRequest):Flowable<ApplyCloseResponse>
 
     /**
      * 获取历史流程

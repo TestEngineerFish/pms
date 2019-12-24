@@ -74,7 +74,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
              * */
             viewModel.getStars(new UserStarsBean("",userInfoModel.getId())).observe(this, model -> {
                 float stars = (float) model.getStars();
-                binding.ratingBar.setStar(stars);
+                binding.ratingBar.setStar(5f);
 
             });
         });

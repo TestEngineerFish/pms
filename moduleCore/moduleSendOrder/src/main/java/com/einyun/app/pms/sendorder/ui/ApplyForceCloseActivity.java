@@ -20,6 +20,7 @@ import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.databinding.ActivityApplyForceCloseBinding;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -29,7 +30,7 @@ import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCusCloseRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
-import com.einyun.app.pms.sendorder.databinding.ActivityApplyForceCloseBinding;
+//import com.einyun.app.pms.sendorder.databinding.ActivityApplyForceCloseBinding;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderDetailBinding;
 import com.einyun.app.pms.sendorder.viewmodel.ApplyCloseViewModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
@@ -53,8 +54,8 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
     String taskId;
     @Autowired(name = RouteKey.KEY_CLOSE_ID)
     String keyId;
-    @Autowired(name = "key")
-    String key;
+    @Autowired(name = RouteKey.KEY_MID_URL)
+    String midUrl;
     @Override
     protected ApplyCloseViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(ApplyCloseViewModel.class);
@@ -159,7 +160,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                if (!StringUtil.isNullStr(key)) {
+                if (!StringUtil.isNullStr(midUrl)) {
                     if (StringUtil.isNullStr(keyId)) {
                         if (RouteKey.KEY_PLAN.equals(keyId)) {
                             viewModel.applyClosePlan(request, data).observe(this, model -> {
@@ -185,7 +186,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                     ApplyCusCloseRequest applyCusCloseRequest = new ApplyCusCloseRequest(new ApplyCusCloseRequest.BizDataBean(),new ApplyCusCloseRequest.DoNextParamBean());
                     applyCusCloseRequest.getDoNextParam().setTaskId(taskId);
                     applyCusCloseRequest.getBizData().setFclose_apply_reason(binding.applyCloseReason.getString());
-                    viewModel.applyCustomerClose(applyCusCloseRequest, data).observe(this, model -> {
+                    viewModel.applyCustomerClose(applyCusCloseRequest,midUrl, data).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(this, R.string.apply_close_success);
                             this.finish();

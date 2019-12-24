@@ -176,7 +176,11 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         adapter = new RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean>(this, BR.module) {
               @Override
               public void onBindItem(ItemFeedbackHistoryLayoutBinding binding, OrderDetailInfoModule.HandleListBean model, int position) {
-
+                  if (position == 0) {
+                      binding.ivFirst.setVisibility(View.INVISIBLE);
+                  } else {
+                      binding.ivFirst.setVisibility(View.VISIBLE);
+                  }
                   if (position == adapter.getDataList().size() - 1) {
                       binding.itemHistroyImg.setVisibility(View.INVISIBLE);
                   } else {
@@ -334,7 +338,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
      * 申请强制闭单
      */
     public void onForseCloseClick(){
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString("key","key")
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString(RouteKey.KEY_MID_URL,RouteKey.KEY_MID_URL_INQUIRIES)
                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.taskId)
                 .navigation();
     }
