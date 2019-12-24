@@ -1,7 +1,6 @@
 package com.einyun.app.pms.sendorder.ui;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -10,7 +9,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -25,16 +23,12 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.utils.Glide4Engine;
-import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCusCloseRequest;
-import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.R;
 //import com.einyun.app.pms.sendorder.databinding.ActivityApplyForceCloseBinding;
-import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderDetailBinding;
 import com.einyun.app.pms.sendorder.viewmodel.ApplyCloseViewModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
-import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
