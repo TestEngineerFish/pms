@@ -129,12 +129,12 @@ class URLs {
         /**
          * 客户端通用延期
          */
-        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME ="/$DOMAIN/workOrder/workOrderInnerAudit/v1/startSubProcess"
+        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME ="/workOrder/workOrder/workOrderInnerAudit/v1/startSubProcess"
 
         /**
          * 客户端通用获取延期信息
          */
-        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME_INFO ="/$DOMAIN/workOrder/task/v1/getDelayByCondition"
+        const val URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME_INFO ="/workOrder/workOrder/task/v1/getDelayByCondition"
 
         /**
          * 通过申请延期

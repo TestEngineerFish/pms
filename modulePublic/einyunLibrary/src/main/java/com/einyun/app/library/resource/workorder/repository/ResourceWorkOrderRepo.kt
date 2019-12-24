@@ -34,16 +34,15 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
     override fun postApplyDateInfo(
-        orderType: String,
         request: ExtenDetialRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean> {
         val liveData = MutableLiveData<Boolean>()
-        serviceApi?.postApplyDateInfo(orderType, request)?.compose(RxSchedulers.inIo())
+        serviceApi?.postApplyDateInfo(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 if (response.isState) {
-                    callBack.call(response.data)
-                    liveData.postValue(response.data)
+                    callBack.call(response.isState)
+                    liveData.postValue(response.isState)
                 } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }

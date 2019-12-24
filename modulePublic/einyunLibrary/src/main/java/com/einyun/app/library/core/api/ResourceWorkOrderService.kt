@@ -202,7 +202,6 @@ interface ResourceWorkOrderService : EinyunService {
     fun isClosed(request: IsClosedRequest, callBack: CallBack<Boolean>)
 
     fun postApplyDateInfo(
-        orderType: String,
         request: ExtenDetialRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean>

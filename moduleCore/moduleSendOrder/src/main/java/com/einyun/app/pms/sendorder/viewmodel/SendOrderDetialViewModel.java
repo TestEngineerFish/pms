@@ -6,6 +6,7 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -270,19 +271,25 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });
     }
 
-    public LiveData<Boolean> postApplyDateInfo(String orderType,ExtenDetialRequest request){
-        return service.postApplyDateInfo(orderType,request, new CallBack<Boolean>() {
+    public LiveData<Boolean> postApplyDateInfo(ExtenDetialRequest request, List<PicUrl> images){
+        showLoading();
+        request.setApplyFiles(uploadManager.toJosnString(images));
+        request.getFormData().setAttachment(uploadManager.toJosnString(images));
+        return service.postApplyDateInfo(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
+                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });

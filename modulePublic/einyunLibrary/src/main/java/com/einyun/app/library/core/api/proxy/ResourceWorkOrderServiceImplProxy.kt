@@ -32,11 +32,10 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     }
 
     override fun postApplyDateInfo(
-        orderType: String,
         request: ExtenDetialRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean> {
-       return  instance?.postApplyDateInfo(orderType,request,callBack)!!
+       return  instance?.postApplyDateInfo(request,callBack)!!
     }
 
     override fun forceClose(

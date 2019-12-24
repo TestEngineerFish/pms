@@ -67,6 +67,8 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
         request.setApplicationDescription(binding.delayInfo.getString());
         request.setId(orderId);
         request.setInstId(proInsId);
+        request.setBizId(orderId);
+        request.setApplyInsId(proInsId);
         if (StringUtil.isNullStr(keyId)) {
             if (RouteKey.KEY_PLAN.equals(keyId)) {
                 viewModel.applyLatePlan(request, data).observe(this, o -> {
@@ -77,22 +79,20 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
 
                 });
             }
-            String orderType="";
             if (RouteKey.KEY_CUSTOMER_COMPLAIN.equals(keyId)){
                 request.setAuditType(WorkOrder.POSTPONED_COMPLAIN);
-                orderType = WorkOrder.POSTPONED_COMPLAIN;
             }
             if (RouteKey.KEY_CUSTOMER_REPAIRS.equals(keyId)){
                 request.setAuditType(WorkOrder.POSTPONED_REPAIR);
-                orderType = WorkOrder.POSTPONED_REPAIR;
             }
             if (RouteKey.KEY_CUSTOMER_COMPLAIN.equals(keyId) || RouteKey.KEY_CUSTOMER_REPAIRS.equals(keyId)){
                 request.setDivideId(divideId);
                 request.setDivideName(divideName);
                 request.getFormData().setDelay_time(binding.delayDate.getText().toString());
                 request.getFormData().setApply_reason(binding.delayInfo.getString());
-                viewModel.postApplyDateInfo(orderType,request).observe(this,aBoolean -> {
+                viewModel.postApplyDateInfo(request,data).observe(this,aBoolean -> {
                     if (aBoolean){
+                        ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
                         finish();
                     }
                 });

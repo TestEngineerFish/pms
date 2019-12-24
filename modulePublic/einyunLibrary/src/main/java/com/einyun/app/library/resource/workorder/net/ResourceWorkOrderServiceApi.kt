@@ -259,6 +259,6 @@ interface ResourceWorkOrderServiceApi {
     @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME_INFO)
     fun getApplyDateInfo(@Body request: Query):Flowable<BaseResponse<formDataExten>>
 
-    @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE)
-    fun postApplyDateInfo(@Path("workOrder") orderType:String,@Body request:ExtenDetialRequest):Flowable<BaseResponse<Boolean>>
+    @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME)
+    fun postApplyDateInfo(@Body request:ExtenDetialRequest):Flowable<BaseResponse<Any>>
 }

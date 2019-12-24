@@ -25,11 +25,10 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
     override fun postApplyDateInfo(
-        orderType: String,
         request: ExtenDetialRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean> {
-        return proxy.postApplyDateInfo(orderType,request,callBack)
+        return proxy.postApplyDateInfo(request,callBack)
     }
 
     override fun getApplyDateInfo(
