@@ -14,7 +14,10 @@ package com.einyun.app.library.resource.workorder.model
  * @Version:        1.0
  */
 class WaitCount {
-     var planOrderCount: Int = 0
-     var dispatchOrderCount: Int = 0
-     var inspectionOrderCount: Int = 0
+    var planOrderCount: Int = 0
+    var dispatchOrderCount: Int = 0
+    var inspectionOrderCount: Int = 0
+    var inspectionOrderFlowListIsComing: Int = 0
+    var planOrderFlowListIsComing: Int = 0
+    var dispatchOrderFlowListIsComing: Int = 0
 }

@@ -4,13 +4,16 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.net.CommonHttpService;
+import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.uc.user.model.TenantModel;
@@ -94,7 +97,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
      * @return
      */
     @Override
-    public LiveData<TenantModel> getTenantId(String code) {
+    public LiveData<TenantModel> getTenantId(String code, boolean splash) {
         //temp code for tenantid
         return mUCService.getTenantId(code, new CallBack<TenantModel>() {
             @Override
@@ -107,6 +110,9 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             @Override
             public void onFaild(Throwable throwable) {
                 ThrowableParser.onFailed(throwable);
+                if (splash){
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                }
             }
         });
     }

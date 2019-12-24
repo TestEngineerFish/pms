@@ -73,7 +73,7 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
-                        style="@style/base_wrap_style"
+                        style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
@@ -94,6 +94,7 @@
                         </LinearLayout>
 
                         <ImageView
+                            android:id="@+id/iv_waring_send_order"
                             style="@style/iv_light_waring"
                             android:layout_alignBottom="@id/ll_work_wenxiu"
                             android:layout_toRightOf="@id/ll_work_wenxiu" />
@@ -102,7 +103,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        style="@style/base_wrap_style"
+                        style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_PLAN_ORDER)}">
@@ -123,6 +124,7 @@
                         </LinearLayout>
 
                         <ImageView
+                            android:id="@+id/iv_waring_plan"
                             style="@style/iv_light_waring"
                             android:layout_alignBottom="@id/ll_work_tousu"
                             android:layout_toRightOf="@id/ll_work_tousu" />
@@ -132,7 +134,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        style="@style/base_wrap_style"
+                        style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_PATROL_LIST)}">
@@ -154,6 +156,7 @@
                         </LinearLayout>
 
                         <ImageView
+                            android:id="@+id/iv_waring_patrol"
                             style="@style/iv_light_waring"
                             android:layout_alignBottom="@id/ll_work_baoxiu"
                             android:layout_toRightOf="@id/ll_work_baoxiu" />
@@ -189,7 +192,11 @@
                                 android:text="@string/tv_client_complain" />
 
                         </LinearLayout>
-
+                        <ImageView
+                            android:id="@+id/iv_waring_complain"
+                            style="@style/iv_light_waring"
+                            android:layout_alignBottom="@id/ll_work_paigongdan"
+                            android:layout_toRightOf="@id/ll_work_paigongdan" />
                         <View style="@style/vertical_line" />
                     </RelativeLayout>
 
@@ -213,7 +220,11 @@
                                 android:text="@string/tv_client_repairs" />
 
                         </LinearLayout>
-
+                        <ImageView
+                            android:id="@+id/iv_waring_enq"
+                            style="@style/iv_light_waring"
+                            android:layout_alignBottom="@id/ll_work_jiahuaagongdan"
+                            android:layout_toRightOf="@id/ll_work_jiahuaagongdan" />
                         <View style="@style/vertical_line" />
                     </RelativeLayout>
 
@@ -237,6 +248,11 @@
                                 android:text="@string/tv_client_enquiry" />
 
                         </LinearLayout>
+                        <ImageView
+                            android:id="@+id/iv_waring_repairs"
+                            style="@style/iv_light_waring"
+                            android:layout_alignBottom="@id/ll_work_xunchagongdan"
+                            android:layout_toRightOf="@id/ll_work_xunchagongdan" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

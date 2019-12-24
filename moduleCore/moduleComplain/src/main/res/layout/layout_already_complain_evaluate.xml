@@ -133,7 +133,7 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
-                <!--                    app:starCount="@{complain.f_return_score}"-->
+<!--                app:starCount="@{complain.f_return_score}"-->
 
 
             </LinearLayout>

@@ -68,7 +68,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     RVPageListAdapter<ItemWorkPlanBinding, Plan> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
-    PageSearchFragment<ItemWorkPlanBinding, PlanWorkOrder> searchFragment;
+    PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder> searchFragment;
     protected SelectPopUpView selectPopUpView;
 
     public static PlanWorkOrderFragment newInstance(Bundle bundle) {
@@ -138,7 +138,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     private void search() {
         if (searchFragment == null) {
-            searchFragment = new PageSearchFragment<ItemWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planWorkOrder, new PageSearchListener<PlanWorkOrder>() {
+            searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {
                 @Override
                 public LiveData<PagedList<PlanWorkOrder>> search(String search) {
                     try {
@@ -168,7 +168,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
                 @Override
                 public int getLayoutId() {
-                    return R.layout.item_work_plan;
+                    return R.layout.item_search_work_plan;
                 }
             });
             searchFragment.setHint("请搜索工单编号或计划名称");
