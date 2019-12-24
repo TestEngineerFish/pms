@@ -144,12 +144,18 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (binding.itemWorkBenchFirst.llWorkOrderList.getVisibility() == View.VISIBLE) {
             //获取待办数量（客户报修，客户询问，客户投诉）
             viewModel.getBlocklogNums().observe(this, blocklogNums -> {
+                binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1?View.VISIBLE:View.INVISIBLE);
                 binding.itemWorkBenchFirst.tvClentComplainNum.setText(StringUtil.isNullStr(blocklogNums.getComplainNum()) ? blocklogNums.getComplainNum() : "0");
                 binding.itemWorkBenchFirst.tvClentInquiryNum.setText(StringUtil.isNullStr(blocklogNums.getEnquiryNum()) ? blocklogNums.getEnquiryNum() : "0");
                 binding.itemWorkBenchFirst.tvClentRepairsNum.setText(StringUtil.isNullStr(blocklogNums.getRepairNum()) ? blocklogNums.getRepairNum() : "0");
             });
             //待办统计-计划、巡查、派工单
             viewModel.getWaitCount().observe(this, waitCount -> {
+                binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
                 //派工单
                 binding.itemWorkBenchFirst.tvWorkTableDispatchNum.setText("" + waitCount.getDispatchOrderCount());
                 //计划工单

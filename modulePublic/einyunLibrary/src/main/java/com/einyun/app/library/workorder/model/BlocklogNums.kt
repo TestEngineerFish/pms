@@ -17,9 +17,15 @@ import com.google.gson.annotations.SerializedName
  */
 class BlocklogNums {
     @SerializedName("customer_repair_flow")
-    var repairNum:String?=null
+    var repairNum: String? = null
     @SerializedName("customer_enquiry_flow")
-    var enquiryNum:String?=null
+    var enquiryNum: String? = null
     @SerializedName("customer_complain_flow")
-    var complainNum:String?=null
+    var complainNum: String? = null
+    @SerializedName("customer_complain_flowis_coming_timeout")
+    var complainTimeout: Int? = 0
+    @SerializedName("customer_repair_flowis_coming_timeout")
+    var repairTimeout: Int? = 0
+    @SerializedName("customer_enquiry_flowis_coming_timeout")
+    var enquiryTimeout: Int? = 0
 }
