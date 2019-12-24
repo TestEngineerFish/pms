@@ -143,7 +143,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_90"
                 android:layout_marginLeft="@dimen/px_30"
-                android:layout_marginRight="@dimen/px_30">
+                android:layout_marginRight="@dimen/px_30"
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:id="@+id/iv_is_cached"

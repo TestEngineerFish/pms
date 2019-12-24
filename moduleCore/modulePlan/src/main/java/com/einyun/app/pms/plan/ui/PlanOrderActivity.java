@@ -116,8 +116,6 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
     @Override
     protected void initData() {
         super.initData();
-        viewModel.getTiaoXian();
-        viewModel.getOrderType();
     }
 
     @Override

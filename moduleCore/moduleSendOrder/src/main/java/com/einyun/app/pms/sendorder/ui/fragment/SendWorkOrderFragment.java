@@ -128,6 +128,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     @Override
     protected void setUpData() {
+        viewModel.listType=listType;
         //停止刷新
         LiveEventBus.get(LiveDataBusKey.STOP_REFRESH,Boolean.class).observe(getActivity(), shown -> {
             if(!shown){
@@ -171,12 +172,6 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
 
-//        blockName= SPUtils.get(getActivity(), SPKey.KEY_BLOCK_NAME,"").toString();
-//        blockId=SPUtils.get(getActivity(), SPKey.KEY_BLOCK_ID,"").toString();
-//        if (!TextUtils.isEmpty(blockName)){
-//            binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
-//            binding.panelCondition.periodSelected.setText(blockName);
-//        }
         loadPagingData();
     }
 
@@ -224,14 +219,13 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     private void loadPagingData() {
         viewModel.getRequest().setUserId(userModuleService.getUserId());
-        viewModel.requestDone.setUserId(userModuleService.getUserId());
         if(listType==ListType.PENDING.getType()){
-            viewModel.loadPadingData(viewModel.getRequest()).observe(this, dataBeans -> {
+            viewModel.loadPadingData().observe(this, dataBeans -> {
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         }else{
-            viewModel.loadDonePagingData(viewModel.requestDone).observe(this, dataBeans -> {
+            viewModel.loadDonePagingData().observe(this, dataBeans -> {
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
@@ -241,7 +235,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     @Override
     protected SendOrderViewModel initViewModel() {
-        return new ViewModelProvider(getActivity(), new SendOdViewModelFactory()).get(SendOrderViewModel.class);
+        return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
     }
 
     //DiffUtil.ItemCallback,标准写法

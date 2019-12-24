@@ -11,6 +11,9 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import static com.einyun.app.common.repository.DatabaseRepo.DATA_TYPE_INIT;
+import static com.einyun.app.common.repository.DatabaseRepo.DATA_TYPE_SYNC;
+
 public class DoneBoundaryCallBack extends PatrolPendingBoundaryCallBack{
     public DoneBoundaryCallBack(PatrolPageRequest request) {
         super(request);
@@ -28,9 +31,9 @@ public class DoneBoundaryCallBack extends PatrolPendingBoundaryCallBack{
                 PatrolListTypeConvert convert=new PatrolListTypeConvert();
                 List<Patrol> patrols=convert.stringToSomeObject(new Gson().toJson(data.getRows()));
                 wrapList(patrols);
-                if(dataType== BaseBoundaryCallBack.DATA_TYPE_INIT){
+                if(dataType== DATA_TYPE_INIT){
                     patrolRepo.initData(patrols,request.getUserId(), listType);
-                }else if(dataType==BaseBoundaryCallBack.DATA_TYPE_SYNC){
+                }else if(dataType==DATA_TYPE_SYNC){
                     //同步数据
                     patrolRepo.sync(patrols, request.getUserId(),listType, null);
                 }

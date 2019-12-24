@@ -6,6 +6,7 @@ import androidx.paging.PagedList;
 import com.einyun.app.base.db.AppDatabase;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
+import com.einyun.app.base.paging.bean.PageResult;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.library.resource.workorder.net.request.PageRquest;
 import com.orhanobut.logger.Logger;
@@ -14,19 +15,18 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static com.einyun.app.common.repository.DatabaseRepo.DATA_TYPE_APPPEND;
+import static com.einyun.app.common.repository.DatabaseRepo.DATA_TYPE_INIT;
+
 /**
  * BaseBoundaryCallBack
  * @param <M>
  */
 public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback<M>{
-    protected AppDatabase db;
-    public final static int DATA_TYPE_INIT=1;
-    public final static int DATA_TYPE_APPPEND=2;
-    public final static int DATA_TYPE_SYNC=3;
     protected PageRquest request;
     protected PageBean pageBean;
     protected Lock lock =new ReentrantLock();
-
+    protected IDatabaseRepo<M> repo;
     public PageRquest getRequest() {
         return request;
     }
@@ -38,9 +38,15 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     public BaseBoundaryCallBack(PageRquest request){
         setRequest(request);
         pageBean=new PageBean();
-        db = AppDatabase.getInstance(CommonApplication.getInstance());
     }
 
+    /**
+     * 切换筛选条件
+     */
+    public void switchCondition() {
+        clearAll();
+        initData();
+    }
 
     /**
      * 网络加载数据
@@ -56,16 +62,9 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     /**
      * 刷新数据
      */
-    public   void refresh(){
+    public void refresh(){
         initData();
     }
-
-    /**
-     * 数据持久化
-     * @param rows
-     * @param dataType
-     */
-    protected abstract void persistence(List<M> rows, int dataType);
 
     /**
      * 数据包装，包装userId等
@@ -75,6 +74,7 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
 
     protected void initData(){
         pageBean.setPage(PageBean.DEFAULT_PAGE);
+        request.setPage(PageBean.DEFAULT_PAGE);
         loadData(DATA_TYPE_INIT, new CallBack<Integer>() {
             @Override
             public void call(Integer data) {
@@ -102,6 +102,7 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     @Override
     public void onItemAtEndLoaded(@NonNull M itemAtEnd) {
         super.onItemAtEndLoaded(itemAtEnd);
+        request.setPage(pageBean.getPage());
         loadData(DATA_TYPE_APPPEND, new CallBack<Integer>() {
             @Override
             public void call(Integer data) {
@@ -114,4 +115,6 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
             }
         });
     }
+
+    protected abstract void onDataLoaded(int dataType, PageResult data, CallBack<Integer> callBack);
 }

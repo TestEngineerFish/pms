@@ -279,7 +279,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                         runOnUiThread(() -> {
                             if (uri != null) {
                                 photoSelectAdapter.addPhotos(Arrays.asList(uri));
-
+                                cacheCaptures();
                             }
                         });
                     });
