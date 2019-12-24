@@ -91,6 +91,7 @@ public class PointCheckDetialActivity extends BaseHeadViewModelActivity<Activity
             return;
         }
         this.detialModel=model;
+        binding.frameSpace.setVisibility(View.GONE);
         binding.layoutBrief.setVariable(BR.checkpoint,detialModel);
         binding.tvCheckContent.setText(model.getRemark());
         binding.layoutBrief.itemHasAttachment.setVisibility(View.GONE);

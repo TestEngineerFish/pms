@@ -32,12 +32,12 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
     }
 
     public LiveData<DisttributeDetialModel> detial(String orderId) {
-        showLoading();
+//        showLoading();
         service.distributeDetial(orderId, new CallBack<DisttributeDetialModel>() {
             @Override
             public void call(DisttributeDetialModel data) {
                 workOrderLiveData.postValue(data);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
@@ -55,17 +55,17 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
      * @return
      */
     public LiveData<DisttributeDetialModel> pendingDetial(String taskId) {
-        showLoading();
+//        showLoading();
         service.distributeWaitDetial(taskId, new CallBack<DisttributeDetialModel>() {
             @Override
             public void call(DisttributeDetialModel data) {
                 workOrderLiveData.postValue(data);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
             }
         });
         return workOrderLiveData;
@@ -82,17 +82,17 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
         DoneDetialRequest request = new DoneDetialRequest();
         request.setTaskNodeId(taskNodeId);
         request.setProInsId(proInsId);
-        showLoading();
+//        showLoading();
         service.distributeDoneDetial(request, new CallBack<DisttributeDetialModel>() {
             @Override
             public void call(DisttributeDetialModel data) {
                 workOrderLiveData.postValue(data);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
             }
         });
         return workOrderLiveData;

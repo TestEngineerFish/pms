@@ -178,7 +178,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
-            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.panelCondition.setConditionSelected(true);
+        }else{
+            binding.panelCondition.setConditionSelected(false);
         }
         viewModel.onConditionSelected(selected);
         viewModel.switchCondition(getFragmentTag());
@@ -305,7 +307,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.panelCondition.periodSelected.setText(orgModel.getName());
-        binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+        binding.panelCondition.setPeriodSelected(true);
         viewModel.setOrgModel(orgModel);
         viewModel.switchCondition(getFragmentTag());
     }

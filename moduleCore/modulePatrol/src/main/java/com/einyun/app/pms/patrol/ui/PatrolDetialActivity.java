@@ -278,6 +278,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             return;
         }
         this.patrolInfo = patrol;
+        binding.frameSpace.setVisibility(View.GONE);
         binding.setPatrol(patrol);
         updateWorkNodesUI(patrol);//更新节点信息
         updateHandleResultUI(patrol);//更新处理结果信息
