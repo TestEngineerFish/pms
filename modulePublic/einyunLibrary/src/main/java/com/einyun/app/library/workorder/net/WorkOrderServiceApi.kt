@@ -4,10 +4,8 @@ import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.resource.workorder.net.response.RepairsResponse
 import com.einyun.app.library.resource.workorder.net.response.TiaoXianResponse
-import com.einyun.app.library.workorder.model.ComplainPage
-import com.einyun.app.library.workorder.model.Door
-import com.einyun.app.library.workorder.model.DoorResult
-import com.einyun.app.library.workorder.model.RepairsDetailModel
+import com.einyun.app.library.uc.user.model.UserInfoModel
+import com.einyun.app.library.workorder.model.*
 import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.response.*
 import io.reactivex.Flowable
@@ -250,4 +248,7 @@ interface WorkOrderServiceApi {
 
     @POST(URLs.URL_COMPLAIN_DETAIL_SAVE)
     fun complainDetailSave(@Body request: ComplainDetailCompleteRequest):Flowable<BaseResponse<Any>>
+
+    @GET(URLs.URL_USERINFO_BY_HOUSE_ID)
+    fun getUserInfoByHouseId(@retrofit2.http.Query("houseId") houseId:String):Flowable<BaseResponse<List<UserInfoByHouseIdModel>>>
 }

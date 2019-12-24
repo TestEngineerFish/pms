@@ -4,32 +4,44 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Adapter;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.component.searchhistory.SingleSearchFragment;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
+import com.einyun.app.pms.create.BR;
 import com.einyun.app.pms.create.R;
 import com.einyun.app.pms.create.SelectType;
 import com.einyun.app.pms.create.databinding.ActivityCreateClientComplainOrderBinding;
+import com.einyun.app.pms.create.databinding.ItemComplainInfoBinding;
 import com.einyun.app.pms.create.viewmodel.CreateViewModel;
 import com.einyun.app.pms.create.viewmodel.CreateViewModelFactory;
 import com.zhihu.matisse.Matisse;
@@ -39,17 +51,20 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.test.InstrumentationRegistry.getContext;
+
 /**
  * 创建客户询问
  */
 @Route(path = RouterUtils.ACTIVITY_CREATE_CLIENT_COMPLAIN_ORDER)
-public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateClientComplainOrderBinding, CreateViewModel> implements PeriodizationView.OnPeriodSelectListener {
+public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateClientComplainOrderBinding, CreateViewModel> implements PeriodizationView.OnPeriodSelectListener, TextWatcher {
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private CreateClientComplainOrderRequest request;
     private List<DictDataModel> dictComplainWayList = new ArrayList<>();
     private List<DictDataModel> dictComplainNatureList = new ArrayList<>();
     private List<TypeAndLine> lines = new ArrayList<>();
+    private RVBindingAdapter<ItemComplainInfoBinding, ComplainModel> adapter;
 
     @Override
     protected CreateViewModel initViewModel() {
@@ -79,6 +94,32 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
             this.lines = lines;
         });
         selectPng();
+        binding.phone.addTextChangedListener(this);
+
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        binding.cv.setLayoutManager(mLayoutManager);
+
+        if (adapter == null) {
+            adapter = new RVBindingAdapter<ItemComplainInfoBinding, ComplainModel>(this, BR.model) {
+                @Override
+                public void onBindItem(ItemComplainInfoBinding binding, ComplainModel model, int position) {
+                    binding.llAddComplainInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_ADD_COMPLAIN_INFO)
+                                    .withString(RouteKey.ID,model.getID_()).navigation();
+                        }
+                    });
+                }
+
+                @Override
+                public int getLayoutId() {
+                    return R.layout.item_complain_info;
+                }
+            };
+        }
+        binding.cv.setAdapter(adapter);
+        binding.cv.addItemDecoration(new SpacesItemDecoration(30));
     }
 
     /**
@@ -101,7 +142,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -146,10 +187,22 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
             @Override
             public void onWorkTypeSelectListener(List<HouseModel> model) {
                 request.getBizData().setBuildId(model.get(0).getId());
-                request.getBizData().setUnitId(model.get(1).getId());
-                request.getBizData().setHouseId(model.get(2).getId());
-                request.getBizData().setHouse(model.get(2).getName());
+                if (model.size() >= 2) {
+                    request.getBizData().setUnitId(model.get(1).getId());
+                }
+                if (model.size() >= 3) {
+                    request.getBizData().setHouseId(model.get(2).getId());
+                    request.getBizData().setHouse(model.get(2).getName());
+                }
                 binding.setBean(request);
+                if (StringUtil.isNullStr(request.getBizData().getHouseId())) {
+                    viewModel.getUserInfoByHouseId(request.getBizData().getHouseId()).observe(CreateClientComplainOrderViewModelActivity.this, users -> {
+                        if (users != null && users.size() != 0) {
+                            binding.phone.setText(users.get(0).getCellphone());
+                            binding.userName.setText(users.get(0).getName());
+                        }
+                    });
+                }
             }
         });
         view.show(getSupportFragmentManager(), "");
@@ -388,4 +441,28 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
     }
 
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        viewModel.complainWorkListdPage(s.toString()).observe(this, result -> {
+            if (result.getRows() != null && result.getRows().size() != 0) {
+                binding.complainInfo.setVisibility(View.VISIBLE);
+                binding.cv.setVisibility(View.VISIBLE);
+                adapter.setDataList(result.getRows());
+                binding.complainInfo.setText(String.format(getResources().getString(R.string.text_user_add_complain_info), String.valueOf(result.getRows().size())));
+            } else {
+                binding.complainInfo.setVisibility(View.GONE);
+                binding.cv.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

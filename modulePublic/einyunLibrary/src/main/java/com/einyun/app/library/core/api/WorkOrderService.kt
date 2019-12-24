@@ -120,5 +120,9 @@ interface WorkOrderService : EinyunService {
     fun getAreaType(callBack: CallBack<AreaModel>):LiveData<AreaModel>
     fun complainDetailComplete(request:ComplainDetailCompleteRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
     fun complainDetailSave(request:ComplainDetailCompleteRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
-
+    fun getUserInfoByHouseId(houseId:String, callBack: CallBack<List<UserInfoByHouseIdModel>>):LiveData<List<UserInfoByHouseIdModel>>
+    fun appendComplain(
+        request: ComplainAppendRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
 }

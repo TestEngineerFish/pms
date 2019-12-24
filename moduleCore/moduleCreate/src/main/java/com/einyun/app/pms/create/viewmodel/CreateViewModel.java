@@ -21,6 +21,8 @@ import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.workorder.model.ComplainModelPageResult;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.DoorResult;
+import com.einyun.app.library.workorder.model.UserInfoByHouseIdModel;
+import com.einyun.app.library.workorder.net.request.ComplainAppendRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
 import com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest;
@@ -238,6 +240,36 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         return workOrderService.complainWorkListdPage(new PageBean(PageBean.DEFAULT_PAGE,PageBean.MAX_PAGE_SIZE), mobile, new CallBack<ComplainModelPageResult>() {
             @Override
             public void call(ComplainModelPageResult data) {
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+    public LiveData<Boolean> appendComplain(ComplainAppendRequest request) {
+        showLoading();
+        return workOrderService.appendComplain(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
+
+    public LiveData<List<UserInfoByHouseIdModel>> getUserInfoByHouseId(String houseId) {
+        return workOrderService.getUserInfoByHouseId(houseId, new CallBack<List<UserInfoByHouseIdModel>>() {
+            @Override
+            public void call(List<UserInfoByHouseIdModel> data) {
             }
 
             @Override
