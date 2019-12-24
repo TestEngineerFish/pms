@@ -19,15 +19,16 @@ import com.bumptech.glide.Glide;
 import com.einyun.app.base.BaseActivity;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.ui.activity.BaseSkinActivity;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoShowActivity extends BaseActivity {
+public class PhotoShowActivity extends BaseSkinActivity {
 
     HackyViewPager hViewPager;
-    ImageView back;
+    View back;
     LinearLayout llPoint;
 
     private int position;
@@ -176,5 +177,10 @@ public class PhotoShowActivity extends BaseActivity {
                 point.setEnabled(true);
             }
         }
+    }
+
+    @Override
+    protected boolean fullWindowFlag() {
+        return true;
     }
 }

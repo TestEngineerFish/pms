@@ -86,7 +86,8 @@ public class RouteKey {
     public static final String REPAIR_STATUS_HANDLE = "Handle";
     public static final String REPAIR_STATUS_EVALUATE= "ReturnVisit";
     public static final String REPAIR_STATUS_WAIT_GRAB= "WorkOrderPoolGrab";
-
+    //    客服三类转派
+    public static final String KEY_CUSTOMER_RESEND_ORDER = "KEY_CUSTOMER_RESEND_ORDER";
 
 
 }

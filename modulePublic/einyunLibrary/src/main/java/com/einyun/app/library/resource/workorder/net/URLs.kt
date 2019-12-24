@@ -103,6 +103,8 @@ class URLs {
         const val URL_SELECT_BY_JOB = "user-center/api/usercenter/v1/ucOrgJob/filterJobByOrgId"
         //转派
         const val URL_RESEND_ORDER = "/$DOMAIN/res-order/distribute/direct"
+        //客服类转派
+        const val URL_RESEND_ORDER_CUS = "/bpm-runtime/runtime/task/v1/delegate"
         //申请闭单
         const val URL_CLOSE_ORDER = "/$DOMAIN/res-order/distribute/close"
         //派工单-延期

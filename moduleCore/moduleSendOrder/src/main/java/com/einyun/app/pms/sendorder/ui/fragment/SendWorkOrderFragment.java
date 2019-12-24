@@ -80,6 +80,8 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     int listType;
+
+    protected SelectPopUpView selectPopUpView;
 //    String blockName;
 //    String blockId;
 
@@ -191,26 +193,32 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             }
         });
         binding.panelCondition.sendWorkOrerTabSelectLn.setOnClickListener(v -> {
-            BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
-                @Override
-                public void call(BasicData data) {
-                    //弹出筛选view
+            showConditionView();
+
+        });
+    }
+
+    private void showConditionView() {
+        BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+            @Override
+            public void call(BasicData data) {
+                //弹出筛选view
+                if(selectPopUpView==null){
                     ConditionBuilder builder=new ConditionBuilder();
                     List<SelectModel> conditions= builder.addLines(data.getLines())//条线
                             .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                             .mergeLineRes(data.getResources())
                             .build();
-                    new SelectPopUpView(getActivity(),conditions)
-                            .setOnSelectedListener(selected -> handleSelect(selected))
-                            .showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                    selectPopUpView= new SelectPopUpView(getActivity(),conditions)
+                            .setOnSelectedListener(selected -> handleSelect(selected));
                 }
+                selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+            }
 
-                @Override
-                public void onFaild(Throwable throwable) {
+            @Override
+            public void onFaild(Throwable throwable) {
 
-                }
-            });
-
+            }
         });
     }
 

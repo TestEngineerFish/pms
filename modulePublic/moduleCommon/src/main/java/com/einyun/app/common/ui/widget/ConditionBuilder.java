@@ -221,7 +221,7 @@ public class ConditionBuilder {
                 conditions.add(createTimeCircle());
             }
         }
-        if (key.equals(SELECT_DATE)) {//是否超期数据
+        if (key.equals(SELECT_DATE)) {//完成截止时间
             //去重复叠加
             if (!selectModelMap.containsKey(SELECT_DATE)) {
                 conditions.add(createCheckDate());

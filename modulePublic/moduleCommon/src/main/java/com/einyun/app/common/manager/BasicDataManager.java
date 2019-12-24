@@ -176,6 +176,9 @@ public class BasicDataManager {
                 public void call(PageResult<GridModel> data) {
                     DivideGrid gridData=new DivideGrid(data);
                     basicData.getDivideGridMap().put(divideId,gridData);
+                    if(callBack!=null){
+                        callBack.call(gridData);
+                    }
                 }
 
                 @Override
@@ -184,7 +187,9 @@ public class BasicDataManager {
                 }
             });
         } else {
-            callBack.call(divideGrid);
+            if(callBack!=null){
+                callBack.call(divideGrid);
+            }
         }
     }
 

@@ -9,16 +9,26 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.ConditionBuilder;
+import com.einyun.app.common.ui.widget.SelectPopUpView;
+import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +38,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
     protected int listType= ListType.DONE.getType();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+
     public static PatrolClosedListFragment newInstance() {
         return new PatrolClosedListFragment();
     }
@@ -38,13 +49,6 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
         binding.swiperefresh.setOnRefreshListener(() -> {
             binding.swiperefresh.setRefreshing(false);
             viewModel.refreshClosedList();
-        });
-        binding.panelCondition.search.setVisibility(View.VISIBLE);
-        binding.panelCondition.search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                search();
-            }
         });
     }
 
@@ -60,6 +64,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
             viewModel.refreshClosedList();
         });
     }
+
 
     /**
      * 处理筛选返回数据

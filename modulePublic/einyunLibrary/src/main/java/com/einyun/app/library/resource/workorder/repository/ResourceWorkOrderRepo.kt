@@ -288,7 +288,21 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
         return liveData; }
-
+    //三大客服转派工单
+    override fun resendCusOrder(
+        request: ResendOrderRequest,
+        callBack: CallBack<ResendOrderResponse>
+    ): LiveData<ResendOrderResponse> {
+        val liveData = MutableLiveData<ResendOrderResponse>()
+        serviceApi?.resendCusOrder(request)?.compose(RxSchedulers.inIo())
+            ?.subscribe(
+                { response ->
+                    callBack.call(response)
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
+        return liveData; }
     override fun exten(
         request: ExtenDetialRequest,
         callBack: CallBack<BaseResponse<Object>>
