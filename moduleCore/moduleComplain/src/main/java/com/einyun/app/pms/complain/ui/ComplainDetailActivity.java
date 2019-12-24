@@ -127,7 +127,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.setCloseExtApplication(closeExtApplication);
             }
             //处理历史
-            handleList = repairsDetailModel.getHandleList();
+//            handleList = repairsDetailModel.getHandleList();
             handleList();
 
             //追加投诉信息
