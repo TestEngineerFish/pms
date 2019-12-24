@@ -38,6 +38,25 @@ import com.einyun.app.library.workorder.repository.WorkOrderRepository
  * @Version: 1.0
  */
 class WorkOrderServiceImplProxy : WorkOrderService {
+    override fun appendComplain(
+        request: ComplainAppendRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+        return instance?.appendComplain(
+            request,
+            callBack
+        )!!
+    }
+
+    override fun getUserInfoByHouseId(
+        houseId: String,
+        callBack: CallBack<List<UserInfoByHouseIdModel>>
+    ): LiveData<List<UserInfoByHouseIdModel>> {
+        return instance?.getUserInfoByHouseId(
+            houseId,
+            callBack
+        )!!
+    }
 
     /**
      * 获取报修筛选数据

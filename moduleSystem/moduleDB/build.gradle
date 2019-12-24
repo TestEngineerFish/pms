@@ -67,6 +67,7 @@ dependencies {
     api deps.room.rxjava2
     implementation deps.retrofit.gson
     annotationProcessor deps.room.compiler
+    implementation project(deps.project.einyun_library)
 //    implementation deps.kotlin.stdlib
     implementation deps.paging
     implementation deps.lifecycle.runtime

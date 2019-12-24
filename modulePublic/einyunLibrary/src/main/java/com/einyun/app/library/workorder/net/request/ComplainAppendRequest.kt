@@ -19,4 +19,5 @@ class ComplainAppendRequest {
     var editorId:String?=null
     var createTime:String?=null
     var desc:String?=null
+    var defkey:String?="customer_complain_flow"
 }

@@ -73,7 +73,14 @@
                         layout="@layout/layout_send_order_info"
                         android:visibility="gone"
                          />
-
+                    <include
+                        android:id="@+id/repair_close_info"
+                        layout="@layout/layout_repair_apply_close_info"
+                        android:visibility="gone"/>
+                    <include
+                        android:id="@+id/repair_late_info"
+                        layout="@layout/layout_repair_apply_late_info"
+                        android:visibility="gone"/>
                     <include
                         android:id="@+id/send_order"
                         layout="@layout/layout_send_order"
@@ -113,7 +120,7 @@
                         android:visibility="gone"/>
                     <include
                         android:id="@+id/repair_evaluate"
-                        layout="@layout/layout_complain_evaluate"
+                        layout="@layout/layout_repair_evaluate"
                         android:visibility="gone"/>
                     <include
                         android:id="@+id/repair_close_postpone"
@@ -121,7 +128,7 @@
                         android:visibility="gone"/>
                     <include
                         android:id="@+id/repair_evaluate_info"
-                        layout="@layout/layout_already_complain_evaluate"
+                        layout="@layout/layout_already_repair_evaluate"
                         android:visibility="gone"/>
                     <Space
                         android:layout_width="match_parent"

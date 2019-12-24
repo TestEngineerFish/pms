@@ -185,6 +185,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (detialModel == null) {
             return;
         }
+        binding.frameSpace.setVisibility(View.GONE);
         binding.setWorkOrder(distributeWorkOrder);
         binding.orderInfo.setWorkOrder(distributeWorkOrder);
         binding.orderForm.setWorkOrder(distributeWorkOrder);

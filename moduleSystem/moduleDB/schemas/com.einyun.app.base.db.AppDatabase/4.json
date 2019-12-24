@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "34494ba231f85c37c57016ab49ec79bd",
+    "identityHash": "94832a8c0de57efd1ef7f6db75466d34",
     "entities": [
       {
         "tableName": "users",
@@ -741,12 +741,136 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "plans",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`proInsId` TEXT, `orderType` INTEGER NOT NULL, `createTime` INTEGER NOT NULL, `F_CREATE_TIME` INTEGER NOT NULL, `ID_` TEXT NOT NULL, `F_ORDER_NO` TEXT, `taskName` TEXT, `F_WP_NAME` TEXT, `ownerId` TEXT, `assigneeId` TEXT, `taskId` TEXT, `taskNodeId` TEXT, `subject` TEXT, `F_STATUS` TEXT, `F_EXT_STATUS` INTEGER NOT NULL, `F_OT_STATUS` INTEGER NOT NULL, `userId` TEXT NOT NULL, `listType` INTEGER NOT NULL, PRIMARY KEY(`userId`, `ID_`, `listType`))",
+        "fields": [
+          {
+            "fieldPath": "proInsId",
+            "columnName": "proInsId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "orderType",
+            "columnName": "orderType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_CREATE_TIME",
+            "columnName": "F_CREATE_TIME",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ID_",
+            "columnName": "ID_",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_ORDER_NO",
+            "columnName": "F_ORDER_NO",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskName",
+            "columnName": "taskName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_WP_NAME",
+            "columnName": "F_WP_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ownerId",
+            "columnName": "ownerId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "assigneeId",
+            "columnName": "assigneeId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskId",
+            "columnName": "taskId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "taskNodeId",
+            "columnName": "taskNodeId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subject",
+            "columnName": "subject",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_STATUS",
+            "columnName": "F_STATUS",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "F_EXT_STATUS",
+            "columnName": "F_EXT_STATUS",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "F_OT_STATUS",
+            "columnName": "F_OT_STATUS",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listType",
+            "columnName": "listType",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userId",
+            "ID_",
+            "listType"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '34494ba231f85c37c57016ab49ec79bd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '94832a8c0de57efd1ef7f6db75466d34')"
     ]
   }
 }

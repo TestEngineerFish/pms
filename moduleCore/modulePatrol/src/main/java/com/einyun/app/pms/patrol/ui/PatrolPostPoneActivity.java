@@ -8,7 +8,6 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity;
-import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.R;

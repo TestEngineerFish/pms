@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.*
+import com.einyun.app.library.resource.workorder.net.URLs
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.HistroyResponse
@@ -11,6 +12,9 @@ import com.einyun.app.library.resource.workorder.net.response.OrderPreviewRespon
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
 import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
+import retrofit2.http.Body
+import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Url
 import java.util.*
 import java.util.*
@@ -30,10 +34,16 @@ import java.util.*
  */
 interface ResourceWorkOrderService : EinyunService {
     //巡查工单代办
-    fun planWaitPage(request: DistributePageRequest, callBack: CallBack<PlanWorkOrderPage>): LiveData<PlanWorkOrderPage>
+    fun planWaitPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage>
 
     //巡查工单已办
-    fun planClosedPage(request: DistributePageRequest, callBack: CallBack<PlanWorkOrderPage>): LiveData<PlanWorkOrderPage>
+    fun planClosedPage(
+        request: DistributePageRequest,
+        callBack: CallBack<PlanWorkOrderPage>
+    ): LiveData<PlanWorkOrderPage>
 
     fun getWaitCount(callBack: CallBack<WaitCount>): LiveData<WaitCount>
 
@@ -61,7 +71,7 @@ interface ResourceWorkOrderService : EinyunService {
     fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>)
 
     //巡查工单处理
-    fun patrolSubmit(request: PatrolSubmitRequest,callBack: CallBack<Boolean>)
+    fun patrolSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>)
 
     //创建派工单
     fun createSendOrder(
@@ -124,6 +134,7 @@ interface ResourceWorkOrderService : EinyunService {
         request: ApplyCloseRequest,
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse>
+
     //申请闭单
     fun applyCustomerClose(
         request: ApplyCusCloseRequest,
@@ -142,7 +153,10 @@ interface ResourceWorkOrderService : EinyunService {
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse>
 
-    fun planExten(request: ExtenDetialRequest, callBack: CallBack<BaseResponse<Object>>): LiveData<BaseResponse<Object>>
+    fun planExten(
+        request: ExtenDetialRequest,
+        callBack: CallBack<BaseResponse<Object>>
+    ): LiveData<BaseResponse<Object>>
 
 
     //历史流程
@@ -164,7 +178,7 @@ interface ResourceWorkOrderService : EinyunService {
     ): LiveData<OrderPreviewPage>
 
     //计划工单详情
-    fun planOrderDetail(taskId:String,callBack: CallBack<PlanInfo>)
+    fun planOrderDetail(taskId: String, callBack: CallBack<PlanInfo>)
 
     //获取计划工单已办详情
     fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>)
@@ -174,17 +188,23 @@ interface ResourceWorkOrderService : EinyunService {
     /**
      * 通用强制闭单
      */
-    fun forceClose(workOrderType:String,request: ApplyCloseRequest,callBack: CallBack<Boolean>)
+    fun forceClose(workOrderType: String, request: ApplyCloseRequest, callBack: CallBack<Boolean>)
 
     /**
      * 通用申请延期
      */
-    fun postpone(workOrderType:String,request: ExtenDetialRequest,callBack: CallBack<Boolean>)
+    fun postpone(workOrderType: String, request: ExtenDetialRequest, callBack: CallBack<Boolean>)
 
     /**
      * 判断 当前的工单 是否可以申请闭单 或者 是否可以申请延期
      *返回true可以发起审批，返回false表示当前正在审批，不可再次申请
      */
-    fun isClosed(request:IsClosedRequest,callBack: CallBack<Boolean>)
+    fun isClosed(request: IsClosedRequest, callBack: CallBack<Boolean>)
 
+    fun postApplyDateInfo(
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
+
+    fun getApplyDateInfo(id: String, callBack: CallBack<formDataExten>): LiveData<formDataExten>
 }

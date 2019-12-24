@@ -24,6 +24,20 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun getApplyDateInfo(
+        id: String,
+        callBack: CallBack<formDataExten>
+    ): LiveData<formDataExten> {
+        return instance?.getApplyDateInfo(id,callBack)!!
+    }
+
+    override fun postApplyDateInfo(
+        request: ExtenDetialRequest,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean> {
+       return  instance?.postApplyDateInfo(request,callBack)!!
+    }
+
     override fun forceClose(
         workOrderType: String,
         request: ApplyCloseRequest,

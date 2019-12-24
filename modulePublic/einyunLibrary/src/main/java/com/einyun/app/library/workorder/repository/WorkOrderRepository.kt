@@ -37,6 +37,23 @@ import retrofit2.http.Url
  * @Version:        1.0
  */
 class WorkOrderRepository : WorkOrderService {
+    override fun getUserInfoByHouseId(
+        houseId: String,
+        callBack: CallBack<List<UserInfoByHouseIdModel>>
+    ): LiveData<List<UserInfoByHouseIdModel>> {
+        val liveData = MutableLiveData<List<UserInfoByHouseIdModel>>()
+        serviceApi?.getUserInfoByHouseId(houseId)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     //客户报修-筛选数据
     override fun getAreaType(callBack: CallBack<AreaModel>): LiveData<AreaModel> {
         val liveData = MutableLiveData<AreaModel>()
@@ -431,13 +448,20 @@ class WorkOrderRepository : WorkOrderService {
     /**
      * 追加投诉
      */
-    fun appendComplain(request: ComplainAppendRequest, callBack: CallBack<Boolean>) {
+    override fun appendComplain(request: ComplainAppendRequest, callBack: CallBack<Boolean>):LiveData<Boolean> {
+        var liveData = MutableLiveData<Boolean>()
         serviceApi?.appendComplain(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
-                callBack.call(it.isState)
+                if (it.isState){
+                    callBack.call(it.isState)
+                    liveData.postValue(it.isState)
+                }else{
+                    callBack.onFaild(EinyunHttpException(it))
+                }
             }, {
                 callBack.onFaild(it)
             })
+        return liveData
     }
 
     /**
@@ -760,7 +784,7 @@ class WorkOrderRepository : WorkOrderService {
         var queryBuilder = queryComplainBuilder(
             request
         )
-        serviceApi?.getComplainWaitFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
+        serviceApi?.getComplainWaitFollow(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -782,7 +806,7 @@ class WorkOrderRepository : WorkOrderService {
         var queryBuilder = queryComplainBuilder(
             request
         )
-        serviceApi?.getComplainAlreadyFollow(queryBuilder.build())?.compose(RxSchedulers.inIo())
+        serviceApi?.getComplainAlreadyFollow(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -804,7 +828,7 @@ class WorkOrderRepository : WorkOrderService {
         var queryBuilder = queryComplainBuilder(
             request
         )
-        serviceApi?.getComplainAlreadyDone(queryBuilder.build())?.compose(RxSchedulers.inIo())
+        serviceApi?.getComplainAlreadyDone(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -826,7 +850,7 @@ class WorkOrderRepository : WorkOrderService {
         var queryBuilder = queryComplainBuilder(
             request
         )
-        serviceApi?.getComplainCopyMe(queryBuilder.build())?.compose(RxSchedulers.inIo())
+        serviceApi?.getComplainCopyMe(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -848,7 +872,7 @@ class WorkOrderRepository : WorkOrderService {
         var queryBuilder = queryComplainBuilder(
             request
         )
-        serviceApi?.getComplainWaitFeed(queryBuilder.build())?.compose(RxSchedulers.inIo())
+        serviceApi?.getComplainWaitFeed(queryBuilder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {

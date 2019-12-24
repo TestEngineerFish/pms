@@ -170,6 +170,14 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                         binding.tvTurnOrder.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, complainModel.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
+                                        .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                        .navigation();
                             }
                         });
                         //沟通
@@ -177,10 +185,10 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                             @Override
                             public void onClick(View v) {
                                 ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
-                                        .withString(RouteKey.KEY_TASK_ID,complainModel.getTaskId())
-                                        .withString(RouteKey.KEY_DIVIDE_ID,complainModel.getF_ts_dk_id())
-                                        .withString(RouteKey.KEY_PROJECT_ID,complainModel.getU_project_id())
-                                .navigation();
+                                        .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
+                                        .navigation();
                             }
                         });
                     }
@@ -192,7 +200,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                             public void onClick(View v) {
                                 ARouter.getInstance()
                                         .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
-                                        .withString(RouteKey.KEY_TASK_ID,complainModel.getTaskId())
+                                        .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
                                         .navigation();
                             }
                         });
@@ -241,10 +249,10 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     @Override
     public void onItemClicked(View veiw, ComplainModel data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
-                .withString(RouteKey.ID,data.getID_())
-                .withString(RouteKey.KEY_FRAGEMNT_TAG,getFragmentTag())
+                .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                .withString(RouteKey.ID, data.getID_())
+                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
                 .navigation();
     }
 

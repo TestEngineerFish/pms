@@ -29,17 +29,17 @@ public class PointCheckDetialViewModel extends BaseViewModel {
     private MutableLiveData<PointCheckDetialModel> detial=new MutableLiveData<>();
 
     public LiveData<PointCheckDetialModel> queryDetial(String id){
-        showLoading();
+//        showLoading();
         repository.detial(id, new CallBack<PointCheckDetialModel>() {
             @Override
             public void call(PointCheckDetialModel data) {
-                hideLoading();
+//                hideLoading();
                 detial.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
             }
         });
         return detial;

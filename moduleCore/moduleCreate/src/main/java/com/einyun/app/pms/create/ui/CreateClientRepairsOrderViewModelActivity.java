@@ -117,7 +117,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -225,10 +225,23 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
             @Override
             public void onWorkTypeSelectListener(List<HouseModel> model) {
                 request.getBizData().setBuildId(model.get(0).getId());
-                request.getBizData().setUnitId(model.get(1).getId());
-                request.getBizData().setHouseId(model.get(2).getId());
-                request.getBizData().setHouse(model.get(2).getName());
+                if (model.size() >= 2) {
+                    request.getBizData().setUnitId(model.get(1).getId());
+                }
+                if (model.size() >= 3) {
+                    request.getBizData().setHouseId(model.get(2).getId());
+                    request.getBizData().setHouse(model.get(2).getName());
+                }
                 binding.setBean(request);
+                if (StringUtil.isNullStr(request.getBizData().getHouseId())) {
+                    viewModel.getUserInfoByHouseId(request.getBizData().getHouseId()).observe(CreateClientRepairsOrderViewModelActivity.this, users -> {
+                        if (users != null && users.size()!=0){
+                            binding.phone.setText(users.get(0).getCellphone());
+                            binding.userName.setText(users.get(0).getName());
+                        }
+                    });
+                }
+
             }
         });
         view.show(getSupportFragmentManager(), "");
@@ -417,7 +430,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
             if (!StringUtil.isNullStr(request.getBizData().getAppointTime())) {
                 new AlertDialog(this).builder().
                         setTitle(getResources().getString(R.string.tip))
-            .setMsg("请选择预约上门时间").setPositiveButton("我知道了", new View.OnClickListener() {
+                        .setMsg("请选择预约上门时间").setPositiveButton("我知道了", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 

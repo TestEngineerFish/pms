@@ -3,6 +3,7 @@ package com.einyun.app.pms.plan.ui.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -13,12 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.View;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.db.entity.Plan;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -33,15 +33,10 @@ import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
-import com.einyun.app.common.utils.FormatUtil;
-import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
-import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
-
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.FragmentPlanWorkOrderBinding;
@@ -54,7 +49,6 @@ import com.orhanobut.logger.Logger;
 import java.util.List;
 import java.util.Map;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
 
 /**
@@ -69,9 +63,9 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_P
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWorkOrderBinding, PlanOrderViewModel> implements ItemClickListener<PlanWorkOrder>, PeriodizationView.OnPeriodSelectListener {
+public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWorkOrderBinding, PlanOrderViewModel> implements ItemClickListener<Plan>, PeriodizationView.OnPeriodSelectListener {
     //    private SendOrderAdapter adapter;//适配器
-    RVPageListAdapter<ItemWorkPlanBinding, PlanWorkOrder> adapter;
+    RVPageListAdapter<ItemWorkPlanBinding, Plan> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     PageSearchFragment<ItemWorkPlanBinding, PlanWorkOrder> searchFragment;
@@ -129,14 +123,14 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     }
 
     protected void showConditionView(BasicData data) {
-        if(selectPopUpView==null){
+        if (selectPopUpView == null) {
             ConditionBuilder builder = new ConditionBuilder();
             List<SelectModel> conditions = builder.addLines(data.getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                     .mergeLineRes(data.getResources())
                     .build();
-            selectPopUpView= new SelectPopUpView(getActivity(), conditions)
+            selectPopUpView = new SelectPopUpView(getActivity(), conditions)
                     .setOnSelectedListener(selected -> handleSelect(selected));
         }
         selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
@@ -148,12 +142,12 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 @Override
                 public LiveData<PagedList<PlanWorkOrder>> search(String search) {
                     try {
-                        DistributePageRequest request = (DistributePageRequest) viewModel.getRequest(getFragmentTag()).clone();
+                        DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
                         request.setSearchValue(search);
                         if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-                            return viewModel.loadPadingData(request, getFragmentTag());
+                            return viewModel.loadPadingNetData(getFragmentTag());
                         } else {
-                            return viewModel.loadDonePagingData(request, getFragmentTag());
+                            return viewModel.loadDonePagingNetData(getFragmentTag());
                         }
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
@@ -184,9 +178,12 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
-            binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.panelCondition.setConditionSelected(true);
+        }else{
+            binding.panelCondition.setConditionSelected(false);
         }
-        viewModel.onConditionSelected(viewModel.getRequest(getFragmentTag()),selected);
+        viewModel.onConditionSelected(selected);
+        viewModel.switchCondition(getFragmentTag());
     }
 
     protected String getFragmentTag() {
@@ -201,11 +198,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     @Override
     protected void setUpView() {
-        binding.sendOrderRef.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadPagingData();
-            }
+        binding.sendOrderRef.setOnRefreshListener(() -> {
+            binding.sendOrderRef.setRefreshing(false);
+            viewModel.refresh(getFragmentTag());
         });
         binding.workSendList.addItemDecoration(new SpacesItemDecoration(30));
 
@@ -230,10 +225,10 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (adapter == null) {
-            adapter = new RVPageListAdapter<ItemWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planWorkOrder, mDiffCallback) {
+            adapter = new RVPageListAdapter<ItemWorkPlanBinding, Plan>(getActivity(), BR.planWorkOrder, mDiffCallback) {
 
                 @Override
-                public void onBindItem(ItemWorkPlanBinding binding, PlanWorkOrder distributeWorkOrder) {
+                public void onBindItem(ItemWorkPlanBinding binding, Plan distributeWorkOrder) {
 
                 }
 
@@ -250,36 +245,42 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        binding.sendOrderRef.setRefreshing(true);
+//        binding.sendOrderRef.setRefreshing(true);
         binding.sendOrderRef.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         String fragmentTag = getFragmentTag();
         if (viewModel.getOrgModel() != null) {
-            viewModel.getRequest(getFragmentTag()).setDivideId(viewModel.getOrgModel().getId());
+            viewModel.request.setDivideId(viewModel.getOrgModel().getId());
         }
-        viewModel.getRequest(getFragmentTag()).setUserId(userModuleService.getUserId());
+        viewModel.request.setUserId(userModuleService.getUserId());
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-            viewModel.loadPadingData(viewModel.getRequest(getFragmentTag()), fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+            viewModel.loadPendingInDB().observe(this, dataBeans -> {
+                adapter.submitList(dataBeans);
+                adapter.notifyDataSetChanged();
+            });
         } else {
-            viewModel.loadDonePagingData(viewModel.getRequest(getFragmentTag()), fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
+            viewModel.loadDoneInDB().observe(this, dataBeans -> {
+                adapter.submitList(dataBeans);
+                adapter.notifyDataSetChanged();
+            });
         }
     }
 
     @Override
     protected PlanOrderViewModel initViewModel() {
-        return new ViewModelProvider(getActivity(), new PlanOdViewModelFactory()).get(PlanOrderViewModel.class);
+        return new ViewModelProvider(this, new PlanOdViewModelFactory()).get(PlanOrderViewModel.class);
     }
 
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<PlanWorkOrder> mDiffCallback = new DiffUtil.ItemCallback<PlanWorkOrder>() {
+    private DiffUtil.ItemCallback<Plan> mDiffCallback = new DiffUtil.ItemCallback<Plan>() {
 
         @Override
-        public boolean areItemsTheSame(@NonNull PlanWorkOrder oldItem, @NonNull PlanWorkOrder newItem) {
+        public boolean areItemsTheSame(@NonNull Plan oldItem, @NonNull Plan newItem) {
             return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull PlanWorkOrder oldItem, @NonNull PlanWorkOrder newItem) {
+        public boolean areContentsTheSame(@NonNull Plan oldItem, @NonNull Plan newItem) {
             return oldItem == newItem;
         }
     };
@@ -293,7 +294,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
      * @param data
      */
     @Override
-    public void onItemClicked(View veiw, PlanWorkOrder data) {
+    public void onItemClicked(View veiw, Plan data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
                 .withString(RouteKey.KEY_ORDER_ID, data.getID_())
                 .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
@@ -306,8 +307,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.panelCondition.periodSelected.setText(orgModel.getName());
-        binding.panelCondition.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
-        viewModel.setOrgModel(getFragmentTag(),orgModel);
+        binding.panelCondition.setPeriodSelected(true);
+        viewModel.setOrgModel(orgModel);
+        viewModel.switchCondition(getFragmentTag());
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

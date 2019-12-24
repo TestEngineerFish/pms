@@ -6,6 +6,7 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -16,6 +17,7 @@ import com.einyun.app.library.resource.workorder.net.request.DistributeSubmitReq
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.WorkOrderHanlerRequest;
+import com.einyun.app.library.resource.workorder.net.request.formDataExten;
 import com.einyun.app.library.resource.workorder.net.response.HistroyResponse;
 import com.einyun.app.library.upload.model.PicUrl;
 
@@ -30,12 +32,12 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
     }
 
     public LiveData<DisttributeDetialModel> detial(String orderId) {
-        showLoading();
+//        showLoading();
         service.distributeDetial(orderId, new CallBack<DisttributeDetialModel>() {
             @Override
             public void call(DisttributeDetialModel data) {
                 workOrderLiveData.postValue(data);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
@@ -53,17 +55,17 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
      * @return
      */
     public LiveData<DisttributeDetialModel> pendingDetial(String taskId) {
-        showLoading();
+//        showLoading();
         service.distributeWaitDetial(taskId, new CallBack<DisttributeDetialModel>() {
             @Override
             public void call(DisttributeDetialModel data) {
                 workOrderLiveData.postValue(data);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
             }
         });
         return workOrderLiveData;
@@ -80,17 +82,17 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
         DoneDetialRequest request = new DoneDetialRequest();
         request.setTaskNodeId(taskNodeId);
         request.setProInsId(proInsId);
-        showLoading();
+//        showLoading();
         service.distributeDoneDetial(request, new CallBack<DisttributeDetialModel>() {
             @Override
             public void call(DisttributeDetialModel data) {
                 workOrderLiveData.postValue(data);
-                hideLoading();
+//                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
             }
         });
         return workOrderLiveData;
@@ -261,5 +263,35 @@ public class SendOrderDetialViewModel extends BaseUploadViewModel {
         return histroyList;
     }
 
+    public LiveData<formDataExten> getApplyDateInfo(String id){
+        return service.getApplyDateInfo(id, new CallBack<formDataExten>() {
+            @Override
+            public void call(formDataExten data) {
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+                hideLoading();
+            }
+        });
+    }
+
+    public LiveData<Boolean> postApplyDateInfo(ExtenDetialRequest request, List<PicUrl> images){
+        showLoading();
+        request.setApplyFiles(uploadManager.toJosnString(images));
+        request.getFormData().setAttachment(uploadManager.toJosnString(images));
+        return service.postApplyDateInfo(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+                hideLoading();
+            }
+        });
+    }
 }

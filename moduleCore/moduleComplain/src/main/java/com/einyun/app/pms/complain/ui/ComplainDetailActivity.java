@@ -102,7 +102,6 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     private void fresh() {
         viewModel.getComplainDetail(proInsId, taskId).observe(this, repairsDetailModel -> {
             this.detail = repairsDetailModel.getData().getCustomer_complain_model();
-
             //处理时长
             createTime = detail.getF_ts_time();
             if (ComplainOrderState.CLOSED.getState().equals(detail.getF_state())) {
@@ -130,7 +129,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 setImageList(binding.layoutApplyCloseInfo.sendOrderClosePicList, closeExtApplication.getAttachment());
             }
             //处理历史
-            handleList = repairsDetailModel.getHandleList();
+//            handleList = repairsDetailModel.getHandleList();
             handleList();
 
             //追加投诉信息
@@ -494,7 +493,12 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             request.setType(WorkOrder.POSTPONED_COMPLAIN);
             viewModel.isClosed(request).observe(this, isClosedState -> {
                 if (isClosedState.isClosed()) {
-
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, id)
+                            .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                            .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_COMPLAIN)
+                            .withString(RouteKey.KEY_DIVIDE_ID, detail.getF_ts_dk_id())
+                            .withString(RouteKey.KEY_DIVIDE_NAME, detail.getF_ts_dk())
+                            .navigation();
                 } else {
                     ToastUtil.show(this, "正在审批中");
                 }
@@ -506,7 +510,9 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
             viewModel.isClosed(request).observe(this, isClosedState -> {
                 if (isClosedState.isClosed()) {
-
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString(RouteKey.KEY_MID_URL, RouteKey.KEY_MID_URL_COMPLAIN)
+                            .withString(RouteKey.KEY_TASK_ID, taskId)
+                            .navigation();
                 } else {
                     ToastUtil.show(this, "正在审批中");
                 }

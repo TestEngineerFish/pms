@@ -10,12 +10,19 @@
             />
     </data>
 
-
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/px_10"
+        app:cardElevation="0dp">
     <LinearLayout
         android:id="@+id/item_repair_ln"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_white_bg"
         android:orientation="vertical">
 
 
@@ -235,4 +242,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

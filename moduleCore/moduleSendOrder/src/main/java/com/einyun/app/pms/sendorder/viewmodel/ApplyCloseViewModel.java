@@ -2,30 +2,21 @@ package com.einyun.app.pms.sendorder.viewmodel;
 
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.einyun.app.base.db.bean.DelayExtensionApplication;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
-import com.einyun.app.library.resource.workorder.model.ApplyCloseModel;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCusCloseRequest;
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.upload.model.PicUrl;
-import com.einyun.app.pms.sendorder.model.ImageDataBean;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,7 +126,7 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
      *
      * @return LiveData
      */
-    public MutableLiveData<ApplyCloseResponse> applyCustomerClose(ApplyCusCloseRequest request,String midUrl, List<PicUrl> images) {
+    public MutableLiveData<ApplyCloseResponse> applyCustomerClose(ApplyCusCloseRequest request, String midUrl, List<PicUrl> images) {
         if (uploadManager != null) {
             request.getBizData().setFclose_apply_attach(uploadManager.toJosnString(images));
 
