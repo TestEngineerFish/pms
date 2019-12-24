@@ -53,7 +53,11 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         ARouter.getInstance().inject(this);
-        setHeadTitle(R.string.text_resend_order);
+        if (!StringUtil.isNullStr(reSendKey)) {
+            setHeadTitle(R.string.text_resend_order);
+        }else {
+            setHeadTitle(R.string.text_resend_cus_order);
+        }
         resendOrderRequest = new ResendOrderRequest();
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
             binding.resendName.setText(model.getFullname());

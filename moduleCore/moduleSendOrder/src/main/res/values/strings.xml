@@ -11,6 +11,7 @@
     <string name="text_wait_handle">待跟进</string>
     <string name="text_already_handle">已跟进</string>
     <string name="text_resend_order">转派工单</string>
+    <string name="text_resend_cus_order">转单</string>
     <string name="text_histroy">历史流程</string>
     <string name="text_take_order_success">接单成功</string>
     <string name="text_alert_handle_result">请输入处理结果</string>
