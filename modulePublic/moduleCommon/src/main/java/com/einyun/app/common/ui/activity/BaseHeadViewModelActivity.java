@@ -72,12 +72,6 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
         headBar.setBackgroundColor(color);
     }
     /**
-     * 设置返回按钮图标
-     * */
-    protected void setBackIcon(int iconId){
-        headBinding.back.setImageResource(iconId);
-    }
-    /**
      * 设置标题颜色
      * */
     protected void setTxtColor(int resId){

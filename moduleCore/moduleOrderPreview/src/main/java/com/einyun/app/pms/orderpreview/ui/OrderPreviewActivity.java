@@ -29,7 +29,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLA
 @Route(path = RouterUtils.ACTIVITY_ORDER_PREVIEW)
 public class OrderPreviewActivity extends BaseHeadViewModelActivity<ActivityOrderPreviewBinding, OrderPreviewViewModel> {
     private String[] mTitles;//tab标题
-
+    SelectPopUpView selectPopUpView;
     @Override
     protected OrderPreviewViewModel initViewModel() {
         return new ViewModelProvider(this, new OrderPreviewModelFactory()).get(OrderPreviewViewModel.class);
@@ -72,18 +72,25 @@ public class OrderPreviewActivity extends BaseHeadViewModelActivity<ActivityOrde
         });
         binding.tabOrderPreview.setupWithViewPager(binding.vpOrderPreview);
         binding.orderPreviewTabSelectLn.setOnClickListener(v -> {
-            //弹出筛选view
+            showConditionView();
+        });
+    }
+
+    protected void showConditionView() {
+        //弹出筛选view
+        if(selectPopUpView==null){
             ConditionBuilder builder = new ConditionBuilder();
             List<SelectModel> conditions = builder
                     .addItem(SelectPopUpView.SELECT_TIME_CIRCLE)//周期
                     .build();
-            new SelectPopUpView(OrderPreviewActivity.this, conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+            selectPopUpView= new SelectPopUpView(OrderPreviewActivity.this, conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
                 @Override
                 public void onSelected(Map selected) {
                     handleSelected(selected);
                 }
-            }).showAsDropDown(binding.orderPreviewTabLn);
-        });
+            });
+        }
+        selectPopUpView.showAsDropDown(binding.orderPreviewTabLn);
     }
 
     private void handleSelected(Map selected) {

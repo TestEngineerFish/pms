@@ -24,7 +24,7 @@ import com.einyun.app.common.R;
  */
 public class BaseHeadActivity extends BaseSkinActivity {
 
-    protected ImageView btnBack;
+    protected View btnBack;
     protected TextView tvTitle;
     protected TextView tvRightTitle;
     protected ImageView ivRightOption;
