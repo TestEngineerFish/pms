@@ -9,6 +9,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,9 +22,12 @@ import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
 
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
@@ -44,6 +48,7 @@ import com.einyun.app.pms.customerinquiries.ui.CustomerInquiriesViewModuleActivi
 import com.einyun.app.pms.customerinquiries.viewmodule.CusInquiriesFragmentViewModel;
 import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewModelFactory;
 import com.einyun.app.pms.customerinquiries.widget.InquiriesTypeSelectPopWindow;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -75,6 +80,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
     private String divideName="";
     private int mPosition=-1;
     private String cate="";
+    private String blockName;
 
     public static CustomerInquiriesViewModuleFragment newInstance(Bundle bundle) {
         CustomerInquiriesViewModuleFragment fragment = new CustomerInquiriesViewModuleFragment();
@@ -99,19 +105,41 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
         return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
     }
 
+    private void initPage() {
+        CustomerInquiriesRepository.mPage2=0;//解决快速刷新导致列表数据不显示问题
+        CustomerInquiriesRepository.mPage3=0;
+        CustomerInquiriesRepository.mPage1=0;
+        CustomerInquiriesRepository.mPage4=0;
+        CustomerInquiriesRepository.mPage5=0;
+    }
 
 
     @Override
     protected void setUpView() {
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
+            initPage();
             loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag()); });
         binding.inquiriesList.setLayoutManager(new LinearLayoutManager(
                 getActivity(),
                 LinearLayoutManager.VERTICAL,
                 false));
         binding.inquiriesList.setAdapter(adapter);
+        LiveEventBus.get(Constants.INQUIRIES_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
 
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag());
+                        Log.e("onChanged", "onChanged: "+aBoolean);
+                    }
+                });
+        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
+        divideId = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
+        if (!blockName.isEmpty()) {
+            binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
+            binding.tvDivide.setText(blockName);
+        }
     }
 
     @Override
@@ -199,19 +227,19 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
             case FRAGMENT_TO_FOLLOW_UP://待跟进
 //                viewModel.getTiaoXian();
 //                viewModel.getOrderType();
-                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_TO_FOLLOW_UP);
+                loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),FRAGMENT_TO_FOLLOW_UP);
                 break;
             case FRAGMENT_TO_FEED_BACK://待反馈
-                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_TO_FEED_BACK);
+                loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),FRAGMENT_TO_FEED_BACK);
                 break;
             case FRAGMENT_HAVE_TO_FOLLOW_UP://已跟进
-                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_HAVE_TO_FOLLOW_UP);
+                loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),FRAGMENT_HAVE_TO_FOLLOW_UP);
                 break;
             case FRAGMENT_TRANSFERRED_TO://已办结
-                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_TRANSFERRED_TO);
+                loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),FRAGMENT_TRANSFERRED_TO);
                 break;
             case FRAGMENT_COPY_ME://抄送我
-                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_COPY_ME);
+                loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),FRAGMENT_COPY_ME);
                 break;
         }
 
@@ -270,11 +298,13 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      */
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
+        initPage();
         divideId = orgModel.getId();
         divideName = orgModel.getName();
         binding.tvDivide.setText(divideName);
         binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
-        loadPagingData(viewModel.getRequestBean(1,10,"","", divideId),getFragmentTag());
+        binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
+        loadPagingData(viewModel.getRequestBean(1,10,cate,"", divideId),getFragmentTag());
     }
     /**
      * item点击
@@ -298,13 +328,25 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
     @Override
     public void onData(String dataKey,int position) {
         Log.e("onData", "onData:dataKey=== "+dataKey );
+        initPage();
+
         cate = dataKey;
         mPosition = position;
+        if (mPosition==-1) {
+            binding.tvSelect.setTextColor(getResources().getColor(R.color.greyTextColor));
+            binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type);
+
+        }else {
+            binding.tvSelect.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type_blue);
+
+        }
         loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        initPage();
     }
 }

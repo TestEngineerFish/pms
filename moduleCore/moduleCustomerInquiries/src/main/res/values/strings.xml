@@ -39,7 +39,13 @@
     <string name="tv_feedback_content">反馈内容</string>
     <string name="tv_empty_content">反馈内容不能为空</string>
     <string name="tv_empty_feedback_content">回复内容不能为空</string>
+    <string name="tv_empty_save_content">保存内容不能为空</string>
     <string name="tv_save_suc">保存数据成功</string>
     <string name="tv_svae_fail">保存失败</string>
     <string name="tv_evaluation_time">评价时间</string>
+    <string name="tv_feedback_suc">回复成功</string>
+    <string name="tv_feedback_fail">回复失败</string>
+    <string name="tv_empty_evaluation">评价内容不能为空</string>
+    <string name="tv_evaluation_suc">评价成功</string>
+    <string name="tv_evaluation_fail">评价失败</string>
 </resources>

@@ -27,4 +27,5 @@
     <string name="tv_write_your_advice">请简要描述你的问题或意见</string>
     <string name="tv_confirm_logout">是否退出登录？</string>
     <string name="tv_no_camera_permission">没有相机权限</string>
+    <string name="tv_new_msg_push">新消息通知</string>
 </resources>

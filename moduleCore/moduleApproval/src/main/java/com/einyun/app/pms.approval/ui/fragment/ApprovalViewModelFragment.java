@@ -116,6 +116,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
         if (!blockName.isEmpty()) {
             binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.ivDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
             binding.tvDivide.setText(blockName);
         }
     }
@@ -357,8 +358,10 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         initPage();
         if (auditType.equals("")&&auditStatus.equals("")&&auditStatus.equals("")) {
             binding.tvSelect.setTextColor(getResources().getColor(R.color.greyTextColor));
+            binding.ivSelect.setImageResource(R.drawable.iv_approval_sel_type);
         }else {
             binding.tvSelect.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.ivSelect.setImageResource(R.drawable.iv_approval_sel_type_blue);
 
         }
         ApprovalBean data = viewModel.getData(1, 10, divideId, divideName, auditType, auditSubType, auditStatus);
@@ -375,6 +378,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
        divideId=orgModel.getId();
        divideName=orgModel.getName();
        binding.tvDivide.setText(divideName);
+       binding.ivDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
        binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
         ApprovalBean data = viewModel.getData(1, 10, divideId, divideName, auditType, auditSubType, auditStatus);
         loadPagingData(data,tabId);
