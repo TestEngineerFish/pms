@@ -5,9 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 class ComplainPageRequest : PageRquest() {
     var ts_dk_id: String? = null
-    var ts_area_id: String? = null
-    var ts_cate_lv1_id: String? = null
-    var ts_cate_lv2_id: String? = null
+    var F_ts_cate_id: String? = null
+    var F_ts_property_id: String? = null
     var state: String? = null
     var node_id_: String? = null
     var owner_id_: String? = null

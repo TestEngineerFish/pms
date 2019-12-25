@@ -27,7 +27,7 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ARouter.getInstance().inject(this);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         ActivityUtil.addActivity(this);
