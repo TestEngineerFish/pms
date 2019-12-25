@@ -154,7 +154,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="材料费(元)" />
 
             <TextView
@@ -210,12 +209,11 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="付款日期" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.handle_pay_time}" />
+                android:text="@{repairs.data.customer_repair_model.handle_pay_time+@string/text_padding_empty}" />
         </LinearLayout>
 
         <LinearLayout

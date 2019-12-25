@@ -92,8 +92,20 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_send_order);
+        setRightTxt(R.string.text_histroy);
+        setRightTxtColor(R.color.blueTextColor);
         tipDialog = new TipDialog(this, getString(R.string.text_take_order_success));
         setRightOption(R.drawable.histroy);
+    }
+
+    @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_HISTORY)
+                    .withString(RouteKey.KEY_ORDER_ID, orderId)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .navigation();
     }
 
     @Override
@@ -551,13 +563,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                     .withString(RouteKey.KEY_ORDER_ID, detialModel.getData().getInfo().getID())
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                     .withString(RouteKey.KEY_TASK_ID, taskId)
-                    .navigation();
-        }
-        if (v.getId() == R.id.iv_right_option) {
-            ARouter.getInstance()
-                    .build(RouterUtils.ACTIVITY_HISTORY)
-                    .withString(RouteKey.KEY_ORDER_ID, orderId)
-                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                     .navigation();
         }
     }
