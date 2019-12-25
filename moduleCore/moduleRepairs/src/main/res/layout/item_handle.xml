@@ -19,7 +19,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_70"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <TextView
@@ -63,11 +63,11 @@
 
             <Button
                 android:id="@+id/left_to_delete"
-                android:layout_width="@dimen/px_70"
+                android:layout_width="@dimen/px_100"
                 android:layout_height="match_parent"
                 android:text="删除"
-                android:background="@color/white"
-                android:textColor="@color/red_delete"
+                android:background="@color/material_delete_color"
+                android:textColor="@color/material_delete_txt_color"
                 android:gravity="center"
                 android:textSize="@dimen/font_size13" />
 

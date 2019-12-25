@@ -88,8 +88,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private final int MAX_PHOTO_SIZE = 4;
     private List<DictDataModel> dictNatureList = new ArrayList<>();
     private List<DictDataModel> dictTimeList = new ArrayList<>();
-    private List<DictDataModel> dictPayTypeLsit=new ArrayList<>();
-    private List<DictDataModel> dictAscriptLsit=new ArrayList<>();
+    private List<DictDataModel> dictPayTypeLsit = new ArrayList<>();
+    private List<DictDataModel> dictAscriptLsit = new ArrayList<>();
     int rtTimeDefaultPos = 0;
     int rtDateDefaultPos = 0;
     int clDefaultPos = 0;
@@ -206,12 +206,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             dictTimeList = dictDataModels;
         });
         //获取支付方式
-        viewModel.getByTypeKey(Constants.REPAIR_PAY_TYPE).observe(this,dictDataModels->{
-            dictPayTypeLsit=dictDataModels;
+        viewModel.getByTypeKey(Constants.REPAIR_PAY_TYPE).observe(this, dictDataModels -> {
+            dictPayTypeLsit = dictDataModels;
         });
         //获取报修工单归属
-        viewModel.getByTypeKey(Constants.REPAIR_WORK_ASCRIPTION).observe(this,dictDataModels->{
-            dictAscriptLsit =dictDataModels;
+        viewModel.getByTypeKey(Constants.REPAIR_WORK_ASCRIPTION).observe(this, dictDataModels -> {
+            dictAscriptLsit = dictDataModels;
             setAscription();
         });
 
@@ -319,11 +319,11 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repariResponse.rgs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId==R.id.rb_normal){
+                if (checkedId == R.id.rb_normal) {
                     customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
                     customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
                 }
-                if (checkedId==R.id.rb_general){
+                if (checkedId == R.id.rb_general) {
                     customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
                     customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
                 }
@@ -414,7 +414,13 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 adapter.updateList(modelList);
             }
         }
-
+        //评价状态评分
+        if (customerRepair.getReturn_score() != null) {
+            binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
+        }
+        if (customerRepair.getService_quality_score() != null) {
+            binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
+        }
         updateImagesUI(repairsOrderDetail);
     }
 
@@ -471,7 +477,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     .withString(RouteKey.KEY_TASK_ID, taskId)
                     .navigation();
         }
-        if (v.getId()==R.id.repair_apply_late){
+        if (v.getId() == R.id.repair_apply_late) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, orderId)
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                     .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_REPAIRS)
@@ -519,8 +525,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                                 RepairsDetailActivity.this.finish();
                             }
                         }).show();
-            }else {
-                ToastUtil.show(this,R.string.text_submit_fale);
+            } else {
+                ToastUtil.show(this, R.string.text_submit_fale);
             }
         });
     }
@@ -630,8 +636,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
-            binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
             return;
         }
         //超时派单
@@ -666,10 +670,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             } else {
                 customerRepair.setResponse_result(binding.repariResponse.repairResponseReason.getString());
             }
-            if (binding.repariResponse.rgs.getCheckedRadioButtonId()==R.id.rb_normal){
+            if (binding.repariResponse.rgs.getCheckedRadioButtonId() == R.id.rb_normal) {
                 customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
                 customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
-            }else {
+            } else {
                 customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
                 customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
             }
@@ -868,9 +872,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      */
     private void choosePayWay() {
         List<String> payWays = new ArrayList<>();
-        for (DictDataModel dictDataModel:dictPayTypeLsit){
+        for (DictDataModel dictDataModel : dictPayTypeLsit) {
             payWays.add(dictDataModel.getName());
-            Log.d("Test",dictDataModel.getName());
+            Log.d("Test", dictDataModel.getName());
         }
 
         BottomPicker.buildBottomPicker(this, payWays, clDefaultPos, new BottomPicker.OnItemPickListener() {
@@ -919,10 +923,11 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairCloseInfo.setRepairs(repairsOrderDetail);
         binding.repairLateInfo.setRepairs(repairsOrderDetail);
     }
+
     /**
      * 设置工单归属数据
-     * */
-    private void setAscription(){
+     */
+    private void setAscription() {
         binding.repariResponse.rbNormal.setText(dictAscriptLsit.get(0).getName());
         binding.repariResponse.rbGeneral.setText(dictAscriptLsit.get(1).getName());
 
@@ -930,8 +935,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
 
     /**
      * 设置性质评估
-     * */
-    private void setProperTy(){
+     */
+    private void setProperTy() {
         binding.repairsInfo.rbNormal.setText(dictNatureList.get(0).getName());
         binding.repairsInfo.rbGeneral.setText(dictNatureList.get(1).getName());
         binding.repairsInfo.rbWarning.setText(dictNatureList.get(2).getName());

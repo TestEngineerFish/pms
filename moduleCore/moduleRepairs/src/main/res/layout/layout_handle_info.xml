@@ -65,7 +65,8 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.handle_is_paid}" />
+                app:ifpay="@{repairs.data.customer_repair_model.handle_is_paid}"
+                 />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">

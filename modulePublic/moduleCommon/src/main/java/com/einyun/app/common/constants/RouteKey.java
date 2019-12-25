@@ -91,6 +91,9 @@ public class RouteKey {
     public static final String REPAIR_STATUS_WAIT_GRAB= "WorkOrderPoolGrab";
     //    客服三类转派
     public static final String KEY_CUSTOMER_RESEND_ORDER = "KEY_CUSTOMER_RESEND_ORDER";
-
+    //有偿
+    public static final String KEY_PAID="1";
+    //无偿
+    public static final String KEY_NOT_PAID="0";
 
 }
