@@ -1,16 +1,11 @@
 package com.einyun.app.pms.mine.viewmodule;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.base.http.RxSchedulers;
-import com.einyun.app.pms.mine.module.FeedBackBean;
-import com.einyun.app.pms.mine.module.SignSetModule;
+import com.einyun.app.pms.mine.model.SignSetModule;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 
 public class SignSetViewModel extends BaseViewModel {

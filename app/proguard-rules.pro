@@ -246,10 +246,13 @@ public *;
 }
 
 #微信开放平台
--keep class com.tencent.mm.opensdk.** { *;}
--keep class com.tencent.wxop.** { *;}
--keep class com.tencent.mm.sdk.** { *;}
-
+-keep class com.tencent.** { *;}
+#皮肤包
+-keep class skin.** { *;}
+-keep class androidx.appcompat.app.** { *;}
+-dontwarn org.xmlpull.v1.XmlPullParser
+-dontwarn org.xmlpull.v1.XmlSerializer
+-keep class org.xmlpull.v1.* {*;}
 #支付宝
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}

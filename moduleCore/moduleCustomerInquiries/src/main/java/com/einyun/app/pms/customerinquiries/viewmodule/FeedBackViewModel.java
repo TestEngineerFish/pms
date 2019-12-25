@@ -5,16 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.pms.customerinquiries.module.DealRequest;
-import com.einyun.app.pms.customerinquiries.module.FeedBackModule;
-import com.einyun.app.pms.customerinquiries.module.FeedBackRequest;
-import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
+import com.einyun.app.pms.customerinquiries.model.FeedBackModule;
+import com.einyun.app.pms.customerinquiries.model.FeedBackRequest;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
-
-import java.util.List;
-
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 
 public class FeedBackViewModel extends BaseViewModel {
     CustomerInquiriesRepository repository= new CustomerInquiriesRepository();

@@ -230,6 +230,11 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
 //                    ToastUtil.show(this, "tentantId" + tenantModel.getId());
                     UserModel model = binding.getUserModel();
                     //判断用户名是否为空
+                    if (!StringUtil.isNullStr(binding.etOrgCode.getText().toString())) {
+                        ToastUtil.show(this, "请输入企业编码");
+                        return;
+                    }
+                    //判断用户名是否为空
                     if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
                         ToastUtil.show(this, R.string.login_username_null_tip);
                         return;

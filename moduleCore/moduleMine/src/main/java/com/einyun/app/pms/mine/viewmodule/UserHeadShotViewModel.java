@@ -12,7 +12,7 @@ import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.library.upload.model.PicUrl;
-import com.einyun.app.pms.mine.module.GetUserByccountBean;
+import com.einyun.app.pms.mine.model.GetUserByccountBean;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 
 import org.jetbrains.annotations.NotNull;

@@ -1,24 +1,18 @@
 package com.einyun.app.pms.mine.viewmodule;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.pms.mine.module.FeedBackBean;
-import com.einyun.app.pms.mine.module.GetUserByccountBean;
-import com.einyun.app.pms.mine.module.UCUserDetailsBean;
-import com.einyun.app.pms.mine.module.UserStarsBean;
+import com.einyun.app.pms.mine.model.GetUserByccountBean;
+import com.einyun.app.pms.mine.model.UCUserDetailsBean;
+import com.einyun.app.pms.mine.model.UserStarsBean;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class UserInfoViewModel extends BaseViewModel {
 

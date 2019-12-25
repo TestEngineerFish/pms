@@ -10,7 +10,7 @@ import com.einyun.app.pms.approval.model.ApprovalBean;
 import com.einyun.app.pms.approval.model.ApprovalListModule;
 import com.einyun.app.pms.approval.model.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.model.GetByTypeKeyInnerAuditStatusModule;
-import com.einyun.app.pms.approval.response.ApprovalServiceApi;
+import com.einyun.app.pms.approval.net.response.ApprovalServiceApi;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;

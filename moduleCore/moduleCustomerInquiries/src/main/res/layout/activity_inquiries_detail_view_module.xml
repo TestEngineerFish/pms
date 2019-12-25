@@ -5,7 +5,7 @@
     <data>
         <variable
             name="module"
-            type="com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule" />
+            type="com.einyun.app.pms.customerinquiries.model.InquiriesDetailModule" />
         <variable
             name="callBack"
             type="com.einyun.app.pms.customerinquiries.ui.InquiriesDetailViewModuleActivity" />
@@ -745,6 +745,7 @@
                  android:textColor="@color/blueTextColor"
                  android:gravity="center"
                  android:textSize="16sp"
+                 android:textStyle="bold"
                  android:layout_marginRight="7.5dp"
                  android:layout_weight="1"
                  android:layout_height="match_parent"/>
@@ -753,10 +754,11 @@
                  android:layout_marginLeft="7.5dp"
                  android:layout_marginRight="20dp"
                  android:text="@string/text_commit"
-                 android:background="@drawable/iv_pass_bg"
+                 android:background="@drawable/select_btn_bg"
                  android:layout_width="0dp"
                  android:textColor="@color/white"
                  android:gravity="center"
+                 android:textStyle="bold"
                  android:textSize="16sp"
                  android:layout_weight="1"
                  android:layout_height="match_parent"/>

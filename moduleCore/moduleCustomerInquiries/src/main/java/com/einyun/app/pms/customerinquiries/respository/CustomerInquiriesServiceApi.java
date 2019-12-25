@@ -2,24 +2,22 @@ package com.einyun.app.pms.customerinquiries.respository;
 
 
 import com.einyun.app.base.http.BaseResponse;
-import com.einyun.app.library.workorder.net.URLs;
 import com.einyun.app.pms.customerinquiries.constants.URLS;
-import com.einyun.app.pms.customerinquiries.module.DealRequest;
-import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
-import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
-import com.einyun.app.pms.customerinquiries.module.FeedBackRequest;
-import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
-import com.einyun.app.pms.customerinquiries.respone.FeedBackResponse;
-import com.einyun.app.pms.customerinquiries.respone.GetInquiriesTypesResponse;
-import com.einyun.app.pms.customerinquiries.respone.InquiriesDetailResponse;
-import com.einyun.app.pms.customerinquiries.respone.InquiriesListResponse;
-import com.einyun.app.pms.customerinquiries.respone.OrderResponse;
+import com.einyun.app.pms.customerinquiries.model.DealRequest;
+import com.einyun.app.pms.customerinquiries.model.DealSaveRequest;
+import com.einyun.app.pms.customerinquiries.model.EvaluationRequest;
+import com.einyun.app.pms.customerinquiries.model.FeedBackRequest;
+import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
+import com.einyun.app.pms.customerinquiries.net.response.FeedBackResponse;
+import com.einyun.app.pms.customerinquiries.net.response.GetInquiriesTypesResponse;
+import com.einyun.app.pms.customerinquiries.net.response.InquiriesDetailResponse;
+import com.einyun.app.pms.customerinquiries.net.response.InquiriesListResponse;
+import com.einyun.app.pms.customerinquiries.net.response.OrderResponse;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Url;
 
 /**
