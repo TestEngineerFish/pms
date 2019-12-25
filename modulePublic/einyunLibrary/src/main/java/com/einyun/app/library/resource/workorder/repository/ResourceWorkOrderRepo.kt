@@ -38,7 +38,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         callBack: CallBack<Boolean>
     ): LiveData<Boolean> {
         val liveData = MutableLiveData<Boolean>()
-        serviceApi?.postApplyDateInfo(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.postApplyDateInfo(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.isState)
@@ -65,7 +65,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             Query.RELATION_AND
         )
         val liveData = MutableLiveData<formDataExten>()
-        serviceApi?.getApplyDateInfo(builder.build())?.compose(RxSchedulers.inIo())
+        serviceApi?.getApplyDateInfo(builder.build())?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)
