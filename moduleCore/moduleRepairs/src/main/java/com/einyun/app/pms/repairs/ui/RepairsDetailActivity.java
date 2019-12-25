@@ -335,6 +335,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     @Override
     protected void onResume() {
         super.onResume();
+        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
+            updateUI(repairsDetail);
+            saveHandleRequest = new SaveHandleRequest(orderId, detialModel.getData().getCustomer_repair_model());
+        });
     }
 
     @Override
@@ -713,6 +717,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             return;
         }
     }
+
 
     /**
      * 处理评价request
