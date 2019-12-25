@@ -20,6 +20,7 @@ import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -300,7 +301,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         dealRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
         viewModel.deal(dealRequest).observe(this,module->{
             if (module) {
-                LiveEventBus.get(Constants.INQUIRIES_FRAGMENT_REFRESH, Boolean.class).post(true);
+                LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                 ToastUtil.show(this, getString(R.string.tv_feedback_suc));
                 finish();
             }else {
@@ -326,7 +327,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         evaluationRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
         viewModel.evaluation(evaluationRequest).observe(this,module->{
             if (module) {
-                LiveEventBus.get(Constants.INQUIRIES_FRAGMENT_REFRESH, Boolean.class).post(true);
+                LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                 ToastUtil.show(this, getString(R.string.tv_evaluation_suc));
                 finish();
             }else {
