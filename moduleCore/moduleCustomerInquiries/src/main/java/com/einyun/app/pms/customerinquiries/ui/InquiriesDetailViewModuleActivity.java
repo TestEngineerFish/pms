@@ -9,7 +9,6 @@ import android.widget.RadioGroup;
 
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,39 +21,30 @@ import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
-import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
-import com.einyun.app.common.ui.component.searchhistory.SingleSearchFragment;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
-import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
 import com.einyun.app.pms.customerinquiries.constants.Constants;
-import com.einyun.app.pms.customerinquiries.databinding.ActivityCustomerInquiriesViewModuleBinding;
 import com.einyun.app.pms.customerinquiries.databinding.ActivityInquiriesDetailViewModuleBinding;
-import com.einyun.app.pms.customerinquiries.databinding.InquiriesPopwindowItemBinding;
 import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriseFeedbackHistoryLayoutBinding;
-import com.einyun.app.pms.customerinquiries.module.DealRequest;
-import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
-import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
-import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesItemModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
-import com.einyun.app.pms.customerinquiries.module.OrderDetailInfoModule;
-import com.einyun.app.pms.customerinquiries.viewmodule.CusInquiriesFragmentViewModel;
+import com.einyun.app.pms.customerinquiries.model.DealRequest;
+import com.einyun.app.pms.customerinquiries.model.DealSaveRequest;
+import com.einyun.app.pms.customerinquiries.model.EvaluationRequest;
+import com.einyun.app.pms.customerinquiries.model.InquiriesDetailModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
+import com.einyun.app.pms.customerinquiries.model.OrderDetailInfoModule;
 import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewModelFactory;
 import com.einyun.app.pms.customerinquiries.viewmodule.InquiriesDetailViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.orhanobut.logger.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 

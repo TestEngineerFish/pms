@@ -9,10 +9,9 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
 
-import com.einyun.app.pms.customerinquiries.module.InquiriesItemModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesListModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
-import com.orhanobut.logger.Logger;
+import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesListModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
 
 
 /**

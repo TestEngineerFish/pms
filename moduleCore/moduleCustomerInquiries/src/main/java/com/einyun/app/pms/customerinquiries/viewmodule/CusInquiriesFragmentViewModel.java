@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.common.model.SelectModel;
@@ -16,9 +15,9 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
-import com.einyun.app.pms.customerinquiries.module.InquiriesItemModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
+import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
+import com.einyun.app.pms.customerinquiries.model.InquiriesTypesBean;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
 import com.einyun.app.pms.customerinquiries.respository.DataSourceFactory;
 import com.google.gson.Gson;
@@ -28,7 +27,6 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 
 public class CusInquiriesFragmentViewModel extends BasePageListViewModel<InquiriesItemModule> {

@@ -9,17 +9,16 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.customerinquiries.constants.URLS;
-import com.einyun.app.pms.customerinquiries.module.DealRequest;
-import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
-import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
-import com.einyun.app.pms.customerinquiries.module.FeedBackModule;
-import com.einyun.app.pms.customerinquiries.module.FeedBackRequest;
-import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesListModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
-import com.einyun.app.pms.customerinquiries.module.OrderDetailInfoModule;
-import com.orhanobut.logger.Logger;
+import com.einyun.app.pms.customerinquiries.model.DealRequest;
+import com.einyun.app.pms.customerinquiries.model.DealSaveRequest;
+import com.einyun.app.pms.customerinquiries.model.EvaluationRequest;
+import com.einyun.app.pms.customerinquiries.model.FeedBackModule;
+import com.einyun.app.pms.customerinquiries.model.FeedBackRequest;
+import com.einyun.app.pms.customerinquiries.model.InquiriesDetailModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesListModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
+import com.einyun.app.pms.customerinquiries.model.InquiriesTypesBean;
+import com.einyun.app.pms.customerinquiries.model.OrderDetailInfoModule;
 
 import java.util.List;
 

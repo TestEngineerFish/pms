@@ -7,7 +7,7 @@
     <data>
         <variable
             name="userHeadShotModule"
-            type="com.einyun.app.pms.mine.module.UserHeadShotModule" />
+            type="com.einyun.app.pms.mine.model.UserHeadShotModule" />
         <variable
             name="callBack"
             type="com.einyun.app.pms.mine.ui.UserHeadShotViewModuleActivity" />

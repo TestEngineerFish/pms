@@ -1,13 +1,11 @@
 package com.einyun.app.pms.mine.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -15,16 +13,9 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.databinding.ActivityAdviceFeedBackViewModuleBinding;
-import com.einyun.app.pms.mine.databinding.ActivityUserHeadShotViewModuleBinding;
-import com.einyun.app.pms.mine.module.FeedBackBean;
+import com.einyun.app.pms.mine.model.FeedBackBean;
 import com.einyun.app.pms.mine.viewmodule.AdviceFeedBackViewModel;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
-import com.einyun.app.pms.mine.viewmodule.UserHeadShotViewModel;
-import com.google.gson.Gson;
-import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.orhanobut.logger.Logger;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;

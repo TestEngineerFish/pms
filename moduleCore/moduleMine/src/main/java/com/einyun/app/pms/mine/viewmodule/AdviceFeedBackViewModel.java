@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.pms.mine.module.FeedBackBean;
+import com.einyun.app.pms.mine.model.FeedBackBean;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 import com.google.gson.Gson;
 

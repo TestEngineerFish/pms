@@ -6,17 +6,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.pms.customerinquiries.constants.URLS;
-import com.einyun.app.pms.customerinquiries.module.DealRequest;
-import com.einyun.app.pms.customerinquiries.module.DealSaveRequest;
-import com.einyun.app.pms.customerinquiries.module.EvaluationRequest;
-import com.einyun.app.pms.customerinquiries.module.InquiriesDetailModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
-import com.einyun.app.pms.customerinquiries.module.OrderDetailInfoModule;
+import com.einyun.app.pms.customerinquiries.model.DealRequest;
+import com.einyun.app.pms.customerinquiries.model.DealSaveRequest;
+import com.einyun.app.pms.customerinquiries.model.EvaluationRequest;
+import com.einyun.app.pms.customerinquiries.model.InquiriesDetailModule;
+import com.einyun.app.pms.customerinquiries.model.OrderDetailInfoModule;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
-
-import java.util.List;
-
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 
 public class InquiriesDetailViewModel extends BaseViewModel {
 

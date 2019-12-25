@@ -1,25 +1,19 @@
 package com.einyun.app.pms.customerinquiries.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
-import com.einyun.app.base.db.entity.Distribute;
 
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.SPUtils;
@@ -28,11 +22,8 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 
 import com.einyun.app.common.constants.SPKey;
-import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
-import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -41,8 +32,8 @@ import com.einyun.app.pms.customerinquiries.R;
 import com.einyun.app.pms.customerinquiries.constants.Constants;
 import com.einyun.app.pms.customerinquiries.databinding.FragmentCustomerInquiriesViewModuleBinding;
 import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriesListBinding;
-import com.einyun.app.pms.customerinquiries.module.InquiriesItemModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
+import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
 import com.einyun.app.pms.customerinquiries.ui.CustomerInquiriesViewModuleActivity;
 import com.einyun.app.pms.customerinquiries.viewmodule.CusInquiriesFragmentViewModel;
@@ -50,9 +41,6 @@ import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewMode
 import com.einyun.app.pms.customerinquiries.widget.InquiriesTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
-
-import java.util.List;
-import java.util.Map;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
