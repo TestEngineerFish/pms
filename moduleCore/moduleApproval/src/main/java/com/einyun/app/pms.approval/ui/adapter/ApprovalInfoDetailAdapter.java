@@ -1,7 +1,6 @@
 package com.einyun.app.pms.approval.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.pms.approval.R;
-import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
+import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
 
 import java.util.List;
 

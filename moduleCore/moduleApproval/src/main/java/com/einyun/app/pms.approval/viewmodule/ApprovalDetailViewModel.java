@@ -5,25 +5,19 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
-import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
-import com.einyun.app.pms.approval.module.ApprovalFormdata;
-import com.einyun.app.pms.approval.module.ApprovalSumitBean;
-import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
-import com.einyun.app.pms.approval.module.UrlxcgdGetInstBOModule;
+import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
+import com.einyun.app.pms.approval.model.ApprovalFormdata;
+import com.einyun.app.pms.approval.model.ApprovalSumitBean;
+import com.einyun.app.pms.approval.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.pms.approval.repository.ApprovalkDetailRepository;
-import com.einyun.app.pms.approval.ui.adapter.ApprovalInfoDetailAdapter;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
-import java.util.List;
-
-import okhttp3.Call;
 
 public class ApprovalDetailViewModel extends BaseViewModel {
     ApprovalkDetailRepository repository=new ApprovalkDetailRepository();

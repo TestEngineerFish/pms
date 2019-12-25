@@ -70,7 +70,7 @@ String taskID;
          * 获取反馈
          */
         viewModel.queryFeedbackInfo(taskID).observe(this,module->{
-            Log.e("module", "initData: "+module );
+            Log.e("model", "initData: "+module );
             feedBackModule = module;
             UpdateUI(module);
         });
@@ -112,7 +112,7 @@ String taskID;
         feedBackRequest.setNotifyType("inner");
         feedBackRequest.setActionName("commu");
         viewModel.feedBack(feedBackRequest).observe(this,module->{
-            Log.e("module", "initData: "+module );
+            Log.e("model", "initData: "+module );
             if (module) {
                 finish();
             }else {

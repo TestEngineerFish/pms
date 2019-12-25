@@ -6,7 +6,7 @@
 
         <variable
             name="approvallist"
-            type="com.einyun.app.pms.approval.module.ApprovalItemmodule" />
+            type="com.einyun.app.pms.approval.model.ApprovalItemmodule" />
     </data>
 
     <androidx.cardview.widget.CardView

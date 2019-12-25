@@ -4,10 +4,8 @@ package com.einyun.app.pms.approval.response;
 
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.library.workorder.net.URLs;
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
-import com.einyun.app.pms.approval.module.ApprovalSumitBean;
-import com.einyun.app.pms.approval.net.URL;
+import com.einyun.app.pms.approval.model.ApprovalBean;
+import com.einyun.app.pms.approval.model.ApprovalSumitBean;
 
 
 import io.reactivex.Flowable;

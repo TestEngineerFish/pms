@@ -1,4 +1,4 @@
-package com.einyun.app.pms.approval.module;
+package com.einyun.app.pms.approval.model;
 
 /**
  * Create by dowedo on 2019/4/25

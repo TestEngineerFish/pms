@@ -1,7 +1,5 @@
 package com.einyun.app.pms.approval.viewmodule;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -11,10 +9,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.ApprovalItemmodule;
-import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
-import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
+import com.einyun.app.pms.approval.model.ApprovalBean;
+import com.einyun.app.pms.approval.model.ApprovalItemmodule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyForComBoModule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.repository.ApprovalkListRepository;
 import com.einyun.app.pms.approval.repository.DataSourceFactory;
 import com.google.gson.Gson;

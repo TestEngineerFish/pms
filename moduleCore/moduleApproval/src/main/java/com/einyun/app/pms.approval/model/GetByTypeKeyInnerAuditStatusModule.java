@@ -1,4 +1,4 @@
-package com.einyun.app.pms.approval.module;
+package com.einyun.app.pms.approval.model;
 
 import java.util.List;
 

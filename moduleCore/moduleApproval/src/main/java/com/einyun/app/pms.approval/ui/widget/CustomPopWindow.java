@@ -17,9 +17,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.pms.approval.R;
 
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
-import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
+import com.einyun.app.pms.approval.model.ApprovalBean;
+import com.einyun.app.pms.approval.model.GetByTypeKeyForComBoModule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.ui.adapter.ApprovalChildTypeAdapter;
 import com.einyun.app.pms.approval.ui.adapter.ApprovalStatusAdapter;
 import com.einyun.app.pms.approval.ui.adapter.ApprovalTypeAdapter;

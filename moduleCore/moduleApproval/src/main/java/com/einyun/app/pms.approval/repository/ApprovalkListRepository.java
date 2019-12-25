@@ -2,20 +2,15 @@ package com.einyun.app.pms.approval.repository;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
-import com.einyun.app.base.paging.bean.PageBean;
-import com.einyun.app.base.paging.bean.Query;
-import com.einyun.app.base.paging.bean.QueryBuilder;
 import com.einyun.app.library.core.net.EinyunHttpService;
 
 
 import com.einyun.app.library.portal.dictdata.net.URLS;
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.ApprovalListModule;
-import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
-import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
-import com.einyun.app.pms.approval.request.PageQueryRequest;
+import com.einyun.app.pms.approval.model.ApprovalBean;
+import com.einyun.app.pms.approval.model.ApprovalListModule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyForComBoModule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.response.ApprovalServiceApi;
-import com.einyun.app.pms.approval.utils.IsFastClick;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;

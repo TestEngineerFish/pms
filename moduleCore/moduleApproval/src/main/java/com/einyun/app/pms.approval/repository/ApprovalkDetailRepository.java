@@ -6,18 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
-import com.einyun.app.library.portal.dictdata.net.URLS;
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.ApprovalDetailInfoBean;
-import com.einyun.app.pms.approval.module.ApprovalListModule;
-import com.einyun.app.pms.approval.module.ApprovalSumitBean;
-import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
-import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
-import com.einyun.app.pms.approval.module.UrlxcgdGetInstBOModule;
+import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
+import com.einyun.app.pms.approval.model.ApprovalSumitBean;
+import com.einyun.app.pms.approval.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.pms.approval.net.URL;
 import com.einyun.app.pms.approval.response.ApprovalServiceApi;
-
-import java.util.List;
 
 public class ApprovalkDetailRepository {
     ApprovalServiceApi serviceApi;
