@@ -6,31 +6,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
-import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.common.databinding.ItemSelectPopBinding;
-import com.einyun.app.common.databinding.SelectPopItemBinding;
-import com.einyun.app.common.model.SelectModel;
-import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
 import com.einyun.app.pms.customerinquiries.databinding.InquiriesPopwindowItemBinding;
-import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriesListBinding;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
-import com.einyun.app.pms.customerinquiries.ui.fragment.CustomerInquiriesViewModuleFragment;
-import com.google.gson.Gson;
+import com.einyun.app.pms.customerinquiries.model.InquiriesTypesBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InquiriesTypeSelectPopWindow extends PopupWindow {

@@ -3,8 +3,8 @@ package com.einyun.app.pms.customerinquiries.respository;
 import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 
-import com.einyun.app.pms.customerinquiries.module.InquiriesItemModule;
-import com.einyun.app.pms.customerinquiries.module.InquiriesRequestBean;
+import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
+import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
 
 
 /**

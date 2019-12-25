@@ -6,7 +6,7 @@
 
         <variable
             name="InquiriesItemModule"
-            type="com.einyun.app.pms.customerinquiries.module.InquiriesItemModule" />
+            type="com.einyun.app.pms.customerinquiries.model.InquiriesItemModule" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

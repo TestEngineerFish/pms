@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean;
+import com.einyun.app.pms.customerinquiries.model.InquiriesTypesBean;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
 
 import java.util.List;
