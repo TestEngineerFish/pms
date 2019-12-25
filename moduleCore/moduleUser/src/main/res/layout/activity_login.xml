@@ -85,7 +85,7 @@
                     android:layout_height="@dimen/px_28"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px_100"
+                    android:layout_marginRight="@dimen/px_60"
                     android:onClick="@{()->callBack.spinnerUser()}"
                     android:src="@mipmap/arrow_down"
                     android:visibility="invisible" />
@@ -96,7 +96,7 @@
                     android:layout_height="@dimen/px_28"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px_60"
+                    android:layout_marginRight="@dimen/px_100"
                     android:onClick="@{()->callBack.deleteUserName()}"
                     android:src="@mipmap/img_login_edit_delete"
                     android:visibility="invisible" />
