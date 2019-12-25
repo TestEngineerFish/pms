@@ -104,7 +104,6 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
     @Override
     protected void initData() {
         super.initData();
-        viewModel.getAreaType();
     }
 
 }

@@ -7,9 +7,12 @@ import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.library.mdm.model.BuildingUnit;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.mdm.model.GridModel;
+import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.workorder.model.AreaModel;
+import com.einyun.app.library.workorder.model.TypeAndLine;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +23,8 @@ import java.util.Map;
 
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_PROPERTYS;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_TYPES;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_GRID;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
@@ -62,6 +67,63 @@ public class ConditionBuilder {
         return this;
     }
 
+    /**
+     * 投诉类别数据
+     * @param types
+     * @return
+     */
+    public ConditionBuilder addComplainTypes(List<TypeAndLine> types){
+        if (!selectModelMap.containsKey(SELECT_COMPLAIN_TYPES)) {
+            SelectModel root = new SelectModel();
+            root.setType(CommonApplication.getInstance().getString(R.string.text_comlain_types));
+            root.setConditionType(SELECT_ROOT);
+            if(types!=null){
+                List<SelectModel> selectModels=new ArrayList<>();
+                for(TypeAndLine type:types){
+                    SelectModel child=new SelectModel();
+                    child.setConditionType(SELECT_COMPLAIN_TYPES);
+                    child.setId(type.getId());
+                    child.setKey(type.getDataKey());
+                    child.setContent(type.getDataName());
+                    selectModels.add(child);
+                }
+                root.setSelectModelList(selectModels);
+            }
+
+            conditions.add(root);
+            selectModelMap.put(SELECT_COMPLAIN_TYPES,root);
+        }
+        return this;
+    }
+
+    /**
+     * 投诉性质
+     * @param propertys
+     * @return
+     */
+    public ConditionBuilder addComplainPropertys(List<DictDataModel> propertys){
+        if (!selectModelMap.containsKey(SELECT_COMPLAIN_PROPERTYS)) {
+            SelectModel root = new SelectModel();
+            root.setType(CommonApplication.getInstance().getString(R.string.text_complain_propertys));
+            root.setConditionType(SELECT_ROOT);
+            conditions.add(root);
+            if(propertys!=null){
+                List<SelectModel> selectModels=new ArrayList<>();
+                for(DictDataModel model:propertys){
+                    SelectModel selectModel=new SelectModel();
+                    selectModel.setId(model.getId());
+                    selectModel.setKey(model.getKey());
+                    selectModel.setConditionType(SELECT_COMPLAIN_PROPERTYS);
+                    selectModel.setContent(model.getName());
+                    selectModels.add(selectModel);
+                }
+                root.setSelectModelList(selectModels);
+            }
+            conditions.add(root);
+            selectModelMap.put(SELECT_COMPLAIN_PROPERTYS,root);
+        }
+        return this;
+    }
 
 
     /**
@@ -146,12 +208,11 @@ public class ConditionBuilder {
      * 添加区域数据
      * @return
      */
-    public ConditionBuilder addArea(SelectModel selectModel){
+    public ConditionBuilder addRepairArea(AreaModel model){
         if (!selectModelMap.containsKey(SELECT_AREA)) {
-            selectModel.setType("报修区域");
-            selectModel.setConditionType(SELECT_ROOT);
-            selectModelMap.put(SELECT_AREA, selectModel);
-            conditions.add(selectModel);
+            SelectModel root=buildReapirArea(model);
+            selectModelMap.put(SELECT_AREA, root);
+            conditions.add(root);
         }
         return this;
     }
@@ -372,6 +433,49 @@ public class ConditionBuilder {
             }
         }
         return lines;
+    }
+
+    /**
+     * 递归转成SelectModel
+     * */
+    public SelectModel buildReapirArea(AreaModel model){
+        SelectModel selectModel=new SelectModel();
+        selectModel.setId(model.getId());
+        selectModel.setName(model.getDataName());
+        if(model.getParentId().equals("-")){
+            model.setGrade(0);
+            selectModel.setType(CommonApplication.getInstance().getString(R.string.text_repair_area));
+            selectModel.setConditionType(SELECT_ROOT);
+        }
+        
+        selectModel.setContent(model.getDataName());
+        selectModel.setConditionType(model.getDataName());
+
+        if (model.getChildren()!=null){
+            List<SelectModel> selectModelList=new ArrayList<>();
+            for (AreaModel model1:model.getChildren()){
+                model1.setGrade(model.getGrade()+1);
+                SelectModel child= buildReapirArea(model1);
+                if(model1.getGrade()==1){
+                    child.setType(CommonApplication.getInstance().getString(R.string.text_repair_type_first));
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA);
+                }else if(model1.getGrade()==2){
+                    child.setType(CommonApplication.getInstance().getString(R.string.text_repair_type_second));
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_FIR);
+                }else if(model1.getGrade()==3){
+                    child.setType("");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_SEC);
+                }else if (model1.getGrade()==4){
+                    child.setType("");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_THIR);
+                }
+                selectModelList.add(child);
+            }
+            selectModel.setSelectModelList(selectModelList);
+        }
+
+        return selectModel;
+
     }
 
     /**

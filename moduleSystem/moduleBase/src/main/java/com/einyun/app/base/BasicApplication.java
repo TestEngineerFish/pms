@@ -42,9 +42,9 @@ public class BasicApplication extends Application {
                 return com.einyun.app.base.BuildConfig.DEBUG;
             }
         });
-        if (BuildConfig.DEBUG) {
-            Thread.setDefaultUncaughtExceptionHandler(new ApplicationCrashHandler());
-        }
+//        if (BuildConfig.DEBUG) {
+        ApplicationCrashHandler.getInstance().init(getApplicationContext());
+//        }
     }
 
 //    public void exit() {
@@ -59,7 +59,6 @@ public class BasicApplication extends Application {
     public static BasicApplication getInstance() {
         return app;
     }
-
 
 
 }
