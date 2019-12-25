@@ -89,7 +89,7 @@
                  <TextView
 
                      style="@style/style_text_approval_left"
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      android:text="@string/tv_work_nums" />
                  <TextView
                      android:id="@+id/tv_work_num"
@@ -102,7 +102,7 @@
                  <TextView
                      style="@style/style_text_approval_left"
                      android:layout_alignParentBottom="true"
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      android:text="@string/tv_divide" />
                  <TextView
                      android:id="@+id/tv_divide"
@@ -113,7 +113,7 @@
                  style="@style/style_rl_normal">
                  <TextView
                      android:text="@string/tv_real_estate"
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"/>
                  <TextView
                      android:text="@{module.data.customer_enquiry_model.wx_house}"
@@ -123,7 +123,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_phone" />
                  <TextView
@@ -134,7 +134,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_asking_people" />
                  <TextView
@@ -179,7 +179,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_complaint_time" />
                  <TextView
@@ -190,7 +190,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_record_person" />
                  <TextView
@@ -201,7 +201,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_ask_way" />
                  <TextView
@@ -212,7 +212,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_ask_type" />
                  <TextView
@@ -223,7 +223,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_finish_time" />
                  <TextView
@@ -234,7 +234,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_current_deal_person" />
                  <TextView
@@ -245,7 +245,7 @@
              <RelativeLayout
                  style="@style/style_rl_normal">
                  <TextView
-                     android:layout_marginBottom="12dp"
+                     android:layout_marginBottom="10dp"
                      style="@style/style_text_approval_left"
                      android:text="@string/tv_inquiries_content" />
                  <TextView

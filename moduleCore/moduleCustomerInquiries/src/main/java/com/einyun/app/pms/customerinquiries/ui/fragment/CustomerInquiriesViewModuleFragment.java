@@ -19,6 +19,7 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 
 import com.einyun.app.common.constants.SPKey;
@@ -113,7 +114,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                 LinearLayoutManager.VERTICAL,
                 false));
         binding.inquiriesList.setAdapter(adapter);
-        LiveEventBus.get(Constants.INQUIRIES_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
 
                     @Override
                     public void onChanged(Boolean aBoolean) {
@@ -169,7 +170,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                             binding.rlFeedBack.setVisibility(View.GONE);
                             break;
                     }
-                    binding.tvInquiriesType.setText(inquiriesItemModule.subject);
+                    binding.tvInquiriesType.setText(inquiriesItemModule.wx_content);
                     binding.tvPropertyNum.setText(inquiriesItemModule.wx_house);
                     binding.tvAskingPeople.setText(inquiriesItemModule.wx_user);
                     binding.tvWorkOrderNum.setText(inquiriesItemModule.wx_code);
@@ -213,8 +214,6 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
         activity = (CustomerInquiriesViewModuleActivity) getActivity();
         switch (getFragmentTag()) {
             case FRAGMENT_TO_FOLLOW_UP://待跟进
-//                viewModel.getTiaoXian();
-//                viewModel.getOrderType();
                 loadPagingData(viewModel.getRequestBean(1,10,"","",divideId),FRAGMENT_TO_FOLLOW_UP);
                 break;
             case FRAGMENT_TO_FEED_BACK://待反馈

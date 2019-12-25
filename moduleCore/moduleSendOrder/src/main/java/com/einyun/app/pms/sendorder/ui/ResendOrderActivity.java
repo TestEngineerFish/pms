@@ -108,6 +108,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                     viewModel.resendCusOrder(resendOrderRequest).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
+                            LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                             this.finish();
                         } else {
                             ToastUtil.show(ResendOrderActivity.this, model.getMsg());
