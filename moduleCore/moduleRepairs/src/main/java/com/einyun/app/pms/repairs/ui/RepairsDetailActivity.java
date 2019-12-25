@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -348,7 +349,16 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             }
         }
     }
-
+    //立即调用方法
+    Handler handler = new Handler();
+    public Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(runnable, 1000);
+            //计算时间
+            binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
+        }
+    };
     /**
      * 详情数据获取后进行UI展示
      *
@@ -362,6 +372,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         detialModel.setNodeId(nodeId);
         customerRepair = detialModel.getData().getCustomer_repair_model();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
+        runnable.run();
         bindData(repairsOrderDetail);
         if (detialModel.getData().getCustomer_repair_model().getHandle_time() != null) {
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getCustomer_repair_model().getHandle_time().toString()));
