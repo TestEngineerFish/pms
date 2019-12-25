@@ -52,6 +52,11 @@ import okhttp3.Route;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_FIR;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_SEC;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_PROPERTYS;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_TYPES;
 
 /**
  * Paging Demo
@@ -77,6 +82,12 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     @Override
     protected void init() {
         super.init();
+        request = new ComplainPageRequest();
+        request.setTs_dk_id("");
+        request.setTs_time(Query.SORT_DESC);
+        request.setNode_id_("");
+        request.setDESC(Query.SORT_DESC);
+        request.setState("");
         binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +130,11 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     }
 
     private void handleSelect(Map<String, SelectModel> selected) {
+        if (selected.size() > 0) {
+            request.setF_ts_property_id(selected.get(SELECT_COMPLAIN_PROPERTYS) == null ? null : selected.get(SELECT_COMPLAIN_PROPERTYS).getKey());
+            request.setF_ts_cate_id(selected.get(SELECT_COMPLAIN_TYPES) == null ? null : selected.get(SELECT_COMPLAIN_TYPES).getKey());
+        }
+        loadPagingData();
     }
 
     @Override
@@ -133,17 +149,11 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         });
     }
 
+    ComplainPageRequest request;
+
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        ComplainPageRequest request = new ComplainPageRequest();
-        request.setTs_area_id("");
-        request.setTs_cate_lv1_id("");
-        request.setTs_cate_lv2_id("");
-        request.setTs_dk_id("");
-        request.setTs_time(Query.SORT_DESC);
-        request.setNode_id_("");
-        request.setDESC(Query.SORT_DESC);
-        request.setState("");
+
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
@@ -261,8 +271,9 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-//        binding.panelCondition.periodSelected.setText(orgModel.getName());
-//        binding.panelCondition.setPeriodSelected(true);
-
+        binding.panelCondition.periodSelected.setText(orgModel.getName());
+        binding.panelCondition.setPeriodSelected(true);
+        request.setTs_dk_id(orgModel.getId());
+        loadPagingData();
     }
 }

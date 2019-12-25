@@ -106,7 +106,6 @@ public class ConditionBuilder {
             SelectModel root = new SelectModel();
             root.setType(CommonApplication.getInstance().getString(R.string.text_complain_propertys));
             root.setConditionType(SELECT_ROOT);
-            conditions.add(root);
             if(propertys!=null){
                 List<SelectModel> selectModels=new ArrayList<>();
                 for(DictDataModel model:propertys){

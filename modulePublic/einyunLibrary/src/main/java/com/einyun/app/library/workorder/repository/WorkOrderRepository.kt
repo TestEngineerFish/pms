@@ -978,26 +978,20 @@ class WorkOrderRepository : WorkOrderService {
     ): QueryBuilder {
         var builder = QueryBuilder()
         builder.addQueryItem(
-            "ts_dk_id",
+            "F_ts_dk_id",
             request.ts_dk_id,
             Query.OPERATION_EQUAL,
             Query.RELATION_AND
         )
             .addQueryItem(
-                "ts_area_id",
-                request.ts_area_id,
+                "F_ts_property_id",
+                request.F_ts_property_id,
                 Query.OPERATION_EQUAL,
                 Query.RELATION_AND
             )
             .addQueryItem(
-                "ts_cate_lv1_id",
-                request.ts_cate_lv1_id,
-                Query.OPERATION_EQUAL,
-                Query.RELATION_AND
-            )
-            .addQueryItem(
-                "ts_cate_lv2_id",
-                request.ts_cate_lv2_id,
+                "F_ts_cate_id",
+                request.F_ts_cate_id,
                 Query.OPERATION_EQUAL,
                 Query.RELATION_AND
             )
