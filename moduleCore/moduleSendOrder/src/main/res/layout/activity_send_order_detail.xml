@@ -85,7 +85,6 @@
                 android:layout_alignParentBottom="true"
                 android:text="@string/text_get_order"
                 android:visibility="gone"
-                app:button_status="@{workOrder.data.info.status}"
                 />
 
         </RelativeLayout>

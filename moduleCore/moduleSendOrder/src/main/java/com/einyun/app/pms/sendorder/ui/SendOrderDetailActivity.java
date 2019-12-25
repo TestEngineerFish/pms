@@ -226,6 +226,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         int state = Integer.parseInt(stateStr);
         if (detialModel.isReply() > 0) {//批复-显示批复按钮
             showReply();
+            return;
         }else{
             if (state == OrderState.NEW.getState()) {//接单-显示接单按钮
                 showTakeOrder();
@@ -244,6 +245,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      */
     private void showTakeOrder() {
         binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
+        binding.sendOrderDetailSubmit.setText(com.einyun.app.common.R.string.text_take_order);
     }
 
     /**
@@ -255,6 +257,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.checkAndAccept.getRoot().setVisibility(View.VISIBLE);//显示验收
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);//显示处理信息
+            binding.sendOrderDetailSubmit.setText(com.einyun.app.common.R.string.text_work_order_apply);
         } else {
             binding.sendOrderDetailSubmit.setVisibility(View.GONE);//如果是自己的单子待验收，显示详情
         }
@@ -266,6 +269,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     private void showSubmit() {
         binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
         binding.orderForm.getRoot().setVisibility(View.VISIBLE);//显示表单
+        binding.sendOrderDetailSubmit.setText(com.einyun.app.common.R.string.text_commit);
         binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.VISIBLE);//显示 申请延期和强制逼单
     }
 
@@ -429,10 +433,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         int state = Integer.parseInt(detialModel.getData().getInfo().getStatus());
+        if (detialModel.isReply() > 0) {
+            reply();
+            return;
+        }
         if (state == OrderState.NEW.getState()) {
             takeOrder();//接单
-        } else if (detialModel.isReply() > 0) {
-            reply();
         } else if (state == OrderState.HANDING.getState()) {
             submit();//处理-提交
         } else if (state == OrderState.APPLY.getState()) {
