@@ -19,10 +19,6 @@
             android:id="@id/head_bar"
             layout="@layout/include_layout_activity_head" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -132,36 +128,36 @@
                         android:visibility="gone"/>
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/px_140" />
+                        android:layout_height="@dimen/px_40" />
+                    <Button
+                        android:id="@+id/repair_detail_submit"
+                        style="@style/submit_btn"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone"
+                        android:text="@string/text_submit" />
+                    <LinearLayout
+                        android:id="@+id/handle_save_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/handler_detail_save"
+                            android:layout_weight="1"
+                            style="@style/submit_btn_save"
+                            android:textColor="@color/blueTextColor"
+                            android:background="@drawable/shape_iv_unpass"
+                            android:layout_marginLeft="@dimen/px_40"
+                            android:text="保存" />
+                        <Button
+                            android:id="@+id/handler_detail_submit"
+                            android:layout_weight="1"
+                            style="@style/submit_btn_save"
+                            android:layout_marginRight="@dimen/px_40"
+                            android:text="提交" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
-
-
-            <Button
-                android:id="@+id/repair_detail_submit"
-                style="@style/submit_btn"
-                android:layout_alignParentBottom="true"
-                android:visibility="gone"
-                android:text="@string/text_submit" />
-            <LinearLayout
-                android:id="@+id/handle_save_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:visibility="gone"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/handler_detail_save"
-                    android:layout_weight="1"
-                    style="@style/submit_btn"
-                    android:text="保存" />
-                <Button
-                    android:id="@+id/handler_detail_submit"
-                    android:layout_weight="1"
-                    style="@style/submit_btn"
-                    android:text="提交" />
-            </LinearLayout>
-
-        </RelativeLayout>
     </LinearLayout>
 </layout>
