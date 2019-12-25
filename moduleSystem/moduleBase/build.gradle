@@ -126,4 +126,6 @@ dependencies {
     api project(deps.project.module_http)
 //    api deps.einyun.http
 //    api deps.einyun.db
+//    api 'com.tencent.bugly:crashreport:latest.release'
+
 }
