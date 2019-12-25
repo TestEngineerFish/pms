@@ -50,4 +50,20 @@ public class RepairBindingAdapter {
             view.setImageResource(R.mipmap.icon_state_wait_grab);
         }
     }
+
+
+    @BindingAdapter("ifpay")
+    public static void ifpay(TextView view,String value){
+        if (value==null){
+            return;
+        }
+        if (value.equals(RouteKey.KEY_PAID)){
+            view.setText(R.string.yes);
+            return;
+        }
+        if (value.equals(RouteKey.KEY_NOT_PAID)){
+            view.setText(R.string.no);
+        }
+
+    }
 }

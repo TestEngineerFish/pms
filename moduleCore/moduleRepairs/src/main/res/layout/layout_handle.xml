@@ -79,25 +79,42 @@
 
                 <RadioButton
                     android:id="@+id/rb_yes"
-                    android:layout_width="@dimen/px_120"
-                    android:layout_height="@dimen/px_50"
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:tag="1"
-                    android:text="是"
+                    android:button="@null"
+                    android:background="@drawable/if_paid_radio_btn"
                     android:checked="true"
-                    android:textColor="@drawable/select_radio_button_text"
-                    android:textSize="@dimen/font_size13" />
-
+                  />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center_vertical"
+                     android:layout_marginLeft="@dimen/px_15"
+                     android:textColor="@color/blackTextColor"
+                     android:textSize="@dimen/font_size14"
+                     android:text="是"/>
                 <RadioButton
                     android:id="@+id/rb_no"
-                    android:layout_width="@dimen/px_120"
-                    android:layout_height="@dimen/px_50"
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
                     android:layout_marginLeft="@dimen/px_20"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
+                    android:background="@drawable/if_paid_radio_btn"
+                    android:button="@null"
                     android:tag="2"
-                    android:text="否"
-                    android:textColor="@drawable/select_radio_button_text"
-                    android:textSize="@dimen/font_size13" />
+                   />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_15"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size14"
+                    android:layout_gravity="center_vertical"
+                    android:text="否"/>
             </RadioGroup>
         </LinearLayout>
 
