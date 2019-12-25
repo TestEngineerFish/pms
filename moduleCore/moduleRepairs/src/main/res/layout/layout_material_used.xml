@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textColor="@color/blueTextColor"
+                    android:textColor="@color/material_add_material_color"
                     android:layout_toRightOf="@id/add_material"
                     android:layout_marginLeft="@dimen/px_20"
                     android:textSize="@dimen/font_size14"
