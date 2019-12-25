@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_10"
+        android:layout_marginTop="@dimen/px_10"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
