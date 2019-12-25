@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_10"
+        android:layout_marginTop="@dimen/px_10"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
@@ -95,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textColor="@color/blueTextColor"
+                    android:textColor="@color/material_add_material_color"
                     android:layout_toRightOf="@id/add_material"
                     android:layout_marginLeft="@dimen/px_20"
                     android:textSize="@dimen/font_size14"

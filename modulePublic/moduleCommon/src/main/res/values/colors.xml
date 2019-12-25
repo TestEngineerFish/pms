@@ -69,5 +69,6 @@
     <color name="button_signin_color">#2879FA</color>
     <color name="material_delete_color">#33E02020</color>
     <color name="material_delete_txt_color">#E02020</color>
+    <color name="material_add_material_color">#458dfe</color>
 
 </resources>

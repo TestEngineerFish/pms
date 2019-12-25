@@ -15,8 +15,10 @@
 
         <LinearLayout
             android:gravity="center_horizontal"
-            android:layout_width="@dimen/px_96"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginTop="@dimen/px_5"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -72,7 +74,7 @@
 
                     <TextView
                         android:id="@+id/tv_name"
-                        android:layout_width="@dimen/px_120"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/px_10"
                         android:textSize="@dimen/font_size12"
@@ -83,7 +85,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_20">
                     <ImageView
                         android:src="@drawable/iv_date"
                         android:layout_width="@dimen/px_32"

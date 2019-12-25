@@ -17,13 +17,14 @@ class ExtenDetialRequest {
     var applicationDescription: String? = null
     @SerializedName(value = "applyFiles")
     var applyFiles: String? = null
-    var formData: formDataExten? = formDataExten()
+    var formData: formDataExten? = null
     var divideId: String? = null
     var divideName: String? = null
     var auditType: String? = null
 }
 
-class formDataExten() {
+
+class formDataExten{
     @SerializedName(value = "delay_number", alternate = ["delayNum"])
     var delay_number: String = "0"
     @SerializedName(value = "delay_sum_time", alternate = ["sum"])
@@ -33,3 +34,4 @@ class formDataExten() {
     var apply_reason: String? = null
     var attachment: String? = null
 }
+

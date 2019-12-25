@@ -14,6 +14,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
+import com.einyun.app.library.resource.workorder.net.request.formDataExten;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
@@ -88,6 +89,7 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
             if (RouteKey.KEY_CUSTOMER_COMPLAIN.equals(keyId) || RouteKey.KEY_CUSTOMER_REPAIRS.equals(keyId)){
                 request.setDivideId(divideId);
                 request.setDivideName(divideName);
+                request.setFormData(new formDataExten());
                 request.getFormData().setDelay_time(binding.delayDate.getText().toString());
                 request.getFormData().setApply_reason(binding.delayInfo.getString());
                 viewModel.postApplyDateInfo(request,data).observe(this,aBoolean -> {
