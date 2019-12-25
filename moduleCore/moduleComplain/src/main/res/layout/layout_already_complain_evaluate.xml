@@ -123,6 +123,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/rb_attr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:clickable="false"
@@ -177,6 +178,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/rb_quality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"
