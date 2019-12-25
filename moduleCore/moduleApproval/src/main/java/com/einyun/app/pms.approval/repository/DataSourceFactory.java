@@ -3,8 +3,8 @@ package com.einyun.app.pms.approval.repository;
 import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.ApprovalItemmodule;
+import com.einyun.app.pms.approval.model.ApprovalBean;
+import com.einyun.app.pms.approval.model.ApprovalItemmodule;
 
 
 /**

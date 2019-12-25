@@ -7,10 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.einyun.app.pms.approval.R;
-import com.einyun.app.pms.approval.module.GetByTypeKeyForComBoModule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyForComBoModule;
 import com.einyun.app.pms.approval.ui.widget.CustomPopWindow;
-
-import java.util.List;
 
 
 public class ApprovalChildTypeAdapter extends BaseAdapter {

@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.einyun.app.pms.approval.R;
-import com.einyun.app.pms.approval.module.GetByTypeKeyInnerAuditStatusModule;
+import com.einyun.app.pms.approval.model.GetByTypeKeyInnerAuditStatusModule;
 import com.einyun.app.pms.approval.ui.widget.CustomPopWindow;
 
 import java.util.List;

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="sendOrderModel"
-            type="com.einyun.app.pms.approval.module.ApprovalModule" />
+            type="com.einyun.app.pms.approval.model.ApprovalModule" />
         <variable
             name="callBack"
             type="com.einyun.app.pms.approval.ui.ApprovalViewModuleActivity" />

@@ -8,9 +8,9 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
-import com.einyun.app.pms.approval.module.ApprovalBean;
-import com.einyun.app.pms.approval.module.ApprovalItemmodule;
-import com.einyun.app.pms.approval.module.ApprovalListModule;
+import com.einyun.app.pms.approval.model.ApprovalBean;
+import com.einyun.app.pms.approval.model.ApprovalItemmodule;
+import com.einyun.app.pms.approval.model.ApprovalListModule;
 import com.orhanobut.logger.Logger;
 
 
