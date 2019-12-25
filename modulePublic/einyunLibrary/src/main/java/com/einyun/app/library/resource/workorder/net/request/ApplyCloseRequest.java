@@ -1,6 +1,8 @@
 package com.einyun.app.library.resource.workorder.net.request;
 
-public class ApplyCloseRequest {
+import java.io.Serializable;
+
+public class ApplyCloseRequest implements Serializable {
     private String id;
     private String applyTaskId;
     private String instId;
