@@ -48,6 +48,8 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     public static final String SELECT_AREA_FIR = "SELECT_AREA_FIR";//报修大类
     public static final String SELECT_AREA_SEC = "SELECT_AREA_SEC";//报修小类
     public static final String SELECT_AREA_THIR = "SELECT_THIR";//报修第三级
+    public static final String SELECT_COMPLAIN_TYPES="SELECT_COMPLAIN_TYPES";//投诉类别
+    public static final String SELECT_COMPLAIN_PROPERTYS="SELECT_COMPLAIN_PROPERTYS";//投诉性质
 
     private View view;
     private Activity context;

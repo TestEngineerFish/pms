@@ -228,4 +228,6 @@
     <string name="text_late_send_order">超时派单</string>
     <string name="text_padding">-</string>
     <string name="text_padding_empty">  </string>
+    <string name="text_comlain_types">投诉类别</string>
+    <string name="text_complain_propertys">投诉性质</string>
 </resources>

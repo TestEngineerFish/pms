@@ -2,16 +2,21 @@ package com.einyun.app.common.manager;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageResult;
+import com.einyun.app.common.Constants;
 import com.einyun.app.common.model.BasicData;
+import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.MdmService;
 import com.einyun.app.library.core.api.ResourceService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.mdm.model.GridModel;
+import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.workorder.model.TypeAndLine;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -28,20 +33,24 @@ public class BasicDataManager {
     private static Lock lock = new ReentrantLock();
     private BasicData basicData;
     private ResourceWorkOrderService resourceWorkOrderService;
+    private DictService dictService;
     private ResourceService resourceService;
+    private WorkOrderService workOrderService;
     private MdmService mdmService;
     private CountDownLatch latch;
     private ExecutorService fixedThreadPool;
-    private final int THREADS = 3;
+    private final int THREADS = 5;
     private volatile boolean reload = false;//
 
     private BasicDataManager() {
         basicData = new BasicData();
-        latch = new CountDownLatch(THREADS);//目前三类数据，增加一种数据，此处加一
+        latch = new CountDownLatch(THREADS);
         fixedThreadPool = Executors.newFixedThreadPool(5);
         resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         resourceService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE);
         mdmService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_MDM);
+        dictService=ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DICT);
+        workOrderService=ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
     }
 
     /**
@@ -87,6 +96,8 @@ public class BasicDataManager {
         loadResources(); //基础资源
         loadLines(); //所有条线
         loadLineTypes(); //所有分类
+        loadComplainTypes();
+        loadComplainPropertys();
         loadResult(callBack);//获取结果
 //        fixedThreadPool.shutdown();
     }
@@ -164,6 +175,42 @@ public class BasicDataManager {
     }
 
     /**
+     * 投诉性质
+     */
+    protected void loadComplainPropertys() {
+        fixedThreadPool.execute(() -> dictService.getByTypeKey(Constants.COMPLAIN_WAY, new CallBack<List<DictDataModel>>() {
+            @Override
+            public void call(List<DictDataModel> data) {
+                basicData.setComplainPropertys(data);
+                latch.countDown();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                latch.countDown();
+            }
+        }));
+    }
+
+    /**
+     * 投诉性质
+     */
+    protected void loadComplainTypes() {
+        fixedThreadPool.execute(() -> workOrderService.typeAndLineList(new CallBack<List<TypeAndLine>>() {
+            @Override
+            public void call(List<TypeAndLine> data) {
+                basicData.setComplainTypes(data);
+                latch.countDown();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                latch.countDown();
+            }
+        }));
+    }
+
+    /**
      * 获取分期下面的网格信息
      * @param divideId
      * @param callBack
@@ -193,6 +240,8 @@ public class BasicDataManager {
         }
     }
 
+
+
     /**
      * 获取缓存
      *
@@ -209,7 +258,8 @@ public class BasicDataManager {
      */
     public boolean hasInit() {
         if (basicData != null) {
-            if (basicData.getLines() != null && basicData.getListLineTypes() != null & basicData.getResources() != null) {
+            if (basicData.getLines() != null && basicData.getListLineTypes() != null & basicData.getResources() != null
+            &&basicData.getComplainPropertys()!=null&&basicData.getComplainTypes()!=null) {
                 return true;
             }
         }

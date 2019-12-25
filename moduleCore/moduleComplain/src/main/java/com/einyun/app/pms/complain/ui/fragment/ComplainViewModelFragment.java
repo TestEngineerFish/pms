@@ -93,9 +93,9 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                     if (view == null) {
                         //弹出筛选view
                         ConditionBuilder builder = new ConditionBuilder();
-                        List<SelectModel> conditions = builder.addLines(data.getLines())//条线
-                                .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                                .mergeLineRes(data.getResources())
+                        List<SelectModel> conditions = builder
+                                .addComplainPropertys(data.getComplainPropertys())
+                                .addComplainTypes(data.getComplainTypes())
                                 .build();
                         view = new SelectPopUpView(getActivity(), conditions);
                         view.setOnSelectedListener(selected -> handleSelect(selected));
