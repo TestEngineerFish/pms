@@ -81,10 +81,11 @@
                         android:textColor="@color/material_txt_color"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:background="@drawable/iv_date"
+                    <ImageView
+                        android:src="@drawable/iv_date"
                         android:layout_width="@dimen/px_32"
                         android:layout_height="@dimen/px_32"
                         android:layout_marginLeft="@dimen/px_10"
@@ -92,7 +93,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/tv_time"
+                        android:id="@+id/item_repair_histroy_time"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/px_10"

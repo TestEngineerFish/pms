@@ -204,6 +204,8 @@
 -keep class com.google.gson.examples.android.model.** { *; }
 -keep class **.model.** {*;}
 -keep class **.bean.** {*;}
+-keep class **.entity.** {*;}
+-keep class **.converter.** {*;}
 -keep class **.net.request.** {*;}
 -keep class **.net.response.** {*;}
 
