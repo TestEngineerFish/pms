@@ -129,7 +129,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 setImageList(binding.layoutApplyCloseInfo.sendOrderClosePicList, closeExtApplication.getAttachment());
             }
             //处理历史
-//            handleList = repairsDetailModel.getHandleList();
+            handleList = repairsDetailModel.getHandleList();
             handleList();
 
             //追加投诉信息
@@ -172,6 +172,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                     binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
                     binding.save.setVisibility(View.GONE);
                     binding.submit.setVisibility(View.GONE);
+                    binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score());
+                    binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score());
                 } else if (value.equals(ComplainOrderState.DEALING.getState())) {
                     binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
@@ -217,6 +219,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
                 binding.save.setVisibility(View.GONE);
                 binding.submit.setVisibility(View.GONE);
+                binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score());
+                binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score());
                 if (value.equals(ComplainOrderState.CLOSED.getState())) {
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
                 }
