@@ -49,6 +49,14 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_FIR;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_SEC;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3;
 
 /**
  * Paging Demo
@@ -57,6 +65,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
 public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
     private SelectPopUpView selectPopUpView;
+    RepairsPageRequest request;
 
     public static RepairsViewModelFragment newInstance(Bundle bundle) {
         RepairsViewModelFragment fragment = new RepairsViewModelFragment();
@@ -94,13 +103,13 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             public void onClick(View v) {
                 //弹出筛选view
                 if (selectPopUpView == null) {
-                    ConditionBuilder builder=new ConditionBuilder();
+                    ConditionBuilder builder = new ConditionBuilder();
                     builder.addArea(viewModel.areaModel);
-                    List<SelectModel> condition=builder.build();
-                   selectPopUpView= new SelectPopUpView(getActivity(), condition)
-                    .setOnSelectedListener(selected -> handleSelect(selected));
+                    List<SelectModel> condition = builder.build();
+                    selectPopUpView = new SelectPopUpView(getActivity(), condition)
+                            .setOnSelectedListener(selected -> handleSelect(selected));
                 }
-                    selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
+                selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
             }
         });
     }
@@ -125,14 +134,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        RepairsPageRequest request = new RepairsPageRequest();
-        request.setBx_area_id("");
-        request.setBx_cate_lv1_id("");
-        request.setBx_cate_lv2_id("");
-        request.setBx_dk_id("");
-        request.setNode_id_("");
-        request.setDESC(Query.SORT_DESC);
-        request.setState("");
+
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
@@ -140,6 +142,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     protected void setUpData() {
+        request = new RepairsPageRequest();
         //停止刷新
         LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(getActivity(), shown -> {
             if (!shown) {
@@ -292,16 +295,19 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-
+        request.setBx_dk_id(orgModel.getId());
+        loadPagingData();
     }
 
     /**
      * 处理筛选返回数据
      */
-    private void handleSelect(Map selected) {
+    private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
-            Log.d("Test",selected.size()+"");
-
+            request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getId());
+            request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getId());
+            request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getKey());
         }
+        loadPagingData();
     }
 }

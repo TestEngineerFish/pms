@@ -628,6 +628,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
+            binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
             return;
         }
         //超时派单

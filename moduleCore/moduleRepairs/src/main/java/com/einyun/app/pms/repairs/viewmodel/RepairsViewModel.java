@@ -24,6 +24,13 @@ import com.einyun.app.pms.repairs.repository.DataSourceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3;
 
 /**
  *RepairsViewModel
@@ -72,7 +79,6 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
         workOrderService.grabRepair(taskId, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
-                Log.d("test",data+"");
                 hideLoading();
                 liveData.postValue(data);
             }
@@ -113,17 +119,14 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
     /**
      * 递归转成SelectModel
      * */
-    int grade=0;
     public SelectModel turnToSelectModel(AreaModel model){
         SelectModel selectModel=new SelectModel();
         selectModel.setId(model.getId());
         selectModel.setName(model.getDataName());
         if(model.getParentId().equals("-")){
-            selectModel.setConditionType(SelectPopUpView.SELECT_ROOT);
-            selectModel.setType("报修区域");
-//            selectModel.setKey();
             selectModel.setGrade(0);
             model.setGrade(0);
+            selectModel.setType("报修区域");
         }
 
         selectModel.setContent(model.getDataName());
@@ -136,10 +139,16 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
                 SelectModel child=turnToSelectModel(model1);
                 if(model1.getGrade()==1){
                     child.setType("报修大类");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA);
                 }else if(model1.getGrade()==2){
                     child.setType("报修小类");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_FIR);
                 }else if(model1.getGrade()==3){
                     child.setType("");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_SEC);
+                }else if (model1.getGrade()==4){
+                    child.setType("");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_THIR);
                 }
                 selectModelList.add(child);
             }
@@ -149,5 +158,4 @@ public class RepairsViewModel extends BasePageListViewModel<RepairsModel> {
         return selectModel;
 
     }
-
 }
