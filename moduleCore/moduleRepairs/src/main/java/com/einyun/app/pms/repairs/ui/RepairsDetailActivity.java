@@ -39,6 +39,7 @@ import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.SelectRepairsTypeView;
 import com.einyun.app.common.ui.widget.SwipeItemLayout;
+import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
@@ -157,6 +158,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 } else {
                     binding.itemHistroyImg.setVisibility(View.VISIBLE);
                 }
+                binding.itemRepairHistroyTime.setText(FormatUtil.formatDate(model.getHandle_time()));
             }
 
             @Override
