@@ -11,6 +11,7 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 
 import org.jetbrains.annotations.NotNull;
@@ -207,12 +208,11 @@ public class ConditionBuilder {
      * 添加区域数据
      * @return
      */
-    public ConditionBuilder addArea(SelectModel selectModel){
+    public ConditionBuilder addRepairArea(AreaModel model){
         if (!selectModelMap.containsKey(SELECT_AREA)) {
-            selectModel.setType("报修区域");
-            selectModel.setConditionType(SELECT_ROOT);
-            selectModelMap.put(SELECT_AREA, selectModel);
-            conditions.add(selectModel);
+            SelectModel root=buildReapirArea(model);
+            selectModelMap.put(SELECT_AREA, root);
+            conditions.add(root);
         }
         return this;
     }
@@ -433,6 +433,49 @@ public class ConditionBuilder {
             }
         }
         return lines;
+    }
+
+    /**
+     * 递归转成SelectModel
+     * */
+    public SelectModel buildReapirArea(AreaModel model){
+        SelectModel selectModel=new SelectModel();
+        selectModel.setId(model.getId());
+        selectModel.setName(model.getDataName());
+        if(model.getParentId().equals("-")){
+            model.setGrade(0);
+            selectModel.setType(CommonApplication.getInstance().getString(R.string.text_repair_area));
+            selectModel.setConditionType(SELECT_ROOT);
+        }
+        
+        selectModel.setContent(model.getDataName());
+        selectModel.setConditionType(model.getDataName());
+
+        if (model.getChildren()!=null){
+            List<SelectModel> selectModelList=new ArrayList<>();
+            for (AreaModel model1:model.getChildren()){
+                model1.setGrade(model.getGrade()+1);
+                SelectModel child= buildReapirArea(model1);
+                if(model1.getGrade()==1){
+                    child.setType(CommonApplication.getInstance().getString(R.string.text_repair_type_first));
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA);
+                }else if(model1.getGrade()==2){
+                    child.setType(CommonApplication.getInstance().getString(R.string.text_repair_type_second));
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_FIR);
+                }else if(model1.getGrade()==3){
+                    child.setType("");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_SEC);
+                }else if (model1.getGrade()==4){
+                    child.setType("");
+                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_THIR);
+                }
+                selectModelList.add(child);
+            }
+            selectModel.setSelectModelList(selectModelList);
+        }
+
+        return selectModel;
+
     }
 
     /**

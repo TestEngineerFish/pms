@@ -16,6 +16,7 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class BasicDataManager {
     private MdmService mdmService;
     private CountDownLatch latch;
     private ExecutorService fixedThreadPool;
-    private final int THREADS = 5;
+    private final int THREADS = 6;
     private volatile boolean reload = false;//
 
     private BasicDataManager() {
@@ -96,8 +97,9 @@ public class BasicDataManager {
         loadResources(); //基础资源
         loadLines(); //所有条线
         loadLineTypes(); //所有分类
-        loadComplainTypes();
-        loadComplainPropertys();
+        loadComplainTypes(); //投诉类型
+        loadComplainPropertys(); //投诉性质
+        loadRepairArea(); //报修区域
         loadResult(callBack);//获取结果
 //        fixedThreadPool.shutdown();
     }
@@ -240,6 +242,23 @@ public class BasicDataManager {
         }
     }
 
+    /**
+     * 获取报修区域
+     */
+    protected void loadRepairArea() {
+        workOrderService.getAreaType(new CallBack<AreaModel>() {
+            @Override
+            public void call(AreaModel data) {
+                latch.countDown();
+                basicData.setRepairArea(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                latch.countDown();
+            }
+        });
+    }
 
 
     /**

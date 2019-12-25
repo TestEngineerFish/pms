@@ -14,10 +14,13 @@ import androidx.test.espresso.matcher.ViewMatchers;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
@@ -103,11 +106,23 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             public void onClick(View v) {
                 //弹出筛选view
                 if (selectPopUpView == null) {
-                    ConditionBuilder builder = new ConditionBuilder();
-                    builder.addArea(viewModel.areaModel);
-                    List<SelectModel> condition = builder.build();
-                    selectPopUpView = new SelectPopUpView(getActivity(), condition)
-                            .setOnSelectedListener(selected -> handleSelect(selected));
+                    BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                        @Override
+                        public void call(BasicData data) {
+                            ConditionBuilder builder = new ConditionBuilder();
+                            builder.addRepairArea(data.getRepairArea());
+                            List<SelectModel> condition = builder.build();
+                            selectPopUpView = new SelectPopUpView(getActivity(), condition)
+                                    .setOnSelectedListener(selected -> handleSelect(selected));
+                        }
+
+                        @Override
+                        public void onFaild(Throwable throwable) {
+
+                        }
+                    });
+
+
                 }
                 selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
             }
@@ -148,10 +163,6 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             if (!shown) {
                 binding.swipeRefresh.setRefreshing(false);
             }
-        });
-        viewModel.getAreaType().observe(this, model -> {
-            Log.d("test", model.getDataName());
-
         });
         RecyclerView mRecyclerView = binding.repairsList;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());

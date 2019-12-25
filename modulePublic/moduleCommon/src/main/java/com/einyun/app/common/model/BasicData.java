@@ -5,6 +5,7 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
+import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class BasicData {
     private Map<String, DivideGrid> divideGridMap=new HashMap<>();//网格-楼栋-单元
     private List<TypeAndLine> complainTypes; //投诉类型
     private List<DictDataModel> complainPropertys; //投诉性质
+    private AreaModel repairArea;//报修区域
 
     public Map<String, DivideGrid> getDivideGridMap() {
         return divideGridMap;
@@ -65,5 +67,13 @@ public class BasicData {
 
     public void setComplainPropertys(List<DictDataModel> complainPropertys) {
         this.complainPropertys = complainPropertys;
+    }
+
+    public AreaModel getRepairArea() {
+        return repairArea;
+    }
+
+    public void setRepairArea(AreaModel repairArea) {
+        this.repairArea = repairArea;
     }
 }

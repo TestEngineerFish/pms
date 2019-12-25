@@ -230,4 +230,7 @@
     <string name="text_padding_empty">  </string>
     <string name="text_comlain_types">投诉类别</string>
     <string name="text_complain_propertys">投诉性质</string>
+    <string name="text_repair_area">报修区域</string>
+    <string name="text_repair_type_first">报修大类</string>
+    <string name="text_repair_type_second">报修小类</string>
 </resources>
