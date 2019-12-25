@@ -97,6 +97,7 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
          */
         viewModel.getSignText(userID).observe(this, model -> {
             binding.etSignName.setText(model);
+            binding.etSignName.setTextColor(getResources().getColor(R.color.blackTextColor));
             Logger.d("sssssss"+model);
         });
     }
