@@ -10,15 +10,12 @@ import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
 
 import com.einyun.app.pms.mine.constants.URLS;
-import com.einyun.app.pms.mine.module.FeedBackBean;
-import com.einyun.app.pms.mine.module.GetUserByccountBean;
-import com.einyun.app.pms.mine.module.SignSetModule;
-import com.einyun.app.pms.mine.module.UCUserDetailsBean;
-import com.einyun.app.pms.mine.module.UserStarsBean;
-import com.einyun.app.pms.mine.response.FeedBackServiceApi;
-import com.google.gson.Gson;
-
-import java.util.List;
+import com.einyun.app.pms.mine.model.FeedBackBean;
+import com.einyun.app.pms.mine.model.GetUserByccountBean;
+import com.einyun.app.pms.mine.model.SignSetModule;
+import com.einyun.app.pms.mine.model.UCUserDetailsBean;
+import com.einyun.app.pms.mine.model.UserStarsBean;
+import com.einyun.app.pms.mine.net.response.FeedBackServiceApi;
 
 public class FeedBackRepository {
     FeedBackServiceApi serviceApi;

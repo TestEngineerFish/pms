@@ -19,11 +19,10 @@ import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.constants.Constants;
 import com.einyun.app.pms.mine.databinding.ActivitySignSetViewModuleBinding;
 
-import com.einyun.app.pms.mine.module.SignSetModule;
+import com.einyun.app.pms.mine.model.SignSetModule;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.einyun.app.pms.mine.viewmodule.SignSetViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.orhanobut.logger.Logger;
 
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)

@@ -3,7 +3,7 @@
         <data>
                 <variable
                     name="selects"
-                    type="com.einyun.app.pms.customerinquiries.module.InquiriesTypesBean" />
+                    type="com.einyun.app.pms.customerinquiries.model.InquiriesTypesBean" />
         </data>
       <LinearLayout
           android:id="@+id/ll_item"

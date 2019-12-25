@@ -10,7 +10,7 @@ import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.model.ApprovalSumitBean;
 import com.einyun.app.pms.approval.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.pms.approval.net.URL;
-import com.einyun.app.pms.approval.response.ApprovalServiceApi;
+import com.einyun.app.pms.approval.net.response.ApprovalServiceApi;
 
 public class ApprovalkDetailRepository {
     ApprovalServiceApi serviceApi;
