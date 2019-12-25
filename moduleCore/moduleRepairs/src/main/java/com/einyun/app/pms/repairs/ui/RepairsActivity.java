@@ -1,6 +1,7 @@
 package com.einyun.app.pms.repairs.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -9,8 +10,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.BaseActivity;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.pms.repairs.R;
 import com.einyun.app.pms.repairs.databinding.RepairsActivityBinding;
 import com.einyun.app.pms.repairs.ui.fragment.RepairsViewModelFragment;
@@ -19,6 +22,7 @@ import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_ALREDY_DONE;
@@ -35,7 +39,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
 @Route(path = RouterUtils.ACTIVITY_REPAIRS_PAGING)
 public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBinding, RepairsViewModel> {
     private String[] mTitles;//tab标题
-
+    public static List<SelectModel> selectModelList=new ArrayList<>();
 
     @Override
     public void initViews(Bundle savedInstanceState) {
@@ -96,4 +100,11 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
     public int getLayoutId() {
         return R.layout.repairs_activity;
     }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        viewModel.getAreaType();
+    }
+
 }

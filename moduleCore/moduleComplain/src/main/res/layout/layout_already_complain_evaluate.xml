@@ -123,6 +123,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/rb_attr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:clickable="false"
@@ -133,7 +134,6 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
-                <!--                    app:starCount="@{complain.f_return_score}"-->
 
 
             </LinearLayout>
@@ -178,6 +178,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/rb_quality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"
@@ -188,7 +189,6 @@
                     app:starPadding="@dimen/px_12"
                     app:starStep="5"
                     app:stepSize="Full" />
-<!--                app:starCount="@{complain.service_quality_score}"-->
 
             </LinearLayout>
 

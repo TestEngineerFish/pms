@@ -23,7 +23,7 @@
                 android:id="@+id/iv_first"
                 android:background="@color/blueTextColor"
                 android:layout_width="@dimen/px_2"
-                android:layout_height="@dimen/px_40"
+                android:layout_height="@dimen/px_38"
                 android:visibility="invisible"/>
             <RelativeLayout
                 android:layout_width="@dimen/px_22"

@@ -97,7 +97,7 @@
 
                 <TextView
                     android:id="@+id/repair_handler_payway_txt"
-                    style="@style/tv_create_order_select"
+                    style="@style/tv_repair_order_select"
                     android:layout_marginLeft="@dimen/px_30" />
 
                 <ImageView style="@style/tv_create_order_right_arrow" />
@@ -116,7 +116,7 @@
 
                 <TextView
                     android:id="@+id/repair_handle_pay_date"
-                    style="@style/tv_create_order_select"
+                    style="@style/tv_repair_order_select"
                     android:layout_marginLeft="@dimen/px_30" />
 
                 <ImageView style="@style/tv_create_order_right_arrow" />

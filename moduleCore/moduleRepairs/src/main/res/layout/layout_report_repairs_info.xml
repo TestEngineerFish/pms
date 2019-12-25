@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/px_30"
                     android:src="@drawable/edit"
-                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_14"
                     android:visibility="gone"
                     android:layout_gravity="center_vertical"
                 />
@@ -135,14 +135,14 @@
                 style="@style/repair_order_detail_txt_right"
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
-                android:text="@{repairs.data.customer_repair_model.bx_cate_lv1}"
+                android:text="@{repairs.data.customer_repair_model.bx_cate_lv1+@string/text_padding+repairs.data.customer_repair_model.bx_cate_lv2+@string/text_padding+repairs.data.customer_repair_model.bx_cate_lv3}"
                  />
             <ImageView
                 android:id="@+id/repair_report_kind_change"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_30"
                 android:src="@drawable/edit"
-                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginLeft="@dimen/px_14"
                 android:visibility="gone"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
@@ -220,17 +220,25 @@
                 style="@style/repair_order_detail_left_txt"
                 android:text="预约上门时间" />
             <TextView
-                android:id="@+id/repair_appoint_time_period"
+                android:id="@+id/repair_appoint_time"
                 style="@style/repair_order_detail_txt_right"
                 android:layout_weight="0"
-                android:text="@{repairs.data.customer_repair_model.bx_appoint_time+@string/text_padding+repairs.data.customer_repair_model.bx_appoint_time_period}"
+                android:text="@{repairs.data.customer_repair_model.bx_appoint_time}"
                  />
+            <TextView
+                android:id="@+id/repair_appoint_period"
+                style="@style/repair_order_detail_txt_right"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_weight="0"
+                android:text="@{repairs.data.customer_repair_model.bx_appoint_time_period}"
+                />
             <ImageView
                 android:id="@+id/repair_report_appoint_change"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_30"
                 android:src="@drawable/edit"
-                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginLeft="@dimen/px_14"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
 

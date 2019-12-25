@@ -132,7 +132,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         return donePageList;
     }
 
-    public void onConditionSelected(Map<String, SelectModel> selected) {
+    public void  onConditionSelected(Map<String, SelectModel> selected) {
         if (isPending()) {
             request.resetConditions();
         }

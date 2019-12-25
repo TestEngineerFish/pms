@@ -42,12 +42,21 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_GRAB;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_FIR;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_SEC;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE2;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3;
 
 /**
  * Paging Demo
@@ -55,6 +64,8 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
  */
 public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
+    private SelectPopUpView selectPopUpView;
+    RepairsPageRequest request;
 
     public static RepairsViewModelFragment newInstance(Bundle bundle) {
         RepairsViewModelFragment fragment = new RepairsViewModelFragment();
@@ -82,23 +93,23 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             @Override
             public void onClick(View v) {
                 //弹出分期view
-                PeriodizationView periodizationView=new PeriodizationView();
+                PeriodizationView periodizationView = new PeriodizationView();
                 periodizationView.setPeriodListener(RepairsViewModelFragment.this::onPeriodSelectListener);
-                periodizationView.show(getParentFragmentManager(),"");
+                periodizationView.show(getParentFragmentManager(), "");
             }
         });
         binding.repairOrerTabSelectLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* //弹出筛选view
-                ConditionBuilder builder=new ConditionBuilder();
-                List<SelectModel> conditions= builder.addLines(data.getLines())//条线
-                        .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
-                        .mergeLineRes(data.getResources())
-                        .build();
-                new SelectPopUpView(getActivity(),conditions)
-                        .setOnSelectedListener(selected -> handleSelect(selected))
-                        .showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);*/
+                //弹出筛选view
+                if (selectPopUpView == null) {
+                    ConditionBuilder builder = new ConditionBuilder();
+                    builder.addArea(viewModel.areaModel);
+                    List<SelectModel> condition = builder.build();
+                    selectPopUpView = new SelectPopUpView(getActivity(), condition)
+                            .setOnSelectedListener(selected -> handleSelect(selected));
+                }
+                selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
             }
         });
     }
@@ -114,23 +125,16 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             }
         });
         if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
-            binding.repairOrerTabLn.setVisibility(View.GONE);
+            binding.repairOrderTabLn.setVisibility(View.GONE);
         } else {
-            binding.repairOrerTabLn.setVisibility(View.VISIBLE);
+            binding.repairOrderTabLn.setVisibility(View.VISIBLE);
         }
         binding.repairsList.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 30));
     }
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-        RepairsPageRequest request = new RepairsPageRequest();
-        request.setBx_area_id("");
-        request.setBx_cate_lv1_id("");
-        request.setBx_cate_lv2_id("");
-        request.setBx_dk_id("");
-        request.setNode_id_("");
-        request.setDESC(Query.SORT_DESC);
-        request.setState("");
+
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
@@ -138,16 +142,17 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     protected void setUpData() {
+        request = new RepairsPageRequest();
         //停止刷新
         LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(getActivity(), shown -> {
             if (!shown) {
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
-         viewModel.getAreaType().observe(this,model->{
-             Log.d("test",model.getDataName());
+        viewModel.getAreaType().observe(this, model -> {
+            Log.d("test", model.getDataName());
 
-         });
+        });
         RecyclerView mRecyclerView = binding.repairsList;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -158,30 +163,16 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
                         binding.itemGrabRe.setVisibility(View.VISIBLE);
                     }
-                    if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FOLLOW)){
+                    if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FOLLOW)) {
                         binding.itemContactOrFeedRe.setVisibility(View.VISIBLE);
                     }
-                    if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FEED)){
+                    if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FEED)) {
                         binding.itemFeedRe.setVisibility(View.VISIBLE);
                     }
 
                     if (repairsModel.getTaskNodeId() == null) {
                         repairsModel.setTaskNodeId("");
                     }
-                    //跳转详情
-                    binding.itemRepairDetail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                                    .withString(RouteKey.KEY_ORDER_ID, repairsModel.getID_())
-                                    .withString(RouteKey.KEY_PRO_INS_ID, repairsModel.getProInsId())
-                                    .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
-                                    .withString(RouteKey.KEY_TASK_NODE_ID, repairsModel.getTaskNodeId())
-                                    .withString(RouteKey.KEY_LIST_TYPE, getFragmentTag())
-                                    .navigation();
-                        }
-                    });
                     //抢单
                     binding.itemRepairGrab.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -215,9 +206,9 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                         @Override
                         public void onClick(View v) {
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
-                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
-                                    .withString(RouteKey.KEY_DIVIDE_ID,repairsModel.getBx_dk_id())
-                                    .withString(RouteKey.KEY_PROJECT_ID,repairsModel.getU_project_id())
+                                    .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
+                                    .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
                                     .navigation();
                         }
                     });
@@ -227,7 +218,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
-                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
+                                    .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
                                     .navigation();
                         }
                     });
@@ -237,10 +228,11 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
-                                    .withString(RouteKey.KEY_TASK_ID,repairsModel.getTaskId())
-                                    .withString(RouteKey.KEY_ORDER_ID,repairsModel.getID_())
-                                    .withString(RouteKey.KEY_DIVIDE_ID,repairsModel.getBx_dk_id())
-                                    .withString(RouteKey.KEY_PROJECT_ID,repairsModel.getU_project_id())
+                                    .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID, repairsModel.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
+                                    .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
+                                    .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                                     .navigation();
                         }
                     });
@@ -287,14 +279,35 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     public void onItemClicked(View veiw, RepairsModel data) {
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
-                .navigation();
+        if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
+            //抢单列表无法查看详情
+        } else {//跳转详情
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+                    .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                    .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                    .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                    .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                    .withString(RouteKey.KEY_LIST_TYPE, getFragmentTag())
+                    .navigation();
+        }
     }
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
+        request.setBx_dk_id(orgModel.getId());
+        loadPagingData();
+    }
 
+    /**
+     * 处理筛选返回数据
+     */
+    private void handleSelect(Map<String, SelectModel> selected) {
+        if (selected.size() > 0) {
+            request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getId());
+            request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getId());
+            request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getKey());
+        }
+        loadPagingData();
     }
 }

@@ -54,7 +54,7 @@
         <item name="android:textSize">@dimen/font_size14</item>
     </style>
     <style name="ll_work_table_pending">
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/font_size14</item>
         <item name="android:layout_centerInParent">true</item>
@@ -68,7 +68,7 @@
         <item name="android:layout_height">@dimen/px_24</item>
         <item name="android:src">@mipmap/img_light_warn</item>
         <item name="android:layout_marginLeft">@dimen/px_10</item>
-        <item name="android:layout_marginBottom">@dimen/px_4</item>
+        <item name="android:layout_marginBottom">@dimen/px_40</item>
         <item name="android:visibility">invisible</item>
     </style>
     <style name="vertical_line">

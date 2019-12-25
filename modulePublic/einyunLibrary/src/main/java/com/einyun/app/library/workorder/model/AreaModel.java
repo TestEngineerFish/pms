@@ -223,4 +223,8 @@ public class AreaModel implements Cloneable{
     public void setIsParent(String isParent) {
         this.isParent = isParent;
     }
+
+    public List<AreaModel> getChildren() {
+        return children;
+    }
 }

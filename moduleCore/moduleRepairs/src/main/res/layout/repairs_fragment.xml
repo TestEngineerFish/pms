@@ -14,7 +14,7 @@
         android:background="@color/activity_bg_color"
         android:orientation="vertical">
     <LinearLayout
-        android:id="@+id/repair_orer_tab_ln"
+        android:id="@+id/repair_order_tab_ln"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_70"
         android:orientation="horizontal"

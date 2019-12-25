@@ -21,4 +21,7 @@ public class Constants {
     public static final String REPAIR_AREA = "repair_area";
     public static final String REPAIR_NATURE = "repair_nature_assessment";
     public static final String REPAIR_TIME = "appoint_time_period";
+    public static final String REPAIR_PAY_TYPE="pay_type";
+    public static final String REPAIR_WORK_ASCRIPTION="Work_Ascription";
+
 }

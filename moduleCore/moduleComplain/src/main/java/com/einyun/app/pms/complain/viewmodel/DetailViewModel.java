@@ -68,28 +68,32 @@ public class DetailViewModel extends BaseWorkOrderHandelViewModel {
     }
 
     public LiveData<Boolean> complainDetailComplete(ComplainDetailCompleteRequest request){
+        showLoading();
         return workOrderService.complainDetailComplete(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
-
+                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+                hideLoading();
                 ThrowableParser.onFailed(throwable);
             }
         });
     }
 
     public LiveData<Boolean> complainDetailSave(ComplainDetailCompleteRequest request){
+        showLoading();
         return workOrderService.complainDetailSave(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
-
+                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+                hideLoading();
                 ThrowableParser.onFailed(throwable);
             }
         });

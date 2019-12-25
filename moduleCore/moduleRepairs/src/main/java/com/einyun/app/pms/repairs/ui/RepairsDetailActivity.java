@@ -10,12 +10,16 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -83,6 +87,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private final int MAX_PHOTO_SIZE = 4;
     private List<DictDataModel> dictNatureList = new ArrayList<>();
     private List<DictDataModel> dictTimeList = new ArrayList<>();
+    private List<DictDataModel> dictPayTypeLsit=new ArrayList<>();
+    private List<DictDataModel> dictAscriptLsit=new ArrayList<>();
     int rtTimeDefaultPos = 0;
     int rtDateDefaultPos = 0;
     int clDefaultPos = 0;
@@ -105,6 +111,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_work_repair);
+        setRightOption(R.drawable.iv_histroy);
+        setRightTxt(R.string.text_histroy);
+        setRightTxtColor(R.color.blueTextColor);
         setView(nodeId);//根据状态值显示相应布局
         //选择人员
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
@@ -188,11 +197,32 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //获取报修性质评估
         viewModel.getByTypeKey(Constants.REPAIR_NATURE).observe(this, dictDataModels -> {
             dictNatureList = dictDataModels;
+            setProperTy();
         });
         //获取预约上门时间
         viewModel.getByTypeKey(Constants.REPAIR_TIME).observe(this, dictDataModels -> {
             dictTimeList = dictDataModels;
         });
+        //获取支付方式
+        viewModel.getByTypeKey(Constants.REPAIR_PAY_TYPE).observe(this,dictDataModels->{
+            dictPayTypeLsit=dictDataModels;
+        });
+        //获取报修工单归属
+        viewModel.getByTypeKey(Constants.REPAIR_WORK_ASCRIPTION).observe(this,dictDataModels->{
+            dictAscriptLsit =dictDataModels;
+            setAscription();
+        });
+
+    }
+
+    @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        //标题栏右侧文字点击时件
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_HISTORY)
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .navigation();
     }
 
     @Override
@@ -281,6 +311,27 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairHandleHistory.handleAddMore.setOnClickListener(this);
         //强制闭单
         binding.repairClosePostpone.applyPostpone.setOnClickListener(this);
+        //申请延期
+        binding.repairClosePostpone.repairApplyLate.setOnClickListener(this);
+        //工单归属
+        binding.repariResponse.rgs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId==R.id.rb_normal){
+                    customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
+                    customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
+                }
+                if (checkedId==R.id.rb_general){
+                    customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
+                    customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -306,7 +357,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (detialModel == null) {
             return;
         }
+        detialModel.setNodeId(nodeId);
         customerRepair = detialModel.getData().getCustomer_repair_model();
+        binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
         bindData(repairsOrderDetail);
         if (detialModel.getData().getCustomer_repair_model().getHandle_time() != null) {
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getCustomer_repair_model().getHandle_time().toString()));
@@ -416,6 +469,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     .withString(RouteKey.KEY_TASK_ID, taskId)
                     .navigation();
         }
+        if (v.getId()==R.id.repair_apply_late){
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, orderId)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_REPAIRS)
+                    .withString(RouteKey.KEY_DIVIDE_ID, customerRepair.getBx_dk_id())
+                    .withString(RouteKey.KEY_DIVIDE_NAME, customerRepair.getBx_dk())
+                    .navigation();
+        }
 
     }
 
@@ -448,7 +509,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         viewModel.repairSend(new RepairSendOrderRequest(detialModel.getData().getCustomer_repair_model(), new RepairSendOrderRequest.DoNextParamBean(taskId))).observe(this, status -> {
             if (status) {
                 new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                        .setMsg(getResources().getString(R.string.text_response_success)).
+                        .setMsg(getResources().getString(R.string.text_submit_success)).
                         setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -456,6 +517,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                                 RepairsDetailActivity.this.finish();
                             }
                         }).show();
+            }else {
+                ToastUtil.show(this,R.string.text_submit_fale);
             }
         });
     }
@@ -471,7 +534,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             viewModel.saveHandler(saveHandleRequest).observe(this, status -> {
                 if (status) {
                     new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                            .setMsg(getResources().getString(R.string.text_response_success)).
+                            .setMsg(getResources().getString(R.string.text_save_success)).
                             setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -503,6 +566,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
+            binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
                 binding.repariResponse.getRoot().setVisibility(View.VISIBLE);
                 binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
@@ -516,6 +580,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
                 binding.repairHandle.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleResult.getRoot().setVisibility(View.VISIBLE);
@@ -549,6 +615,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairsInfo.repairReportNatureRed.setVisibility(View.VISIBLE);
             binding.repairsInfo.repariReportAreaChange.setVisibility(View.VISIBLE);
             binding.repairsInfo.repairReportKindChange.setVisibility(View.VISIBLE);
+            binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
+            binding.repairsInfo.rgs.setVisibility(View.VISIBLE);
             binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             return;
         }
@@ -560,8 +628,21 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
+            binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
             return;
         }
+        //超时派单
+        if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
+            binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            binding.sendOrder.repairSendTxt.setText(R.string.text_late_send_order);
+            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
+            binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+            return;
+        }
+
 
     }
 
@@ -581,7 +662,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (TextUtils.isEmpty(binding.repariResponse.repairResponseReason.getString())) {
                 ToastUtil.show(this, R.string.text_please_enter_reason);
             } else {
-                detialModel.getData().getCustomer_repair_model().setResponse_result(binding.repariResponse.repairResponseReason.getString());
+                customerRepair.setResponse_result(binding.repariResponse.repairResponseReason.getString());
+            }
+            if (binding.repariResponse.rgs.getCheckedRadioButtonId()==R.id.rb_normal){
+                customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
+            }else {
+                customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
             }
             return;
         }
@@ -642,8 +730,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (binding.repairHandle.repairHandleIfPaid.getCheckedRadioButtonId() == R.id.rb_yes) {
                 customerRepair.setHandle_is_paid(HANDLE_PAID);
                 customerRepair.setMaterial_cost(binding.repairHandlePaid.repairMaterialPrice.getText().toString().trim());
-                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
-//                customerRepair.set(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
+                customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
+                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
+                customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
 
             } else {
                 customerRepair.setHandle_is_paid(HANDLE_NO_PAID);
@@ -695,7 +784,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 rtDateDefaultPos = position1;
                 rtTimeDefaultPos = position2;
                 BottomPickerModel model = models.get(position1);
-                binding.repairsInfo.repairAppointTimePeriod.setText(model.getData() + " " + model.getDataList().get(position2));
+                binding.repairsInfo.repairAppointTime.setText(model.getData());
+                binding.repairsInfo.repairAppointPeriod.setText(model.getDataList().get(position2));
                 customerRepair.setBx_appoint_time(model.getData());
                 customerRepair.setBx_appoint_time_period_id(dictTimeList.get(position2).getKey());
                 customerRepair.setBx_appoint_time_period(dictTimeList.get(position2).getName());
@@ -776,13 +866,17 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      */
     private void choosePayWay() {
         List<String> payWays = new ArrayList<>();
-        payWays.add(getResources().getString(R.string.text_pay_online));
-        payWays.add(getResources().getString(R.string.text_pay_under_line));
+        for (DictDataModel dictDataModel:dictPayTypeLsit){
+            payWays.add(dictDataModel.getName());
+            Log.d("Test",dictDataModel.getName());
+        }
+
         BottomPicker.buildBottomPicker(this, payWays, clDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
                 binding.repairHandlePaid.repairHandlerPaywayTxt.setText(payWays.get(position));
-//                customerRepair.setHandle_pay_type();
+                customerRepair.setHandle_pay_type(label);
+                customerRepair.setHandle_pay_type_id(dictPayTypeLsit.get(position).getId());
             }
         });
     }
@@ -791,18 +885,18 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      * 付款日期选择
      */
     private void choosePayDate() {
-        List<String> models = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            models.add(getOldDate(i));
-        }
-
-        BottomPicker.buildBottomPicker(this, models, rtDateDefaultPos, new BottomPicker.OnItemPickListener() {
+        //时间选择器
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
-            public void onPick(int position1, String label) {
-                binding.repairHandlePaid.repairHandlePayDate.setText(label);
-//                customerRepair.setHandle_pa
+            public void onTimeSelect(Date date, View v) {
+                SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                customerRepair.setHandle_pay_time(date.getTime());
+//                    request.setExpectTime(dft.format(date));
             }
-        });
+        }).setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
+                .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
+                .build();
+        pvTime.show();
     }
 
     /**
@@ -822,6 +916,23 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairEvaluateInfo.setRepairs(repairsOrderDetail);
         binding.repairCloseInfo.setRepairs(repairsOrderDetail);
         binding.repairLateInfo.setRepairs(repairsOrderDetail);
+    }
+    /**
+     * 设置工单归属数据
+     * */
+    private void setAscription(){
+        binding.repariResponse.rbNormal.setText(dictAscriptLsit.get(0).getName());
+        binding.repariResponse.rbGeneral.setText(dictAscriptLsit.get(1).getName());
+
+    }
+
+    /**
+     * 设置性质评估
+     * */
+    private void setProperTy(){
+        binding.repairsInfo.rbNormal.setText(dictNatureList.get(0).getName());
+        binding.repairsInfo.rbGeneral.setText(dictNatureList.get(1).getName());
+        binding.repairsInfo.rbWarning.setText(dictNatureList.get(2).getName());
     }
 
 }

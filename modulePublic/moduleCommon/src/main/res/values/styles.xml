@@ -153,6 +153,13 @@
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
         <item name="android:textSize">@dimen/font_size15</item>
     </style>
+    <style name="tv_repair_order_select">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:hint">@string/text_please_select</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+        <item name="android:textSize">@dimen/font_size15</item>
+    </style>
     <style name="et_create_order_right">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
