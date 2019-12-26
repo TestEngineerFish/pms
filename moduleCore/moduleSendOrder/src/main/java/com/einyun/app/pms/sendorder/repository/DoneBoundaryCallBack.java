@@ -22,7 +22,7 @@ public class DoneBoundaryCallBack extends PendingBoundaryCallBack {
         service.distributeDonePage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
-               onDataLoaded(dataType,data,callBack);
+               onDataLoaded(dataType,orderType,data,callBack);
             }
 
             @Override

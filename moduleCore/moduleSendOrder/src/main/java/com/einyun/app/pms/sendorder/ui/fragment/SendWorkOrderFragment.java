@@ -82,6 +82,10 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     int listType;
 
     protected SelectPopUpView selectPopUpView;
+
+
+
+
 //    String blockName;
 //    String blockId;
 
@@ -251,7 +255,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         @SuppressLint("DiffUtilEquals")
         @Override
         public boolean areContentsTheSame(@NonNull Distribute oldItem, @NonNull Distribute newItem) {
-            return oldItem.getID_().equals(newItem.getID_());
+            return oldItem.getID_()==newItem.getID_();
         }
 
         @Nullable

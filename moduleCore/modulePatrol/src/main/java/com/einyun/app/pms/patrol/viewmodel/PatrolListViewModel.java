@@ -135,7 +135,7 @@ public class PatrolListViewModel extends BasePageListViewModel<Patrol> {
      * @return
      */
     public LiveData<PagedList<Patrol>> search(String key){
-       return  new LivePagedListBuilder(repo.search(requestDone.getUserId(), listType,key), config).build();
+       return  new LivePagedListBuilder(repo.search(request.getUserId(), listType,key), config).build();
     }
 
 }

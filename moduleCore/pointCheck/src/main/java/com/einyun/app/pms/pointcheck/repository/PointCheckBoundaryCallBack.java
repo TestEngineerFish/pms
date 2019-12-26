@@ -21,7 +21,7 @@ public class PointCheckBoundaryCallBack extends BaseBoundaryCallBack<CheckPoint>
         ((PointCheckListRepository)repo).pageQuery(pageBean, new CallBack<CheckPointPage>() {
             @Override
             public void call(CheckPointPage data) {
-                onDataLoaded(dataType,data,callBack);
+                onDataLoaded(dataType,-1,data,callBack);
             }
 
             @Override
@@ -45,7 +45,7 @@ public class PointCheckBoundaryCallBack extends BaseBoundaryCallBack<CheckPoint>
     }
 
     @Override
-    protected void onDataLoaded(int dataType, PageResult data, CallBack<Integer> callBack) {
+    protected void onDataLoaded(int dataType,int listType, PageResult data, CallBack<Integer> callBack) {
         if(data.isEmpty()){
             clearAll();
         }
@@ -54,7 +54,7 @@ public class PointCheckBoundaryCallBack extends BaseBoundaryCallBack<CheckPoint>
         }
         if (data.getRows().size() > 0) {
             wrapList(data.getRows());
-            repo.persistence(data.getRows(),request.getUserId(), dataType);
+            repo.persistence(data.getRows(),request.getUserId(),listType, dataType);
         }
     }
 }
