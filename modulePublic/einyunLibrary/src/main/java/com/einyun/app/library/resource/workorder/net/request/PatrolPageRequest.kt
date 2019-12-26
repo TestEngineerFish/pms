@@ -29,4 +29,6 @@ class PatrolPageRequest :PageRquest(){
     @SerializedName("F_massif_id")
     var divideId: String? = null
     var searchValue: String? = null
+    @SerializedName("F_type_id")
+    var typeId:String?=null
 }
