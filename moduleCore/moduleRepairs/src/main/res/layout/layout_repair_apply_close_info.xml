@@ -11,8 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px_20"
-        android:layout_marginRight="@dimen/px_20"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_10"
         android:layout_marginTop="@dimen/px_10"
         app:cardBackgroundColor="@color/white"
@@ -54,7 +54,7 @@
                 android:background="@color/white">
 
                 <TextView
-                    style="@style/work_order_detail_txt_left"
+                    style="@style/work_order_detail_left_txt"
                     android:text="审批结果" />
 
                 <TextView style="@style/work_order_detail_txt_right"
@@ -65,7 +65,7 @@
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
-                    style="@style/work_order_detail_txt_left"
+                    style="@style/work_order_detail_left_txt"
                     android:text="审批时间" />
 
                 <TextView style="@style/work_order_detail_txt_right"
@@ -78,7 +78,7 @@
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
-                    style="@style/work_order_detail_txt_left"
+                    style="@style/work_order_detail_left_txt"
                     android:text="申请人" />
 
                 <TextView style="@style/work_order_detail_txt_right"
@@ -89,7 +89,7 @@
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
-                    style="@style/work_order_detail_txt_left"
+                    style="@style/work_order_detail_left_txt"
                     android:text="申请时间" />
 
                 <TextView style="@style/work_order_detail_txt_right"
@@ -100,7 +100,7 @@
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
-                    style="@style/work_order_detail_txt_left"
+                    style="@style/work_order_detail_left_txt"
                     android:layout_height="match_parent"
                     android:text="申请原因" />
 
@@ -112,7 +112,7 @@
             <LinearLayout style="@style/work_order_detail_ln">
 
                 <TextView
-                    style="@style/work_order_detail_txt_left"
+                    style="@style/work_order_detail_left_txt"
                     android:text="申请照片" />
             </LinearLayout>
             <LinearLayout style="@style/work_order_detail_ln">
