@@ -76,13 +76,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle(R.string.title_patrol);
         binding.setCallBack(this);
     }
 
     protected void switchStateUI() {
         super.switchStateUI();
-        hideRightOption();
         binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);

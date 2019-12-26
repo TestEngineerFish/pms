@@ -7,6 +7,7 @@
     <string name="title_patrol">巡查工单</string>
     <string name="title_patrol_time">巡更工单</string>
     <string name="text_result">结果</string>
+    <string name="text_option">操作</string>
     <string name="text_patrol_road_time">巡更路线限时</string>
     <string name="text_patrol_road_name">巡更路线名称</string>
     <string name="text_patrol_time_handle">巡更点处理</string>
@@ -30,5 +31,6 @@
     <string name="text_un_sign_in">未签到</string>
     <string name="text_lose_node_pic">第%d个巡更节点缺少拍照信息</string>
     <string name="text_lose_node_signin">第%d个巡更节点还未签到</string>
+    <string name="text_un_need_handle">未选择</string>
 
 </resources>

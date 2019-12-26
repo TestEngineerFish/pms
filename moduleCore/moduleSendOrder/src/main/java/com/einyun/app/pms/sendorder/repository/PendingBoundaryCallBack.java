@@ -45,7 +45,7 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
         service.distributeWaitPage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
-                onDataLoaded(dataType,data,callBack);
+                onDataLoaded(dataType,orderType,data,callBack);
             }
 
             @Override
@@ -56,7 +56,7 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
     }
 
     @Override
-    protected void onDataLoaded(int dataType, PageResult data, CallBack<Integer> callBack) {
+    protected void onDataLoaded(int dataType,int orderType, PageResult data, CallBack<Integer> callBack) {
         if(data.isEmpty()){
             clearAll();
         }
@@ -67,7 +67,7 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
         List<Distribute> rows = convert.stringToSomeObjectList(new Gson().toJson(data.getRows()));
         if (rows.size() > 0) {
             wrapList(rows);
-            repo.persistence(rows,request.getUserId(),dataType);
+            repo.persistence(rows,request.getUserId(),orderType,dataType);
         }
     }
 

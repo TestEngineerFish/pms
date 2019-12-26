@@ -257,7 +257,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                     return R.layout.item_work_patrol;
                 }
             });
-            searchFragment.setHint("请搜索工单编号或计划名称");
+            searchFragment.setHint("请输入工单编号或计划名称");
         }
         searchFragment.show(getActivity().getSupportFragmentManager(), "");
     }
