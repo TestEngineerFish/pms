@@ -7,6 +7,6 @@
         <item name="actionBarStyle">@android:style/Theme.Holo.NoActionBar.TranslucentDecor</item>
     </style>
     <style name="AppThemeFullScreen" parent="NoActionBarAppTheme">
-        <item name="android:background">@mipmap/splash_bg</item>
+<!--        <item name="android:background">@mipmap/splash_bg</item>-->
     </style>
 </resources>

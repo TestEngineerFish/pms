@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.uc.user.model.TenantModel
+import com.einyun.app.library.uc.user.model.UpdateAppModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
@@ -23,6 +24,9 @@ import com.einyun.app.library.uc.user.repository.UserRepository
  * @Version: 1.0
  */
 class UCSericeImplProxy :UCService{
+    override fun updateApp(callBack: CallBack<UpdateAppModel>): LiveData<UpdateAppModel> {
+        return instance?.updateApp(callBack)!!
+    }
 
     private var instance:UCService?=null
 

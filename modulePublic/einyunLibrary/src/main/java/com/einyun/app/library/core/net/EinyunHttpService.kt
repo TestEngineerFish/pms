@@ -65,7 +65,7 @@ open class EinyunHttpService protected constructor() : HttpService() {
     override fun filter(url:String) {
         super.filter(url)
         //except
-        if(url.contains(URLs.URL_USER_GET_TENTANTID)){
+        if(url.contains(URLs.URL_USER_GET_TENTANTID)||url.contains(URLs.URL_APP_UPDATE)){
             return
         }
         if(needTenantId){
