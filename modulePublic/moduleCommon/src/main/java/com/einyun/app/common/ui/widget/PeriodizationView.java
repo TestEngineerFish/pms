@@ -87,7 +87,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(wlp);
         ViewGroup.LayoutParams params=binding.rvOrgList.getLayoutParams();
-        params.height= ScreenUtils.getMetricsHeight(getActivity())-ScreenUtils.getStatusHeight(getActivity())-550;
+        params.height= ScreenUtils.getMetricsHeight(getActivity())-ScreenUtils.getStatusHeight(getActivity())-ScreenUtils.dip2px(getActivity(),220);
         binding.rvOrgList.setLayoutParams(params);
         getActivity().getLifecycle().addObserver((LifecycleEventObserver) (source, event) -> {
             if (event == Lifecycle.Event.ON_STOP) {
