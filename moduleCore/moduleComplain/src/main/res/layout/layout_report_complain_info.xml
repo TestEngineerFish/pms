@@ -25,7 +25,9 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        android:paddingBottom="@dimen/px_30">
+        android:paddingBottom="@dimen/px_30"
+        app:cardElevation="0.5dp"
+        >
 
         <LinearLayout
             android:id="@+id/panel_work_order_info"

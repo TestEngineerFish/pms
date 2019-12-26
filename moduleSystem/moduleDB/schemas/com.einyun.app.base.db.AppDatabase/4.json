@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "94832a8c0de57efd1ef7f6db75466d34",
+    "identityHash": "38014fe4b3ded83b261d75121f75fc86",
     "entities": [
       {
         "tableName": "users",
@@ -53,7 +53,7 @@
       },
       {
         "tableName": "patrol_digests",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`orderType` INTEGER NOT NULL, `userId` TEXT NOT NULL, `listType` INTEGER NOT NULL, `F_plan_work_order_state` INTEGER NOT NULL, `F_line_name` TEXT, `ID_` TEXT NOT NULL, `subject` TEXT, `F_creation_date` INTEGER NOT NULL, `F_line_code` TEXT, `F_type_id` TEXT, `auditor_` TEXT, `F_type_name` TEXT, `proInsId` TEXT, `parentInstId` TEXT, `createTime` INTEGER NOT NULL, `F_principal_name` TEXT, `F_plan_work_order_code` TEXT, `F_inspection_work_plan_name` TEXT, `auditor_name_` TEXT, `taskNodeId` TEXT, `isCached` INTEGER NOT NULL, `taskId` TEXT, `assigneeId` TEXT, `ownerId` TEXT, `F_patrol_line_id` TEXT, `is_coming_timeout` INTEGER NOT NULL, PRIMARY KEY(`ID_`, `userId`, `listType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`orderType` INTEGER NOT NULL, `userId` TEXT NOT NULL, `listType` INTEGER NOT NULL, `F_plan_work_order_state` INTEGER NOT NULL, `F_line_name` TEXT, `ID_` TEXT NOT NULL, `subject` TEXT, `F_creation_date` INTEGER NOT NULL, `F_line_code` TEXT, `F_type_id` TEXT, `auditor_` TEXT, `F_type_name` TEXT, `proInsId` TEXT, `parentInstId` TEXT, `createTime` INTEGER NOT NULL, `F_principal_name` TEXT, `F_plan_work_order_code` TEXT, `F_inspection_work_plan_name` TEXT, `auditor_name_` TEXT, `taskNodeId` TEXT, `isCached` INTEGER NOT NULL, `taskId` TEXT, `assigneeId` TEXT, `ownerId` TEXT, `F_patrol_line_id` TEXT, `is_coming_timeout` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "orderType",
@@ -210,15 +210,19 @@
             "columnName": "is_coming_timeout",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "ID_",
-            "userId",
-            "listType"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -365,7 +369,7 @@
       },
       {
         "tableName": "distributes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`F_CHECK_CONTENT` TEXT, `subject` TEXT, `F_TYPE` TEXT, `F_PROJECT_ID` TEXT, `ownerId` TEXT, `F_PROJECT_NAME` TEXT, `proInsId` TEXT, `F_CHECK_ID` TEXT, `F_EVALUATION` TEXT, `F_PROC_NAME` TEXT, `F_RETURN_REASON` TEXT, `REF_ID_` TEXT, `F_DIVIDE_ID` TEXT, `F_TIT_NAME` TEXT, `taskNodeId` TEXT, `F_LOCATION` TEXT, `F_TX_ID` TEXT, `ID_` TEXT NOT NULL, `F_DESC` TEXT, `F_PROC_CONTENT` TEXT, `F_STATUS` INTEGER NOT NULL, `F_RES_NAME` TEXT, `assigneeId` TEXT, `F_CHECK_NAME` TEXT, `F_RES_ID` TEXT, `F_DIVIDE_NAME` TEXT, `F_TIT_ID` TEXT, `F_BEF_PIC` TEXT, `F_PROC_ID` TEXT, `createTime` INTEGER, `F_TX_NAME` TEXT, `F_ORDER_NO` TEXT, `taskName` TEXT, `F_AFT_PIC` TEXT, `taskId` TEXT, `F_CHECK_RESULT` TEXT, `F_CREATE_TIME` INTEGER, `F_CHECK_DATE` INTEGER, `F_PROC_DATE` TEXT, `F_EXT_STATUS` INTEGER NOT NULL, `isReply` INTEGER NOT NULL, `is_coming_timeout` INTEGER NOT NULL, `userId` TEXT NOT NULL, `orderType` INTEGER NOT NULL, PRIMARY KEY(`ID_`, `userId`, `orderType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`F_CHECK_CONTENT` TEXT, `subject` TEXT, `F_TYPE` TEXT, `F_PROJECT_ID` TEXT, `ownerId` TEXT, `F_PROJECT_NAME` TEXT, `proInsId` TEXT, `F_CHECK_ID` TEXT, `F_EVALUATION` TEXT, `F_PROC_NAME` TEXT, `F_RETURN_REASON` TEXT, `REF_ID_` TEXT, `F_DIVIDE_ID` TEXT, `F_TIT_NAME` TEXT, `taskNodeId` TEXT, `F_LOCATION` TEXT, `F_TX_ID` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ID_` TEXT NOT NULL, `F_DESC` TEXT, `F_PROC_CONTENT` TEXT, `F_STATUS` INTEGER NOT NULL, `F_RES_NAME` TEXT, `assigneeId` TEXT, `F_CHECK_NAME` TEXT, `F_RES_ID` TEXT, `F_DIVIDE_NAME` TEXT, `F_TIT_ID` TEXT, `F_BEF_PIC` TEXT, `F_PROC_ID` TEXT, `createTime` INTEGER, `F_TX_NAME` TEXT, `F_ORDER_NO` TEXT, `taskName` TEXT, `F_AFT_PIC` TEXT, `taskId` TEXT, `F_CHECK_RESULT` TEXT, `F_CREATE_TIME` INTEGER, `F_CHECK_DATE` INTEGER, `F_PROC_DATE` TEXT, `F_EXT_STATUS` INTEGER NOT NULL, `isReply` INTEGER NOT NULL, `is_coming_timeout` INTEGER NOT NULL, `userId` TEXT NOT NULL, `orderType` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "F_CHECK_CONTENT",
@@ -468,6 +472,12 @@
             "columnName": "F_TX_ID",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "ID_",
@@ -634,18 +644,16 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "ID_",
-            "userId",
-            "orderType"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "checkpoints",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `userId` TEXT NOT NULL, `checkRecordCode` TEXT, `massifId` TEXT, `remark` TEXT, `isUnusual` INTEGER NOT NULL, `createTime` TEXT, `createId` TEXT, `massifName` TEXT, `createName` TEXT, `checkName` TEXT, `specificLocation` TEXT, `isPic` INTEGER NOT NULL, `resourceName` TEXT, PRIMARY KEY(`id`, `userId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `userId` TEXT NOT NULL, `checkRecordCode` TEXT, `massifId` TEXT, `remark` TEXT, `isUnusual` INTEGER NOT NULL, `createTime` TEXT, `createId` TEXT, `massifName` TEXT, `createName` TEXT, `checkName` TEXT, `specificLocation` TEXT, `isPic` INTEGER NOT NULL, `resourceName` TEXT, `id_` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -730,21 +738,26 @@
             "columnName": "resourceName",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "id_",
+            "columnName": "id_",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id",
-            "userId"
+            "id_"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "plans",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`proInsId` TEXT, `orderType` INTEGER NOT NULL, `createTime` INTEGER NOT NULL, `F_CREATE_TIME` INTEGER NOT NULL, `ID_` TEXT NOT NULL, `F_ORDER_NO` TEXT, `taskName` TEXT, `F_WP_NAME` TEXT, `ownerId` TEXT, `assigneeId` TEXT, `taskId` TEXT, `taskNodeId` TEXT, `subject` TEXT, `F_STATUS` TEXT, `F_EXT_STATUS` INTEGER NOT NULL, `F_OT_STATUS` INTEGER NOT NULL, `userId` TEXT NOT NULL, `listType` INTEGER NOT NULL, PRIMARY KEY(`userId`, `ID_`, `listType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`proInsId` TEXT, `orderType` INTEGER NOT NULL, `createTime` INTEGER NOT NULL, `F_CREATE_TIME` INTEGER NOT NULL, `ID_` TEXT NOT NULL, `F_ORDER_NO` TEXT, `taskName` TEXT, `F_WP_NAME` TEXT, `ownerId` TEXT, `assigneeId` TEXT, `taskId` TEXT, `taskNodeId` TEXT, `subject` TEXT, `F_STATUS` TEXT, `F_EXT_STATUS` INTEGER NOT NULL, `F_OT_STATUS` INTEGER NOT NULL, `userId` TEXT NOT NULL, `listType` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "proInsId",
@@ -853,15 +866,19 @@
             "columnName": "listType",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "userId",
-            "ID_",
-            "listType"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -870,7 +887,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '94832a8c0de57efd1ef7f6db75466d34')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '38014fe4b3ded83b261d75121f75fc86')"
     ]
   }
 }

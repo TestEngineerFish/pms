@@ -14,12 +14,12 @@ import java.util.List;
 
 @Dao
 public interface CheckPointDao {
-    @Query("select * from checkpoints where userId=:userId")
+    @Query("select * from checkpoints where userId=:userId order by id_ asc")
     DataSource.Factory<Integer, CheckPoint> queryAll(@NonNull String userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<CheckPoint> list);
 
-    @Query("delete from checkpoints where userId=:userId")
+    @Query("delete from checkpoints where userId=:userId ")
     void deleteAll(String userId);
 }

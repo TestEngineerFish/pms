@@ -17,6 +17,7 @@
         android:id="@+id/cv"
         style="@style/detail_cv"
         android:visibility="gone"
+        app:cardElevation="0.5dp"
         app:cardCornerRadius="10dp">
 
         <LinearLayout

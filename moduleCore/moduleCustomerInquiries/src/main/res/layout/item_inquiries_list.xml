@@ -17,7 +17,9 @@
         app:cardCornerRadius="@dimen/px_10"
         android:focusable="true"
         android:clickable="true"
-        android:foreground = "?attr/selectableItemBackground">
+        android:foreground = "?attr/selectableItemBackground"
+        app:cardElevation="0.5dp"
+        >
     <LinearLayout
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"

@@ -27,7 +27,7 @@ public interface PatrolDao {
     @Query("select * from patrol_digests where userId=:userId ORDER BY F_creation_date DESC LIMIT :current,:pageSize")
     List<Patrol> pageDigest(int current, int pageSize,String userId);
 
-    @Query("select * from patrol_digests where userId=:userId and listType=:listType")
+    @Query("select * from patrol_digests where userId=:userId and listType=:listType ORDER BY id asc")
     DataSource.Factory<Integer,Patrol> queryAll(@NonNull String userId, @NonNull int listType);
 
     @Query("select * from patrol_digests where userId=:userId and listType=:listType and (F_plan_work_order_code LIKE '%' || :search || '%' or F_inspection_work_plan_name LIKE '%' || :search || '%')")
