@@ -61,7 +61,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="是否有偿" />
 
             <TextView
@@ -74,7 +73,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="维修工时" />
 
             <TextView
@@ -167,7 +165,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="人工费(元)" />
 
             <TextView
@@ -181,7 +178,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="费用总计(元)" />
 
             <TextView
@@ -195,7 +191,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="付款方式" />
 
             <TextView
@@ -222,7 +217,6 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="联合处理人" />
 
             <TextView
