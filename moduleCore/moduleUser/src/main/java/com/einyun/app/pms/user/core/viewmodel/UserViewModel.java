@@ -11,12 +11,12 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.application.ThrowableParser;
-import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.uc.user.model.TenantModel;
+import com.einyun.app.library.uc.user.model.UpdateAppModel;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
@@ -155,5 +155,19 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
     @Override
     public LiveData<List<String>> loadAllUserName() {
         return mUsersRepo.loadAllUserName();
+    }
+
+    public LiveData<UpdateAppModel> updateApp() {
+        return mUCService.updateApp(new CallBack<UpdateAppModel>() {
+            @Override
+            public void call(UpdateAppModel data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
     }
 }
