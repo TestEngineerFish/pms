@@ -5,6 +5,7 @@ import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.core.api.proxy.UCSericeImplProxy
 import com.einyun.app.library.uc.user.model.TenantModel
+import com.einyun.app.library.uc.user.model.UpdateAppModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
@@ -23,6 +24,9 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class UCServiceImpl :UCService {
+    override fun updateApp(callBack: CallBack<UpdateAppModel>): LiveData<UpdateAppModel> {
+        return proxy.updateApp(callBack)
+    }
 
     var proxy:UCSericeImplProxy= UCSericeImplProxy()
     override fun login(username: String, password: String, callBack: CallBack<UserModel>): LiveData<UserModel> {
