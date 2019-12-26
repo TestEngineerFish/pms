@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "patrol_digests", primaryKeys = {"ID_", "userId", "listType"})
+@Entity(tableName = "patrol_digests")
 public class Patrol {
     /**
      * proInsId : 485732
@@ -49,6 +49,8 @@ public class Patrol {
     private String ownerId;
     private String F_patrol_line_id;
     private int is_coming_timeout;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     public int getIs_coming_timeout() {
         return is_coming_timeout;
@@ -64,6 +66,14 @@ public class Patrol {
 
     public void setF_patrol_line_id(String f_patrol_line_id) {
         F_patrol_line_id = f_patrol_line_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTaskId() {

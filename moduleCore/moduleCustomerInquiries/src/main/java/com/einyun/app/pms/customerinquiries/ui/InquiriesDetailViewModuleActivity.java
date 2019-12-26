@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -113,12 +114,18 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.blueTextColor));
                 break;
             default:
-                binding.tvDealState.setText(getString(R.string.tv_closed));
+                binding.tvDealState.setText(getString(R.string.tv_finish));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
 //                binding.llHistory.setVisibility(View.VISIBLE);
 //                binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 break;
         }
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+               finish();
+            }
+        });
     }
     @Override
     protected void initData() {
@@ -138,12 +145,6 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 false));
         binding.listApplyPic.addItemDecoration(new SpacesItemDecoration(18));
         binding.listApplyPic.setAdapter(forseClosephotoListInfoAdapter);
-    }
-
-    private static final String TAG = "InquiriesDetailViewModu";
-    @Override
-    protected void onResume() {
-        super.onResume();
         /**
          * 获取详情信息
          */
@@ -170,6 +171,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         });
     }
 
+    private static final String TAG = "InquiriesDetailViewModu";
     private void initHistoryList(OrderDetailInfoModule orderDetailInfoModule) {
         //一级列表适配器
         adapter = new RVBindingAdapter<ItemInquiriseFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean>(this, BR.module) {
@@ -270,8 +272,13 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
                     binding.llForseClose.setVisibility(View.VISIBLE);
                 }
-            }else {//
-//                binding.llForseClose.setVisibility(View.GONE);
+            }else {//强制关闭正在审批中  能操作的都隐藏掉 评价  提交 回复
+                binding.llForseClose.setVisibility(View.GONE);
+
+                binding.llEvaluation.setVisibility(View.GONE);
+                binding.llReplyContent.setVisibility(View.GONE);
+                binding.llPass.setVisibility(View.GONE);
+
                 binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 OrderDetailInfoModule.ForceCloseInfoBean forceCloseInfo = orderDetailInfoModule.getForceCloseInfo();
                 if (forceCloseInfo!=null) {

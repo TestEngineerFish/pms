@@ -265,7 +265,9 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cd_work_resouce"
                     style="@style/detail_cv"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0.5dp"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -306,7 +308,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cd_work_nodes"
                     style="@style/detail_cv"
-                    app:cardElevation="5dp"
+                    app:cardElevation="0.5dp"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout

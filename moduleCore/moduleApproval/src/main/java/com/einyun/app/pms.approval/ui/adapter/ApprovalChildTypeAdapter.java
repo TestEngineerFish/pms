@@ -49,9 +49,10 @@ public class ApprovalChildTypeAdapter extends BaseAdapter {
             convertView.setTag(hodler);
         }
         if (position== CustomPopWindow.mApprovalChildTypePosition) {
-
+            hodler.textview.setTextColor(context.getResources().getColor(R.color.blueTextColor));
             hodler.textview.setBackgroundResource(R.drawable.iv_pop_item_choise);
         }else {
+            hodler.textview.setTextColor(context.getResources().getColor(R.color.blackTextColor));
             hodler.textview.setBackgroundResource(R.drawable.shape_line);
         }
             hodler.textview.setText(getByTypeKeyForComBoModule.getChildren().get(position).getName());

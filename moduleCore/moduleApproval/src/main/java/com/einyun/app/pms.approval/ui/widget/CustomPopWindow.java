@@ -90,6 +90,7 @@ public class CustomPopWindow extends PopupWindow {
         approvalChildTypeAdapter.notifyDataSetChanged();
         approvalStatusAdapter.notifyDataSetChanged();
         approvalTypeAdapter.notifyDataSetChanged();
+        gv_approval_child_type.setVisibility(View.GONE);
     }
 
     private ApprovalBean getData(int page, int pageSize) {
@@ -240,6 +241,7 @@ public class CustomPopWindow extends PopupWindow {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                 gv_approval_child_type.setVisibility(View.VISIBLE);
                  mApprovalTypePosition=position;//暂定这样 等有真实数据 直接修改数据源刷新适配器，取出对应参数放到请求参数中
                  mGetByTypeKeyForComBoModule = approvalAuditTypeModule.get(position);
                  approvalChildTypeAdapter.setData(mGetByTypeKeyForComBoModule);//给child传数据

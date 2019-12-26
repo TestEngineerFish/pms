@@ -65,7 +65,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     private String auditStatus = "";
     private String typeValue;
     CustomPopWindow customPopWindow;
-    private String blockName;
+//    private String blockName;
 
     public static ApprovalViewModelFragment newInstance(Bundle bundle) {
         ApprovalViewModelFragment approvalViewModelFragment = new ApprovalViewModelFragment();
@@ -113,12 +113,12 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
                         Log.e("onChanged", "onChanged: "+aBoolean);
                     }
                 });
-        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
-        if (!blockName.isEmpty()) {
-            binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
-            binding.ivDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
-            binding.tvDivide.setText(blockName);
-        }
+//        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
+//        if (!blockName.isEmpty()) {
+//            binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
+//            binding.ivDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
+//            binding.tvDivide.setText(blockName);
+//        }
     }
 
     private void initPage() {
@@ -188,7 +188,8 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         }
         binding.approvalList.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        loadPagingData(viewModel.getData(1,10,"",blockName,"","",""),tabId);
+//        loadPagingData(viewModel.getData(1,10,"",blockName,"","",""),tabId);
+        loadPagingData(viewModel.getData(1,10,"","","","",""),tabId);
     }
 
     private String  getTypeValue(String auditType ,String auditSubType) {

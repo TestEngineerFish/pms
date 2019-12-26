@@ -2,8 +2,9 @@ package com.einyun.app.base.db.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "checkpoints",primaryKeys = {"id","userId"})
+@Entity(tableName = "checkpoints")
 public class CheckPoint {
     @NonNull
     private String id;
@@ -21,7 +22,8 @@ public class CheckPoint {
     private String specificLocation;
     private int isPic;
     private String resourceName;
-
+    @PrimaryKey(autoGenerate = true)
+    private int id_;
     @NonNull
     public String getId() {
         return id;
@@ -46,6 +48,14 @@ public class CheckPoint {
 
     public void setCheckRecordCode(String checkRecordCode) {
         this.checkRecordCode = checkRecordCode;
+    }
+
+    public int getId_() {
+        return id_;
+    }
+
+    public void setId_(int id_) {
+        this.id_ = id_;
     }
 
     public String getMassifId() {

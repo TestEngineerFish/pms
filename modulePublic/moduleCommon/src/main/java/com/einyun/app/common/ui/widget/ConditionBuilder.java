@@ -38,7 +38,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
 
 public class ConditionBuilder {
     public static final String RESULT_YES = "1";
-    public static final String RESULT_NO = "2";
+    public static final String RESULT_NO = "0";
     public static final String TIME_CIRCLE_ONE = "3";
     public static final String TIME_CIRCLE_TWO = "4";
     public static final String TIME_CIRLE_THREE = "5";

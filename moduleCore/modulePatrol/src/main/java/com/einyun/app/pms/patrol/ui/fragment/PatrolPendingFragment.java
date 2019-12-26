@@ -283,7 +283,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         String gridId = selected.get(SELECT_GRID) == null ? null : selected.get(SELECT_GRID).getId();
         String budingId = selected.get(SELECT_BUILDING) == null ? null : selected.get(SELECT_BUILDING).getId();
         String unitId = selected.get(SELECT_UNIT) == null ? null : selected.get(SELECT_UNIT).getId();
-        request.setDivideId(selected.get(SELECT_LINE)==null?null:selected.get(SELECT_LINE).getKey());
+        request.setTxId(selected.get(SELECT_LINE)==null?null:selected.get(SELECT_LINE).getKey());
         request.setTypeId(selected.get(SELECT_LINE_TYPES)==null?null:selected.get(SELECT_LINE_TYPES).getKey());
         request.setPeriod(selected.get(SELECT_DATE)==null?null:selected.get(SELECT_DATE).getKey());
         request.setTimeout(selected.get(SELECT_IS_OVERDUE)==null?null:selected.get(SELECT_IS_OVERDUE).getKey());

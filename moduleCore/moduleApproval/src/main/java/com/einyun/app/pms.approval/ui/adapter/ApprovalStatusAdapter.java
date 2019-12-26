@@ -50,7 +50,9 @@ public class ApprovalStatusAdapter extends BaseAdapter {
         if (position== CustomPopWindow.mApprovalStatusPosition) {
 
             hodler.textview.setBackgroundResource(R.drawable.iv_pop_item_choise);
+            hodler.textview.setTextColor(context.getResources().getColor(R.color.blueTextColor));
         }else {
+            hodler.textview.setTextColor(context.getResources().getColor(R.color.blackTextColor));
             hodler.textview.setBackgroundResource(R.drawable.shape_line);
         }
             hodler.textview.setText(approvalAuditStateModule.get(position).getName());

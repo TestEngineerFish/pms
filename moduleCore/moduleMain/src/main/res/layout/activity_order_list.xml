@@ -43,7 +43,7 @@
                 android:layout_marginLeft="@dimen/px_30"
                 android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp">
+                app:cardElevation="0.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
