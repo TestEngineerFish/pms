@@ -70,6 +70,8 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
     private int mPosition=-1;
     private String cate="";
     private String blockName;
+    private InquiriesTypeSelectPopWindow inquiriesTypeSelectPopWindow;
+    private PeriodizationView periodizationView;
 
     public static CustomerInquiriesViewModuleFragment newInstance(Bundle bundle) {
         CustomerInquiriesViewModuleFragment fragment = new CustomerInquiriesViewModuleFragment();
@@ -267,18 +269,27 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 
             return;
         }
-        InquiriesTypeSelectPopWindow inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
+        if (inquiriesTypeSelectPopWindow==null) {
+            inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
+        }
         inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
-        inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
+        if (!inquiriesTypeSelectPopWindow.isShowing()) {
+            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
+        }
     }
     /*
      * 分期按钮点击
      * */
     public void onPlotClick(){
         //弹出分期view
-        PeriodizationView periodizationView=new PeriodizationView();
-        periodizationView.setPeriodListener(CustomerInquiriesViewModuleFragment.this::onPeriodSelectListener);
-        periodizationView.show(getActivity().getSupportFragmentManager(),"");
+        if (periodizationView==null) {
+
+            periodizationView = new PeriodizationView();
+        }
+        if (!periodizationView.isVisible()) {
+            periodizationView.setPeriodListener(CustomerInquiriesViewModuleFragment.this::onPeriodSelectListener);
+            periodizationView.show(getActivity().getSupportFragmentManager(),"");
+        }
     }
     /**
      *分期返回

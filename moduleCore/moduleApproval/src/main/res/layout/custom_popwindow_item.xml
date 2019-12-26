@@ -9,6 +9,7 @@
             android:id="@+id/tv_content"
             android:text="修改计划"
             android:gravity="center"
+            android:textColor="@color/blackTextColor"
             android:layout_width="108dp"
             android:layout_height="30dp"
             android:textSize="@dimen/font_size14" />
