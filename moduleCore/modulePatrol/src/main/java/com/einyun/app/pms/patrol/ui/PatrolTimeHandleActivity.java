@@ -76,11 +76,12 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     @Override
     protected void switchStateUI() {
         super.switchStateUI();
-        hideRightOption();
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
+        binding.llPatrolRoadName.setVisibility(View.VISIBLE);
+        binding.llPatrolRoadDuration.setVisibility(View.VISIBLE);
     }
 
     @Override

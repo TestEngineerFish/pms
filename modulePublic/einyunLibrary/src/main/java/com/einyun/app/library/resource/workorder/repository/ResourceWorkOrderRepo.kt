@@ -366,7 +366,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     }
 
     override fun distributeReply(request: WorkOrderHanlerRequest, callBack: CallBack<Boolean>) {
-        serviceApi?.distribteReply(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.distribteReply(request.taskId!!)?.compose(RxSchedulers.inIo())
             ?.subscribe(
                 {
                     callBack.call(it.isState)

@@ -5,6 +5,7 @@
 
 
     <data>
+
         <variable
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
@@ -14,9 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginTop="@dimen/px_10"
         android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_10"
-        android:layout_marginTop="@dimen/px_10"
         android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
@@ -66,9 +67,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
+                    android:text="@{repairs.data.customer_repair_model.return_time}"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"
-                    android:text="@{repairs.data.customer_repair_model.return_time}"/>
+                    android:textSize="@dimen/font_size14" />
 
             </LinearLayout>
 
@@ -85,26 +86,21 @@
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size14" />
 
-                <RadioGroup
+
+                <ImageView
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:padding="@dimen/px_5"
+                    app:isSolve="@{repairs.data.customer_repair_model.c_is_solve}" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:padding="@dimen/px_5"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14"
+                    app:isSolve="@{repairs.data.customer_repair_model.c_is_solve}" />
 
-                    <ImageView
-                        android:layout_width="@dimen/px_30"
-                        android:layout_height="@dimen/px_30"
-                        android:padding="@dimen/px_5" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/px_5"
-                        android:text="@{repairs.data.customer_repair_model.handle_result}"
-                        android:textColor="@color/txt_black_order"
-                        android:textSize="@dimen/font_size14"/>
-
-                </RadioGroup>
 
             </LinearLayout>
 
@@ -157,9 +153,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
+                    android:text="@{repairs.data.customer_repair_model.service_attitude_content}"
                     android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"
-                    android:text="@{repairs.data.customer_repair_model.service_attitude_content}"/>
+                    android:textSize="@dimen/font_size14" />
 
             </LinearLayout>
 
@@ -203,8 +199,8 @@
                 <TextView
                     android:layout_width="@dimen/px_176"
                     android:layout_height="wrap_content"
-                    android:text="不满意原因"
                     android:layout_gravity="center_vertical"
+                    android:text="不满意原因"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size14" />
 

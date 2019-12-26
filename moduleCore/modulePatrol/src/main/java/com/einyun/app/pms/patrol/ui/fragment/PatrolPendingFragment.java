@@ -50,7 +50,11 @@ import java.util.Map;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_DATE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_GRID;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_IS_OVERDUE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_LINE_TYPES;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
 
 /**
@@ -192,10 +196,10 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                             ConditionBuilder builder = new ConditionBuilder();
                             List<SelectModel> conditions = builder
                                     .addDivideGrid(divideGrid) //网格-楼栋-单元
-                                    .addLines(data.getLines())//条线
+                                    .addLineTypesItem(data.getListLineTypes())
+                                    .addItem(SELECT_DATE)
                                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                                     .mergeLineRes(data.getResources())
-                                    .addLineTypesItem(data.getListLineTypes())
                                     .build();
                            selectPopUpView= new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
                                 @Override
@@ -253,7 +257,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                     return R.layout.item_work_patrol;
                 }
             });
-            searchFragment.setHint("请搜索工单编号或计划名称");
+            searchFragment.setHint("请输入工单编号或计划名称");
         }
         searchFragment.show(getActivity().getSupportFragmentManager(), "");
     }
@@ -279,9 +283,14 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         String gridId = selected.get(SELECT_GRID) == null ? null : selected.get(SELECT_GRID).getId();
         String budingId = selected.get(SELECT_BUILDING) == null ? null : selected.get(SELECT_BUILDING).getId();
         String unitId = selected.get(SELECT_UNIT) == null ? null : selected.get(SELECT_UNIT).getId();
+        request.setDivideId(selected.get(SELECT_LINE)==null?null:selected.get(SELECT_LINE).getKey());
+        request.setTypeId(selected.get(SELECT_LINE_TYPES)==null?null:selected.get(SELECT_LINE_TYPES).getKey());
+        request.setPeriod(selected.get(SELECT_DATE)==null?null:selected.get(SELECT_DATE).getKey());
+        request.setTimeout(selected.get(SELECT_IS_OVERDUE)==null?null:selected.get(SELECT_IS_OVERDUE).getKey());
         request.setGridId(gridId);
         request.setBuildingId(budingId);
         request.setUnitId(unitId);
+
     }
 
     @Override

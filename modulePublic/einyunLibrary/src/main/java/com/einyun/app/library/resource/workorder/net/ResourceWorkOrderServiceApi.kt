@@ -139,8 +139,8 @@ interface ResourceWorkOrderServiceApi {
     /**
      * 派工单批复
      */
-    @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_REPLY)
-    fun distribteReply(@Body request: WorkOrderHanlerRequest): Flowable<BaseResponse<Any>>
+    @GET(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_REPLY)
+    fun distribteReply(@Path("taskId") taskId:String): Flowable<BaseResponse<Any>>
 
     /**
      * 派工单处理

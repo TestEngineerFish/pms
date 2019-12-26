@@ -194,15 +194,15 @@
         <item name="android:elevation" tools:targetApi="lollipop">@dimen/px_10</item>
     </style>
 
-    <style name="work_order_detail_ln">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:minHeight">@dimen/px_80</item>
-        <item name="android:background">@color/white</item>
+<!--    <style name="work_order_detail_ln">-->
+<!--        <item name="android:gravity">center_vertical</item>-->
+<!--        <item name="android:layout_width">match_parent</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:orientation">horizontal</item>-->
+<!--        <item name="android:minHeight">@dimen/px_80</item>-->
+<!--        <item name="android:background">@color/white</item>-->
 
-    </style>
+<!--    </style>-->
     <style name="work_order_detail_txt_left">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">@dimen/px_176</item>
@@ -214,15 +214,15 @@
         <item name="android:layout_marginRight">@dimen/px_30</item>
         <item name="android:textColor">@color/normal_main_text_icon_color</item>
     </style>
-    <style name="work_order_detail_txt_right">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_weight">1</item>
-    <item name="android:minHeight">@dimen/px_80</item>
-    <item name="android:textSize">@dimen/font_size14</item>
-    <item name="android:textColor">@color/txt_black_order</item>
-</style>
+<!--    <style name="work_order_detail_txt_right">-->
+<!--    <item name="android:layout_width">wrap_content</item>-->
+<!--    <item name="android:layout_gravity">center_vertical</item>-->
+<!--    <item name="android:layout_height">wrap_content</item>-->
+<!--    <item name="android:layout_weight">1</item>-->
+<!--    <item name="android:minHeight">@dimen/px_80</item>-->
+<!--    <item name="android:textSize">@dimen/font_size14</item>-->
+<!--    <item name="android:textColor">@color/txt_black_order</item>-->
+<!--</style>-->
     <!--工单列表首页样式-->
     <style name="order_list_main" parent="base_style">
         <item name="android:layout_width">@dimen/px_0</item>
@@ -268,15 +268,15 @@
         <item name="android:textColor">@color/main_color</item>
         <item name="android:textSize">18sp</item>
     </style>
-    <style name="work_order_detail_left_txt">
-        <item name="android:layout_width">@dimen/px_176</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/px_20</item>
-        <item name="android:textSize">@dimen/font_size14</item>
-        <item name="android:layout_marginLeft">@dimen/px_20</item>
-        <item name="android:layout_marginRight">@dimen/px_30</item>
-        <item name="android:textColor">@color/normal_main_text_icon_color</item>
-    </style>
+<!--    <style name="work_order_detail_left_txt">-->
+<!--        <item name="android:layout_width">@dimen/px_176</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:layout_marginTop">@dimen/px_20</item>-->
+<!--        <item name="android:textSize">@dimen/font_size14</item>-->
+<!--        <item name="android:layout_marginLeft">@dimen/px_20</item>-->
+<!--        <item name="android:layout_marginRight">@dimen/px_30</item>-->
+<!--        <item name="android:textColor">@color/normal_main_text_icon_color</item>-->
+<!--    </style>-->
 
     <style name="style_text_approval_left">
         <item name="android:layout_centerVertical">true</item>
@@ -345,5 +345,25 @@
         <item name="android:textSize">@dimen/font_size16</item>
         <item name="android:textStyle">bold</item>
         <item name="android:elevation" tools:targetApi="lollipop">@dimen/px_10</item>
+    </style>
+    <style name="work_order_detail_left_txt">
+        <item name="android:layout_width">@dimen/px_176</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+    </style>
+    <style name="work_order_detail_ln">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/px_20</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="work_order_detail_txt_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:textColor">@color/txt_black_order</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
     </style>
 </resources>

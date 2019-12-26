@@ -16,7 +16,7 @@ public class DoneBoundaryCallBack extends PendingBoundaryCallBack {
         workOrderService.planClosedPage((DistributePageRequest) request, new CallBack<PlanWorkOrderPage>() {
             @Override
             public void call(PlanWorkOrderPage data) {
-                onDataLoaded(dataType,data,callBack);
+                onDataLoaded(dataType,listType,data,callBack);
             }
 
             @Override

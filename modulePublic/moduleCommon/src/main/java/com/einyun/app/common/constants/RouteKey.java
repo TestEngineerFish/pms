@@ -95,5 +95,11 @@ public class RouteKey {
     public static final String KEY_PAID="1";
     //无偿
     public static final String KEY_NOT_PAID="0";
+    //已解决
+    public static final int KEY_IS_SOLVED=1;
+    //未解决
+    public static final int KEY_NO_SOLVED=0;
+
+
 
 }

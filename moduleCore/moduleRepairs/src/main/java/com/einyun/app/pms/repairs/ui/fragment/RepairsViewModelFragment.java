@@ -130,6 +130,12 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        loadPagingData();
+    }
+
+    @Override
     protected void setUpView() {
         binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -198,6 +204,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                                                     viewModel.refreshUI();
                                                 }
                                             }).show();
+                                    loadPagingData();
 
                                 } else {
                                     new AlertDialog(getActivity()).builder().setTitle(getResources().getString(R.string.tip))

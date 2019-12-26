@@ -335,6 +335,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     @Override
     protected void onResume() {
         super.onResume();
+        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
+            updateUI(repairsDetail);
+            saveHandleRequest = new SaveHandleRequest(orderId, detialModel.getData().getCustomer_repair_model());
+        });
     }
 
     @Override
@@ -414,12 +418,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairLateInfo.getRoot().setVisibility(View.VISIBLE);
             if (detialModel.getDelayInfo().getAttachment() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
-                binding.repairLateInfo.repairOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
+                /*binding.repairLateInfo.repairOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
                 binding.repairLateInfo.repairOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18, 0, 0, 0));
-                binding.repairLateInfo.repairOrderPostponePicList.setAdapter(adapter);
+                binding.repairLateInfo.repairOrderPostponePicList.setAdapter(adapter);*/
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(detialModel.getDelayInfo().getAttachment());
                 adapter.updateList(modelList);
@@ -618,6 +622,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
                 binding.repairEvaluate.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
@@ -713,6 +718,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             return;
         }
     }
+
 
     /**
      * 处理评价request

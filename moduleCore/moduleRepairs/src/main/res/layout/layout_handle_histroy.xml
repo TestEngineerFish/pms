@@ -61,7 +61,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="加载更多"
-                    android:textColor="@color/blueTextColor"
+                    android:textColor="@color/material_add_material_color"
                     android:textSize="@dimen/font_size14" />
                 <ImageView
                     android:id="@+id/handle_arrow"
