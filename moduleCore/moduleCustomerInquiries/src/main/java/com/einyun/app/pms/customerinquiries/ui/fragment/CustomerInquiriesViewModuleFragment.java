@@ -124,13 +124,13 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                         Log.e("onChanged", "onChanged: "+aBoolean);
                     }
                 });
-        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
-        divideId = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
-        if (!blockName.isEmpty()) {
-            binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
-            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
-            binding.tvDivide.setText(blockName);
-        }
+//        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
+//        divideId = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
+//        if (!blockName.isEmpty()) {
+//            binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
+//            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
+//            binding.tvDivide.setText(blockName);
+//        }
     }
 
     @Override

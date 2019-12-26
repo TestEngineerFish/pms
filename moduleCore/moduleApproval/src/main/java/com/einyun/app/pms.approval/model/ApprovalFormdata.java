@@ -319,6 +319,9 @@ public class ApprovalFormdata {
     }
 
     public String getApplicationDescription() {
+        if (applicationDescription==null) {
+            applicationDescription=apply_reason;
+        }
         return applicationDescription == null ? "" : applicationDescription;
     }
 
