@@ -21,7 +21,7 @@ class URLs {
         //待审批数量
         const val URL_APPROVAL_PENDING_NUMS:String= "/$DOMAIN/workOrder/task/v1/getUserAuditCount"
         //获取用户待办工单的数量(GET)
-        const val URL_BACKLOG_NUMS:String= "/$DOMAIN/workOrder/task/v1/getMapByUcDivKeys?defKeys=customer_repair_flow,customer_enquiry_flow,customer_complain_flow"
+        const val URL_BACKLOG_NUMS:String= "/$DOMAIN/workOrder/task/v1/getMapByUcDivKeys?defKeys=customer_complain_flow,customer_repair_flow,customer_enquiry_flow"
 
         // 客户投诉列表 待跟进
         const val URL_COMPLAIN_FLOW_PENDING:String="/$DOMAIN/workOrder/task/v1/getTodoListAliaForApp/customer_complain_flow/NORMAL,DELIVERTO"

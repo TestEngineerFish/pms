@@ -143,23 +143,37 @@ public class ConditionBuilder {
         if (!selectModelMap.containsKey(SELECT_LINE_TYPES)) {
             if(data!=null){
                 SelectModel lineAndTypes=new SelectModel();
-                lineAndTypes.setType(CommonApplication.getInstance().getString(R.string.text_line_types));
+                lineAndTypes.setGrade(0);
+                lineAndTypes.setType(CommonApplication.getInstance().getString(R.string.tv_tiao_line));
                 lineAndTypes.setConditionType(SELECT_ROOT);
-                List<SelectModel> children=new ArrayList<>();
-                for(LineType lineType:data){
-                    SelectModel model=new SelectModel();
-                    model.setConditionType(SELECT_LINE_TYPES);
-                    model.setContent(lineType.getName());
-                    model.setKey(lineType.getKey());
-                    model.setId(lineType.getId());
-                    children.add(model);
-                }
-                lineAndTypes.setSelectModelList(children);
+                setLineAndTypeChildren(lineAndTypes,data);
                 conditions.add(lineAndTypes);
                 selectModelMap.put(SELECT_LINE_TYPES,lineAndTypes);
             }
         }
         return this;
+    }
+
+    public void setLineAndTypeChildren(SelectModel selectModel,List<LineType> childs){
+        if(childs!=null){
+            List<SelectModel> models=new ArrayList<>();
+            for(LineType type:childs){
+                SelectModel model=new SelectModel();
+                model.setGrade(selectModel.getGrade()+1);
+                if(model.getGrade()==1){
+                    model.setConditionType(SELECT_LINE);
+                    model.setType(CommonApplication.getInstance().getResources().getString(R.string.text_type));
+                }else if(model.getGrade()==2){
+                    model.setConditionType(SELECT_LINE_TYPES);
+                }
+                model.setKey(type.getKey());
+                model.setId(type.getKey());
+                model.setContent(type.getName());
+                models.add(model);
+                setLineAndTypeChildren(model,type.getChildren());
+            }
+            selectModel.setSelectModelList(models);
+        }
     }
 
     /**
