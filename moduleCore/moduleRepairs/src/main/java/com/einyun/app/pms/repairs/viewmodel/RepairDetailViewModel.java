@@ -9,6 +9,7 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.WorkOrderService;
@@ -21,7 +22,7 @@ import com.einyun.app.library.workorder.net.request.SaveHandleRequest;
 
 import java.util.List;
 
-public class RepairDetailViewModel extends BaseUploadViewModel {
+public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
 
     private WorkOrderService workOrderService;
     private DictService dictService;

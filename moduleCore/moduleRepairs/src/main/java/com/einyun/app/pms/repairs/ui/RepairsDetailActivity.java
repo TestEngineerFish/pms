@@ -28,9 +28,11 @@ import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -44,6 +46,7 @@ import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.net.request.RepairSendOrderRequest;
@@ -98,7 +101,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     static final String HANDLE_PAID = "1";//有偿
     static final String HANDLE_NO_PAID = "0";//无偿
     RepairsDetailModel.DataBean.CustomerRepairModelBean customerRepair;
-
+    private IsClosedRequest isClosedRequest;
     @Override
     protected RepairDetailViewModel initViewModel() {
         return new ViewModelProvider(this, new ViewModelFactory()).get(RepairDetailViewModel.class);
@@ -276,7 +279,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
                 return;
             }
-            Matisse.from(this) //加号添加图片
+            Matisse.from(this) //加号添加图片zf
                     .choose(MimeType.ofImage())
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
@@ -618,6 +621,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             }
+            ifApplyClose();
             return;
         }
         //处理状态
@@ -636,6 +640,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
                 binding.handleSaveSubmit.setVisibility(View.VISIBLE);
             }
+            ifApplyClose();
             return;
         }
         //待评价状态
@@ -688,6 +693,27 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             return;
         }
 
+
+    }
+
+    /**
+     * 判断是否有闭单申请
+     * */
+    private void ifApplyClose(){
+        isClosedRequest=new IsClosedRequest(orderId,WorkOrder.FORCE_CLOSE_REPAIR);
+        viewModel.isClosed(isClosedRequest).observe(this,model->{
+            if (!model.isClosed()){
+                binding.repairDetailSubmit.setVisibility(View.GONE);
+                binding.handleSaveSubmit.setVisibility(View.GONE);
+                binding.repairHandlePaid.getRoot().setVisibility(View.GONE);
+                binding.repairUseMaterial.getRoot().setVisibility(View.GONE);
+                binding.repariResponse.getRoot().setVisibility(View.GONE);
+                binding.repairClosePostpone.getRoot().setVisibility(View.GONE);
+                binding.repairHandleResult.getRoot().setVisibility(View.GONE);
+                binding.repairsInfo.repairReportAppointChange.setVisibility(View.GONE);
+                binding.repairHandle.getRoot().setVisibility(View.GONE);
+            }
+        });
 
     }
 

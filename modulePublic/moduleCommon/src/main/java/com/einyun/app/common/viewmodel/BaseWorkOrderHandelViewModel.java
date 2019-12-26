@@ -1,5 +1,7 @@
 package com.einyun.app.common.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -70,6 +72,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
           workOrderService.isClosed(request, new CallBack<Boolean>() {
                @Override
                public void call(Boolean data) {
+                    Log.d("Test",data+"");
                     isClosedLiveData.postValue(new IsClosedState(data,request.getType()));
                }
 

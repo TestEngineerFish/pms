@@ -400,7 +400,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             });
         }
     }
-
     /**
      * 提交处理
      */
