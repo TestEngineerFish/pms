@@ -55,4 +55,6 @@ dependencies {
     annotationProcessor deps.lifecycle.compiler
     annotationProcessor deps.room.compiler
     annotationProcessor deps.arouter_compiler
+    api deps.permission_dispatcher
+    annotationProcessor deps.permission_dispatcher_processor
 }

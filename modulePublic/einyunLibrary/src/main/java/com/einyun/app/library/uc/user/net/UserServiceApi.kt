@@ -3,9 +3,11 @@ package com.einyun.app.library.uc.user.net
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.uc.user.net.request.ChangePwdRequest
 import com.einyun.app.library.uc.user.net.request.LoginRequest
+import com.einyun.app.library.uc.user.net.request.UpdateAppRequest
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.uc.user.net.response.LoginResponse
 import com.einyun.app.library.uc.user.net.response.TentantResponse
+import com.einyun.app.library.uc.user.net.response.UpdateAppResponse
 import com.einyun.app.library.uc.user.net.response.UserResponse
 import io.reactivex.Flowable
 import retrofit2.http.*
@@ -91,4 +93,7 @@ interface UserServiceApi {
      */
     @PUT(URLs.URL_UC_UPDATE_USER)
     fun updateUserInfo(@Body request: UpdateUserRequest): Flowable<BaseResponse<Any>>
+
+    @POST(URLs.URL_APP_UPDATE)
+    fun updateApp(@Body updateAppRequest: UpdateAppRequest):Flowable<UpdateAppResponse>
 }

@@ -20,6 +20,7 @@ import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
@@ -96,7 +97,29 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         binding.save.setOnClickListener(this);
         binding.layoutReportComplainInfo.llComplainType2.setOnClickListener(this);
         binding.layoutReportComplainInfo.llComplainNature2.setOnClickListener(this);
+        viewModel.isClosedLiveData.observe(this, isClosedState -> {
+            if(isClosedState.isClosed()){
+                if(isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PATROL)){
+                    navigatApply(RouterUtils.ACTIVITY_PATROL_FORCE_CLOSE);//强制关闭
+                }else if(isClosedState.getType().equals(WorkOrder.POSTPONED_PATROL)){
+                    navigatApply(RouterUtils.ACTIVITY_PATROL_POSTPONE);//申请延期
+                }
+            }else{
+                ToastUtil.show(CommonApplication.getInstance(),R.string.text_applying_wait);
+            }
+        });
         fresh();
+    }
+
+    private void navigatApply(String activityPatrolForceClose) {
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, id)
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_COMPLAIN)
+                .withString(RouteKey.KEY_DIVIDE_ID, detail.getF_ts_dk_id())
+                .withString(RouteKey.KEY_DIVIDE_NAME, detail.getF_ts_dk())
+                .withString(RouteKey.KEY_MID_URL, RouteKey.KEY_MID_URL_COMPLAIN)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .navigation();
     }
 
     private void fresh() {
@@ -495,32 +518,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             IsClosedRequest request = new IsClosedRequest();
             request.setId(id);
             request.setType(WorkOrder.POSTPONED_COMPLAIN);
-            viewModel.isClosed(request).observe(this, isClosedState -> {
-                if (isClosedState.isClosed()) {
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, id)
-                            .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                            .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_COMPLAIN)
-                            .withString(RouteKey.KEY_DIVIDE_ID, detail.getF_ts_dk_id())
-                            .withString(RouteKey.KEY_DIVIDE_NAME, detail.getF_ts_dk())
-                            .navigation();
-                } else {
-                    ToastUtil.show(this, "正在审批中");
-                }
-            });
+            viewModel.isClosed(request);
         }
         if (v.getId() == R.id.ll_close) {
             IsClosedRequest request = new IsClosedRequest();
             request.setId(id);
             request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
-            viewModel.isClosed(request).observe(this, isClosedState -> {
-                if (isClosedState.isClosed()) {
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString(RouteKey.KEY_MID_URL, RouteKey.KEY_MID_URL_COMPLAIN)
-                            .withString(RouteKey.KEY_TASK_ID, taskId)
-                            .navigation();
-                } else {
-                    ToastUtil.show(this, "正在审批中");
-                }
-            });
+            viewModel.isClosed(request);
         }
     }
 
