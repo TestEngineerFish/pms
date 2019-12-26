@@ -31,4 +31,6 @@ class PatrolPageRequest :PageRquest(){
     var searchValue: String? = null
     @SerializedName("F_type_id")
     var typeId:String?=null
+    @SerializedName("F_line_code")
+    var txId:String?=null
 }

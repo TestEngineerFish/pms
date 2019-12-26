@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/px_5"
         android:visibility="visible"
         app:cardBackgroundColor="@color/white"
-        app:cardElevation="0dp"
+        app:cardElevation="0.5dp"
         app:cardCornerRadius="@dimen/px_10">
 
         <LinearLayout
