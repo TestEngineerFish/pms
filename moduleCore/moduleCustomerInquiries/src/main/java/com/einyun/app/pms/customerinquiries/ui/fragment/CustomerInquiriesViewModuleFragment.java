@@ -269,9 +269,8 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 
             return;
         }
-        if (inquiriesTypeSelectPopWindow==null) {
-            inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
-        }
+
+        inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
         inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
         if (!inquiriesTypeSelectPopWindow.isShowing()) {
             inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
