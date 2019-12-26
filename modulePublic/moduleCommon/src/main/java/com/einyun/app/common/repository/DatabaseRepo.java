@@ -58,9 +58,13 @@ public abstract class DatabaseRepo<T> implements IDatabaseRepo<T>{
     }
 
     @Override
-    public void persistence(List<T> rows,String userId, int dataType){
+    public void persistence(List<T> rows,String userId,int listType, int dataType){
         if (dataType == DATA_TYPE_INIT) {//初始化清空数据
-            deleteAll(userId);
+            if(listType<0){
+                deleteAll(userId);
+            }else{
+                deleteAll(userId,listType);
+            }
         }
         insert(rows);//追加数据
     }

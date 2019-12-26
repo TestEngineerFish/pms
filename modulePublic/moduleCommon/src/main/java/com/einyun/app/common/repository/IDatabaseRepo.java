@@ -12,5 +12,5 @@ public interface IDatabaseRepo<T> {
     void deleteAll(String userId,int listType);
     void insert(List<T> rows);
     DataSource.Factory<Integer, T> queryAll(@NonNull String userId, int listype);
-    void persistence(List<T> rows,String userId, int dataType);
+    void persistence(List<T> rows,String userId, int listType,int dataType);
 }

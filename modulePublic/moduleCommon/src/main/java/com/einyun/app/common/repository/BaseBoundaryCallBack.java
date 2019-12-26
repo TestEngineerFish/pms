@@ -116,5 +116,5 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
         });
     }
 
-    protected abstract void onDataLoaded(int dataType, PageResult data, CallBack<Integer> callBack);
+    protected abstract void onDataLoaded(int dataType,int listType, PageResult data, CallBack<Integer> callBack);
 }

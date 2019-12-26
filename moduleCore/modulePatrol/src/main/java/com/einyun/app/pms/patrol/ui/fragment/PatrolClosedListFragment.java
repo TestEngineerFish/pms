@@ -50,6 +50,13 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
             binding.swiperefresh.setRefreshing(false);
             viewModel.refreshClosedList();
         });
+        binding.panelCondition.search.setVisibility(View.VISIBLE);
+        binding.panelCondition.search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
     }
 
     protected void loadData() {
