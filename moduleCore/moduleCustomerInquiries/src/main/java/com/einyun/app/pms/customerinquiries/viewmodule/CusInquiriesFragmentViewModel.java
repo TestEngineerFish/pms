@@ -31,73 +31,6 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 
 public class CusInquiriesFragmentViewModel extends BasePageListViewModel<InquiriesItemModule> {
     public String currentFragmentTag=FRAGMENT_TO_FOLLOW_UP;
-    public List<SelectModel> listAll = new ArrayList<>();
-    private MutableLiveData<List<WorkOrderTypeModel>> workOrderTypeList = new MutableLiveData<>();//条线
-    private ResourceWorkOrderRepo resourceWorkOrderRepo;
-    public List<ResourceTypeBean> resourceTypeBeans = new ArrayList<>();
-    private MutableLiveData<List<ResourceTypeBean>> tiaoxianList = new MutableLiveData<>();//条线
-    /**
-     * 获取跳线 LiveData
-     *
-     * @return LiveData
-     */
-    public LiveData<List<WorkOrderTypeModel>> getOrderType() {
-        showLoading();
-        resourceWorkOrderService.getWorkOrderType(new CallBack<List<WorkOrderTypeModel>>() {
-            @Override
-            public void call(List<WorkOrderTypeModel> data) {
-                hideLoading();
-                workOrderTypeList.postValue(data);
-                //先获取第一级别，并将其他级别按照parentid分组
-                listAll = new ArrayList<>();
-                for (WorkOrderTypeModel beanLoop : data) {
-                    SelectModel selectModel = new SelectModel();
-                    selectModel.setId(beanLoop.getId());
-                    selectModel.setIsCheck(false);
-                    selectModel.setContent(beanLoop.getText());
-                    selectModel.setType("");
-                    selectModel.setTypeId(beanLoop.getTypeId());
-                    selectModel.setKey(beanLoop.getKey());
-                    selectModel.setName(beanLoop.getName());
-                    selectModel.setParentId(beanLoop.getParentId());
-                    selectModel.setOpen(beanLoop.getOpen());
-                    selectModel.setText(beanLoop.getText());
-                    selectModel.setKey(beanLoop.getKey());
-                    listAll.add(selectModel);
-                }
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-
-            }
-        });
-
-        return workOrderTypeList;
-    }
-    /**
-     * 获取跳线 LiveData
-     *
-     * @return LiveData
-     */
-    public LiveData<List<ResourceTypeBean>> getTiaoXian() {
-        showLoading();
-        resourceWorkOrderRepo.getTiaoXian(new CallBack<List<ResourceTypeBean>>() {
-            @Override
-            public void call(List<ResourceTypeBean> data) {
-                hideLoading();
-                tiaoxianList.postValue(data);
-                resourceTypeBeans = new ArrayList<>();
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-
-            }
-        });
-
-        return tiaoxianList;
-    }
     /**
      * 获取Paging LiveData
      * @return LiveData
@@ -111,7 +44,6 @@ public class CusInquiriesFragmentViewModel extends BasePageListViewModel<Inquiri
 
         return pageList;
     }
-    ResourceWorkOrderService resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     CustomerInquiriesRepository repository= new CustomerInquiriesRepository();
     private MutableLiveData<List<InquiriesTypesBean>> detialType=new MutableLiveData<>();
     public LiveData<List<InquiriesTypesBean>> queryAduitType(){
@@ -121,22 +53,6 @@ public class CusInquiriesFragmentViewModel extends BasePageListViewModel<Inquiri
             public void call(List<InquiriesTypesBean> data) {
                 hideLoading();
                 detialType.postValue(data);
-                listAll = new ArrayList<>();
-                for (InquiriesTypesBean beanLoop : data) {
-                    SelectModel selectModel = new SelectModel();
-                    selectModel.setId(beanLoop.getId());
-                    selectModel.setIsCheck(false);
-                    selectModel.setContent("问询类别");
-                    selectModel.setType("");
-                    selectModel.setTypeId(beanLoop.getId());
-                    selectModel.setKey(beanLoop.getDataKey());
-                    selectModel.setName(beanLoop.getDataName());
-                    selectModel.setParentId("");
-                    selectModel.setOpen("");
-                    selectModel.setText(beanLoop.getDataName());
-                    selectModel.setKey(beanLoop.getDataKey());
-                    listAll.add(selectModel);
-                }
             }
 
             @Override

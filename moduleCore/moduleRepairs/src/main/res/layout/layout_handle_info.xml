@@ -79,7 +79,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.handle_man_hour}" />
+                android:text="@{repairs.data.customer_repair_model.handle_man_hour+@string/text_padding_empty}" />
         </LinearLayout>
 
         <View
@@ -154,12 +154,11 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="材料费(元)" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                android:text="@{repairs.data.customer_repair_model.material_cost+@string/text_padding_empty}" />
         </LinearLayout>
 
         <LinearLayout
@@ -173,7 +172,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                android:text="@{repairs.data.customer_repair_model.artificial_cost+@string/text_padding_empty}" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,7 +186,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                android:text="@{repairs.data.customer_repair_model.handle_fee+@string/text_padding_empty}" />
         </LinearLayout>
 
         <LinearLayout
@@ -201,7 +200,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                android:text="@{repairs.data.customer_repair_model.Handle_pay_type}" />
         </LinearLayout>
 
         <LinearLayout
@@ -210,12 +209,11 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:layout_marginTop="@dimen/px_30"
                 android:text="付款日期" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                android:text="@{repairs.data.customer_repair_model.handle_pay_time+@string/text_padding_empty}" />
         </LinearLayout>
 
         <LinearLayout
@@ -229,7 +227,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.bx_time}" />
+                android:text="@{repairs.data.customer_repair_model.joint_processor}" />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">

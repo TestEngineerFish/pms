@@ -10,16 +10,19 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.pms.customerinquiries.R;
+import com.einyun.app.pms.customerinquiries.constants.Constants;
 import com.einyun.app.pms.customerinquiries.databinding.ActivityFeedbackViewModuleBinding;
 import com.einyun.app.pms.customerinquiries.model.FeedBackModule;
 import com.einyun.app.pms.customerinquiries.model.FeedBackRequest;
 import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewModelFactory;
 import com.einyun.app.pms.customerinquiries.viewmodule.FeedBackViewModel;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.util.List;
 
@@ -99,6 +102,7 @@ String taskID;
         viewModel.feedBack(feedBackRequest).observe(this,module->{
             Log.e("model", "initData: "+module );
             if (module) {
+                LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                 finish();
             }else {
                 ToastUtil.show(this, "反馈失败");

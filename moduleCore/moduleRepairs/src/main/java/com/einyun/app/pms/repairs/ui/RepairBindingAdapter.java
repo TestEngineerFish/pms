@@ -66,4 +66,34 @@ public class RepairBindingAdapter {
         }
 
     }
+
+    @BindingAdapter("isSolve")
+    public static void isSolve(TextView view,Integer value){
+        if (value==null){
+            return;
+        }
+        if (value==(RouteKey.KEY_IS_SOLVED)){
+            view.setText(R.string.tv_had_solve);
+            return;
+        }
+        if (value==(RouteKey.KEY_NO_SOLVED)){
+            view.setText(R.string.tv_un_solve);
+            return;
+        }
+    }
+
+    @BindingAdapter("isSolve")
+    public static void isSolve(ImageView view,Integer value){
+        if (value==null){
+            return;
+        }
+        if (value.equals(RouteKey.KEY_IS_SOLVED)){
+            view.setImageResource(R.drawable.iv_solve);
+            return;
+        }
+        if (value.equals(RouteKey.KEY_NO_SOLVED)){
+            view.setImageResource(R.drawable.iv_un_solve);
+            return;
+        }
+    }
 }
