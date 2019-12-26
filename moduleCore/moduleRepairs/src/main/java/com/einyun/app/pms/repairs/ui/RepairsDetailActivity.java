@@ -125,7 +125,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         });
         //添加材料
         LiveEventBus.get(LiveDataBusKey.POST_REPAIR_ADD_MATERIAL, RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean.class).observe(this, model -> {
-            if (detialModel != null) {
+            if (detialModel                                                       != null) {
                 detialModel.getData().getCustomer_repair_model().getSub_repair_materials().add(model);
                 materialAdapter.setDataList(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
             }
@@ -335,10 +335,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
+       /* viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
             updateUI(repairsDetail);
             saveHandleRequest = new SaveHandleRequest(orderId, detialModel.getData().getCustomer_repair_model());
-        });
+        });*/
     }
 
     @Override
@@ -418,16 +418,29 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairLateInfo.getRoot().setVisibility(View.VISIBLE);
             if (detialModel.getDelayInfo().getAttachment() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
-                /*binding.repairLateInfo.repairOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
+                binding.repairLateInfo.repairOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
                 binding.repairLateInfo.repairOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18, 0, 0, 0));
-                binding.repairLateInfo.repairOrderPostponePicList.setAdapter(adapter);*/
+                binding.repairLateInfo.repairOrderPostponePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(detialModel.getDelayInfo().getAttachment());
                 adapter.updateList(modelList);
             }
+        }
+        //处理信息图片
+        if (customerRepair.getHandle_attach()!=null){
+            PhotoListAdapter adapter = new PhotoListAdapter(this);
+            binding.repairHandleInfo.repairOrderDetailList.setLayoutManager(new LinearLayoutManager(
+                    this,
+                    LinearLayoutManager.HORIZONTAL,
+                    false));
+            binding.repairHandleInfo.repairOrderDetailList.addItemDecoration(new SpacesItemDecoration(18, 0, 0, 0));
+            binding.repairHandleInfo.repairOrderDetailList.setAdapter(adapter);
+            PicUrlModelConvert convert = new PicUrlModelConvert();
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(customerRepair.getHandle_attach().toString());
+            adapter.updateList(modelList);
         }
         //评价状态评分
         if (customerRepair.getReturn_score() != null) {
@@ -529,7 +542,17 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      */
     private void doReuest() {
         filterRequest(nodeId);
-        viewModel.repairSend(new RepairSendOrderRequest(detialModel.getData().getCustomer_repair_model(), new RepairSendOrderRequest.DoNextParamBean(taskId))).observe(this, status -> {
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_HANDLE)){
+            //上传图片后异步提交
+        }else {
+           submit();
+        }
+    }
+    /**
+     * 派单，响应,处理，评价
+     * */
+    private void submit(){
+        viewModel.repairSend(new RepairSendOrderRequest(customerRepair, new RepairSendOrderRequest.DoNextParamBean(taskId))).observe(this, status -> {
             if (status) {
                 new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
                         .setMsg(getResources().getString(R.string.text_submit_success)).
@@ -776,6 +799,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private void uploadImages() {
         viewModel.uploadImages(photoListFormAdapter.getSelectedPhotos()).observe(this, picUrls -> {
             customerRepair.setHandle_attach(new ImageUploadManager().toJosnString(picUrls));
+            submit();//提交处理
         });
     }
 
@@ -891,7 +915,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         List<String> payWays = new ArrayList<>();
         for (DictDataModel dictDataModel : dictPayTypeLsit) {
             payWays.add(dictDataModel.getName());
-            Log.d("Test", dictDataModel.getName());
         }
 
         BottomPicker.buildBottomPicker(this, payWays, clDefaultPos, new BottomPicker.OnItemPickListener() {
@@ -913,8 +936,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             @Override
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                customerRepair.setHandle_pay_time(date.getTime());
-//                    request.setExpectTime(dft.format(date));
+                binding.repairHandlePaid.repairHandlePayDate.setText(dft.format(date));
+                customerRepair.setHandle_pay_time(dft.format(date));
             }
         }).setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒

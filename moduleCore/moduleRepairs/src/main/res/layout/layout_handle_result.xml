@@ -54,12 +54,11 @@
 
         <LinearLayout style="@style/ll_create_order">
 
-            <TextView style="@style/tv_create_order_red_star" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="图片"
+                android:layout_marginLeft="@dimen/px_20"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
 
