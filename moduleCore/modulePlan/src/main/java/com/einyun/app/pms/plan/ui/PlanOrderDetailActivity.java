@@ -185,7 +185,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         agree(binding, model);
                         //选中不通过
                         reject(binding, model);
-                        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
+                        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {
                             if (!TextUtils.isEmpty(model.result)) {
                                 //成功
                                 if ("1".equals(nodes.get(position).getResult())) {
@@ -239,7 +239,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 protected void agree(ItemPlanWorkNodeBinding binding, WorkNode model) {
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
-                        model.setResult(ResultState.RESULT_FAILD);
+                        model.setResult(ResultState.RESULT_SUCCESS);
                     });
                 }
 
@@ -476,6 +476,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         IsClosedRequest request = new IsClosedRequest();
         request.setId(id);
         request.setType(WorkOrder.POSTPONED_PLAN);
+        viewModel.isClosed(request, true);
     }
 
     /**
@@ -668,8 +669,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     @Override
-    public void onOptionClick(View view) {
-        super.onOptionClick(view);
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_HISTORY)
                 .withString(RouteKey.KEY_ORDER_ID, id)

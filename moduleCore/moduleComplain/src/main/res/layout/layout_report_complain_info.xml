@@ -15,9 +15,7 @@
             type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        style="@style/cardview_style"
-        >
+    <androidx.cardview.widget.CardView style="@style/cardview_style">
 
         <LinearLayout
             android:id="@+id/panel_work_order_info"
@@ -121,75 +119,67 @@
                     android:text="@{complain.f_ts_property}" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/ll_complain_type_2"
-                style="@style/work_order_detail_ln">
+                style="@style/work_order_detail_ln"
+                android:paddingLeft="@dimen/px_20">
 
-                <LinearLayout
-                    android:layout_width="@dimen/px_206"
-                    android:layout_height="wrap_content">
+                <TextView
+                    style="@style/tv_create_order_red_star"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/px_10"/>
 
-                    <TextView
-                        style="@style/tv_create_order_red_star"
-                        android:layout_marginLeft="@dimen/px_20"
-                        android:layout_marginTop="@dimen/px_30" />
-
-                    <TextView
-                        style="@style/work_order_detail_left_txt"
-                        android:layout_width="match_parent"
-                        android:layout_marginRight="@dimen/px_0"
-                        android:layout_marginLeft="@dimen/px_6"
-                        android:text="投诉类别" />
-                </LinearLayout>
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:layout_width="@dimen/px_171"
+                    android:layout_marginLeft="@dimen/px_0"
+                    android:text="投诉类别" />
 
                 <TextView
                     android:id="@+id/tv_complain_type"
                     style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/px_10"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:text="@{request.bizData.f_ts_cate}"
-                    />
-<!--                @{request.bizData.f_ts_cate}-->
+                    android:layout_weight="0"
+                    android:text="@{request.bizData.f_ts_cate}" />
+
                 <ImageView
-                    android:layout_width="@dimen/px_20"
-                    android:layout_height="@dimen/px_22"
-                    android:layout_marginTop="@dimen/px_10"
-                    android:src="@drawable/edit" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/px_14"
+                    android:layout_marginTop="@dimen/px_5"
+                    android:src="@drawable/edit"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_complain_nature_2"
-                style="@style/work_order_detail_ln">
-                <LinearLayout
-                    android:layout_width="@dimen/px_206"
-                    android:layout_height="wrap_content">
+                style="@style/work_order_detail_ln"
+                android:paddingLeft="@dimen/px_20">
+
                 <TextView
                     style="@style/tv_create_order_red_star"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginTop="@dimen/px_30" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/px_10"/>
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:layout_marginLeft="@dimen/px_6"
-                    android:layout_width="match_parent"
-                    android:layout_marginRight="@dimen/px_0"
+                    android:layout_marginLeft="@dimen/px_0"
+                    android:layout_width="@dimen/px_171"
                     android:text="投诉性质" />
-                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_complain_nature"
                     style="@style/work_order_detail_txt_right"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/px_10"
-                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_weight="0"
                     android:text="@{request.bizData.f_ts_property}" />
 
                 <ImageView
-                    android:layout_width="@dimen/px_20"
-                    android:layout_height="@dimen/px_22"
-                    android:layout_marginTop="@dimen/px_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/px_14"
+                    android:layout_marginTop="@dimen/px_5"
                     android:src="@drawable/edit" />
             </LinearLayout>
 

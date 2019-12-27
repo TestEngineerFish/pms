@@ -84,4 +84,32 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
           return isClosedLiveData;
      }
 
+     /**
+      * 判断是否强制关闭，申请延期
+      * @param request
+      * @return
+      */
+     public LiveData<IsClosedState> isClosed(IsClosedRequest request,boolean showLoading){
+          if (showLoading){
+               showLoading();
+          }
+          workOrderService.isClosed(request, new CallBack<Boolean>() {
+               @Override
+               public void call(Boolean data) {
+                    isClosedLiveData.postValue(new IsClosedState(data,request.getType()));
+                    if (showLoading){
+                         hideLoading();
+                    }
+               }
+
+               @Override
+               public void onFaild(Throwable throwable) {
+                    if (showLoading){
+                         hideLoading();
+                    }
+               }
+          });
+
+          return isClosedLiveData;
+     }
 }

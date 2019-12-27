@@ -11,6 +11,7 @@ import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.BaseViewModelActivity;
 import com.einyun.app.common.R;
 import com.einyun.app.common.databinding.IncludeLayoutActivityHeadBinding;
+import com.einyun.app.common.utils.ClickProxy;
 
 /**
  * @ProjectName: android-framework
@@ -96,8 +97,8 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void initListener() {
         super.initListener();
         headBinding.back.setOnClickListener(v -> onBackOnClick(v));
-        headBinding.ivRightOption.setOnClickListener(v->onOptionClick(v));
-        headBinding.tvRightTitle.setOnClickListener(v->onRightOptionClick(v));
+        headBinding.ivRightOption.setOnClickListener(new ClickProxy(v->onOptionClick(v)));
+        headBinding.tvRightTitle.setOnClickListener(new ClickProxy(v->onRightOptionClick(v)));
     }
 
     @Override
