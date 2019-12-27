@@ -65,10 +65,7 @@
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
-                    style="@style/detail_cv"
-                    android:layout_marginTop="@dimen/px_0"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0.5dp"
+                    style="@style/cardview_style"
                     >
 
                     <LinearLayout
@@ -264,9 +261,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cd_work_resouce"
-                    style="@style/detail_cv"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0.5dp"
+                    style="@style/cardview_style"
                     >
 
                     <LinearLayout
@@ -307,9 +302,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cd_work_nodes"
-                    style="@style/detail_cv"
-                    app:cardElevation="0.5dp"
-                    app:cardCornerRadius="10dp">
+                    style="@style/cardview_style">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -339,9 +332,8 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    style="@style/detail_cv"
-                    android:visibility="gone"
-                    app:cardCornerRadius="10dp">
+                    style="@style/cardview_style"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -372,8 +364,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_result_edit"
-                    style="@style/detail_cv"
-                    app:cardCornerRadius="10dp">
+                    style="@style/cardview_style">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -473,8 +464,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_operate"
-                    style="@style/detail_cv"
-                    app:cardCornerRadius="10dp">
+                    style="@style/cardview_style">
 
                     <LinearLayout
                         android:layout_width="match_parent"
