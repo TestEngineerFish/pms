@@ -642,11 +642,11 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
                 binding.repariResponse.getRoot().setVisibility(View.VISIBLE);
                 binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
             }
             ifApplyClose();
             return;
@@ -659,7 +659,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
                 binding.repairHandle.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleResult.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
@@ -678,7 +678,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
                 binding.repairEvaluate.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             }
