@@ -138,7 +138,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     }
 
     override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
-        serviceApi?.planDoneDetial(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.planDoneDetial(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -155,10 +155,14 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse> {
         val liveData = MutableLiveData<ApplyCloseResponse>()
-        serviceApi?.closeOrderPlan(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.closeOrderPlan(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                callBack.call(response)
-                liveData.postValue(response)
+                if (response.isState){
+                    callBack.call(response)
+                    liveData.postValue(response)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
             }, { error ->
                 callBack.onFaild(error)
             })
@@ -707,10 +711,14 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse> {
         val liveData = MutableLiveData<ApplyCloseResponse>()
-        serviceApi?.closeOrder(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.closeOrder(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                callBack.call(response)
-                liveData.postValue(response)
+                if (response.isState){
+                    callBack.call(response)
+                    liveData.postValue(response)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
             }, { error ->
                 callBack.onFaild(error)
             })
@@ -723,10 +731,14 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         callBack: CallBack<ApplyCloseResponse>
     ): LiveData<ApplyCloseResponse> {
         val liveData = MutableLiveData<ApplyCloseResponse>()
-        serviceApi?.closeCustomerOrder(midUrl, request)?.compose(RxSchedulers.inIo())
+        serviceApi?.closeCustomerOrder(midUrl, request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                callBack.call(response)
-                liveData.postValue(response)
+                if (response.isState){
+                    callBack.call(response)
+                    liveData.postValue(response)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
             }, { error ->
                 callBack.onFaild(error)
             })
