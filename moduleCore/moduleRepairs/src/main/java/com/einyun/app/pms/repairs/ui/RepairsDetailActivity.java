@@ -1,6 +1,7 @@
 package com.einyun.app.pms.repairs.ui;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -332,6 +333,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 }
             }
         });
+        //申请强制闭单后关闭详情页面
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                RepairsDetailActivity.this.finish();
+            }
+        });
     }
 
     @Override
@@ -454,7 +463,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //设置性质评估
         if (customerRepair.getBx_property_ass_id() != null) {
             for (int i = 0; i < dictNatureList.size(); i++) {
-                if (dictNatureList.get(i).getId().equals(customerRepair.getBx_property_ass_id())) {
+                if (dictNatureList.get(i).getKey().equals(customerRepair.getBx_property_ass_id())) {
                     if (i == 0) {
                         binding.repairsInfo.rbNormal.setChecked(true);
                     }
@@ -772,7 +781,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //待派单
         if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             if (TextUtils.isEmpty(binding.sendOrder.repairSendReason.getString())) {
-                ToastUtil.show(this, R.string.text_please_enter_reason);
             } else {
                 detialModel.getData().getCustomer_repair_model().setHandle_result(binding.sendOrder.repairSendReason.getString());
             }
