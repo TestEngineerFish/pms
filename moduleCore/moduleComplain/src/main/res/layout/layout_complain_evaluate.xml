@@ -51,7 +51,7 @@
                     style="@style/ll_create_order"
                     android:paddingLeft="0dp">
 
-
+                    <TextView style="@style/tv_create_order_red_star" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -71,6 +71,7 @@
                             android:layout_width="@dimen/px_30"
                             android:layout_height="@dimen/px_30"
                             android:layout_marginLeft="@dimen/px_75"
+                            android:checked="true"
                             android:background="@drawable/select_inquiries_solve"
                             android:button="@null"
                             android:padding="@dimen/px_5" />
@@ -105,10 +106,42 @@
                 </LinearLayout>
                 <View style="@style/base_underline" />
                 <LinearLayout
+                    android:id="@+id/ll_explain"
+                    style="@style/ll_create_order"
+                    android:paddingLeft="@dimen/px_0"
+                    android:visibility="gone">
+                    <TextView style="@style/tv_create_order_red_star" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="说明"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_explain_second"
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10"
+                    android:visibility="gone">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/lt_explain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_30"
+                        app:hintText="@string/tv_enter"
+                        app:maxNumber="300" />
+                </LinearLayout>
+                <View android:id="@+id/v_explain" android:visibility="gone" style="@style/base_underline" />
+
+                <LinearLayout
                     style="@style/ll_create_order"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/px_30"
                     android:paddingLeft="0dp">
+                    <TextView style="@style/tv_create_order_red_star" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -133,38 +166,6 @@
 
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:id="@+id/ll_explain"
-                    style="@style/ll_create_order"
-                    android:paddingLeft="@dimen/px_0"
-                    android:visibility="gone">
-                    <TextView style="@style/tv_create_order_red_star" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="说明"
-                        android:textColor="@color/normal_main_text_icon_color"
-                        android:textSize="@dimen/font_size14" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_explain_second"
-                    style="@style/ll_create_order"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/px_10"
-                    android:paddingRight="@dimen/px_10"
-                    android:visibility="gone">
-
-                    <com.einyun.app.common.ui.component.limit.LimitInput
-                        android:id="@+id/lt_explain"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/px_30"
-                        app:hintText="@string/tv_enter"
-                        app:maxNumber="300" />
-                </LinearLayout>
-                <View android:id="@+id/v_explain" android:visibility="gone" style="@style/base_underline" />
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:paddingLeft="@dimen/px_0">
@@ -198,6 +199,7 @@
             <LinearLayout
                 style="@style/ll_create_order"
                 android:paddingLeft="0dp">
+                <TextView style="@style/tv_create_order_red_star" />
 
                 <TextView
                     android:layout_width="wrap_content"
