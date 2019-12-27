@@ -130,6 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px_30"
             android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginRight="@dimen/px_20"
             app:hintText="请输入申请原因"
             app:maxNumber="300" />
     </LinearLayout>
