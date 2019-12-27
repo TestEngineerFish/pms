@@ -98,8 +98,11 @@ public class InquiriesTypeSelectPopWindow extends PopupWindow {
                     adapter.notifyDataSetChanged();
                 });
                 if (position== mPosition) {
+                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
                     binding.tvContent.setBackgroundResource(R.drawable.iv_pop_item_choise);
                 }else {
+                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
+
                     binding.tvContent.setBackgroundResource(R.drawable.shape_line);
                 }
                 binding.tvContent.setText(model.getDataName());

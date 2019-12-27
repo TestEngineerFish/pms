@@ -28,9 +28,11 @@ import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -44,6 +46,7 @@ import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.net.request.RepairSendOrderRequest;
@@ -98,7 +101,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     static final String HANDLE_PAID = "1";//有偿
     static final String HANDLE_NO_PAID = "0";//无偿
     RepairsDetailModel.DataBean.CustomerRepairModelBean customerRepair;
-
+    private IsClosedRequest isClosedRequest;
     @Override
     protected RepairDetailViewModel initViewModel() {
         return new ViewModelProvider(this, new ViewModelFactory()).get(RepairDetailViewModel.class);
@@ -125,7 +128,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         });
         //添加材料
         LiveEventBus.get(LiveDataBusKey.POST_REPAIR_ADD_MATERIAL, RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean.class).observe(this, model -> {
-            if (detialModel != null) {
+            if (detialModel                                                       != null) {
                 detialModel.getData().getCustomer_repair_model().getSub_repair_materials().add(model);
                 materialAdapter.setDataList(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
             }
@@ -256,7 +259,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 if (checkedId == R.id.rb_normal) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(0).getName());
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(0).getId());
-
                 }
                 if (checkedId == R.id.rb_general) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(1).getName());
@@ -276,7 +278,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
                 return;
             }
-            Matisse.from(this) //加号添加图片
+            Matisse.from(this) //加号添加图片zf
                     .choose(MimeType.ofImage())
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
@@ -335,10 +337,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
+       /* viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
             updateUI(repairsDetail);
             saveHandleRequest = new SaveHandleRequest(orderId, detialModel.getData().getCustomer_repair_model());
-        });
+        });*/
     }
 
     @Override
@@ -418,16 +420,29 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairLateInfo.getRoot().setVisibility(View.VISIBLE);
             if (detialModel.getDelayInfo().getAttachment() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
-                /*binding.repairLateInfo.repairOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
+                binding.repairLateInfo.repairOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
                 binding.repairLateInfo.repairOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18, 0, 0, 0));
-                binding.repairLateInfo.repairOrderPostponePicList.setAdapter(adapter);*/
+                binding.repairLateInfo.repairOrderPostponePicList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(detialModel.getDelayInfo().getAttachment());
                 adapter.updateList(modelList);
             }
+        }
+        //处理信息图片
+        if (customerRepair.getHandle_attach()!=null){
+            PhotoListAdapter adapter = new PhotoListAdapter(this);
+            binding.repairHandleInfo.repairOrderDetailList.setLayoutManager(new LinearLayoutManager(
+                    this,
+                    LinearLayoutManager.HORIZONTAL,
+                    false));
+            binding.repairHandleInfo.repairOrderDetailList.addItemDecoration(new SpacesItemDecoration(18, 0, 0, 0));
+            binding.repairHandleInfo.repairOrderDetailList.setAdapter(adapter);
+            PicUrlModelConvert convert = new PicUrlModelConvert();
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(customerRepair.getHandle_attach().toString());
+            adapter.updateList(modelList);
         }
         //评价状态评分
         if (customerRepair.getReturn_score() != null) {
@@ -435,6 +450,22 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         }
         if (customerRepair.getService_quality_score() != null) {
             binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
+        }
+        //设置性质评估
+        if (customerRepair.getBx_property_ass_id() != null) {
+            for (int i = 0; i < dictNatureList.size(); i++) {
+                if (dictNatureList.get(i).getId().equals(customerRepair.getBx_property_ass_id())) {
+                    if (i == 0) {
+                        binding.repairsInfo.rbNormal.setChecked(true);
+                    }
+                    if (i == 1) {
+                        binding.repairsInfo.rbGeneral.setChecked(true);
+                    }
+                    if (i == 2) {
+                        binding.repairsInfo.rbWarning.setChecked(true);
+                    }
+                }
+            }
         }
         updateImagesUI(repairsOrderDetail);
     }
@@ -529,7 +560,17 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      */
     private void doReuest() {
         filterRequest(nodeId);
-        viewModel.repairSend(new RepairSendOrderRequest(detialModel.getData().getCustomer_repair_model(), new RepairSendOrderRequest.DoNextParamBean(taskId))).observe(this, status -> {
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_HANDLE)){
+            //上传图片后异步提交
+        }else {
+           submit();
+        }
+    }
+    /**
+     * 派单，响应,处理，评价
+     * */
+    private void submit(){
+        viewModel.repairSend(new RepairSendOrderRequest(customerRepair, new RepairSendOrderRequest.DoNextParamBean(taskId))).observe(this, status -> {
             if (status) {
                 new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
                         .setMsg(getResources().getString(R.string.text_submit_success)).
@@ -595,6 +636,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             }
+            ifApplyClose();
             return;
         }
         //处理状态
@@ -613,6 +655,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
                 binding.handleSaveSubmit.setVisibility(View.VISIBLE);
             }
+            ifApplyClose();
             return;
         }
         //待评价状态
@@ -665,6 +708,27 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             return;
         }
 
+
+    }
+
+    /**
+     * 判断是否有闭单申请
+     * */
+    private void ifApplyClose(){
+        isClosedRequest=new IsClosedRequest(orderId,WorkOrder.FORCE_CLOSE_REPAIR);
+        viewModel.isClosed(isClosedRequest).observe(this,model->{
+            if (!model.isClosed()){
+                binding.repairDetailSubmit.setVisibility(View.GONE);
+                binding.handleSaveSubmit.setVisibility(View.GONE);
+                binding.repairHandlePaid.getRoot().setVisibility(View.GONE);
+                binding.repairUseMaterial.getRoot().setVisibility(View.GONE);
+                binding.repariResponse.getRoot().setVisibility(View.GONE);
+                binding.repairClosePostpone.getRoot().setVisibility(View.GONE);
+                binding.repairHandleResult.getRoot().setVisibility(View.GONE);
+                binding.repairsInfo.repairReportAppointChange.setVisibility(View.GONE);
+                binding.repairHandle.getRoot().setVisibility(View.GONE);
+            }
+        });
 
     }
 
@@ -776,6 +840,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private void uploadImages() {
         viewModel.uploadImages(photoListFormAdapter.getSelectedPhotos()).observe(this, picUrls -> {
             customerRepair.setHandle_attach(new ImageUploadManager().toJosnString(picUrls));
+            submit();//提交处理
         });
     }
 
@@ -891,7 +956,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         List<String> payWays = new ArrayList<>();
         for (DictDataModel dictDataModel : dictPayTypeLsit) {
             payWays.add(dictDataModel.getName());
-            Log.d("Test", dictDataModel.getName());
         }
 
         BottomPicker.buildBottomPicker(this, payWays, clDefaultPos, new BottomPicker.OnItemPickListener() {
@@ -913,8 +977,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             @Override
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                customerRepair.setHandle_pay_time(date.getTime());
-//                    request.setExpectTime(dft.format(date));
+                binding.repairHandlePaid.repairHandlePayDate.setText(dft.format(date));
+                customerRepair.setHandle_pay_time(dft.format(date));
             }
         }).setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
@@ -947,7 +1011,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private void setAscription() {
         binding.repariResponse.rbNormal.setText(dictAscriptLsit.get(0).getName());
         binding.repariResponse.rbGeneral.setText(dictAscriptLsit.get(1).getName());
-
     }
 
     /**

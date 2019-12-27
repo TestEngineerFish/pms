@@ -48,4 +48,6 @@
     <string name="tv_empty_evaluation">评价内容不能为空</string>
     <string name="tv_evaluation_suc">评价成功</string>
     <string name="tv_evaluation_fail">评价失败</string>
+    <string name="tv_finish">已完成</string>
+    <string name="tv_apply_close_info">申请闭单信息</string>
 </resources>

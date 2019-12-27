@@ -77,8 +77,10 @@
                 <TextView
                     android:id="@+id/repair_handle_total_money"
                     style="@style/tv_create_order_select"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:inputType="number" />
+                    android:text=""
+                     />
 
             </LinearLayout>
 

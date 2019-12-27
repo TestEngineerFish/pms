@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.ActivityUtil;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -114,8 +115,14 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
                     MutableLiveData liveData = new MutableLiveData<List<OrgModel>>();
                     List<GetMappingByUserIdsResponse> list = new ArrayList<>();
                     for (GetMappingByUserIdsResponse user : users) {
-                        if (user.getFullname().contains(search) || user.getMobile().contains(search)) {
-                            list.add(user);
+                        if (StringUtil.isNullStr(user.getMobile())) {
+                            if (user.getFullname().contains(search) || user.getMobile().contains(search)) {
+                                list.add(user);
+                            }
+                        }else{
+                            if (user.getFullname().contains(search)) {
+                                list.add(user);
+                            }
                         }
                     }
                     liveData.postValue(list);

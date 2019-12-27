@@ -15,6 +15,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColorHint">@color/edit_hint_color</item>
         <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:maxLength">20</item>
     </style>
 
     <style name="login_input_ll_img" parent="base_style">

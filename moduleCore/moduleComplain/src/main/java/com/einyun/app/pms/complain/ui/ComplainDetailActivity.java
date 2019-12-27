@@ -195,8 +195,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                     binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
                     binding.save.setVisibility(View.GONE);
                     binding.submit.setVisibility(View.GONE);
-                    binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score());
-                    binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score());
+                    binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score()==null?0:detail.getF_return_score());
+                    binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score()==null?0:detail.getService_quality_score());
                 } else if (value.equals(ComplainOrderState.DEALING.getState())) {
                     binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
@@ -242,8 +242,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
                 binding.save.setVisibility(View.GONE);
                 binding.submit.setVisibility(View.GONE);
-                binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score());
-                binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score());
+                binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score()==null?0:detail.getF_return_score());
+                binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score()==null?0:detail.getService_quality_score());
                 if (value.equals(ComplainOrderState.CLOSED.getState())) {
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
                 }

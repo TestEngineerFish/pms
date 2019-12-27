@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.databinding.ActivityApplyForceCloseBinding;
 import com.einyun.app.common.service.RouterUtils;
@@ -29,6 +30,7 @@ import com.einyun.app.pms.sendorder.R;
 //import com.einyun.app.pms.sendorder.databinding.ActivityApplyForceCloseBinding;
 import com.einyun.app.pms.sendorder.viewmodel.ApplyCloseViewModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -137,8 +139,6 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                 request.setEndReason(binding.applyCloseReason.getString());
                 if (TextUtils.isEmpty(binding.applyCloseReason.getString())) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
-                } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
-                    ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);
                 } else {
                     uploadImages();
                 }
@@ -182,6 +182,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                     applyCusCloseRequest.getBizData().setFclose_apply_reason(binding.applyCloseReason.getString());
                     viewModel.applyCustomerClose(applyCusCloseRequest,midUrl, data).observe(this, model -> {
                         if (model.getCode().equals("0")) {
+                            LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                             ToastUtil.show(this, R.string.apply_close_success);
                             this.finish();
                         } else {

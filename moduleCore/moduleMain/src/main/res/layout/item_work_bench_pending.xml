@@ -173,7 +173,7 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
-                        style="@style/base_wrap_style"
+                        style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_COMPLAIN_PAGING)}">
@@ -195,13 +195,14 @@
                         <ImageView
                             android:id="@+id/iv_waring_complain"
                             style="@style/iv_light_waring"
+                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_paigongdan"
                             android:layout_toRightOf="@id/ll_work_paigongdan" />
                         <View style="@style/vertical_line" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        style="@style/base_wrap_style"
+                        style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_CUSTOMER_INQUIRIES)}">
@@ -223,13 +224,14 @@
                         <ImageView
                             android:id="@+id/iv_waring_enq"
                             style="@style/iv_light_waring"
+                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_jiahuaagongdan"
                             android:layout_toRightOf="@id/ll_work_jiahuaagongdan" />
                         <View style="@style/vertical_line" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        style="@style/base_wrap_style"
+                        style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_REPAIRS_PAGING)}">
@@ -251,6 +253,7 @@
                         <ImageView
                             android:id="@+id/iv_waring_repairs"
                             style="@style/iv_light_waring"
+                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_xunchagongdan"
                             android:layout_toRightOf="@id/ll_work_xunchagongdan" />
                     </RelativeLayout>
