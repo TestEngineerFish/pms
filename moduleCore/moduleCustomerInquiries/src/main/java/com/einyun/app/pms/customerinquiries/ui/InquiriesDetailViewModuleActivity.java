@@ -29,6 +29,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -298,92 +299,100 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     /**
      * 处理提交按钮
      * */
-    public void onPassClick(){
-        if (binding.limitInput.getString().isEmpty()) {
-            ToastUtil.show(this,getString(R.string.tv_empty_feedback_content));
-            return;
-        }
-        DealRequest dealRequest = new DealRequest();
-        dealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
-        dealRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
-        viewModel.deal(dealRequest).observe(this,module->{
-            if (module) {
-                LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-                ToastUtil.show(this, getString(R.string.tv_feedback_suc));
-                finish();
-            }else {
-                ToastUtil.show(this, getString(R.string.tv_feedback_fail));
-
+    public void onPassClick() {
+        if (IsFastClick.isFastDoubleClick()) {
+            if (binding.limitInput.getString().isEmpty()) {
+                ToastUtil.show(this, getString(R.string.tv_empty_feedback_content));
+                return;
             }
-        });
+            DealRequest dealRequest = new DealRequest();
+            dealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
+            dealRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
+            viewModel.deal(dealRequest).observe(this, module -> {
+                if (module) {
+                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
+                    ToastUtil.show(this, getString(R.string.tv_feedback_suc));
+                    finish();
+                } else {
+                    ToastUtil.show(this, getString(R.string.tv_feedback_fail));
+
+                }
+            });
+        }
     }
     /**
      * 评价
      * */
     public  void onEvaluationClick() {
-        String content = binding.etLimitSuggestion.getString();
-        if (evaluation==0) {
-            if (content.isEmpty()) {
-                ToastUtil.show(this, getString(R.string.tv_empty_evaluation));
-                return;
+        if (IsFastClick.isFastDoubleClick()) {
+            String content = binding.etLimitSuggestion.getString();
+            if (evaluation == 0) {
+                if (content.isEmpty()) {
+                    ToastUtil.show(this, getString(R.string.tv_empty_evaluation));
+                    return;
+                }
             }
-        }
-        EvaluationRequest evaluationRequest = new EvaluationRequest();
-        evaluationRequest.getBizData().setC_is_solve(evaluation);
-        evaluationRequest.getBizData().setReturn_result(content.isEmpty()?"":content);
-        evaluationRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
-        viewModel.evaluation(evaluationRequest).observe(this,module->{
-            if (module) {
-                LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-                ToastUtil.show(this, getString(R.string.tv_evaluation_suc));
-                finish();
-            }else {
-                ToastUtil.show(this, getString(R.string.tv_evaluation_fail));
+            EvaluationRequest evaluationRequest = new EvaluationRequest();
+            evaluationRequest.getBizData().setC_is_solve(evaluation);
+            evaluationRequest.getBizData().setReturn_result(content.isEmpty() ? "" : content);
+            evaluationRequest.getDoNextParam().setTaskId(inquiriesItemModule.taskId);
+            viewModel.evaluation(evaluationRequest).observe(this, module -> {
+                if (module) {
+                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
+                    ToastUtil.show(this, getString(R.string.tv_evaluation_suc));
+                    finish();
+                } else {
+                    ToastUtil.show(this, getString(R.string.tv_evaluation_fail));
 
-            }
-        });
+                }
+            });
+        }
     }
     /**
      * 申请强制闭单
      */
-    public void onForseCloseClick(){
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString(RouteKey.KEY_MID_URL,RouteKey.KEY_MID_URL_INQUIRIES)
-                .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.taskId)
-                .navigation();
+    public void onForseCloseClick() {
+        if (IsFastClick.isFastDoubleClick()) {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_CLOSE).withString(RouteKey.KEY_MID_URL, RouteKey.KEY_MID_URL_INQUIRIES)
+                    .withString(RouteKey.KEY_TASK_ID, inquiriesItemModule.taskId)
+                    .navigation();
+        }
     }
     /**
      * 处理保存
      */
     public  void onRejectClick() {
-        if (binding.limitInput.getString().isEmpty()) {
-            ToastUtil.show(this,getString(R.string.tv_empty_save_content));
-            return;
-        }
-        DealSaveRequest dealRequest = new DealSaveRequest();
-        dealRequest.setID_(inquiriesItemModule.ID_);
-        dealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
-        viewModel.dealSave(dealRequest).observe(this,module->{
-
-            if (module) {
-                if (alertDialog==null) {
-                    alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                            .setMsg(getString(R.string.tv_save_suc))
-                            .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-//                                finish();
-                                }
-                            });
-                    alertDialog.show();
-                }else {
-                    if (!alertDialog.isShowing()) {
-                        alertDialog.show();
-                    }
-                }
-            }else {
-                ToastUtil.show(this, R.string.tv_svae_fail);
+        if (IsFastClick.isFastDoubleClick()) {
+            if (binding.limitInput.getString().isEmpty()) {
+                ToastUtil.show(this, getString(R.string.tv_empty_save_content));
+                return;
             }
-        });
+            DealSaveRequest dealRequest = new DealSaveRequest();
+            dealRequest.setID_(inquiriesItemModule.ID_);
+            dealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
+            viewModel.dealSave(dealRequest).observe(this, module -> {
+
+                if (module) {
+                    if (alertDialog == null) {
+                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                                .setMsg(getString(R.string.tv_save_suc))
+                                .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+//                                finish();
+                                    }
+                                });
+                        alertDialog.show();
+                    } else {
+                        if (!alertDialog.isShowing()) {
+                            alertDialog.show();
+                        }
+                    }
+                } else {
+                    ToastUtil.show(this, R.string.tv_svae_fail);
+                }
+            });
+        }
     }
 
     private void initRadioGroup() {

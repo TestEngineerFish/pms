@@ -25,6 +25,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -177,7 +178,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     binding.tvAskingPeople.setText(inquiriesItemModule.wx_user);
                     binding.tvWorkOrderNum.setText(inquiriesItemModule.wx_code);
                     binding.tvCreateTime.setText(TimeUtil.getAllTime(inquiriesItemModule.wx_time));
-                    binding.tvTurnOrder.setOnClickListener(view -> {
+                    binding.tvTurnOrder.setOnClickListener(new ClickProxy(view -> {
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
@@ -187,21 +188,21 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                                 .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER,RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                                 .navigation();
 
-                    });
-                    binding.tvTalk.setOnClickListener(view -> {
+                    }));
+                    binding.tvTalk.setOnClickListener(new ClickProxy(view -> {
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
                                 .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
                                 .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
                                 .navigation();
-                    });
-                    binding.rlFeedBack.setOnClickListener(view -> {
+                    }));
+                    binding.rlFeedBack.setOnClickListener(new ClickProxy(view -> {
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
                                 .navigation();
 
-                    });
+                    }));
 
 
                 }
