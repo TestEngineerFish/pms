@@ -17,7 +17,7 @@ public interface PlanDao {
     @Query("delete from plans where userId=:userId and listType=:listType")
     void deleteAll(String userId,int listType);
 
-    @Query("select * from plans where userId=:userId and listType=:listType ORDER BY id asc") //ORDER BY F_PROC_DATE,createTime DESC
+    @Query("select * from plans where userId=:userId and listType=:listType order by saveTime asc") //ORDER BY F_PROC_DATE,createTime DESC
     DataSource.Factory<Integer, Plan> queryAll(String userId, int listType);
 
 }

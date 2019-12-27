@@ -91,7 +91,7 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     @Override
     public void onZeroItemsLoaded() {
         super.onZeroItemsLoaded();
-       initData();
+        initData();
     }
 
     @Override

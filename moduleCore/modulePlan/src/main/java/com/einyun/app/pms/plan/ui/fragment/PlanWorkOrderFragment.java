@@ -276,7 +276,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
         @Override
         public boolean areItemsTheSame(@NonNull Plan oldItem, @NonNull Plan newItem) {
-            return oldItem.getId()==newItem.getId();
+            return oldItem.getID_().equals(newItem.getID_());
         }
 
         @SuppressLint("DiffUtilEquals")

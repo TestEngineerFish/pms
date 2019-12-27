@@ -81,6 +81,7 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
         for (Distribute distribute : list) {
             distribute.setUserId(request.getUserId());
             distribute.setOrderType(orderType);
+            distribute.setSaveTime(System.currentTimeMillis());
         }
     }
 
