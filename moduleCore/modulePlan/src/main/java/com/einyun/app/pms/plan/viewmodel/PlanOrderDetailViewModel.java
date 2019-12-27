@@ -100,7 +100,7 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      * @return
      */
     public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag) {
-//        showLoading();
+        showLoading();
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
             DoneDetialRequest request = new DoneDetialRequest();
             request.setProInsId(proInsId);
@@ -109,12 +109,12 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
                 @Override
                 public void call(PlanInfo data) {
                     liveData.postValue(data);
-//                    hideLoading();
+                    hideLoading();
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
-//                    hideLoading();
+                    hideLoading();
                     ThrowableParser.onFailed(throwable);
                 }
             });
@@ -123,12 +123,12 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
                 @Override
                 public void call(PlanInfo data) {
                     liveData.postValue(data);
-//                    hideLoading();
+                    hideLoading();
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
-//                    hideLoading();
+                    hideLoading();
                     ThrowableParser.onFailed(throwable);
                 }
             });

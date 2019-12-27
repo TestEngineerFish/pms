@@ -50,7 +50,7 @@
                         android:text="@string/text_divide" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
+                        style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.divideName}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -67,7 +67,7 @@
                         android:text="@string/text_house" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
+                        style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.house}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -116,7 +116,7 @@
                         android:text="报修方式" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
+                        style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.way}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -134,7 +134,7 @@
                         android:text="报修区域" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
+                        style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.area}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -152,7 +152,7 @@
                         android:text="报修类别" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
+                        style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.cateLv3}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -170,7 +170,7 @@
                         android:text="性质评估" />
 
                     <TextView
-                        style="@style/tv_create_order_select"
+                        style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.propertyAss}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -186,7 +186,7 @@
 
                     <TextView
                         android:id="@+id/time"
-                        style="@style/tv_create_order_select" />
+                        style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
