@@ -426,4 +426,10 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        handler.removeCallbacks(runnable);
+    }
 }
