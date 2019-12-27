@@ -177,6 +177,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
         binding.setNode(workNode);
         if(SignCheckResult.SIGN_IN_SUCCESS!=workNode.getSign_result()){
             binding.llPatrolSigninTime.setVisibility(View.GONE);
+            binding.llPatrolSigninResult.setVisibility(View.GONE);
         }else{
             binding.llPatrolSigninTime.setVisibility(View.VISIBLE);
         }

@@ -81,7 +81,6 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     protected void switchStateUI() {
         super.switchStateUI();
-        binding.tvWorkNodesTitle.setText(R.string.text_patrol_time_manager);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);

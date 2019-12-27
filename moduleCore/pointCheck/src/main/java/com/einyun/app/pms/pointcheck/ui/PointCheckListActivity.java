@@ -130,7 +130,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
 
         @Override
         public boolean areItemsTheSame(@NonNull CheckPoint oldItem, @NonNull CheckPoint newItem) {
-            return oldItem.getId().equals(newItem.getId());
+            return oldItem.getId()==newItem.getId();
         }
 
         @Override
@@ -141,7 +141,7 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
         @Nullable
         @Override
         public Object getChangePayload(@NonNull CheckPoint oldItem, @NonNull CheckPoint newItem) {
-            return oldItem.getId().equals(newItem.getId());
+            return oldItem.getId()==newItem.getId();
         }
     };
 

@@ -41,6 +41,7 @@ public class PointCheckBoundaryCallBack extends BaseBoundaryCallBack<CheckPoint>
     protected void wrapList(List<CheckPoint> list) {
         for(CheckPoint checkPoint:list){
             checkPoint.setUserId(request.getUserId());
+            checkPoint.setSaveTime(System.currentTimeMillis());
         }
     }
 

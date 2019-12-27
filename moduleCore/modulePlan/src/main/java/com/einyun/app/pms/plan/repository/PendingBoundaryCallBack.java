@@ -51,6 +51,7 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Plan> {
         for(Plan plan:list){
             plan.setUserId(request.getUserId());
             plan.setListType(listType);
+            plan.setSaveTime(System.currentTimeMillis());
         }
     }
 

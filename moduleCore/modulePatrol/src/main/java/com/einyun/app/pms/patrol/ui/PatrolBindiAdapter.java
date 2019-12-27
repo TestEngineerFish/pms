@@ -67,6 +67,20 @@ public class PatrolBindiAdapter {
         }
     }
 
+    @BindingAdapter("status_detial")
+    public static void status_detial(TextView view,int value){
+        if(value== OrderState.NEW.getState()){
+            view.setText(R.string.text_state_new);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blueTextColor));
+        }else if(value==OrderState.HANDING.getState()||value==OrderState.APPLY.getState()){
+            view.setText(R.string.text_state_processing);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blueTextColor));
+        }else if(value==OrderState.CLOSED.getState()){
+            view.setText(R.string.text_state_closed);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
+        }
+    }
+
 
     @BindingAdapter("status")
     public static void status(ImageView view,int value){
