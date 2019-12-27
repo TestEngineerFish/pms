@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseActivity;
 import com.einyun.app.base.BaseViewModelActivity;
 import com.einyun.app.base.db.entity.User;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -59,6 +60,7 @@ public class SplashViewModelActivity extends BaseViewModelActivity<ActivitySplas
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void update(){
+        ActivityUtil.setFirstClass(getClass());
         viewModel.updateApp().observe(this, updateAppModel -> {
             UpdateManager updateManager = new UpdateManager(this, new UpdateManager.UpdateListener() {
                 @Override

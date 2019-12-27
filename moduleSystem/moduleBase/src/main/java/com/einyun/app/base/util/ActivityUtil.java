@@ -37,6 +37,16 @@ public class ActivityUtil {
      */
     private static Class defaultClass;
 
+    private static Class firstClass;
+
+    public static Class getFirstClass() {
+        return firstClass;
+    }
+
+    public static void setFirstClass(Class firstClass) {
+        firstClass = firstClass;
+    }
+
     public static void setDefaultClass(Class className) {
         defaultClass = className;
     }

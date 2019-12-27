@@ -20,7 +20,7 @@ class GetMappingByUserIdsResponse {
     var pendingCount: Int? = 0
     var account: String? = null
     var email: String? = null
-    var fullname: String? = null
-    var mobile: String? = null
+    var fullname: String? = ""
+    var mobile: String? = ""
     var status: Int? = -1
 }
