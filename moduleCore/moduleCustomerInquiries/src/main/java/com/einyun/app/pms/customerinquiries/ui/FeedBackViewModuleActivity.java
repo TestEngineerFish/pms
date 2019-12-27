@@ -15,6 +15,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.pms.customerinquiries.R;
 import com.einyun.app.pms.customerinquiries.constants.Constants;
 import com.einyun.app.pms.customerinquiries.databinding.ActivityFeedbackViewModuleBinding;
@@ -23,6 +24,7 @@ import com.einyun.app.pms.customerinquiries.model.FeedBackRequest;
 import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewModelFactory;
 import com.einyun.app.pms.customerinquiries.viewmodule.FeedBackViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -85,6 +87,7 @@ String taskID;
 //                "opinion":"反馈内容",
 //                "notifyType":"inner,app_push",
 //                "actionName":"commu"
+        if (IsFastClick.isFastDoubleClick()) {
         if (feedBackModule.getTaskCommu()==null) {
             return;
         }
@@ -108,6 +111,7 @@ String taskID;
                 ToastUtil.show(this, "反馈失败");
             }
         });
+    }
     }
     @Override
     protected int getColorPrimary() {
