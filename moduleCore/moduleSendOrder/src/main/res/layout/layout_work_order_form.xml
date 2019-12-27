@@ -9,18 +9,15 @@
             name="workOrder"
             type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
     </data>
-
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
     <LinearLayout
         android:id="@+id/panel_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px_30"
-        android:layout_marginRight="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_10"
-        android:layout_marginTop="@dimen/px_10"
-        android:background="@color/white"
         android:orientation="vertical"
-        android:visibility="visible">
+        >
 
 
         <RelativeLayout
@@ -104,4 +101,5 @@
         </LinearLayout>
 
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
