@@ -109,6 +109,7 @@
         <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity"/>
         <activity android:name=".patrol.ui.PatrolForceCloseActivity"/>
         <activity android:name=".patrol.ui.PatrolPostPoneActivity"/>
+        <activity android:name=".patrol.ui.PatrolTimePhotoActivity"/>
         <!--巡查工单End-->
 
         <!-- 创建工单 Start-->

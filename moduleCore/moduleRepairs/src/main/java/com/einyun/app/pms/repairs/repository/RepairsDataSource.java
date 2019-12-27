@@ -112,7 +112,6 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                 public void call(RepairsPage data) {
                     if (callback instanceof LoadInitialCallback) {
                         LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
-                        Log.d("test", data.getRows().size() + "");
                         loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
                     } else if (callback instanceof LoadRangeCallback) {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;

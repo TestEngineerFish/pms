@@ -114,8 +114,8 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                     binding.tvWorkThings.setGravity(Gravity.LEFT);
                     binding.llSign.setVisibility(View.GONE);
                     binding.llCapture.setVisibility(View.GONE);
-                    binding.tvWorkNode.setOnClickListener(v -> navigatSignInDetial(node));
-                    binding.tvWorkThings.setOnClickListener(v -> navigatSignInDetial(node));
+                    binding.tvWorkNode.setOnClickListener(v -> navigatSignIn(node));
+                    binding.tvWorkThings.setOnClickListener(v -> navigatSignIn(node));
                 }
 
                 /**
@@ -183,7 +183,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
      * 签到详情
      * @param node
      */
-    protected void navigatSignInDetial(WorkNode node){
+    protected void navigatSignIn(WorkNode node){
         saveLocalUserData();
         Bundle bundle = new Bundle();
         bundle.putSerializable(RouteKey.KEY_PATROL_TIME_WORKNODE, node);

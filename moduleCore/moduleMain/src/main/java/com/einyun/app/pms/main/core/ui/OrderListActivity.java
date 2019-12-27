@@ -69,7 +69,8 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_LIST).navigation();
             }
             if (v.getId() == R.id.og_unwell_order) {
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
+                ToastUtil.show(this,"该功能暂未实现");
+//                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
             }
 
         }
@@ -96,5 +97,6 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         binding.clientComplainOrder.setOnClickListener(this);
         binding.clientEnquiryOrder.setOnClickListener(this);
         binding.clientRepairsOrder.setOnClickListener(this);
+        binding.ogPlanOrder.setOnClickListener(this);
     }
 }

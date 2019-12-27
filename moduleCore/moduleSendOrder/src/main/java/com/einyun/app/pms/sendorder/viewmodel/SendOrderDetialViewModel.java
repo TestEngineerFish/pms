@@ -8,6 +8,7 @@ import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
@@ -23,7 +24,7 @@ import com.einyun.app.library.upload.model.PicUrl;
 
 import java.util.List;
 
-public class SendOrderDetialViewModel extends BaseUploadViewModel {
+public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
     ResourceWorkOrderService service;
     MutableLiveData<DisttributeDetialModel> workOrderLiveData = new MutableLiveData<>();
 
