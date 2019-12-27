@@ -44,16 +44,6 @@ public class PhotoListView extends LinearLayout {
                 LinearLayoutManager.HORIZONTAL,
                 false));
         binding.rvPhoto.setAdapter(listAdapter);
-        listAdapter.setOnItemListener((v, position) -> {
-            if(pics==null){
-                return;
-            }
-            Intent starter = new Intent(getContext(), PhotoShowActivity.class);
-            //传递当前点击的图片的位置、图片路径集合
-            starter.putExtra("position", position);
-            starter.putStringArrayListExtra("mImages", getImagePaths());
-            getContext().startActivity(starter);
-        });
     }
 
     public void updateList(List<PicUrlModel> pics){

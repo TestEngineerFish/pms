@@ -32,8 +32,10 @@ import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
@@ -55,6 +57,7 @@ import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb;
 import com.einyun.app.library.resource.workorder.model.Zyjhgd;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.plan.BR;
@@ -114,6 +117,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_plan_order);
         setRightOption(R.drawable.histroy);
+        setRightTxt(R.string.text_histroy);
+        setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
 
         if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
@@ -121,7 +126,37 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             binding.cvOperate.setVisibility(View.GONE);
             binding.btnSubmit.setVisibility(View.GONE);
         }
+
+        viewModel.isClosedLiveData.observe(this, isClosedState -> {
+            if (isClosedState.isClosed()) {
+                if (isClosedState.getType().equals(WorkOrder.POSTPONED_PLAN)) {
+                    //还需要传入参数
+                    ARouter.getInstance()
+                            .build(RouterUtils.ACTIVITY_LATE)
+                            .withString(RouteKey.KEY_ORDER_ID, id)
+                            .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, planInfo.getExtensionApplication())
+                            .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                            .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_PLAN)
+                            .navigation();
+                } else if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PLAN)) {
+                    isCloseClose = isClosedState.isClosed();
+                }
+            } else {
+                if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PLAN)) {
+                    isCloseClose = isClosedState.isClosed();
+                    binding.cvResultEdit.setVisibility(View.GONE);
+                    binding.cvOperate.setVisibility(View.GONE);
+                    binding.btnSubmit.setVisibility(View.GONE);
+                } else {
+                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
+                }
+
+            }
+        });
     }
+
+    //false为不可以闭单  true为可以闭单
+    private boolean isCloseClose = false;
 
     @Override
     protected void initData() {
@@ -132,6 +167,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
+        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration(18));
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
 
         //工作节点适配
@@ -255,6 +291,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     private void requestData() {
+
         //加载数据
         viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
             updateUI(planInfo);
@@ -273,6 +310,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
             }
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(id);
+            request.setType(WorkOrder.FORCE_CLOSE_PLAN);
+            viewModel.isClosed(request);
         });
     }
 
@@ -308,7 +349,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -325,7 +366,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         showResult();
         showPostpone();
         showForceClose();
-        if (nodes.size() <1){
+        if (nodes.size() < 1) {
             nodes = viewModel.loadNodes(planInfo);
             nodes.add(0, new WorkNode());
             nodesAdapter.setDataList(nodes);
@@ -432,27 +473,26 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 跳转申请延期
      */
     public void applyPostpone() {
-        //还需要传入参数
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_LATE)
-                .withString(RouteKey.KEY_ORDER_ID, id)
-                .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, planInfo.getExtensionApplication())
-                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_PLAN)
-                .navigation();
+        IsClosedRequest request = new IsClosedRequest();
+        request.setId(id);
+        request.setType(WorkOrder.POSTPONED_PLAN);
     }
 
     /**
      *
      */
     public void closeOrder() {
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_CLOSE)
-                .withString(RouteKey.KEY_ORDER_ID, id)
-                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                .withString(RouteKey.KEY_TASK_ID, taskId)
-                .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
-                .navigation();
+        if (isCloseClose) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_CLOSE)
+                    .withString(RouteKey.KEY_ORDER_ID, id)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withString(RouteKey.KEY_TASK_ID, taskId)
+                    .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
+                    .navigation();
+        } else {
+            ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
+        }
     }
 
     /**

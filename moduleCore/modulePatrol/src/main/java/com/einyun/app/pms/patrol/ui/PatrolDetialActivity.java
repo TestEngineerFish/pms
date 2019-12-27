@@ -154,9 +154,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 false));//设置横向
         binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration());
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
-        photoSelectAdapter.setOnItemListener((v, position) -> {
-            PhotoShowActivity.start(this, position, (ArrayList<String>) photoSelectAdapter.getImagePaths());
-        });
 
         photoListAdapter = new PhotoListAdapter(this);
         binding.panelHandleInfo.patrolHandlePicList.setLayoutManager(new LinearLayoutManager(
@@ -358,9 +355,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 PicUrlModelConvert convertPic = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convertPic.stringToSomeObjectList(images);
                 adapter.updateList(modelList);
-                adapter.setOnItemListener((v, position) -> {
-                    PhotoShowActivity.start(this, position, (ArrayList<String>) adapter.getImagePaths());
-                });
             }
 
         }
@@ -399,9 +393,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             PicUrlModelConvert convert = new PicUrlModelConvert();
             List<PicUrlModel> modelList = convert.stringToSomeObjectList(images);
             photoListAdapter.updateList(modelList);
-            photoListAdapter.setOnItemListener((v, position) -> {
-                PhotoShowActivity.start(this, position, (ArrayList<String>) photoListAdapter.getImagePaths());
-            });
         }
     }
 

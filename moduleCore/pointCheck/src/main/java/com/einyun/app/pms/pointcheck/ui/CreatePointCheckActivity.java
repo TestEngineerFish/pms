@@ -222,12 +222,6 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                     .imageEngine(new Glide4Engine())
                     .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
         }, CreatePointCheckActivity.this);
-        photoSelectAdapter.setOnItemListener(new PhotoListItemListener() {
-            @Override
-            public void OnItemClick(View v, int position) {
-                PhotoShowActivity.start(CreatePointCheckActivity.this,position,(ArrayList<String>) photoSelectAdapter.getImagePaths());
-            }
-        });
     }
 
     @Override

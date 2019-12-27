@@ -23,6 +23,7 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectWorkOrderTypeView;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceChildBean;
@@ -91,6 +92,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
         binding.rvImglist.setAdapter(photoSelectAdapter);
+        binding.rvImglist.addItemDecoration(new SpacesItemDecoration(18));
         photoSelectAdapter.setAddListener(selectedSize -> {
             if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
@@ -297,6 +299,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             copy.setDivideName(request.getDivideName());
             request = copy;
             resourceTypeBean = null;
+            binding.tvResource.setText("");
         }
         if (SelectType.WORKY_TYPE == type) {
             request.setType("");

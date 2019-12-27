@@ -39,10 +39,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 
     private LayoutInflater inflater;
     private WeakReference<Activity> weakReference;
-    public static int maxSize=4;
-    private PhotoListItemListener itemClickListener;
+    public static int maxSize = 4;
+
     public void setActivity(Activity activity) {
-        weakReference=new WeakReference<>(activity);
+        weakReference = new WeakReference<>(activity);
     }
 
     public void setItemChangeListener(ItemChangeListener itemChangeListener) {
@@ -67,10 +67,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
     }
 
     public PhotoSelectAdapter(Activity activity) {
-        if(weakReference!=null){
+        if (weakReference != null) {
             weakReference.clear();
         }
-        weakReference=new WeakReference<>(activity);
+        weakReference = new WeakReference<>(activity);
     }
 
     @NonNull
@@ -89,15 +89,15 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             holder.layoutAdd.setVisibility(View.VISIBLE);
             holder.imgPhoto.setVisibility(View.INVISIBLE);
             holder.imgRemove.setVisibility(View.INVISIBLE);
-            if(getItemCount()>=maxSize+1){
+            if (getItemCount() >= maxSize + 1) {
                 holder.itemView.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.itemView.setVisibility(View.VISIBLE);
             }
             holder.layoutAdd.setOnClickListener(v -> {
                 if (listener != null) {
-                    Activity activity=weakReference.get();
-                    if(activity==null){
+                    Activity activity = weakReference.get();
+                    if (activity == null) {
                         return;
                     }
                     if (Build.VERSION.SDK_INT >= 23) {
@@ -125,13 +125,14 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
             holder.imgPhoto.setVisibility(View.VISIBLE);
             holder.imgRemove.setVisibility(View.VISIBLE);
             Uri photo = selectedPhotos.get(position);
-            Activity activity=weakReference.get();
-            if(activity==null){
+            Activity activity = weakReference.get();
+            if (activity == null) {
                 return;
             }
-            if(itemClickListener!=null){
-                holder.itemView.setOnClickListener(v -> itemClickListener.OnItemClick(holder.itemView,position));
-            }
+
+            holder.itemView.setOnClickListener(v -> {
+                PhotoShowActivity.start(activity, position, (ArrayList<String>) getImagePaths());
+            });
             holder.imgRemove.setOnClickListener(v -> {
                 new AlertDialog(activity).builder()
                         .setTitle("提示")
@@ -170,14 +171,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
 
     public void setAddListener(AddPhotoClickListener listener, Activity activity) {
         this.listener = listener;
-        if(weakReference!=null){
+        if (weakReference != null) {
             weakReference.clear();
         }
-        weakReference=new WeakReference<>(activity);
-    }
-
-    public void setOnItemListener(PhotoListItemListener listener){
-        this.itemClickListener=listener;
+        weakReference = new WeakReference<>(activity);
     }
 
     public void addPhotos(List<Uri> photoUri) {
@@ -192,10 +189,10 @@ public class PhotoSelectAdapter extends RecyclerView.Adapter<PhotoSelectAdapter.
         return count;
     }
 
-    public List<String> getImagePaths(){
-        List<String> paths=new ArrayList<>();
-        if(selectedPhotos!=null){
-            for(Uri uri:selectedPhotos){
+    public List<String> getImagePaths() {
+        List<String> paths = new ArrayList<>();
+        if (selectedPhotos != null) {
+            for (Uri uri : selectedPhotos) {
                 paths.add(uri.toString());
             }
         }

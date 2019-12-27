@@ -5,8 +5,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.R;
@@ -19,15 +21,16 @@ import java.util.List;
 public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
     private List<PicUrlModel> picList;
     private Context mContext;
-    private PhotoListItemListener listener;
-    public PhotoListAdapter(Context context){
-        this.mContext=context;
+
+    public PhotoListAdapter(Context context) {
+        this.mContext = context;
     }
+
     @NonNull
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LinearLayout.inflate(mContext, R.layout.item_photo_select,null);
-        PhotoViewHolder viewHolder=new PhotoViewHolder(view);
+        View view = LinearLayout.inflate(mContext, R.layout.item_photo_select, null);
+        PhotoViewHolder viewHolder = new PhotoViewHolder(view);
         return viewHolder;
     }
 
@@ -36,7 +39,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
         holder.ivPhoto.setVisibility(View.VISIBLE);
         holder.add.setVisibility(View.GONE);
         PicUrlModel model = picList.get(position);
-        if(model!=null){
+        if (model != null) {
             Glide.with(mContext)
                     .load(HttpUrlUtil.getImageServerUrl(model.getPath()))
                     .centerCrop()
@@ -44,39 +47,35 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
                     .error(R.mipmap.place_holder_img)
                     .into(holder.ivPhoto);
         }
-        if(listener!=null){
-            holder.itemView.setOnClickListener(v -> listener.OnItemClick(holder.itemView,position));
-        }
+        holder.itemView.setOnClickListener(v -> {
+            PhotoShowActivity.start(mContext, position, (ArrayList<String>) getImagePaths());
+        });
     }
 
     @Override
     public int getItemCount() {
-        return picList==null?0:picList.size();
+        return picList == null ? 0 : picList.size();
     }
 
-    public void updateList(List<PicUrlModel> list){
-        if(picList ==null){
-            picList =list;
-        }else{
+    public void updateList(List<PicUrlModel> list) {
+        if (picList == null) {
+            picList = list;
+        } else {
             picList.clear();
             picList.addAll(list);
         }
         notifyDataSetChanged();
     }
 
-    public List<String> getImagePaths(){
-        List<String> paths=new ArrayList<>();
-        if(picList!=null){
-            for(PicUrlModel model:picList){
-                if(model!=null){
+    public List<String> getImagePaths() {
+        List<String> paths = new ArrayList<>();
+        if (picList != null) {
+            for (PicUrlModel model : picList) {
+                if (model != null) {
                     paths.add(HttpUrlUtil.getImageServerUrl(model.getPath()));
                 }
             }
         }
         return paths;
-    }
-
-    public void setOnItemListener(PhotoListItemListener listener){
-        this.listener=listener;
     }
 }
