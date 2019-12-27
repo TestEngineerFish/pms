@@ -24,6 +24,7 @@ import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
 import com.einyun.app.common.ui.widget.SelectRepairsTypeView;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.workorder.model.Door;
@@ -107,6 +108,7 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
         binding.rvImglist.setAdapter(photoSelectAdapter);
+        binding.rvImglist.addItemDecoration(new SpacesItemDecoration(18));
         photoSelectAdapter.setAddListener(selectedSize -> {
             if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);

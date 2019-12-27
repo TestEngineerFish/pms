@@ -61,8 +61,8 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         binding.checkbox.setOnCheckedChangeListener(this);
     }
     /**
-    * 退出登录
-    * */
+     * 退出登录
+     * */
     public void onLoginOutClick(){
         new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
                 .setMsg(getString(R.string.tv_confirm_logout))

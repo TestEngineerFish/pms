@@ -9,18 +9,14 @@
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
-
+    <androidx.cardview.widget.CardView
+       style="@style/cardview_style">
     <LinearLayout
         android:id="@+id/panel_work_order_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px_30"
-        android:layout_marginRight="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_10"
-        android:layout_marginTop="@dimen/px_10"
-        android:background="@color/white"
         android:orientation="vertical"
-        android:visibility="visible">
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -92,15 +88,17 @@
                  />
         </LinearLayout>
 
-        <LinearLayout style="@style/work_order_detail_ln">
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:paddingLeft="@dimen/px_20">
             <TextView style="@style/tv_create_order_red_star"
                 android:id="@+id/repair_report_area_red"
-                android:layout_marginLeft="@dimen/px_20"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/px_10"
                 android:visibility="gone"
                 />
             <TextView
                 style="@style/work_order_detail_left_txt"
+                android:layout_marginLeft="@dimen/px_0"
                 android:text="报修区域" />
             <TextView
                 android:id="@+id/repair_report_area"
@@ -115,19 +113,23 @@
                     android:layout_height="@dimen/px_30"
                     android:src="@drawable/edit"
                     android:layout_marginLeft="@dimen/px_14"
+                    android:layout_marginTop="@dimen/px_5"
                     android:visibility="gone"
                     android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
 
-        <LinearLayout style="@style/work_order_detail_ln">
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:paddingLeft="@dimen/px_20">
             <TextView style="@style/tv_create_order_red_star"
                 android:id="@+id/repair_report_kind_red"
-                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginTop="@dimen/px_10"
+                android:layout_gravity="center_vertical"
                 android:visibility="gone"
               />
             <TextView
                 style="@style/work_order_detail_left_txt"
+                android:layout_marginLeft="@dimen/px_0"
                 android:text="报修类别" />
             <TextView
                 android:id="@+id/repair_type"
@@ -141,22 +143,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/px_30"
                 android:src="@drawable/edit"
+                android:layout_marginTop="@dimen/px_5"
                 android:layout_marginLeft="@dimen/px_14"
                 android:visibility="gone"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
-        <LinearLayout style="@style/work_order_detail_ln">
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:paddingLeft="@dimen/px_20">
 
             <TextView
                 android:id="@+id/repair_report_nature_red"
                 style="@style/tv_create_order_red_star"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/px_10"
                 android:visibility="gone"
-                android:layout_marginLeft="@dimen/px_20"
              />
             <TextView
                 style="@style/work_order_detail_left_txt"
+                android:layout_marginLeft="@dimen/px_0"
                 android:text="性质评估" />
             <TextView
                 android:id="@+id/repair_asses_txt"
@@ -168,15 +174,17 @@
                 />
             <RadioGroup
                 android:id="@+id/rgs"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginRight="@dimen/px_50"
                 android:layout_gravity="center_vertical"
                 android:visibility="gone">
 
                 <RadioButton
                     android:id="@+id/rb_normal"
-                    android:layout_width="@dimen/px_120"
+                    android:layout_width="@dimen/px_0"
+                    android:layout_weight="1"
                     android:layout_height="@dimen/px_50"
                     android:background="@drawable/select_radio_button_normal"
                     android:button="@null"
@@ -188,7 +196,8 @@
 
                 <RadioButton
                     android:id="@+id/rb_general"
-                    android:layout_width="@dimen/px_120"
+                    android:layout_width="@dimen/px_0"
+                    android:layout_weight="1"
                     android:layout_height="@dimen/px_50"
                     android:layout_marginLeft="@dimen/px_20"
                     android:background="@drawable/select_radio_button_general"
@@ -201,7 +210,8 @@
 
                 <RadioButton
                     android:id="@+id/rb_warning"
-                    android:layout_width="@dimen/px_120"
+                    android:layout_width="@dimen/px_0"
+                    android:layout_weight="1"
                     android:layout_height="@dimen/px_50"
                     android:layout_marginLeft="@dimen/px_20"
                     android:background="@drawable/select_radio_button_warning"
@@ -284,4 +294,5 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

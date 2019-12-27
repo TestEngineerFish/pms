@@ -40,7 +40,7 @@
     <color name="thick_divider_color">#f8f9fb</color>
     <!-- 输入框提示颜色 -->
     <color name="edit_hint_color">#d8d8d8</color>
-    
+
     <color name="normal_blue_color">#2B7DFE</color>
     <color name="main_bottom_tab_text_select_color">#185cc7</color>
     <color name="normal_blue_btn_start_color">#185cc7</color>
@@ -56,7 +56,7 @@
     <color name="txt_black_order">#132D42</color>
     <color name="greyTextColor">#9DA3B4</color>
     <color name="grayLine">#D8D8D8</color>
-    <color name="blueTextColor">#185CC7 </color>
+    <color name="blueTextColor">#185CC7</color>
     <color name="blueConditionColor">#125DD3</color>
     <color name="lightBlueColor">#5C9BFF</color>
     <color name="color_FAF">#FAFAFE</color>
@@ -70,5 +70,11 @@
     <color name="material_delete_color">#33E02020</color>
     <color name="material_delete_txt_color">#E02020</color>
     <color name="material_add_material_color">#458dfe</color>
+    <color name="repair_detail_response_color">#f89b3a</color>
+    <color name="repair_detail_handle_color">#20cd70</color>
+    <color name="repair_detail_send_color">#f7b500</color>
+    <color name="repair_detail_grab_color">#458dfe</color>
+    <color name="repair_detail_evaluate_color">#2ebaf1</color>
+    <color name="repair_detail_close_color">#cecdcd</color>
 
 </resources>

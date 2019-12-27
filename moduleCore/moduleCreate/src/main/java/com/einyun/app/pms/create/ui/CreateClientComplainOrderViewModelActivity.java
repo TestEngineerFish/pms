@@ -132,6 +132,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
         binding.rvImglist.setAdapter(photoSelectAdapter);
+        binding.rvImglist.addItemDecoration(new SpacesItemDecoration(18));
         photoSelectAdapter.setAddListener(selectedSize -> {
             if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);

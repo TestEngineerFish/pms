@@ -1,14 +1,45 @@
 package com.einyun.app.pms.repairs.ui;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.pms.repairs.R;
 
 public class RepairBindingAdapter {
+    @BindingAdapter("statusDetail")
+    public static void statusDetail(TextView view, String value) {
+        Context context=CommonApplication.getInstance();
+        if (value==null){
+            view.setText(R.string.text_state_closed);
+            view.setTextColor(context.getResources().getColor(R.color.repair_detail_close_color));
+            return;
+        }
+        if (value.equals(RouteKey.REPAIR_STATUS_RESPONSE)) {
+            view.setText(R.string.text_wait_response);
+            view.setTextColor(context.getResources().getColor(R.color.repair_detail_response_color));
+        } else if (value.equals(RouteKey.REPAIR_STATUS_HANDLE)) {
+            view.setText(R.string.text_handling);
+            view.setTextColor(context.getResources().getColor(R.color.repair_detail_handle_color));
+        } else if (value.equals(RouteKey.REPAIR_STATUS_EVALUATE)) {
+            view.setText(R.string.text_wait_evaluate);
+            view.setTextColor(context.getResources().getColor(R.color.repair_detail_evaluate_color));
+        } else if (value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
+            view.setText(R.string.text_wait_send);
+            view.setTextColor(context.getResources().getColor(R.color.repair_detail_send_color));
+        }else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)||value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)){
+            view.setText(R.string.text_wait_grab);
+            view.setTextColor(context.getResources().getColor(R.color.repair_detail_grab_color));
+        }else {
+
+        }
+
+    }
     @BindingAdapter("status")
     public static void status(TextView view, String value) {
         if (value==null){

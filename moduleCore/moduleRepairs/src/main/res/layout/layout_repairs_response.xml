@@ -9,18 +9,22 @@
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
-
-    <LinearLayout
-        android:id="@+id/repairs_work_order_info"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_10"
         android:layout_marginTop="@dimen/px_10"
-        android:background="@color/white"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="@dimen/px_10">
+    <LinearLayout
+        android:id="@+id/repairs_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+       >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -137,4 +141,5 @@
             app:hintText="请输入申请原因"
             app:maxNumber="300" />
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

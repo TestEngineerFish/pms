@@ -185,13 +185,13 @@
     <methods>;
 }
 
-#（可选）避免Log打印输出
--assumenosideeffects class android.util.Log {
-   public static *** v(...);
-   public static *** d(...);
-   public static *** i(...);
-   public static *** w(...);
- }
+##（可选）避免Log打印输出
+#-assumenosideeffects class android.util.Log {
+#   public static *** v(...);
+#   public static *** d(...);
+#   public static *** i(...);
+#   public static *** w(...);
+# }
 
 
 #---------------------------------第三方包-------------------------------

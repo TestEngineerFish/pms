@@ -1,11 +1,19 @@
 package com.einyun.app.base;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
+
+
+import com.einyun.app.base.util.ActivityUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,25 +86,21 @@ public class ApplicationCrashHandler implements Thread.UncaughtExceptionHandler 
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            // 退出程序,注释下面的重启启动程序代码
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
-
-
-//            ex.printStackTrace();
-
-            // 重新启动程序，注释上面的退出程序
-//            Intent intent = new Intent();
-//            intent.setClass(mContext, MainActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            mContext.startActivity(intent);
-//            android.os.Process.killProcess(android.os.Process.myPid());
+            Intent intent = new Intent(mContext.getApplicationContext(), ActivityUtil.getFirstClass());
+            AlarmManager mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            //重启应用，得使用PendingIntent
+            PendingIntent restartIntent = PendingIntent.getActivity(
+                    mContext.getApplicationContext(), 0, intent,
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 2000,
+                    restartIntent); // 重启应用
         }
+
     }
 
     /**
@@ -115,14 +119,14 @@ public class ApplicationCrashHandler implements Thread.UncaughtExceptionHandler 
         logger.log(Level.SEVERE, Thread.currentThread().getName(), ex);
 
         // 使用 Toast 来显示异常信息   这里不开线程就看不到，或者一闪而逝，因为程序已经崩溃
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                Toast.makeText(mContext, "很抱歉，程序出现异常，即将退出。", Toast.LENGTH_LONG).show();
-//                Looper.loop();
-//            }
-//        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                Toast.makeText(mContext, "很抱歉，程序出现异常，即将退出。", Toast.LENGTH_LONG).show();
+                Looper.loop();
+            }
+        }.start();
 
         // 收集设备参数信息
         collectDeviceInfo(mContext);
@@ -211,4 +215,6 @@ public class ApplicationCrashHandler implements Thread.UncaughtExceptionHandler 
         }
         return null;
     }
+
+
 }
