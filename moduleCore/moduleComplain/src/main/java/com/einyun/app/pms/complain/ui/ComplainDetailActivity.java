@@ -32,6 +32,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
+import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
@@ -95,10 +96,11 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
-        binding.submit.setOnClickListener(this);
-        binding.save.setOnClickListener(this);
-        binding.layoutReportComplainInfo.llComplainType2.setOnClickListener(this);
-        binding.layoutReportComplainInfo.llComplainNature2.setOnClickListener(this);
+        request.getBizData().setC_is_solve(1);
+        binding.submit.setOnClickListener(new ClickProxy(this));
+        binding.save.setOnClickListener(new ClickProxy(this));
+        binding.layoutReportComplainInfo.llComplainType2.setOnClickListener(new ClickProxy(this));
+        binding.layoutReportComplainInfo.llComplainNature2.setOnClickListener(new ClickProxy(this));
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
             if (isClosedState.isClosed()) {
                 if (isClosedState.getType().equals(WorkOrder.POSTPONED_COMPLAIN)) {
@@ -179,7 +181,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             setStatus(value);
 
             binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
-            binding.layoutApplyCloseBtn.llClose.setOnClickListener(this);
+            binding.layoutApplyCloseBtn.llClose.setOnClickListener(new ClickProxy(this));
             binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
             binding.setComplain(detail);
             setImageList(binding.layoutReportComplainInfo.rvPhoto, detail.getF_ts_attachment());
@@ -447,8 +449,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     }
 
     @Override
-    public void onOptionClick(View view) {
-        super.onOptionClick(view);
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_HISTORY)
                 .withString(RouteKey.KEY_ORDER_ID, detail.getId_())
@@ -543,7 +545,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             IsClosedRequest request = new IsClosedRequest();
             request.setId(id);
             request.setType(WorkOrder.POSTPONED_COMPLAIN);
-            viewModel.isClosed(request);
+            viewModel.isClosed(request, true);
         }
         if (v.getId() == R.id.ll_close) {
             if (isCloseClose) {
