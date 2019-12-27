@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
     <LinearLayout
         android:id="@+id/panel_postpone"
         style="@style/ll_create_order"
-        android:layout_margin="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_10"
-        android:layout_marginTop="@dimen/px_10"
-        android:background="@color/white">
+        >
 
         <TextView
             style="@style/tv_create_order_name"
@@ -16,4 +16,5 @@
             style="@style/tv_create_order_right_arrow"
             android:layout_marginRight="@dimen/px_20" />
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
