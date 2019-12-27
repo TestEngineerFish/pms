@@ -25,6 +25,7 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
@@ -53,6 +54,7 @@ import com.einyun.app.pms.sendorder.databinding.LayoutCheckAndAcceptBinding;
 import com.einyun.app.pms.sendorder.model.SendOrderModel;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderDetialViewModel;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -136,6 +138,14 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         .navigation();
             }
         });
+        isClosedRequest=new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
+        //判断是否有闭单申请，有只显示详情
+        viewModel.isClosed(isClosedRequest).observe(this,model->{
+            Log.d("Test",model.isClosed()+"");
+            if (!model.isClosed()){
+                showIfHasClosed();
+            }
+        });
     }
 
     /**
@@ -208,13 +218,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getInfo().getCreateTime()));
         updateImagesUI(distributeWorkOrder);
         switchState(distributeWorkOrder.getData().getInfo().getStatus());
-        isClosedRequest=new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
-        //判断是否有闭单申请，有只显示详情
-        viewModel.isClosed(isClosedRequest).observe(this,model->{
-            if (!model.isClosed()){
-                showIfHasClosed();
-            }
-        });
     }
     /**
      * 有闭单申请的情况
@@ -226,7 +229,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.applyPostpone.getRoot().setVisibility(View.GONE);
         binding.checkAndAccept.getRoot().setVisibility(View.GONE);
         binding.orderForm.getRoot().setVisibility(View.GONE);
-
     }
 
     private void updateImagesUI(DisttributeDetialModel distributeWorkOrder) {
@@ -400,6 +402,14 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                     .imageEngine(new Glide4Engine())
                     .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
         }, SendOrderDetailActivity.this);
+        //申请闭单后关闭详情页面
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged(Boolean aBoolean) {
+              SendOrderDetailActivity.this.finish();
+            }
+        });
     }
 
     @Override
