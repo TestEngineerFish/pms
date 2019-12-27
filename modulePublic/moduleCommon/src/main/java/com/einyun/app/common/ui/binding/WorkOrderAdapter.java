@@ -32,8 +32,8 @@ public class WorkOrderAdapter {
         else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
         }
-
     }
+
 
     /**
      * 筛选条件是否选择，分期是否选择

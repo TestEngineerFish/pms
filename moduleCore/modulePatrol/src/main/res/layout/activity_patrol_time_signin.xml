@@ -18,7 +18,14 @@
         <include
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
-
+        <View
+            android:id="@+id/frame_space"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:background="@mipmap/icon_detial_frame"
+            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -71,7 +78,7 @@
                                     android:layout_centerVertical="true">
 
                                     <TextView
-                                        android:visibility="visible"
+                                        android:visibility="gone"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -95,7 +102,7 @@
                                 android:layout_height="@dimen/px_60"
                                 android:layout_marginLeft="@dimen/px_30"
                                 android:orientation="horizontal"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 >
 
                                 <TextView

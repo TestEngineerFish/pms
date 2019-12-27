@@ -142,7 +142,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
         @Override
         public boolean areItemsTheSame(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getID_().equals(newItem.getID_());
+            return oldItem.getId()==newItem.getId();
         }
 
         @SuppressLint("DiffUtilEquals")
@@ -154,7 +154,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         @Nullable
         @Override
         public Object getChangePayload(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getID_().equals(newItem.getID_());
+            return oldItem.getId()==newItem.getId();
         }
     };
 

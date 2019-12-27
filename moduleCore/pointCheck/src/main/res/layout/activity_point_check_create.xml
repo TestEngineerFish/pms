@@ -42,7 +42,7 @@
                         android:background="#ffffff"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="@dimen/px_30"
                         android:paddingTop="8dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="8dp">
@@ -95,7 +95,7 @@
                         android:background="#ffffff"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="@dimen/px_30"
                         android:paddingTop="8dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="8dp">
@@ -146,19 +146,11 @@
                         android:background="#ffffff"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="@dimen/px_30"
                         android:paddingTop="8dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="8dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="*"
-                            android:textColor="#e33535"
-                            android:textSize="20sp"
-                            android:visibility="invisible" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -196,19 +188,10 @@
                         android:background="#ffffff"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="@dimen/px_30"
                         android:paddingTop="8dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="*"
-                            android:textColor="#e33535"
-                            android:textSize="20sp"
-                            android:visibility="invisible" />
 
                         <TextView
                             android:layout_width="wrap_content"
