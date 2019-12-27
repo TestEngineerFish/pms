@@ -110,7 +110,7 @@
         <LinearLayout
             android:id="@+id/ll_2"
             style="@style/ll_create_order"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView style="@style/tv_create_order_red_star" />
 

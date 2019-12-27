@@ -16,6 +16,7 @@ import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
@@ -32,7 +33,7 @@ import io.reactivex.Observable;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
-public class PlanOrderDetailViewModel extends BaseUploadViewModel {
+public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
     MutableLiveData<PlanInfo> liveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;

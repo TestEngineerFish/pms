@@ -229,6 +229,14 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                         });
                     }
                 }else {
+                    if (RouteKey.KEY_MID_URL_COMPLAIN.equals(midUrl)){
+                        if ("1".equals(applyCusCloseRequest.getBizData().getF_fclose_apply_invalid())){
+                            if (!StringUtil.isNullStr(applyCusCloseRequest.getBizData().getF_invalid_reason_cate())){
+                                ToastUtil.show(this,"请选择无效原因");
+                                return;
+                            }
+                        }
+                    }
                     applyCusCloseRequest.getDoNextParam().setTaskId(taskId);
                     applyCusCloseRequest.getBizData().setFclose_apply_reason(binding.applyCloseReason.getString());
                     applyCusCloseRequest.getBizData().setF_fclose_apply_reason(binding.applyCloseReason.getString());
