@@ -45,6 +45,7 @@ public class RouterUtils {
     public static final String ACTIVITY_PATROL_TIME_QR_SCANNER="/patrol/PatrolSignInScannerActivity";
     public static final String ACTIVITY_PATROL_FORCE_CLOSE="/patrol/PatrolForceCloseActivity";
     public static final String ACTIVITY_PATROL_POSTPONE="/patrol/PatrolPostponeActivity";
+    public static final String ACTIVITY_PATROL_PHOTO="/patrol/PatrolTimePhotoActivity";
 
 
     //计划工单

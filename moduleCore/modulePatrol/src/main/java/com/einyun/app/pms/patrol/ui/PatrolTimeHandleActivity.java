@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -98,14 +97,14 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                     } else {
                         WorkNode front = null;
                         if (position > 1) {
-                            front = (WorkNode) nodesAdapter.getDataList().get(position - 1);
+                            front = getFrontWorkNode(position);
                         }
                         //处理节点
                         tableItem(binding,model, position);
                         //设置签到
                         setUpSignIn(binding, front, model);
                         //设置拍照
-                        setUpCapture(binding, front, model);
+                        setUpCapture(binding,model,position);
                     }
                 }
 
@@ -115,8 +114,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                     binding.tvWorkNode.setVisibility(View.VISIBLE);
                     binding.tvResult.setVisibility(View.GONE);
                     binding.tvWorkThings.setGravity(Gravity.LEFT);
-                    binding.tvWorkNode.setOnClickListener(v -> navigatSignInDetial(node));
-                    binding.tvWorkThings.setOnClickListener(v -> navigatSignInDetial(node));
+                    binding.tvWorkNode.setOnClickListener(v -> navigatSignIn(node));
+                    binding.tvWorkThings.setOnClickListener(v -> navigatSignIn(node));
                 }
 
                 /**
@@ -149,18 +148,18 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                  * @param binding
                  * @param model
                  */
-                protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding, WorkNode front, WorkNode model) {
+                protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding, WorkNode model,int position) {
                     //是否需要拍照
                     if (model.is_photo > 0) {//需要拍照
                         if (!TextUtils.isEmpty(model.pic_url)||(model.getCachedImages()!=null&&model.getCachedImages().size()>0)) {//是否已有拍照记录，有拍照记录，显示已拍照
                             binding.llPhotoComplete.setVisibility(View.VISIBLE);
                             binding.llCapture.setVisibility(View.GONE);
-                            binding.llPhotoComplete.setOnClickListener(v -> navigatSignIn(front, model));//已拍照，点击可以进入修改照片
+                            binding.llPhotoComplete.setOnClickListener(v -> navigatSignInPhoto(model,position));//已拍照，点击可以进入修改照片
                         } else {//无拍照记录，显示拍照按钮，进行拍照
                             binding.llPhotoComplete.setVisibility(View.GONE);
                             binding.llCapture.setVisibility(View.VISIBLE);
                             binding.llCapture.setOnClickListener(v -> {
-                                navigatSignIn(front, model);
+                                navigatSignInPhoto(model,position);
                             });
                         }
                     } else {//不需要拍照，不显示任何拍照按钮
@@ -192,30 +191,44 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         binding.rvNodes.setAdapter(nodesAdapter);
     }
 
+
+    private WorkNode getFrontWorkNode(int position){
+        if(position>0){
+            int frontPos=position-1;
+            WorkNode node= (WorkNode) nodesAdapter.getDataList().get(frontPos);
+            if((SignInType.NONE.equals(node.sign_type) || TextUtils.isEmpty(node.sign_type))&&node.is_photo<=0){
+                    return getFrontWorkNode(frontPos);
+            }
+            return node;
+        }
+        return null;
+    }
     /**
      * 拍照
-     * @param frontWorkNode
      * @param node
      */
-    private void navigatSignIn(WorkNode frontWorkNode, WorkNode node) {
+    private void navigatSignInPhoto(WorkNode node,int position) {
         if (patrolInfo == null) {
             return;
         }
         saveLocalUserData();
-        int ordered = patrolInfo.getData().getZyxcgd().getIs_sort();//是否需要按照顺序
-        if (ordered > 0) {
-            if (frontWorkNode != null) {//第一个忽略
-                if (frontWorkNode.is_photo > 0 && !viewModel.hasCapture(frontWorkNode)) {
-                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
-                    return;
+        WorkNode frontWorkNode=getFrontWorkNode(position);
+        if(frontWorkNode!=null){
+            int ordered = patrolInfo.getData().getZyxcgd().getIs_sort();//是否需要按照顺序
+            if (ordered > 0) {
+                if (frontWorkNode !=null) {//前面没有拍照项
+                    if (frontWorkNode.is_photo > 0 && !viewModel.hasCapture(frontWorkNode)) {
+                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
+                        return;
+                    }
                 }
             }
-        }
-        if (ordered > 0) {
-            if (frontWorkNode != null) {//第一个忽略
-                if (SignInType.QR.equals(frontWorkNode.sign_type) && !viewModel.hasSignIn(frontWorkNode)) {
-                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
-                    return;
+            if (ordered > 0) {
+                if (frontWorkNode != null) {//前面没有签到项
+                    if (SignInType.QR.equals(frontWorkNode.sign_type) && !viewModel.hasSignIn(frontWorkNode)) {
+                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+                        return;
+                    }
                 }
             }
         }
@@ -373,5 +386,19 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 uploadImage(nodesAdapter.getDataList());
             }
         }
+    }
+
+    /**
+     * 签到详情
+     * @param node
+     */
+    protected void navigatSignIn(WorkNode node){
+        saveLocalUserData();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(RouteKey.KEY_PATROL_TIME_WORKNODE, node);
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_QR_SIGNIN_HANDLE)
+                .withString(RouteKey.KEY_ORDER_ID, orderId)
+                .withBundle(RouteKey.KEY_PARAMS, bundle)
+                .navigation(this, RouterUtils.ACTIVITY_REQUEST_SIGN_IN);
     }
 }
