@@ -396,8 +396,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             if (detialModel.getHandleList().size() > 3) {
                 handleAdapter.setDataList(detialModel.getHandleList().subList(0, 3));
+                binding.repairHandleHistory.handleAddMore.setVisibility(View.VISIBLE);
             } else {
                 handleAdapter.setDataList(detialModel.getHandleList());
+                binding.repairHandleHistory.handleAddMore.setVisibility(View.GONE);
             }
 
         } else {
@@ -525,6 +527,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             choosePayDate();
         }
         if (v.getId() == R.id.handle_add_more) {
+            binding.repairHandleHistory.handleAddMore.setVisibility(View.GONE);
             handleAdapter.setDataList(detialModel.getHandleList());
         }
         if (v.getId() == R.id.apply_postpone) {

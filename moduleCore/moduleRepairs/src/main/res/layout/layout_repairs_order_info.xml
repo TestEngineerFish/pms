@@ -31,7 +31,8 @@
                 android:gravity="center_vertical"
                 android:text="工单信息"
                 android:textColor="@color/txt_black_order"
-                android:textSize="@dimen/font_size16" />
+                android:textSize="@dimen/font_size16"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"

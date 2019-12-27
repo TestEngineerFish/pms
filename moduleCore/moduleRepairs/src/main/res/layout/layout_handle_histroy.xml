@@ -3,72 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
-    <androidx.cardview.widget.CardView
-        style="@style/cardview_style">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
 
-        <LinearLayout
-            style="@style/work_order_detail_ln"
-            android:id="@+id/repair_handle_history_ln">
-
-
-            <TextView
-                style="@style/work_order_detail_txt_left"
-                android:layout_marginBottom="@dimen/px_20"
-                android:text="处理历史" />
-
-        </LinearLayout>
+    <androidx.cardview.widget.CardView style="@style/cardview_style">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/repair_handle_histroy_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/px_30"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <LinearLayout
-                android:id="@+id/handle_add_more"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/px_100"
-                android:layout_centerInParent="true"
-                android:orientation="horizontal">
+                android:id="@+id/repair_handle_history_ln"
+                style="@style/work_order_detail_ln">
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="加载更多"
-                    android:textColor="@color/material_add_material_color"
-                    android:textSize="@dimen/font_size14" />
-                <ImageView
-                    android:id="@+id/handle_arrow"
-                    android:layout_width="@dimen/px_26"
-                    android:layout_height="@dimen/px_16"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/iv_arrow_blue_down" />
+                    style="@style/work_order_detail_txt_left"
+                    android:layout_marginBottom="@dimen/px_20"
+                    android:text="处理历史" />
+
             </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/repair_handle_histroy_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_30"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/thin_divider_color" />
+
+            <RelativeLayout
+                android:id="@+id/repair_histroy_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/handle_add_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_100"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="加载更多"
+                        android:textColor="@color/material_add_material_color"
+                        android:textSize="@dimen/font_size14" />
+
+                    <ImageView
+                        android:id="@+id/handle_arrow"
+                        android:layout_width="@dimen/px_26"
+                        android:layout_height="@dimen/px_16"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_20"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/iv_arrow_blue_down" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

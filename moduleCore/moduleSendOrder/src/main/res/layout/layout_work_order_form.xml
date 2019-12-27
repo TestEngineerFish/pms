@@ -32,6 +32,8 @@
                 android:layout_marginLeft="@dimen/px_20"
                 android:gravity="center_vertical"
                 android:text="上传充分反映情况的照片"
+                android:textColor="@color/blackTextColor"
+                android:textStyle="bold"
                 android:textSize="@dimen/px_32" />
 
         </RelativeLayout>
