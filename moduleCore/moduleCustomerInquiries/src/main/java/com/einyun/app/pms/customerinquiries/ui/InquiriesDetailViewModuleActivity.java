@@ -156,6 +156,10 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
          * 获取工单详情
          */
 
+        queryOrderInfo();
+    }
+
+    private void queryOrderInfo() {
         viewModel.queryOrderInfo(inquiriesItemModule.proInsId,inquiriesItemModule.taskId==null?"":inquiriesItemModule.taskId).observe(this,module->{
             Log.e(TAG, "onResume:proInsId--"+inquiriesItemModule.proInsId+"--taskId--"+inquiriesItemModule.taskId);
             orderDetailInfoModule = module;
@@ -379,6 +383,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                                 .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        queryOrderInfo();
 //                                finish();
                                     }
                                 });
