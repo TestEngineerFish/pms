@@ -99,10 +99,10 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         binding.layoutReportComplainInfo.llComplainNature2.setOnClickListener(this);
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
             if(isClosedState.isClosed()){
-                if(isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PATROL)){
-                    navigatApply(RouterUtils.ACTIVITY_PATROL_FORCE_CLOSE);//强制关闭
-                }else if(isClosedState.getType().equals(WorkOrder.POSTPONED_PATROL)){
-                    navigatApply(RouterUtils.ACTIVITY_PATROL_POSTPONE);//申请延期
+                if(isClosedState.getType().equals(WorkOrder.POSTPONED_COMPLAIN)){
+                    navigatApply(RouterUtils.ACTIVITY_LATE);//强制关闭
+                }else if(isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_COMPLAIN)){
+                    navigatApply(RouterUtils.ACTIVITY_CLOSE);//强制关闭
                 }
             }else{
                 ToastUtil.show(CommonApplication.getInstance(),R.string.text_applying_wait);
@@ -112,7 +112,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     }
 
     private void navigatApply(String activityPatrolForceClose) {
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, id)
+        ARouter.getInstance().build(activityPatrolForceClose).withString(RouteKey.KEY_ORDER_ID, id)
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_COMPLAIN)
                 .withString(RouteKey.KEY_DIVIDE_ID, detail.getF_ts_dk_id())
