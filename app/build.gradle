@@ -58,7 +58,6 @@ android {
         }
         //请勿删除，提测uat环境，上线开启
         uat {
-            debuggable true
             versionNameSuffix "-uat"
             manifestPlaceholders=[APP_NAME:app_name+"Uat"]
             minifyEnabled true   //开启混淆

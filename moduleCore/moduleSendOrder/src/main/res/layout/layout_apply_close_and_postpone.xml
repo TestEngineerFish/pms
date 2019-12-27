@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
     <LinearLayout
         android:id="@+id/apply_force_close_and_postpone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_238"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/px_30"
-        android:layout_marginRight="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_10"
-        android:layout_marginTop="@dimen/px_10"
-        android:background="@color/white">
+       >
 
         <LinearLayout
             android:id="@+id/send_order_apply_late"
@@ -57,5 +56,6 @@
                 android:textSize="@dimen/font_size13" />
         </LinearLayout>
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
 

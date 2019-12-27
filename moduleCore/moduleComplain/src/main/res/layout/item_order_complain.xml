@@ -92,7 +92,7 @@
                         android:layout_width="@dimen/px_150"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="@string/text_report_repair_people" />
+                        android:text="投诉人" />
 
                     <TextView
                         android:layout_width="match_parent"

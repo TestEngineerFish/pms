@@ -7,18 +7,14 @@
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
-
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style">
     <LinearLayout
         android:id="@+id/repairs_work_order_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px_30"
-        android:layout_marginRight="@dimen/px_30"
-        android:layout_marginBottom="@dimen/px_10"
-        android:paddingBottom="@dimen/px_30"
-        android:background="@color/white"
         android:orientation="vertical"
-        android:visibility="visible">
+        >
 
         <LinearLayout
             android:id="@+id/repair_pay_lay"
@@ -150,5 +146,6 @@
         </LinearLayout>
 
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
 

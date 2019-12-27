@@ -47,10 +47,8 @@ public class CreateOrderBindiAdapter {
             view.setText("请选择");
             return;
         }
-        if (StringUtil.isNullStr(request.getEnvType3Name())) {
-            view.setText(request.getEnvType3Name());
-        } else if (StringUtil.isNullStr(request.getTypeName())) {
-            view.setText(request.getTypeName());
+        if (StringUtil.isNullStr(request.getEnvType3Name()) && StringUtil.isNullStr(request.getTypeName())) {
+            view.setText(request.getTypeName()+"-"+request.getEnvType2Name()+"-"+request.getEnvType3Name());
         } else {
             view.setText("请选择");
 //            view.setTextColor(view.getContext().getResources().getColor(R.color.normal_main_text_icon_color));

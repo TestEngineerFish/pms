@@ -46,331 +46,127 @@
                  />
          </LinearLayout>
          <!--         工单信息-->
-         <LinearLayout
-             android:visibility="visible"
-             android:background="@drawable/shape_white_bg"
-             android:layout_marginLeft="@dimen/px_30"
-             android:layout_marginRight="@dimen/px_30"
-             android:layout_width="match_parent"
-             android:orientation="vertical"
-             android:layout_height="wrap_content">
-             <RelativeLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="44dp">
-                 <TextView
-                     android:id="@+id/tv_approvaler_name"
-                     android:layout_marginLeft="10dp"
-                     android:gravity="center_vertical"
-                     android:textSize="16sp"
-                     android:textColor="@color/blackTextColor"
-                     android:text="@string/tv_work_order_info"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"/>
-                 <TextView
-                     android:id="@+id/tv_deal_state"
-                     android:gravity="center"
-                     android:layout_marginRight="10dp"
-                     android:layout_centerVertical="true"
-                     android:layout_alignParentRight="true"
-                     android:layout_width="68dp"
-                     android:textSize="15sp"
-                     android:layout_height="24dp"/>
-             </RelativeLayout>
-             <ImageView
-                 android:src="@drawable/iv_pop_line"
-                 android:layout_marginLeft="10dp"
-                 android:layout_marginRight="10dp"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
-             <RelativeLayout
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
 
-                 style="@style/style_rl_normal">
-
-                 <TextView
-
-                     style="@style/style_text_approval_left"
-                     android:layout_marginBottom="10dp"
-                     android:text="@string/tv_work_nums" />
-                 <TextView
-                     android:id="@+id/tv_work_num"
-                     android:text="@{module.data.customer_enquiry_model.wx_code}"
-                     style="@style/style_text_approval_right" />
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-
-                 <TextView
-                     style="@style/style_text_approval_left"
-                     android:layout_alignParentBottom="true"
-                     android:layout_marginBottom="10dp"
-                     android:text="@string/tv_divide" />
-                 <TextView
-                     android:id="@+id/tv_divide"
-                     android:text="@{module.data.customer_enquiry_model.wx_dk}"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:text="@string/tv_real_estate"
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"/>
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_house}"
-                     android:id="@+id/tv_house_estate"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_phone" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_mobile}"
-                     android:id="@+id/tv_phone_num"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_asking_people" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_user}"
-                     android:id="@+id/tv_asking_people"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-         </LinearLayout>
-         <!--         问询信息-->
-         <LinearLayout
-             android:layout_marginTop="@dimen/px_20"
-             android:background="@drawable/shape_white_bg"
-             android:layout_marginLeft="@dimen/px_30"
-             android:layout_marginRight="@dimen/px_30"
-             android:layout_width="match_parent"
-             android:visibility="visible"
-             android:orientation="vertical"
-             android:layout_height="wrap_content">
-
-             <RelativeLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/px_90">
-
-                 <TextView
-                     android:textColor="@color/blackTextColor"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"
-                     android:layout_alignParentLeft="true"
-                     android:layout_marginLeft="@dimen/px_20"
-                     android:gravity="center_vertical"
-                     android:text="@string/tv_inquiries_info"
-                     android:textSize="@dimen/font_size16" />
-
-             </RelativeLayout>
-
-             <ImageView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginLeft="10dp"
-                 android:layout_marginRight="10dp"
-                 android:src="@drawable/pd_view" />
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_complaint_time" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_time}"
-                     android:id="@+id/tv_complaint_time"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_record_person" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_recorder}"
-                     android:id="@+id/tv_crecord_person"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_ask_way" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_way}"
-                     android:id="@+id/tv_ask_way"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_ask_type" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_cate}"
-                     android:id="@+id/tv_ask_type"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_finish_time" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.c_deadline_time}"
-                     android:id="@+id/tv_finish_time"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_current_deal_person" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.handle_user}"
-                     android:id="@+id/tv_current_deal_person"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <RelativeLayout
-                 style="@style/style_rl_normal">
-                 <TextView
-                     android:layout_marginBottom="10dp"
-                     style="@style/style_text_approval_left"
-                     android:text="@string/tv_inquiries_content" />
-                 <TextView
-                     android:text="@{module.data.customer_enquiry_model.wx_content}"
-                     android:id="@+id/tv_inquiries_content"
-                     style="@style/style_text_approval_right"/>
-             </RelativeLayout>
-             <LinearLayout style="@style/work_order_detail_ln">
-                 <TextView
-                     style="@style/work_order_detail_txt_left"
-                     android:layout_marginBottom="@dimen/px_20"
-                     android:text="@string/tv_pic" />
-             </LinearLayout>
              <LinearLayout
+                 android:visibility="visible"
                  android:background="@drawable/shape_white_bg"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical">
-                 <androidx.recyclerview.widget.RecyclerView
-                     android:id="@+id/list_pic"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <RelativeLayout
                      android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginBottom="@dimen/px_30"
-                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-             </LinearLayout>
-         </LinearLayout>
-         <!--        回复历史-->
-         <LinearLayout
-             android:id="@+id/ll_history"
-             android:focusable="true"
-             android:focusableInTouchMode="true"
-             android:layout_marginBottom="20dp"
-             android:layout_marginTop="10dp"
-             android:visibility="visible"
-             android:background="@drawable/shape_white_bg"
-             android:layout_marginLeft="15dp"
-             android:layout_marginRight="15dp"
-             android:layout_width="match_parent"
-             android:orientation="vertical"
-             android:layout_height="wrap_content">
-             <RelativeLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="44dp">
-                 <TextView
-                     android:layout_marginLeft="10dp"
-                     android:gravity="center_vertical"
-                     android:textSize="16sp"
-                     android:textColor="@color/blackTextColor"
-                     android:text="@string/tv_feed_history"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"/>
+                     android:layout_height="44dp">
+                     <TextView
+                         android:id="@+id/tv_approvaler_name"
+                         android:layout_marginLeft="10dp"
+                         android:gravity="center_vertical"
+                         android:textSize="16sp"
+                         android:textColor="@color/blackTextColor"
+                         android:text="@string/tv_work_order_info"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"/>
+                     <TextView
+                         android:id="@+id/tv_deal_state"
+                         android:gravity="center"
+                         android:layout_marginRight="10dp"
+                         android:layout_centerVertical="true"
+                         android:layout_alignParentRight="true"
+                         android:layout_width="68dp"
+                         android:textSize="15sp"
+                         android:layout_height="24dp"/>
+                 </RelativeLayout>
                  <ImageView
                      android:src="@drawable/iv_pop_line"
-                     android:layout_alignParentBottom="true"
                      android:layout_marginLeft="10dp"
                      android:layout_marginRight="10dp"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"/>
-             </RelativeLayout>
+                 <RelativeLayout
 
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/list_history"
-                 android:layout_marginTop="3dp"
-                 android:dividerHeight="0dp"
-                 android:divider="@null"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
+                     style="@style/style_rl_normal">
 
-<!--             <include layout="@layout/layout_history_load_more" android:id="@+id/rl_load_more"/>-->
-             <RelativeLayout
-                 android:visibility="gone"
-                 android:id="@+id/rl_load_more"
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/px_100">
-                 <View
-                     android:layout_marginLeft="@dimen/px_20"
-                     android:layout_marginRight="@dimen/px_20"
-                     android:background="@color/thin_divider_color"
-                     android:layout_width="match_parent"
-                     android:layout_height="1dp"/>
-                 <TextView
-                     android:id="@+id/tv_more"
-                     android:layout_centerInParent="true"
-                     android:text="@string/tv_load_more"
-                     android:textColor="@color/blueTextColor"
-                     android:gravity="center"
-                     android:textSize="@dimen/font_size14"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"/>
-                 <TextView
-                     android:background="@drawable/iv_arrow_blue_down"
-                     android:layout_centerVertical="true"
-                     android:layout_toRightOf="@id/tv_more"
-                     android:textColor="@color/blueTextColor"
-                     android:layout_width="@dimen/px_26"
-                     android:layout_height="@dimen/px_16"/>
-             </RelativeLayout>
-         </LinearLayout>
-<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
-        <!--        强制闭单信息 -->
-         <LinearLayout
-             android:visibility="gone"
-             android:id="@+id/forceCloseInfo"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+                     <TextView
 
+                         style="@style/style_text_approval_left"
+                         android:layout_marginBottom="10dp"
+                         android:text="@string/tv_work_nums" />
+                     <TextView
+                         android:id="@+id/tv_work_num"
+                         android:text="@{module.data.customer_enquiry_model.wx_code}"
+                         style="@style/style_text_approval_right" />
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+
+                     <TextView
+                         style="@style/style_text_approval_left"
+                         android:layout_alignParentBottom="true"
+                         android:layout_marginBottom="10dp"
+                         android:text="@string/tv_divide" />
+                     <TextView
+                         android:id="@+id/tv_divide"
+                         android:text="@{module.data.customer_enquiry_model.wx_dk}"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:text="@string/tv_real_estate"
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"/>
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_house}"
+                         android:id="@+id/tv_house_estate"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_phone" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_mobile}"
+                         android:id="@+id/tv_phone_num"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_asking_people" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_user}"
+                         android:id="@+id/tv_asking_people"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
+         <!--         问询信息-->
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
              <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_margin="@dimen/px_30"
                  android:background="@drawable/shape_white_bg"
-                 android:orientation="vertical">
+                 android:layout_width="match_parent"
+                 android:visibility="visible"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
 
                  <RelativeLayout
                      android:layout_width="match_parent"
                      android:layout_height="@dimen/px_90">
 
                      <TextView
+                         android:textColor="@color/blackTextColor"
                          android:layout_width="wrap_content"
                          android:layout_height="match_parent"
                          android:layout_alignParentLeft="true"
                          android:layout_marginLeft="@dimen/px_20"
                          android:gravity="center_vertical"
-                         android:text="@string/tv_apply_close_info"
-                         android:textColor="@color/blackTextColor"
+                         android:text="@string/tv_inquiries_info"
                          android:textSize="@dimen/font_size16" />
 
                  </RelativeLayout>
@@ -381,355 +177,572 @@
                      android:layout_marginLeft="10dp"
                      android:layout_marginRight="10dp"
                      android:src="@drawable/pd_view" />
-
-                 <LinearLayout
-                     style="@style/work_order_detail_ln">
-
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
                      <TextView
-                         style="@style/work_order_detail_txt_left2"
-                         android:text="审批结果" />
-
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_complaint_time" />
                      <TextView
-                         android:gravity="center_vertical"
-                         android:id="@+id/tv_approval_result"
-                         style="@style/work_order_detail_txt_right2" />
-                 </LinearLayout>
-
+                         android:text="@{module.data.customer_enquiry_model.wx_time}"
+                         android:id="@+id/tv_complaint_time"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_record_person" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_recorder}"
+                         android:id="@+id/tv_crecord_person"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_ask_way" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_way}"
+                         android:id="@+id/tv_ask_way"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_ask_type" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_cate}"
+                         android:id="@+id/tv_ask_type"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_finish_time" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.c_deadline_time}"
+                         android:id="@+id/tv_finish_time"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_current_deal_person" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.handle_user}"
+                         android:id="@+id/tv_current_deal_person"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
+                 <RelativeLayout
+                     style="@style/style_rl_normal">
+                     <TextView
+                         android:layout_marginBottom="10dp"
+                         style="@style/style_text_approval_left"
+                         android:text="@string/tv_inquiries_content" />
+                     <TextView
+                         android:text="@{module.data.customer_enquiry_model.wx_content}"
+                         android:id="@+id/tv_inquiries_content"
+                         style="@style/style_text_approval_right"/>
+                 </RelativeLayout>
                  <LinearLayout style="@style/work_order_detail_ln">
-
                      <TextView
-                         style="@style/work_order_detail_txt_left2"
-                         android:text="审批时间" />
-
-                     <TextView
-                         android:gravity="center_vertical"
-                         android:id="@+id/tv_approval_time"
-                         style="@style/work_order_detail_txt_right2"
-                         />
-                 </LinearLayout>
-
-
-                 <LinearLayout style="@style/work_order_detail_ln">
-
-                     <TextView
-                         style="@style/work_order_detail_txt_left2"
-                         android:text="申请人" />
-
-                     <TextView
-                         android:gravity="center_vertical"
-                         style="@style/work_order_detail_txt_right2"
-                         android:id="@+id/tv_applyer"
-                         />
-                 </LinearLayout>
-
-                 <LinearLayout style="@style/work_order_detail_ln">
-
-                     <TextView
-                         style="@style/work_order_detail_txt_left2"
-                         android:text="申请时间" />
-
-                     <TextView
-                         android:gravity="center_vertical"
-                         style="@style/work_order_detail_txt_right2"
-                         android:id="@+id/tv_apply_time"
-                         />
-                 </LinearLayout>
-
-                 <LinearLayout style="@style/work_order_detail_ln">
-
-                     <TextView
-                         style="@style/work_order_detail_txt_left2"
-                         android:text="申请原因" />
-
-                     <TextView
-                         android:gravity="center_vertical"
-                         style="@style/work_order_detail_txt_right2"
-                         android:id="@+id/tv_apply_reason"
-                         />
-                 </LinearLayout>
-
-                 <LinearLayout style="@style/work_order_detail_ln">
-
-                     <TextView
-                         style="@style/work_order_detail_txt_left2"
-                         android:text="申请照片" />
+                         style="@style/work_order_detail_txt_left"
+                         android:layout_marginBottom="@dimen/px_20"
+                         android:text="@string/tv_pic" />
                  </LinearLayout>
                  <LinearLayout
                      android:background="@drawable/shape_white_bg"
-                     style="@style/work_order_detail_ln">
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="vertical">
                      <androidx.recyclerview.widget.RecyclerView
-                         android:id="@+id/list_apply_pic"
-                         android:layout_marginTop="@dimen/px_30"
-                         android:layout_marginLeft="@dimen/px_10"
+                         android:id="@+id/list_pic"
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          android:layout_marginBottom="@dimen/px_30"
-                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                         />
+                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
                  </LinearLayout>
              </LinearLayout>
-         </LinearLayout>
-        <!--         评价-->
-         <LinearLayout
-             android:id="@+id/ll_evaluation"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_margin="@dimen/px_30"
-             android:background="@drawable/shape_white_bg"
-             android:orientation="vertical"
-             android:visibility="gone">
-
-             <RelativeLayout
+         </androidx.cardview.widget.CardView>
+         <!--        回复历史-->
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
+             <LinearLayout
+                 android:id="@+id/ll_history"
+                 android:focusable="true"
+                 android:focusableInTouchMode="true"
+                 android:visibility="gone"
+                 android:background="@drawable/shape_white_bg"
                  android:layout_width="match_parent"
-                 android:layout_height="@dimen/px_90">
-
-                 <TextView
-                     style="@style/tv_create_order_name"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"
-                     android:layout_alignParentLeft="true"
-                     android:layout_marginLeft="@dimen/px_20"
-                     android:gravity="center_vertical"
-                     android:text="@string/tv_evaluation"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/px_32" />
-
-             </RelativeLayout>
-
-             <ImageView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginLeft="10dp"
-                 android:layout_marginRight="10dp"
-                 android:src="@drawable/pd_view" />
-
-             <LinearLayout style="@style/ll_create_order">
-
-
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/tv_deal_result"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/font_size14" />
-                 <RadioGroup
-                     android:id="@+id/radiogroup"
-                     android:gravity="center_vertical"
-                     android:orientation="horizontal"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content">
-                     <RadioButton
-                         android:id="@+id/rb_solve"
-                         android:layout_width="@dimen/px_30"
-                         android:layout_height="@dimen/px_30"
-                         android:padding="@dimen/px_5"
-                         android:layout_marginLeft="@dimen/px_75"
-                         android:button="@null"
-                         android:background="@drawable/select_inquiries_solve"
-                         />
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="44dp">
                      <TextView
-                         android:text="@string/tv_had_solve"
-                         android:padding="@dimen/px_5"
+                         android:layout_marginLeft="10dp"
+                         android:gravity="center_vertical"
+                         android:textSize="16sp"
+                         android:textColor="@color/blackTextColor"
+                         android:text="@string/tv_feed_history"
                          android:layout_width="wrap_content"
+                         android:layout_height="match_parent"/>
+                     <ImageView
+                         android:src="@drawable/iv_pop_line"
+                         android:layout_alignParentBottom="true"
+                         android:layout_marginLeft="10dp"
+                         android:layout_marginRight="10dp"
+                         android:layout_width="match_parent"
                          android:layout_height="wrap_content"/>
-                     <RadioButton
-                         android:id="@+id/rb_un_solve"
-                         android:layout_width="@dimen/px_30"
-                         android:layout_height="@dimen/px_30"
-                         android:layout_marginLeft="@dimen/px_40"
-                         android:padding="@dimen/px_5"
-                         android:button="@null"
-                         android:background="@drawable/select_inquiries_unsolve" />
+                 </RelativeLayout>
+
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/list_history"
+                     android:layout_marginTop="3dp"
+                     android:dividerHeight="0dp"
+                     android:divider="@null"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
+
+                 <!--             <include layout="@layout/layout_history_load_more" android:id="@+id/rl_load_more"/>-->
+                 <RelativeLayout
+                     android:visibility="gone"
+                     android:id="@+id/rl_load_more"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_100">
+                     <View
+                         android:layout_marginLeft="@dimen/px_20"
+                         android:layout_marginRight="@dimen/px_20"
+                         android:background="@color/thin_divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"/>
                      <TextView
-                         android:text="@string/tv_un_solve"
-                         android:padding="@dimen/px_5"
+                         android:id="@+id/tv_more"
+                         android:layout_centerInParent="true"
+                         android:text="@string/tv_load_more"
+                         android:textColor="@color/blueTextColor"
+                         android:gravity="center"
+                         android:textSize="@dimen/font_size14"
                          android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"/>
-
-                 </RadioGroup>
-
+                         android:layout_height="match_parent"/>
+                     <TextView
+                         android:background="@drawable/iv_arrow_blue_down"
+                         android:layout_centerVertical="true"
+                         android:layout_toRightOf="@id/tv_more"
+                         android:textColor="@color/blueTextColor"
+                         android:layout_width="@dimen/px_26"
+                         android:layout_height="@dimen/px_16"/>
+                 </RelativeLayout>
              </LinearLayout>
+         </androidx.cardview.widget.CardView>
+<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
+        <!--        强制闭单信息 -->
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
 
              <LinearLayout
-                 android:id="@+id/ll_is_solved"
-                 android:orientation="vertical"
+                 android:visibility="gone"
+                 android:id="@+id/forceCloseInfo"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+                 android:layout_height="match_parent">
+
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/shape_white_bg"
+                     android:orientation="vertical">
+
+                     <RelativeLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="@dimen/px_90">
+
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="match_parent"
+                             android:layout_alignParentLeft="true"
+                             android:layout_marginLeft="@dimen/px_20"
+                             android:gravity="center_vertical"
+                             android:text="@string/tv_apply_close_info"
+                             android:textColor="@color/blackTextColor"
+                             android:textSize="@dimen/font_size16" />
+
+                     </RelativeLayout>
+
+                     <ImageView
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="10dp"
+                         android:layout_marginRight="10dp"
+                         android:src="@drawable/pd_view" />
+
+                     <LinearLayout
+                         style="@style/work_order_detail_ln">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="审批结果" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             android:id="@+id/tv_approval_result"
+                             style="@style/work_order_detail_txt_right2" />
+                     </LinearLayout>
+
+                     <LinearLayout style="@style/work_order_detail_ln">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="审批时间" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             android:id="@+id/tv_approval_time"
+                             style="@style/work_order_detail_txt_right2"
+                             />
+                     </LinearLayout>
+
+
+                     <LinearLayout style="@style/work_order_detail_ln">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请人" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             style="@style/work_order_detail_txt_right2"
+                             android:id="@+id/tv_applyer"
+                             />
+                     </LinearLayout>
+
+                     <LinearLayout style="@style/work_order_detail_ln">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请时间" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             style="@style/work_order_detail_txt_right2"
+                             android:id="@+id/tv_apply_time"
+                             />
+                     </LinearLayout>
+
+                     <LinearLayout style="@style/work_order_detail_ln">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请原因" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             style="@style/work_order_detail_txt_right2"
+                             android:id="@+id/tv_apply_reason"
+                             />
+                     </LinearLayout>
+
+                     <LinearLayout style="@style/work_order_detail_ln">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请照片" />
+                     </LinearLayout>
+                     <LinearLayout
+                         android:background="@drawable/shape_white_bg"
+                         style="@style/work_order_detail_ln">
+                         <androidx.recyclerview.widget.RecyclerView
+                             android:id="@+id/list_apply_pic"
+                             android:layout_marginTop="@dimen/px_30"
+                             android:layout_marginLeft="@dimen/px_10"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_marginBottom="@dimen/px_30"
+                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                             />
+                     </LinearLayout>
+                 </LinearLayout>
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
+        <!--         评价-->
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
+             <LinearLayout
+                 android:id="@+id/ll_evaluation"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/shape_white_bg"
+                 android:orientation="vertical"
+                 android:visibility="gone">
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_90">
+
+                     <TextView
+                         style="@style/tv_create_order_name"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:layout_alignParentLeft="true"
+                         android:layout_marginLeft="@dimen/px_20"
+                         android:gravity="center_vertical"
+                         android:text="@string/tv_evaluation"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/px_32" />
+
+                 </RelativeLayout>
+
+                 <ImageView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:src="@drawable/pd_view" />
+
                  <LinearLayout style="@style/ll_create_order">
 
-                     <TextView style="@style/tv_create_order_red_star" />
 
                      <TextView
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:text="@string/tv_instructions"
+                         android:text="@string/tv_deal_result"
                          android:textColor="@color/blackTextColor"
                          android:textSize="@dimen/font_size14" />
+                     <RadioGroup
+                         android:id="@+id/radiogroup"
+                         android:gravity="center_vertical"
+                         android:orientation="horizontal"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content">
+                         <RadioButton
+                             android:id="@+id/rb_solve"
+                             android:layout_width="@dimen/px_30"
+                             android:layout_height="@dimen/px_30"
+                             android:padding="@dimen/px_5"
+                             android:layout_marginLeft="@dimen/px_75"
+                             android:button="@null"
+                             android:background="@drawable/select_inquiries_solve"
+                             />
+                         <TextView
+                             android:text="@string/tv_had_solve"
+                             android:padding="@dimen/px_5"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"/>
+                         <RadioButton
+                             android:id="@+id/rb_un_solve"
+                             android:layout_width="@dimen/px_30"
+                             android:layout_height="@dimen/px_30"
+                             android:layout_marginLeft="@dimen/px_40"
+                             android:padding="@dimen/px_5"
+                             android:button="@null"
+                             android:background="@drawable/select_inquiries_unsolve" />
+                         <TextView
+                             android:text="@string/tv_un_solve"
+                             android:padding="@dimen/px_5"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"/>
+
+                     </RadioGroup>
+
                  </LinearLayout>
 
                  <LinearLayout
-                     style="@style/ll_create_order"
+                     android:id="@+id/ll_is_solved"
+                     android:orientation="vertical"
+                     android:layout_width="match_parent"
                      android:layout_height="wrap_content">
+                     <LinearLayout style="@style/ll_create_order">
 
-                     <com.einyun.app.common.ui.component.limit.LimitInput
-                         android:id="@+id/et_limit_suggestion"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_marginBottom="@dimen/px_30"
-                         app:hintText="@string/tv_enter"
-                         app:maxNumber="300" />
+                         <TextView style="@style/tv_create_order_red_star" />
+
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/tv_instructions"
+                             android:textColor="@color/blackTextColor"
+                             android:textSize="@dimen/font_size14" />
+                     </LinearLayout>
+
+                     <LinearLayout
+                         style="@style/ll_create_order"
+                         android:layout_height="wrap_content">
+
+                         <com.einyun.app.common.ui.component.limit.LimitInput
+                             android:id="@+id/et_limit_suggestion"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginBottom="@dimen/px_30"
+                             app:hintText="@string/tv_enter"
+                             app:maxNumber="300" />
+                     </LinearLayout>
                  </LinearLayout>
-             </LinearLayout>
                  <Button
                      android:onClick="@{()->callBack.onEvaluationClick()}"
                      android:text="@string/text_commit"
                      android:layout_width="match_parent"
                      android:layout_height="@dimen/px_90"
                      style="@style/submit_btn"/>
-         </LinearLayout>
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
          <!--         评价闭单状态-->
-         <LinearLayout
-             android:id="@+id/ll_evaluation_close"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_margin="@dimen/px_30"
-             android:background="@drawable/shape_white_bg"
-             android:orientation="vertical"
-             android:visibility="gone">
-
-             <RelativeLayout
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
+             <LinearLayout
+                 android:id="@+id/ll_evaluation_close"
                  android:layout_width="match_parent"
-                 android:layout_height="@dimen/px_90">
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/shape_white_bg"
+                 android:orientation="vertical"
+                 android:visibility="gone">
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_90">
+
+                     <TextView
+                         style="@style/tv_create_order_name"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:layout_alignParentLeft="true"
+                         android:layout_marginLeft="@dimen/px_20"
+                         android:gravity="center_vertical"
+                         android:text="@string/tv_evaluation"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/px_32" />
+
+                 </RelativeLayout>
+
+                 <ImageView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:src="@drawable/pd_view" />
+                 <LinearLayout
+                     android:background="@drawable/shape_white_bg"
+                     style="@style/ll_create_order">
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/tv_evaluation_time"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/font_size14" />
+                     <TextView
+                         android:id="@+id/tv_evaluation_time"
+                         android:layout_marginLeft="@dimen/px_75"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/font_size14" />
+
+                 </LinearLayout>
+
+                 <LinearLayout
+                     android:background="@drawable/shape_white_bg"
+                     style="@style/ll_create_order">
+
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/tv_deal_result"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/font_size14" />
+                     <RadioGroup
+                         android:gravity="center_vertical"
+                         android:orientation="horizontal"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content">
+                         <RadioButton
+                             android:checked="true"
+                             android:layout_width="@dimen/px_30"
+                             android:layout_height="@dimen/px_30"
+                             android:padding="@dimen/px_5"
+                             android:layout_marginLeft="@dimen/px_75"
+                             android:button="@null"
+                             android:background="@drawable/select_inquiries_solve"
+                             />
+                         <TextView
+                             android:textColor="@color/blackTextColor"
+                             android:text="@string/tv_had_solve"
+                             android:padding="@dimen/px_5"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"/>
+
+                     </RadioGroup>
+
+                 </LinearLayout>
+
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
+         <!--         回复内容-->
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
+
+             <LinearLayout
+                 android:visibility="gone"
+                 android:id="@+id/ll_reply_content"
+                 android:layout_marginBottom="20dp"
+                 android:background="@drawable/shape_white_bg"
+                 android:layout_width="match_parent"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <LinearLayout
+                     android:background="@drawable/shape_white_bg"
+                     android:layout_height="35dp"
+                     style="@style/ll_create_order">
+
+                     <TextView style="@style/tv_create_order_red_star" />
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/tv_feed_content"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/font_size14" />
+                 </LinearLayout>
+                 <com.einyun.app.common.ui.component.limit.LimitInput
+                     android:id="@+id/limit_input"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_182"
+                     android:layout_marginTop="@dimen/px_20"
+                     android:layout_marginLeft="@dimen/px_30"
+                     android:layout_marginRight="@dimen/px_30"
+                     android:layout_marginBottom="@dimen/px_30"
+                     />
+
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
+         <!--         强制关闭-->
+         <androidx.cardview.widget.CardView
+             android:layout_marginBottom="@dimen/px_40"
+             style="@style/cardview_style">
+
+             <LinearLayout
+                 android:onClick="@{()->callBack.onForseCloseClick()}"
+                 android:visibility="gone"
+                 android:id="@+id/ll_forse_close"
+                 style="@style/ll_create_order"
+                 android:background="@drawable/shape_white_bg">
 
                  <TextView
                      style="@style/tv_create_order_name"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"
-                     android:layout_alignParentLeft="true"
-                     android:layout_marginLeft="@dimen/px_20"
-                     android:gravity="center_vertical"
-                     android:text="@string/tv_evaluation"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/px_32" />
+                     android:text="@string/tv_forse_close" />
 
-             </RelativeLayout>
-
-             <ImageView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginLeft="10dp"
-                 android:layout_marginRight="10dp"
-                 android:src="@drawable/pd_view" />
-             <LinearLayout
-                 android:background="@drawable/shape_white_bg"
-                 style="@style/ll_create_order">
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/tv_evaluation_time"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/font_size14" />
-                 <TextView
-                     android:id="@+id/tv_evaluation_time"
-                     android:layout_marginLeft="@dimen/px_75"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/font_size14" />
-
+                 <ImageView
+                     style="@style/tv_create_order_right_arrow"
+                     android:layout_marginRight="@dimen/px_20" />
              </LinearLayout>
-
-             <LinearLayout
-                 android:background="@drawable/shape_white_bg"
-                 style="@style/ll_create_order">
-
-
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/tv_deal_result"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/font_size14" />
-                 <RadioGroup
-                     android:gravity="center_vertical"
-                     android:orientation="horizontal"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content">
-                     <RadioButton
-                         android:checked="true"
-                         android:layout_width="@dimen/px_30"
-                         android:layout_height="@dimen/px_30"
-                         android:padding="@dimen/px_5"
-                         android:layout_marginLeft="@dimen/px_75"
-                         android:button="@null"
-                         android:background="@drawable/select_inquiries_solve"
-                         />
-                     <TextView
-                         android:textColor="@color/blackTextColor"
-                         android:text="@string/tv_had_solve"
-                         android:padding="@dimen/px_5"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"/>
-
-                 </RadioGroup>
-
-             </LinearLayout>
-
-         </LinearLayout>
-         <!--         回复内容-->
-         <LinearLayout
-             android:visibility="gone"
-             android:id="@+id/ll_reply_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_white_bg"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-             <LinearLayout
-                 android:background="@drawable/shape_white_bg"
-                 android:layout_height="35dp"
-                 style="@style/ll_create_order">
-
-                 <TextView style="@style/tv_create_order_red_star" />
-
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/tv_feed_content"
-                     android:textColor="@color/blackTextColor"
-                     android:textSize="@dimen/font_size14" />
-             </LinearLayout>
-         <com.einyun.app.common.ui.component.limit.LimitInput
-             android:id="@+id/limit_input"
-             android:layout_width="match_parent"
-             android:layout_height="@dimen/px_182"
-             android:layout_marginTop="@dimen/px_20"
-             android:layout_marginLeft="@dimen/px_30"
-             android:layout_marginRight="@dimen/px_30"
-             android:layout_marginBottom="@dimen/px_30"
-             />
-
-        </LinearLayout>
-         <!--         强制关闭-->
-         <LinearLayout
-             android:onClick="@{()->callBack.onForseCloseClick()}"
-             android:visibility="gone"
-             android:id="@+id/ll_forse_close"
-             style="@style/ll_create_order"
-             android:layout_margin="@dimen/px_30"
-             android:background="@drawable/shape_white_bg">
-
-             <TextView
-                 style="@style/tv_create_order_name"
-                 android:text="@string/tv_forse_close" />
-
-             <ImageView
-                 style="@style/tv_create_order_right_arrow"
-                 android:layout_marginRight="@dimen/px_20" />
-         </LinearLayout>
+         </androidx.cardview.widget.CardView>
          <!--         提交-->
          <LinearLayout
              android:visibility="gone"
