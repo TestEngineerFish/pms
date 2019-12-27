@@ -28,6 +28,7 @@ import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.pms.customerinquiries.BR;
@@ -133,6 +134,13 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
         binding.setCallBack(this);
         photoListInfoAdapter = new PhotoListAdapter(this);
         forseClosephotoListInfoAdapter = new PhotoListAdapter(this);
+        photoListInfoAdapter.setOnItemListener((v, position) -> {
+            PhotoShowActivity.start(this, position, (ArrayList<String>) photoListInfoAdapter.getImagePaths());
+        });
+        forseClosephotoListInfoAdapter.setOnItemListener((v, position) -> {
+            PhotoShowActivity.start(this, position, (ArrayList<String>) forseClosephotoListInfoAdapter.getImagePaths());
+        });
+
         binding.listPic.setLayoutManager(new LinearLayoutManager(
                 this,
                 LinearLayoutManager.HORIZONTAL,
