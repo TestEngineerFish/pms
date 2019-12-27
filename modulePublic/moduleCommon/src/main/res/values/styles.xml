@@ -156,7 +156,7 @@
     </style>
     <style name="tv_create_order_select_single" parent="tv_create_order_select">
         <item name="android:singleLine">true</item>
-        <item name="android:maxEms">15</item>
+        <item name="android:maxEms">10</item>
         <item name="android:ellipsize">end</item>
     </style>
     <style name="tv_repair_order_select">

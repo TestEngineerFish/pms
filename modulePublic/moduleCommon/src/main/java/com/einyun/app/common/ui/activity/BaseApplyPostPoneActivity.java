@@ -15,6 +15,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.databinding.ActivityApplyLateBinding;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
@@ -83,6 +84,7 @@ public abstract class BaseApplyPostPoneActivity<T extends BaseUploadViewModel> e
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
         binding.sendOrderImgList.setAdapter(photoSelectAdapter);
+        binding.sendOrderImgList.addItemDecoration(new SpacesItemDecoration(18));
         photoSelectAdapter.setAddListener(selectedSize -> {
             if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
