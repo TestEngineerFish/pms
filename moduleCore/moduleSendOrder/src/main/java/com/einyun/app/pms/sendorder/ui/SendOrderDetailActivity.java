@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -25,9 +26,11 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -42,6 +45,7 @@ import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.DistributeCheckRequest;
 import com.einyun.app.library.resource.workorder.net.request.DistributeSubmitRequest;
+import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.ActivitySendOrderDetailBinding;
@@ -77,7 +81,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     private String checkResult;
     public static String RESULT_PASS = "1";
     public static String RESULT_REJECT = "0";
-
+    IsClosedRequest isClosedRequest;
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
@@ -204,8 +208,26 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getInfo().getCreateTime()));
         updateImagesUI(distributeWorkOrder);
         switchState(distributeWorkOrder.getData().getInfo().getStatus());
+        isClosedRequest=new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
+        //判断是否有闭单申请，有只显示详情
+        viewModel.isClosed(isClosedRequest).observe(this,model->{
+            if (!model.isClosed()){
+                showIfHasClosed();
+            }
+        });
     }
+    /**
+     * 有闭单申请的情况
+     * */
+    private void showIfHasClosed(){
+        binding.sendOrderDetailSubmit.setVisibility(View.GONE);
+        binding.orderHandle.getRoot().setVisibility(View.GONE);
+        binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
+        binding.applyPostpone.getRoot().setVisibility(View.GONE);
+        binding.checkAndAccept.getRoot().setVisibility(View.GONE);
+        binding.orderForm.getRoot().setVisibility(View.GONE);
 
+    }
 
     private void updateImagesUI(DisttributeDetialModel distributeWorkOrder) {
         if (detialModel == null) {

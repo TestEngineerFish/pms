@@ -259,7 +259,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 if (checkedId == R.id.rb_normal) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(0).getName());
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(0).getId());
-
                 }
                 if (checkedId == R.id.rb_general) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(1).getName());
@@ -451,6 +450,22 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         }
         if (customerRepair.getService_quality_score() != null) {
             binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
+        }
+        //设置性质评估
+        if (customerRepair.getBx_property_ass_id() != null) {
+            for (int i = 0; i < dictNatureList.size(); i++) {
+                if (dictNatureList.get(i).getId().equals(customerRepair.getBx_property_ass_id())) {
+                    if (i == 0) {
+                        binding.repairsInfo.rbNormal.setChecked(true);
+                    }
+                    if (i == 1) {
+                        binding.repairsInfo.rbGeneral.setChecked(true);
+                    }
+                    if (i == 2) {
+                        binding.repairsInfo.rbWarning.setChecked(true);
+                    }
+                }
+            }
         }
         updateImagesUI(repairsOrderDetail);
     }
@@ -996,7 +1011,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private void setAscription() {
         binding.repariResponse.rbNormal.setText(dictAscriptLsit.get(0).getName());
         binding.repariResponse.rbGeneral.setText(dictAscriptLsit.get(1).getName());
-
     }
 
     /**

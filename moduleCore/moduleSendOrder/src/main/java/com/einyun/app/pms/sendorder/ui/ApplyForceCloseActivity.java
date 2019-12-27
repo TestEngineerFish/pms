@@ -139,8 +139,6 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                 request.setEndReason(binding.applyCloseReason.getString());
                 if (TextUtils.isEmpty(binding.applyCloseReason.getString())) {
                     ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_enter_reason);
-                } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
-                    ToastUtil.show(ApplyForceCloseActivity.this, R.string.txt_plese_select_img);
                 } else {
                     uploadImages();
                 }
