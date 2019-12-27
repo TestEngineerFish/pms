@@ -234,7 +234,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         }
         Bundle bundle = new Bundle();
         bundle.putSerializable(RouteKey.KEY_PATROL_TIME_WORKNODE, node);
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_QR_SIGNIN_HANDLE)
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_PHOTO)
                 .withString(RouteKey.KEY_ORDER_ID, orderId)
                 .withBundle(RouteKey.KEY_PARAMS, bundle)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_SIGN_IN);

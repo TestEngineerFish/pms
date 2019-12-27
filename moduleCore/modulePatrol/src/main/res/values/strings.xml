@@ -33,5 +33,6 @@
     <string name="text_lose_node_signin">第%d个巡更节点还未签到</string>
     <string name="text_un_need_handle">未选择</string>
     <string name="text_patrol_photo">巡更现场图片</string>
+    <string name="text_check_items">检查项</string>
 
 </resources>

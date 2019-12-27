@@ -71,6 +71,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_patrol_photo);
+        binding.setCallBack(this);
         initSamplePhotos();//参考标准图片
         initCapturePhotos();//现场拍照对比
     }
@@ -127,11 +128,11 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
-        if (photoListAdapterUpload == null) {
-            photoListAdapterUpload = new PhotoListAdapter(this);
+        if (photoSelectAdapter == null) {
+            photoSelectAdapter = new PhotoSelectAdapter(this);
         }
         binding.rvCaptureImages.addItemDecoration(new SpacesItemDecoration());
-        binding.rvCaptureImages.setAdapter(photoListAdapterUpload);
+        binding.rvCaptureImages.setAdapter(photoSelectAdapter);
     }
 
     protected void updateSamplePic() {
@@ -141,26 +142,6 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     }
 
     protected void updateCapturePic(){
-        if(!TextUtils.isEmpty(workNode.getPic_url())){
-            updateNetPhoto(workNode.getPic_url(), photoListAdapterUpload);
-        }else {
-            updateLocalPhoto();
-        }
-    }
-
-    /**
-     * 显示本地图片
-     */
-    private void updateLocalPhoto() {
-        binding.rvCaptureImages.setLayoutManager(new LinearLayoutManager(
-                this,
-                LinearLayoutManager.HORIZONTAL,
-                false));//设置横向
-        if(photoLocalListAdapter==null){
-            photoLocalListAdapter=new PhotoLocalListAdapter(this);
-        }
-        binding.rvCaptureImages.addItemDecoration(new SpacesItemDecoration());
-        binding.rvCaptureImages.setAdapter(photoLocalListAdapter);
         List<String> iamgePaths=workNode.getCachedImages();
         if (iamgePaths!= null && iamgePaths.size() > 0) {
             List<Uri> uris = new ArrayList<>();
@@ -168,10 +149,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                 Uri uri = Uri.parse(imgeUrl);
                 uris.add(uri);
             }
-            photoLocalListAdapter.updateList(uris);
-            photoLocalListAdapter.setOnItemListener((v, position) -> {
-                PhotoShowActivity.start(this,position, (ArrayList<String>) photoLocalListAdapter.getImagePaths());
-            });
+            photoSelectAdapter.setSelectedPhotos(uris);
         }
     }
 
@@ -211,5 +189,13 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
 
     protected void cacheCaptures(){
         viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos());
+    }
+
+    /**
+     * 提交
+     */
+    public void onSubmitClick(){
+        cacheCaptures();
+        finish();
     }
 }

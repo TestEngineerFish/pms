@@ -265,6 +265,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     }
 
     private void acceptForm(PatrolInfo patrol){
+        hasException(patrol);
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
         patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
         patrol.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());

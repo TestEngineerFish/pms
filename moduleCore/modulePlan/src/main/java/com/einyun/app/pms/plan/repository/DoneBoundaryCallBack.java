@@ -13,15 +13,17 @@ public class DoneBoundaryCallBack extends PendingBoundaryCallBack {
 
     @Override
     protected void loadData(int dataType, CallBack<Integer> callBack) {
+        lock.lock();
         workOrderService.planClosedPage((DistributePageRequest) request, new CallBack<PlanWorkOrderPage>() {
             @Override
             public void call(PlanWorkOrderPage data) {
                 onDataLoaded(dataType,listType,data,callBack);
+                lock.unlock();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-
+                lock.unlock();
             }
         });
     }

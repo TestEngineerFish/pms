@@ -42,14 +42,17 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
      * @param dataType
      */
     protected void loadData(int dataType, CallBack<Integer> callBack) {
+        lock.lock();
         service.distributeWaitPage((DistributePageRequest) request, new CallBack<DistributeWorkOrderPage>() {
             @Override
             public void call(DistributeWorkOrderPage data) {
                 onDataLoaded(dataType,orderType,data,callBack);
+                lock.unlock();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+                lock.unlock();
                 ThrowableParser.onFailed(throwable);
             }
         });
@@ -81,7 +84,6 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Distribute> {
         for (Distribute distribute : list) {
             distribute.setUserId(request.getUserId());
             distribute.setOrderType(orderType);
-            distribute.setSaveTime(System.currentTimeMillis());
         }
     }
 
