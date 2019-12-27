@@ -92,11 +92,13 @@ class DictRepository : DictService {
     ): LiveData<List<DictDataModel>> {
         var liveData = MutableLiveData<List<DictDataModel>>()
         serviceApi?.getByTypeKey(typeKey)
-            ?.compose(RxSchedulers.inIo())
+            ?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack?.call(response.data)
                     liveData.postValue(response.data)
+                }else{
+                    callBack?.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
                 error.printStackTrace()
