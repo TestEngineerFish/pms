@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.R;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -192,6 +193,16 @@ public class WorkOrderAdapter {
             view.setText(R.string.yes);
         }else{
             view.setText(R.string.no);
+        }
+    }
+
+    @BindingAdapter("setSelectTxt")
+    public static void setSelectTxt(TextView view, String value) {
+        if (StringUtil.isNullStr(value)) {
+            view.setText(value);
+        } else {
+            view.setText("请选择");
+//            view.setTextColor(view.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
         }
     }
 

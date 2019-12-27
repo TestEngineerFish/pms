@@ -92,27 +92,43 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_work_complain);
         setRightOption(R.drawable.histroy);
+        setRightTxt(R.string.text_histroy);
+        setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
         binding.submit.setOnClickListener(this);
         binding.save.setOnClickListener(this);
         binding.layoutReportComplainInfo.llComplainType2.setOnClickListener(this);
         binding.layoutReportComplainInfo.llComplainNature2.setOnClickListener(this);
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
-            if(isClosedState.isClosed()){
-                if(isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PATROL)){
-                    navigatApply(RouterUtils.ACTIVITY_PATROL_FORCE_CLOSE);//强制关闭
-                }else if(isClosedState.getType().equals(WorkOrder.POSTPONED_PATROL)){
-                    navigatApply(RouterUtils.ACTIVITY_PATROL_POSTPONE);//申请延期
+            if (isClosedState.isClosed()) {
+                if (isClosedState.getType().equals(WorkOrder.POSTPONED_COMPLAIN)) {
+                    navigatApply(RouterUtils.ACTIVITY_LATE);//强制关闭
+                } else if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_COMPLAIN)) {
+                    this.isCloseClose = isClosedState.isClosed();
                 }
-            }else{
-                ToastUtil.show(CommonApplication.getInstance(),R.string.text_applying_wait);
+            } else {
+                if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_COMPLAIN)) {
+                    this.isCloseClose = isClosedState.isClosed();
+                    binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+                    binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                    binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
+                    binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
+                    binding.save.setVisibility(View.GONE);
+                    binding.submit.setVisibility(View.GONE);
+                } else {
+                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
+                }
+
             }
         });
         fresh();
     }
 
+    //false为不可以闭单  true为可以闭单
+    private boolean isCloseClose = false;
+
     private void navigatApply(String activityPatrolForceClose) {
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, id)
+        ARouter.getInstance().build(activityPatrolForceClose).withString(RouteKey.KEY_ORDER_ID, id)
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_COMPLAIN)
                 .withString(RouteKey.KEY_DIVIDE_ID, detail.getF_ts_dk_id())
@@ -158,106 +174,115 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             //追加投诉信息
             complainAppendList = repairsDetailModel.getData().getCustomer_complain_model().getSub_complain_append();
             complainAppendList();
-
             //隐藏展示
             String value = detail.getF_state();
-            //只有待跟进才能操作   其余无法操作
-            if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(fragmentKey)) {
-                if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
-                    binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
-                    binding.complainEvaluate.getRoot().setVisibility(View.GONE);
-                    binding.layoutComplainResponse.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
-                    binding.save.setVisibility(View.GONE);
-                    binding.submit.setVisibility(View.VISIBLE);
-                    //获取投诉性质
-                    viewModel.getByTypeKey(Constants.COMPLAIN_WAY).observe(this, dictDataModels -> {
-                        dictComplainNatureList = dictDataModels;
-                    });
-                    viewModel.typeAndLineList().observe(this, lines -> {
-                        this.lines = lines;
-                    });
-                    request.getBizData().setF_ts_property_id(detail.getF_ts_property_id());
-                    request.getBizData().setF_ts_property(detail.getF_ts_property());
-                    request.getBizData().setF_ts_cate(detail.getF_ts_cate());
-                    request.getBizData().setF_ts_cate_id(detail.getF_ts_cate_id());
-                    request.getBizData().setF_line_key(detail.getF_line_key());
-                    request.getBizData().setF_line_name(detail.getF_line_name());
-                    binding.layoutReportComplainInfo.setRequest(request);
-                } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
-                    binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
-                    binding.complainEvaluate.getRoot().setVisibility(View.GONE);
-                    binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
-                    binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
-                    binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
-                    binding.save.setVisibility(View.GONE);
-                    binding.submit.setVisibility(View.GONE);
-                    binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score()==null?0:detail.getF_return_score());
-                    binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score()==null?0:detail.getService_quality_score());
-                } else if (value.equals(ComplainOrderState.DEALING.getState())) {
-                    binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
-                    binding.complainEvaluate.getRoot().setVisibility(View.GONE);
-                    binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
-                    binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutComplainDeadline.getRoot().setVisibility(View.VISIBLE);
-                    binding.save.setVisibility(View.VISIBLE);
-                    binding.submit.setVisibility(View.VISIBLE);
-                } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-                    //待评价
-                    binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
-                    binding.complainEvaluate.getRoot().setVisibility(View.VISIBLE);
-                    binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
-                    binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
-                    binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
-                    binding.save.setVisibility(View.GONE);
-                    binding.submit.setVisibility(View.VISIBLE);
-                }
-                if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
-                    binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.GONE);
-                    binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.GONE);
-                    binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.VISIBLE);
-                    binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.VISIBLE);
-                } else {
-                    binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.VISIBLE);
-                    binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.VISIBLE);
-                    binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.GONE);
-                    binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.GONE);
-                }
-            } else {
-                binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.VISIBLE);
-                binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.VISIBLE);
-                binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.GONE);
-                binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.GONE);
-                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
-                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
-                binding.complainEvaluate.getRoot().setVisibility(View.GONE);
-                binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
-                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
-                binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
-                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
-                binding.save.setVisibility(View.GONE);
-                binding.submit.setVisibility(View.GONE);
-                binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score()==null?0:detail.getF_return_score());
-                binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score()==null?0:detail.getService_quality_score());
-                if (value.equals(ComplainOrderState.CLOSED.getState())) {
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
-                }
-                if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
-                    binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
-                }
-            }
+            setStatus(value);
+
             binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
             binding.layoutApplyCloseBtn.llClose.setOnClickListener(this);
             binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
             binding.setComplain(detail);
             setImageList(binding.layoutReportComplainInfo.rvPhoto, detail.getF_ts_attachment());
             showDetailFollow();
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(id);
+            request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
+            viewModel.isClosed(request);
         });
+    }
+
+
+    private void setStatus(String value) {
+        //只有待跟进才能操作   其余无法操作
+        if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(fragmentKey)) {
+            if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+                binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
+                binding.save.setVisibility(View.GONE);
+                binding.submit.setVisibility(View.VISIBLE);
+                //获取投诉性质
+                viewModel.getByTypeKey(Constants.COMPLAIN_WAY).observe(this, dictDataModels -> {
+                    dictComplainNatureList = dictDataModels;
+                });
+                viewModel.typeAndLineList().observe(this, lines -> {
+                    this.lines = lines;
+                });
+                request.getBizData().setF_ts_property_id(detail.getF_ts_property_id());
+                request.getBizData().setF_ts_property(detail.getF_ts_property());
+                request.getBizData().setF_ts_cate(detail.getF_ts_cate());
+                request.getBizData().setF_ts_cate_id(detail.getF_ts_cate_id());
+                request.getBizData().setF_line_key(detail.getF_line_key());
+                request.getBizData().setF_line_name(detail.getF_line_name());
+                binding.layoutReportComplainInfo.setRequest(request);
+            } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
+                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
+                binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
+                binding.save.setVisibility(View.GONE);
+                binding.submit.setVisibility(View.GONE);
+                binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score() == null ? 0 : detail.getF_return_score());
+                binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score() == null ? 0 : detail.getService_quality_score());
+            } else if (value.equals(ComplainOrderState.DEALING.getState())) {
+                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutComplainDeadline.getRoot().setVisibility(View.VISIBLE);
+                binding.save.setVisibility(View.VISIBLE);
+                binding.submit.setVisibility(View.VISIBLE);
+            } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
+                //待评价
+                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.complainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
+                binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
+                binding.save.setVisibility(View.GONE);
+                binding.submit.setVisibility(View.VISIBLE);
+            }
+            if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+                binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.GONE);
+                binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.GONE);
+                binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.VISIBLE);
+                binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.VISIBLE);
+            } else {
+                binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.VISIBLE);
+                binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.VISIBLE);
+                binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.GONE);
+                binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.GONE);
+            }
+        } else {
+            binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.VISIBLE);
+            binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.VISIBLE);
+            binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.GONE);
+            binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.GONE);
+            binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+            binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+            binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+            binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
+            binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
+            binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
+            binding.save.setVisibility(View.GONE);
+            binding.submit.setVisibility(View.GONE);
+            binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score() == null ? 0 : detail.getF_return_score());
+            binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score() == null ? 0 : detail.getService_quality_score());
+            if (value.equals(ComplainOrderState.CLOSED.getState())) {
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+                binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+            }
+        }
     }
 
     /**
@@ -521,10 +546,11 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             viewModel.isClosed(request);
         }
         if (v.getId() == R.id.ll_close) {
-            IsClosedRequest request = new IsClosedRequest();
-            request.setId(id);
-            request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
-            viewModel.isClosed(request);
+            if (isCloseClose) {
+                navigatApply(RouterUtils.ACTIVITY_CLOSE);//强制关闭
+            } else {
+                ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
+            }
         }
     }
 

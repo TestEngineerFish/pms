@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
         android:layout_marginBottom="@dimen/px_10"
         android:layout_marginTop="@dimen/px_10"
-        android:background="@color/white"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="@dimen/px_10">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        >
 
         <LinearLayout
             style="@style/ll_create_order"
@@ -105,4 +110,5 @@
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

@@ -85,9 +85,6 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
             photoSelectAdapter = new PhotoSelectAdapter(this);
         }
         binding.rvCaptureImages.setAdapter(photoSelectAdapter);
-        photoListAdapter.setOnItemListener((v, position) -> {
-            PhotoShowActivity.start(this,position, (ArrayList<String>) photoListAdapter.getImagePaths());
-        });
     }
 
     protected void updateCapturePic(){

@@ -72,6 +72,63 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_1"
+            style="@style/ll_create_order"
+            android:layout_marginTop="@dimen/px_20"
+            android:visibility="gone">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="申请无效" />
+
+           <RadioGroup
+               android:id="@+id/rg"
+              style="@style/tv_create_order_right"
+               android:orientation="horizontal">
+               <RadioButton
+                   android:id="@+id/rb_yes"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="#FF132D42"
+                   android:textSize="@dimen/font_size14"
+                   android:text="是"/>
+               <RadioButton
+                   android:id="@+id/rb_no"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/px_60"
+                   android:textColor="#FF132D42"
+                   android:textSize="@dimen/font_size14"
+                   android:checked="true"
+                   android:text="否"/>
+           </RadioGroup>
+        </LinearLayout>
+        <View android:id="@+id/line" android:visibility="gone" style="@style/base_underline"/>
+        <LinearLayout
+            android:id="@+id/ll_2"
+            style="@style/ll_create_order"
+            android:visibility="gone">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="无效原因" />
+            <TextView
+                android:id="@+id/tv_complain_reason"
+                style="@style/tv_create_order_select"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="right"/>
+
+            <ImageView style="@style/tv_create_order_right_arrow" />
+
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

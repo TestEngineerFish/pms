@@ -7,8 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.library.core.api.DictService;
+import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCusCloseRequest;
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse;
@@ -129,7 +133,7 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
     public MutableLiveData<ApplyCloseResponse> applyCustomerClose(ApplyCusCloseRequest request, String midUrl, List<PicUrl> images) {
         if (uploadManager != null) {
             request.getBizData().setFclose_apply_attach(uploadManager.toJosnString(images));
-
+            request.getBizData().setF_fclose_apply_attach(uploadManager.toJosnString(images));
         }
 //        Log.e("", "applyCustomerClose: "+new Gson().toJson(ApplyCusCloseRequest.class) );
         showLoading();
@@ -148,5 +152,20 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
         });
 
         return resend;
+    }
+
+    public LiveData<List<DictDataModel>> getByTypeKey(String typeKey) {
+        DictService dictService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DICT);
+        return dictService.getByTypeKey(typeKey, new CallBack<List<DictDataModel>>() {
+            @Override
+            public void call(List<DictDataModel> data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
     }
 }

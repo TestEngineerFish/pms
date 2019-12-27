@@ -245,9 +245,6 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
         PicUrlModelConvert convert = new PicUrlModelConvert();
         List<PicUrlModel> modelList = convert.stringToSomeObjectList(pic_url);
         photoListAdapterUpload.updateList(modelList);
-        photoListAdapterUpload.setOnItemListener((v, position) -> {
-            PhotoShowActivity.start(this,position, (ArrayList<String>) photoListAdapterUpload.getImagePaths());
-        });
     }
 
     @Override
