@@ -30,6 +30,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         if (DataConstants.WORK_ORDER_LIST_TYPE_CREATE.equals(type)) {
             binding.ogPlanOrder.setVisibility(View.INVISIBLE);
             binding.secondLine.setVisibility(View.GONE);
+            binding.ogPatroOrder.setVisibility(View.INVISIBLE);
         }
     }
 

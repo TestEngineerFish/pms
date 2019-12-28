@@ -65,8 +65,7 @@
                 android:id="@+id/og_patro_order"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginLeft="@dimen/px_30"
-                android:layout_marginRight="@dimen/px_30"
+                android:layout_marginLeft="@dimen/px_20"
                 android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/white"
                 app:cardElevation="0dp">
