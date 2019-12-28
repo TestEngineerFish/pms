@@ -23,6 +23,7 @@ public class DoneBoundaryCallBack extends PendingBoundaryCallBack {
             @Override
             public void call(DistributeWorkOrderPage data) {
                onDataLoaded(dataType,orderType,data,callBack);
+                lock.unlock();
             }
 
             @Override

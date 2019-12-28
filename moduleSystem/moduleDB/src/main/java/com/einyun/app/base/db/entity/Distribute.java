@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "distributes",primaryKeys = {"userId","ID_","orderType"})
+@Entity(tableName = "distributes")
 public class Distribute{
     public final static int ORDER_TYPE_PENDING=1;
     public final static int ORDER_TYPE_DONE=2;
@@ -25,7 +25,8 @@ public class Distribute{
     private String taskNodeId;
     private String F_LOCATION;
     private String F_TX_ID;
-
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     @NonNull
     private String ID_;
     private String F_DESC;
@@ -54,18 +55,17 @@ public class Distribute{
     private int is_coming_timeout;
     @NonNull
     private String userId;
-    private long saveTime;
-
-    public long getSaveTime() {
-        return saveTime;
-    }
-
-    public void setSaveTime(long saveTime) {
-        this.saveTime = saveTime;
-    }
 
     @NonNull
     private int orderType;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getIs_coming_timeout() {
         return is_coming_timeout;

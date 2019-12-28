@@ -157,7 +157,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                 binding.tvNumber.setText(R.string.text_no);
                 binding.tvWorkNode.setVisibility(View.GONE);
                 binding.tvWorkThings.setGravity(Gravity.CENTER);
-                binding.tvWorkThings.setText(R.string.text_work_items);
+                binding.tvWorkThings.setText(R.string.text_check_items);
                 binding.tvWorkThings.setTextSize(14);
             }
 
@@ -174,6 +174,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
      */
     protected void updateUI() {
         workNode = (WorkNode) bundle.get(RouteKey.KEY_PATROL_TIME_WORKNODE);
+        binding.frameSpace.setVisibility(View.GONE);
         binding.setNode(workNode);
         if(SignCheckResult.SIGN_IN_SUCCESS!=workNode.getSign_result()){
             binding.llPatrolSigninTime.setVisibility(View.GONE);

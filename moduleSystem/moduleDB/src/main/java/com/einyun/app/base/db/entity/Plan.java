@@ -1,11 +1,10 @@
 package com.einyun.app.base.db.entity;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "plans",primaryKeys = {"userId","ID_","listType"})
+@Entity(tableName = "plans")
 public class Plan {
     private String proInsId;
     private int orderType;
@@ -24,11 +23,21 @@ public class Plan {
     private String F_STATUS;
     private int F_EXT_STATUS;
     private int F_OT_STATUS;
-    private long saveTime;
     @NonNull
     private String userId;
     @NonNull
     private int listType;
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getProInsId() {
         return proInsId;
@@ -175,13 +184,5 @@ public class Plan {
 
     public void setListType( @NonNull int listType) {
         this.listType = listType;
-    }
-
-    public long getSaveTime() {
-        return saveTime;
-    }
-
-    public void setSaveTime(long saveTime) {
-        this.saveTime = saveTime;
     }
 }
