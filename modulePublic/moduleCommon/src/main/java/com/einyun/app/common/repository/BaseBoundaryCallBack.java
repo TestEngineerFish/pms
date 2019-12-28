@@ -30,7 +30,6 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     public PageRquest getRequest() {
         return request;
     }
-    protected boolean hasInit=false;
 
     public void setRequest(PageRquest request) {
         this.request = request;
@@ -105,15 +104,13 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
         super.onItemAtEndLoaded(itemAtEnd);
         request.setPage(pageBean.getPage());
         int dataType=DATA_TYPE_INIT;
-        if(hasInit){
+        if(pageBean.getPage()!=PageBean.DEFAULT_PAGE){
             dataType=DATA_TYPE_APPPEND;
         }
         loadData(dataType, new CallBack<Integer>() {
             @Override
             public void call(Integer data) {
-                Logger.d("setPage->"+this.toString()+":"+data);
                 pageBean.setPage(data);
-                hasInit=true;
             }
 
             @Override
