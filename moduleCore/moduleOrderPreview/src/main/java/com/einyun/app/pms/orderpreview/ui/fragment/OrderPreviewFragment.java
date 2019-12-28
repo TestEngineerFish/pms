@@ -16,11 +16,17 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.model.BasicData;
+import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.ConditionBuilder;
+import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
@@ -31,15 +37,20 @@ import com.einyun.app.pms.orderpreview.BR;
 import com.einyun.app.pms.orderpreview.R;
 import com.einyun.app.pms.orderpreview.databinding.FragmentOrderPreviewBinding;
 import com.einyun.app.pms.orderpreview.databinding.ItemOrderPreviewBinding;
+import com.einyun.app.pms.orderpreview.ui.OrderPreviewActivity;
 import com.einyun.app.pms.orderpreview.viewmodel.OrderPreviewModelFactory;
 import com.einyun.app.pms.orderpreview.viewmodel.OrderPreviewViewModel;
 import com.einyun.app.pms.sendorder.repository.OrderDataSourceFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
+import java.util.Map;
+
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLAN;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_TIME_CIRCLE;
 
 /**
  * @ProjectName: pms_old
@@ -57,6 +68,7 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
     RVPageListAdapter<ItemOrderPreviewBinding, OrderPreviewModel> adapter;
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    SelectPopUpView selectPopUpView;
 
     public static OrderPreviewFragment newInstance(Bundle bundle) {
         OrderPreviewFragment fragment = new OrderPreviewFragment();
@@ -100,7 +112,9 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
             }
         });
         binding.workSendList.addItemDecoration(new SpacesItemDecoration(30));
-
+        binding.orderPreviewTabSelectLn.setOnClickListener(v -> {
+            showConditionView();
+        });
     }
 
     @Override
@@ -163,6 +177,16 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
         }
     };
 
+    @Override
+    protected void setUpListener() {
+        super.setUpListener();
+        binding.orderPreviewTabSelectLn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConditionView();
+            }
+        });
+    }
 
     /**
      * 列表Item 点击，跳转进入详情
@@ -187,5 +211,35 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
                                    RecyclerView parent, RecyclerView.State state) {
             outRect.bottom = space;
         }
+    }
+
+    protected void showConditionView() {
+        //弹出筛选view
+        if (selectPopUpView == null) {
+            BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                @Override
+                public void call(BasicData data) {
+                    ConditionBuilder builder = new ConditionBuilder();
+                    builder.addPreviewSelect(data.getPreviewSelect()).addItem(SELECT_TIME_CIRCLE);
+                    List<SelectModel> conditions = builder.build();
+                    selectPopUpView = new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                        @Override
+                        public void onSelected(Map selected) {
+                            handleSelected(selected);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+
+                }
+            });
+        }
+        selectPopUpView.showAsDropDown(binding.orderPreviewTabLn);
+    }
+
+    private void handleSelected(Map selected) {
+        viewModel.onConditionSelected(selected);
     }
 }

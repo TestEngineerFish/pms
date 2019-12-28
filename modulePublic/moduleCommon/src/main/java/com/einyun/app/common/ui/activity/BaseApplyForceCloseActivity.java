@@ -106,9 +106,6 @@ public abstract class BaseApplyForceCloseActivity<T extends BaseUploadViewModel>
         if (TextUtils.isEmpty(binding.applyCloseReason.getString())) {
             ToastUtil.show(CommonApplication.getInstance(), R.string.txt_plese_enter_reason);
             return false;
-        } else if (photoSelectAdapter.getSelectedPhotos().size() == 0) {
-            ToastUtil.show(CommonApplication.getInstance(), R.string.txt_plese_select_img);
-            return false;
         }
         return true;
     }

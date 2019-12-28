@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.common.constants.RouteKey;
@@ -29,7 +30,6 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLA
 @Route(path = RouterUtils.ACTIVITY_ORDER_PREVIEW)
 public class OrderPreviewActivity extends BaseHeadViewModelActivity<ActivityOrderPreviewBinding, OrderPreviewViewModel> {
     private String[] mTitles;//tab标题
-    SelectPopUpView selectPopUpView;
     @Override
     protected OrderPreviewViewModel initViewModel() {
         return new ViewModelProvider(this, new OrderPreviewModelFactory()).get(OrderPreviewViewModel.class);
@@ -71,29 +71,12 @@ public class OrderPreviewActivity extends BaseHeadViewModelActivity<ActivityOrde
             }
         });
         binding.tabOrderPreview.setupWithViewPager(binding.vpOrderPreview);
-        binding.orderPreviewTabSelectLn.setOnClickListener(v -> {
-            showConditionView();
-        });
+
     }
 
-    protected void showConditionView() {
-        //弹出筛选view
-        if(selectPopUpView==null){
-            ConditionBuilder builder = new ConditionBuilder();
-            List<SelectModel> conditions = builder
-                    .addItem(SelectPopUpView.SELECT_TIME_CIRCLE)//周期
-                    .build();
-            selectPopUpView= new SelectPopUpView(OrderPreviewActivity.this, conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
-                @Override
-                public void onSelected(Map selected) {
-                    handleSelected(selected);
-                }
-            });
-        }
-        selectPopUpView.showAsDropDown(binding.orderPreviewTabLn);
-    }
+    @Override
+    protected void initData() {
+        super.initData();
 
-    private void handleSelected(Map selected) {
-        viewModel.onConditionSelected(selected);
     }
 }

@@ -19,7 +19,8 @@ public class OrderPreviewModel {
     private String workContent;
     private String projectName;
     private String massifName;
-
+    private String lineName;
+    private String inspectionWorkPlanName;
     public String getId() {
         return id;
     }
@@ -164,5 +165,19 @@ public class OrderPreviewModel {
         this.massifName = massifName;
     }
 
+    public String getLineName() {
+        return lineName;
+    }
 
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
+
+    public String getInspectionWorkPlanName() {
+        return inspectionWorkPlanName;
+    }
+
+    public void setInspectionWorkPlanName(String inspectionWorkPlanName) {
+        this.inspectionWorkPlanName = inspectionWorkPlanName;
+    }
 }

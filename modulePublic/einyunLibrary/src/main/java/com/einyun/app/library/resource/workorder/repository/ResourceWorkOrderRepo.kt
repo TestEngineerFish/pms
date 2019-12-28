@@ -1,5 +1,6 @@
 package com.einyun.app.library.resource.workorder.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
@@ -7,6 +8,7 @@ import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.base.paging.bean.QueryBuilder
+import com.einyun.app.base.util.ToastUtil
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
@@ -18,6 +20,7 @@ import com.einyun.app.library.resource.workorder.net.response.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
+import java.util.logging.Logger
 
 /**
  *
@@ -33,6 +36,21 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun getOrderPreviewSelect(callBack: CallBack<List<PreviewSelectModel>>): LiveData<List<PreviewSelectModel>> {
+        val liveData = MutableLiveData<List<PreviewSelectModel>>()
+        serviceApi?.getOrderPreviewSelect()?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data.rows)
+                    liveData.postValue(response.data.rows)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error ->
+                callBack.onFaild(error)
+            })
+        return liveData    }
+
     override fun postApplyDateInfo(
         request: ExtenDetialRequest,
         callBack: CallBack<Boolean>

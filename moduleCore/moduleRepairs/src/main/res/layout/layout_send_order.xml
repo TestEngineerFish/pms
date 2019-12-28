@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px_30"
                 android:layout_marginLeft="@dimen/px_20"
+                android:paddingRight="@dimen/px_20"
                 app:hintText="请输入备注内容"
                 app:maxNumber="300" />
     </LinearLayout>

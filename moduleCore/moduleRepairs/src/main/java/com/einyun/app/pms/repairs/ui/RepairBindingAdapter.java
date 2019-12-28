@@ -2,6 +2,7 @@ package com.einyun.app.pms.repairs.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -98,6 +99,15 @@ public class RepairBindingAdapter {
 
     }
 
+    @BindingAdapter("setText")
+    public static void setText(TextView view,String value){
+        if (TextUtils.isEmpty(value)){
+            view.setText("--");
+            return;
+        }
+        view.setText(value);
+
+    }
     @BindingAdapter("isSolve")
     public static void isSolve(TextView view,Integer value){
         if (value==null){

@@ -143,5 +143,8 @@ class URLs {
 
         //客户问询申请闭单
         const val URL_CLOSE_CUSTOMER_ORDER = "/workOrder/workOrder/{workOrder}/v1/applyFclose"
+        //工作预览筛选跳线数据
+        const val URL_ORDER_PREVIEW_SELECT = "/portal/sys/sysType/v1/queryLinkByGroupKey?groupKey=RESOURCE_TYPE"
+
     }
 }

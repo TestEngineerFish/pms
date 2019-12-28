@@ -11,7 +11,9 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -32,6 +34,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.BottomPickerModel;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -341,6 +344,47 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 RepairsDetailActivity.this.finish();
             }
         });
+        //材料费总计监听
+        binding.repairHandlePaid.repairMaterialPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText())){
+                }else {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())*Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString())+"");
+                }
+
+            }
+        });
+        binding.repairHandlePaid.repairHandleManMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(binding.repairHandlePaid.repairMaterialPrice.getText())){
+                }else {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())+Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString())+"");
+                }
+
+            }
+        });
     }
 
     @Override
@@ -374,16 +418,22 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
         }
     };
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
+    }
     /**
      * 详情数据获取后进行UI展示
      *
      * @param
      */
     private void updateUI(RepairsDetailModel repairsOrderDetail) {
-        detialModel = repairsOrderDetail;
-        if (detialModel == null) {
+        if (repairsOrderDetail == null) {
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        detialModel = repairsOrderDetail;
+        updatePageUIState(PageUIState.FILLDATA.getState());
         detialModel.setNodeId(nodeId);
         customerRepair = detialModel.getData().getCustomer_repair_model();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
@@ -642,11 +692,11 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
                 binding.repariResponse.getRoot().setVisibility(View.VISIBLE);
                 binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
             }
             ifApplyClose();
             return;
@@ -659,7 +709,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
                 binding.repairHandle.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleResult.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
@@ -678,7 +728,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
                 binding.repairEvaluate.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             }
@@ -831,7 +881,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
                 customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
                 customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
-
             } else {
                 customerRepair.setHandle_is_paid(HANDLE_NO_PAID);
             }

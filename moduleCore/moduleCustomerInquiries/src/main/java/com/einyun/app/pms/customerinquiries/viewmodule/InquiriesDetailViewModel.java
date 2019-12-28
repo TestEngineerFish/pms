@@ -19,17 +19,18 @@ public class InquiriesDetailViewModel extends BaseViewModel {
 
     private MutableLiveData<InquiriesDetailModule> InquiriesBasicInfo=new MutableLiveData<>();
     public LiveData<InquiriesDetailModule> queryInquiriesBasicInfo(String id){
-        showLoading();
+//        showLoading();
         repository.getInquiriesBasicInfo(id, new CallBack<InquiriesDetailModule>() {
             @Override
             public void call(InquiriesDetailModule data) {
-                hideLoading();
+//                hideLoading();
                 InquiriesBasicInfo.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+                InquiriesBasicInfo.postValue(null);
+//                hideLoading();
             }
         });
         return InquiriesBasicInfo;
