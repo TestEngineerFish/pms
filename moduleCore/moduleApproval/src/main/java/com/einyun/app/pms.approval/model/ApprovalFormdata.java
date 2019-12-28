@@ -421,6 +421,9 @@ public class ApprovalFormdata {
     }
 
     public String getFlowType() {
+        if (flowType==null) {
+            flowType=category;
+        }
         return flowType == null ? "" : flowType;
     }
 
@@ -477,6 +480,9 @@ public class ApprovalFormdata {
     }
 
     public String getExtensionDays() {
+        if (extensionDays==null) {
+            extensionDays=delay_time;
+        }
         return extensionDays == null ? "" : extensionDays;
     }
 

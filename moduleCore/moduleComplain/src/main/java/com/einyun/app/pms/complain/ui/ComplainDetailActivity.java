@@ -662,4 +662,12 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             binding.complainEvaluate.llExplainSecond.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (handler != null){
+            handler.removeCallbacksAndMessages(null);
+        }
+    }
 }

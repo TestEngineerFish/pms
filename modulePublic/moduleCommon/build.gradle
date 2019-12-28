@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'bugly'
 android {
     compileSdkVersion deps.android.compileSdkVersion
 
@@ -22,7 +23,11 @@ android {
         }
 
     }
-
+    bugly {
+        appId = 'ac69f9ff00' // 注册时分配的App ID
+        appKey = '2abea681-cc1a-4167-af2a-e8c925e673d0' // 注册时分配的App Key
+        debug = true//调试模式下 默认关闭  这里设置 开启还是关闭
+    }
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", deps.server.debug)
@@ -70,6 +75,11 @@ dependencies {
     api deps.skin.design
     api deps.skin.cardview
     api deps.skin.constraint
+//    compileOnly deps.leakcanary.debugCompile
+//    compileOnly deps.leakcanary.releaseCompile
+//    compileOnly deps.bugly.crashreport
+//    compileOnly deps.bugly.nativecrashreport
+//    api deps.leakcanary.testCompile
     api deps.photo_view    //图片显示
     api deps.matisse       //知乎图片选择器
 //    api deps.smartrefresh  //上拉下拉刷新
@@ -83,5 +93,8 @@ dependencies {
     }
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor deps.arouter_compiler
-
+    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+//    implementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

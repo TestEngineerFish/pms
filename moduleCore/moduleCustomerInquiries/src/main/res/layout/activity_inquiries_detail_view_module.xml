@@ -346,9 +346,48 @@
                  </RelativeLayout>
              </LinearLayout>
          </androidx.cardview.widget.CardView>
+         <!--         回复内容-->
+         <androidx.cardview.widget.CardView
+             style="@style/cardview_style">
+
+             <LinearLayout
+                 android:visibility="gone"
+                 android:id="@+id/ll_reply_content"
+                 android:layout_marginBottom="20dp"
+                 android:background="@drawable/shape_white_bg"
+                 android:layout_width="match_parent"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <LinearLayout
+                     android:background="@drawable/shape_white_bg"
+                     android:layout_height="35dp"
+                     style="@style/ll_create_order">
+
+                     <TextView style="@style/tv_create_order_red_star" />
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/tv_feed_content"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/font_size14" />
+                 </LinearLayout>
+                 <com.einyun.app.common.ui.component.limit.LimitInput
+                     android:id="@+id/limit_input"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_182"
+                     android:layout_marginTop="@dimen/px_20"
+                     android:layout_marginLeft="@dimen/px_30"
+                     android:layout_marginRight="@dimen/px_30"
+                     android:layout_marginBottom="@dimen/px_30"
+                     />
+
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
 <!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
         <!--        强制闭单信息 -->
          <androidx.cardview.widget.CardView
+             android:layout_marginTop="0dp"
              style="@style/cardview_style">
 
              <LinearLayout
@@ -474,6 +513,7 @@
                  </LinearLayout>
              </LinearLayout>
          </androidx.cardview.widget.CardView>
+
         <!--         评价-->
          <androidx.cardview.widget.CardView
              style="@style/cardview_style">
@@ -685,44 +725,7 @@
 
              </LinearLayout>
          </androidx.cardview.widget.CardView>
-         <!--         回复内容-->
-         <androidx.cardview.widget.CardView
-             style="@style/cardview_style">
 
-             <LinearLayout
-                 android:visibility="gone"
-                 android:id="@+id/ll_reply_content"
-                 android:layout_marginBottom="20dp"
-                 android:background="@drawable/shape_white_bg"
-                 android:layout_width="match_parent"
-                 android:orientation="vertical"
-                 android:layout_height="wrap_content">
-                 <LinearLayout
-                     android:background="@drawable/shape_white_bg"
-                     android:layout_height="35dp"
-                     style="@style/ll_create_order">
-
-                     <TextView style="@style/tv_create_order_red_star" />
-
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/tv_feed_content"
-                         android:textColor="@color/blackTextColor"
-                         android:textSize="@dimen/font_size14" />
-                 </LinearLayout>
-                 <com.einyun.app.common.ui.component.limit.LimitInput
-                     android:id="@+id/limit_input"
-                     android:layout_width="match_parent"
-                     android:layout_height="@dimen/px_182"
-                     android:layout_marginTop="@dimen/px_20"
-                     android:layout_marginLeft="@dimen/px_30"
-                     android:layout_marginRight="@dimen/px_30"
-                     android:layout_marginBottom="@dimen/px_30"
-                     />
-
-             </LinearLayout>
-         </androidx.cardview.widget.CardView>
          <!--         强制关闭-->
          <androidx.cardview.widget.CardView
              android:layout_marginBottom="@dimen/px_40"

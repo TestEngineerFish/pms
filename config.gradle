@@ -83,6 +83,7 @@ versions.permission_dispatcher_processor ="4.6.0"
 versions.skin ="4.0.4"
 versions.luban ="1.1.8"
 versions.picker = "4.1.9"
+//versions.leakcanary="1.5.4"
 ext.versions = versions
 
 
@@ -250,6 +251,16 @@ skin.design = "skin.support:skin-support-design:$versions.skin" // skin-support-
 skin.cardview = "skin.support:skin-support-cardview:$versions.skin" // skin-support-cardview CardView 控件支持[可选]
 skin.constraint = "skin.support:skin-support-constraint-layout:$versions.skin" // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
 deps.skin = skin
+
+//def leakcanary =[:]
+//leakcanary.debugCompile= "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+//leakcanary.releaseCompile ="com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+////leakcanary.testCompile ="com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+//deps.leakcanary=leakcanary
+//def bugly =[:]
+//bugly.crashreport="com.tencent.bugly:crashreport:latest.release" //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+//bugly.nativecrashreport= "com.tencent.bugly:nativecrashreport:latest.release" //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+//deps.bugly=bugly
 
 //project config
 def project =[:]
