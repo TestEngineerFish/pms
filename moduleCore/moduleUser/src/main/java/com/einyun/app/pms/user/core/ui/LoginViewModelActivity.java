@@ -26,6 +26,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
@@ -225,6 +226,9 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      * 登陆事件
      */
     public void onLoginClick() {
+        if (!IsFastClick.isFastDoubleClick()) {
+            return;
+        }
         viewModel.getTenantId(binding.etOrgCode.getText().toString(), false).observe(this,
                 tenantModel -> {
 //                    ToastUtil.show(this, "tentantId" + tenantModel.getId());

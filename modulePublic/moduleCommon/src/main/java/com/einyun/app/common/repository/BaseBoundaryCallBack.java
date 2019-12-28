@@ -103,10 +103,13 @@ public abstract class BaseBoundaryCallBack<M> extends PagedList.BoundaryCallback
     public void onItemAtEndLoaded(@NonNull M itemAtEnd) {
         super.onItemAtEndLoaded(itemAtEnd);
         request.setPage(pageBean.getPage());
-        loadData(DATA_TYPE_APPPEND, new CallBack<Integer>() {
+        int dataType=DATA_TYPE_INIT;
+        if(pageBean.getPage()!=PageBean.DEFAULT_PAGE){
+            dataType=DATA_TYPE_APPPEND;
+        }
+        loadData(dataType, new CallBack<Integer>() {
             @Override
             public void call(Integer data) {
-                Logger.d("setPage->"+this.toString()+":"+data);
                 pageBean.setPage(data);
             }
 

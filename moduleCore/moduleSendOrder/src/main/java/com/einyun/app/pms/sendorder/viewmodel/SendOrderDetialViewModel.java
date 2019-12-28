@@ -67,6 +67,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
 //                hideLoading();
+                workOrderLiveData.postValue(null);
             }
         });
         return workOrderLiveData;
@@ -94,6 +95,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
 //                hideLoading();
+                workOrderLiveData.postValue(null);
             }
         });
         return workOrderLiveData;

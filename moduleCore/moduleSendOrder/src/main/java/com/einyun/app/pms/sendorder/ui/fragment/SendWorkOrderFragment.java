@@ -32,6 +32,7 @@ import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -227,15 +228,29 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         viewModel.getRequest().setUserId(userModuleService.getUserId());
         if (listType == ListType.PENDING.getType()) {
             viewModel.loadPadingData().observe(this, dataBeans -> {
+                if(dataBeans.size()==0){
+                    updatePageUIState(PageUIState.EMPTY.getState());
+                }else{
+                    updatePageUIState(PageUIState.FILLDATA.getState());
+                }
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         } else {
             viewModel.loadDonePagingData().observe(this, dataBeans -> {
+                if(dataBeans.size()==0){
+                    updatePageUIState(PageUIState.EMPTY.getState());
+                }else{
+                    updatePageUIState(PageUIState.FILLDATA.getState());
+                }
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         }
+    }
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
     }
 
 

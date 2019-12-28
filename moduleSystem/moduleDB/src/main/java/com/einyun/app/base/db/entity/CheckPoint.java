@@ -22,7 +22,6 @@ public class CheckPoint {
     private String specificLocation;
     private int isPic;
     private String resourceName;
-    private long saveTime;
     @PrimaryKey(autoGenerate = true)
     private int id_;
     @NonNull
@@ -145,13 +144,5 @@ public class CheckPoint {
 
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
-    }
-
-    public long getSaveTime() {
-        return saveTime;
-    }
-
-    public void setSaveTime(long saveTime) {
-        this.saveTime = saveTime;
     }
 }

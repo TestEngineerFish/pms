@@ -5,7 +5,7 @@ public class URLS {
     public static final String URL_GET_QUIRIES_TYPES ="workOrder/workOrder/bizData/v1/getBaseList?categoryKey=workorder_type_and_line";
 
     //待跟进列表
-    public static final String URL_GET_TO_FOLLOW_UP_LIST ="work-order/workOrder/task/v1/getTodoListAliaForApp/customer_enquiry_flow/NORMAL,DELIVERTO";
+    public static final String URL_GET_TO_FOLLOW_UP_LIST ="work-order/workOrder/task/v1/getTodoListAliaForApp/customer_enquiry_flow/FILLDATA,DELIVERTO";
 
     //待反馈
     public static final String URL_GET_TO_FEED_BACK_LIST ="work-order/workOrder/task/v1/getTodoListAliaForApp/customer_enquiry_flow/COMMU";

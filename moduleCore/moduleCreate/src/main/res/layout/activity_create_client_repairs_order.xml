@@ -82,11 +82,13 @@
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="联系电话" />
+                        android:text="联系电话"
+                        />
 
                     <EditText
                         android:id="@+id/phone"
                         style="@style/et_create_order_right"
+                        android:contentDescription="联系电话"
                         android:inputType="phone"/>
                 </LinearLayout>
                 <View style="@style/base_underline" />

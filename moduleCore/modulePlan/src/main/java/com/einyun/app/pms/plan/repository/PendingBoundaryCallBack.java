@@ -1,7 +1,5 @@
 package com.einyun.app.pms.plan.repository;
 
-import com.einyun.app.base.db.converter.DistributeListConvert;
-import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Plan;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageResult;
@@ -28,15 +26,17 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Plan> {
 
     @Override
     protected void loadData(int dataType, CallBack<Integer> callBack) {
+        lock.lock();
         workOrderService.planWaitPage((DistributePageRequest) request, new CallBack<PlanWorkOrderPage>() {
             @Override
             public void call(PlanWorkOrderPage data) {
                 onDataLoaded(dataType,listType,data,callBack);
+                lock.unlock();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-
+                lock.unlock();
             }
         });
     }
@@ -51,7 +51,6 @@ public class PendingBoundaryCallBack extends BaseBoundaryCallBack<Plan> {
         for(Plan plan:list){
             plan.setUserId(request.getUserId());
             plan.setListType(listType);
-            plan.setSaveTime(System.currentTimeMillis());
         }
     }
 
