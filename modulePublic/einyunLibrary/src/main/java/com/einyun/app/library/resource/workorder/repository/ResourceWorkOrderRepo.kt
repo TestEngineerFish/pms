@@ -361,10 +361,15 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         callBack: CallBack<BaseResponse<Object>>
     ): LiveData<BaseResponse<Object>> {
         val liveData = MutableLiveData<BaseResponse<Object>>()
-        serviceApi?.exten(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.exten(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                liveData.postValue(response)
-                callBack.call(response)
+                if (response.isState){
+                    liveData.postValue(response)
+                    callBack.call(response)
+                }else{
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+
             }, { error -> {} })
         return liveData;
     }
