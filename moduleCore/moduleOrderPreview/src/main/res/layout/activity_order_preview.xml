@@ -34,52 +34,12 @@
                 android:background="@color/activity_bg_color" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/order_preview_tab_ln"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_70"
-                android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp">
-
-                <LinearLayout
-                    android:id="@+id/order_preview_tab_select_ln"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/order_preview_selected"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/px_10"
-                        android:layout_marginRight="@dimen/px_10"
-                        android:gravity="center"
-                        android:text="筛选"
-                        android:textColor="@color/normal_main_text_icon_color" />
-
-                    <ImageView
-                        android:layout_width="@dimen/px_12"
-                        android:layout_height="@dimen/px_12"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="@dimen/px_10"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/down" />
-                </LinearLayout>
-            </LinearLayout>
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_order_preview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/order_preview_tab_ln">
-
+               >
             </androidx.viewpager.widget.ViewPager>
-        </RelativeLayout>
     </LinearLayout>
 </layout>
 
