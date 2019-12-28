@@ -3,6 +3,7 @@ package com.einyun.app.common.model;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
+import com.einyun.app.library.resource.workorder.model.PreviewSelectModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.workorder.model.AreaModel;
@@ -20,7 +21,7 @@ public class BasicData {
     private List<TypeAndLine> complainTypes; //投诉类型
     private List<DictDataModel> complainPropertys; //投诉性质
     private AreaModel repairArea;//报修区域
-
+    private List<PreviewSelectModel> previewSelect;//工单预览筛选
     public Map<String, DivideGrid> getDivideGridMap() {
         return divideGridMap;
     }
@@ -75,5 +76,13 @@ public class BasicData {
 
     public void setRepairArea(AreaModel repairArea) {
         this.repairArea = repairArea;
+    }
+
+    public List<PreviewSelectModel> getPreviewSelect() {
+        return previewSelect;
+    }
+
+    public void setPreviewSelect(List<PreviewSelectModel> previewSelect) {
+        this.previewSelect = previewSelect;
     }
 }

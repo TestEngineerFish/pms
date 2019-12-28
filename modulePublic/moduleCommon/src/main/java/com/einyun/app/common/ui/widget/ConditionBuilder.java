@@ -9,6 +9,7 @@ import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
+import com.einyun.app.library.resource.workorder.model.PreviewSelectModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.workorder.model.AreaModel;
@@ -21,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.ui.widget.SelectPopUpView.PREVIEW_SELECT;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.PREVIEW_SELECT_TIAOXIAN;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_PROPERTYS;
@@ -229,6 +232,25 @@ public class ConditionBuilder {
         }
         return this;
     }
+
+    /**
+     * 添加工单预览筛选
+     * @return
+     */
+    public ConditionBuilder addPreviewSelect(List<PreviewSelectModel> modelList){
+        if (!selectModelMap.containsKey(PREVIEW_SELECT)) {
+            SelectModel root=buildPreviewSelect(modelList);
+            selectModelMap.put(PREVIEW_SELECT, root);
+            conditions.add(root);
+        }
+        return this;
+    }
+
+
+
+    /**
+     * 添加工单预览筛选跳线数据
+     * */
 
 
     /**
@@ -490,7 +512,26 @@ public class ConditionBuilder {
         return selectModel;
 
     }
+    /**
+     * 预览转selectmodel
+     * */
+    public SelectModel buildPreviewSelect(List<PreviewSelectModel> list){
+        SelectModel selectModel1=new SelectModel();
+        selectModel1.setConditionType(SELECT_ROOT);
+        selectModel1.setType(CommonApplication.getInstance().getResources().getString(R.string.tv_tiao_line));
+        List<SelectModel> selectModelList=new ArrayList<>();
+        for (PreviewSelectModel model:list){
+            SelectModel selectModel=new SelectModel();
+            selectModel.setId(model.getId());
+            selectModel.setType("");
+            selectModel.setContent(model.getName());
+            selectModel.setConditionType(PREVIEW_SELECT_TIAOXIAN);
+            selectModelList.add(selectModel);
+        }
+        selectModel1.setSelectModelList(selectModelList);
+        return selectModel1;
 
+    }
     /**
      * 包装条线数据
      * @param models

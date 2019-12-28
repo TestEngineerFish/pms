@@ -24,6 +24,9 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun getOrderPreviewSelect(callBack: CallBack<List<PreviewSelectModel>>): LiveData<List<PreviewSelectModel>> {
+        return instance?.getOrderPreviewSelect(callBack)!!    }
+
     override fun getApplyDateInfo(
         id: String,
         callBack: CallBack<formDataExten>

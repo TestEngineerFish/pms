@@ -11,7 +11,9 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -339,6 +341,47 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             @Override
             public void onChanged(Boolean aBoolean) {
                 RepairsDetailActivity.this.finish();
+            }
+        });
+        //材料费总计监听
+        binding.repairHandlePaid.repairMaterialPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText())){
+                }else {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())*Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString())+"");
+                }
+
+            }
+        });
+        binding.repairHandlePaid.repairHandleManMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(binding.repairHandlePaid.repairMaterialPrice.getText())){
+                }else {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())+Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString())+"");
+                }
+
             }
         });
     }
@@ -831,7 +874,6 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
                 customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
                 customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
-
             } else {
                 customerRepair.setHandle_is_paid(HANDLE_NO_PAID);
             }

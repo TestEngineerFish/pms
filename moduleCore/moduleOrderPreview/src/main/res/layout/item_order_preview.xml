@@ -41,7 +41,7 @@
                     android:gravity="center_vertical"
                     android:maxLength="10"
                     android:textColor="@color/blackTextColor"
-                    android:text="@{orderPreview.workPlanName}"
+                    android:text="@{orderPreview.inspectionWorkPlanName}"
                     android:textSize="@dimen/px_32" />
             </RelativeLayout>
 
@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="@{orderPreview.line}"
+                        android:text="@{orderPreview.lineName}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.model.LineType;
+import com.einyun.app.library.resource.workorder.model.PreviewSelectModel;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.workorder.model.AreaModel;
@@ -40,7 +41,7 @@ public class BasicDataManager {
     private MdmService mdmService;
     private CountDownLatch latch;
     private ExecutorService fixedThreadPool;
-    private final int THREADS = 6;
+    private final int THREADS = 7;
     private volatile boolean reload = false;//
 
     private BasicDataManager() {
@@ -101,8 +102,31 @@ public class BasicDataManager {
         loadComplainPropertys(); //投诉性质
         loadRepairArea(); //报修区域
         loadResult(callBack);//获取结果
+        loadPreviewSelect();//获取工单预览筛选
+
 //        fixedThreadPool.shutdown();
     }
+
+    /**
+     *
+     * 获取工单预览筛选条线
+     *
+     * */
+    protected void loadPreviewSelect() {
+        resourceWorkOrderService.getOrderPreviewSelect(new CallBack<List<PreviewSelectModel>>() {
+            @Override
+            public void call(List<PreviewSelectModel> data) {
+                latch.countDown();
+                basicData.setPreviewSelect(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                latch.countDown();
+            }
+        });
+    }
+
 
     /**
      * 获取基础数据
