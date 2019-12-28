@@ -24,6 +24,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -139,58 +140,85 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .navigation();
     }
-
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
+    }
     private void fresh() {
         viewModel.getComplainDetail(proInsId, taskId).observe(this, repairsDetailModel -> {
-            this.detail = repairsDetailModel.getData().getCustomer_complain_model();
-            //处理时长
-            createTime = detail.getF_ts_time();
-            if (ComplainOrderState.CLOSED.getState().equals(detail.getF_state())) {
-                if (StringUtil.isNullStr(detail.getF_close_time()))
-                    binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detail.getF_ts_time(), detail.getF_close_time()));
-            } else {
-                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detail.getF_ts_time()));
-                runnable.run();
-            }
-            //延期
-            applyExtApplication = repairsDetailModel.getExtApplication(ApplyType.POSTPONE.getState());
-            if (applyExtApplication == null) {
-                binding.layoutApplyLateInfo.getRoot().setVisibility(View.GONE);
-            } else {
-                binding.layoutApplyLateInfo.getRoot().setVisibility(View.VISIBLE);
-                binding.setApplyExtApplication(applyExtApplication);
-            }
-            //闭单
-            closeExtApplication = repairsDetailModel.getForceCloseInfo();
-            if (closeExtApplication == null) {
-                binding.layoutApplyCloseInfo.getRoot().setVisibility(View.GONE);
-            } else {
-                binding.layoutApplyCloseInfo.getRoot().setVisibility(View.VISIBLE);
-                binding.setCloseExtApplication(closeExtApplication);
-                setImageList(binding.layoutApplyCloseInfo.sendOrderClosePicList, closeExtApplication.getAttachment());
-            }
-            //处理历史
-            handleList = repairsDetailModel.getHandleList();
-            handleList();
-
-            //追加投诉信息
-            complainAppendList = repairsDetailModel.getData().getCustomer_complain_model().getSub_complain_append();
-            complainAppendList();
-            //隐藏展示
-            String value = detail.getF_state();
-            setStatus(value);
-
-            binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
-            binding.layoutApplyCloseBtn.llClose.setOnClickListener(new ClickProxy(this));
-            binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
-            binding.setComplain(detail);
-            setImageList(binding.layoutReportComplainInfo.rvPhoto, detail.getF_ts_attachment());
-            showDetailFollow();
-            IsClosedRequest request = new IsClosedRequest();
-            request.setId(id);
-            request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
-            viewModel.isClosed(request);
+            updateUI(repairsDetailModel);
         });
+    }
+
+    /**
+     * 刷新UI
+     * @param repairsDetailModel
+     */
+    private void updateUI(RepairsDetailModel repairsDetailModel) {
+        if(repairsDetailModel==null){
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
+            return;
+        }
+        this.detail = repairsDetailModel.getData().getCustomer_complain_model();
+        updatePageUIState(PageUIState.FILLDATA.getState());
+        updateElapsedTime();
+        //延期
+        updatePostponeUI(repairsDetailModel);
+        //闭单
+        upateForceCloseUI(repairsDetailModel);
+        //处理历史
+        handleList = repairsDetailModel.getHandleList();
+        handleList();
+
+        //追加投诉信息
+        complainAppendList = repairsDetailModel.getData().getCustomer_complain_model().getSub_complain_append();
+        complainAppendList();
+        //隐藏展示
+        String value = detail.getF_state();
+        setStatus(value);
+
+        binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
+        binding.layoutApplyCloseBtn.llClose.setOnClickListener(new ClickProxy(this));
+        binding.complainEvaluate.radiogroup.setOnCheckedChangeListener(this);
+        binding.setComplain(detail);
+        setImageList(binding.layoutReportComplainInfo.rvPhoto, detail.getF_ts_attachment());
+        showDetailFollow();
+        IsClosedRequest request = new IsClosedRequest();
+        request.setId(id);
+        request.setType(WorkOrder.FORCE_CLOSE_COMPLAIN);
+        viewModel.isClosed(request);
+    }
+
+    private void upateForceCloseUI(RepairsDetailModel repairsDetailModel) {
+        closeExtApplication = repairsDetailModel.getForceCloseInfo();
+        if (closeExtApplication == null) {
+            binding.layoutApplyCloseInfo.getRoot().setVisibility(View.GONE);
+        } else {
+            binding.layoutApplyCloseInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.setCloseExtApplication(closeExtApplication);
+            setImageList(binding.layoutApplyCloseInfo.sendOrderClosePicList, closeExtApplication.getAttachment());
+        }
+    }
+
+    private void updatePostponeUI(RepairsDetailModel repairsDetailModel) {
+        applyExtApplication = repairsDetailModel.getExtApplication(ApplyType.POSTPONE.getState());
+        if (applyExtApplication == null) {
+            binding.layoutApplyLateInfo.getRoot().setVisibility(View.GONE);
+        } else {
+            binding.layoutApplyLateInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.setApplyExtApplication(applyExtApplication);
+        }
+    }
+
+    private void updateElapsedTime() {
+        //处理时长
+        createTime = detail.getF_ts_time();
+        if (ComplainOrderState.CLOSED.getState().equals(detail.getF_state())) {
+            if (StringUtil.isNullStr(detail.getF_close_time()))
+                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detail.getF_ts_time(), detail.getF_close_time()));
+        } else {
+            binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detail.getF_ts_time()));
+            runnable.run();
+        }
     }
 
 

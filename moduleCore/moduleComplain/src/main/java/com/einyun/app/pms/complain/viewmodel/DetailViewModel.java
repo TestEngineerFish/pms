@@ -104,19 +104,20 @@ public class DetailViewModel extends BaseWorkOrderHandelViewModel {
      */
     public LiveData<RepairsDetailModel> getComplainDetail(String instId, String taskId) {
         MutableLiveData<RepairsDetailModel> liveData = new MutableLiveData<>();
-        showLoading();
+//        showLoading();
         if (taskId == null)
             taskId = "";
         workOrderService.getClientOrderDetail(instId, taskId, new CallBack<RepairsDetailModel>() {
             @Override
             public void call(RepairsDetailModel data) {
-                hideLoading();
+//                hideLoading();
                 liveData.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
+                liveData.postValue(null);
             }
         });
         return liveData;
