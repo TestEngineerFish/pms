@@ -32,6 +32,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.BottomPickerModel;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -374,16 +375,22 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
         }
     };
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
+    }
     /**
      * 详情数据获取后进行UI展示
      *
      * @param
      */
     private void updateUI(RepairsDetailModel repairsOrderDetail) {
-        detialModel = repairsOrderDetail;
-        if (detialModel == null) {
+        if (repairsOrderDetail == null) {
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        detialModel = repairsOrderDetail;
+        updatePageUIState(PageUIState.FILLDATA.getState());
         detialModel.setNodeId(nodeId);
         customerRepair = detialModel.getData().getCustomer_repair_model();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
