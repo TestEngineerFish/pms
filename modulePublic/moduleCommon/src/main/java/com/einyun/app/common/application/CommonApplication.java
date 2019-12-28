@@ -1,11 +1,17 @@
 package com.einyun.app.common.application;
 
+import android.util.Log;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.net.CommonHttpService;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 
 import skin.support.SkinCompatManager;
@@ -27,7 +33,7 @@ import skin.support.design.app.SkinMaterialViewInflater;
  * @Version: 1.0
  */
 public class CommonApplication extends BasicApplication {
-
+    private static final String TAG = "CommonApplication";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,8 +44,13 @@ public class CommonApplication extends BasicApplication {
             ARouter.openDebug();
         }
 
+//        initLeakCanary();
         preinitX5WebCore();
         initSkin();
+        if (IsFastClick.isDebugVersion(this)) {
+            LeakCanary.install(this);
+        }
+        CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
     }
 
     /**
@@ -75,6 +86,18 @@ public class CommonApplication extends BasicApplication {
                 .setSkinStatusBarColorEnable(true)                     // 关闭状态栏换肤，默认打开[可选]
                 .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .loadSkin();
+    }
+    private RefWatcher mRefWatcher;
+
+    private void initLeakCanary() {
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            mRefWatcher = RefWatcher.DISABLED;
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
     }
 
 }

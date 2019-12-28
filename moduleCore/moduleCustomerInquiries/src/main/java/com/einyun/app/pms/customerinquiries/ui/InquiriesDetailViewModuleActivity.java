@@ -445,5 +445,8 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     protected void onDestroy() {
         super.onDestroy();
 //        handler.removeCallbacks(runnable);
+        if (handler!=null) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 }
