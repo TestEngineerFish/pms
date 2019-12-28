@@ -86,7 +86,6 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         if (pageList == null) {
             pageList = new LivePagedListBuilder(repo.queryAll(request.getUserId(), Distribute.ORDER_TYPE_PENDING), config)
                     .setBoundaryCallback(pendingBoundaryCallBack)
-                    .setFetchExecutor(Executors.newFixedThreadPool(2))
                     .build();
         }
         return pageList;
@@ -96,8 +95,10 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
     @Override
     public void refresh() {
         if (isPending()) {
+            pageList.getValue().getDataSource().invalidate();
             pendingBoundaryCallBack.refresh();
         } else {
+            donePageList.getValue().getDataSource().invalidate();
             doneBoundaryCallBack.refresh();
         }
     }
@@ -126,7 +127,6 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         if (donePageList == null) {
             donePageList = new LivePagedListBuilder(repo.queryAll(request.getUserId(), Distribute.ORDER_TYPE_DONE), config)
                     .setBoundaryCallback(doneBoundaryCallBack)
-                    .setFetchExecutor(Executors.newFixedThreadPool(2))
                     .build();
         }
         return donePageList;

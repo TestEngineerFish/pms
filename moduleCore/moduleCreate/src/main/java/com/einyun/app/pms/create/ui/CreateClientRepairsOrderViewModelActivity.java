@@ -25,6 +25,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
 import com.einyun.app.common.ui.widget.SelectRepairsTypeView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
+import com.einyun.app.common.utils.CheckUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.workorder.model.Door;
@@ -405,6 +406,9 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         }
         if (!StringUtil.isNullStr(binding.phone.getText().toString())) {
             ToastUtil.show(this, "请填写联系电话");
+            return false;
+        }
+        if (!CheckUtil.getInstance(this).isMatch(binding.phone,CheckUtil.REG_PHONE)){
             return false;
         }
         if (!StringUtil.isNullStr(binding.userName.getText().toString())) {

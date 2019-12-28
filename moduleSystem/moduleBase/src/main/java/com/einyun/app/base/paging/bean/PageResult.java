@@ -1,5 +1,7 @@
 package com.einyun.app.base.paging.bean;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.List;
 
 /**
@@ -21,7 +23,17 @@ public class PageResult<T> {
     private List<T> rows;
 
     public Boolean hasNextPage(){
-        if(rows!=null&&rows.size()>=0){
+        if(total>0){
+            int totalPage=total/pageSize;
+            if(total%pageSize!=0){
+                totalPage=totalPage+1;
+                Logger.d("totalPage->"+totalPage);
+            }
+            if(totalPage+1>page){
+                return true;
+            }
+        }
+        if(rows!=null&&rows.size()>0){
             return true;
         }
         return false;

@@ -254,7 +254,7 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
 
     public boolean hasCapture(WorkNode workNode){
         if(workNode.is_photo>0){
-            if(!TextUtils.isEmpty(workNode.pic_url)){
+            if(!TextUtils.isEmpty(workNode.pic_url)||(workNode.getCachedImages()!=null&&workNode.getCachedImages().size()>0)){
                 return true;
             }
         }

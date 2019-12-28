@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * time     2017/3/30 22:36
  */
 public class CheckUtil {
-    public Activity activity;
+    public static Activity activity;
     /**
      * 用户id正则 8-40位数字或英文
      */
@@ -86,8 +86,17 @@ public class CheckUtil {
     public static final String REG_MAIL = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
 
-    public CheckUtil(Activity activity) {
-        this.activity = activity;
+    private CheckUtil() {
+
+    }
+
+    static CheckUtil checkUtil;
+    public static CheckUtil getInstance(Activity mActivity){
+        activity = mActivity;
+        if (checkUtil == null){
+            checkUtil = new CheckUtil();
+        }
+        return checkUtil;
     }
 
     /**
@@ -177,7 +186,7 @@ public class CheckUtil {
             public void onClick(View v) {
                 view.requestFocus();
             }
-        });
+        }).show();
     }
 
 

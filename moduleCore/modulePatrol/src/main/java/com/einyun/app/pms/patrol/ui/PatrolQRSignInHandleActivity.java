@@ -18,6 +18,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.photo.PhotoListItemListener;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.viewmodel.PatrolSignInViewModel;
@@ -84,6 +85,7 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
         if (photoSelectAdapter == null) {
             photoSelectAdapter = new PhotoSelectAdapter(this);
         }
+        binding.rvCaptureImages.addItemDecoration(new SpacesItemDecoration());
         binding.rvCaptureImages.setAdapter(photoSelectAdapter);
     }
 

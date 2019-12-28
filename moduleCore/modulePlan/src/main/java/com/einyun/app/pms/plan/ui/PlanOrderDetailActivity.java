@@ -185,7 +185,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         agree(binding, model);
                         //选中不通过
                         reject(binding, model);
-                        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
+                        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {
                             if (!TextUtils.isEmpty(model.result)) {
                                 //成功
                                 if ("1".equals(nodes.get(position).getResult())) {

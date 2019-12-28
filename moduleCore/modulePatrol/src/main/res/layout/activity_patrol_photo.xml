@@ -1,66 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.patrol.ui.PatrolTimePhotoActivity" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/px_30"
-            android:layout_marginTop="@dimen/px_20"
-            android:gravity="center_vertical"
-            android:textColor="@color/txt_black_order"
-            android:text="@string/text_sample_pic"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_size16"
-            />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_sample_images"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_30"
-            android:layout_marginRight="@dimen/px_30"
-            android:layout_marginBottom="@dimen/px_30"
-            />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/px_20"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px_30"
-                android:textColor="@color/txt_black_order"
-                android:text="@string/text_capture_pic"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_size16"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/normal_main_text_icon_color"
-                android:layout_marginLeft="@dimen/px_15"
-                android:text="@string/text_pic_max"
-                />
-        </LinearLayout>
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_capture_images"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:layout_marginLeft="@dimen/px_30"
-            android:layout_marginRight="@dimen/px_30"
-            android:layout_marginBottom="@dimen/px_30"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_160"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_sample_pic"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_sample_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:layout_marginBottom="@dimen/px_30" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:text="@string/text_capture_pic"
+                        android:textColor="@color/txt_black_order"
+                        android:textSize="@dimen/font_size16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_15"
+                        android:text="@string/text_pic_max"
+                        android:textColor="@color/normal_main_text_icon_color" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_capture_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:layout_marginBottom="@dimen/px_30"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_submit"
+                style="@style/submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_88"
+                android:layout_alignParentBottom="true"
+                android:onClick="@{()->callBack.onSubmitClick()}"
+                android:text="@string/text_submit"
+                android:visibility="visible" />
+        </RelativeLayout>
     </LinearLayout>
 </layout>
 

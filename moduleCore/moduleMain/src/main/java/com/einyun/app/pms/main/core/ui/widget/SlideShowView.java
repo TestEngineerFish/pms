@@ -233,8 +233,6 @@ public class SlideShowView extends FrameLayout {
             switch (arg0) {
                 case 1:
                     break;
-                case 2:
-                    break;
                 case 0:
                     break;
                 default:
