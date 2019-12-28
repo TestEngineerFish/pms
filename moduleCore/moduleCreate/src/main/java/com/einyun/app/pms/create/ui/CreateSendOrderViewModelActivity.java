@@ -50,7 +50,6 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     private List<DictDataModel> dictDataModelList = new ArrayList<>();
     private List<DictDataModel> dictDataModelWorkTypeList = new ArrayList<>();
     private List<DictDataModel> lineDictDataModelList = new ArrayList<>();
-
     @Override
     protected CreateViewModel initViewModel() {
         return new ViewModelProvider(this, new CreateViewModelFactory()).get(CreateViewModel.class);
