@@ -22,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
+                <include layout="@layout/layout_list_page_state" android:id="@+id/page_state"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/work_send_list"
                     android:layout_width="match_parent"

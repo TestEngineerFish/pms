@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.util.BitmapUtil;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
@@ -29,6 +31,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -42,6 +45,7 @@ import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.convert.ExtensionApplicationConvert;
@@ -286,18 +290,35 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
 
     protected void updateUI(PatrolInfo patrol) {
         if (patrol == null) {
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
         this.patrolInfo = patrol;
-        binding.tvHandleTime.setText(TimeUtil.getTimeExpend(patrol.getData().getZyxcgd().getF_creation_date()));
-        binding.frameSpace.setVisibility(View.GONE);
+        updateElapsedTime(patrol);
         binding.setPatrol(patrol);
+        updatePageUIState(PageUIState.FILLDATA.getState());
         updateWorkNodesUI(patrol);//更新节点信息
         updateHandleResultUI(patrol);//更新处理结果信息
 
         ExtensionApplicationConvert convert = new ExtensionApplicationConvert();
         updateForceCloseUI(patrol, convert);//更新强制关闭信息
         uploadPostponeUI(patrol, convert);//更新申请超时信息
+    }
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
+    }
+
+    private void updateElapsedTime(PatrolInfo patrol) {
+        createTime=patrol.getData().getZyxcgd().getF_creation_date();
+        binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
+        if (patrol.getData().getZyxcgd().getF_plan_work_order_state()== OrderState.CLOSED.getState()) {
+            if (StringUtil.isNullStr(patrol.getData().getZyxcgd().getF_actual_completion_time())){
+                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime,patrol.getData().getZyxcgd().getF_actual_completion_time()));
+            }
+        } else {
+            runnable.run();
+        }
     }
 
     protected void updateLocalData(PatrolLocal local) {
@@ -516,5 +537,26 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_OPTION);
+    }
+
+
+    private String createTime;
+    //立即调用方法
+    Handler handler = new Handler();
+    public Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(runnable, 1000);
+            //计算时间
+            binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(handler!=null){
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 }

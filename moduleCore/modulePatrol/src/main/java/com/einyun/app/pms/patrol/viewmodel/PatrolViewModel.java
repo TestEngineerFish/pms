@@ -90,7 +90,8 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
                         index.getSort(),
                         index.getPatrol_point_id(),
                         index.getPic_example_url(),
-                        index.getPatrol_items()
+                        index.getPatrol_items(),
+                        index.getPic_url()
                 ))
                 .toList()
                 .blockingGet();
@@ -128,7 +129,8 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+//                hideLoading();
+                liveData.postValue(null);
             }
         });
         return liveData;
@@ -153,12 +155,11 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
             public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
                 PatrolInfo patrolInfo = saveCache(data, orderId);
                 liveData.postValue(patrolInfo);
-//                hideLoading();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                hideLoading();
+                liveData.postValue(null);
             }
         });
         return liveData;

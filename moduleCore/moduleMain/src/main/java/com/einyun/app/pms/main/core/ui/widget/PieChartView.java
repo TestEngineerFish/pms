@@ -157,7 +157,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 //        //原文：MPAndroidChart\ndeveloped by Philipp Jahoda
 //        SpannableString s = new SpannableString("刘某人程序员\n我仿佛听到有人说我帅");
 //        //s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
-//        //s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
+//        //s.setSpan(new StyleSpan(Typeface.FILLDATA), 14, s.length() - 15, 0);
 //        // s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
 //        //s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
 //        // s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);

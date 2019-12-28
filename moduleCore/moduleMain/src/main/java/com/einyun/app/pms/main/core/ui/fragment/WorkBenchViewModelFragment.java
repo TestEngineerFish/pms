@@ -86,7 +86,6 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 freshData();
             });
         });
-
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
             freshData();

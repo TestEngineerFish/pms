@@ -25,6 +25,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -255,15 +256,29 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         viewModel.request.setUserId(userModuleService.getUserId());
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             viewModel.loadPendingInDB().observe(this, dataBeans -> {
+                if(dataBeans.size()==0){
+                    updatePageUIState(PageUIState.EMPTY.getState());
+                }else{
+                    updatePageUIState(PageUIState.FILLDATA.getState());
+                }
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         } else {
             viewModel.loadDoneInDB().observe(this, dataBeans -> {
+                if(dataBeans.size()==0){
+                    updatePageUIState(PageUIState.EMPTY.getState());
+                }else{
+                    updatePageUIState(PageUIState.FILLDATA.getState());
+                }
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         }
+    }
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
     }
 
     @Override

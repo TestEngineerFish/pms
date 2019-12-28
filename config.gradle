@@ -295,7 +295,7 @@ server.debug_test = "\"http://120.79.213.146\""
 //UAT环境
 server.uat = "\"http://testbms.einyun.com\""
 //正式环境
-server.release = "\"https://bpm.somelink.cn/xxxx\""
+server.release = "\"https://bms.einyun.com\""
 deps.server = server
 
 ext.deps = deps

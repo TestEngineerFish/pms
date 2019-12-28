@@ -39,7 +39,7 @@ public class WorkNode implements Serializable {
         this.result = result;
     }
 
-    public WorkNode(String number, String workThings, String workNode,String sign_type,int sign_result,int is_photo,String result,String sign_time,int sort,String patrol_point_id,String pic_example_url,String patrol_items) {
+    public WorkNode(String number, String workThings, String workNode,String sign_type,int sign_result,int is_photo,String result,String sign_time,int sort,String patrol_point_id,String pic_example_url,String patrol_items,String picUrl) {
         this.number = number;
         this.workThings = workThings;
         this.workNode = workNode;
@@ -52,6 +52,7 @@ public class WorkNode implements Serializable {
         this.patrol_point_id=patrol_point_id;
         this.pic_example_url=pic_example_url;
         this.patrol_items=patrol_items;
+        this.pic_url=picUrl;
     }
 
     public List<String> getCachedImages() {
