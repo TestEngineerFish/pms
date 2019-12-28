@@ -6,13 +6,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
@@ -23,6 +26,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.main.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -69,6 +73,16 @@ public class SlideShowView extends FrameLayout {
         ivOne = findViewById(R.id.iv_one);
         ivTwo = findViewById(R.id.iv_two);
         mViewPager = findViewById(R.id.viewPager);
+        Field field = null; // 通过ViewPager类得到字段，不能通过实例得到字段。
+        try {
+            field = ViewPager.class.getDeclaredField("mTouchSlop");
+            field.setAccessible(true); // 设置Java不检查权限。
+            field.setInt(mViewPager, 10); // 设置字段的值，此处应该使用ViewPager实例。设置只有滑动长度大于150px的时候，ViewPager才进行滑动
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setRed_SP(int red) {
@@ -144,7 +158,6 @@ public class SlideShowView extends FrameLayout {
 
         return linearLayout;
     }
-
 
     public void setImageData(Activity activity, List<String> dataList) {
         this.dataList = dataList;

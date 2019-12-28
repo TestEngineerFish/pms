@@ -21,7 +21,7 @@
             name="numAdapter"
             type="android.widget.BaseAdapter" />
     </data>
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.einyun.app.common.ui.widget.CustomSwipeToRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,5 +55,5 @@
 
             </LinearLayout>
         </com.einyun.app.common.ui.component.AbScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.einyun.app.common.ui.widget.CustomSwipeToRefresh>
 </layout>

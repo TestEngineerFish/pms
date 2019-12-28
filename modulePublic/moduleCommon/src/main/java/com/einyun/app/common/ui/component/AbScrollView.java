@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
 
+import androidx.core.widget.NestedScrollView;
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.common.ui.component
@@ -20,7 +22,7 @@ import android.widget.ScrollView;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class AbScrollView extends ScrollView {
+public class AbScrollView extends NestedScrollView {
 
     private float xDistance, yDistance, xLast, yLast;
 
