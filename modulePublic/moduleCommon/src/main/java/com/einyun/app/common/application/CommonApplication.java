@@ -44,7 +44,6 @@ public class CommonApplication extends BasicApplication {
             ARouter.openDebug();
         }
 
-//        initLeakCanary();
         preinitX5WebCore();
         initSkin();
         if (IsFastClick.isDebugVersion(this)) {
@@ -87,17 +86,6 @@ public class CommonApplication extends BasicApplication {
                 .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .loadSkin();
     }
-    private RefWatcher mRefWatcher;
 
-    private void initLeakCanary() {
-
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            mRefWatcher = RefWatcher.DISABLED;
-            return;
-        }
-        mRefWatcher = LeakCanary.install(this);
-    }
 
 }
