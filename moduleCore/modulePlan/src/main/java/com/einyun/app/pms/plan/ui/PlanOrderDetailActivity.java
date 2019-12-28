@@ -575,7 +575,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         Gson gson = getUploadJsonStr.getGson();
         List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
         patrol.getData().getZyjhgd().setF_STATUS(String.valueOf(OrderState.CLOSED.getState()));
-        hasException();
         patrol.getData().getZyjhgd().setF_FILES(gson.toJson(picUrlModels));//包装上传图片信息
         patrol.getData().getZyjhgd().setF_CONTENT(binding.limitInput.getString());//包装节点选择信息
     }
@@ -596,10 +595,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     TipDialog tipDialog;
 
     private void acceptForm(PlanInfo patrol) {
-//        patrol.getData().get().setF_actual_completion_time(TimeUtil.Now());
-//        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
-//        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
-//        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
         hasException();
         patrol.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
         Log.e("传参  patrol  为", JsonUtil.toJson(patrol));
