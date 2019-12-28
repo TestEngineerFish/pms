@@ -14,6 +14,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
@@ -30,6 +32,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -207,18 +210,39 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      * @param distributeWorkOrder
      */
     private void updateUI(DisttributeDetialModel distributeWorkOrder) {
-        detialModel = distributeWorkOrder;
-        if (detialModel == null) {
+
+        if (distributeWorkOrder == null) {
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
-        binding.frameSpace.setVisibility(View.GONE);
+        detialModel = distributeWorkOrder;
         binding.setWorkOrder(distributeWorkOrder);
+        updatePageUIState(PageUIState.FILLDATA.getState());
         binding.orderInfo.setWorkOrder(distributeWorkOrder);
         binding.orderForm.setWorkOrder(distributeWorkOrder);
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getInfo().getCreateTime()));
+        updateElapsedTime();
         updateImagesUI(distributeWorkOrder);
         switchState(distributeWorkOrder.getData().getInfo().getStatus());
     }
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
+    }
+
+    private void updateElapsedTime() {
+        if (StringUtil.isNullStr(detialModel.getData().getInfo().getCreateTime())) {
+            createTime = detialModel.getData().getInfo().getCreateTime();
+            if (detialModel.getData().getInfo().getStatus().equals(String.valueOf(OrderState.CLOSED.getState()))) {
+                if (StringUtil.isNullStr(detialModel.getData().getInfo().getActFinishTime()))
+                    binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime, detialModel.getData().getInfo().getActFinishTime()));
+            } else {
+                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
+                runnable.run();
+            }
+        }
+    }
+
     /**
      * 有闭单申请的情况
      * */
@@ -641,6 +665,27 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         public void getItemOffsets(Rect outRect, View view,
                                    RecyclerView parent, RecyclerView.State state) {
             outRect.left = space;
+        }
+    }
+
+    private String createTime;
+
+    //立即调用方法
+    Handler handler = new Handler();
+    public Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(runnable, 1000);
+            //计算时间
+            binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(handler!=null){
+            handler.removeCallbacksAndMessages(null);
         }
     }
 }

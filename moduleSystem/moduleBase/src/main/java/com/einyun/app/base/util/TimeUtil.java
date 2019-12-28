@@ -1,5 +1,6 @@
 package com.einyun.app.base.util;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -333,6 +334,9 @@ public class TimeUtil {
     public static final long l3 = 60 * 1000;
 
     public static String getTimeExpend(String startTime) {
+        if (TextUtils.isEmpty(startTime)) {
+            return "----------- --:--:--";
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String endTime = format.format(new Date());
         //传入字串类型 2016/06/28 08:30

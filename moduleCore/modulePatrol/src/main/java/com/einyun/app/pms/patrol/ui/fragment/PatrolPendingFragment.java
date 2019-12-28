@@ -23,6 +23,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
@@ -131,9 +132,18 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
     protected void loadData() {
         viewModel.loadPendingData().observe(getActivity(), patrols -> {
+            if(patrols.size()==0){
+                updatePageUIState(PageUIState.EMPTY.getState());
+            }else{
+                updatePageUIState(PageUIState.FILLDATA.getState());
+            }
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
         });
+    }
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
     }
 
 

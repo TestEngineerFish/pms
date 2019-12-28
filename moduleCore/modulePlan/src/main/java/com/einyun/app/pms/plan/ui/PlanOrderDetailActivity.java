@@ -37,6 +37,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.GetUploadJson;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
@@ -295,16 +296,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         //加载数据
         viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
             updateUI(planInfo);
-            if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_CREATE_TIME())) {
-                createTime = planInfo.getData().getZyjhgd().getF_CREATE_TIME();
-                if (planInfo.getData().getZyjhgd().getF_STATUS().equals(OrderState.CLOSED.getState())) {
-                    if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_ACT_FINISH_TIME()))
-                        binding.tvHandleTime.setText(TimeUtil.getTimeExpend(planInfo.getData().getZyjhgd().getF_CREATE_TIME(), planInfo.getData().getZyjhgd().getF_ACT_FINISH_TIME()));
-                } else {
-                    binding.tvHandleTime.setText(TimeUtil.getTimeExpend(planInfo.getData().getZyjhgd().getF_CREATE_TIME()));
-                    runnable.run();
-                }
-            }
+            updateElapsedTime(planInfo);
             if (planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
                 resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
             } else {
@@ -315,6 +307,19 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             request.setType(WorkOrder.FORCE_CLOSE_PLAN);
             viewModel.isClosed(request);
         });
+    }
+
+    private void updateElapsedTime(PlanInfo planInfo) {
+        if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_CREATE_TIME())) {
+            createTime = planInfo.getData().getZyjhgd().getF_CREATE_TIME();
+            if (planInfo.getData().getZyjhgd().getF_STATUS().equals(String.valueOf(OrderState.CLOSED.getState()))) {
+                if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_ACT_FINISH_TIME()))
+                    binding.tvHandleTime.setText(TimeUtil.getTimeExpend(planInfo.getData().getZyjhgd().getF_CREATE_TIME(), planInfo.getData().getZyjhgd().getF_ACT_FINISH_TIME()));
+            } else {
+                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(planInfo.getData().getZyjhgd().getF_CREATE_TIME()));
+                runnable.run();
+            }
+        }
     }
 
     @Override
@@ -361,8 +366,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     List<WorkNode> nodes = new ArrayList<>();
 
     private void updateUI(PlanInfo planInfo) {
+        if(planInfo==null){
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
+            return;
+        }
         this.planInfo = planInfo;
-        binding.frameSpace.setVisibility(View.GONE);
+        updatePageUIState(PageUIState.FILLDATA.getState());
         showResult();
         showPostpone();
         showForceClose();
@@ -373,6 +382,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }
 
         binding.setDetail(planInfo.getData().getZyjhgd());
+    }
+
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
     }
 
     /**
@@ -587,6 +600,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //        patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
 //        patrol.getData().getZyxcgd().setF_principal_id(userModuleService.getUserId());
 //        patrol.getData().getZyxcgd().setF_principal_name(userModuleService.getUserName());
+        hasException();
         patrol.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
         Log.e("传参  patrol  为", JsonUtil.toJson(patrol));
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
@@ -699,6 +713,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             binding.rvResource.setVisibility(View.VISIBLE);
             binding.ivResourceLine.setVisibility(View.VISIBLE);
             binding.ivResourceArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_arrow_down_grey));
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(handler!=null){
+            handler.removeCallbacksAndMessages(null);
         }
     }
 }
