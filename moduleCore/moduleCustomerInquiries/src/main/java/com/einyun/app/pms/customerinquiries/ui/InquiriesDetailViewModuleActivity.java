@@ -23,6 +23,7 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
@@ -156,6 +157,10 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
          * 获取工单详情
          */
 
+        queryOrderInfo();
+    }
+
+    private void queryOrderInfo() {
         viewModel.queryOrderInfo(inquiriesItemModule.proInsId,inquiriesItemModule.taskId==null?"":inquiriesItemModule.taskId).observe(this,module->{
             Log.e(TAG, "onResume:proInsId--"+inquiriesItemModule.proInsId+"--taskId--"+inquiriesItemModule.taskId);
             orderDetailInfoModule = module;
@@ -226,13 +231,17 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
 
     }
 
+    protected void updatePageUIState(int state){
+        binding.pageState.setPageState(state);
+    }
     private void updateUI(InquiriesDetailModule inquiriesDetailModule) {
         if (inquiriesDetailModule == null) {
+            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
         //处理时长
         detail = inquiriesDetailModule.getData().getCustomer_enquiry_model();
-
+        updatePageUIState(PageUIState.FILLDATA.getState());
         createTime = detail.getWx_time();
         if (ComplainOrderState.CLOSED.getState().equals(detail.getState())) {
             if (StringUtil.isNullStr(detail.getClose_time()))
@@ -379,6 +388,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                                 .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        queryOrderInfo();
 //                                finish();
                                     }
                                 });
@@ -440,5 +450,8 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     protected void onDestroy() {
         super.onDestroy();
 //        handler.removeCallbacks(runnable);
+        if (handler!=null) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 }

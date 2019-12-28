@@ -64,7 +64,7 @@ public class SendOrderActivity extends BaseHeadViewModelActivity<ActivitySendOrd
         super.initViews(savedInstanceState);
         mTitles=new String[]{getResources().getString(R.string.text_wait_handle),getResources().getString(R.string.text_already_handle)};
         setHeadTitle(R.string.text_send_order);
-        setRightOption(R.drawable.scan);
+//        setRightOption(R.drawable.scan);
         final ArrayList<SendWorkOrderFragment> fragments = new ArrayList<>();
         int fragmentTags[]=new int[]{ListType.PENDING.getType(),ListType.DONE.getType()};
         for (int i = 0; i < mTitles.length; i++) {

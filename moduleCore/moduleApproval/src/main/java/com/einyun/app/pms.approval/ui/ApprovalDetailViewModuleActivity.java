@@ -14,6 +14,7 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.pms.approval.R;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.constants.RouteKey;
@@ -105,9 +106,11 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     /*
     * 审批通过按钮
     * */
-    public void onPassClick(){
-        Log.e("sumitApproval", "onPassClick: ");
-        sumit(ApprovalDataKey.APPROVAL_SUMIT_AGREE);
+    public void onPassClick() {
+        if (IsFastClick.isFastDoubleClick()) {
+            Log.e("sumitApproval", "onPassClick: ");
+            sumit(ApprovalDataKey.APPROVAL_SUMIT_AGREE);
+        }
     }
     /*
      * 审批不通过按钮
@@ -115,7 +118,10 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     public  void onRejectClick(){
 //        new DoubleChoiceDialog(this,"test","teast","left","right",
 //                view -> {},view -> {}).show();
-        sumit(ApprovalDataKey.APPROVAL_SUMIT_REJECT);
+        if (IsFastClick.isFastDoubleClick()) {
+
+            sumit(ApprovalDataKey.APPROVAL_SUMIT_REJECT);
+        }
     }
     /*
     * 提交审批
