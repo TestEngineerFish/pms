@@ -148,6 +148,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     binding.cvResultEdit.setVisibility(View.GONE);
                     binding.cvOperate.setVisibility(View.GONE);
                     binding.btnSubmit.setVisibility(View.GONE);
+                    nodesAdapter.notifyDataSetChanged();
                 } else {
                     ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
                 }
@@ -157,7 +158,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     //false为不可以闭单  true为可以闭单
-    private boolean isCloseClose = false;
+    private boolean isCloseClose = true;
 
     @Override
     protected void initData() {
@@ -617,7 +618,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
     private String getTime() {
         long time = System.currentTimeMillis();//long now = android.os.SystemClock.uptimeMillis();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date d1 = new Date(time);
         String t1 = format.format(d1);
         return t1;
