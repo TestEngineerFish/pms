@@ -11,7 +11,12 @@
 
 
     <androidx.cardview.widget.CardView
-        style="@style/cardview_style">
+        style="@style/cardview_style"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_marginTop="@dimen/px_0"
+        android:layout_marginLeft="@dimen/px_10"
+        android:layout_marginRight="@dimen/px_10"
+        >
 
         <LinearLayout
             android:id="@+id/item_order_ln"
