@@ -49,7 +49,7 @@ public class CreateOrderBindiAdapter {
             return;
         }
         if (StringUtil.isNullStr(request.getTypeName())) {
-            view.setText(request.getTypeName() + "-" + (request.getEnvType2Name() == null ? "" : request.getEnvType2Name()) + "-" + (request.getEnvType3Name() == null ? "" : request.getEnvType3Name()));
+            view.setText(request.getTypeName() + (request.getEnvType2Name() == null ? "" : "-" + request.getEnvType2Name()) + (request.getEnvType3Name() == null ? "" : "-" + request.getEnvType3Name()));
         } else {
             view.setText("请选择");
 //            view.setTextColor(view.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
