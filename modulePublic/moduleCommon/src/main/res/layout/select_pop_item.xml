@@ -27,9 +27,10 @@
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_40"
-                    android:layout_marginRight="@dimen/px_40"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_marginRight="@dimen/px_30"
                     android:textColor="@color/blackTextColor"
+                    android:padding="@dimen/px_5"
                     android:textSize="@dimen/font_size14" />
 
         </RelativeLayout>
