@@ -72,7 +72,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.handle_man_hour}"
+                    app:setText="@{repairs.data.customer_repair_model.handle_man_hour+@string/text_padding_empty}"
                      />
             </LinearLayout>
 
@@ -152,7 +152,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.material_cost}"
+                    app:setText="@{repairs.data.customer_repair_model.material_cost+@string/text_padding_empty}"
                    />
             </LinearLayout>
 
@@ -166,7 +166,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.artificial_cost}"
+                    app:setText="@{repairs.data.customer_repair_model.artificial_cost+@string/text_padding_empty}"
                      />
             </LinearLayout>
 
@@ -180,7 +180,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.handle_fee}"
+                    app:setText="@{repairs.data.customer_repair_model.handle_fee+@string/text_padding_empty}"
                     />
             </LinearLayout>
 

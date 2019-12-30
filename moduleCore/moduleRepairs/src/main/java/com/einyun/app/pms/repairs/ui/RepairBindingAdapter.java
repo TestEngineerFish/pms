@@ -101,7 +101,7 @@ public class RepairBindingAdapter {
 
     @BindingAdapter("setText")
     public static void setText(TextView view,String value){
-        if (TextUtils.isEmpty(value)){
+        if (TextUtils.isEmpty(value)||value.equals("null")){
             view.setText("--");
             return;
         }
