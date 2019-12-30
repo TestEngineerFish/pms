@@ -33,11 +33,11 @@ public class PatrolPostPoneActivity extends BaseApplyPostPoneActivity<PatrolView
     @Override
     public void submitForm(List<PicUrl> data) {
         ExtenDetialRequest request = new ExtenDetialRequest();
-        request.setId(orderId);
+        request.setID_(orderId);
         request.setInstId(proInsId);
         request.setApplyFiles(new Gson().toJson(data));
-        request.setExtensionDays(binding.delayDate.getText().toString());
-        request.setApplicationDescription(binding.delayInfo.getString());
+        request.setExtension_days(binding.delayDate.getText().toString());
+        request.setApplication_description(binding.delayInfo.getString());
         viewModel.postpone(request).observe(this, flag -> {
             if (flag) {
                 ToastUtil.show(this, R.string.apply_late_success);

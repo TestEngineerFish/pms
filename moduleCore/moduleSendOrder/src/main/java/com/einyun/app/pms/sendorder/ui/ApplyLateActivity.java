@@ -65,10 +65,13 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
     @Override
     public void submitForm(List<PicUrl> data) {
         request.setExtensionDays(binding.delayDate.getText().toString());
+        request.setExtension_days(binding.delayDate.getText().toString());
         request.setApplicationDescription(binding.delayInfo.getString());
+        request.setApplication_description(binding.delayInfo.getString());
         request.setId(orderId);
         request.setInstId(proInsId);
         request.setBizId(orderId);
+        request.setID_(orderId);
         request.setApplyInsId(proInsId);
         if (StringUtil.isNullStr(keyId)) {
             if (RouteKey.KEY_PLAN.equals(keyId)) {

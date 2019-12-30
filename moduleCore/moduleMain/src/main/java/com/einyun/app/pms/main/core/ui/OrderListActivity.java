@@ -73,7 +73,18 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
                 ToastUtil.show(this,"该功能暂未实现");
 //                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
             }
-
+            if (v.getId() == R.id.client_complain_order) {
+                //客户投诉
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_COMPLAIN_PAGING).navigation();
+            }
+            if (v.getId() == R.id.client_repairs_order) {
+                //客户报修
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_REPAIRS_PAGING).navigation();
+            }
+            if (v.getId() == R.id.client_enquiry_order) {
+                //客户问询
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_INQUIRIES).navigation();
+            }
         }
 
     }

@@ -700,7 +700,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repariResponse.getRoot().setVisibility(View.VISIBLE);
                 binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
@@ -713,12 +713,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (status.equals(RouteKey.REPAIR_STATUS_HANDLE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repairHandle.getRoot().setVisibility(View.VISIBLE);
+                binding.repairClosePostpone.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleResult.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
                 binding.repairUseMaterial.getRoot().setVisibility(View.VISIBLE);
@@ -736,7 +736,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)) {
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repairEvaluate.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             }
@@ -746,15 +746,17 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportAreaRed.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportKindRed.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportNatureRed.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repariReportAreaChange.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportKindChange.setVisibility(View.VISIBLE);
-            binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
-            binding.repairsInfo.rgs.setVisibility(View.VISIBLE);
-            binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
+                binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportAreaRed.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportKindRed.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportNatureRed.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repariReportAreaChange.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportKindChange.setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
+                binding.repairsInfo.rgs.setVisibility(View.VISIBLE);
+                binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+            }
             return;
         }
         //已关闭
@@ -771,10 +773,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrder.repairSendTxt.setText(R.string.text_late_send_order);
-            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
-            binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+            if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
+                binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+                binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
+                binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+            }
             return;
         }
 

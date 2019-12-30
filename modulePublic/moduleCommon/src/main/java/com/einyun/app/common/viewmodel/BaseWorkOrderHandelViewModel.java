@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.model.IsClosedState;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -36,7 +37,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
 
                @Override
                public void onFaild(Throwable throwable) {
-
+                    ThrowableParser.onFailed(throwable);
                }
           });
           return forceCloseLiveData;
@@ -56,7 +57,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
 
                @Override
                public void onFaild(Throwable throwable) {
-
+                    ThrowableParser.onFailed(throwable);
                }
           });
           return postponeLiveData;
@@ -77,7 +78,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
 
                @Override
                public void onFaild(Throwable throwable) {
-
+                    ThrowableParser.onFailed(throwable);
                }
           });
 

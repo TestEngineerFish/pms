@@ -50,19 +50,12 @@ import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.FragmentSendWorkOrderBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
-import com.einyun.app.pms.sendorder.ui.SendOrderActivity;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.orhanobut.logger.Logger;
-
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING;
 
 /**
  * @ProjectName: pms_old
@@ -84,8 +77,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     protected SelectPopUpView selectPopUpView;
 
+    public SendWorkOrderFragment(){
 
-
+    }
 
 //    String blockName;
 //    String blockId;
