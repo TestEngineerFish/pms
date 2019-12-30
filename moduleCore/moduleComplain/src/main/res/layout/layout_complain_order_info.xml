@@ -42,6 +42,7 @@
                     android:layout_marginRight="@dimen/px_20"
                     android:gravity="center_vertical"
                     android:textColor="@color/txt_blue_color"
+                    app:complainStatus="@{complain.f_state}"
                     android:textSize="@dimen/px_30" />
             </RelativeLayout>
 

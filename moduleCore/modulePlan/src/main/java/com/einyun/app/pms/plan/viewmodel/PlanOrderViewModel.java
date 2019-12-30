@@ -168,7 +168,7 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
         request.setType(selected.get(SELECT_ORDER_TYPE)==null?null:selected.get(SELECT_ORDER_TYPE).getKey());
         request.setEnvType2(selected.get(SELECT_ORDER_TYPE2)==null?null:selected.get(SELECT_ORDER_TYPE2).getKey());
         request.setEnvType3(selected.get(SELECT_ORDER_TYPE3)==null?null:selected.get(SELECT_ORDER_TYPE3).getKey());
-        request.setFState(selected.get(SELECT_IS_OVERDUE)==null?null:selected.get(SELECT_IS_OVERDUE).getKey());
+        request.setOtStatus(selected.get(SELECT_IS_OVERDUE)==null?null:selected.get(SELECT_IS_OVERDUE).getKey());
 //        refreshUI();
     }
 

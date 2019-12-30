@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:hintText="请输入延期原因"
-                app:maxNumber="100" />
+                app:maxNumber="300" />
         </LinearLayout>
 
         <View style="@style/base_underline" />
