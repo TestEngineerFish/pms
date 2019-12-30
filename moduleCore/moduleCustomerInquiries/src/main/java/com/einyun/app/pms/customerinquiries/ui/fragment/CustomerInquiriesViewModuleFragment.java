@@ -177,7 +177,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     binding.tvPropertyNum.setText(inquiriesItemModule.wx_house);
                     binding.tvAskingPeople.setText(inquiriesItemModule.wx_user);
                     binding.tvWorkOrderNum.setText(inquiriesItemModule.wx_code);
-                    binding.tvCreateTime.setText(TimeUtil.getAllTime(inquiriesItemModule.wx_time));
+                    binding.tvCreateTime.setText(TimeUtil.getAllTime(inquiriesItemModule.createTime));
                     binding.tvTurnOrder.setOnClickListener(new ClickProxy(view -> {
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
