@@ -282,6 +282,20 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
                     binding.llForseClose.setVisibility(View.VISIBLE);
                 }
+
+                OrderDetailInfoModule.ForceCloseInfoBean forceCloseInfo = orderDetailInfoModule.getForceCloseInfo();
+                if (forceCloseInfo!=null) {
+                    binding.forceCloseInfo.setVisibility(View.VISIBLE);
+                    binding.tvApprovalResult.setText(forceCloseInfo.getStatusStr());
+                    binding.tvApprovalTime.setText(forceCloseInfo.getAuditDate().toString());
+                    binding.tvApplyer.setText(forceCloseInfo.getApplyUser());
+                    binding.tvApplyTime.setText(forceCloseInfo.getApplyDate());
+                    binding.tvApplyReason.setText(forceCloseInfo.getApplyReason());
+                    PicUrlModelConvert convert = new PicUrlModelConvert();
+                    List<PicUrlModel> modelList = convert.stringToSomeObjectList(forceCloseInfo.getAttachment());
+                    forseClosephotoListInfoAdapter.updateList(modelList);
+                }
+
             }else {//强制关闭正在审批中  能操作的都隐藏掉 评价  提交 回复
                 binding.llForseClose.setVisibility(View.GONE);
 

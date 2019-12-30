@@ -160,12 +160,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
 
         photoListAdapter = new PhotoListAdapter(this);
-        binding.panelHandleInfo.patrolHandlePicList.setLayoutManager(new LinearLayoutManager(
-                this,
-                LinearLayoutManager.HORIZONTAL,
-                false));//设置横向
-        binding.panelHandleInfo.patrolHandlePicList.addItemDecoration(new SpacesItemDecoration());
-        binding.panelHandleInfo.patrolHandlePicList.setAdapter(photoListAdapter);
     }
 
     /**
