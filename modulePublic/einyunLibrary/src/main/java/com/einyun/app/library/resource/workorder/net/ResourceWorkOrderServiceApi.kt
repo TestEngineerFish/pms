@@ -261,4 +261,7 @@ interface ResourceWorkOrderServiceApi {
 
     @POST(URLs.URL_WORK_ORDER_FORCE_POSTPONE_CUSTOME)
     fun postApplyDateInfo(@Body request:ExtenDetialRequest):Flowable<BaseResponse<Any>>
+
+    @POST(URLs.URL_ORDER_PREVIEW_SELECT)
+    fun getOrderPreviewSelect():Flowable<PreviewSelectModelResponse>
 }

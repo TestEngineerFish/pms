@@ -31,6 +31,7 @@ public class CreateOrderBindiAdapter {
     public static void setTime(TextView view, Long value) {
         view.setText(FormatUtil.formatDate(value));
     }
+
     @BindingAdapter("setSelectTxt")
     public static void setSelectTxt(TextView view, String value) {
         if (StringUtil.isNullStr(value)) {
@@ -47,8 +48,8 @@ public class CreateOrderBindiAdapter {
             view.setText("请选择");
             return;
         }
-        if (StringUtil.isNullStr(request.getEnvType3Name()) && StringUtil.isNullStr(request.getTypeName())) {
-            view.setText(request.getTypeName()+"-"+request.getEnvType2Name()+"-"+request.getEnvType3Name());
+        if (StringUtil.isNullStr(request.getTypeName())) {
+            view.setText(request.getTypeName() + (!StringUtil.isNullStr(request.getEnvType2Name()) ? "" : "-" + request.getEnvType2Name()) + (!StringUtil.isNullStr(request.getEnvType3Name()) ? "" : "-" + request.getEnvType3Name()));
         } else {
             view.setText("请选择");
 //            view.setTextColor(view.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
@@ -73,11 +74,11 @@ public class CreateOrderBindiAdapter {
             view.setText("新生成");
         } else if (value == ComplainOrderState.CLOSED.getState()) {
             view.setText("已关闭");
-        }else if (value == ComplainOrderState.DEALING.getState()) {
+        } else if (value == ComplainOrderState.DEALING.getState()) {
             view.setText("处理中");
-        }else if (value == ComplainOrderState.RESPONSE.getState()) {
+        } else if (value == ComplainOrderState.RESPONSE.getState()) {
             view.setText("待响应");
-        }else if (value == ComplainOrderState.RETURN_VISIT.getState()) {
+        } else if (value == ComplainOrderState.RETURN_VISIT.getState()) {
             view.setText("待评价");
         }
 

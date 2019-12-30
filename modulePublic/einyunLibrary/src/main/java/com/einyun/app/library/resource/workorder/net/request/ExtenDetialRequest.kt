@@ -3,8 +3,9 @@ package com.einyun.app.library.resource.workorder.net.request
 import com.google.gson.annotations.SerializedName
 
 class ExtenDetialRequest {
-    @SerializedName(value = "id", alternate = ["ID_"])
+    @SerializedName(value = "id")
     var id: String? = null
+    var ID_:String?=null
     var bizId: String? = null
     @SerializedName(value = "instId")
     var instId: String? = null

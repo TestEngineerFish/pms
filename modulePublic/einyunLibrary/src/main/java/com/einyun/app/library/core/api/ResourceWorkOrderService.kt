@@ -207,4 +207,9 @@ interface ResourceWorkOrderService : EinyunService {
     ): LiveData<Boolean>
 
     fun getApplyDateInfo(id: String, callBack: CallBack<formDataExten>): LiveData<formDataExten>
+
+    //获取工单预览筛选数据
+    fun getOrderPreviewSelect(
+        callBack: CallBack<List<PreviewSelectModel>>
+        ): LiveData<List<PreviewSelectModel>>
 }

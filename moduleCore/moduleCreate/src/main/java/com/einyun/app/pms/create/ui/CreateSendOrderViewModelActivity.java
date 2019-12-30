@@ -298,7 +298,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             copy.setDivideName(request.getDivideName());
             request = copy;
             resourceTypeBean = null;
-            binding.tvResource.setText("");
+            binding.tvResource.setText("请选择");
         }
         if (SelectType.WORKY_TYPE == type) {
             request.setType("");

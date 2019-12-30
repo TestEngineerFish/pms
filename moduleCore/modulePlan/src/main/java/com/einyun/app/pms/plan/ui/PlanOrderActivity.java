@@ -66,7 +66,7 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         super.initViews(savedInstanceState);
         mTitles=new String[]{getResources().getString(R.string.text_wait_handle),getResources().getString(R.string.text_already_handle)};
         setHeadTitle(R.string.text_plan_order);
-        setRightOption(R.drawable.scan);
+//        setRightOption(R.drawable.scan);
         final ArrayList<PlanWorkOrderFragment> fragments = new ArrayList<>();
         String fragmentTags[]=new String[]{FRAGMENT_PLAN_OWRKORDER_PENDING,FRAGMENT_PLAN_OWRKORDER_DONE};
         tag = fragmentTags[0];

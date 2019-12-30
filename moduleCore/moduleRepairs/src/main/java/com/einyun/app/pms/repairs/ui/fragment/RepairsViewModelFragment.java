@@ -69,7 +69,9 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
     private SelectPopUpView selectPopUpView;
     RepairsPageRequest request;
+    public RepairsViewModelFragment(){
 
+    }
     public static RepairsViewModelFragment newInstance(Bundle bundle) {
         RepairsViewModelFragment fragment = new RepairsViewModelFragment();
         fragment.setArguments(bundle);

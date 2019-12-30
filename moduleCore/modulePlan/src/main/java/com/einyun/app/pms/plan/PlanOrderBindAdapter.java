@@ -73,9 +73,9 @@ public class PlanOrderBindAdapter {
     public static void apply_status(TextView view, int state) {
         if (state == ApplyState.APPLYING.getState()) {
             view.setText(R.string.text_applying);
-        } else if (state == ApplyState.APPLYING.getState()) {
+        } else if (state == ApplyState.PASS.getState()) {
             view.setText(R.string.text_state_pass);
-        } else if (state == ApplyState.APPLYING.getState()) {
+        } else if (state == ApplyState.REJECT.getState()) {
             view.setText(R.string.text_state_reject);
         }
 

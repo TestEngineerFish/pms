@@ -72,7 +72,8 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.handle_man_hour+@string/text_padding_empty}" />
+                    app:setText="@{repairs.data.customer_repair_model.handle_man_hour+@string/text_padding_empty}"
+                     />
             </LinearLayout>
 
             <View
@@ -151,7 +152,8 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.material_cost+@string/text_padding_empty}" />
+                    app:setText="@{repairs.data.customer_repair_model.material_cost+@string/text_padding_empty}"
+                   />
             </LinearLayout>
 
             <LinearLayout
@@ -164,7 +166,8 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.artificial_cost+@string/text_padding_empty}" />
+                    app:setText="@{repairs.data.customer_repair_model.artificial_cost+@string/text_padding_empty}"
+                     />
             </LinearLayout>
 
             <LinearLayout
@@ -177,7 +180,8 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.handle_fee+@string/text_padding_empty}" />
+                    app:setText="@{repairs.data.customer_repair_model.handle_fee+@string/text_padding_empty}"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -203,7 +207,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    android:text="@{repairs.data.customer_repair_model.handle_pay_time+@string/text_padding_empty}" />
+                    android:text="@{repairs.data.customer_repair_model.handle_pay_time}" />
             </LinearLayout>
 
             <LinearLayout

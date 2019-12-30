@@ -2,6 +2,7 @@ package com.einyun.app.pms.repairs.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +15,8 @@ import com.einyun.app.pms.repairs.R;
 public class RepairBindingAdapter {
     @BindingAdapter("statusDetail")
     public static void statusDetail(TextView view, String value) {
-        Context context=CommonApplication.getInstance();
-        if (value==null){
+        Context context = CommonApplication.getInstance();
+        if (value == null) {
             view.setText(R.string.text_state_closed);
             view.setTextColor(context.getResources().getColor(R.color.repair_detail_close_color));
             return;
@@ -32,17 +33,18 @@ public class RepairBindingAdapter {
         } else if (value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             view.setText(R.string.text_wait_send);
             view.setTextColor(context.getResources().getColor(R.color.repair_detail_send_color));
-        }else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)||value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)){
+        } else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB) || value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
             view.setText(R.string.text_wait_grab);
             view.setTextColor(context.getResources().getColor(R.color.repair_detail_grab_color));
-        }else {
+        } else {
 
         }
 
     }
+
     @BindingAdapter("status")
     public static void status(TextView view, String value) {
-        if (value==null){
+        if (value == null) {
             view.setText(R.string.text_state_closed);
             return;
         }
@@ -54,9 +56,9 @@ public class RepairBindingAdapter {
             view.setText(R.string.text_wait_evaluate);
         } else if (value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             view.setText(R.string.text_wait_send);
-        }else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)||value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)){
+        } else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB) || value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
             view.setText(R.string.text_wait_grab);
-        }else {
+        } else {
 
         }
 
@@ -65,7 +67,7 @@ public class RepairBindingAdapter {
 
     @BindingAdapter("status")
     public static void status(ImageView view, String value) {
-        if (value==null){
+        if (value == null) {
             view.setImageResource(R.mipmap.icon_state_closed);
             return;
         }
@@ -77,52 +79,62 @@ public class RepairBindingAdapter {
             view.setImageResource(R.mipmap.icon_state_wait_evaluate);
         } else if (value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             view.setImageResource(R.mipmap.icon_state_wait_send);
-        }else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)) {
+        } else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)) {
             view.setImageResource(R.mipmap.icon_state_wait_grab);
         }
     }
 
 
     @BindingAdapter("ifpay")
-    public static void ifpay(TextView view,String value){
-        if (value==null){
+    public static void ifpay(TextView view, String value) {
+        if (value == null) {
             return;
         }
-        if (value.equals(RouteKey.KEY_PAID)){
+        if (value.equals(RouteKey.KEY_PAID)) {
             view.setText(R.string.yes);
             return;
         }
-        if (value.equals(RouteKey.KEY_NOT_PAID)){
+        if (value.equals(RouteKey.KEY_NOT_PAID)) {
             view.setText(R.string.no);
         }
 
     }
 
-    @BindingAdapter("isSolve")
-    public static void isSolve(TextView view,Integer value){
-        if (value==null){
+    @BindingAdapter("setText")
+    public static void setText(TextView view, String value) {
+        if (TextUtils.isEmpty(value) || value.equals("null")) {
+            view.setText("--");
             return;
         }
-        if (value==(RouteKey.KEY_IS_SOLVED)){
+        view.setText(value);
+
+    }
+
+    @BindingAdapter("isSolve")
+    public static void isSolve(TextView view, Integer value) {
+        if (value == null) {
+            return;
+        }
+        if (value == (RouteKey.KEY_IS_SOLVED)) {
             view.setText(R.string.tv_had_solve);
             return;
         }
-        if (value==(RouteKey.KEY_NO_SOLVED)){
+        if (value == (RouteKey.KEY_NO_SOLVED)) {
             view.setText(R.string.tv_un_solve);
             return;
         }
     }
 
     @BindingAdapter("isSolve")
-    public static void isSolve(ImageView view,Integer value){
-        if (value==null){
+    public static void isSolve(ImageView view, Integer value) {
+        if (value == null) {
             return;
         }
-        if (value.equals(RouteKey.KEY_IS_SOLVED)){
+        if (value.equals(RouteKey.KEY_IS_SOLVED)) {
             view.setImageResource(R.drawable.iv_solve);
             return;
         }
-        if (value.equals(RouteKey.KEY_NO_SOLVED)){
+        if (value.equals(RouteKey.KEY_NO_SOLVED)) {
             view.setImageResource(R.drawable.iv_un_solve);
             return;
         }

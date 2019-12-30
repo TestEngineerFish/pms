@@ -10,7 +10,7 @@
 
         <variable
             name="applyExtApplication"
-            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel.DelayInfoBean" />
 
         <variable
             name="complain"
