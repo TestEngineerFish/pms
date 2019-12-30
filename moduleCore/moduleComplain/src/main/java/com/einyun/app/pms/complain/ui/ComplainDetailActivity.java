@@ -68,7 +68,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     @Autowired(name = RouteKey.KEY_FRAGEMNT_TAG)
     String fragmentKey;
     CustomerComplainModelBean detail;
-    ExtensionApplication applyExtApplication;
+    RepairsDetailModel.DelayInfoBean applyExtApplication;
     RepairsDetailModel.ForceCloseInfoBean closeExtApplication;
     List<ComplainAppendBean> complainAppendList;
     List<RepairsDetailModel.HandleListBean> handleList;
@@ -200,12 +200,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     }
 
     private void updatePostponeUI(RepairsDetailModel repairsDetailModel) {
-        applyExtApplication = repairsDetailModel.getExtApplication(ApplyType.POSTPONE.getState());
+        applyExtApplication = repairsDetailModel.getDelayInfo();
         if (applyExtApplication == null) {
             binding.layoutApplyLateInfo.getRoot().setVisibility(View.GONE);
         } else {
             binding.layoutApplyLateInfo.getRoot().setVisibility(View.VISIBLE);
             binding.setApplyExtApplication(applyExtApplication);
+            setImageList(binding.layoutApplyLateInfo.sendOrderPostponePicList, applyExtApplication.getAttachment());
         }
     }
 
