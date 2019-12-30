@@ -145,7 +145,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         //判断是否有闭单申请，有只显示详情
         viewModel.isClosed(isClosedRequest).observe(this,model->{
             Log.d("Test",model.isClosed()+"");
-            if (!model.isClosed()){
+            if (model.isClosed()==false){
                 showIfHasClosed();
             }
         });
@@ -428,7 +428,6 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         }, SendOrderDetailActivity.this);
         //申请闭单后关闭详情页面
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
-
             @Override
             public void onChanged(Boolean aBoolean) {
               SendOrderDetailActivity.this.finish();
@@ -648,7 +647,11 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         if (detialModel == null) {
             return false;
         }
-        return userModuleService.getUserId().equals(detialModel.getData().getInfo().getCheckID());
+        try {
+            return userModuleService.getUserId().equals(detialModel.getData().getInfo().getCheckID());
+        }catch (Exception e){
+           return false;
+        }
     }
 
     /**

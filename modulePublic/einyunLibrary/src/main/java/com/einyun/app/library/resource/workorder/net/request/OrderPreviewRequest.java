@@ -9,15 +9,24 @@ public class OrderPreviewRequest extends PageRquest {
     private String typeRe="";
     public OrderPreviewRequest() {
         querys.add(new query());
+//        querys.add(new query("line",""));
         sorters.add(new sorter());
     }
 
     public class query{
         private String property="queryRange";
         private String relation="AND";
-        private String value="1";
+        private String value="3";
         private String operation="EQUAL";
         private String group="";
+
+        public query() {
+        }
+
+        public query(String property,String value) {
+            this.property = property;
+            this.value=value;
+        }
 
         public void setValue(String value) {
             this.value = value;

@@ -25,6 +25,7 @@ import java.util.Map;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.PREVIEW_SELECT;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.PREVIEW_SELECT_TIAOXIAN;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
+import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_ALL;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_BUILDING;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_PROPERTYS;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_TYPES;
@@ -463,7 +464,7 @@ public class ConditionBuilder {
                     && model.getParentId().equals(model.getTypeId())) {
                 model.setConditionType(SELECT_LINE);
                 model.setGrade(lineRoot.getGrade()+1);
-                model.setKey(model.getId());
+                model.setKey(model.getKey());
                 lines.add(model);
             }
         }
@@ -493,16 +494,16 @@ public class ConditionBuilder {
                 SelectModel child= buildReapirArea(model1);
                 if(model1.getGrade()==1){
                     child.setType(CommonApplication.getInstance().getString(R.string.text_repair_type_first));
-                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA);
+                    child.setConditionType(SelectPopUpView.SELECT_AREA);
                 }else if(model1.getGrade()==2){
                     child.setType(CommonApplication.getInstance().getString(R.string.text_repair_type_second));
-                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_FIR);
+                    child.setConditionType(SelectPopUpView.SELECT_AREA_FIR);
                 }else if(model1.getGrade()==3){
                     child.setType("");
-                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_SEC);
+                    child.setConditionType(SelectPopUpView.SELECT_AREA_SEC);
                 }else if (model1.getGrade()==4){
                     child.setType("");
-                    selectModel.setConditionType(SelectPopUpView.SELECT_AREA_THIR);
+                    child.setConditionType(SelectPopUpView.SELECT_AREA_THIR);
                 }
                 selectModelList.add(child);
             }
