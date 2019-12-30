@@ -30,6 +30,7 @@ import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
 import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
@@ -99,6 +100,8 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         initAdapter();
         binding.swiperefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(binding.patrolList);
+        RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
+        binding.patrolList.setLayoutManager(mLayoutManager);
         binding.patrolList.setAdapter(adapter);
         loadData();
     }

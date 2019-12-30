@@ -74,6 +74,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
     @Override
     protected void switchStateUI() {
         super.switchStateUI();
+        binding.tvWorkNodesTitle.setText("巡更点处理");
         binding.panelHandleForm.setVisibility(View.GONE);
         binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
         binding.btnSubmit.setVisibility(View.GONE);
