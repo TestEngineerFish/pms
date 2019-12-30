@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -361,12 +362,16 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrolInfo.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if(aBoolean){
-                viewModel.finishTask(orderId);
-                tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
-                tipDialog.setTipDialogListener(dialog -> {
-                    finish();
+                viewModel.finishTask(orderId).observe(this, aBoolean1 -> {
+                    if(aBoolean1){
+                        tipDialog=new TipDialog(getApplication(),getString(R.string.text_handle_success));
+                        tipDialog.setTipDialogListener(dialog -> {
+                            finish();
+                        });
+                        tipDialog.show();
+                    }
                 });
-                tipDialog.show();
+
             }
         });
     }

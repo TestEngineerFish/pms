@@ -57,7 +57,7 @@
                         android:layout_height="@dimen/px_48"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        app:status="@{complain.f_state}" />
+                        app:complainStatus="@{complain.f_state}" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        app:status="@{complain.f_state}" />
+                        app:complainStatus="@{complain.f_state}" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -118,7 +118,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
+                        android:textColor="@color/blackTextColor"
+                        android:text="@{complain.f_ts_house}"/>
                 </LinearLayout>
 
                 <LinearLayout

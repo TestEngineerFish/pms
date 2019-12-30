@@ -20,3 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep class com.einyun.app.base.event.** {*;}
+-keepattributes SourceFile,LineNumberTable

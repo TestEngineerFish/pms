@@ -76,7 +76,7 @@ public class PatrolBindiAdapter {
             view.setText(R.string.text_state_processing);
             view.setTextColor(view.getContext().getResources().getColor(R.color.blueTextColor));
         }else if(value==OrderState.CLOSED.getState()){
-            view.setText(R.string.text_state_closed);
+            view.setText(R.string.text_finished);
             view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
         }
     }

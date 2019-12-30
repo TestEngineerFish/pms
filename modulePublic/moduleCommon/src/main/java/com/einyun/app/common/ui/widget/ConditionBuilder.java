@@ -394,7 +394,7 @@ public class ConditionBuilder {
         SelectModel selectMonth = new SelectModel();
         selectMonth.setType(SELECT_DATE);
         selectMonth.setConditionType(SELECT_DATE);
-        selectMonth.setContent(CommonApplication.getInstance().getString(R.string.pickerview_month));
+        selectMonth.setContent(CommonApplication.getInstance().getString(R.string.text_date_month));
         selectMonth.setId(RESULT_DATE_MONTH);
         selectMonth.setKey(RESULT_DATE_MONTH);
 
