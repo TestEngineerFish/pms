@@ -39,8 +39,8 @@ public class ComplainBindAdapter {
 //
 //    }
 
-    @BindingAdapter("status")
-    public static void status(ImageView view, String value) {
+    @BindingAdapter("complainStatus")
+    public static void complainStatus(ImageView view, String value) {
         if (TextUtils.isEmpty(value)) {
             return;
         }
@@ -53,7 +53,7 @@ public class ComplainBindAdapter {
         } else if (value.equals(ComplainOrderState.RESPONSE.getState())) {
             view.setImageResource(R.mipmap.icon_work_order_apply);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-//            view.setImageResource(R.mipmap.icon_evaluate);
+            view.setImageResource(R.mipmap.icon_evaluate);
         }
     }
 
@@ -62,8 +62,8 @@ public class ComplainBindAdapter {
         view.setText(FormatUtil.formatDate(value));
     }
 
-    @BindingAdapter("status")
-    public static void status(TextView view, String value) {
+    @BindingAdapter("complainStatus")
+    public static void complainStatus(TextView view, String value) {
         if (TextUtils.isEmpty(value)) {
             return;
         }

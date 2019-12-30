@@ -50,4 +50,5 @@ class ComplainModel {
     var F_ts_way: String? = null
     var taskId: String? = null
     var u_project_id: String? = null
+    var F_ts_house: String? = null
 }

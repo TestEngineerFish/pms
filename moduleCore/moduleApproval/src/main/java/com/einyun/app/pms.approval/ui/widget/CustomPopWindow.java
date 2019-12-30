@@ -215,10 +215,10 @@ public class CustomPopWindow extends PopupWindow {
 
         }
         gv_approval_child_type.setAdapter(approvalChildTypeAdapter);
-        //三级列表  已审批 只显示 已审批  已驳回
+        //三级列表
         approvalSelectedAuditStateModule=new ArrayList<>();
         for (GetByTypeKeyInnerAuditStatusModule auditStatusModule : approvalAuditStateModule) {
-            if (ApprovalDataKey.APPROVAL_STATE_HAD_PASS.equals(auditStatusModule.getKey())||ApprovalDataKey.APPROVAL_STATE_HAD_UNPASS.equals(auditStatusModule.getKey())) {
+            if (ApprovalDataKey.APPROVAL_STATE_PENDING.equals(auditStatusModule.getKey())||ApprovalDataKey.APPROVAL_STATE_IN_APPROVAL.equals(auditStatusModule.getKey())) {
                 approvalSelectedAuditStateModule.add(auditStatusModule);
             }
         }
@@ -269,7 +269,7 @@ public class CustomPopWindow extends PopupWindow {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 mApprovalStatusPosition=position;
                 approvalStatusAdapter.notifyDataSetChanged();
-                if (tabId==1) {
+                if (tabId==0) {
 
                     auditStatus=approvalSelectedAuditStateModule.get(position).getKey();
                 }else {
