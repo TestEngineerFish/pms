@@ -79,7 +79,7 @@ public class RepairBindingAdapter {
             view.setImageResource(R.mipmap.icon_state_wait_evaluate);
         } else if (value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             view.setImageResource(R.mipmap.icon_state_wait_send);
-        } else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)) {
+        } else if (value.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)|| value.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
             view.setImageResource(R.mipmap.icon_state_wait_grab);
         }
     }
