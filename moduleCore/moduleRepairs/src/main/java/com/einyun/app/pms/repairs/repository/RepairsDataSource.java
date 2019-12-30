@@ -1,5 +1,7 @@
 package com.einyun.app.pms.repairs.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.einyun.app.base.event.CallBack;
@@ -141,6 +143,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                     ThrowableParser.onFailed(throwable);
                 }
             });
+        }
             //抄送我
             if (tag.equals(FRAGMENT_REPAIR_COPY_ME)) {
                 repository.getRepairCopyMe(request, new CallBack<RepairsPage>() {
@@ -163,6 +166,5 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
             }
 
         }
-    }
     }
 

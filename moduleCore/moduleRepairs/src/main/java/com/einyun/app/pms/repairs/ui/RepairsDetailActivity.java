@@ -397,6 +397,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (handler!=null){
+            handler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //选择图片返回
