@@ -10,6 +10,12 @@
             name="callBack"
             type="com.einyun.app.pms.customerinquiries.ui.InquiriesDetailViewModuleActivity" />
     </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+        <include layout="@layout/layout_page_state" android:id="@+id/page_state"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -21,8 +27,6 @@
          android:orientation="vertical"
          android:layout_width="match_parent"
          android:layout_height="match_parent">
-         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
-         <include layout="@layout/layout_page_state" android:id="@+id/page_state"/>
          <LinearLayout
              android:layout_width="match_parent"
              android:layout_height="@dimen/px_80"
@@ -786,4 +790,5 @@
 
      </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>
