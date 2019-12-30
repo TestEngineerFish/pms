@@ -166,8 +166,6 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
                         }
                     }
                 });
-
-
             }
 
             @Override
