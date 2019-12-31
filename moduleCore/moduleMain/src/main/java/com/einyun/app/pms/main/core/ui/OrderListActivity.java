@@ -31,6 +31,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             binding.ogPlanOrder.setVisibility(View.INVISIBLE);
             binding.secondLine.setVisibility(View.GONE);
             binding.ogPatroOrder.setVisibility(View.INVISIBLE);
+            setHeadTitle("创建工单");
         }
     }
 

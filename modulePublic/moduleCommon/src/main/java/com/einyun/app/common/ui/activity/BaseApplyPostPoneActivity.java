@@ -18,6 +18,7 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
+import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.upload.model.PicUrl;
@@ -51,7 +52,7 @@ public abstract class BaseApplyPostPoneActivity<T extends BaseUploadViewModel> e
         }
         List<ExtensionApplication> exts = new ArrayList<>();
         for (ExtensionApplication ext : extensionApplication) {
-            if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null) {
+            if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null && ext.getApplicationState() == ApplyState.APPLYING.getState()) {
                 j++;
                 i = i + Integer.valueOf(ext.getExtensionDays());
             }
