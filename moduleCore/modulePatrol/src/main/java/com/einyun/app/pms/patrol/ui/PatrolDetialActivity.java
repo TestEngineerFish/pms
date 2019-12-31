@@ -547,8 +547,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
-                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplication()==null?0:patrolInfo.getDelayExtensionApplication().getExtensionDays())
-                .withInt(RouteKey.KEY_PARENT_ID, 1)
+                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplication() == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
+                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplication() == null ? 0 : 1)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_OPTION);
     }
 
