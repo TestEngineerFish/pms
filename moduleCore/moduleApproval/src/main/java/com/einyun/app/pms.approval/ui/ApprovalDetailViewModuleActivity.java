@@ -132,6 +132,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             ToastUtil.show(getApplicationContext(), R.string.tv_empty_sug);
             return;
         }
+        if (approvalFormdata==null) {
+            return;
+        }
         //获取请求参数
         HashMap<Object, Object> approve = viewModel.approval(actionName, urlxcgdGetInstBOModule, approvalItemmodule.getProInsId(), approvalItemmodule.getTaskId(), comment, approvalFormdata);
         /*
