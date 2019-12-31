@@ -429,7 +429,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
-                binding.itemApplyLateInfo.imgList.addItemDecoration(new com.einyun.app.common.ui.widget.SpacesItemDecoration());
+                binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.itemApplyLateInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
@@ -437,23 +437,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             }
         } else {
             binding.itemApplyLateInfo.cv.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * 设置图片间隔
-     */
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view,
-                                   RecyclerView parent, RecyclerView.State state) {
-            outRect.left = space;
         }
     }
 

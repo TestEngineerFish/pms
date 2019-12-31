@@ -2,6 +2,7 @@ package com.einyun.app.base.paging.datasource;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PositionalDataSource;
+
 import com.einyun.app.base.paging.bean.PageBean;
 
 import java.util.ArrayList;
@@ -20,38 +21,39 @@ import java.util.List;
  * @Version: 1.0
  */
 public abstract class BaseDataSource<M> extends PositionalDataSource<M> {
-    List<M> cached=new ArrayList<>();
+    List<M> cached = new ArrayList<>();
     int cacheTotal;
 
-    protected void saveCached(List<M> list,int total){
+    protected void saveCached(List<M> list, int total) {
         cached.clear();
         cached.addAll(list);
-        this.cacheTotal=total;
+        this.cacheTotal = total;
     }
 
-    protected List<M> loadCache(){
+    protected List<M> loadCache() {
         return cached;
     }
 
-    protected int getCacheTotal(){
+    protected int getCacheTotal() {
         return cacheTotal;
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams params, @NonNull LoadInitialCallback<M> callback) {
-        loadData(new PageBean(),callback);
+        loadData(new PageBean(), callback);
     }
 
     @Override
     public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<M> callback) {
-        int page=params.startPosition/params.loadSize+1;
-        if(params.startPosition<params.loadSize){
+        int page = params.startPosition / params.loadSize + 1;
+        if ((params.startPosition % params.loadSize) != 0) {
             page++;
         }
-        loadData(new PageBean(page,params.loadSize),callback);
+
+        loadData(new PageBean(page, params.loadSize), callback);
     }
 
     //根据页数获取数据
-    public abstract <T> void loadData(PageBean pageBean,@NonNull T callback);
+    public abstract <T> void loadData(PageBean pageBean, @NonNull T callback);
 
 }
