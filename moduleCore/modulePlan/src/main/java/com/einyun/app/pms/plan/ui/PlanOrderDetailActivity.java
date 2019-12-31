@@ -127,7 +127,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             binding.cvOperate.setVisibility(View.GONE);
             binding.btnSubmit.setVisibility(View.GONE);
         }
-
+        binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
+        binding.itemAlreadyResult.imgList.addItemDecoration(new SpacesItemDecoration(18));
+        binding.itemCloseOrderInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
             if (isClosedState.isClosed()) {
                 if (isClosedState.getType().equals(WorkOrder.POSTPONED_PLAN)) {
@@ -406,7 +408,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
-                binding.itemAlreadyResult.imgList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.itemAlreadyResult.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(zyjhgd.getF_FILES());
@@ -429,7 +430,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
-                binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
                 binding.itemApplyLateInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extPostpone.getApplyFiles());
@@ -454,7 +454,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         this,
                         LinearLayoutManager.HORIZONTAL,
                         false));
-                binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
+
                 binding.itemCloseOrderInfo.imgList.setAdapter(adapter);
                 PicUrlModelConvert convert = new PicUrlModelConvert();
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(extForceClose.getApplyFiles());

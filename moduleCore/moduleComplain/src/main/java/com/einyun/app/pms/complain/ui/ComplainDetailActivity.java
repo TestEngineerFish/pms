@@ -78,7 +78,6 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     private List<TypeAndLine> lines = new ArrayList<>();
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, RepairsDetailModel.HandleListBean> adapter;
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, ComplainAppendBean> addAdapter;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_complain_detail;
@@ -100,6 +99,9 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         request.getBizData().setC_is_solve(1);
         binding.submit.setOnClickListener(new ClickProxy(this));
         binding.save.setOnClickListener(new ClickProxy(this));
+        binding.layoutApplyLateInfo.sendOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18));
+        binding.layoutReportComplainInfo.rvPhoto.addItemDecoration(new SpacesItemDecoration(18));
+        binding.layoutApplyCloseInfo.sendOrderClosePicList.addItemDecoration(new SpacesItemDecoration(18));
         binding.layoutReportComplainInfo.llComplainType2.setOnClickListener(new ClickProxy(this));
         binding.layoutReportComplainInfo.llComplainNature2.setOnClickListener(new ClickProxy(this));
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
@@ -451,7 +453,6 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                     this,
                     LinearLayoutManager.HORIZONTAL,
                     false));
-            view.addItemDecoration(new SpacesItemDecoration(18));
             view.setAdapter(adapter);
             PicUrlModelConvert convert = new PicUrlModelConvert();
             List<PicUrlModel> modelList = convert.stringToSomeObjectList(files);
