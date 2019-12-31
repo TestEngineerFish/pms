@@ -181,6 +181,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
 
     private void initCheckAccept() {
         onAgree(binding.checkAndAccept);
+        checkResult = RESULT_PASS;
         binding.checkAndAccept.btnReject.setOnClickListener(v -> {
             onReject(binding.checkAndAccept);
             checkResult = RESULT_REJECT;
