@@ -47,12 +47,11 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
 
     @Override
     public void initViews(Bundle savedInstanceState) {
-        super.setExtensionApplication(extensionApplication);
         super.initViews(savedInstanceState);
         if (RouteKey.KEY_CUSTOMER_COMPLAIN.equals(keyId) || RouteKey.KEY_CUSTOMER_REPAIRS.equals(keyId)){
             viewModel.getApplyDateInfo(proInsId).observe(this,formDataExten -> {
-                binding.applyDate.setText(formDataExten.getDelay_time() + "天");
-                binding.applyNum.setText(formDataExten.getDelay_sum_time() + "次");
+                binding.applyDate.setText(formDataExten.getSum() + "天");
+                binding.applyNum.setText(formDataExten.getDelay_number() + "次");
             });
         }
     }

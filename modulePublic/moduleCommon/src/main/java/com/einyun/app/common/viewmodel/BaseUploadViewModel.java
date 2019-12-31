@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -84,6 +85,7 @@ public class BaseUploadViewModel extends BaseViewModel {
 
                 @Override
                 public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
                     uploadState.postValue(null);
                     hideLoading();
                 }
