@@ -39,9 +39,10 @@
                     android:layout_marginTop="@dimen/px_18"
                     android:layout_marginBottom="@dimen/px_18"
                     android:gravity="center_vertical"
-                    android:maxLength="10"
-                    android:text="@{model.f_ts_cate}"
-                    android:textColor="@color/txt_black_order"
+                    android:singleLine="true"
+                    android:maxEms="10"
+                    android:text="@{model.F_ts_content}"
+                    android:textColor="#132D42"
                     android:textSize="@dimen/font_size14" />
 
 
@@ -51,8 +52,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    app:status="@{model.f_state}" />
+                    android:textColor="#20CD70"
+                    app:complainStatus="@{model.F_state}" />
             </RelativeLayout>
 
             <ImageView

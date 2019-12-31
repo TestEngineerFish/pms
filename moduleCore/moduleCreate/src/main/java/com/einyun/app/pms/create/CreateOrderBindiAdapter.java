@@ -65,20 +65,20 @@ public class CreateOrderBindiAdapter {
         }
     }
 
-    @BindingAdapter("status")
-    public static void status(TextView view, String value) {
+    @BindingAdapter("complainStatus")
+    public static void complainStatus(TextView view, String value) {
         if (TextUtils.isEmpty(value)) {
             return;
         }
-        if (value == ComplainOrderState.ADD.getState()) {
+        if (value.equals(ComplainOrderState.ADD.getState())) {
             view.setText("新生成");
-        } else if (value == ComplainOrderState.CLOSED.getState()) {
+        } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
             view.setText("已关闭");
-        } else if (value == ComplainOrderState.DEALING.getState()) {
+        } else if (value.equals(ComplainOrderState.DEALING.getState())) {
             view.setText("处理中");
-        } else if (value == ComplainOrderState.RESPONSE.getState()) {
+        } else if (value.equals(ComplainOrderState.RESPONSE.getState())) {
             view.setText("待响应");
-        } else if (value == ComplainOrderState.RETURN_VISIT.getState()) {
+        } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
             view.setText("待评价");
         }
 
