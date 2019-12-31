@@ -17,6 +17,7 @@ import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.util.Base64Util;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.GetUploadJson;
@@ -232,6 +233,10 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
             return;
         }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
+            if(picUrls==null){
+                ToastUtil.show(CommonApplication.getInstance(), R.string.text_alert_local_cached);
+                return;
+            }
             wrapFormData(patrol, picUrls);
             acceptForm(patrol);
         });

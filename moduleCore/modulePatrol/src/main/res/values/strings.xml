@@ -34,5 +34,6 @@
     <string name="text_un_need_handle">未选择</string>
     <string name="text_patrol_photo">巡更现场图片</string>
     <string name="text_check_items">检查项</string>
+    <string name="text_alert_local_cached">本地数据保存成功</string>
 
 </resources>

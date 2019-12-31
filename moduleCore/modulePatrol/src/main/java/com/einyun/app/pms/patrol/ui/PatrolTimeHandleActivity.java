@@ -349,6 +349,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
      */
     private void uploadImage(List<WorkNode> nodes){
         if(nodes==null){
+            ToastUtil.show(CommonApplication.getInstance(),R.string.text_alert_local_cached);
             return;
         }
         viewModel.uploadWorkNodesImages(nodes).observe(this, nodes1 -> submitForm(nodes1));
