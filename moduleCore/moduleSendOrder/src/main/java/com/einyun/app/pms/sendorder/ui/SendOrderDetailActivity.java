@@ -180,6 +180,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     }
 
     private void initCheckAccept() {
+        onAgree(binding.checkAndAccept);
         binding.checkAndAccept.btnReject.setOnClickListener(v -> {
             onReject(binding.checkAndAccept);
             checkResult = RESULT_REJECT;
@@ -220,6 +221,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         updatePageUIState(PageUIState.FILLDATA.getState());
         binding.orderInfo.setWorkOrder(distributeWorkOrder);
         binding.orderForm.setWorkOrder(distributeWorkOrder);
+        binding.orderHandle.setWorkOrder(distributeWorkOrder);
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getInfo().getCreateTime()));
         updateElapsedTime();
         updateImagesUI(distributeWorkOrder);
