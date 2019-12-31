@@ -159,17 +159,17 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 //                    Log.e(TAG, "2onBindItem: auditType:"+auditType+"---auditSubType :"+auditSubType);
 //                    typeValue = (auditType.length() > 0 ? (auditType + "-") : "") + (auditSubType.length() > 0 ? auditSubType : "");
                     checkPointModel.getUserAuditStatus();
-                    if (checkPointModel.getStatus().equals("submit")) {//待审批
+                    if (checkPointModel.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_PENDING)) {//待审批
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
                         binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
                         binding.rlApprovalTime.setVisibility(View.GONE);//隐藏审批时间
-                    } else if (checkPointModel.getStatus().equals("approve")) {//通过
+                    } else if (checkPointModel.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_PASS)) {//通过
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
                         binding.tvApprovalState.setText(getString(R.string.tv_had_pass));
-                    } else if (checkPointModel.getStatus().equals("reject")) {//驳回
+                    } else if (checkPointModel.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_UNPASS)) {//驳回
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_unpass);
                         binding.tvApprovalState.setText(getString(R.string.tv_had_not_approval));
-                    } else if (checkPointModel.getStatus().equals("in_approval")) {//审批中
+                    } else if (checkPointModel.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_IN_APPROVAL)) {//审批中
                         binding.rlApprovalTime.setVisibility(View.GONE);//隐藏审批时间
                         binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approvaling);
                         binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
