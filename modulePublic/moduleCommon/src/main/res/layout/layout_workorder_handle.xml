@@ -55,7 +55,7 @@
             android:background="@color/white">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="处理人" />
 
             <TextView style="@style/work_order_detail_txt_right"
@@ -66,7 +66,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="处理时间" />
 
             <TextView style="@style/work_order_detail_txt_right"
@@ -77,7 +77,7 @@
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="处理后图片" />
         </LinearLayout>
 
@@ -100,7 +100,7 @@
             >
 
             <TextView
-                style="@style/work_order_detail_txt_left"
+                style="@style/work_order_detail_left_txt"
                 android:text="执行人" />
 
             <TextView style="@style/work_order_detail_txt_right" />

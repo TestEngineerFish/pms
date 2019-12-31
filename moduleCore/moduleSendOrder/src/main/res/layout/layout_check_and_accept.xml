@@ -45,17 +45,17 @@
                 android:text="验收结论"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
+
             <Button
                 android:id="@+id/btn_agree"
                 android:layout_width="@dimen/px_104"
                 android:layout_height="@dimen/px_40"
-                android:padding="@dimen/px_5"
                 android:layout_marginLeft="@dimen/px_75"
                 android:background="@drawable/shape_frame_corners_gray"
-                android:textColor="@color/normal_main_text_icon_color"
-                android:textSize="@dimen/font_size12"
+                android:padding="@dimen/px_5"
                 android:text="@string/text_state_passed"
-                />
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size12" />
             <Button
                 android:id="@+id/btn_reject"
                 android:layout_width="@dimen/px_104"

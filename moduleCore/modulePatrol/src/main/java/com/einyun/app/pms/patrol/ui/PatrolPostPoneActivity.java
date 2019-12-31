@@ -58,7 +58,7 @@ public class PatrolPostPoneActivity extends BaseApplyPostPoneActivity<PatrolView
         ExtenDetialRequest request = new ExtenDetialRequest();
         request.setID_(orderId);
         request.setInstId(proInsId);
-        request.setApplyFiles(new Gson().toJson(data));
+        request.setApplyFiles(new ImageUploadManager().toJosnString(data));
         request.setExtension_days(binding.delayDate.getText().toString());
         request.setApplication_description(binding.delayInfo.getString());
         viewModel.postpone(request).observe(this, flag -> {

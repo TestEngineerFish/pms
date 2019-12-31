@@ -244,7 +244,24 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 
         }else if ("INNER_AUDIT_POSTPONED".equals(type)||"INNER_AUDIT_FORCE_CLOSE".equals(type)){//工单延期 强制闭单
             if ("INNER_AUDIT_FORCE_CLOSE".equals(type)) {
-                binding.llGoneTime.setVisibility(View.GONE);//强制闭单没有时间信息
+//                binding.llGoneTime.setVisibility(View.GONE);//强制闭单没有时间信息
+                binding.rlCreateTime.setVisibility(View.GONE);
+                binding.rlFinishTime.setVisibility(View.GONE);
+                binding.rlDelayDay.setVisibility(View.GONE);
+            }
+
+            switch (subType) {//客服三类 强制闭单 申请延期 隐藏条线 派工单类型 工单负责人 创建时间工单截止时间
+                case ApprovalDataKey.FORCE_CLOSE_REPAIR:
+                case ApprovalDataKey.FORCE_CLOSE_COMPLAIN:
+                case ApprovalDataKey.FORCE_CLOSE_ENQUIRY:
+                case ApprovalDataKey.POSTPONED_COMPLAIN:
+                case ApprovalDataKey.POSTPONED_REPAIR:
+//                    binding.rlCreateTime.setVisibility(View.GONE);
+//                    binding.rlFinishTime.setVisibility(View.GONE);
+//                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
+//                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
+//                    binding.rlLine.setVisibility(View.GONE);//条线
+                    break;
             }
             binding.llDelayCloseInfo.setVisibility(View.VISIBLE);
             binding.tvCloseOrderType.setText(approvalFormdata.getFlowType());//工单类型
