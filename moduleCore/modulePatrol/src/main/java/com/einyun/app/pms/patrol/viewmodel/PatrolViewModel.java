@@ -130,7 +130,9 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
 //                hideLoading();
-                liveData.postValue(null);
+                if(patrolInfo==null){
+                    liveData.postValue(null);
+                }
             }
         });
         return liveData;
@@ -159,7 +161,9 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
-                liveData.postValue(null);
+                if(patrolInfo==null){
+                    liveData.postValue(null);
+                }
             }
         });
         return liveData;

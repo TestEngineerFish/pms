@@ -64,10 +64,10 @@ public class OrderPreviewViewModel extends BasePageListViewModel<OrderPreviewMod
             String id = selected.get(SELECT_TIME_CIRCLE).getId();
             request.getQuerys().get(0).setValue(id);
         }
-       /* if (selected.get(PREVIEW_SELECT_TIAOXIAN) != null) {
+        if (selected.get(PREVIEW_SELECT_TIAOXIAN) != null) {
             String id = selected.get(SELECT_TIME_CIRCLE).getId();
             request.getQuerys().get(1).setValue(id);
-        }*/
+        }
         refreshUI();
     }
 

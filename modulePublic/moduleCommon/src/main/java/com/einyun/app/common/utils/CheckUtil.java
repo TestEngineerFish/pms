@@ -27,7 +27,7 @@ public class CheckUtil {
     /**
      * 手机号正则
      */
-    public static final String REG_PHONE = "^\\d{11}$";
+    public static final String REG_PHONE = "^(1[2-9]|92|98)[0-9]{9}$";
     /**
      * 交易密码正则
      */

@@ -136,7 +136,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         if (isPending()) {
             request.resetConditions();
         }
-        request.setDivideId(selected.get(SELECT_LINE) == null ? null : selected.get(SELECT_LINE).getKey());
+        request.setTxId(selected.get(SELECT_LINE) == null ? null : selected.get(SELECT_LINE).getKey());
         request.setType(selected.get(SELECT_ORDER_TYPE) == null ? null : selected.get(SELECT_ORDER_TYPE).getKey());
         request.setEnvType2(selected.get(SELECT_ORDER_TYPE2) == null ? null : selected.get(SELECT_ORDER_TYPE2).getKey());
         request.setEnvType3(selected.get(SELECT_ORDER_TYPE3) == null ? null : selected.get(SELECT_ORDER_TYPE3).getKey());

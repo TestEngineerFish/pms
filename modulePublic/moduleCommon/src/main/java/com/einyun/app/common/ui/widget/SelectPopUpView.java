@@ -45,8 +45,9 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
     public static final String SELECT_BUILDING= "SELECT_BUILDING";//楼栋;
     public static final String SELECT_UNIT= "SELECT_UNIT";//单元;
     public static final String SELECT_DATE = "SELECT_DATE";
-    public static final String SELECT_AREA = "SELECT_AREA";//报修区域
+    public static final String SELECT_AREA_ALL = "SELECT_AREA_ALL";//所有报修区域
     public static final String PREVIEW_SELECT = "PREVIEW_SELECT";//工单预览筛选
+    public static final String SELECT_AREA = "SELECT_AREA";//报修区域
     public static final String SELECT_AREA_FIR = "SELECT_AREA_FIR";//报修大类
     public static final String SELECT_AREA_SEC = "SELECT_AREA_SEC";//报修小类
     public static final String SELECT_AREA_THIR = "SELECT_THIR";//报修第三级

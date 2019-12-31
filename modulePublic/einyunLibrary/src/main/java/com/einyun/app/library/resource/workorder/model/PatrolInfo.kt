@@ -111,6 +111,7 @@ class DelayExtensionApplication{
      var approveId: String? = null
      var approveName: String? = null
      var createName: String? = null
+     var createdName: String? = null //创建人姓名
      var applyFiles: String? = null
      var auditDate: String? = null
 }
