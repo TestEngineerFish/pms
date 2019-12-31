@@ -28,8 +28,9 @@ class ExtenDetialRequest {
 class formDataExten{
     @SerializedName(value = "delay_number", alternate = ["delayNum"])
     var delay_number: String = "0"
-    @SerializedName(value = "delay_sum_time", alternate = ["sum"])
+    @SerializedName(value = "delay_sum_time")
     var delay_sum_time: String = "0"
+    var sum :String = "0"
     @SerializedName(value = "delay_time", alternate = ["delayDayNum"])
     var delay_time: String? = null
     var apply_reason: String? = null
