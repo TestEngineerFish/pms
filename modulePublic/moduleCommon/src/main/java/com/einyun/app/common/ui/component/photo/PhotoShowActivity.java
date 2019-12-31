@@ -1,5 +1,6 @@
 package com.einyun.app.common.ui.component.photo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -19,13 +21,14 @@ import com.bumptech.glide.Glide;
 import com.einyun.app.base.BaseActivity;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.ui.activity.BaseHeadActivity;
 import com.einyun.app.common.ui.activity.BaseSkinActivity;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoShowActivity extends BaseSkinActivity {
+public class PhotoShowActivity extends BaseHeadActivity {
 
     HackyViewPager hViewPager;
     View back;
@@ -74,6 +77,7 @@ public class PhotoShowActivity extends BaseSkinActivity {
                 finish();
             }
         });
+        cancelFullScreen(this);
     }
 
     public void getFrontPageData() {
@@ -182,5 +186,15 @@ public class PhotoShowActivity extends BaseSkinActivity {
     @Override
     protected boolean fullWindowFlag() {
         return true;
+    }
+
+    /**
+     * 取消全屏
+     *
+     * @param activity
+     */
+    public static void cancelFullScreen(Activity activity) {
+        activity.getWindow().clearFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }

@@ -6,7 +6,7 @@
     android:background="@color/blackTextColor"
     android:orientation="vertical">
 
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:id="@+id/main_header_bar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -63,7 +63,8 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
+-->
+    <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
