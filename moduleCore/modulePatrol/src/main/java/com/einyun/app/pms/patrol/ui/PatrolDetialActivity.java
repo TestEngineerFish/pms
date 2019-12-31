@@ -299,16 +299,16 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         uploadPostponeUI(patrol, convert);//更新申请超时信息
     }
 
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 
     private void updateElapsedTime(PatrolInfo patrol) {
-        createTime=patrol.getData().getZyxcgd().getF_creation_date();
+        createTime = patrol.getData().getZyxcgd().getF_creation_date();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
-        if (patrol.getData().getZyxcgd().getF_plan_work_order_state()== OrderState.CLOSED.getState()) {
-            if (StringUtil.isNullStr(patrol.getData().getZyxcgd().getF_actual_completion_time())){
-                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime,patrol.getData().getZyxcgd().getF_actual_completion_time()));
+        if (patrol.getData().getZyxcgd().getF_plan_work_order_state() == OrderState.CLOSED.getState()) {
+            if (StringUtil.isNullStr(patrol.getData().getZyxcgd().getF_actual_completion_time())) {
+                binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime, patrol.getData().getZyxcgd().getF_actual_completion_time()));
             }
         } else {
             runnable.run();
@@ -530,6 +530,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
+                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplication().getExtensionDays())
+                .withInt(RouteKey.KEY_PARENT_ID, 1)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_OPTION);
     }
 
@@ -549,7 +551,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(handler!=null){
+        if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
     }

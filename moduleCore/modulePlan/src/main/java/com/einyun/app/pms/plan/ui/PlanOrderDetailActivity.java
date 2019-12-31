@@ -311,7 +311,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     private void updateElapsedTime(PlanInfo planInfo) {
-        if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_CREATE_TIME())) {
+        if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd() != null && StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_CREATE_TIME())) {
             createTime = planInfo.getData().getZyjhgd().getF_CREATE_TIME();
             if (planInfo.getData().getZyjhgd().getF_STATUS().equals(String.valueOf(OrderState.CLOSED.getState()))) {
                 if (StringUtil.isNullStr(planInfo.getData().getZyjhgd().getF_ACT_FINISH_TIME()))
@@ -367,7 +367,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     List<WorkNode> nodes = new ArrayList<>();
 
     private void updateUI(PlanInfo planInfo) {
-        if(planInfo==null){
+        if (planInfo == null) {
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
@@ -385,7 +385,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         binding.setDetail(planInfo.getData().getZyjhgd());
     }
 
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 
@@ -698,7 +698,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(handler!=null){
+        if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
     }

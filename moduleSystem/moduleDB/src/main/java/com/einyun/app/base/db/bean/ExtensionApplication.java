@@ -1,6 +1,8 @@
 package com.einyun.app.base.db.bean;
 
-public class ExtensionApplication{
+import java.io.Serializable;
+
+public class ExtensionApplication implements Serializable {
    private String id;
    private String poId;
    private int applyType;
