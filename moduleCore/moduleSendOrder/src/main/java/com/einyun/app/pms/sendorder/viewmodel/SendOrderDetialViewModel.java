@@ -219,6 +219,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });
@@ -238,6 +239,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });
@@ -260,6 +262,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });

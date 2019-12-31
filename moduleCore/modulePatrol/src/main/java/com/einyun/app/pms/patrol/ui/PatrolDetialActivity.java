@@ -345,6 +345,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         if (patrol.getDelayExtensionApplication() != null) {
             binding.panelPostponeInfo.getRoot().setVisibility(View.VISIBLE);
             binding.panelPostponeInfo.setExt(convert.stringToSomeObject(convert.getGson().toJson(patrol.getDelayExtensionApplication())));
+            String images = patrol.getDelayExtensionApplication().getApplyFiles();
+            PhotoListAdapter adapter = new PhotoListAdapter(this);
+            binding.panelPostponeInfo.sendOrderPostponePicList.setLayoutManager(new LinearLayoutManager(
+                    this,
+                    LinearLayoutManager.HORIZONTAL,
+                    false));//设置横向
+            binding.panelPostponeInfo.sendOrderPostponePicList.setAdapter(adapter);
+            binding.panelPostponeInfo.sendOrderPostponePicList.addItemDecoration(new SpacesItemDecoration());
+            if (!TextUtils.isEmpty(images)) {
+                PicUrlModelConvert convertPic = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = convertPic.stringToSomeObjectList(images);
+                adapter.updateList(modelList);
+            }
         }
     }
 
@@ -363,6 +376,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             PhotoListAdapter adapter = new PhotoListAdapter(this);
             int state = patrol.getExtensionApplication().getApplicationState();
             onApplyForceClose(state);
+            binding.panelCloseInfo.sendOrderClosePicList.setLayoutManager(new LinearLayoutManager(
+                    this,
+                    LinearLayoutManager.HORIZONTAL,
+                    false));//设置横向
             binding.panelCloseInfo.sendOrderClosePicList.setAdapter(adapter);
             binding.panelCloseInfo.sendOrderClosePicList.addItemDecoration(new SpacesItemDecoration());
             String images = patrol.getExtensionApplication().getApplyFiles();

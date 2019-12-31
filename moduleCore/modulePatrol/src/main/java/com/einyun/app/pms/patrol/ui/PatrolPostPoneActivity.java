@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity;
 import com.einyun.app.library.resource.workorder.net.request.ExtenDetialRequest;
@@ -35,7 +36,7 @@ public class PatrolPostPoneActivity extends BaseApplyPostPoneActivity<PatrolView
         ExtenDetialRequest request = new ExtenDetialRequest();
         request.setID_(orderId);
         request.setInstId(proInsId);
-        request.setApplyFiles(new Gson().toJson(data));
+        request.setApplyFiles(new ImageUploadManager().toJosnString(data));
         request.setExtension_days(binding.delayDate.getText().toString());
         request.setApplication_description(binding.delayInfo.getString());
         viewModel.postpone(request).observe(this, flag -> {
