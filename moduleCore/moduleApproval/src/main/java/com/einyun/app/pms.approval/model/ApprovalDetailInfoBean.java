@@ -72,7 +72,7 @@ public class ApprovalDetailInfoBean {
         private String status;
 
         public String getApprovalRole() {
-            return approvalRole;
+            return approvalRole==null?"":approvalRole;
         }
 
         public void setApprovalRole(String approvalRole) {
