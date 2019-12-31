@@ -52,7 +52,7 @@ public abstract class BaseApplyPostPoneActivity<T extends BaseUploadViewModel> e
         }
         List<ExtensionApplication> exts = new ArrayList<>();
         for (ExtensionApplication ext : extensionApplication) {
-            if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null && ext.getApplicationState() == ApplyState.APPLYING.getState()) {
+            if (ApplyType.POSTPONE.getState() == ext.getApplyType() && ext.getExtensionDays() != null && ext.getApplicationState() == ApplyState.PASS.getState()) {
                 j++;
                 i = i + Integer.valueOf(ext.getExtensionDays());
             }
