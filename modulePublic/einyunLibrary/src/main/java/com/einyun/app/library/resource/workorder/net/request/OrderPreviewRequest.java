@@ -1,31 +1,38 @@
 package com.einyun.app.library.resource.workorder.net.request;
 
+import com.einyun.app.base.paging.bean.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderPreviewRequest extends PageRquest {
-    private   List<query> querys=new ArrayList();
-    private List<sorter> sorters=new ArrayList<>();
-    private String typeRe="";
+    private List<query> querys = new ArrayList();
+    private List<sorter> sorters = new ArrayList<>();
+    private String typeRe = "";
+
     public OrderPreviewRequest() {
         querys.add(new query());
-//        querys.add(new query("line",""));
         sorters.add(new sorter());
     }
 
-    public class query{
-        private String property="queryRange";
-        private String relation="AND";
-        private String value="3";
-        private String operation="EQUAL";
-        private String group="";
+    public void addTiaoXian(String txId) {
+        query query = new query("line", txId);
+        querys.add(query);
+    }
+
+    public class query {
+        private String property = "queryRange";
+        private String relation = "AND";
+        private String value = "3";
+        private String operation = "EQUAL";
+        private String group = "";
 
         public query() {
         }
 
-        public query(String property,String value) {
+        public query(String property, String value) {
             this.property = property;
-            this.value=value;
+            this.value = value;
         }
 
         public void setValue(String value) {
@@ -33,9 +40,9 @@ public class OrderPreviewRequest extends PageRquest {
         }
     }
 
-    private class sorter{
-        private String direction="ASC";
-        private String property="planExecutionDate";
+    private class sorter {
+        private String direction = "ASC";
+        private String property = "planExecutionDate";
     }
 
     public String getTypeRe() {

@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="处理后图片"
+                android:text="图片"
                 android:layout_marginLeft="@dimen/px_20"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_20"
-                android:text="(最多四张)"
+                android:text="(最多4张)"
                 android:textSize="@dimen/font_size12" />
         </LinearLayout>
         <LinearLayout
