@@ -51,6 +51,7 @@
     <!-- 屏幕管理权限 -->
     <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
+
     <meta-data android:value="5dad68473fc195309b001055" android:name="UMENG_APPKEY"/>
 
     <!--多渠道打包-->
@@ -62,9 +63,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="${APP_NAME}"
+        tools:replace="android:label"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeFullScreen">
+        <meta-data android:name="com.alibaba.app.appkey" android:value="28169242"/> <!-- 请填写你自己的- appKey -->
+        <meta-data android:name="com.alibaba.app.appsecret" android:value="ecd0a9e3c22cfe011cc5a31b9a63a433"/> <!-- 请填写你自己的appSecret -->
         <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
             android:theme="@style/AppThemeFullScreen">
             <intent-filter>
@@ -147,6 +151,21 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <!-- 消息接收监听器 （用户可自主扩展） -->
+        <receiver
+            android:name="com.einyun.app.common.pushReceiver.MyMessageReceiver"
+            android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

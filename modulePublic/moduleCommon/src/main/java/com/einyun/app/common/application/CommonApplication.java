@@ -1,8 +1,12 @@
 package com.einyun.app.common.application;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.net.CommonHttpService;
@@ -50,6 +54,7 @@ public class CommonApplication extends BasicApplication {
             LeakCanary.install(this);
         }
         CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
+        initCloudChannel(this);
     }
 
     /**
@@ -87,5 +92,23 @@ public class CommonApplication extends BasicApplication {
                 .loadSkin();
     }
 
+    /**
+     * 初始化云推送通道
+     * @param applicationContext
+     */
+    private void initCloudChannel(Context applicationContext) {
+        PushServiceFactory.init(applicationContext);
+        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService.register(applicationContext, new CommonCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d(TAG, "init cloudchannel success");
+            }
+            @Override
+            public void onFailed(String errorCode, String errorMessage) {
+                Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+            }
+        });
+    }
 
 }

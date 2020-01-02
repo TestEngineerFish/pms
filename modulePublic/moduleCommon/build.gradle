@@ -97,4 +97,5 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 //    implementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation 'com.aliyun.ams:alicloud-android-push:3.1.6'
 }
