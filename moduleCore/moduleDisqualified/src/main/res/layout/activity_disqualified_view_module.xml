@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="csutomerInquiriesViewModule"
+            type="com.einyun.app.pms.disqualified.model.DisqualifiedListModel" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.disqualified.ui.DisqualifiedViewModuleActivity" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <LinearLayout
+             android:id="@+id/tab_customer_inquiries"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+
+             <com.google.android.material.tabs.TabLayout
+                 android:id="@+id/tab_send_order"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@color/white"
+                 app:tabIndicatorColor="@color/stress_text_btn_icon_color"
+                 app:tabIndicatorFullWidth="false"
+                 app:tabIndicatorHeight="3dp"
+                 app:tabSelectedTextColor="@color/blackTextColor"
+                 app:tabTextColor="@color/normal_main_text_icon_color" />
+
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/px_10"
+                 android:background="@color/activity_bg_color" />
+             <androidx.viewpager.widget.ViewPager
+                 android:id="@+id/view_pager"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+             </androidx.viewpager.widget.ViewPager>
+         </LinearLayout>
+     </LinearLayout>
+</layout>

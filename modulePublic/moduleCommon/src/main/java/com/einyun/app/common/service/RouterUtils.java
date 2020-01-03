@@ -97,6 +97,8 @@ public class RouterUtils {
     //客户投诉
     public static final String ACTIVITY_COMPLAIN_PAGING="/complain/ComplainActivity";
     public static final String ACTIVITY_CUSTOMER_COMPLAIN_DETAIL = "/complain/ComplainDetailActivity";
+    //不合格单
+    public static final String ACTIVITY_DISQUALIFIED = "/disqualified/DisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
