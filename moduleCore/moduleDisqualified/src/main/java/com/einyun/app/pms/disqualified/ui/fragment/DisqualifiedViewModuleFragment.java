@@ -172,6 +172,12 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         }
     };
     /*
+     * 搜索按钮点击
+     * */
+    public void onSearchClick(){
+      ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
+    }
+    /*
      * 筛选按钮点击
      * */
     public void onInstallmentClick(){

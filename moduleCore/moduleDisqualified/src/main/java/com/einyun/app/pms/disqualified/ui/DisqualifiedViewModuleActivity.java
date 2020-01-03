@@ -50,7 +50,7 @@ public class DisqualifiedViewModuleActivity extends BaseHeadViewModelActivity<Ac
 //        setTitleBarColor(R.color.white);
 //        setBackIcon(R.drawable.back);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
-        setHeadTitle(R.string.tv_customer_inquiries);
+        setHeadTitle(R.string.tv_disqualified_order);
         mTitles=getResources().getStringArray(R.array.order_list);
         ArrayList<DisqualifiedViewModuleFragment> fragments = new ArrayList<>();
         String fragmentTags[]=new String[]{FRAGMENT_DISQUALIFIED_WAIT_FOLLOW,FRAGMENT_DISQUALIFIED_HAD_FOLLOW};

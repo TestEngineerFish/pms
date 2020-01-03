@@ -140,6 +140,8 @@
         <!--  客户问询结束      -->
         <!--  不合格单开始      -->
         <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity"/>
+        <activity android:name=".disqualified.ui.PropertyListViewModuleActivity"/>
+        <activity android:name=".disqualified.ui.CreateDisqualifiedActivity"/>
         <!--  不合格单结束      -->
 
         <provider
