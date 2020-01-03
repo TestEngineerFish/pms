@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@color/activity_bg_color"
+        tools:context=".ui.ApplyLateActivity">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+        <LinearLayout style="@style/ll_create_order"
+            android:layout_marginTop="@dimen/px_2">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="申请原因" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content">
+
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/apply_close_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hintText="请输入申请原因"
+                app:maxNumber="300" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片"
+                android:layout_marginLeft="@dimen/px_20"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:text="(最多4张)"
+                android:textSize="@dimen/font_size12" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_close_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/px_30"
+                >
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_1"
+            style="@style/ll_create_order"
+            android:layout_marginTop="@dimen/px_20"
+            android:visibility="gone">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="申请无效" />
+
+           <RadioGroup
+               android:id="@+id/rg"
+              style="@style/tv_create_order_right"
+               android:orientation="horizontal">
+               <RadioButton
+                   android:id="@+id/rb_yes"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="#FF132D42"
+                   android:textSize="@dimen/font_size14"
+                   android:text="是"/>
+               <RadioButton
+                   android:id="@+id/rb_no"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/px_60"
+                   android:textColor="#FF132D42"
+                   android:textSize="@dimen/font_size14"
+                   android:checked="true"
+                   android:text="否"/>
+           </RadioGroup>
+        </LinearLayout>
+        <View android:id="@+id/line" android:visibility="gone" style="@style/base_underline"/>
+        <LinearLayout
+            android:id="@+id/ll_2"
+            style="@style/ll_create_order"
+            android:visibility="gone">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="无效原因" />
+            <TextView
+                android:id="@+id/tv_complain_reason"
+                style="@style/tv_create_order_select"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="right"/>
+
+            <ImageView style="@style/tv_create_order_right_arrow" />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/apply_close_btn"
+                style="@style/submit_btn"
+                android:layout_alignParentBottom="true"
+                android:text="@string/text_submit"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

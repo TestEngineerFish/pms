@@ -6,15 +6,17 @@ android {
         applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 200
+        versionName "2.0.0"
         multiDexEnabled true
+        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
-        flavorDimensions "default"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+                arguments = [ AROUTER_MODULE_NAME : project.getName(),
+                              "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
         }
 
@@ -27,7 +29,14 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
+
     }
+
+    dexOptions {
+        maxProcessCount 8
+        javaMaxHeapSize "4g"
+    }
+
 
     signingConfigs {
         release  {
@@ -41,20 +50,16 @@ android {
         debug {
             minifyEnabled false
             versionNameSuffix "-dev"
-            applicationIdSuffix '.dev'
             manifestPlaceholders=[APP_NAME:app_name+"Dev"]
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
             versionNameSuffix "-test"
-            applicationIdSuffix '.test'
             manifestPlaceholders=[APP_NAME:app_name+"Test"]
         }
         //请勿删除，提测uat环境，上线开启
-
         uat {
             versionNameSuffix "-uat"
-            applicationIdSuffix '.uat'
             manifestPlaceholders=[APP_NAME:app_name+"Uat"]
             minifyEnabled true   //开启混淆
             zipAlignEnabled true  //压缩优化
@@ -64,6 +69,7 @@ android {
         }
         release.initWith(uat)
         release {
+            versionNameSuffix ""
             manifestPlaceholders=[APP_NAME:app_name]
         }
     }
@@ -78,7 +84,7 @@ android {
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            def createTime = new Date().format("YYYY-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
+            def createTime = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
             outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${createTime}.apk"
         }
     }
@@ -86,7 +92,6 @@ android {
     //多渠道打包支持
     productFlavors {
         //请勿删除，上线提交多渠道开启
-        /**
         Tencent {//投放应用宝市场
             manifestPlaceholders=[UMENG_CHANNEL_VALUE:"tencent"]
         }
@@ -111,7 +116,6 @@ android {
         AnZhi {//投放安智市场
             manifestPlaceholders=[UMENG_CHANNEL_VALUE:"anzhi"]
         }
-        **/
     }
     //注意我注释掉的，可以去掉注释，那样的话，下面这句就可以不用了
     productFlavors.all {
@@ -126,4 +130,17 @@ dependencies {
     implementation project(deps.project.module_user)
     implementation project(deps.project.module_main)
     implementation project(deps.project.module_repairs)
+    implementation project(deps.project.point_check)
+    implementation project(deps.project.module_sendorder)
+    implementation project(deps.project.module_patrol)
+    implementation project(deps.project.module_approval)
+    implementation project(deps.project.module_create)
+    implementation project(deps.project.module_mine)
+    implementation project(deps.project.module_orderpreview)
+    implementation project(deps.project.module_operatepercent)
+//    implementation project(deps.project.module_plan)
+    implementation project(deps.project.module_plan)
+    implementation project(deps.project.module_customerinquiries)
+    implementation project(deps.project.module_complain)
+//    implementation project(deps.project.module_extra)
 }

@@ -1,9 +1,12 @@
 package com.einyun.app.common.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PicUrlModel {
     private String id;
     private String name;
     private long size;
+    @SerializedName(value = "path", alternate = "filePath")
     private String path;
 
     public String getId() {

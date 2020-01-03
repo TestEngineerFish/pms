@@ -82,8 +82,6 @@ object URLs {
      */
     const val URL_UC_UPLOAD_PORTRAIT= URL_UC_DOMAIN+"/api/user/v1/user/uploadPortrait"
 
-
-
-
+    const val URL_APP_UPDATE = "/appcenter/api/appConf/v1/appbbConf/isUp"
 
 }

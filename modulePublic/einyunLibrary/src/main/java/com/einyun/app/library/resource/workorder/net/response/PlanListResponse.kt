@@ -1,7 +1,10 @@
 package com.einyun.app.library.resource.workorder.net.response
 
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.base.paging.bean.PageResult
+import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrderPage
 
 /**
  *
@@ -16,5 +19,5 @@ import com.einyun.app.library.resource.workorder.model.PlanWorkOrder
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class PlanListResponse :BaseResponse<List<PlanWorkOrder>>(){
+class PlanListResponse : BaseResponse<PlanWorkOrderPage>(){
 }

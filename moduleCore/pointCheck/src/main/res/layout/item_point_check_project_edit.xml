@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="project"
+            type="com.einyun.app.pms.pointcheck.model.ProjectContentItemModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/point_check_bg">
+
+            <TextView
+                android:id="@+id/tv_project_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="@dimen/px_30"
+                android:layout_marginBottom="6dp"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_20"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/px_10"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/text_check_content"
+                    android:textSize="@dimen/font_size16"
+                    android:textColor="@color/txt_black_order" />
+
+                <TextView
+                    android:id="@+id/tv_check_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/point_check_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_10"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/text_note"
+                    android:textSize="@dimen/font_size16"
+                    android:textColor="@color/txt_black_order" />
+
+                <TextView
+                    android:id="@+id/tv_check_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/point_check_rang_split"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/point_check_bg"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/point_check_rang_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_10"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/text_check_range"
+                    android:textSize="@dimen/font_size16"
+                    android:textColor="@color/txt_black_order"/>
+
+                <TextView
+                    android:id="@+id/tv_check_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:gravity="right"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/point_check_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_10"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/text_check_result"
+                    android:textSize="@dimen/font_size16"
+                    android:textColor="@color/txt_black_order" />
+
+                <EditText
+                    android:id="@+id/ed_check_result"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:hint="@string/text_input_hint"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+
+                <Button
+                    android:id="@+id/btn_agree"
+                    android:visibility="gone"
+                    android:layout_width="@dimen/px_120"
+                    android:layout_height="@dimen/px_50"
+                    android:background="@drawable/shape_frame_corners_gray"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size13"
+                    android:text="@string/item_qualified"
+                    />
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_reject"
+                    android:layout_width="@dimen/px_120"
+                    android:layout_height="@dimen/px_50"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:textSize="@dimen/font_size13"
+                    android:background="@drawable/shape_frame_corners_gray"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:text="@string/item_no_qualified"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_check_result"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:visibility="gone"
+                    app:srcCompat="@mipmap/icon_arrow_right" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

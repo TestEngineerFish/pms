@@ -22,7 +22,7 @@ public class BaseBindingViewHolder <T extends ViewDataBinding> extends RecyclerV
     public  T getBinding() {
         return binding;
     }
-
+    public Object data;
     private final T binding;
 
     public BaseBindingViewHolder(View itemView) {
@@ -31,4 +31,5 @@ public class BaseBindingViewHolder <T extends ViewDataBinding> extends RecyclerV
         //通过DataBindingUtil.bind()方法，使DataBinding绑定布局，并且返回ViewDataBinding的子类对象
         binding = DataBindingUtil.bind(itemView);
     }
+
 }

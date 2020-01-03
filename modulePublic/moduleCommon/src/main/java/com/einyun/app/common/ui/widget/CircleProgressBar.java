@@ -40,7 +40,7 @@ public class CircleProgressBar extends View {
     private Paint.Style progress_style = Paint.Style.STROKE;//填充式还是环形式
 
     //是否显示圆圈中心文字
-    private boolean faly = false;
+    private boolean faly = true;
 
     public CircleProgressBar(Context context) {
         this(context, null);

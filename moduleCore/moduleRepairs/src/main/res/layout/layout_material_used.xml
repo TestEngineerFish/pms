@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:paddingLeft="@dimen/px_0"
+            android:layout_marginLeft="@dimen/px_20">
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_width="wrap_content"
+                android:layout_weight="0"
+                android:text="使用材料"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_70"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="材料名称"
+                android:textColor="@color/material_txt_color"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="单价(元)"
+                android:textColor="@color/material_txt_color"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="数量"
+                android:textColor="@color/material_txt_color"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="@dimen/px_70"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="总价"
+                android:textColor="@color/material_txt_color"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repair_handle_rec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/handle_add_material"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_height="@dimen/px_100">
+
+                <ImageView
+                    android:id="@+id/add_material"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:src="@drawable/add_material"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/material_add_material_color"
+                    android:layout_toRightOf="@id/add_material"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:textSize="@dimen/font_size14"
+                    android:gravity="center"
+                    android:text="添加材料" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

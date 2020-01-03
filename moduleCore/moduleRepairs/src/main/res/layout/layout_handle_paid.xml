@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style">
+    <LinearLayout
+        android:id="@+id/repairs_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/repair_pay_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="材料费(元)" />
+
+                <EditText
+                    android:id="@+id/repair_material_price"
+                    style="@style/tv_handle_order_select"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:hint="请输入"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="人工费(元)" />
+
+                <EditText
+                    android:id="@+id/repair_handle_man_money"
+                    style="@style/tv_handle_order_select"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:inputType="number"
+                    android:hint="请输入" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="费用总计(元)" />
+
+                <TextView
+                    android:id="@+id/repair_handle_total_money"
+                    style="@style/tv_create_order_select"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:text=""
+                     />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout
+                android:id="@+id/repair_handle_payway"
+                style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="付款方式" />
+
+                <TextView
+                    android:id="@+id/repair_handler_payway_txt"
+                    style="@style/tv_repair_order_select"
+                    android:layout_marginLeft="@dimen/px_30" />
+
+                <ImageView style="@style/tv_create_order_right_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="付款日期" />
+
+                <TextView
+                    android:id="@+id/repair_handle_pay_date"
+                    style="@style/tv_repair_order_select"
+                    android:layout_marginLeft="@dimen/px_30" />
+
+                <ImageView style="@style/tv_create_order_right_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+
+            <LinearLayout style="@style/ll_create_order">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="联合处理人" />
+
+                <EditText
+                    android:id="@+id/repair_handle_together_man"
+                    style="@style/tv_handle_order_select"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:hint="请输入" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_2"
+                android:background="@color/activity_bg_color" />
+        </LinearLayout>
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+

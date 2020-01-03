@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical"
+        tools:context=".ui.OperatePercentActivity">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_operate_percent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/stress_text_btn_icon_color"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/blackTextColor"
+            app:tabTextColor="@color/normal_main_text_icon_color" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_10"
+            android:background="@color/activity_bg_color" />
+
+        <LinearLayout
+            android:id="@+id/operate_percent_tab_ln"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_70"
+            android:orientation="horizontal"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <LinearLayout
+                android:id="@+id/operate_percent_tab_peroid_ln"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/period_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_10"
+                    android:gravity="center"
+                    android:text="分期"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_12"
+                    android:layout_height="@dimen/px_12"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/px_10"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/down" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/operate_percent_tab_select_ln"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/px_60"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/operate_percent_select_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_10"
+                    android:gravity="center"
+                    android:text="筛选"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_12"
+                    android:layout_height="@dimen/px_12"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/px_10"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/down" />
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_operate_percent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</layout>

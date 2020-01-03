@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 
 /**
  * @ProjectName: android-framework
@@ -18,9 +19,16 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel;
  * @Version: 1.0
  */
 public class DataSourceFactory extends DataSource.Factory<Integer, DictDataModel> {
+    RepairsPageRequest request;
+    String tag;
+    public DataSourceFactory(RepairsPageRequest request,String tag) {
+        this.request = request;
+        this.tag=tag;
+    }
+
     @NonNull
     @Override
     public DataSource<Integer, DictDataModel> create() {
-        return new RepairsDataSource();
+        return new RepairsDataSource(request,tag);
     }
 }

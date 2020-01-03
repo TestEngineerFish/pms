@@ -1,0 +1,88 @@
+<resources>
+    <style name="style_text_approval_left">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/px_20</item>
+        <item name="android:layout_marginBottom">@dimen/px_20</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/greyTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="style_text_feedback_left">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="work_order_detail_txt_right2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_height">@dimen/px_70</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:textColor">@color/txt_black_order</item>
+    </style>
+    <style name="work_order_detail_txt_left2">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">@dimen/px_176</item>
+        <item name="android:layout_height">@dimen/px_70</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:layout_marginLeft">@dimen/px_20</item>
+        <item name="android:layout_marginRight">@dimen/px_30</item>
+        <item name="android:textColor">@color/normal_main_text_icon_color</item>
+    </style>
+    <style name="style_text_feedback_right">
+        <item name="android:layout_marginLeft">@dimen/px_292</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="style_rl_normal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <style name="style_text_approval_right">
+        <item name="android:layout_marginLeft">@dimen/px_222</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="style_tv_turn_order">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/blueTextColor</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="style_devcie_tv_left">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="style_rl_feedback">
+        <item name="android:layout_marginTop">@dimen/px_2</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px_100</item>
+    </style>
+</resources>

@@ -1,16 +1,20 @@
 package com.einyun.app.base.db.entity;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Date;
 
-@Entity(tableName = "users")
+@Entity(tableName = "users", indices = {@Index(value = {"user_name"}, unique = true)})
 public class User implements Serializable {
     @PrimaryKey
-    private int id;
+    @NonNull
+    private String id;
 
     @ColumnInfo(name = "user_name")
     private String userName;
@@ -18,17 +22,20 @@ public class User implements Serializable {
     @ColumnInfo(name = "password")
     private String password;
 
-    public User(int id, String userName, String password){
-        this.id=id;
-        this.userName=userName;
-        this.password=password;
+    @ColumnInfo(name = "update_time")
+    private Date updateTime;
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+        this.updateTime = new Date();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -46,5 +53,23 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

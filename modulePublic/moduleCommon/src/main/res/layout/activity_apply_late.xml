@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".ui.ApplyLateActivity">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:text="已延期次数" />
+
+            <TextView
+                android:id="@+id/apply_num"
+                style="@style/tv_create_order_right"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:text="0"
+                android:textSize="@dimen/font_size15" />
+        </LinearLayout>
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:text="已延期时长" />
+
+            <TextView
+                android:id="@+id/apply_date"
+                style="@style/tv_create_order_right"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:text="0"
+                android:textSize="@dimen/font_size15" />
+        </LinearLayout>
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:text="延期天数(天)" />
+
+            <EditText
+                android:id="@+id/delay_date"
+                style="@style/tv_create_order_right"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:background="@null"
+                android:hint="请输入"
+                android:inputType="number"
+                android:textSize="@dimen/font_size15" />
+        </LinearLayout>
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="申请原因" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content">
+
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/delay_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hintText="请输入延期原因"
+                app:maxNumber="300" />
+        </LinearLayout>
+
+        <View style="@style/base_underline" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size16"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"
+                android:text="(最多4张)"
+                android:textSize="@dimen/font_size12" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ll_create_order"
+
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_img_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/px_30">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="@style/submit_btn"
+                android:layout_alignParentBottom="true"
+                android:onClick="@{()->callBack.submit()}"
+                android:text="@string/text_submit" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

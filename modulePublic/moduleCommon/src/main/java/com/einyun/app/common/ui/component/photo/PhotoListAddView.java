@@ -15,11 +15,13 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
@@ -29,6 +31,7 @@ import com.einyun.app.common.utils.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
 import java.util.List;
 
 /**
@@ -47,25 +50,26 @@ public class PhotoListAddView extends LinearLayout {
     private List<Uri> picList;
     PhotoListAdapter listAdapter;
     LayoutLinearPhotoBinding binding;
-    private  int MAX_PHOTO_SIZE=999;
-    public PhotoListAddView(Activity context, @Nullable AttributeSet attrs) {
+    private int MAX_PHOTO_SIZE = 999;
+
+    public PhotoListAddView(AppCompatActivity context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_linear_photo, this);
-        binding= DataBindingUtil.getBinding(this);
+        binding = DataBindingUtil.getBinding(this);
 
         initView();
         loadData();
     }
 
-    public void setMaxSize(int maxSize){
-        this.MAX_PHOTO_SIZE=maxSize;
+    public void setMaxSize(int maxSize) {
+        this.MAX_PHOTO_SIZE = maxSize;
     }
 
     private void loadData() {
     }
 
     private void initView() {
-        listAdapter=new PhotoListAdapter(getContext());
+        listAdapter = new PhotoListAdapter(getContext());
         binding.rvPhoto.setLayoutManager(new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,
@@ -76,8 +80,8 @@ public class PhotoListAddView extends LinearLayout {
             public void onAddClick(int selectedSize) {
                 Matisse.from((Activity) getContext())
                         .choose(MimeType.ofImage())
-                        .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                         .capture(true)
+                        .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                         .countable(true)
                         .maxSelectable(MAX_PHOTO_SIZE)
 //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
@@ -93,14 +97,14 @@ public class PhotoListAddView extends LinearLayout {
         void onAddClick(int selectedSize);
     }
 
-    public void updateList(List<Uri> pics){
-        this.picList=pics;
-        if(listAdapter!=null){
+    public void updateList(List<Uri> pics) {
+        this.picList = pics;
+        if (listAdapter != null) {
             listAdapter.updateList(picList);
         }
     }
 
-    public List<Uri> getPicList(){
+    public List<Uri> getPicList() {
         return listAdapter.getPicList();
     }
 
@@ -108,23 +112,25 @@ public class PhotoListAddView extends LinearLayout {
         private List<Uri> picList;
         private Context mContext;
         private AddPhotoClickListener listener;
-        private int MAX_SIZE=9999;
-        public PhotoListAdapter(Context context){
-            this.mContext=context;
+        private int MAX_SIZE = 9999;
+
+        public PhotoListAdapter(Context context) {
+            this.mContext = context;
         }
+
         @NonNull
         @Override
         public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view= LinearLayout.inflate(mContext, R.layout.item_photo_select,parent);
-            PhotoViewHolder viewHolder=new PhotoViewHolder(view);
+            View view = LinearLayout.inflate(mContext, R.layout.item_photo_select, parent);
+            PhotoViewHolder viewHolder = new PhotoViewHolder(view);
             return viewHolder;
         }
 
-        public void setMaxSize(int maxSize){
-            MAX_SIZE=maxSize;
+        public void setMaxSize(int maxSize) {
+            MAX_SIZE = maxSize;
         }
 
-        public List<Uri> getPicList(){
+        public List<Uri> getPicList() {
             return picList;
         }
 
@@ -157,44 +163,46 @@ public class PhotoListAddView extends LinearLayout {
                     }
                 });
 
-            if(getItemCount() -1 >= MAX_SIZE) {
-                holder.add.setVisibility(View.GONE);
-            }
-            else {
-                holder.add.setVisibility(View.VISIBLE);
-            }
+                if (getItemCount() - 1 >= MAX_SIZE) {
+                    holder.add.setVisibility(View.GONE);
+                } else {
+                    holder.add.setVisibility(View.VISIBLE);
+                }
 
             } else {
                 holder.ivPhoto.setVisibility(View.INVISIBLE);
                 holder.add.setVisibility(View.VISIBLE);
                 holder.ivRemove.setVisibility(View.VISIBLE);
-                Uri photo = picList.get(position-1);
+                Uri photo = picList.get(position - 1);
 
                 holder.ivRemove.setOnClickListener(v -> {
                     picList.remove(photo);
                     notifyDataSetChanged();
                 });
-                Glide.with(getContext()).load(photo).into(holder.ivPhoto);
+                Glide.with(getContext())
+                        .load(photo).centerCrop().placeholder(R.mipmap.place_holder_img)
+                        .error(R.mipmap.place_holder_img)
+                        .into(holder.ivPhoto);
             }
         }
 
         @Override
         public int getItemCount() {
-            return picList==null?0:picList.size()+1;
+            return picList == null ? 0 : picList.size() + 1;
         }
 
-        public void updateList(List<Uri> list){
-            if(picList ==null){
-                picList =list;
-            }else{
+        public void updateList(List<Uri> list) {
+            if (picList == null) {
+                picList = list;
+            } else {
                 picList.clear();
                 picList.addAll(list);
             }
             notifyDataSetChanged();
         }
 
-        public void setAddPhotoClickListener(AddPhotoClickListener listener){
-            this.listener=listener;
+        public void setAddPhotoClickListener(AddPhotoClickListener listener) {
+            this.listener = listener;
         }
     }
 

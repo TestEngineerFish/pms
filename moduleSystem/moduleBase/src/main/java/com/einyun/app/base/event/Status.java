@@ -17,6 +17,16 @@ public class Status {
     private boolean isLoadingShow;
     private boolean isProgressIndicatorShown;
     private boolean isGenderDialogShown;
+    private boolean isRefresShown;
+    private boolean isSubmitEnable; //提交按钮是否可用
+
+    public boolean isRefresShown() {
+        return isRefresShown;
+    }
+
+    public void setRefresShown(boolean refresShown) {
+        isRefresShown = refresShown;
+    }
 
     public boolean isLoadingShow() {
         return isLoadingShow;
@@ -40,5 +50,13 @@ public class Status {
 
     public void setGenderDialogShown(boolean genderDialogShown) {
         isGenderDialogShown = genderDialogShown;
+    }
+
+    public boolean isSubmitEnable() {
+        return isSubmitEnable;
+    }
+
+    public void setSubmitEnable(boolean submitEnable) {
+        isSubmitEnable = submitEnable;
     }
 }

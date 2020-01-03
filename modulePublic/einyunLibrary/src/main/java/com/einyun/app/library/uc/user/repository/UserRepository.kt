@@ -9,15 +9,18 @@ import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.uc.user.model.TenantModel
+import com.einyun.app.library.uc.user.model.UpdateAppModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.URLs
 import com.einyun.app.library.uc.user.net.UserServiceApi
 import com.einyun.app.library.uc.user.net.request.ChangePwdRequest
 import com.einyun.app.library.uc.user.net.request.LoginRequest
+import com.einyun.app.library.uc.user.net.request.UpdateAppRequest
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.uc.user.net.response.LoginResponse
 import com.einyun.app.library.uc.user.net.response.TentantResponse
+import com.einyun.app.library.uc.user.net.response.UpdateAppResponse
 
 /**
  *
@@ -34,6 +37,21 @@ import com.einyun.app.library.uc.user.net.response.TentantResponse
  * @Version:        1.0
  */
 class UserRepository :UCService{
+    override fun updateApp(callBack: CallBack<UpdateAppModel>): LiveData<UpdateAppModel> {
+        val liveData = MutableLiveData<UpdateAppModel>()
+        val update = UpdateAppRequest()
+        serviceApi?.updateApp(update)?.compose(RxSchedulers.inIoMain<UpdateAppResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     var serviceApi: UserServiceApi? = null
 
     init {
@@ -50,6 +68,7 @@ class UserRepository :UCService{
                         liveData.postValue(tentantResponse.getData())
                         callBack.call(tentantResponse.getData())
                     } else {
+                        tentantResponse.msg = "企业编码填写错误"
                         callBack.onFaild(EinyunHttpException(tentantResponse))
                     }
                 }, { error -> callBack.onFaild(error) })
@@ -246,4 +265,5 @@ class UserRepository :UCService{
                 })
         return liveData
     }
+
 }

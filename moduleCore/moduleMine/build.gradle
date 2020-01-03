@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion deps.android.compileSdkVersion
 
@@ -8,6 +7,7 @@ android {
         targetSdkVersion deps.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -33,9 +33,13 @@ android {
 
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
     compileOptions {
-        sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+        sourceCompatibility = '1.8'
     }
 
 }
@@ -43,4 +47,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.module_common)
+    //页面路由ARouter
+    implementation (deps.arouter_api) {
+        exclude group: 'com.android.support'
+    }
+    implementation 'com.alibaba:fastjson:1.1.34'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc3'
+    annotationProcessor deps.lifecycle.compiler
+    annotationProcessor deps.room.compiler
+    annotationProcessor deps.arouter_compiler
 }

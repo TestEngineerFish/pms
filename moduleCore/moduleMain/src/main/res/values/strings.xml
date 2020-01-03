@@ -1,6 +1,34 @@
 <resources>
     <string name="app_name">moduleMain</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="tv_tab_work_bench">工作台</string>
+    <!-- 首页 -->
+    <string name="tv_tab_work_bench">首页</string>
     <string name="tv_tab_mine">我的</string>
+    <string name="title_pending_work_order">待处理工单</string>
+    <string name="title_work_order_process">工单处理情况总览</string>
+    <string name="tv_work_order_num">工单总数</string>
+    <string name="tv_work_order_percentage_complete">工单完成率</string>
+    <string name="tv_work_order_timeliness_ratio">工单及时率</string>
+    <string name="title_operating_capture_rate">运营收缴率</string>
+    <string name="tv_today_capture_rate">今日收缴率</string>
+    <string name="tv_today_debts_rate">今日清欠率</string>
+    <string name="tv_plan_work_order">计划工单</string>
+    <string name="tv_patrol_work_order">巡查工单</string>
+    <string name="tv_dispatch_work_order">派工单</string>
+    <string name="tv_client_complain">客户投诉</string>
+    <string name="tv_client_repairs">客户问询</string>
+    <string name="tv_client_enquiry">客户报修</string>
+    <string name="tv_point_check">点检</string>
+    <string name="tv_approve">审批</string>
+    <string name="tv_create_work_order">创建工单</string>
+    <string name="tv_work_order_list">工单列表</string>
+    <string name="tv_work_preview">工作预览</string>
+    <string name="tv_scan_handle">扫码处理</string>
+
+    <!-- 我的 -->
+    <string name="tv_mine_approve">我的审批</string>
+    <string name="tv_feedback">意见反馈</string>
+    <string name="tv_setting">设置</string>
+    <string name="ad_change_work_status">是否设置为下班状态？</string>
+    <string name="ad_change_working_status">是否设置为上班状态？</string>
 </resources>

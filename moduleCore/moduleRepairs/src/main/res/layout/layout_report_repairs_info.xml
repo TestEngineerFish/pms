@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+       style="@style/cardview_style">
+    <LinearLayout
+        android:id="@+id/panel_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/blackTextColor"
+                android:textStyle="bold"
+                android:text="报修信息"
+                android:textSize="@dimen/font_size16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/txt_blue_color"
+                android:textSize="@dimen/px_30"
+                 />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+           style="@style/work_order_detail_ln">
+
+            <TextView
+               style="@style/work_order_detail_left_txt"
+                android:text="报修时间" />
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_time}"
+                />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="记录人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_recorder}"
+                />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="报修方式" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_way}"
+                 />
+        </LinearLayout>
+
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:paddingLeft="@dimen/px_20">
+                <LinearLayout
+                    android:layout_width="@dimen/px_204"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+            <TextView style="@style/tv_create_order_red_star"
+                android:id="@+id/repair_report_area_red"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/px_10"
+                android:visibility="gone"
+                />
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginLeft="@dimen/px_0"
+                android:layout_width="wrap_content"
+                android:text="报修区域" />
+                </LinearLayout>
+            <TextView
+                android:id="@+id/repair_report_area"
+                style="@style/work_order_detail_txt_right"
+                android:layout_width="wrap_content"
+                android:layout_weight="0"
+                android:text="@{repairs.data.customer_repair_model.bx_area}"/>
+                <ImageView
+                    android:id="@+id/repari_report_area_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
+                    android:src="@drawable/edit"
+                    android:layout_marginLeft="@dimen/px_14"
+                    android:layout_marginTop="@dimen/px_5"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                />
+            </LinearLayout>
+
+
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:paddingLeft="@dimen/px_20">
+            <LinearLayout
+                android:layout_width="@dimen/px_204"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView style="@style/tv_create_order_red_star"
+                android:id="@+id/repair_report_kind_red"
+                android:layout_marginTop="@dimen/px_10"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+              />
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginLeft="@dimen/px_0"
+                android:text="报修类别" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/repair_type"
+                style="@style/work_order_detail_txt_right"
+                android:layout_width="wrap_content"
+                android:layout_weight="0"
+                android:text="@{repairs.data.customer_repair_model.bx_cate_lv1+@string/text_padding+repairs.data.customer_repair_model.bx_cate_lv2+@string/text_padding+repairs.data.customer_repair_model.bx_cate_lv3}"
+                 />
+            <ImageView
+                android:id="@+id/repair_report_kind_change"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_30"
+                android:src="@drawable/edit"
+                android:layout_marginTop="@dimen/px_5"
+                android:layout_marginLeft="@dimen/px_14"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:paddingLeft="@dimen/px_20">
+            <LinearLayout
+                android:layout_width="@dimen/px_204"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/repair_report_nature_red"
+                style="@style/tv_create_order_red_star"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/px_10"
+                android:visibility="gone"
+             />
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:layout_marginLeft="@dimen/px_0"
+                android:text="性质评估" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/repair_asses_txt"
+                style="@style/work_order_detail_txt_right"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/px_0"
+                android:text="@{repairs.data.customer_repair_model.bx_property_ass}"
+                android:visibility="gone"
+                />
+            <RadioGroup
+                android:id="@+id/rgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="@dimen/px_50"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rb_normal"
+                    android:layout_width="@dimen/px_0"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/px_50"
+                    android:background="@drawable/select_radio_button_normal"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:tag="1"
+                    android:text=""
+                    android:textColor="@drawable/select_radio_button_text"
+                    android:textSize="@dimen/font_size13" />
+
+                <RadioButton
+                    android:id="@+id/rb_general"
+                    android:layout_width="@dimen/px_0"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/px_50"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:background="@drawable/select_radio_button_general"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:tag="2"
+                    android:text=""
+                    android:textColor="@drawable/select_radio_button_text"
+                    android:textSize="@dimen/font_size13" />
+
+                <RadioButton
+                    android:id="@+id/rb_warning"
+                    android:layout_width="@dimen/px_0"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/px_50"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:background="@drawable/select_radio_button_warning"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:tag="3"
+                    android:text=""
+                    android:textColor="@drawable/select_radio_button_text"
+                    android:textSize="@dimen/font_size13" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:orientation="horizontal"
+            >
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="预约上门时间" />
+            <TextView
+                android:id="@+id/repair_appoint_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/txt_black_order"
+                android:layout_marginRight="@dimen/px_10"
+                android:layout_marginTop="@dimen/px_20"
+                android:text="@{repairs.data.customer_repair_model.bx_appoint_time}"
+                 />
+            <TextView
+                android:id="@+id/repair_appoint_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/txt_black_order"
+                android:layout_marginTop="@dimen/px_20"
+                android:text="@{repairs.data.customer_repair_model.bx_appoint_time_period}"
+                />
+            <ImageView
+                android:id="@+id/repair_report_appoint_change"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_30"
+                android:layout_marginTop="@dimen/px_20"
+                android:src="@drawable/edit"
+                android:layout_marginLeft="@dimen/px_14"
+                android:visibility="gone"
+               />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="报修内容" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_repair_model.bx_content}"
+                />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_txt_left"
+                android:layout_marginBottom="@dimen/px_20"
+                android:text="图片" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/repair_order_detail_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_30"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

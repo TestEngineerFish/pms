@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="node"
+            type="com.einyun.app.base.db.bean.WorkNode" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.patrol.ui.PatrolQRSignInHandleActivity" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+        <View
+            android:id="@+id/frame_space"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:background="@mipmap/icon_detial_frame"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_160"
+                    android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/panel_qr_scan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_20"
+                        android:layout_marginTop="@dimen/px_20"
+                        android:layout_marginRight="@dimen/px_20"
+                        android:layout_marginBottom="@dimen/px_5"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardElevation="0.5dp"
+                        app:cardCornerRadius="@dimen/px_10">
+
+                        <LinearLayout
+                            android:id="@+id/item_sign"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_90"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_qr_sign_in"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/font_size16"
+                                    android:textColor="@color/txt_black_order" />
+                                <FrameLayout
+                                    android:layout_width="@dimen/px_136"
+                                    android:layout_height="@dimen/px_48"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true">
+
+                                    <TextView
+                                        android:visibility="gone"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textColor="@color/txt_blue_color"
+                                        app:isSignIn="@{node.sign_result}" />
+
+                                </FrameLayout>
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="@dimen/px_30"
+                                android:src="@drawable/dotted_line" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_patrol_signin_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:orientation="horizontal"
+                                android:visibility="visible"
+                                >
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_signin_result"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/txt_black_order"
+                                    app:isSignIn="@{node.sign_result}"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/ll_patrol_signin_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:visibility="gone"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_signin_time"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/txt_black_order"
+                                    android:text="@{node.sign_time}"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/ll_patrol_road_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_time_name"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/txt_black_order"
+                                    android:text="@{node.workNode}"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/ll_patrol_road_duration"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="@dimen/px_170"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_time_position"
+                                    android:textColor="@color/normal_main_text_icon_color" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@{node.workThings}"
+                                    android:textColor="@color/txt_black_order" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:layout_marginTop="@dimen/px_20"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/normal_main_text_icon_color"
+                                android:text="@string/text_sample_pic"
+                                />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_sample_images"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/px_20"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:layout_marginRight="@dimen/px_30"
+                                android:layout_marginBottom="@dimen/px_30"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="@dimen/px_20"
+                                android:orientation="horizontal"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/px_30"
+                                    android:textColor="@color/normal_main_text_icon_color"
+                                    android:text="@string/text_capture_pic"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/normal_main_text_icon_color"
+                                    android:layout_marginLeft="@dimen/px_15"
+                                    android:text="@string/text_pic_max"
+                                    />
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_capture_images"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/px_20"
+                                android:layout_marginLeft="@dimen/px_30"
+                                android:layout_marginRight="@dimen/px_30"
+                                android:layout_marginBottom="@dimen/px_30"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cd_work_nodes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_20"
+                        android:layout_marginTop="@dimen/px_20"
+                        android:layout_marginRight="@dimen/px_20"
+                        android:layout_marginBottom="@dimen/px_5"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardElevation="0.5dp"
+                        app:cardCornerRadius="@dimen/px_10">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px_90"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/text_patrol_check_nodes"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/font_size16"
+                                    android:textColor="@color/txt_black_order" />
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="@dimen/px_30"
+                                android:src="@drawable/dotted_line" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_nodes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_20"
+                                android:layout_marginRight="@dimen/px_20"
+                                android:layout_marginBottom="@dimen/px_30"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+            <Button
+                android:id="@+id/btn_submit"
+                style="@style/submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_88"
+                android:onClick="@{()->callBack.onSubmitClick()}"
+                android:layout_alignParentBottom="true"
+                android:text="@string/text_submit" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
+

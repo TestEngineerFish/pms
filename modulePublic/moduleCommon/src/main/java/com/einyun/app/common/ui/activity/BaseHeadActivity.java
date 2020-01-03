@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.einyun.app.base.BaseActivity;
+
 import com.einyun.app.common.R;
 
 
@@ -22,9 +22,9 @@ import com.einyun.app.common.R;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class BaseHeadActivity extends BaseActivity {
+public class BaseHeadActivity extends BaseSkinActivity {
 
-    protected ImageView btnBack;
+    protected View btnBack;
     protected TextView tvTitle;
     protected TextView tvRightTitle;
     protected ImageView ivRightOption;
@@ -38,11 +38,11 @@ public class BaseHeadActivity extends BaseActivity {
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        root=findViewById(R.id.main_header_bar);
+        root=findViewById(R.id.head_bar);
         btnBack=findViewById(R.id.back);
         tvTitle=findViewById(R.id.tv_header_title);
         tvRightTitle=findViewById(R.id.tv_right_title);
-        ivRightOption.findViewById(R.id.iv_right_option);
+        ivRightOption=findViewById(R.id.iv_right_option);
 
         root.setBackgroundColor(getColorPrimary());
     }
@@ -68,5 +68,10 @@ public class BaseHeadActivity extends BaseActivity {
 
     protected void onOptionClick(View ivOption){
 
+    }
+
+    @Override
+    protected int getColorPrimary() {
+        return getResources().getColor(R.color.white);
     }
 }

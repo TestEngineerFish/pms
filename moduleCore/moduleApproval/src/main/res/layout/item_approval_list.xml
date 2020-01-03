@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="approvallist"
+            type="com.einyun.app.pms.approval.model.ApprovalItemmodule" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tv_approvaler_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/tv_applicat"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_approval_state"
+                    android:layout_width="68dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/iv_wait_approval"
+                    android:gravity="center"
+                    android:text="@string/tv_approval_wait"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+
+                    style="@style/style_text_approval_left"
+                    android:text="@string/tv_approval_num" />
+
+                <TextView
+                    android:id="@+id/tv_approval_num"
+                    style="@style/style_text_approval_right"
+                    android:text="CJJH20191113120002" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    style="@style/style_text_approval_left"
+                    android:text="@string/tv_approval_type" />
+
+                <TextView
+                    android:id="@+id/tv_approval_type"
+                    style="@style/style_text_approval_right"
+                    android:text="创建计划-创建巡查计划"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    style="@style/style_text_approval_left"
+                    android:text="@string/tv_installment" />
+
+                <TextView
+                    android:id="@+id/tv_intallment"
+                    style="@style/style_text_approval_right"
+                    android:text="长城二期"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    style="@style/style_text_approval_left"
+                    android:text="@string/tv_apply_time"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_apply_time"
+                    style="@style/style_text_approval_right"
+                    android:text="2019-11-18 15:34:55"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_approval_time"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    style="@style/style_text_approval_left"
+                    android:text="@string/tv_approval_time"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_approval_time"
+                    style="@style/style_text_approval_right"
+                    android:text="2019-11-18 15:34:55"
+
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+

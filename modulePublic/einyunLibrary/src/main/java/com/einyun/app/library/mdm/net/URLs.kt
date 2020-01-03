@@ -23,5 +23,8 @@ class URLs {
 
         //获取divideId
         const val URL_MDM_DIVIDE_BY_PLATCODE="/$DOMAIN/api/mdm/v1/divide/getDivideIdByPlatCode?code="
+
+        //获取网格信息
+        const val URL_MDM_GRID_INFO="/$DOMAIN/api/mdm/v1/newGridBasicInfo/list"
     }
 }

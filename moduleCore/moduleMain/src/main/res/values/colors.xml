@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="tv_main_second_title_color">#FF132D42</color>
+    <color name="tv_main_text_color">#FF666666</color>
+    <color name="tv_work_order_process_num_color">#FFFA6400</color>
+    <color name="tv_work_order_timeliness_num_color">#5F62FF</color>
+    <color name="tv_up_color">#E02020</color>
+    <color name="tv_down_color">#0FC462</color>
+    <color name="tv_item_work_table_pending">#FFEBF1F9</color>
 </resources>

@@ -14,32 +14,32 @@ package com.einyun.app.library.resource.workorder.model
  * @Version:        1.0
  */
 class Distribute {
-    private var id: String? = null
-    private var forderNo: String? = null
-    private var fdivideId: String? = null
-    private var ftxId: String? = null
-    private var ftxName: String? = null
-    private var ftype: String? = null
-    private var fprocName: String? = null
-    private var fdesc: String? = null
-    private var fresId: String? = null
-    private var fresName: String? = null
-    private var flocation: String? = null
-    private var fprocId: String? = null
-    private var fstatus: String? = null
-    private var refId: String? = null
-    private var fProcDate: String? = null
-    private var fCheckDate: String? = null
-    private var fCreateTime: String? = null
-    private var fcreateTime: Long = 0
-    private var fprocDate: Long = 0
-    private var fprocContent: String? = null
-    private var fcheckDate: Long = 0
-    private var fcheckContent: String? = null
-    private var fcheckResult: String? = null
-    private var fevaluation: String? = null
-    private var freturnReason: String? = null
-    private var fbefPic: String? = null
-    private var faftPic: String? = null
+     var id: String? = null
+     var forderNo: String? = null
+     var fdivideId: String? = null
+     var ftxId: String? = null
+     var ftxName: String? = null
+     var ftype: String? = null
+     var fprocName: String? = null
+     var fdesc: String? = null
+     var fresId: String? = null
+     var fresName: String? = null
+     var flocation: String? = null
+     var fprocId: String? = null
+     var fstatus: String? = null
+     var refId: String? = null
+     var fProcDate: String? = null
+     var fCheckDate: String? = null
+     var fCreateTime: String? = null
+     var fcreateTime: Long = 0
+     var fprocDate: Long = 0
+     var fprocContent: String? = null
+     var fcheckDate: Long = 0
+     var fcheckContent: String? = null
+     var fcheckResult: String? = null
+     var fevaluation: String? = null
+     var freturnReason: String? = null
+     var fbefPic: String? = null
+     var faftPic: String? = null
 
 }

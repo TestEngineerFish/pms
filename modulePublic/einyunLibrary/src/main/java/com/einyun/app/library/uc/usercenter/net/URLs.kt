@@ -26,5 +26,19 @@ class URLs {
         //获取满意度
         const val URL_STATISFACTION: String = "/$DOMAIN/api/Satisfaction/v1/satisfaction/getAllSatisfactionNoAuth?time="
 
+        //获取工作状态
+        const val URL_GET_WORK_STATUS: String = "/$DOMAIN/api/usercenter/v1/ucWorkHistory/getUserHisStatus"
+
+        //更新工作状态
+        const val URL_UPDATE_WORK_STATUS: String = "/$DOMAIN/api/usercenter/v1/ucWorkHistory/save"
+
+        //获取处理人https://testbms.einyun.com/uc/api/user/v1/users/getUserByConditionRoles?
+        const val URL_GET_DISPOSE_PERSON: String = "/$DOMAIN/api/usercenter/v1/ucUser/users/getByRolesAndOrgIdAndDimCode"
+
+        //通过条件搜索负责人
+        const val URL_SEARCH_USER_BY_CONDITION: String = "/$DOMAIN/api/usercenter/v1/ucUser/searchUserByCondition"
+
+        const val URL_GET_HOUSE_BY_CONDITION:String = "/mdm/app/division/getBuildingUnitHouseList"
+
     }
 }

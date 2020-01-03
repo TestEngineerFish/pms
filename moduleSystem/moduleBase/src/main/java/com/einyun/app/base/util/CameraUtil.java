@@ -1,12 +1,13 @@
 package com.einyun.app.base.util;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.util.Log;
 import android.view.Surface;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,7 +77,7 @@ public class CameraUtil {
      * @param cameraId cameraId
      * @param camera   camera
      */
-    public void setCameraDisplayOrientation(Activity activity,
+    public void setCameraDisplayOrientation(AppCompatActivity activity,
                                             int cameraId, Camera camera) {
         Camera.CameraInfo info =
                 new Camera.CameraInfo();

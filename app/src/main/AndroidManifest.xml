@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yykj.app.pms">
+    package="com.einyun.app.pms">
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -38,7 +39,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <!--解锁-->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <permission android:name="android.permission.UPDATE_DEVICE_STATS" />
 
     <!--<uses-feature android:name="android.hardware.camera" />-->
@@ -63,25 +64,83 @@
         android:label="${APP_NAME}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NoActionBarAppTheme">
-        <activity android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity">
+        android:theme="@style/AppThemeFullScreen">
+        <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
+            android:theme="@style/AppThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.einyun.app.pms.main.ui.HomeTabViewModelActivity"/>
-        <activity android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
-<!--        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>-->
-        <activity android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
-        <activity android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
+        <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity"/>
+        <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity"/>
+        <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
+        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
+        <activity android:name="com.einyun.app.common.zxing.ScannerActivity"/>
+        <activity  android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
+        <activity  android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             />
+        <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"/>
 
+        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyForceCloseActivity"/>
+        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity"/>
+
+        <!--点检Start-->
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
+        <!--点检End-->
+
+        <!--计划工单Start-->
+        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderActivity"/>
+        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity"/>
+        <!--计划工单End-->
+
+        <!--巡查工单Start-->
+        <activity android:name=".patrol.ui.PatrolListActivity"/>
+        <activity android:name=".patrol.ui.PatrolHandleActivity"/>
+        <activity android:name=".patrol.ui.PatrolTimeHandleActivity"/>
+        <activity android:name=".patrol.ui.PatrolTimeDetialActivity"/>
+        <activity android:name=".patrol.ui.PatrolDetialActivity"/>
+        <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity"/>
+        <activity android:name=".patrol.ui.PatrolSignInScannerActivity"/>
+        <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity"/>
+        <activity android:name=".patrol.ui.PatrolForceCloseActivity"/>
+        <activity android:name=".patrol.ui.PatrolPostPoneActivity"/>
+        <activity android:name=".patrol.ui.PatrolTimePhotoActivity"/>
+        <!--巡查工单End-->
+
+        <!-- 创建工单 Start-->
+        <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientComplainOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientEnquiryOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientRepairsOrderViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>
+        <!-- 创建工单 End-->
+
+        <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
+        <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
+        <activity android:name=".sendorder.ui.ChooseDisposeViewModelActivity"/>
+       <!-- Mine       -->
+        <activity android:name=".mine.ui.SettingViewModuleActivity"/>
+        <activity android:name=".mine.ui.AdviceFeedBackViewModuleActivity"/>
+        <activity android:name=".mine.ui.SignSetViewModuleActivity"/>
+        <activity android:name=".mine.ui.UserHeadShotViewModuleActivity"/>
+        <activity android:name=".mine.ui.UserInfoViewModuleActivity"/>
+        <activity android:name=".create.ui.AddComplainInfoActivity"/>
+        <activity android:name=".complain.ui.CommunicationActivity"/>
+        <activity android:name=".complain.ui.ComplainActivity"/>
+       <!-- Mine end       -->
+       <!--  客户问询开始      -->
+        <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
+        <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity"/>
+        <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity"/>
+       <!--  客户问询结束      -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.einyun.app.pms.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

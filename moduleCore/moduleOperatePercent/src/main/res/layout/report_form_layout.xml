@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/report_form_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_bg_color">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <include
+                        android:id="@+id/operate_percent_all_get"
+                        layout="@layout/layout_operate_percent_all_get" />
+
+                    <include
+                        android:id="@+id/operate_percent_car_get"
+                        layout="@layout/layout_operate_percent_car" />
+
+                    <include
+                        android:id="@+id/operate_percent_property_get"
+                        layout="@layout/layout_operate_percent_property" />
+
+                    <com.einyun.app.common.ui.widget.VerticalProgressBar
+                        android:id="@+id/iv_progressBar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="20dp"
+                        android:layout_height="227dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="30dp"
+                        android:max="100"
+                        android:progress="40"
+                        android:progressDrawable="@drawable/all_year_car_get_bg" />
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</layout>

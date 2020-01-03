@@ -1,8 +1,10 @@
 package com.einyun.app.library.core.api.proxy
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UploadService
+import com.einyun.app.library.upload.model.PicUrl
 import com.einyun.app.library.upload.model.ResourceModel
 import com.einyun.app.library.upload.repository.FileResRepository
 
@@ -24,7 +26,13 @@ class UploadServiceImplProxy :UploadService{
     constructor(){
         instance=FileResRepository()
     }
-    override fun uploadImage(filePath: String, callBack: CallBack<ResourceModel>): LiveData<ResourceModel> {
+    override fun uploadImage(filePath: String, callBack: CallBack<PicUrl>): LiveData<PicUrl> {
        return instance?.uploadImage(filePath,callBack)!!
     }
+
+
+    override fun uploadImageList(images: List<String>, callBack: CallBack<List<PicUrl>>): LiveData<List<PicUrl>> {
+       return instance?.uploadImageList(images,callBack)!!
+    }
+
 }

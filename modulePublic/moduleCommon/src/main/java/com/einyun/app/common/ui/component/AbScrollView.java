@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
 
+import androidx.core.widget.NestedScrollView;
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.common.ui.component
@@ -20,136 +22,20 @@ import android.widget.ScrollView;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class AbScrollView extends ScrollView {
-    private View inner; // 孩子View
-    private static final int DEFAULT_POSITION = -1;
-    private float y = DEFAULT_POSITION;// 点击时y的坐标
-    private Rect normal = new Rect();
+public class AbScrollView extends NestedScrollView {
 
-    // 滑动距离及坐标
     private float xDistance, yDistance, xLast, yLast;
+
+    public AbScrollView(Context context) {
+        super(context);
+    }
 
     public AbScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-
-    /**
-     * 根据XML生成视图工作完成，该函数在生成视图的最后调用，在所有子视图添加完成之后， 即使子类覆盖了onFinishInflate
-     * 方法，也应该调用父类的方法， 使得该方法得以执行
-     */
-
-//	@Override
-//	protected void onFinishInflate() {
-//		if (getChildCount() > 0) {
-//			inner = getChildAt(0);
-//
-//		}
-//	}
-
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        if (getChildCount() > 0) {
-            inner = getChildAt(0);
-
-        }
-
-    }
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        if (inner == null) {
-            return super.onTouchEvent(ev);
-        } else {
-            commOnTouchEvent(ev);
-        }
-
-        return super.onTouchEvent(ev);
-    }
-
-    public void commOnTouchEvent(MotionEvent ev) {
-        int action = ev.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                y = ev.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-
-                if (isNeedAnimation()) {
-                    animation();
-                }
-
-                y = DEFAULT_POSITION;
-                break;
-
-            /**
-             * 排除第一次移动计算，因为第一次无法得知y左边，在MotionEvent.ACTION_DOWN中获取不到，
-             * 因为此时是MyScrollView的Tocuh时间传递到了ListView的孩子item上面。所以从第二次开始计算
-             * 然而我们也要进行初始化，就是第一次移动的时候让滑动距离归零，之后记录准确了就正常执行
-             */
-            case MotionEvent.ACTION_MOVE:
-                float preY = y;
-                float nowY = ev.getY();
-                if (isDefaultPosition(y)) {
-                    preY = nowY;
-                }
-                int deltaY = (int) (preY - nowY);
-                scrollBy(0, deltaY);
-                y = nowY;
-                // 当滚动到最上或者最下时就不会再滚动，这时移动布局
-                if (isNeedMove()) {
-                    if (normal.isEmpty()) {
-                        // 保存正常的布局位置
-                        normal.set(inner.getLeft(), inner.getTop(),
-                                inner.getRight(), inner.getBottom());
-
-                    }
-                    // 移动布局
-                    inner.layout(inner.getLeft(), inner.getTop() - deltaY,
-                            inner.getRight(), inner.getBottom() - deltaY);
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    // 开启动画移动
-
-    public void animation() {
-        // 开启移动动画
-        TranslateAnimation ta = new TranslateAnimation(0, 0, inner.getTop(),
-                normal.top);
-        ta.setDuration(200);
-        inner.startAnimation(ta);
-        // 设置回到正常的布局位置
-        inner.layout(normal.left, normal.top, normal.right, normal.bottom);
-
-        normal.setEmpty();
-
-    }
-
-    // 是否需要开启动画
-    public boolean isNeedAnimation() {
-        return !normal.isEmpty();
-    }
-
-    // 是否需要移动布局
-    public boolean isNeedMove() {
-
-        int offset = inner.getMeasuredHeight() - getHeight();
-        int scrollY = getScrollY();
-        if (scrollY == 0 || scrollY == offset) {
-            return true;
-        }
-        return false;
-    }
-
-    // 检查是否处于默认位置
-    private boolean isDefaultPosition(float position) {
-        return position == DEFAULT_POSITION;
+    public AbScrollView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
     @Override
@@ -173,8 +59,6 @@ public class AbScrollView extends ScrollView {
                     return false;
                 }
         }
-
         return super.onInterceptTouchEvent(ev);
     }
-
 }

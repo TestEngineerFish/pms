@@ -27,7 +27,7 @@ android {
         debugTest {
         }
         uat {
-//            minifyEnabled true   //开启混淆
+            minifyEnabled true   //开启混淆
 //            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -72,6 +72,7 @@ dependencies {
     api deps.loger
     api deps.status_bar    //全面屏、刘海屏状态栏
     api deps.arouter_api
+    api deps.luban
     annotationProcessor deps.arouter_compiler
 
     // Support libraries
@@ -101,7 +102,6 @@ dependencies {
     api deps.dagger.android_support
     annotationProcessor  deps.dagger.compiler
     annotationProcessor  deps.dagger.android_support_compiler
-
     // Android Testing Support Library's runner and rules
     api deps.atsl.core
     api deps.atsl.runner
@@ -121,10 +121,11 @@ dependencies {
     api deps.support.annotations
     api deps.support.app_compat
     api deps.support.design
-
+    api deps.live_event_bus
     //project
     api project(deps.project.module_http)
-    api project(deps.project.module_db)
 //    api deps.einyun.http
 //    api deps.einyun.db
+//    api 'com.tencent.bugly:crashreport:latest.release'
+
 }
