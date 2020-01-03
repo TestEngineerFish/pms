@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
+
 android {
     compileSdkVersion deps.android.compileSdkVersion
 
@@ -15,7 +13,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+                arguments = [ AROUTER_MODULE_NAME : project.getName(),
+                              "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
         }
     }
@@ -28,7 +28,7 @@ android {
         debugTest {
         }
         uat {
-//            minifyEnabled true   //开启混淆
+            minifyEnabled true   //开启混淆
 //            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -41,8 +41,6 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-
-
 }
 
 uploadArchives {
@@ -66,8 +64,15 @@ uploadArchives {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api deps.room.runtime
+    api deps.room.rxjava2
+    implementation deps.retrofit.gson
     annotationProcessor deps.room.compiler
+    implementation project(deps.project.einyun_library)
+//    implementation deps.kotlin.stdlib
+    implementation deps.paging
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.extensions
     annotationProcessor deps.lifecycle.compiler
+
+
 }

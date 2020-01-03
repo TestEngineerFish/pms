@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="resource"
+            type="com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_20"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/detail_item_left_tv"
+            android:text="@{resource.f_RES_NAME}"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/px_20"
+            android:textColor="#FF132D42"
+            android:textSize="@dimen/font_size15" />
+
+        <LinearLayout style="@style/detail_item_ll">
+
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="资源编码" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:text="@{resource.f_RES_CODE}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_item_ll">
+
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="工作指导" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:text="@{resource.f_WG_NAME}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_item_ll">
+
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="资源分类" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:text="@{resource.f_RES_TYPE}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_item_ll">
+
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="资源数量" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:text="@{resource.f_RES_COUNT}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_item_ll">
+
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="空间类型" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:text="@{resource.f_SP_TYPE}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_item_ll">
+
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="资源位置" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:text="@{resource.f_RES_LOCATION}" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

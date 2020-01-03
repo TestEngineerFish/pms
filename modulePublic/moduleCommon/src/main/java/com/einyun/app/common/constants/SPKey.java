@@ -18,4 +18,7 @@ public class SPKey {
     public static final String KEY_BLOCK_CODE="block_code";
 
     public static final String KEY_BLOCK_CHOOSE_CACHE="block_choose_cahce";
+
+    public static final String KEY_WORK_TYPE_CHOOSE_CACHE="work_type_choose_cahce";
+    public static final String KEY_ACCOUNT="ACCOUNT";
 }

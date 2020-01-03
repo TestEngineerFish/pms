@@ -251,7 +251,7 @@ public class StringUtil {
      * @return true 不为空  false 为空
      */
     public static boolean isNullStr(String url) {
-        if (url == null || url.length() <= 0 || url.equals("null")) {
+        if (url == null || url.trim().length() <= 0 || url.equals("null")) {
             return false;
         }
         return true;

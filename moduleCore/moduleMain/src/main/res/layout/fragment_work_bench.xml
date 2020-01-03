@@ -1,34 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="workBenchViewModel"
-            type="com.einyun.app.pms.main.viewmodel.WorkBenchViewModel" />
+            name="operateCaptureData"
+            type="com.einyun.app.library.dashboard.model.OperateCaptureData" />
 
         <variable
             name="callBack"
-            type="com.einyun.app.pms.main.ui.fragment.WorkBenchViewModelFragment" />
+            type="com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment" />
+
+        <variable
+            name="adapter"
+            type="android.widget.BaseAdapter" />
+
+        <variable
+            name="numAdapter"
+            type="android.widget.BaseAdapter" />
     </data>
-
-    <LinearLayout
+    <com.einyun.app.common.ui.widget.CustomSwipeToRefresh
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paging"
-            android:onClick="@{()->callBack.onPagingButtonClick()}"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paging"
-            android:onClick="@{()->callBack.onX5WebViewButtonClick()}"
-            />
-    </LinearLayout>
+        android:layout_height="match_parent">
 
+        <com.einyun.app.common.ui.component.AbScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/home"
+                style="@style/gallery_layout_style">
+
+
+                <!-- 顶部 -->
+                <include
+                    android:id="@+id/item_work_bench_first"
+                    layout="@layout/item_work_bench_pending"
+                    app:callBack="@{callBack}" />
+
+                <!-- 工单处理情况总览 -->
+                <include
+                    android:id="@+id/item_work_bench_second"
+                    layout="@layout/item_work_bench_pending_pandect"
+                    app:callBack="@{callBack}" />
+
+                <!-- 运营收缴率 -->
+                <include
+                    android:id="@+id/item_work_bench_third"
+                    layout="@layout/item_operating_capture_rate"
+                    app:callBack="@{callBack}" />
+
+            </LinearLayout>
+        </com.einyun.app.common.ui.component.AbScrollView>
+    </com.einyun.app.common.ui.widget.CustomSwipeToRefresh>
 </layout>

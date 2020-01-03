@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
+    <LinearLayout
+        android:id="@+id/panel_check_and_accpet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90">
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="验收"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/px_32" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验收结论"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+
+            <Button
+                android:id="@+id/btn_agree"
+                android:layout_width="@dimen/px_104"
+                android:layout_height="@dimen/px_40"
+                android:layout_marginLeft="@dimen/px_75"
+                android:background="@drawable/shape_frame_corners_gray"
+                android:padding="@dimen/px_5"
+                android:text="@string/text_state_passed"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textSize="@dimen/font_size12" />
+            <Button
+                android:id="@+id/btn_reject"
+                android:layout_width="@dimen/px_104"
+                android:layout_height="@dimen/px_40"
+                android:layout_marginLeft="@dimen/px_40"
+                android:padding="@dimen/px_5"
+                android:textSize="@dimen/font_size12"
+                android:background="@drawable/shape_frame_corners_gray"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:text="@string/text_reject"
+                />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评价"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+            <com.einyun.app.common.ui.component.rating.RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/px_38"
+                android:layout_marginLeft="@dimen/px_144"
+                android:layout_weight="1"
+                app:clickable="true"
+                app:starCount="5"
+                app:starEmpty="@mipmap/rating_uncheck"
+                app:starFill="@mipmap/rating_check"
+                app:starImageSize="@dimen/px_38"
+                app:starPadding="@dimen/px_12"
+                app:starStep="5"
+                app:stepSize="Full" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView style="@style/tv_create_order_red_star" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验收意见"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content">
+
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/et_limit_suggestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_30"
+                app:hintText="请输入文字信息"
+                app:maxNumber="300" />
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

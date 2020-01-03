@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        android:paddingBottom="@dimen/px_30">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/px_30"
+       >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:background="@color/activity_bg_color" />
+
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:paddingLeft="@dimen/px_0">
+
+            <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"/>
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="处理结果"
+                />
+        </LinearLayout>
+
+        <com.einyun.app.common.ui.component.limit.LimitInput
+            android:id="@+id/repair_handle_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_30"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30"
+            app:hintText="请输入处理结果"
+            app:maxNumber="300" />
+
+        <LinearLayout style="@style/ll_create_order">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片"
+                android:layout_marginLeft="@dimen/px_20"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:text="(最多四张)"
+                android:textSize="@dimen/font_size12" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_img_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

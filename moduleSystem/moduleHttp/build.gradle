@@ -22,7 +22,7 @@ android {
         debugTest {
         }
         uat {
-//            minifyEnabled true   //开启混淆
+            minifyEnabled true   //开启混淆
 //            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -70,4 +70,5 @@ dependencies {
 
     //Gson
     api deps.gson
+    implementation 'com.android.support:appcompat-v7'
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,131 +13,148 @@
             type="com.einyun.app.pms.user.core.ui.LoginViewModelActivity" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f8f7fb">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/login_back" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_login_bg" />
 
         <LinearLayout
             android:id="@+id/ll_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="180dp"
-            android:background="@drawable/shape_white_bg"
-            android:orientation="vertical"
-            android:paddingLeft="40dp"
-            android:paddingTop="40dp"
-            android:paddingRight="40dp"
-            android:paddingBottom="50dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:id="@+id/ll_org_code"
+                    style="@style/login_input_ll">
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_toLeftOf="@id/et_user"
-                        android:src="@drawable/login_user" />
+                        style="@style/login_input_ll_img"
+                        app:srcCompat="@mipmap/img_login_code" />
 
-                    <com.einyun.app.pms.user.core.ui.widget.DropEditText
+                    <EditText
+                        android:id="@+id/et_org_code"
+                        style="@style/login_input_ll_edit"
+                        android:hint="请输入企业编码" />
+
+
+                </LinearLayout>
+
+                <View
+                    style="@style/login_input_ll_underline"
+                    android:layout_below="@id/ll_org_code" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_user"
+                    style="@style/login_input_ll">
+
+                    <ImageView
+                        style="@style/login_input_ll_img"
+                        android:layout_toLeftOf="@id/et_user"
+                        app:srcCompat="@mipmap/img_login_user" />
+
+                    <EditText
                         android:id="@+id/et_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/login_input_ll_edit"
                         android:hint="请输入用户名"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:text="@={userModel.username}"
-                        android:textColorHint="#e6e6e6"
-                        android:textSize="16sp" />
+                        android:text="@={userModel.username}" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/iv_delete"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:id="@+id/iv_spinner"
+                    android:layout_width="@dimen/px_28"
+                    android:layout_height="@dimen/px_28"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:src="@drawable/edit_delete"
+                    android:layout_marginRight="@dimen/px_60"
+                    android:onClick="@{()->callBack.spinnerUser()}"
+                    android:src="@mipmap/arrow_down"
                     android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="@dimen/px_28"
+                    android:layout_height="@dimen/px_28"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px_100"
+                    android:onClick="@{()->callBack.deleteUserName()}"
+                    android:src="@mipmap/img_login_edit_delete"
+                    android:visibility="invisible" />
+
+                <View
+                    style="@style/login_input_ll_underline"
+                    android:layout_below="@id/ll_user" />
 
             </RelativeLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginTop="30dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_password"
+                    style="@style/login_input_ll">
+
+                    <ImageView
+                        style="@style/login_input_ll_img"
+                        app:srcCompat="@mipmap/img_login_password" />
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        style="@style/login_input_ll_edit"
+                        android:hint="请输入密码"
+                        android:inputType="textPassword"
+                        android:text="@={userModel.password}" />
+                </LinearLayout>
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/login_password" />
+                    android:id="@+id/iv_option"
+                    android:layout_width="20dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px_60"
+                    android:onClick="@{()->callBack.showEye()}"
+                    android:src="@mipmap/img_login_password_hide"
+                    android:visibility="invisible" />
 
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="请输入密码"
-                    android:text="@={userModel.password}"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColorHint="#e6e6e6"
-                    android:textSize="16sp" />
+                <View
+                    style="@style/login_input_ll_underline"
+                    android:layout_below="@id/ll_password" />
+            </RelativeLayout>
 
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/bt_login"
+                style="@style/submit_btn"
+                android:layout_marginTop="@dimen/px_120"
+                android:onClick="@{()->callBack.onLoginClick()}"
+                android:enabled="false"
+                android:text="登录"
+                 />
 
         </LinearLayout>
 
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-30dp"
-            android:background="#f8f7fb"
-            android:padding="16dp">
-
-            <Button
-                android:id="@+id/bt_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_login_button"
-                android:paddingLeft="80dp"
-                android:paddingTop="10dp"
-                android:paddingRight="80dp"
-                android:paddingBottom="10dp"
-                android:text="登  录"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:onClick="@{()->callBack.onLoginClick()}"
-                />
-
-        </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

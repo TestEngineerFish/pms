@@ -1,0 +1,39 @@
+<resources>
+
+    <style name="login_input_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginLeft">@dimen/px_60</item>
+        <item name="android:layout_marginRight">@dimen/px_60</item>
+    </style>
+
+    <style name="login_input_ll_edit" parent="base_style">
+        <item name="android:background">@null</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/edit_hint_color</item>
+        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:maxLength">20</item>
+    </style>
+
+    <style name="login_input_ll_img" parent="base_style">
+        <item name="android:layout_width">@dimen/px_44</item>
+        <item name="android:layout_height">@dimen/px_44</item>
+        <item name="android:layout_marginRight">@dimen/px_30</item>
+    </style>
+
+    <style name="login_input_ll_underline" parent="base_underline">
+        <item name="android:layout_marginTop">@dimen/px_20</item>
+        <item name="android:layout_marginLeft">@dimen/px_60</item>
+        <item name="android:layout_marginRight">@dimen/px_60</item>
+    </style>
+
+    <style name="privacy_tv" parent="base_style">
+        <item name="android:layout_marginTop">@dimen/px_32</item>
+        <item name="android:textColor">@color/user_privacy_text_color</item>
+        <item name="android:textSize">@dimen/font_size12</item>
+        <item name="android:lineSpacingExtra">@dimen/px_10</item>
+    </style>
+</resources>

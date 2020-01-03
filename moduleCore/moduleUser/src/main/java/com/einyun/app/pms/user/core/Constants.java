@@ -1,5 +1,7 @@
 package com.einyun.app.pms.user.core;
 
+import com.einyun.app.common.BuildConfig;
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.pms.user.core
@@ -13,6 +15,9 @@ package com.einyun.app.pms.user.core;
  * @Version: 1.0
  */
 public class Constants {
-    public static final String SP_KEY_TOKEN="KEY_TOKEN";
-    public static final String SP_KEY_USERID="KEY_USERID";
+    public static final String SP_KEY_TOKEN = "KEY_TOKEN";
+    public static final String SP_KEY_USERID = "KEY_USERID";
+    public static final String SP_KEY_SHOW_PRIVACY = "KEY_SHOW_PRIVACY";
+    public static final String SP_KEY_TENANT_CODE = "KEY_TENANT_CODE";
+    public static final String PRIVACY_DETAIL_URL = BuildConfig.BASE_URL + "/h5-mobile/web/appPolicy";
 }

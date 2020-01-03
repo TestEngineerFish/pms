@@ -1,14 +1,22 @@
 package com.einyun.app.library.dashboard.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.http.RxSchedulers
+import com.einyun.app.base.util.JsonUtil
 import com.einyun.app.library.core.EinyunException
+import com.einyun.app.library.core.api.DashBoardService
 import com.einyun.app.library.core.api.EinyunService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.dashboard.model.OperateCaptureData
+import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.DashBoardServiceApi
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
+import com.einyun.app.library.uc.user.model.TenantModel
+import com.einyun.app.library.uc.user.net.URLs
 import io.reactivex.functions.Consumer
 
 /**
@@ -24,19 +32,33 @@ import io.reactivex.functions.Consumer
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-class DashBoardRepo {
-    var serviceApi: DashBoardServiceApi? = null
-
-    init {
-        serviceApi = EinyunHttpService.getInstance().getServiceApi(DashBoardServiceApi::class.java)
-    }
-
-    //工单处理情况总览
-    fun workOrder(request: WorkOrderRequest, callBack: CallBack<WorkOrderData>) {
-        serviceApi?.workOrder(request)?.compose(RxSchedulers.inIoMain())
+class DashBoardRepo : DashBoardService {
+    override fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String> {
+        val liveData = MutableLiveData<String>()
+        serviceApi?.userMenu(menuType)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe(
                         Consumer { response ->
-                            if (response.isState) {
+                            if (response.code.equals("0")) {
+                                liveData.postValue(JsonUtil.toJson((response.data)[0].children.toString()))
+                                callBack.call(JsonUtil.toJson((response.data)[0].children.toString()))
+                            } else {
+                                callBack.onFaild(EinyunHttpException(response))
+                            }
+                        },
+                        Consumer {
+                            callBack.onFaild(it)
+                        }
+                )
+        return liveData
+    }
+
+    override fun operateCaptureData(orgCodes: List<String>, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData> {
+        val liveData = MutableLiveData<OperateCaptureData>()
+        serviceApi?.operateCapture(orgCodes)?.compose(RxSchedulers.inIoMain())
+                ?.subscribe(
+                        Consumer { response ->
+                            if (response.code.equals("0")) {
+                                liveData.postValue(response.data)
                                 callBack.call(response.data)
                             } else {
                                 callBack.onFaild(EinyunHttpException(response))
@@ -46,6 +68,33 @@ class DashBoardRepo {
                             callBack.onFaild(it)
                         }
                 )
+        return liveData
+    }
+
+    //工单处理情况总览
+    override fun workOrderData(request: WorkOrderRequest, callBack: CallBack<WorkOrderData>): LiveData<WorkOrderData> {
+        val liveData = MutableLiveData<WorkOrderData>()
+        serviceApi?.workOrder(request)?.compose(RxSchedulers.inIoMain())
+                ?.subscribe(
+                        Consumer { response ->
+                            if (response.isState) {
+                                liveData.postValue(response.data)
+                                callBack.call(response.data)
+                            } else {
+                                callBack.onFaild(EinyunHttpException(response))
+                            }
+                        },
+                        Consumer {
+                            callBack.onFaild(it)
+                        }
+                )
+        return liveData
+    }
+
+    var serviceApi: DashBoardServiceApi? = null
+
+    init {
+        serviceApi = EinyunHttpService.getInstance().getServiceApi(DashBoardServiceApi::class.java)
     }
 
 }

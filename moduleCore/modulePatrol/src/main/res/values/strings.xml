@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">modulePatrol</string>
+    <string name="text_cached">已缓存</string>
+    <string name="text_no_cached">未缓存</string>
+    <string name="text_state_processing">处理中</string>
+    <string name="text_state_new">新生成</string>
+    <string name="title_patrol">巡查工单</string>
+    <string name="title_patrol_time">巡更工单</string>
+    <string name="text_result">结果</string>
+    <string name="text_option">操作</string>
+    <string name="text_patrol_road_time">巡更路线限时</string>
+    <string name="text_patrol_road_name">巡更路线名称</string>
+    <string name="text_patrol_time_handle">巡更点处理</string>
+    <string name="text_require">要求:</string>
+    <string name="text_duration">%d分钟</string>
+    <string name="text_qr_sign_in">二维码签到</string>
+    <string name="text_patrol_time_name">巡更点名称</string>
+    <string name="text_patrol_signin_result">签到结果</string>
+    <string name="text_patrol_signin_time">签到时间</string>
+    <string name="text_patrol_time_position">巡更点位置</string>
+    <string name="text_sample_pic">参考标准图片</string>
+    <string name="text_capture_pic">现场拍照对比</string>
+    <string name="text_patrol_check_nodes">巡更检查项</string>
+    <string name="text_patrol_time_signin">巡更签到</string>
+    <string name="text_signin_success">恭喜您！签到成功</string>
+    <string name="text_signin_failed">签到失败！请扫描正确的二维码</string>
+    <string name="text_auto_return">3s后自动返回</string>
+    <string name="text_need_order_sign_in">请按照顺序签到</string>
+    <string name="text_need_order_capture">请按照顺序拍照</string>
+    <string name="text_sign_in_ed">已签到</string>
+    <string name="text_un_sign_in">未签到</string>
+    <string name="text_lose_node_pic">第%d个巡更节点缺少拍照信息</string>
+    <string name="text_lose_node_signin">第%d个巡更节点还未签到</string>
+    <string name="text_un_need_handle">未选择</string>
+    <string name="text_patrol_photo">巡更现场图片</string>
+    <string name="text_check_items">检查项</string>
+    <string name="text_alert_local_cached">本地数据保存成功</string>
+
 </resources>

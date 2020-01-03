@@ -31,6 +31,9 @@ class URLS {
         //根据分类id获取字典
         const val URL_DATA_DICT_GET_BY_TYPE_KEY = "/portal/sys/dataDict/v1/getByTypeKey"
 
+        //根据分类key获取字典
+        const val URL_DATA_DICT_GET_BY_TYPE_KEY_LIST = "/portal/sys/sysType/v1/getTypesListByKey"
+
         //通过groupKey、typeKey获取数据字典
         const val URL_DATA_DICT_GET_BY_TYPE_KEY_FOR_COMBO = "/portal/sys/dataDict/v1/getByTypeKeyForComBo"
 

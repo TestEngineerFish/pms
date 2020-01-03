@@ -204,6 +204,8 @@
 -keep class com.google.gson.examples.android.model.** { *; }
 -keep class **.model.** {*;}
 -keep class **.bean.** {*;}
+-keep class **.entity.** {*;}
+-keep class **.converter.** {*;}
 -keep class **.net.request.** {*;}
 -keep class **.net.response.** {*;}
 
@@ -244,10 +246,13 @@ public *;
 }
 
 #微信开放平台
--keep class com.tencent.mm.opensdk.** { *;}
--keep class com.tencent.wxop.** { *;}
--keep class com.tencent.mm.sdk.** { *;}
-
+-keep class com.tencent.** { *;}
+#皮肤包
+-keep class skin.** { *;}
+-keep class androidx.appcompat.app.** { *;}
+-dontwarn org.xmlpull.v1.XmlPullParser
+-dontwarn org.xmlpull.v1.XmlSerializer
+-keep class org.xmlpull.v1.* {*;}
 #支付宝
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
@@ -329,3 +334,6 @@ public *;
 
 #com.zhihu.android:matisse
 -dontwarn com.squareup.picasso.**
+##bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

@@ -2,6 +2,7 @@ package com.einyun.app.library.resource.workorder.net.response
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
+import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage
 
 /**
  *
@@ -16,5 +17,5 @@ import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class DistributeListResponse:BaseResponse<List<DistributeWorkOrder>>() {
+class DistributeListResponse:BaseResponse<DistributeWorkOrderPage>() {
 }

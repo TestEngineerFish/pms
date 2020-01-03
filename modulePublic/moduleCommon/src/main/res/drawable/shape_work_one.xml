@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="#c99e2b"
+        android:color="@color/stress_text_btn_icon_color"
         />
     <corners android:radius="4dp"></corners>
 

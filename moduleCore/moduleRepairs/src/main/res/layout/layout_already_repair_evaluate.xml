@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:text="@string/tv_evaluation"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size16" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="评价时间"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:text="@{repairs.data.customer_repair_model.return_time}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="@string/tv_deal_result"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:padding="@dimen/px_5"
+                    app:isSolve="@{repairs.data.customer_repair_model.c_is_solve}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14"
+                    app:isSolve="@{repairs.data.customer_repair_model.c_is_solve}" />
+
+
+            </LinearLayout>
+
+            <View
+                style="@style/base_underline"
+                android:layout_marginTop="@dimen/px_20" />
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="服务态度"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/attitude_star"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:clickable="false"
+                    app:starEmpty="@mipmap/rating_uncheck"
+                    app:starFill="@mipmap/rating_check"
+                    app:starHalf="@mipmap/rating_uncheck"
+                    app:starImageSize="@dimen/px_26"
+                    app:starPadding="@dimen/px_12"
+                    app:starStep="5"
+                    app:stepSize="Full" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="不满意原因"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:text="@{repairs.data.customer_repair_model.service_attitude_content}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/base_underline"
+                android:layout_marginTop="@dimen/px_20" />
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="wrap_content"
+                    android:text="服务质量"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <com.einyun.app.common.ui.component.rating.RatingBar
+                    android:id="@+id/quality_star"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    app:starEmpty="@mipmap/rating_uncheck"
+                    app:starFill="@mipmap/rating_on"
+                    app:starHalf="@mipmap/rating_uncheck"
+                    app:starImageSize="@dimen/px_26"
+                    app:starPadding="@dimen/px_12"
+                    app:starStep="5"
+                    app:stepSize="Full" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_30"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="不满意原因"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:text="@{repairs.data.customer_repair_model.service_quality_content}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

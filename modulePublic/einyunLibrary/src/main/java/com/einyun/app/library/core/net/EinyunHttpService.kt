@@ -41,7 +41,7 @@ open class EinyunHttpService protected constructor() : HttpService() {
     open fun init() {
         //添加自定义请求头
         addHeader(HTTPS_HEAD_API_RESPONSE_HANDLE, "true")
-        super.BASE_URL = EinyunSDK.server
+        BASE_URL = EinyunSDK.server
     }
 
     companion object {
@@ -65,7 +65,7 @@ open class EinyunHttpService protected constructor() : HttpService() {
     override fun filter(url:String) {
         super.filter(url)
         //except
-        if(url.contains(URLs.URL_USER_GET_TENTANTID)){
+        if(url.contains(URLs.URL_USER_GET_TENTANTID)||url.contains(URLs.URL_APP_UPDATE)){
             return
         }
         if(needTenantId){

@@ -1,0 +1,77 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+    <variable
+        name="material"
+        type="com.einyun.app.library.workorder.model.RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean" />
+    </data>
+
+    <com.einyun.app.common.ui.widget.SwipeItemLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_90"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{material.name}"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{material.price}"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{material.quantity}"
+                    android:textColor="@color/normal_main_text_icon_color" />
+
+                <TextView
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{material.total_price}"
+                    android:textColor="@color/normal_main_text_icon_color" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/left_to_delete"
+                android:layout_width="@dimen/px_100"
+                android:layout_height="match_parent"
+                android:text="删除"
+                android:background="@color/material_delete_color"
+                android:textColor="@color/material_delete_txt_color"
+                android:gravity="center"
+                android:textSize="@dimen/font_size13" />
+
+        </LinearLayout>
+
+    </com.einyun.app.common.ui.widget.SwipeItemLayout>
+</layout>

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion deps.android.compileSdkVersion
 
@@ -26,7 +25,7 @@ android {
         }
         uat {
             minifyEnabled true   //开启混淆
-            zipAlignEnabled true  //压缩优化
+//            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release.initWith(uat)
@@ -49,8 +48,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.module_common)
     //页面路由ARouter
-    implementation (deps.arouter_api) {
+    implementation(deps.arouter_api) {
         exclude group: 'com.android.support'
     }
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    annotationProcessor deps.lifecycle.compiler
+    annotationProcessor deps.room.compiler
     annotationProcessor deps.arouter_compiler
+    api deps.permission_dispatcher
+    annotationProcessor deps.permission_dispatcher_processor
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+<variable
+    name="todayGet"
+    type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingDefaultResource">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/blueTextColor"
+            android:paddingLeft="@dimen/px_10"
+            android:paddingRight="@dimen/px_10"
+            android:layout_gravity="center_horizontal"
+            android:text="6"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size12" />
+
+        <com.einyun.app.common.ui.widget.VerticalProgressBar
+            android:id="@+id/iv_progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="@dimen/px_10"
+            android:layout_height="@dimen/px_110"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/px_10"
+            android:max="100"
+            android:progress="100"
+            android:progressDrawable="@drawable/all_year_car_get_bg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M"
+            android:textSize="@dimen/font_size12"
+            android:layout_marginTop="@dimen/px_22"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</layout>

@@ -28,8 +28,9 @@ open class DictDataModel {
     var createOrgId: String? = null
     @ColumnInfo(name = "create_time")
     var createTime: String? = null
-    @PrimaryKey@NonNull
-    var id:String?=null
+    @PrimaryKey
+    @NonNull
+    var id: String? = null
     @ColumnInfo(name = "is_parent")
     var isParent: Boolean? = null
     @ColumnInfo(name = "key")
@@ -50,4 +51,6 @@ open class DictDataModel {
     var updateBy: String? = null
     @ColumnInfo(name = "update_time")
     var updateTime: String? = null
+    @ColumnInfo(name = "type_key")
+    var typeKey: String? = null
 }

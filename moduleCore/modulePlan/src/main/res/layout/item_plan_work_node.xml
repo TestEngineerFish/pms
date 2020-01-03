@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="node"
+            type="com.einyun.app.base.db.bean.WorkNode" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/px_75"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/shape_frame_gray"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/txt_black_order"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+            <LinearLayout
+                android:id="@+id/ll_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/px_75"
+                android:layout_weight="9"
+                android:background="@drawable/shape_frame_gray"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingTop="8dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tv_work_things"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_10"
+                    android:text="@{node.workThings}"
+                    android:textColor="@color/txt_black_order"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_work_node"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{node.workNode}"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="@dimen/px_120"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/px_75"
+                android:background="@drawable/shape_frame_gray"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/tv_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_black_order"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/font_size14"
+                    android:text="@string/text_result"
+                    android:textStyle="bold"
+                    />
+                <Button
+                    android:id="@+id/btn_agree"
+                    android:layout_width="@dimen/px_104"
+                    android:layout_height="@dimen/px_40"
+                    android:layout_marginTop="@dimen/px_10"
+                    android:padding="@dimen/px_5"
+                    android:background="@drawable/shape_frame_corners_gray"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size12"
+                    android:text="@string/text_state_passed"
+                    />
+                <Button
+                    android:id="@+id/btn_reject"
+                    android:layout_width="@dimen/px_104"
+                    android:layout_height="@dimen/px_40"
+                    android:padding="@dimen/px_5"
+                    android:textSize="@dimen/font_size12"
+                    android:layout_marginBottom="@dimen/px_10"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:background="@drawable/shape_frame_corners_gray"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:text="@string/text_reject"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="detail"
+            type="com.einyun.app.library.resource.workorder.model.Zyjhgd" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+        <include layout="@layout/layout_page_state" android:id="@+id/page_state"/>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/px_30"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_clys"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/grayBgColor"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/px_20"
+                        android:paddingRight="5dp"
+                        android:text="处理时长:"
+                        android:textColor="@color/important_red_color" />
+
+                    <TextView
+                        android:id="@+id/tv_handle_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/important_red_color" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/cardview_style"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/item_order_ln"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            style="@style/detail_title_rl"
+                            android:onClick="@{()->callBack.showOrHideOrderInfo()}">
+
+
+                            <TextView
+                                style="@style/detail_title_tv"
+                                android:text="@string/text_order_info" />
+
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/px_48"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/px_50">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textColor="@color/txt_blue_color"
+                                    android:textSize="@dimen/font_size15"
+                                    android:textStyle="bold"
+                                    app:status="@{String.valueOf(detail.f_STATUS)}" />
+
+                            </FrameLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_order_arrow"
+                                android:layout_width="@dimen/px_25"
+                                android:layout_height="@dimen/px_25"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/icon_arrow_right" />
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_order_line"
+                            style="@style/detail_title_line"
+                            android:visibility="gone"/>
+
+                        <LinearLayout
+                            android:id="@+id/ll_order_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_order_num" />
+
+                                <TextView
+                                    android:id="@+id/tv_order_no"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_ORDER_NO}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_divide" />
+
+                                <TextView
+                                    android:id="@+id/tv_divide_name"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_DIVIDE_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_line" />
+
+                                <TextView
+                                    android:id="@+id/tv_line"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_TX_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/resource_type" />
+
+                                <TextView
+                                    android:id="@+id/tv_types"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_RES_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_work_plan" />
+
+                                <TextView
+                                    android:id="@+id/tv_plan_name"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_WP_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_work_guide" />
+
+                                <TextView
+                                    android:id="@+id/tv_work_guide"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_WG_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_responsible_job" />
+
+                                <TextView
+                                    android:id="@+id/tv_grid"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_TIT_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_order_person" />
+
+                                <TextView
+                                    android:id="@+id/tv_order_person"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_OWNER_NAME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_order_create_time" />
+
+                                <TextView
+                                    android:id="@+id/tv_order_create_time"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_CREATE_TIME}" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/detail_item_ll">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_end_time" />
+
+                                <TextView
+                                    android:id="@+id/tv_end_time"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_DEADLINE_TIME}" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/detail_item_ll"
+                                android:layout_marginBottom="@dimen/px_30">
+
+                                <TextView
+                                    style="@style/detail_item_left_tv"
+                                    android:text="@string/text_location" />
+
+                                <TextView
+                                    android:id="@+id/tv_location"
+                                    style="@style/detail_item_right_tv"
+                                    android:text="@{detail.f_LOCATION}" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cd_work_resouce"
+                    style="@style/cardview_style"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            style="@style/detail_title_rl"
+                            android:onClick="@{()->callBack.showOrHideResource()}">
+
+
+                            <TextView
+                                style="@style/detail_title_tv"
+                                android:text="已关联资源" />
+
+                            <ImageView
+                                android:id="@+id/iv_resource_arrow"
+                                android:layout_width="@dimen/px_25"
+                                android:layout_height="@dimen/px_25"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/icon_arrow_right" />
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_resource_line"
+                            style="@style/detail_title_line"
+                            android:visibility="gone"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_resource"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/px_30"
+                            android:visibility="gone"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cd_work_nodes"
+                    style="@style/cardview_style">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout style="@style/detail_title_rl">
+
+
+                            <TextView
+                                style="@style/detail_title_tv"
+                                android:text="@string/text_work_nodes" />
+                        </RelativeLayout>
+
+                        <ImageView style="@style/detail_title_line" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_nodes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:layout_marginTop="@dimen/px_20"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:layout_marginBottom="@dimen/px_30"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/cardview_style"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout style="@style/detail_title_rl">
+
+                            <TextView
+                                style="@style/detail_title_tv"
+                                android:text="物料使用" />
+                        </RelativeLayout>
+
+                        <ImageView style="@style/detail_title_line" />
+
+                        <include layout="@layout/item_plan_material_table_head" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_material"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:layout_marginBottom="@dimen/px_30"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_result_edit"
+                    style="@style/cardview_style">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout style="@style/detail_title_rl">
+
+
+                            <TextView
+                                style="@style/detail_title_tv"
+                                android:text="@string/text_resolve_result" />
+                        </RelativeLayout>
+
+                        <ImageView style="@style/detail_title_line" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px_4"
+                                android:text="*"
+                                android:textColor="@color/important_red_color"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_resolve_dis" />
+                        </LinearLayout>
+
+                        <com.einyun.app.common.ui.component.limit.LimitInput
+                            android:id="@+id/limit_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_182"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_marginTop="@dimen/px_20"
+                            android:layout_marginRight="@dimen/px_30"
+                            android:layout_marginBottom="@dimen/px_30"
+                            app:hintText="请输入处理信息"
+                            app:maxNumber="300" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px_4"
+                                android:text="*"
+                                android:textColor="@color/important_red_color"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_handle_pic" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_15"
+                                android:text="@string/text_pic_max"
+                                android:textColor="@color/important_red_color" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/point_ck_imglist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:layout_marginTop="@dimen/px_20"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:layout_marginBottom="@dimen/px_20">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <include
+                    android:id="@+id/item_already_result"
+                    layout="@layout/item_already_result" />
+
+                <include android:id="@+id/item_apply_late_info" layout="@layout/item_apply_late_info"  />
+
+                <include android:id="@+id/item_close_order_info" layout="@layout/item_close_order_info" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_operate"
+                    style="@style/cardview_style">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:layout_marginBottom="@dimen/px_20"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{()->callBack.applyPostpone()}"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/px_110"
+                                android:layout_height="@dimen/px_110"
+                                android:layout_marginBottom="@dimen/px_20"
+                                android:src="@mipmap/icon_apply_postpone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_apply_postpone" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{()->callBack.closeOrder()}"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/px_110"
+                                android:layout_height="@dimen/px_110"
+                                android:layout_marginBottom="@dimen/px_20"
+                                android:src="@mipmap/icon_force_close" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="申请关闭" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    style="@style/submit_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_88"
+                    android:layout_marginTop="@dimen/px_40"
+                    android:layout_marginBottom="@dimen/px_40"
+                    android:onClick="@{()->callBack.onSubmitClick()}"
+                    android:text="@string/text_submit" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</layout>

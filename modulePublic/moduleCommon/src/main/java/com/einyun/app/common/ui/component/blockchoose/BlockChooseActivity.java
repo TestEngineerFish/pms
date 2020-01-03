@@ -16,13 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.RVBindingAdapter;
+import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.databinding.ActivityChooseOrgBinding;
 import com.einyun.app.common.databinding.ItemBlockChooseBinding;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
@@ -52,7 +54,8 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
     @Autowired(name = RouteKey.KEY_USER_ID)
     String userId;
     String blockId="";
-
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
     @Override
     public int getLayoutId() {
         return R.layout.activity_choose_org;
@@ -74,6 +77,7 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
     @Override
     protected void initData() {
         super.initData();
+        userId=userModuleService.getUserId();
         viewModel.loadFromCache().observe(this, models -> {
             if(models!=null){
                 selectOrgs.addAll(models);
@@ -92,13 +96,13 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
         if (adapter == null) {
             adapter = new RVBindingAdapter<ItemBlockChooseBinding, OrgModel>(this, com.einyun.app.common.BR.org) {
                 @Override
-                public void onBindItem(ItemBlockChooseBinding binding, OrgModel model) {
-                    if(!model.getGrade().equals(DataConstants.KEY_ORG_BLOCK)){
-                        binding.ivRightselect.setVisibility(View.GONE);
+                public void onBindItem(ItemBlockChooseBinding binding, OrgModel model,int pos) {
+                    if(!model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)){
+                       /* binding.ivRightselect.setVisibility(View.GONE);
                         binding.ivRightSelected.setVisibility(View.GONE);
                     }else{
                         binding.ivRight.setVisibility(View.GONE);
-                        binding.ivRightSelected.setVisibility(View.GONE);
+                        binding.ivRightSelected.setVisibility(View.GONE);*/
                     }
                 }
 
@@ -145,7 +149,7 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
 
     @Override
     public void onItemClicked(View veiw, OrgModel orgModel) {
-        if(orgModel.getGrade().equals(DataConstants.KEY_ORG_BLOCK)){
+        if(orgModel.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)){
             viewModel.saveBlock2Local(orgModel.getId(),orgModel.getName(),orgModel.getCode());
             viewModel.saveChache2Local(selectOrgs);
             setIntentResult(orgModel);
@@ -165,7 +169,7 @@ public class BlockChooseActivity extends BaseHeadViewModelActivity<ActivityChoos
         finish();
     }
 
-    class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
+   public class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
         ItemClickListener<OrgModel> itemClickListener;
 
         public void setItemClickListener(ItemClickListener listener){

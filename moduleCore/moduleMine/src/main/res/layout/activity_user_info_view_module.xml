@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="UserInfoModule"
+            type="com.einyun.app.pms.mine.model.UserInfoModule" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.mine.ui.UserInfoViewModuleActivity" />
+    </data>
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <RelativeLayout
+          android:onClick="@{()->callBack.HeadShotOnClick()}"
+          android:background="@color/white"
+          android:layout_marginTop="1dp"
+          android:layout_width="match_parent"
+          android:layout_height="63dp">
+          <TextView
+              android:text="@string/tv_head_icon"
+              style="@style/style_userinfo_tv_left" />
+          <ImageView
+              android:id="@+id/iv_head_shot"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="32.5dp"
+              android:layout_width="45dp"
+              android:layout_height="45dp"/>
+          <ImageView
+              android:src="@drawable/iv_right_arrow"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="15dp"
+              android:layout_width="13dp"
+              android:layout_height="13dp"/>
+      </RelativeLayout>
+         <RelativeLayout
+             android:background="@color/white"
+             android:layout_marginTop="1dp"
+             android:layout_width="match_parent"
+             android:layout_height="50dp">
+             <TextView
+                 android:text="@string/tv_login_account"
+                 style="@style/style_userinfo_tv_left"/>
+             <TextView
+                 android:id="@+id/tv_account"
+                 style="@style/style_userinfo_right_text" />
+         </RelativeLayout>
+         <RelativeLayout
+             android:background="@color/white"
+             android:layout_marginTop="10dp"
+             android:layout_width="match_parent"
+             android:layout_height="50dp">
+             <TextView
+                 android:text="@string/name"
+                 style="@style/style_userinfo_tv_left"/>
+             <TextView
+                 android:id="@+id/tv_name"
+                 style="@style/style_userinfo_right_text" />
+         </RelativeLayout>
+         <RelativeLayout
+             android:background="@color/white"
+             android:layout_marginTop="1dp"
+             android:layout_width="match_parent"
+             android:layout_height="50dp">
+             <TextView
+                 android:text="@string/tv_phone_num"
+                 style="@style/style_userinfo_tv_left"/>
+             <TextView
+                 android:id="@+id/tv_phone_num"
+                 style="@style/style_userinfo_right_text" />
+         </RelativeLayout>
+         <RelativeLayout
+             android:onClick="@{()->callBack.EnterSignName()}"
+             android:background="@color/white"
+             android:layout_marginTop="10dp"
+             android:layout_width="match_parent"
+             android:layout_height="50dp">
+             <TextView
+                 android:text="@string/tv_sign_name"
+                 style="@style/style_userinfo_tv_left"/>
+             <TextView
+                 android:layout_marginRight="15dp"
+                 android:textColor="@color/greyTextColor"
+                 android:text="请输入"
+                 android:gravity="center_vertical|end"
+                 android:layout_width="@dimen/px_400"
+                 android:id="@+id/et_sign_name"
+                 style="@style/style_userinfo_right_text" />
+         </RelativeLayout>
+         <RelativeLayout
+             android:background="@color/white"
+             android:layout_marginTop="1dp"
+             android:layout_width="match_parent"
+             android:layout_height="50dp">
+             <TextView
+                 android:text="@string/tv_start"
+                 style="@style/style_userinfo_tv_left"/>
+             <com.einyun.app.common.ui.component.rating.RatingBar
+                 android:layout_width="wrap_content"
+                 android:layout_marginRight="15dp"
+                 android:layout_marginTop="15dp"
+                 android:layout_alignParentRight="true"
+                 android:layout_height="20dp"
+                 android:id="@+id/rating_bar"
+                 app:clickable="false"
+                 app:starCount="5"
+                 app:starEmpty="@mipmap/rating_off"
+                 app:starHalf="@mipmap/rating_off"
+                 app:starFill="@mipmap/rating_on"
+                 app:starImageSize="@dimen/px_26"
+                 app:starPadding="@dimen/px_12"
+                 app:starStep="5"
+                 app:stepSize="Full" />
+         </RelativeLayout>
+     </LinearLayout>
+</layout>

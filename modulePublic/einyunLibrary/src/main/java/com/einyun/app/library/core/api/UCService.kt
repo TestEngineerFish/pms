@@ -3,6 +3,7 @@ package com.einyun.app.library.core.api
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.uc.user.model.TenantModel
+import com.einyun.app.library.uc.user.model.UpdateAppModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
@@ -69,4 +70,6 @@ interface UCService :EinyunService{
      * 更新用户信息
      */
     fun updateUser(request: UpdateUserRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+
+    fun updateApp(callBack: CallBack<UpdateAppModel>):LiveData<UpdateAppModel>
 }

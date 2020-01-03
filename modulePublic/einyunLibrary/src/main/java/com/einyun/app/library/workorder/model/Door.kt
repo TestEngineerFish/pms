@@ -1,5 +1,7 @@
 package com.einyun.app.library.workorder.model
 
+import java.io.Serializable
+
 /**
  *
  * @ProjectName:    android-framework
@@ -13,31 +15,32 @@ package com.einyun.app.library.workorder.model
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class Door {
-    private var id: String? = null
-    private var parentId: String? = null
-    private var categoryId: String? = null
-    private var dataName: String? = null
-    private var dataKey: String? = null
-    private var expand: Expand? = null
-    private var sn: Int = 0
-    private var children: List<Door>? = null
+ class Door : Serializable {
+    var id: String? = null
+    var parentId: String? = null
+    var categoryId: String? = null
+    var dataName: String? = null
+    var dataKey: String? = null
+    var expand: Expand? = null
+    var enabledFlag: String? = null
+    var sn: Int? = 0
+    var children: List<Door>? = null
 }
 
-class Expand{
-    private var line_posi_key: String? = null
-    private var majorLine: MajorLine? = null
-    private var line_posi_name: String? = null
-    private var code_str: String? = null
-    private var repair_area: RepairArea? = null
+class Expand {
+    var line_posi_key: String? = null
+    var majorLine: MajorLine? = null
+    var line_posi_name: String? = null
+    var code_str: String? = null
+    var repair_area: RepairArea? = null
 }
 
-class MajorLine{
-    private var name: String? = null
-    private var key: String? = null
+class MajorLine {
+    var name: String? = null
+    var key: String? = null
 }
 
-class RepairArea{
-    private var name: List<String>? = null
-    private var key: List<String>? = null
+class RepairArea {
+    var name: List<String>? = null
+    var key: List<String>? = null
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/slect_rec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_90">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/tv_pl_choice"
+                        android:textColor="@color/blackTextColor"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_close"
+                        android:layout_width="@dimen/px_30"
+                        android:layout_height="@dimen/px_30"
+                        android:scaleType="fitXY"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/px_40"
+                        android:src="@drawable/iv_pop_close" />
+
+                </RelativeLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/select_out_rec"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/px_200"/>
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true">
+                <TextView
+                    android:id="@+id/canclel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_little_blue"
+                    android:gravity="center"
+                    android:text="重置"
+                    android:alpha="80"
+                    android:textColor="@color/blueTextColor"
+                    android:textSize="@dimen/font_size15" />
+
+                <TextView
+                    android:id="@+id/confirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/iv_pop_confirm" />
+            </LinearLayout>
+    </RelativeLayout>
+</layout>

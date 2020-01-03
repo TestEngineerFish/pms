@@ -1,5 +1,8 @@
 package com.einyun.app.base.util;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +25,10 @@ public class TimeUtil {
         return Calendar.getInstance().getTimeInMillis();
     }
 
+    public static String Now() {
+        return getAllTime(getCurrentTime());
+    }
+
     /**
      * 将time转换为 1970-1-1 00:00:00 格式的时间
      */
@@ -34,13 +41,14 @@ public class TimeUtil {
 
     /**
      * 将time转换为 1970-1-1 00:00:00 格式的时间
-     * @param time 时间戳
+     *
+     * @param time    时间戳
      * @param is_msec 时间戳 是否是到毫秒
      * @return
      */
-    public static String getAllTime(long time,boolean is_msec) {
+    public static String getAllTime(long time, boolean is_msec) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date now = new Date(is_msec?time:time*1000);
+        Date now = new Date(is_msec ? time : time * 1000);
         return format.format(now);
     }
 
@@ -56,8 +64,8 @@ public class TimeUtil {
     /**
      * 根据时间获取毫秒数
      *
-     * @param time         时间字符串
-     * @param formate      时间格式
+     * @param time    时间字符串
+     * @param formate 时间格式
      * @return
      */
     public static long getTime(String time, String formate) {
@@ -80,10 +88,11 @@ public class TimeUtil {
             return 0;
         }
     }
+
     /**
      * 将time转换为 1970-1-1 格式的时间
      */
-    public static String getYMdTime(long time ) {
+    public static String getYMdTime(long time) {
         if (time == 0) {
             return "";
         }
@@ -91,15 +100,16 @@ public class TimeUtil {
         Date now = new Date(time);
         return format.format(now);
     }
+
     /**
      * 将time转换为 1970-1-1 格式的时间
      */
-    public static String getYMdTime(long time,boolean is_msec) {
+    public static String getYMdTime(long time, boolean is_msec) {
         if (time == 0) {
             return "";
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date(is_msec?time:time*1000);
+        Date now = new Date(is_msec ? time : time * 1000);
         return format.format(now);
     }
 
@@ -201,8 +211,7 @@ public class TimeUtil {
         int second = 0;
         if (time <= 0) {
             return "00:00";
-        }
-        else {
+        } else {
             minute = time / 60;
             if (minute < 60) {
                 second = time % 60;
@@ -224,8 +233,7 @@ public class TimeUtil {
         String retStr = null;
         if (i >= 0 && i < 10) {
             retStr = "0" + Integer.toString(i);
-        }
-        else {
+        } else {
             retStr = "" + i;
         }
         return retStr;
@@ -238,11 +246,11 @@ public class TimeUtil {
      * @param beginTime
      * @return
      */
-    public static boolean isAdTiemBegin(String beginTime){
+    public static boolean isAdTiemBegin(String beginTime) {
         try {
-            long begin_time = getTime(beginTime,"yyyy-MM-dd HH:mm:ss");//2018-05-29 00:00:00
+            long begin_time = getTime(beginTime, "yyyy-MM-dd HH:mm:ss");//2018-05-29 00:00:00
             long time = System.currentTimeMillis();
-            if (time>begin_time){
+            if (time > begin_time) {
                 return true;
             }
         } catch (Exception e) {
@@ -257,11 +265,11 @@ public class TimeUtil {
      * @param endTime
      * @return
      */
-    public static boolean isAdTiemEnd(String endTime){
+    public static boolean isAdTiemEnd(String endTime) {
         try {
-            long end_time = getTime(endTime,"yyyy-MM-dd HH:mm:ss");//2018-05-29 00:00:00
+            long end_time = getTime(endTime, "yyyy-MM-dd HH:mm:ss");//2018-05-29 00:00:00
             long time = System.currentTimeMillis();
-            if (time<end_time){
+            if (time < end_time) {
                 return true;
             }
         } catch (Exception e) {
@@ -272,10 +280,11 @@ public class TimeUtil {
 
     /**
      * 把字符串型时间戳 转化为long型
+     *
      * @param time
      * @return
      */
-    public static long getStrToLong(String time){
+    public static long getStrToLong(String time) {
         try {
             return Long.valueOf(time).longValue();
         } catch (NumberFormatException e) {
@@ -286,6 +295,7 @@ public class TimeUtil {
 
     /**
      * 获取当前时间戳
+     *
      * @return
      */
     public static long currentTimeMillis() {
@@ -294,14 +304,76 @@ public class TimeUtil {
 
     /**
      * 获取当前时间戳
+     *
      * @param is_ms 是否到毫秒
      * @return
      */
     public static long currentTimeMillis(boolean is_ms) {
         if (is_ms) {
             return System.currentTimeMillis();
-        }else{
-            return System.currentTimeMillis()/1000;
+        } else {
+            return System.currentTimeMillis() / 1000;
         }
+    }
+
+    public static long getTimeMillis(String strTime) {
+        long returnMillis = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = null;
+        try {
+            d = sdf.parse(strTime);
+            returnMillis = d.getTime();
+        } catch (Exception e) {
+            Log.e("shmshmshm", "e = " + e);
+        }
+        return returnMillis;
+    }
+
+    public static final long l = 60 * 60 * 1000 * 24;
+    public static final long l2 = 60 * 60 * 1000;
+    public static final long l3 = 60 * 1000;
+
+    public static String getTimeExpend(String startTime) {
+        if (TextUtils.isEmpty(startTime)) {
+            return "----------- --:--:--";
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String endTime = format.format(new Date());
+        //传入字串类型 2016/06/28 08:30
+        long longStart = getTimeMillis(startTime); //获取开始时间毫秒数
+        long longEnd = getTimeMillis(endTime);  //获取结束时间毫秒数
+        long longExpend = longEnd - longStart;  //获取时间差
+
+        if (longExpend < 0) {
+            longExpend = 0;
+        }
+
+        long longDay = longExpend / l;
+        long long1 = longExpend - longDay * l;
+        long longHours = long1 / l2; //根据时间差来计算小时数
+        long long2 = long1 - longHours * l2;
+        long longMinutes = long2 / l3;   //根据时间差来计算分钟数
+        long longSecond = (long2 - longMinutes * l3) / 1000;
+        return longDay + " 天 " + longHours + " 时 " + longMinutes + " 分" + longSecond + "秒";
+    }
+
+    public static String getTimeExpend(String startTime,String endTime) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //传入字串类型 2016/06/28 08:30
+        long longStart = getTimeMillis(startTime); //获取开始时间毫秒数
+        long longEnd = getTimeMillis(endTime);  //获取结束时间毫秒数
+        long longExpend = longEnd - longStart;  //获取时间差
+
+        if (longExpend < 0) {
+            longExpend = 0;
+        }
+
+        long longDay = longExpend / l;
+        long long1 = longExpend - longDay * l;
+        long longHours = long1 / l2; //根据时间差来计算小时数
+        long long2 = long1 - longHours * l2;
+        long longMinutes = long2 / l3;   //根据时间差来计算分钟数
+        long longSecond = (long2 - longMinutes * l3) / 1000;
+        return longDay + " 天 " + longHours + " 时 " + longMinutes + " 分" + longSecond + "秒";
     }
 }

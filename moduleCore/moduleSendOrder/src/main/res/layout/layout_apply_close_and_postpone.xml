@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
+    <LinearLayout
+        android:id="@+id/apply_force_close_and_postpone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_238"
+        android:orientation="horizontal"
+       >
+
+        <LinearLayout
+            android:id="@+id/send_order_apply_late"
+            android:layout_width="@dimen/px_110"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_110"
+                android:src="@drawable/apply_late" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_38"
+                android:layout_marginTop="@dimen/px_20"
+                android:text="申请延期"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/apply_postpone"
+            android:layout_width="@dimen/px_110"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_110"
+                android:src="@drawable/force_close" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_38"
+                android:layout_marginTop="@dimen/px_20"
+                android:text="强制关闭"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size13" />
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+

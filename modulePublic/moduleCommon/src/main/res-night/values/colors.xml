@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grayTextColor_night">#333333</color>
+    <color name="NoneActiveTextColor_night">#333333</color>
+    <color name="grayBgColor_night">#333333</color>
+
+    <color name="whiteTextColor_night">#333333</color>
+    <color name="blackTextColor_night">#333333</color>
+    <color name="grayItemColor_night">#333333</color>
+    <color name="main_color_night">#333333</color>
+    <color name="main_color_dark_night">#333333</color>
+    <color name="whiteListColor_night">#333333</color>
+    <color name="alertdialog_line_night">#333333</color>
+    <color name="divider_night">#333333</color>
+    <color name="container_night">#333333</color>
+
+</resources>

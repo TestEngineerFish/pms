@@ -1,5 +1,7 @@
 package com.einyun.app.library.uc.usercenter.model
 
+import java.io.Serializable
+
 /**
  *
  * @ProjectName:    android-framework
@@ -13,20 +15,22 @@ package com.einyun.app.library.uc.usercenter.model
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class OrgModel {
-    var code: String?=null
-    var demId: String?=null
-    var disabled: String?=null
-    var grade: String?=null
-    var id: String?=null
-    var isDele: String?=null
-    var level: Int?=null
-    var name: String?=null
-    var orderNo: Int?=null
-    var parentId: String?=null
-    var path: String?=null
-    var pathName: String?=null
-    var refId: String?=null
-    var updateTime: String?=null
-    var version: Int?=null
+class OrgModel : Serializable {
+    var code: String? = null
+    var demId: String? = null
+    var disabled: String? = null
+    var grade: String? = null
+    var id: String? = null
+    var isDele: String? = null
+    var level: Int? = null
+    var name: String? = null
+    var orderNo: Int? = null
+    var parentId: String? = null
+    var path: String? = null
+    var pathName: String? = null
+    var refId: String? = null
+    var updateTime: String? = null
+    var version: Int? = null
+    var groupType: String? = null
+    var postName: String? = null
 }

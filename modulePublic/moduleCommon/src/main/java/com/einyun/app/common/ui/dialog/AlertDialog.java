@@ -187,6 +187,16 @@ public class AlertDialog {
         }
     }
 
+    public boolean    isShowing(){
+        if (dialog!=null) {
+            if (dialog.isShowing()) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
 
     public void show() {
         setLayout();
@@ -195,7 +205,7 @@ public class AlertDialog {
         }
     }
 
-    public void close() {
+    public void dismiss() {
         if (dialog != null) {
             if (dialog.isShowing()) {
                 dialog.cancel();

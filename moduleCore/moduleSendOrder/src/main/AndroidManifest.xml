@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.einyun.app.pms.sendorder">
+
+    <application>
+        <activity android:name=".ui.HistroyActivity"></activity>
+        <activity android:name=".ui.ApplyForceCloseActivity" />
+        <activity android:name=".ui.ApplyLateActivity" />
+        <activity android:name=".ui.SelectPeopleActivity" />
+        <activity android:name=".ui.SendOrderDetailActivity"
+            ></activity>
+        <activity android:name=".ui.ResendOrderActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.ComplainActivity"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <LinearLayout
+            android:id="@+id/send_work_tab_ln"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_repair_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabIndicatorColor="@color/stress_text_btn_icon_color"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="3dp"
+                app:tabSelectedTextColor="@color/blackTextColor"
+                app:tabTextColor="@color/normal_main_text_icon_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_10"
+                android:background="@color/activity_bg_color" />
+        </LinearLayout>
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_repair"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tab_repair_order">
+
+        </androidx.viewpager.widget.ViewPager>
+    </LinearLayout>
+</layout>

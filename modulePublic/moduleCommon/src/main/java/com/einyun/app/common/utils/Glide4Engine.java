@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
+import com.einyun.app.common.R;
 import com.zhihu.matisse.engine.ImageEngine;
 
 /**
@@ -23,7 +24,8 @@ public class Glide4Engine implements ImageEngine {
                 .load(uri)
                 .apply(new RequestOptions()
                         .override(resize, resize)
-                        .placeholder(placeholder)
+                        .placeholder(R.mipmap.place_holder_img)
+                        .error(R.mipmap.place_holder_img)
                         .centerCrop())
                 .into(imageView);
     }
@@ -36,7 +38,8 @@ public class Glide4Engine implements ImageEngine {
                 .load(uri)
                 .apply(new RequestOptions()
                         .override(resize, resize)
-                        .placeholder(placeholder)
+                        .placeholder(R.mipmap.place_holder_img)
+                        .error(R.mipmap.place_holder_img)
                         .centerCrop())
                 .into(imageView);
     }
@@ -48,6 +51,8 @@ public class Glide4Engine implements ImageEngine {
                 .apply(new RequestOptions()
                         .override(resizeX, resizeY)
                         .priority(Priority.HIGH)
+                        .placeholder(R.mipmap.place_holder_img)
+                        .error(R.mipmap.place_holder_img)
                         .fitCenter())
                 .into(imageView);
     }
@@ -60,6 +65,8 @@ public class Glide4Engine implements ImageEngine {
                 .apply(new RequestOptions()
                         .override(resizeX, resizeY)
                         .priority(Priority.HIGH)
+                        .placeholder(R.mipmap.place_holder_img)
+                        .error(R.mipmap.place_holder_img)
                         .fitCenter())
                 .into(imageView);
     }

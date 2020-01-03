@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.einyun.app.library.uc.user.model.UserModel" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.user.core.ui.LoginViewModelActivity" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_org"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        >
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingTop="@dimen/px_20"
+            android:paddingBottom="@dimen/px_20"
+            android:textColor="@color/user_login_spinner_text_color"
+            android:textSize="@dimen/font_size14"/>
+
+        <ImageView
+            android:id="@+id/iv_delete_icon"
+            android:layout_width="@dimen/px_30"
+            android:layout_height="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_40"
+            app:srcCompat="@mipmap/icon_delete"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+</layout>

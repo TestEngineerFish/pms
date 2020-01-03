@@ -1,8 +1,6 @@
 package com.einyun.app.library.core.api
 
-import com.einyun.app.library.core.api.impl.DictServiceImpl
-import com.einyun.app.library.core.api.impl.UCServiceImpl
-import com.einyun.app.library.core.api.impl.UserCenterServiceImpl
+import com.einyun.app.library.core.api.impl.*
 
 /**
  *
@@ -23,28 +21,39 @@ class ServiceManager {
      * 添加对外发布服务
      */
     init {
-        addService(SERVICE_DICT,DictServiceImpl())//添加数据字典服务
-        addService(SERVICE_UC,UCServiceImpl())//添加UC服务
-        addService(SERVICE_USER_CENTER,UserCenterServiceImpl())
+        addService(SERVICE_DICT, DictServiceImpl())//添加数据字典服务
+        addService(SERVICE_UC, UCServiceImpl())//添加UC服务
+        addService(SERVICE_USER_CENTER, UserCenterServiceImpl())
+        addService(SERVICE_UPLOAD, UploadServiceImpl())
+        addService(SERVICE_DASHBOARD, DashBoardServiceImpl())
+        addService(SERVICE_WORK_ORDER, WorkOrderServiceImpl())
+        addService(SERVICE_RESOURCE_WORK_ORDER, ResourceWorkOrderServiceImpl())
+        addService(SERVICE_RESOURCE,ResourceServiceImpl())
+        addService(SERVICE_MDM,MdmServiceImpl())
     }
 
-    companion object{
-        const val SERVICE_DICT:String="dict"
-        const val SERVICE_UC:String="uc"
-        const val SERVICE_USER_CENTER:String="user-center"
-
-        private val services: HashMap<String,EinyunService>?=HashMap()
-        private var instance:ServiceManager?=null
+    companion object {
+        const val SERVICE_DICT: String = "dict"
+        const val SERVICE_UC: String = "uc"
+        const val SERVICE_USER_CENTER: String = "user-center"
+        const val SERVICE_UPLOAD: String = "upload"
+        const val SERVICE_DASHBOARD: String = "dashboard"
+        const val SERVICE_WORK_ORDER: String = "work-order"
+        const val SERVICE_RESOURCE:String="resource"
+        const val SERVICE_RESOURCE_WORK_ORDER: String = "resource-work-order"
+        const val SERVICE_MDM:String="mdm"
+        private val services: HashMap<String, EinyunService>? = HashMap()
+        private var instance: ServiceManager? = null
 
         private val LOCK = Any()
         /**
          * 单例，dobule check
          */
-        fun obtain():ServiceManager{
-            if(instance==null){
-                synchronized(LOCK){
-                    if(instance==null){
-                        instance= ServiceManager()
+        fun obtain(): ServiceManager {
+            if (instance == null) {
+                synchronized(LOCK) {
+                    if (instance == null) {
+                        instance = ServiceManager()
                     }
                 }
             }
@@ -55,14 +64,14 @@ class ServiceManager {
     /**
      * 添加服务
      */
-    private fun addService(serviceName: String,service :EinyunService){
-        services?.put(serviceName,service)
+    private fun addService(serviceName: String, service: EinyunService) {
+        services?.put(serviceName, service)
     }
 
     /**
      * 获取服务
      */
-    fun <T> getService(serviceName: String):T{
+    fun <T> getService(serviceName: String): T {
         return services?.get(serviceName) as T
     }
 

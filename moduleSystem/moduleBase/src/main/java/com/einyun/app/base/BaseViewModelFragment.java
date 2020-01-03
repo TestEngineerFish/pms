@@ -2,6 +2,7 @@ package com.einyun.app.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,17 @@ public abstract class BaseViewModelFragment<V extends ViewDataBinding, VM extend
         viewModel=initViewModel();
         setUpView();
         setUpData();
+        setUpListener();
+    }
+
+    /**
+     * 获取主题颜色
+     * @return
+     */
+    public int getColorPrimary(){
+        TypedValue typedValue = new  TypedValue();
+        getContext().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        return typedValue.data;
     }
 
     public abstract int getLayoutId();
@@ -49,6 +61,10 @@ public abstract class BaseViewModelFragment<V extends ViewDataBinding, VM extend
      * 一些View的相关操作
      */
     protected abstract void setUpView();
+
+    protected  void setUpListener(){
+
+    }
 
     /**
      * 一些Data的相关操作

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical">
+
+        <include
+            android:id="@id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+        <include layout="@layout/layout_page_state" android:id="@+id/page_state"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/px_20"
+                        >
+                        <TextView
+                            android:id="@+id/tv_clys"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/grayBgColor"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="5dp"
+                            android:text="处理用时:"
+                            android:textColor="@color/important_red_color" />
+                        <TextView
+                            android:id="@+id/tv_handle_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/important_red_color"
+                            />
+                    </LinearLayout>
+                    <include layout="@layout/layout_work_order_info" android:id="@+id/order_info"/>
+                    <include layout="@layout/layout_workorder_handle" android:id="@+id/order_handle" android:visibility="gone"/>
+                    <include layout="@layout/layout_apply_late_info" android:id="@+id/postpone_info"  android:visibility="gone"/>
+                    <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>
+                    <include layout="@layout/layout_work_order_form" android:id="@+id/order_form" android:visibility="gone"/>
+                    <include layout="@layout/layout_apply_close_and_postpone" android:id="@+id/apply_force_close_and_postpone" android:visibility="gone"/>
+                    <include layout="@layout/layout_check_and_accept" android:id="@+id/check_and_accept" android:visibility="gone"/>
+                    <include layout="@layout/layout_apply_postpone" android:id="@+id/apply_postpone" android:visibility="gone"/>
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_140"/>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+            <Button
+                android:id="@+id/send_order_detail_submit"
+                style="@style/submit_btn"
+                android:layout_alignParentBottom="true"
+                android:text="@string/text_get_order"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

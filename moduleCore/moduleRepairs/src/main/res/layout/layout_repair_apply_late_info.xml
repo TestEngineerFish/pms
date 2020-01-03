@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style">
+    <LinearLayout
+        android:id="@+id/panel_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="申请延期信息"
+                android:textColor="@color/txt_black_order"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_size16" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="审批结果" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.delayInfo.statusStr}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="审批时间" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.delayInfo.auditDate}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="延期天数" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.delayInfo.delayTime}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln"
+            >
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="申请人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.delayInfo.applyUser}" />
+        </LinearLayout>
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="申请时间" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.delayInfo.applyDate}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="申请原因" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.delayInfo.applyReason}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="申请照片" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:layout_marginTop="@dimen/px_20"
+            android:layout_marginBottom="@dimen/px_30">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/repair_order_postpone_pic_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+
