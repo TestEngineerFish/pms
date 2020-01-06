@@ -382,4 +382,11 @@
         <item name="cardElevation">@dimen/px_1</item>
         <item name="cardCornerRadius">@dimen/px_10</item>
     </style>
+    <style name="main_cardview_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardElevation">@dimen/px_1</item>
+        <item name="cardCornerRadius">@dimen/px_10</item>
+    </style>
 </resources>

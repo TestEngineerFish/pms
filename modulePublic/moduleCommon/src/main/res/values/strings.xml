@@ -92,6 +92,7 @@
     <string name="create">创建</string>
     <string name="resend_success">转派成功</string>
     <string name="order_list">工单列表</string>
+    <string name="title_order_condition_pandect">工单列表</string>
     <string name="plan_order">计划工单</string>
     <string name="patro_order">巡查工单</string>
     <string name="work_preview">工作预览</string>
