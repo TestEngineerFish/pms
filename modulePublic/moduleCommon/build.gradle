@@ -97,4 +97,13 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 //    implementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation ('com.aliyun.ams:alicloud-android-push:3.1.6@aar') {
+        transitive true
+    }
+    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.9@aar'
+
+    implementation 'com.aliyun.ams:meizu-push:3.8.3-fix'
+    implementation 'com.aliyun.ams:huawei-push:2.6.3.305'
+    implementation 'com.aliyun.ams:huawei-push-base:2.6.3.305'
+    implementation ('com.google.firebase:firebase-messaging:17.6.0')
 }

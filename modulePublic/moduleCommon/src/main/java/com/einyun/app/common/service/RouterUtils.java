@@ -28,6 +28,7 @@ public class RouterUtils {
     public static final String ACTIVITY_X5_WEBVIEW="/webview/X5WebViewActivity";
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
     public static final String ACTIVITY_ORDER_LIST="/main/OrderListActivity";
+    public static final String ACTIVITY_ORDER_CONDITION_PANDECT="/main/OrderConditionPandectActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
