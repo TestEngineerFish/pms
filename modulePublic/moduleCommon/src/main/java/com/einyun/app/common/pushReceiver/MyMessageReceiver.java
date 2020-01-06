@@ -13,12 +13,14 @@ public class MyMessageReceiver extends MessageReceiver {
     public static final String REC_TAG = "receiver";
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
+        super.onNotification(context,title,summary,extraMap);
         // TODO 处理推送通知
         Log.e("MyMessageReceiver", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
     }
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
-            Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
+        super.onMessage(context,cPushMessage);
+        Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
     }
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
