@@ -5,6 +5,14 @@
     <data>
 
         <variable
+            name="conditionSelected"
+            type="Boolean" />
+
+        <variable
+            name="periodSelected"
+            type="Boolean" />
+
+        <variable
             name="callBack"
             type="com.einyun.app.pms.main.core.ui.OrderConditionPandectActivity" />
     </data>
@@ -12,6 +20,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
         android:orientation="vertical">
 
         <include layout="@layout/include_layout_activity_head" />
@@ -102,30 +111,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <androidx.cardview.widget.CardView
                         style="@style/main_cardview_style"
                         android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/px_44"
+                            android:paddingLeft="@dimen/px_22"
+                            android:paddingRight="@dimen/px_22"
+                            android:paddingBottom="@dimen/px_44">
 
                             <TextView
+                                android:id="@+id/tv_percentage_complete"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="工单完成率"
                                 android:textColor="#FF999999"
-                                android:textSize="24px"
-                                />
+                                android:textSize="24px" />
+
                             <TextView
-                                android:layout_width="162px"
-                                android:layout_height="62px"
+                                android:id="@+id/tv_timeless"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_percentage_complete"
+                                android:layout_marginTop="@dimen/px_26"
                                 android:text="86.43%"
                                 android:textColor="#FF132D42"
                                 android:textSize="44px"
-                                />
-                        </LinearLayout>
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="@dimen/px_60"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_alignBottom="@id/tv_timeless"
+                                android:layout_alignParentRight="true"
+                                android:src="@mipmap/img_percentage_complete" />
+                        </RelativeLayout>
                     </androidx.cardview.widget.CardView>
+
                     <androidx.cardview.widget.CardView
                         style="@style/main_cardview_style"
                         android:layout_marginLeft="@dimen/px_30"
@@ -135,32 +161,94 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/px_44"
-                            android:paddingBottom="@dimen/px_44"
                             android:paddingLeft="@dimen/px_22"
                             android:paddingRight="@dimen/px_22"
-                            android:orientation="vertical">
+                            android:paddingBottom="@dimen/px_44">
 
                             <TextView
+                                android:id="@+id/tv_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="工单完成率"
+                                android:text="工单及时率"
                                 android:textColor="#FF999999"
-                                android:textSize="24px"
-                                />
+                                android:textSize="24px" />
+
                             <TextView
-                                android:layout_width="162px"
-                                android:layout_height="62px"
-                                android:text="86.43%"
+                                android:id="@+id/tv_timeliness_ratio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_1"
                                 android:layout_marginTop="@dimen/px_26"
+                                android:text="86.43%"
                                 android:textColor="#FF132D42"
-                                android:textStyle="bold"
                                 android:textSize="44px"
-                                />
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="@dimen/px_60"
+                                android:layout_height="@dimen/px_60"
+                                android:layout_alignBottom="@id/tv_timeliness_ratio"
+                                android:layout_alignParentRight="true"
+                                android:src="@mipmap/img_timeliness_ratio" />
                         </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
+                <androidx.cardview.widget.CardView
+                    style="@style/main_cardview_style"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/px_78">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/px_20"
+                        android:paddingRight="@dimen/px_20"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="工单数量统计"
+                            android:textColor="#FF132D42"
+                            android:textSize="@dimen/font_size16"
+                            android:layout_marginTop="@dimen/px_26"
+                            android:layout_marginBottom="@dimen/px_26"/>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/pd_view" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/img_order_bg">
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_marginTop="@dimen/px_30"
+                               android:layout_height="wrap_content"
+                               android:orientation="vertical"
+                               android:gravity="center"
+                               android:layout_centerInParent="true">
+                               <androidx.recyclerview.widget.RecyclerView
+                                   android:id="@+id/rv_work_table_pending_num"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content" />
+
+                               <TextView
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginTop="@dimen/px_20"
+                                   android:gravity="center"
+                                   android:text="@string/tv_work_order_num"
+                                   android:textColor="@color/white"
+                                   android:textSize="@dimen/font_size12" />
+                           </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </com.einyun.app.common.ui.component.AbScrollView>
     </LinearLayout>
