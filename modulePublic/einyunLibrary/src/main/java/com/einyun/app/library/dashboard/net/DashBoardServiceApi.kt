@@ -2,7 +2,9 @@ package com.einyun.app.library.dashboard.net
 
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.WorkOrderData
+import com.einyun.app.library.dashboard.net.request.AllChargedRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
+import com.einyun.app.library.dashboard.net.response.AllChargedResponse
 import com.einyun.app.library.dashboard.net.response.OperateCaptureResponse
 import com.einyun.app.library.dashboard.net.response.UserMenuResponse
 import com.einyun.app.library.dashboard.net.response.WorkOrderResponse
@@ -41,4 +43,7 @@ interface DashBoardServiceApi {
      */
     @GET(URLs.URL_DASHBOARD_USER_MENU)
     fun userMenu(@Query("menuType") menuType: Int): Flowable<UserMenuResponse>
+
+    @POST(URLs.URL_ALL_CHARGED_PROJECT)
+    fun getAllCharged(@Body request: AllChargedRequest):Flowable<AllChargedResponse>
 }

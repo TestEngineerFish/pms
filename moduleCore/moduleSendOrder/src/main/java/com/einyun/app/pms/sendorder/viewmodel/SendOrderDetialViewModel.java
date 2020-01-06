@@ -95,6 +95,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
 //                hideLoading();
+                ThrowableParser.onFailed(throwable);
                 workOrderLiveData.postValue(null);
             }
         });
@@ -122,6 +123,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                ThrowableParser.onFailed(throwable);
                 liveData.postValue(false);
             }
         });
@@ -147,6 +149,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                ThrowableParser.onFailed(throwable);
                 liveData.postValue(false);
             }
         });
@@ -174,6 +177,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                ThrowableParser.onFailed(throwable);
                 liveData.postValue(false);
             }
         });
@@ -199,6 +203,7 @@ public class SendOrderDetialViewModel extends BaseWorkOrderHandelViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                ThrowableParser.onFailed(throwable);
                 liveData.postValue(false);
             }
         });

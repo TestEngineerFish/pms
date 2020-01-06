@@ -10,7 +10,7 @@
         android:minHeight="100dp"
         android:hint="@string/et_limit_input_hint"
         android:textColor="@color/normal_main_text_icon_color"
-        android:textColorHint="@color/hint_text_color"
+        android:textColorHint="@color/normal_main_text_icon_color"
         android:textSize = "14sp"
         android:gravity="start"
         android:paddingTop="@dimen/px_20"

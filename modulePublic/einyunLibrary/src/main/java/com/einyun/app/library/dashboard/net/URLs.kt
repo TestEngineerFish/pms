@@ -22,5 +22,7 @@ class URLs {
         const val URL_DASHBOARD_OPERATE_CAPTURE_RATE = "/app/fee/proxy/api/fee/fee-center/api/getTotalRate"
         //首页权限配置
         const val URL_DASHBOARD_USER_MENU = "/portal/sys/sysMenu/v1/getCurrentUserMenu"
+        //全部收费项目
+        const val URL_ALL_CHARGED_PROJECT = "app/fee/proxy/api/fee/fee-center/api/getAmountDetail"
     }
 }

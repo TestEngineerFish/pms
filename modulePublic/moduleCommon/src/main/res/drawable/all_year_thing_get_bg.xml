@@ -1,11 +1,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@android:id/background">
+
+<item android:id="@android:id/background">
         <shape>
             <corners android:radius="10dip" />
 
             <solid
-                android:color="#24ebf1f9"
+                android:color="#242366d0"
 
                 />
         </shape>
@@ -14,7 +15,7 @@
         <clip>
             <shape>
                 <corners android:radius="10dip" />
-                <solid android:color="@color/white"/>
+                <solid android:color="#2366d0"/>
             </shape>
         </clip>
     </item>
