@@ -76,7 +76,6 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:label="${APP_NAME}"
         tools:replace="android:label"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeFullScreen">
         <meta-data android:name="com.alibaba.app.appkey" android:value="28249762"/> <!-- 请填写你自己的- appKey -->
