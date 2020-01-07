@@ -9,6 +9,8 @@
             type="com.einyun.app.pms.customerinquiries.model.InquiriesItemModule" />
     </data>
     <androidx.cardview.widget.CardView
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="@dimen/px_20"
         style="@style/cardview_style"
         android:focusable="true"
         android:clickable="true"
@@ -47,10 +49,11 @@
             android:layout_height="24dp"/>
         </RelativeLayout>
         <ImageView
+            android:src="@drawable/iv_pop_line"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp">

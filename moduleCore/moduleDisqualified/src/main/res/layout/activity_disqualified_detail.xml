@@ -25,6 +25,7 @@
                  android:layout_height="match_parent">
                  <!--         工单信息-->
                  <androidx.cardview.widget.CardView
+                     android:visibility="visible"
                      style="@style/cardview_style">
                      <LinearLayout
                          android:background="@drawable/shape_white_bg"
@@ -35,14 +36,8 @@
                              android:layout_width="match_parent"
                              android:layout_height="44dp">
                              <TextView
-                                 android:id="@+id/tv_approvaler_name"
-                                 android:layout_marginLeft="10dp"
-                                 android:gravity="center_vertical"
-                                 android:textSize="16sp"
-                                 android:textColor="@color/blackTextColor"
                                  android:text="工单信息"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="match_parent"/>
+                                 style="@style/unquality_order_info_left" />
                              <TextView
                                  android:id="@+id/tv_deal_state"
                                  android:gravity="center"
@@ -67,7 +62,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="工单编号" />
                              <TextView
-                                 android:id="@+id/tv_complaint_time"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -77,7 +71,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="创建时间" />
                              <TextView
-                                 android:id="@+id/tv_crecord_person"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -87,7 +80,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="分期" />
                              <TextView
-                                 android:id="@+id/tv_ask_way"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -97,7 +89,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="检查日期" />
                              <TextView
-                                 android:id="@+id/tv_ask_type"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -107,7 +98,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="问题描述" />
                              <TextView
-                                 android:id="@+id/tv_finish_time"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -117,7 +107,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="条线" />
                              <TextView
-                                 android:id="@+id/tv_current_deal_person"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -127,7 +116,6 @@
                                  style="@style/style_text_approval_left"
                                  android:text="严重程度" />
                              <TextView
-                                 android:id="@+id/tv_inquiries_content"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -160,12 +148,455 @@
                              android:layout_height="wrap_content"
                              android:orientation="vertical">
                              <androidx.recyclerview.widget.RecyclerView
-                                 android:id="@+id/list_pic"
+                                 android:id="@+id/list_pic_onder_info"
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"
                                  android:layout_marginBottom="@dimen/px_30"
                                  app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
                          </LinearLayout>
+                     </LinearLayout>
+                 </androidx.cardview.widget.CardView>
+                 <!--         反馈信息-->
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/cd_feedback_info"
+                     android:visibility="visible"
+                     style="@style/cardview_style">
+                     <LinearLayout
+                         android:background="@drawable/shape_white_bg"
+                         android:layout_width="match_parent"
+                         android:orientation="vertical"
+                         android:layout_height="wrap_content">
+                         <RelativeLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="44dp">
+                             <TextView
+                                 android:text="@string/tv_feedback_info"
+                                 style="@style/unquality_order_info_left" />
+                         </RelativeLayout>
+
+                         <ImageView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="10dp"
+                             android:layout_marginRight="10dp"
+                             android:src="@drawable/pd_view" />
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_feedback_date" />
+                             <TextView
+                                 android:id="@+id/tv_feedback_date"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_cause_analysis" />
+                             <TextView
+                                 android:id="@+id/tv_cause_reason"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_prevention" />
+                             <TextView
+                                 android:id="@+id/tv_prevention"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_deal_time" />
+                             <TextView
+                                 android:id="@+id/tv_deal_time"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <LinearLayout style="@style/work_order_detail_ln">
+                             <TextView
+                                 style="@style/work_order_detail_txt_left"
+                                 android:layout_marginBottom="@dimen/px_20"
+                                 android:text="图片" />
+                         </LinearLayout>
+                         <LinearLayout
+                             android:background="@drawable/shape_white_bg"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="vertical">
+                             <androidx.recyclerview.widget.RecyclerView
+                                 android:id="@+id/list_pic_feedback"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_marginBottom="@dimen/px_30"
+                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                         </LinearLayout>
+                     </LinearLayout>
+                 </androidx.cardview.widget.CardView>
+                 <!--         验证信息-->
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/cd_validation_info"
+                     android:visibility="visible"
+                     style="@style/cardview_style">
+                     <LinearLayout
+                         android:background="@drawable/shape_white_bg"
+                         android:layout_width="match_parent"
+                         android:orientation="vertical"
+                         android:layout_height="wrap_content">
+                         <RelativeLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="44dp">
+                             <TextView
+                                 android:text="@string/tv_valition_info"
+                                 style="@style/unquality_order_info_left" />
+                         </RelativeLayout>
+
+                         <ImageView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="10dp"
+                             android:layout_marginRight="10dp"
+                             android:src="@drawable/pd_view" />
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_valition_person" />
+                             <TextView
+                                 android:id="@+id/tv_valition_person"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_valition_date" />
+                             <TextView
+                                 android:id="@+id/tv_valition_date"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_valition_situation" />
+                             <TextView
+                                 android:id="@+id/tv_valition_situation"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <RelativeLayout
+                             style="@style/style_rl_normal">
+                             <TextView
+                                 android:layout_marginBottom="10dp"
+                                 style="@style/style_text_approval_left"
+                                 android:text="@string/tv_finish_time" />
+                             <TextView
+                                 android:id="@+id/tv_incalition__time"
+                                 style="@style/style_text_approval_right"/>
+                         </RelativeLayout>
+                         <LinearLayout style="@style/work_order_detail_ln">
+                             <TextView
+                                 style="@style/work_order_detail_txt_left"
+                                 android:layout_marginBottom="@dimen/px_20"
+                                 android:text="图片" />
+                         </LinearLayout>
+                         <LinearLayout
+                             android:background="@drawable/shape_white_bg"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="vertical">
+                             <androidx.recyclerview.widget.RecyclerView
+                                 android:id="@+id/list_pic_invalition"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_marginBottom="@dimen/px_30"
+                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                         </LinearLayout>
+                     </LinearLayout>
+                 </androidx.cardview.widget.CardView>
+                 <!--          反馈操作       -->
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/cd_op_feedback"
+                     android:visibility="visible"
+                     style="@style/cardview_style">
+                     <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:orientation="vertical">
+                         <RelativeLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="44dp">
+                             <TextView
+                                 android:text="@string/tv_feedback_info"
+                                 style="@style/unquality_order_info_left" />
+                         </RelativeLayout>
+
+                         <ImageView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="10dp"
+                             android:layout_marginRight="10dp"
+                             android:src="@drawable/pd_view" />
+                         <LinearLayout
+                             android:layout_height="@dimen/px_80"
+                             style="@style/ll_create_order">
+
+                             <TextView style="@style/tv_create_order_red_star" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textStyle="normal"
+                                 style="@style/tv_disqualified_detail_left"
+                                 android:text="@string/tv_feedback_date" />
+
+                             <TextView
+                                 android:id="@+id/tv_op_feedback_date"
+                                 android:textSize="@dimen/font_size14"
+                                 android:textColor="@color/blackTextColor"
+                                 android:text="2019-12-23"
+                                 style="@style/tv_create_order_select_single" />
+
+                             <ImageView
+                                 android:src="@drawable/edit"
+                                 style="@style/tv_create_order_right_arrow" />
+                         </LinearLayout>
+                         <LinearLayout
+                             android:layout_height="@dimen/px_80"
+                             style="@style/ll_create_order">
+
+                             <TextView style="@style/tv_create_order_red_star" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textStyle="normal"
+                                 style="@style/tv_create_order_name"
+                                 android:text="原因分析" />
+                         </LinearLayout>
+                         <LinearLayout
+                             style="@style/ll_create_order"
+                             android:layout_height="wrap_content">
+
+                             <com.einyun.app.common.ui.component.limit.LimitInput
+                                 android:id="@+id/lt_measures"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 app:hintText="请输入分析内容"
+                                 app:maxNumber="300" />
+                         </LinearLayout>
+                         <LinearLayout
+                             android:layout_height="@dimen/px_80"
+                             style="@style/ll_create_order">
+
+                             <TextView style="@style/tv_create_order_red_star" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textStyle="normal"
+                                 style="@style/tv_create_order_name"
+                                 android:text="纠正预防措施" />
+                         </LinearLayout>
+                         <LinearLayout
+                             style="@style/ll_create_order"
+                             android:layout_height="wrap_content"
+                             android:paddingBottom="@dimen/px_30">
+
+                             <com.einyun.app.common.ui.component.limit.LimitInput
+                                 android:id="@+id/lt_reason"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 app:hintText="请输入文字信息"
+                                 app:maxNumber="300" />
+                         </LinearLayout>
+                         <LinearLayout style="@style/ll_create_order">
+                             <TextView style="@style/tv_create_order_red_star" />
+                             <TextView
+                                 android:textStyle="normal"
+                                 style="@style/tv_create_order_name"
+                                 android:layout_weight="0"
+                                 android:text="@string/picture" />
+
+                             <TextView
+                                 style="@style/tv_create_order_red_star"
+                                 android:text="（最多4张）"
+                                 android:textSize="@dimen/font_size13" />
+                         </LinearLayout>
+                         <LinearLayout
+                             style="@style/ll_create_order"
+                             android:layout_height="wrap_content">
+
+                             <androidx.recyclerview.widget.RecyclerView
+                                 android:id="@+id/rv_feedback_list"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:paddingBottom="@dimen/px_30">
+
+                             </androidx.recyclerview.widget.RecyclerView>
+                         </LinearLayout>
+                         <LinearLayout
+                             android:layout_marginTop="20dp"
+                             android:layout_marginBottom="20dp"
+                             android:layout_width="match_parent"
+                             android:layout_height="45dp">
+                             <TextView
+                                 android:onClick="@{()->callBack.onFeedBackCacheClick()}"
+                                 style="@style/style_btn_cache"
+                                 android:text="@string/tv_cache" />
+                             <TextView
+                                 android:onClick="@{()->callBack.onFeedBackPassClick()}"
+                                 style="@style/style_btn_submit"
+                                 android:text="@string/text_commit" />
+
+                         </LinearLayout>
+
+                     </LinearLayout>
+                 </androidx.cardview.widget.CardView>
+                 <!--          验证操作       -->
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/cd_op_validation"
+                     android:visibility="visible"
+                     style="@style/cardview_style">
+                     <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:orientation="vertical">
+                         <RelativeLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="44dp">
+                             <TextView
+                                 android:text="@string/tv_valition_info"
+                                 style="@style/unquality_order_info_left" />
+                         </RelativeLayout>
+
+                         <ImageView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="10dp"
+                             android:layout_marginRight="10dp"
+                             android:src="@drawable/pd_view" />
+                         <LinearLayout
+                             android:layout_height="@dimen/px_80"
+                             style="@style/ll_create_order">
+
+                             <TextView style="@style/tv_create_order_red_star" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textStyle="normal"
+                                 style="@style/tv_disqualified_detail_left"
+                                 android:text="@string/tv_valition_person" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textColor="@color/blackTextColor"
+                                 android:text="大佬"
+                                 style="@style/tv_create_order_select_single" />
+                         </LinearLayout>
+                         <LinearLayout
+                             android:layout_height="@dimen/px_80"
+                             style="@style/ll_create_order">
+
+                             <TextView style="@style/tv_create_order_red_star" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textStyle="normal"
+                                 style="@style/tv_disqualified_detail_left"
+                                 android:text="@string/tv_valition_date" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textColor="@color/blackTextColor"
+                                 android:text="2019-12-23"
+                                 style="@style/tv_create_order_select_single" />
+
+                             <ImageView
+                                 android:src="@drawable/edit"
+                                 style="@style/tv_create_order_right_arrow" />
+                         </LinearLayout>
+                         <LinearLayout
+                             android:layout_height="@dimen/px_80"
+                             style="@style/ll_create_order">
+
+                             <TextView style="@style/tv_create_order_red_star" />
+
+                             <TextView
+                                 android:textSize="@dimen/font_size14"
+                                 android:textStyle="normal"
+                                 style="@style/tv_create_order_name"
+                                 android:text="验证情况" />
+                         </LinearLayout>
+                         <LinearLayout
+                             style="@style/ll_create_order"
+                             android:layout_height="wrap_content">
+
+                             <com.einyun.app.common.ui.component.limit.LimitInput
+                                 android:id="@+id/lt_validation"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 app:hintText="请输入文字信息"
+                                 app:maxNumber="300" />
+                         </LinearLayout>
+                         <LinearLayout style="@style/ll_create_order">
+                             <TextView style="@style/tv_create_order_red_star" />
+                             <TextView
+                                 android:textStyle="normal"
+                                 style="@style/tv_create_order_name"
+                                 android:layout_weight="0"
+                                 android:text="@string/picture" />
+
+                             <TextView
+                                 style="@style/tv_create_order_red_star"
+                                 android:text="（最多4张）"
+                                 android:textSize="@dimen/font_size13" />
+                         </LinearLayout>
+                         <LinearLayout
+                             style="@style/ll_create_order"
+                             android:layout_height="wrap_content">
+
+                             <androidx.recyclerview.widget.RecyclerView
+                                 android:id="@+id/rv_validation_list"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:paddingBottom="@dimen/px_30">
+
+                             </androidx.recyclerview.widget.RecyclerView>
+                         </LinearLayout>
+                         <LinearLayout
+                             android:layout_marginTop="20dp"
+                             android:layout_marginBottom="20dp"
+                             android:layout_width="match_parent"
+                             android:layout_height="45dp">
+                             <TextView
+                                 android:layout_marginLeft="10dp"
+                                 android:layout_marginRight="5dp"
+                                 android:onClick="@{()->callBack.onCreateOrderClick()}"
+                                 android:text="创建新工单"
+                                 style="@style/style_btn_cache" />
+                             <TextView
+                                 android:layout_marginLeft="5dp"
+                                 android:layout_marginRight="5dp"
+                                 android:onClick="@{()->callBack.onValidationCacheClick()}"
+                                 android:text="@string/tv_cache"
+                                 style="@style/style_btn_cache" />
+                             <TextView
+                                 android:layout_marginRight="10dp"
+                                 android:layout_marginLeft="5dp"
+                                 android:onClick="@{()->callBack.onValidationPassClick()}"
+                                 android:text="@string/text_commit"
+                                 style="@style/style_btn_submit" />
+
+                         </LinearLayout>
+
                      </LinearLayout>
                  </androidx.cardview.widget.CardView>
              </LinearLayout>

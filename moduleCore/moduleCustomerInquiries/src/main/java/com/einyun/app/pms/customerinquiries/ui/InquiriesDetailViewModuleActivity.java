@@ -113,10 +113,11 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                     binding.llEvaluation.setVisibility(View.VISIBLE);
                 }
                 binding.tvDealState.setText(getString(R.string.tv_for_respone));
-                binding.tvDealState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                binding.tvDealState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
                 break;
             default:
-                binding.tvDealState.setText(getString(R.string.tv_finish));
+//                binding.tvDealState.setText(getString(R.string.tv_finish));
+                binding.tvDealState.setText("已完成");
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
 //                binding.llHistory.setVisibility(View.VISIBLE);
 //                binding.forceCloseInfo.setVisibility(View.VISIBLE);
