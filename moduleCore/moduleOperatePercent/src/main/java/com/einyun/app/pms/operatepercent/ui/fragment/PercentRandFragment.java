@@ -1,51 +1,47 @@
 package com.einyun.app.pms.operatepercent.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.view.View;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
-import com.einyun.app.common.ui.widget.PeriodizationView;
-import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.pms.operatepercent.BR;
 import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentViewModel;
 import com.einyun.app.pms.operatepercent.R;
-import com.einyun.app.pms.operatepercent.databinding.ReportFormLayoutBinding;
+import com.einyun.app.pms.operatepercent.databinding.FragmentPercentRandBinding;
+import com.einyun.app.pms.operatepercent.databinding.ItemPercentRankBinding;
 import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
-/**
- * @ProjectName: pms_old
- * @Package: com.einyun.app.pms.sendorder.ui
- * @ClassName: SendWorkOrderFragment
- * @Description: java类作用描述
- * @Author: zhulufeng
- * @CreateDate: 2019/11/26 14:37
- * @UpdateUser: 更新者：
- * @UpdateDate: 2019/11/26 14:37
- * @UpdateRemark: 更新说明：
- * @Version: 1.0
- */
-public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBinding, OperatePercentViewModel>  implements View.OnClickListener, PeriodizationView.OnPeriodSelectListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PercentRandFragment extends BaseViewModelFragment<FragmentPercentRandBinding, OperatePercentViewModel>  implements View.OnClickListener {
+
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
-    public static ReportFormFragment newInstance(Bundle bundle) {
-        ReportFormFragment fragment = new ReportFormFragment();
+    private RVBindingAdapter<ItemPercentRankBinding, SelectModel> adapter;//排名adapter
+    private List<SelectModel> list=new ArrayList<>();
+    public static PercentRandFragment newInstance(Bundle bundle) {
+        PercentRandFragment fragment = new PercentRandFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.report_form_layout;
+        return R.layout.fragment_percent_rand;
     }
 
 
@@ -53,15 +49,6 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     protected void init() {
         super.init();
 
-    }
-
-    @Override
-    protected void setUpListener() {
-        super.setUpListener();
-        binding.operatePercentTabPeroidLn.setOnClickListener(this);
-        binding.operatePercentAllGet.getRoot().setOnClickListener(this);
-        binding.operatePercentCarGet.carFee.setOnClickListener(this);
-        binding.operatePercentPropertyGet.thingFee.setOnClickListener(this);
     }
 
     @Override
@@ -81,14 +68,30 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     protected void setUpView() {
-        binding.reportFormRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
-        binding.reportFormRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.rankRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
+        binding.rankRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadPagingData();
             }
         });
+        for (int i=0;i<8;i++){
+            list.add(new SelectModel());
+        }
+        adapter=new RVBindingAdapter<ItemPercentRankBinding, SelectModel>(getActivity(),BR.select) {
+            @Override
+            public void onBindItem(ItemPercentRankBinding binding, SelectModel model, int position) {
 
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_percent_rank;
+            }
+        };
+        binding.percentRankList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter.setDataList(list);
+        binding.percentRankList.setAdapter(adapter);
     }
 
     @Override
@@ -96,7 +99,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
         //停止刷新
         LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(getActivity(), shown -> {
             if (!shown) {
-                binding.reportFormRefresh.setRefreshing(false);
+                binding.rankRefresh.setRefreshing(false);
             }
         });
 
@@ -118,19 +121,5 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.operate_percent_tab_peroid_ln){
-            //弹出分期view
-            PeriodizationView periodizationView = new PeriodizationView();
-            periodizationView.setPeriodListener(ReportFormFragment.this::onPeriodSelectListener);
-            periodizationView.show(getParentFragmentManager(), "");
-        }else {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_TODAY_ALL_GET).navigation();
-        }
-    }
-
-    @Override
-    public void onPeriodSelectListener(OrgModel orgModel) {
-        Log.d("Test",orgModel.getCode());
-
     }
 }

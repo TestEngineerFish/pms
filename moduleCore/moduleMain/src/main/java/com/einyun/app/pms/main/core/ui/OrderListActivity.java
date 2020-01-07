@@ -71,8 +71,8 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_LIST).navigation();
             }
             if (v.getId() == R.id.og_unwell_order) {
-                ToastUtil.show(this,"该功能暂未实现");
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
+//                ToastUtil.show(this,"该功能暂未实现");
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉
