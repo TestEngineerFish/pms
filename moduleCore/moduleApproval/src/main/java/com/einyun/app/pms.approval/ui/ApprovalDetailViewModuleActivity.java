@@ -162,7 +162,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.listview.setVisibility(View.GONE);//
             binding.rlApprovalSug.setVisibility(View.VISIBLE);
             binding.limitInput.setVisibility(View.VISIBLE);
-            binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
             binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
         } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_PASS)) {//通过
 
@@ -192,14 +192,14 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 binding.limitInput.setVisibility(View.VISIBLE);
 
                 binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
-                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_send_color));
             }else {//自己审批过 显示审批列表 UserAuditStatus 不为空
                 binding.listview.setVisibility(View.VISIBLE);//显示审批信息列表
                 binding.rlApprovalSug.setVisibility(View.GONE);
                 binding.limitInput.setVisibility(View.GONE);
                 binding.llPass.setVisibility(View.GONE);
                 binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
-                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_send_color));
 //                if ("approve".equals(approvalItemmodule.getUserAuditStatus())) {
 ////                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
 ////                    binding.tvApprovalState.setText(getString(R.string.tv_had_approval));

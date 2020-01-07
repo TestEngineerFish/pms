@@ -187,11 +187,12 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //            return;
 //        }
         //TODO 数据源
-        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), new ArrayList<>(),mPosition);
-        inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
-        if (!inquiriesTypeSelectPopWindow.isShowing()) {
-            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
-        }
+//        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), new ArrayList<>(),mPosition);
+//        inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
+//        if (!inquiriesTypeSelectPopWindow.isShowing()) {
+//            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
+//        }
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL).navigation();
     }
     /*
      * 分期按钮点击

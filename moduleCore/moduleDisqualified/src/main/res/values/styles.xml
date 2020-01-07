@@ -1,4 +1,9 @@
 <resources>
 
-
+    <style name="style_rl_normal">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

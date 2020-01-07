@@ -99,6 +99,7 @@ public class RouterUtils {
     public static final String ACTIVITY_CUSTOMER_COMPLAIN_DETAIL = "/complain/ComplainDetailActivity";
     //不合格单
     public static final String ACTIVITY_DISQUALIFIED = "/disqualified/DisqualifiedActivity";
+    public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
     public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
     public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
     public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
