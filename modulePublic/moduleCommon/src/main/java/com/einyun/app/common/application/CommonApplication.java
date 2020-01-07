@@ -138,11 +138,11 @@ public class CommonApplication extends BasicApplication {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             // 通知渠道的id
-            String id = "rrbus";
+            String id = "pms_notification_channel_id";
             // 用户可以看到的通知渠道的名字.
-            CharSequence name = "notification channel";
+            CharSequence name = "消息通知";
             // 用户可以看到的通知渠道的描述
-            String description = "notification description";
+            String description = "消息通知";
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(id, name, importance);
             // 配置通知渠道的属性

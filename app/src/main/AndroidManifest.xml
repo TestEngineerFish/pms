@@ -180,26 +180,28 @@
 
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="appid=101286213" /><!-- 请填写你自己华为平台上注册的appid -->
-
+            android:value="appid=101286213" />
+        <!-- 请填写你自己华为平台上注册的appid -->
         <meta-data
             android:name="com.vivo.push.api_key"
-            android:value="xxxxxxxxxxxxxxxxxxx" />  <!-- 请填写您自己的vivo平台上的appKey -->
+            android:value="xxxxxxxxxxxxxxxxxxx" />
+        <!-- 请填写您自己的vivo平台上的appKey -->
         <meta-data
             android:name="com.vivo.push.app_id"
-            android:value="xxxx" />    <!-- 请填写您自己的vivo平台上的appId -->
+            android:value="xxxx" />
+        <!-- 请填写您自己的vivo平台上的appId -->
 
         <service
             android:name="com.einyun.app.common.pushReceiver.MyMessageIntentService"
             android:exported="false">
-            <intent-filter> 
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
-            </intent-filter>
-            <intent-filter>     
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
             </intent-filter>
         </service>
     </application>
