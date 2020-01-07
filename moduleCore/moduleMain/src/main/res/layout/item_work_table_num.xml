@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="num"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_org"
+        android:layout_width="@dimen/px_46"
+        android:layout_height="@dimen/px_54"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/px_8"
+        android:layout_marginRight="@dimen/px_8"
+        android:background="@mipmap/img_num_bg"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title_text_icon_color"
+            android:text="@{num}"
+            android:textSize="@dimen/font_size18"/>
+
+    </LinearLayout>
+</layout>

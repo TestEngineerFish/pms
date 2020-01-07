@@ -49,7 +49,7 @@ android {
         debug {
             minifyEnabled false
             versionNameSuffix "-dev"
-            manifestPlaceholders=[APP_NAME:app_name]
+            manifestPlaceholders=[APP_NAME:app_name + "Dev"]
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {

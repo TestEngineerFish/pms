@@ -23,7 +23,9 @@
         android:background="@color/activity_bg_color"
         android:orientation="vertical">
 
-        <include layout="@layout/include_layout_activity_head" />
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,6 +40,7 @@
                 android:id="@+id/send_work_orer_tab_peroid_ln"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->callBack.selectOrgCodes()}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -68,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_60"
-                android:layout_weight="1"
+                android:onClick="@{()->callBack.selectTime()}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -125,28 +128,28 @@
                             android:paddingBottom="@dimen/px_44">
 
                             <TextView
-                                android:id="@+id/tv_percentage_complete"
+                                android:id="@id/tv_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="工单完成率"
                                 android:textColor="#FF999999"
-                                android:textSize="24px" />
+                                android:textSize="@dimen/font_size12" />
 
                             <TextView
-                                android:id="@+id/tv_timeless"
+                                android:id="@+id/tv_percentage_complete"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/tv_percentage_complete"
+                                android:layout_below="@id/tv_1"
                                 android:layout_marginTop="@dimen/px_26"
                                 android:text="86.43%"
                                 android:textColor="#FF132D42"
-                                android:textSize="44px"
+                                android:textSize="@dimen/font_size22"
                                 android:textStyle="bold" />
 
                             <ImageView
                                 android:layout_width="@dimen/px_60"
                                 android:layout_height="@dimen/px_60"
-                                android:layout_alignBottom="@id/tv_timeless"
+                                android:layout_alignBottom="@id/tv_percentage_complete"
                                 android:layout_alignParentRight="true"
                                 android:src="@mipmap/img_percentage_complete" />
                         </RelativeLayout>
@@ -171,7 +174,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="工单及时率"
                                 android:textColor="#FF999999"
-                                android:textSize="24px" />
+                                android:textSize="@dimen/font_size12" />
 
                             <TextView
                                 android:id="@+id/tv_timeliness_ratio"
@@ -181,7 +184,7 @@
                                 android:layout_marginTop="@dimen/px_26"
                                 android:text="86.43%"
                                 android:textColor="#FF132D42"
-                                android:textSize="44px"
+                                android:textSize="@dimen/font_size22"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -203,18 +206,18 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:paddingLeft="@dimen/px_20"
-                        android:paddingRight="@dimen/px_20"
-                        android:orientation="vertical">
+                        android:paddingRight="@dimen/px_20">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_26"
+                            android:layout_marginBottom="@dimen/px_26"
                             android:text="工单数量统计"
                             android:textColor="#FF132D42"
-                            android:textSize="@dimen/font_size16"
-                            android:layout_marginTop="@dimen/px_26"
-                            android:layout_marginBottom="@dimen/px_26"/>
+                            android:textSize="@dimen/font_size16" />
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -224,28 +227,201 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_30"
                             android:background="@mipmap/img_order_bg">
-                           <LinearLayout
-                               android:layout_width="match_parent"
-                               android:layout_marginTop="@dimen/px_30"
-                               android:layout_height="wrap_content"
-                               android:orientation="vertical"
-                               android:gravity="center"
-                               android:layout_centerInParent="true">
-                               <androidx.recyclerview.widget.RecyclerView
-                                   android:id="@+id/rv_work_table_pending_num"
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content" />
 
-                               <TextView
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginTop="@dimen/px_20"
-                                   android:gravity="center"
-                                   android:text="@string/tv_work_order_num"
-                                   android:textColor="@color/white"
-                                   android:textSize="@dimen/font_size12" />
-                           </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_work_table_pending_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_20"
+                                    android:gravity="center"
+                                    android:text="@string/tv_work_order_num"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/font_size12" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_40"
+                            android:layout_marginBottom="@dimen/px_40"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/ll_height"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/cv_table"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/main_cardview_style"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/px_23">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/px_20"
+                        android:paddingRight="@dimen/px_20">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_26"
+                            android:layout_marginBottom="@dimen/px_26"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="条线工单统计"
+                                android:textColor="#FF132D42"
+                                android:textSize="@dimen/font_size16" />
+
+                            <View
+                                android:layout_width="@dimen/px_16"
+                                android:layout_height="@dimen/px_16"
+                                android:background="@drawable/main_work_order_table" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_16"
+                                android:text="已完成"
+                                android:textColor="#FF999999"
+                                android:textSize="@dimen/font_size11" />
+
+                            <View
+                                android:layout_width="@dimen/px_16"
+                                android:layout_height="@dimen/px_16"
+                                android:layout_marginLeft="@dimen/px_25"
+                                android:background="@drawable/main_work_order_line_table" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_16"
+                                android:text="未完成"
+                                android:textColor="#FF999999"
+                                android:textSize="@dimen/font_size11" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/pd_view" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_40"
+                            android:layout_marginBottom="@dimen/px_40"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/ll_line_height"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/px_68"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/img_table_line" />
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/cv_line_table"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

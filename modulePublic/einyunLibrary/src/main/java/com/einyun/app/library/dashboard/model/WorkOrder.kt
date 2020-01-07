@@ -14,10 +14,10 @@ package com.einyun.app.library.dashboard.model
  * @Version:        1.0
  */
 class WorkOrder {
-     val completed_num = 0
-     val unfinished_num = 0
-     val count = 0
-     val name: String? = null
-     val type = 0
-     val timely_num = 0
+    val completed_num = 0
+    val unfinished_num = 0
+    val count = 0
+    val name: String? = null
+    val type: String? = "0"
+    val timely_num = 0
 }

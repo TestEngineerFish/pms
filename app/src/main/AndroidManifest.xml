@@ -98,7 +98,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             />
         <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"/>
-
+        <activity android:name=".main.core.ui.OrderConditionPandectActivity"/>
         <activity android:name="com.einyun.app.common.ui.activity.BaseApplyForceCloseActivity"/>
         <activity android:name="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity"/>
 
