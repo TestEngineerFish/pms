@@ -56,48 +56,46 @@
             android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="wrap_content">
             <TextView
 
                 android:text="@string/tv_real_estate"
-                style="@style/style_text_approval_left" />
+                style="@style/style_text_item_left" />
             <TextView
                 android:id="@+id/tv_property_num"
-                style="@style/style_text_approval_right" />
+                style="@style/style_text_item_right" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="wrap_content">
             <TextView
                 android:text="@string/tv_asking_people"
-                style="@style/style_text_approval_left"
+                style="@style/style_text_item_left"
                 />
             <TextView
                 android:id="@+id/tv_asking_people"
-                style="@style/style_text_approval_right"/>
+                style="@style/style_text_item_right"/>
         </RelativeLayout>
         <RelativeLayout
-            android:layout_marginTop="@dimen/px_10"
-            android:layout_marginBottom="@dimen/px_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/tv_work_num"
-                style="@style/style_text_approval_left"
+                style="@style/style_text_item_left"
                 />
             <TextView
                 android:id="@+id/tv_work_order_num"
-                style="@style/style_text_approval_right" />
+                style="@style/style_text_item_right" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="wrap_content">
             <TextView
-                style="@style/style_text_approval_left"
+                style="@style/style_text_item_left"
                 android:text="@string/tv_create_time"/>
             <TextView
                 android:id="@+id/tv_create_time"
-                style="@style/style_text_approval_right"/>
+                style="@style/style_text_item_right"/>
         </RelativeLayout>
         <View
             android:background="@color/thin_divider_color"
@@ -137,7 +135,7 @@
                 android:layout_marginRight="@dimen/px_28"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_width="@dimen/px_25"
+                android:layout_width="@dimen/px_15"
                 android:layout_height="@dimen/px_25"
                 android:background="@drawable/right_arrow"
                 />

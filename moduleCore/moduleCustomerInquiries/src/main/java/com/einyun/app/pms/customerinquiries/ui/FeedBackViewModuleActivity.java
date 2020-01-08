@@ -74,7 +74,9 @@ String taskID;
         List<FeedBackModule.CommuReceiversBean> commuReceivers = module.getCommuReceivers();
         if (commuReceivers!=null&&commuReceivers.size()>0) {
             long expectTime = commuReceivers.get(0).getExpectTime();
-            binding.tvBackTime.setText(TimeUtil.getAllTime(expectTime));
+            if (expectTime!=0) {
+                binding.tvBackTime.setText(TimeUtil.getAllTime(expectTime));
+            }
         }
     }
 

@@ -18,6 +18,7 @@
          android:layout_height="match_parent">
          <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
         <RelativeLayout
+            android:layout_marginBottom="@dimen/px_20"
             android:visibility="gone"
             android:background="@color/white"
             android:layout_marginTop="1dp"
@@ -46,7 +47,7 @@
         </RelativeLayout>
          <RelativeLayout
              android:background="@color/white"
-             android:layout_marginTop="@dimen/px_20"
+             android:layout_marginTop="@dimen/px_2"
              android:layout_width="match_parent"
              android:layout_height="@dimen/px_100">
              <TextView

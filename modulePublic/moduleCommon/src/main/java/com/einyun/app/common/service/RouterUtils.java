@@ -111,6 +111,7 @@ public class RouterUtils {
     public static final int ACTIVITY_REQUEST_PERSON_CHOOSE = 105;
     public static final int ACTIVITY_REQUEST_SIGN_IN = 106;
     public static final int ACTIVITY_REQUEST_OPTION = 107;
+    public static final int ACTIVITY_REQUEST_REQUEST_PIC_PICK_SECOND = 108;
 
 
     public static final String ACTIVITY_COMMUNICATION="/complain/CommunicationActivity";

@@ -38,6 +38,8 @@
                  android:layout_height="match_parent"
                  android:background="@color/grayBgColor"
                  android:gravity="center_vertical"
+                 android:textSize="@dimen/font_size13"
+                 android:textStyle="bold"
                  android:paddingLeft="16dp"
                  android:paddingRight="5dp"
                  android:text="处理用时:"
@@ -52,6 +54,7 @@
          </LinearLayout>
          <!--         工单信息-->
          <androidx.cardview.widget.CardView
+             android:layout_marginTop="@dimen/px_2"
              style="@style/cardview_style">
 
              <LinearLayout
@@ -64,6 +67,7 @@
                      android:layout_width="match_parent"
                      android:layout_height="44dp">
                      <TextView
+                         android:textStyle="bold"
                          android:id="@+id/tv_approvaler_name"
                          android:layout_marginLeft="10dp"
                          android:gravity="center_vertical"
@@ -73,6 +77,7 @@
                          android:layout_width="wrap_content"
                          android:layout_height="match_parent"/>
                      <TextView
+                         android:textStyle="bold"
                          android:id="@+id/tv_deal_state"
                          android:gravity="center"
                          android:layout_marginRight="10dp"
@@ -95,7 +100,6 @@
                      <TextView
 
                          style="@style/style_text_approval_left"
-                         android:layout_marginBottom="10dp"
                          android:text="@string/tv_work_nums" />
                      <TextView
                          android:id="@+id/tv_work_num"
@@ -107,8 +111,6 @@
 
                      <TextView
                          style="@style/style_text_approval_left"
-                         android:layout_alignParentBottom="true"
-                         android:layout_marginBottom="10dp"
                          android:text="@string/tv_divide" />
                      <TextView
                          android:id="@+id/tv_divide"
@@ -119,7 +121,6 @@
                      style="@style/style_rl_normal">
                      <TextView
                          android:text="@string/tv_real_estate"
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"/>
                      <TextView
                          android:text="@{module.data.customer_enquiry_model.wx_house}"
@@ -129,7 +130,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_phone" />
                      <TextView
@@ -140,7 +140,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_asking_people" />
                      <TextView
@@ -165,6 +164,7 @@
                      android:layout_height="@dimen/px_90">
 
                      <TextView
+                         android:textStyle="bold"
                          android:textColor="@color/blackTextColor"
                          android:layout_width="wrap_content"
                          android:layout_height="match_parent"
@@ -185,7 +185,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_complaint_time" />
                      <TextView
@@ -196,7 +195,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_record_person" />
                      <TextView
@@ -207,7 +205,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_ask_way" />
                      <TextView
@@ -218,7 +215,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_ask_type" />
                      <TextView
@@ -229,7 +225,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_finish_time" />
                      <TextView
@@ -240,7 +235,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_current_deal_person" />
                      <TextView
@@ -251,7 +245,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_inquiries_content" />
                      <TextView
@@ -295,6 +288,7 @@
                      android:layout_width="match_parent"
                      android:layout_height="44dp">
                      <TextView
+                         android:textStyle="bold"
                          android:layout_marginLeft="10dp"
                          android:gravity="center_vertical"
                          android:textSize="16sp"
@@ -370,6 +364,7 @@
                      <TextView style="@style/tv_create_order_red_star" />
 
                      <TextView
+                         android:textStyle="bold"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
                          android:text="@string/tv_feed_content"
@@ -411,6 +406,7 @@
                          android:layout_height="@dimen/px_90">
 
                          <TextView
+                             android:textStyle="bold"
                              android:layout_width="wrap_content"
                              android:layout_height="match_parent"
                              android:layout_alignParentLeft="true"
@@ -430,7 +426,8 @@
                          android:src="@drawable/pd_view" />
 
                      <LinearLayout
-                         style="@style/work_order_detail_ln">
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
 
                          <TextView
                              style="@style/work_order_detail_txt_left2"
@@ -442,7 +439,9 @@
                              style="@style/work_order_detail_txt_right2" />
                      </LinearLayout>
 
-                     <LinearLayout style="@style/work_order_detail_ln">
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
 
                          <TextView
                              style="@style/work_order_detail_txt_left2"
@@ -456,7 +455,9 @@
                      </LinearLayout>
 
 
-                     <LinearLayout style="@style/work_order_detail_ln">
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
 
                          <TextView
                              style="@style/work_order_detail_txt_left2"
@@ -469,7 +470,9 @@
                              />
                      </LinearLayout>
 
-                     <LinearLayout style="@style/work_order_detail_ln">
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
 
                          <TextView
                              style="@style/work_order_detail_txt_left2"
@@ -482,7 +485,9 @@
                              />
                      </LinearLayout>
 
-                     <LinearLayout style="@style/work_order_detail_ln">
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
 
                          <TextView
                              style="@style/work_order_detail_txt_left2"
@@ -495,7 +500,9 @@
                              />
                      </LinearLayout>
 
-                     <LinearLayout style="@style/work_order_detail_ln">
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
 
                          <TextView
                              style="@style/work_order_detail_txt_left2"
