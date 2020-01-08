@@ -13,6 +13,9 @@ buildscript {
         maven { url "https://jitpack.io" }
 //        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 //        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
         mavenCentral()
         google()
     }
@@ -22,6 +25,7 @@ buildscript {
         classpath deps.kotlin.plugin
         classpath deps.benchmark_gradle
         classpath 'com.tencent.bugly:symtabfileuploader:latest.release'//bugly 符号表插件
+        classpath 'com.aliyun.ams:emas-services:1.0.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -34,6 +38,9 @@ allprojects {
         }
         maven{ url'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
         maven { url "https://jitpack.io" }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
 //        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 //        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
         mavenCentral()

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="select"
+            type="com.einyun.app.common.model.SelectModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_136"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/px_60"
+            android:layout_height="@dimen/px_50"
+            android:layout_marginTop="@dimen/px_33"
+            android:layout_marginLeft="@dimen/px_28"
+            android:src="@drawable/moth_get"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_28"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="高端事业部"
+                android:textSize="@dimen/font_size16"
+                android:textColor="@color/blackTextColor"
+                android:layout_marginTop="@dimen/px_24"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收缴金额4,786,980"
+                android:textSize="@dimen/font_size12"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:layout_marginTop="@dimen/px_12"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/px_24"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="87%"
+                    android:textSize="@dimen/font_size16"
+                    android:textColor="@color/blackTextColor"
+                    android:layout_marginTop="@dimen/px_24"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年收缴率"
+                    android:textSize="@dimen/font_size12"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:layout_marginTop="@dimen/px_12"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

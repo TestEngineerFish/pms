@@ -1,6 +1,7 @@
 package com.einyun.app.pms.operatepercent.ui;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,9 +15,10 @@ import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.pms.operatepercent.OperatePercentViewModel;
+import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentViewModel;
 import com.einyun.app.pms.operatepercent.R;
 import com.einyun.app.pms.operatepercent.databinding.ActivityOperatePercentBinding;
+import com.einyun.app.pms.operatepercent.ui.fragment.PercentRandFragment;
 import com.einyun.app.pms.operatepercent.ui.fragment.ReportFormFragment;
 import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
 
@@ -39,17 +41,22 @@ public class OperatePercentActivity extends BaseHeadViewModelActivity<ActivityOp
         super.initViews(savedInstanceState);
         mTitles = new String[]{getResources().getString(R.string.txt_get_report_form), getResources().getString(R.string.txt_own_report_form),getResources().getString(R.string.txt_get_report_rank),getResources().getString(R.string.txt_own_report_rank)};
         setHeadTitle(R.string.txt_operate_percent);
-        final ArrayList<ReportFormFragment> fragments = new ArrayList<>();
+        final ArrayList<Fragment> fragments = new ArrayList<>();
 //        String fragmentTags[] = new String[]{FRAGMENT_WORK_PREVIEW_PLAN, FRAGMENT_WORK_PREVIEW_PATRO};
-        for (int i = 0; i < mTitles.length; i++) {
+        Bundle bundle = new Bundle();
+        fragments.add(ReportFormFragment.newInstance(bundle));
+        fragments.add(ReportFormFragment.newInstance(bundle));
+        fragments.add(PercentRandFragment.newInstance(bundle));
+        fragments.add(PercentRandFragment.newInstance(bundle));
+       /* for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
 //            bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
             fragments.add(ReportFormFragment.newInstance(bundle));
         }
-
+*/
         binding.vpOperatePercent.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
-            public ReportFormFragment getItem(int i) {
+            public Fragment getItem(int i) {
                 return fragments.get(i);
             }
 

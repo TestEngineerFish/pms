@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.JsonUtil;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
@@ -33,6 +35,7 @@ import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
 import com.einyun.app.pms.main.databinding.ItemWorkTablePendingNumBinding;
+import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
@@ -81,6 +84,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             handleUserMenu(userMenu);
             //获取分期数据
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
+                SPUtils.put(BasicApplication.getInstance(),Constants.SP_KEY_STAGING,new Gson().toJson(orgModels));
                 handleStagingData(orgModels);
                 firstFresh = true;
                 freshData();
@@ -102,7 +106,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
      * 刷新当前页面
      */
     public void freshData() {
-        if (!firstFresh){
+        if (!firstFresh) {
             return;
         }
         //运营收缴率
@@ -118,12 +122,18 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //工单处理情况总览
         if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
             viewModel.workOrderData(divideCode).observe(this, workOrderData -> {
-                //工单完成率
-                String completedRate = workOrderData.getRate().getCompletedRate();
-                binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
-                //工单及时率
-                String timelyRate = workOrderData.getRate().getTimelyRate();
-                binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
+                if (workOrderData.getRate() != null) {
+                    //工单完成率
+                    String completedRate = workOrderData.getRate().getCompletedRate();
+                    binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
+                    //工单及时率
+                    String timelyRate = workOrderData.getRate().getTimelyRate();
+                    binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
+                } else {
+                    binding.itemWorkBenchSecond.tvWorkOrderProcess.setText("0%");
+                    binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText("0%");
+                }
+
                 //总单总数
                 int num = 0;
                 for (WorkOrder workOrder : workOrderData.getWorkOrder()) {
@@ -133,6 +143,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 setWorkTablePendingNum(format.toCharArray());
             });
         }
+
         //获取审批数量
         if (binding.itemWorkBenchFirst.ssvCommonFun.getVisibility() == View.VISIBLE) {
             viewModel.getAuditCount().observe(this, integer -> {
@@ -143,18 +154,18 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (binding.itemWorkBenchFirst.llWorkOrderList.getVisibility() == View.VISIBLE) {
             //获取待办数量（客户报修，客户询问，客户投诉）
             viewModel.getBlocklogNums().observe(this, blocklogNums -> {
-                binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
                 binding.itemWorkBenchFirst.tvClentComplainNum.setText(StringUtil.isNullStr(blocklogNums.getComplainNum()) ? blocklogNums.getComplainNum() : "0");
                 binding.itemWorkBenchFirst.tvClentInquiryNum.setText(StringUtil.isNullStr(blocklogNums.getEnquiryNum()) ? blocklogNums.getEnquiryNum() : "0");
                 binding.itemWorkBenchFirst.tvClentRepairsNum.setText(StringUtil.isNullStr(blocklogNums.getRepairNum()) ? blocklogNums.getRepairNum() : "0");
             });
             //待办统计-计划、巡查、派工单
             viewModel.getWaitCount().observe(this, waitCount -> {
-                binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
                 //派工单
                 binding.itemWorkBenchFirst.tvWorkTableDispatchNum.setText("" + waitCount.getDispatchOrderCount());
                 //计划工单
@@ -287,11 +298,6 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (userMenu.indexOf("gdlbck") != -1) {
             functionList.add("gdlb");
         }
-//  去除抢单
-//        if (userMenu.indexOf("qd") != -1) {
-//            functionList.add("qd");
-//        }
-
 
         functionList.add("gzyl");
         functionList.add("smcl");
@@ -406,15 +412,22 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (type == 0) {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId();
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, url)
+                    .navigation();
+        } else if (type == 2) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
+                    .navigation();
         } else {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId() + "&type=" + type;
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, url)
+                    .navigation();
         }
-
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
-                .withString(RouteKey.KEY_WEB_URL, url)
-                .navigation();
     }
 
     @Override

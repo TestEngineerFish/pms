@@ -10,10 +10,12 @@ import com.einyun.app.library.core.api.DashBoardService
 import com.einyun.app.library.core.api.EinyunService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.dashboard.model.AllChargedModel
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.DashBoardServiceApi
+import com.einyun.app.library.dashboard.net.request.AllChargedRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.net.URLs
@@ -33,6 +35,29 @@ import io.reactivex.functions.Consumer
  * @Version:        1.0
  */
 class DashBoardRepo : DashBoardService {
+    override fun allChargedProject(
+        request: AllChargedRequest,
+        callBack: CallBack<AllChargedModel>
+    ): LiveData<AllChargedModel> {
+        val liveData = MutableLiveData<AllChargedModel>()
+        serviceApi?.getAllCharged(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe(
+                Consumer { response ->
+                    if (response.isState) {
+                        liveData.postValue(response.data)
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
+                },
+                Consumer {
+                    callBack.onFaild(it)
+                }
+            )
+        return liveData
+    }
+
+
     override fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String> {
         val liveData = MutableLiveData<String>()
         serviceApi?.userMenu(menuType)?.compose(RxSchedulers.inIoMain())

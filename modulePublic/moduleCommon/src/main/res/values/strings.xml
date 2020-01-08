@@ -92,6 +92,7 @@
     <string name="create">创建</string>
     <string name="resend_success">转派成功</string>
     <string name="order_list">工单列表</string>
+    <string name="title_order_condition_pandect">工单列表</string>
     <string name="plan_order">计划工单</string>
     <string name="patro_order">巡查工单</string>
     <string name="work_preview">工作预览</string>
@@ -235,6 +236,7 @@
     <string name="text_repair_area">报修区域</string>
     <string name="text_repair_type_first">报修大类</string>
     <string name="text_repair_type_second">报修小类</string>
+    <string name="text_all_get">全部收费项目</string>
 
     <!-- 不合格单开始-->
     <string name="tv_disqualified_order">不合格单</string>

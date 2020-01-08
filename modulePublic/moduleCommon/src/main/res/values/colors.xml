@@ -76,5 +76,6 @@
     <color name="repair_detail_grab_color">#458dfe</color>
     <color name="repair_detail_evaluate_color">#2ebaf1</color>
     <color name="repair_detail_close_color">#cecdcd</color>
-
+    <color name="repair_circle_color">#4a5bef</color>
+    <color name="all_left_tt_color">#f36161</color>
 </resources>

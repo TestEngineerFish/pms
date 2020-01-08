@@ -52,6 +52,7 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
     private OrgModel orgModel;
     private PlanRepository planRepository;
     public DistributePageRequest request=new DistributePageRequest();
+    public DistributePageRequest cloneRequest;
     private PendingBoundaryCallBack pendingBoundaryCallBack;
     private DoneBoundaryCallBack doneBoundaryCallBack;
 
@@ -159,6 +160,30 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
        donePageList= new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
                 .build();
        return donePageList;
+    }
+    /**
+     * * 在线搜索代办列表
+     *
+     * @return LiveData
+     */
+    public LiveData<PagedList<PlanWorkOrder>> loadPadingNetData(DistributePageRequest request,String tag) {
+        if (!StringUtil.isNullStr(request.getDivideId())){
+            request.setDivideId(null);
+        }
+        pageList = new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
+                .build();
+        return pageList;
+    }
+
+
+    /**
+     * 在线搜索已办列表
+     * @return
+     */
+    public LiveData<PagedList<PlanWorkOrder>> loadDonePagingNetData(DistributePageRequest request,String tag){
+        donePageList= new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
+                .build();
+        return donePageList;
     }
 
     public void onConditionSelected(Map<String, SelectModel> selected){
