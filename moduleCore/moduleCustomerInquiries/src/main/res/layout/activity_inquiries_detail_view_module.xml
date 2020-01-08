@@ -45,6 +45,7 @@
                  android:text="处理用时:"
                  android:textColor="@color/important_red_color" />
              <TextView
+                 android:textStyle="bold"
                  android:id="@+id/tv_handle_time"
                  android:layout_width="wrap_content"
                  android:layout_height="match_parent"

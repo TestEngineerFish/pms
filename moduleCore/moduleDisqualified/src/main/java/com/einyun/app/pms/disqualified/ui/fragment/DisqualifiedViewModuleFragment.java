@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -19,15 +21,22 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
+import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 
 import com.einyun.app.pms.disqualified.BR;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.databinding.FragmentDisqualifiedViewModuleBinding;
 import com.einyun.app.pms.disqualified.databinding.ItemDisqualifiedListBinding;
+import com.einyun.app.pms.disqualified.databinding.ItemDisqualifiedSearchListBinding;
 import com.einyun.app.pms.disqualified.model.DisqualifiedItemModel;
+import com.einyun.app.pms.disqualified.model.DisqualifiedTypesBean;
+import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
 import com.einyun.app.pms.disqualified.ui.DisqualifiedViewModuleActivity;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedFragmentViewModel;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
@@ -36,9 +45,13 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
@@ -62,10 +75,13 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     private String divideId="";
     private String divideName="";
     private int mPosition=-1;
+    private int mPositionState=-1;
     private String cate="";
     private String blockName;
     private DisqualifiedTypeSelectPopWindow inquiriesTypeSelectPopWindow;
     private PeriodizationView periodizationView;
+    private PageSearchFragment searchFragment;
+    private List<DisqualifiedTypesBean> model1;
 
     public static DisqualifiedViewModuleFragment newInstance(Bundle bundle) {
         DisqualifiedViewModuleFragment fragment = new DisqualifiedViewModuleFragment();
@@ -116,8 +132,15 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
 //            binding.tvDivide.setText(blockName);
 //        }
-    }
 
+    }
+    private void loadPagingData(DisqualifiedListRequest requestBean, String  tag){
+//        初始化数据，LiveData自动感知，刷新页面
+        viewModel.loadPadingData(requestBean,tag).observe(this, dataBeans ->
+                adapter.submitList(dataBeans)
+        );
+
+    }
     @Override
     protected void setUpData() {
         binding.setCallBack(this);
@@ -138,8 +161,10 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         adapter.setOnItemClick(this);
         activity = (DisqualifiedViewModuleActivity) getActivity();
         switch (getFragmentTag()) {
-            case FRAGMENT_TO_FOLLOW_UP://待跟进
-
+            case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
+                viewModel.queryAduitType().observe(this,model->{ model1 = model; });
+            case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
+                viewModel.queryAduitType().observe(this,model->{ model1 = model; });
                 break;
         }
 
@@ -175,8 +200,47 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
      * 搜索按钮点击
      * */
     public void onSearchClick(){
-      ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
+
     }
+//    private void search() {
+//        try {
+//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+//            if (searchFragment == null) {
+//                searchFragment = new PageSearchFragment<ItemDisqualifiedSearchListBinding, PlanWorkOrder>(getActivity(), com.einyun.app.pms.plan.BR.planModel, new PageSearchListener<PlanWorkOrder>() {
+//                    @Override
+//                    public LiveData<PagedList<PlanWorkOrder>> search(String search) {
+//                        request.setSearchValue(search);
+//                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+//                            return viewModel.loadPadingNetData(request, getFragmentTag());
+//                        } else {
+//                            return viewModel.loadDonePagingNetData(request, getFragmentTag());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onItemClick(PlanWorkOrder model) {
+//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+//                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+//                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+//                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+//                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
+//                                .navigation();
+//                    }
+//
+//                    @Override
+//                    public int getLayoutId() {
+//                        return R.layout.item_disqualified_search_list;
+//                    }
+//                });
+//                searchFragment.setHint("请搜索工单编号或计划名称");
+//            }
+//            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+//        } catch (CloneNotSupportedException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     /*
      * 筛选按钮点击
      * */
@@ -186,13 +250,23 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //
 //            return;
 //        }
-        //TODO 数据源
-//        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), new ArrayList<>(),mPosition);
+        if (model1==null||model1.size()==0) {
+
+            return;
+        }
+
+//        inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
 //        inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
 //        if (!inquiriesTypeSelectPopWindow.isShowing()) {
 //            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
 //        }
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL).navigation();
+        //TODO 数据源
+        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), model1,mPosition,mPositionState);
+        inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
+        if (!inquiriesTypeSelectPopWindow.isShowing()) {
+            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
+        }
+
     }
     /*
      * 分期按钮点击
@@ -233,17 +307,21 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
      * 筛选过后的position
      */
     @Override
-    public void onData(String dataKey,int position) {
+    public void onData(String dataKey,String state,int position,int positionState) {
         Log.e("onData", "onData:dataKey=== "+dataKey );
+        Log.e("onData", "onData:state=== "+state );
+        Log.e("onData", "onData:position=== "+position );
+        Log.e("onData", "onData:positionState=== "+positionState );
         cate = dataKey;
         mPosition = position;
-        if (mPosition==-1) {
+        mPositionState = positionState;
+        if (mPosition==-1&&mPositionState==-1) {
             binding.tvSelect.setTextColor(getResources().getColor(R.color.greyTextColor));
             binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type);
 
         }else {
             binding.tvSelect.setTextColor(getResources().getColor(R.color.blueTextColor));
-//            binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type_blue);
+            binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type_blue);
 
         }
 //        loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag());

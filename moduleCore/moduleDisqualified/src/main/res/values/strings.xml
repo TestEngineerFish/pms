@@ -10,4 +10,6 @@
     <string name="tv_valition_situation">验证情况</string>
     <string name="tv_finish_time">完成时间</string>
     <string name="tv_feedback_info">反馈信息</string>
+    <string name="text_cached">已缓存</string>
+    <string name="text_no_cached">未缓存</string>
 </resources>

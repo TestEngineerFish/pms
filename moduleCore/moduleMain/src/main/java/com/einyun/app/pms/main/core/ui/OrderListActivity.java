@@ -29,7 +29,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         setHeadTitle(R.string.order_list);
         if (DataConstants.WORK_ORDER_LIST_TYPE_CREATE.equals(type)) {
             binding.ogPlanOrder.setVisibility(View.INVISIBLE);
-            binding.secondLine.setVisibility(View.GONE);
+            binding.secondLine.setVisibility(View.VISIBLE);
             binding.ogPatroOrder.setVisibility(View.INVISIBLE);
             setHeadTitle("创建工单");
         }
@@ -45,7 +45,8 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.og_unwell_order) {
                 //不合格单
-                ToastUtil.show(this,"该功能暂未实现");
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
+//                ToastUtil.show(this,"该功能暂未实现");
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉
@@ -72,7 +73,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.og_unwell_order) {
 //                ToastUtil.show(this,"该功能暂未实现");
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_DISQUALIFIED).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉

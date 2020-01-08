@@ -29,15 +29,18 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
     private Activity context;
     private OnItemClickListener mListener;
     private RVBindingAdapter<DisqualifiedPopwindowItemBinding, DisqualifiedTypesBean> adapter;//外部适配器
+    private RVBindingAdapter<DisqualifiedPopwindowItemBinding, DisqualifiedTypesBean> adapterState;//二级适配器
     private int mPosition=-1;
+    private int mPositionState=-1;
 
-    public DisqualifiedTypeSelectPopWindow(Activity context, List<DisqualifiedTypesBean> mInquiriesTypesModule, int mPosition) {
+    public DisqualifiedTypeSelectPopWindow(Activity context, List<DisqualifiedTypesBean> mInquiriesTypesModule, int mPosition,int mPositionState) {
         super(context);
         this.mInquiriesTypesModule=mInquiriesTypesModule;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.disqualifiedtype_popwindow, null);//alt+ctrl+f
         this.context = context;
         this.mPosition=mPosition;
+        this.mPositionState=mPositionState;
         initView();
         initPopWindow();
 //        getData(1,10);
@@ -57,7 +60,8 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
         TextView cancel = view.findViewById(R.id.cancle);
         TextView ok = view.findViewById(R.id.ok);
         ImageView iv_close = view.findViewById(R.id.iv_close);
-        RecyclerView recyclerview = view.findViewById(R.id.recyclerview);
+        RecyclerView rvLine = view.findViewById(R.id.rv_line);
+        RecyclerView rvOrderState = view.findViewById(R.id.rv_order_state);
 
         iv_close.setOnClickListener(view1 -> {dismiss();});
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +69,9 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
             public void onClick(View v) {
 
                 mPosition=-1;
+                mPositionState=-1;
                 adapter.notifyDataSetChanged();
+                adapterState.notifyDataSetChanged();
 
             }
         });
@@ -80,7 +86,8 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
 //                }        else {
 //                    mListener.onData( mInquiriesTypesModule.get(mPosition).getDataName());
 //                }
-                mListener.onData( mPosition==-1?"":mInquiriesTypesModule.get(mPosition).getDataKey(),mPosition);
+                mListener.onData( mPosition==-1?"":mInquiriesTypesModule.get(mPosition).getDataKey(),
+                        mPositionState==-1?"":mInquiriesTypesModule.get(mPositionState).getDataKey(),mPosition,mPositionState);
                 dismiss();
             }
         });
@@ -99,13 +106,44 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
                     adapter.notifyDataSetChanged();
                 });
                 if (position== mPosition) {
-//                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
-//                    binding.tvContent.setBackgroundResource(R.drawable.iv_pop_item_choise);
+                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
+                    binding.tvContent.setBackgroundResource(R.drawable.iv_pop_item_choise);
                 }else {
-//                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
-//                    binding.tvContent.setBackgroundResource(R.drawable.shape_line);
+                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
+                    binding.tvContent.setBackgroundResource(R.drawable.shape_line);
                 }
-//                binding.tvContent.setText(model.getDataName());
+                binding.tvContent.setText(model.getDataName());
+
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.disqualified_popwindow_item;
+            }
+
+        };
+        //二级列表适配器
+        adapterState = new RVBindingAdapter<DisqualifiedPopwindowItemBinding, DisqualifiedTypesBean>(context, com.einyun.app.pms.disqualified.BR.org) {
+
+            @Override
+            public void onBindItem(DisqualifiedPopwindowItemBinding binding, DisqualifiedTypesBean model, int position) {
+
+                binding.llItem.setOnClickListener(view1 -> {
+                    if (mPositionState==position) {
+                        mPositionState=-1;
+                    }else {
+                        mPositionState = position;
+                    }
+                    adapterState.notifyDataSetChanged();
+                });
+                if (position== mPositionState) {
+                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
+                    binding.tvContent.setBackgroundResource(R.drawable.iv_pop_item_choise);
+                }else {
+                    binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
+                    binding.tvContent.setBackgroundResource(R.drawable.shape_line);
+                }
+                binding.tvContent.setText(model.getDataName());
 
             }
 
@@ -116,8 +154,13 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
 
         };
         adapter.setDataList(mInquiriesTypesModule);
-        recyclerview.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
-        recyclerview.setAdapter(adapter);
+        rvLine.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
+        rvLine.setAdapter(adapter);
+
+
+        adapterState.setDataList(mInquiriesTypesModule);
+        rvOrderState.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
+        rvOrderState.setAdapter(adapterState);
     }
 
     private void initPopWindow() {
@@ -158,7 +201,7 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
 
 
     public interface OnItemClickListener {
-        void onData(String cate, int position);
+        void onData(String line, String state,int position,int positionState);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
