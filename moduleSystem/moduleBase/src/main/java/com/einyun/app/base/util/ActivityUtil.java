@@ -128,7 +128,7 @@ public class ActivityUtil {
         return false;
     }
 
-    private static Activity getLastActivty() {
+    public static AppCompatActivity getLastActivty() {
         if (activityList.size() > 0) {
             return activityList.get(activityList.size() - 1);
         }

@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.pms.main.core.ui.fragment.MineViewModelFragment;
 import com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment;
@@ -67,7 +69,6 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         super.initData();
         binding.setCallBack(this);
         onWorkBenchPage(false);
-        viewModel.loadBasicData();
     }
 
 

@@ -20,6 +20,7 @@ import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.common.utils.UpdateManager;
@@ -55,6 +56,7 @@ public class SplashViewModelActivity extends BaseViewModelActivity<ActivitySplas
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        login();
         SplashViewModelActivityPermissionsDispatcher.updateWithPermissionCheck(this);
     }
 
@@ -105,6 +107,7 @@ public class SplashViewModelActivity extends BaseViewModelActivity<ActivitySplas
                         viewModel.login(userModel.getUsername(), userModel.getPassword(), false)
                                 .observe(this,
                                         currentUserModel -> {
+                                            CommonApplication.getInstance().bindAccount(currentUserModel.getUserId().replace("-", ""));
                                             ARouter.getInstance()
                                                     .build(RouterUtils.ACTIVITY_MAIN_HOME)
                                                     .navigation();

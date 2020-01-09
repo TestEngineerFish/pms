@@ -37,9 +37,6 @@ class URLS {
         //通过groupKey、typeKey获取数据字典
         const val URL_DATA_DICT_GET_BY_TYPE_KEY_FOR_COMBO = "/portal/sys/dataDict/v1/getByTypeKeyForComBo"
 
-        //根据分类key获取字典
-        const val URL_DATA_DICT_GET_BY_TYPE_KEYS = "/portal/sys/dataDict/v1/getByTypeKeys"
-
         //根据字典key查询字典下级
         const val URL_DATA_DICT_GET_CHILD_BY_KEY = "/portal/sys/dataDict/v1/getChildByKey"
 

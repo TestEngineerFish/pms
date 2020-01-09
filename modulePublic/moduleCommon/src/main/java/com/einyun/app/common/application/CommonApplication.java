@@ -48,10 +48,11 @@ import skin.support.design.app.SkinMaterialViewInflater;
  */
 public class CommonApplication extends BasicApplication {
     private static final String TAG = "CommonApplication";
-
+    private static CommonApplication app;
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         CommonHttpService.Companion.setNeedTenantId(true);
         EinyunSDK.Companion.init(this, BuildConfig.BASE_URL);
         if (com.einyun.app.base.BuildConfig.DEBUG) {
@@ -111,7 +112,7 @@ public class CommonApplication extends BasicApplication {
     private void initCloudChannel(Context applicationContext) {
         this.createNotificationChannel();
         PushServiceFactory.init(applicationContext);
-        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService = PushServiceFactory.getCloudPushService();
         pushService.register(applicationContext, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
@@ -123,15 +124,47 @@ public class CommonApplication extends BasicApplication {
                 Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
-        MiPushRegister.register(applicationContext, "XIAOMI_ID", "XIAOMI_KEY"); // 初始化小米辅助推送
+        bindAccount("1");
+        MiPushRegister.register(applicationContext, "2882303761518226834", "5271822697834"); // 初始化小米辅助推送
         HuaWeiRegister.register(this); // 接入华为辅助推送
         VivoRegister.register(applicationContext);
-        OppoRegister.register(applicationContext, "OPPO_KEY", "OPPO_SECRET");
+        OppoRegister.register(applicationContext, "797e69652a344010a140cb708c246357", "0d6a234cb5d14821b2a8d4383851faa0");
         MeizuRegister.register(applicationContext, "MEIZU_ID", "MEIZU_KEY");
 
-        GcmRegister.register(applicationContext, "send_id", "application_id"); // 接入FCM/GCM初始化推送
+//        GcmRegister.register(applicationContext, "send_id", "application_id"); // 接入FCM/GCM初始化推送
     }
 
+    CloudPushService pushService;
+
+    public void bindAccount(String accountName) {
+        if (pushService != null)
+            pushService.bindAccount(accountName, new CommonCallback() {
+                @Override
+                public void onSuccess(String s) {
+                    Log.d(TAG, "init cloudchannel success");
+                }
+
+                @Override
+                public void onFailed(String errorCode, String errorMessage) {
+                    Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+                }
+            });
+    }
+
+    public void unbindAccount() {
+        if (pushService != null)
+            pushService.unbindAccount(new CommonCallback() {
+                @Override
+                public void onSuccess(String s) {
+                    Log.d(TAG, "init cloudchannel success");
+                }
+
+                @Override
+                public void onFailed(String errorCode, String errorMessage) {
+                    Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+                }
+            });
+    }
 
     private void createNotificationChannel() {
         //针对于安卓8.0以上的手机,开启通道
@@ -158,4 +191,7 @@ public class CommonApplication extends BasicApplication {
         }
     }
 
+    public static CommonApplication getInstance() {
+        return app;
+    }
 }

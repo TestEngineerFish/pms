@@ -21,6 +21,7 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -214,11 +215,12 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
     }
 
     protected void showConditionView() {
-        //弹出筛选view
-        if (selectPopUpView == null) {
-            BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
-                @Override
-                public void call(BasicData data) {
+
+        BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+            @Override
+            public void call(BasicData data) {
+                //弹出筛选view
+                if (selectPopUpView == null) {
                     ConditionBuilder builder = new ConditionBuilder();
                     builder.addPreviewSelect(data.getPreviewSelect()).addItem(SELECT_TIME_CIRCLE);
                     List<SelectModel> conditions = builder.build();
@@ -228,15 +230,16 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
                             handleSelected(selected);
                         }
                     });
-                }
-
-                @Override
-                public void onFaild(Throwable throwable) {
 
                 }
-            });
-        }
-        selectPopUpView.showAsDropDown(binding.orderPreviewTabLn);
+                selectPopUpView.showAsDropDown(binding.orderPreviewTabLn);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        }, BasicDataTypeEnum.PREVIEW_SELECT);
     }
 
     private void handleSelected(Map selected) {

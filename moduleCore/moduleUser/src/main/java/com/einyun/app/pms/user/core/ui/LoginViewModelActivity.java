@@ -23,6 +23,7 @@ import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -80,7 +81,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         binding.setCallBack(this);
         binding.etOrgCode.setText(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString());
         setUserList();
-
+        CommonApplication.getInstance().unbindAccount();
         initEvent();
     }
 
@@ -251,6 +252,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                     viewModel.login(binding.etUser.getText().toString(), model.getPassword(), true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
+                                        CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
                                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                                         SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
                                         ARouter.getInstance()
