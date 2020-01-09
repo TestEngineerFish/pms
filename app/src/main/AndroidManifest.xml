@@ -189,7 +189,7 @@
             android:name="com.vivo.push.app_id"
             android:value="xxxx" />    <!-- 请填写您自己的vivo平台上的appId -->
 
-        <service
+       <!-- <service
             android:name="com.einyun.app.common.pushReceiver.MyMessageIntentService"
             android:exported="false">
             <intent-filter> 
@@ -201,7 +201,17 @@
             <intent-filter>
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
-        </service>
+        </service>-->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=101286213" /><!-- 请填写你自己华为平台上注册的appid -->
+
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="xxxxxxxxxxxxxxxxxxx" />  <!-- 请填写您自己的vivo平台上的appKey -->
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="xxxx" />    <!-- 请填写您自己的vivo平台上的appId -->
     </application>
 
 </manifest>

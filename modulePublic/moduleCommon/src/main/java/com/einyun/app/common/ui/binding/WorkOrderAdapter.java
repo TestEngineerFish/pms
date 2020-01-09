@@ -34,7 +34,25 @@ public class WorkOrderAdapter {
             view.setText(R.string.text_state_closed);
         }
     }
-
+    /**
+     * 列表状态
+     * @param view
+     * @param value
+     */
+    @BindingAdapter("status")
+    public static void status(TextView view, String value){
+        int valueInt=Integer.parseInt(value);
+        if(valueInt== OrderState.NEW.getState()){
+            view.setText(R.string.text_state_new);
+        }else if(valueInt==OrderState.HANDING.getState()){
+            view.setText(R.string.text_state_processing);
+        }else if(valueInt==OrderState.APPLY.getState()){
+            view.setText(R.string.text_apply);
+        }
+        else if(valueInt==OrderState.CLOSED.getState()){
+            view.setText(R.string.text_state_closed);
+        }
+    }
 
     /**
      * 筛选条件是否选择，分期是否选择
@@ -166,6 +184,20 @@ public class WorkOrderAdapter {
             view.setImageResource(R.mipmap.icon_work_order_apply);
         }
         else if(value==OrderState.CLOSED.getState()){
+            view.setImageResource(R.mipmap.icon_state_closed);
+        }
+    }
+    @BindingAdapter("status")
+    public static void status(ImageView view, String value){
+        int valueInt=Integer.parseInt(value);
+        if(valueInt== OrderState.NEW.getState()){
+            view.setImageResource(R.mipmap.icon_new);
+        }else if(valueInt==OrderState.HANDING.getState()){
+            view.setImageResource(R.mipmap.icon_processing);
+        }else if(valueInt==OrderState.APPLY.getState()){
+            view.setImageResource(R.mipmap.icon_work_order_apply);
+        }
+        else if(valueInt==OrderState.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);
         }
     }

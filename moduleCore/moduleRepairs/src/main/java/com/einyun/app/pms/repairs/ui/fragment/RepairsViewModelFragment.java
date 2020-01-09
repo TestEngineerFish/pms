@@ -159,6 +159,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         //初始化数据，LiveData自动感知，刷新页面
 
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
+            Log.d("test",dataBeans.size()+"");
             adapter.submitList(dataBeans);
         });
     }

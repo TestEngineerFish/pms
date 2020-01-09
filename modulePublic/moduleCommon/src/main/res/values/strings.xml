@@ -237,4 +237,5 @@
     <string name="text_repair_type_first">报修大类</string>
     <string name="text_repair_type_second">报修小类</string>
     <string name="text_all_get">全部收费项目</string>
+    <string name="title_patrol">巡查工单</string>
 </resources>

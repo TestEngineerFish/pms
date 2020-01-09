@@ -212,4 +212,23 @@ interface ResourceWorkOrderService : EinyunService {
     fun getOrderPreviewSelect(
         callBack: CallBack<List<PreviewSelectModel>>
         ): LiveData<List<PreviewSelectModel>>
+
+    //工单列表派工单
+    fun orderListDistribute(
+        request: DistributePageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表计划工单
+    fun orderListPlan(
+        request: DistributePageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表巡查工单
+    fun orderListPatro(
+        request: DistributePageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
 }

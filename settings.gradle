@@ -7,4 +7,4 @@ include ':app',
 
         ':modulePublic',':modulePublic:moduleCommon',
         ':modulePublic:einyunLibrary',
-        ':moduleSystem',':moduleSystem:moduleBase',':moduleSystem:moduleDB',':moduleSystem:moduleHttp',':moduleCore:moduleCustomerInquiries'
+        ':moduleSystem',':moduleSystem:moduleBase',':moduleSystem:moduleDB',':moduleSystem:moduleHttp',':moduleCore:moduleCustomerInquiries',':moduleCore:moduleOrderList'

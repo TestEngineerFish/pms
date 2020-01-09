@@ -285,11 +285,12 @@ project.module_mine= ":moduleCore:moduleMine"
 project.module_orderpreview=":moduleCore:moduleOrderPreview"
 project.module_operatepercent=":moduleCore:moduleOperatePercent"
 project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
+project.module_orderlist=":moduleCore:moduleOrderList"
 deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"https://testbms.einyun.com\""
+server.debug = "\"https://bms.einyun.com\""
 //测试环境
 server.debug_test = "\"http://120.79.213.146\""
 //UAT环境
