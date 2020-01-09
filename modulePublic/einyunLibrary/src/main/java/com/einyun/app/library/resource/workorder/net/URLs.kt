@@ -160,5 +160,9 @@ class URLs {
          * */
         const val URL_ORDER_LIST_PATRO="$DOMAIN/res-order/patrol/v2/queryList"
 
+        /**
+         * 工单列表-客户报修
+         * */
+        const val URL_ORDER_LIST_REPAIR="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_repair_flow"
     }
 }

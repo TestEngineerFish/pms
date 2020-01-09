@@ -2,38 +2,32 @@ package com.einyun.app.pms.orderlist.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
-import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
-import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
-import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-import com.einyun.app.pms.orderlist.BR;
 import com.einyun.app.pms.orderlist.R;
 import com.einyun.app.pms.orderlist.databinding.ActivityOrderListAllBinding;
 import com.einyun.app.pms.orderlist.databinding.ItemOrderListBinding;
@@ -41,7 +35,6 @@ import com.einyun.app.pms.orderlist.viewmodel.OrderListViewModel;
 import com.einyun.app.pms.orderlist.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
-import static androidx.test.InstrumentationRegistry.getContext;
 @Route(path = RouterUtils.ACTIVITY_ORDER_LIST_ALL)
 public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrderListAllBinding, OrderListViewModel> implements ItemClickListener<OrderListModel>, PeriodizationView.OnPeriodSelectListener {
     RVPageListAdapter<ItemOrderListBinding, OrderListModel> adapter;
@@ -49,6 +42,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     IUserModuleService userModuleService;
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     public String tag;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_order_list_all;
@@ -69,7 +63,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             loadPagingData();
             viewModel.refresh();
         });
-        switch (tag){
+        switch (tag) {
             case RouteKey.ORDER_LIST_DISTRIBUTE:
                 setHeadTitle(R.string.text_send_order);
                 break;
@@ -78,6 +72,9 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 break;
             case RouteKey.ORDER_LIST_PATRO:
                 setHeadTitle(R.string.title_patrol);
+                break;
+            case RouteKey.ORDER_LIST_REPAIR:
+                setHeadTitle(R.string.text_work_repair);
                 break;
         }
     }
@@ -105,7 +102,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
 
                 @Override
                 public int getLayoutId() {
-                    return R.layout.item_order_list;
+                    switch (tag) {
+                        case RouteKey.ORDER_LIST_REPAIR:
+                            return R.layout.item_order_list_custom;
+                        default:
+                            return R.layout.item_order_list;
+                    }
                 }
             };
         }
@@ -125,9 +127,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     }
 
 
-
-
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 
@@ -181,6 +181,16 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     .withString(RouteKey.KEY_TASK_ID, "")
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                    .navigation();
+            return;
+        }
+        if (tag.equals(RouteKey.ORDER_LIST_REPAIR)) {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+                    .withString(RouteKey.KEY_ORDER_ID, data.getREF_ID())
+                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                    .withString(RouteKey.KEY_TASK_ID, "")
+                    .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
+                    .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
                     .navigation();
             return;
         }

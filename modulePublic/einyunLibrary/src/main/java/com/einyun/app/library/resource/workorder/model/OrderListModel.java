@@ -63,6 +63,42 @@ public class OrderListModel {
     private Object F_OPER_CONTENT;
     private String F_FILES;
     private String id;
+    private String RESPONSE_TIMEOUT;
+    private String bx_dk_id;
+    private String bx_way;
+    private String bx_appoint_time_period;
+    private String PROC_INST_TIMEOUT;
+    private String bx_area;
+    private String line_key;
+    private String bx_dk;
+    private String bx_user;
+    private long c_deadline_time;
+    private long bx_time;
+    private String bx_mobile;
+    private String bx_cate_lv1_id;
+    private String assigneeName;
+    private String bx_cate_lv3_id;
+    private String line_name;
+    private String state;
+    private String bx_cate_lv2;
+    private String bx_cate_lv1;
+    private String bx_cate_lv3;
+    private String app_state;
+    private String ID_;
+    private String Qualfieds;
+    private String bx_area_id;
+    private String bx_code;
+    private String bx_content;
+    private String u_project;
+    private String QualfiedNames;
+    private String assigneeId;
+    private String bx_attachment;
+    private String instance_id;
+    private String bx_house_id;
+    private String RETURN_VISIT_TIMEOUT;
+    private String bx_cate_lv2_id;
+    private long bx_appoint_time;
+    private String taskId;
 
     public String getF_WP_ID() {
         return F_WP_ID;
@@ -558,5 +594,293 @@ public class OrderListModel {
 
     public void setF_EXECUTOR_NAME(Object F_EXECUTOR_NAME) {
         this.F_EXECUTOR_NAME = F_EXECUTOR_NAME;
+    }
+
+    public String getRESPONSE_TIMEOUT() {
+        return RESPONSE_TIMEOUT;
+    }
+
+    public void setRESPONSE_TIMEOUT(String RESPONSE_TIMEOUT) {
+        this.RESPONSE_TIMEOUT = RESPONSE_TIMEOUT;
+    }
+
+    public String getBx_dk_id() {
+        return bx_dk_id;
+    }
+
+    public void setBx_dk_id(String bx_dk_id) {
+        this.bx_dk_id = bx_dk_id;
+    }
+
+    public String getBx_way() {
+        return bx_way;
+    }
+
+    public void setBx_way(String bx_way) {
+        this.bx_way = bx_way;
+    }
+
+    public String getBx_appoint_time_period() {
+        return bx_appoint_time_period;
+    }
+
+    public void setBx_appoint_time_period(String bx_appoint_time_period) {
+        this.bx_appoint_time_period = bx_appoint_time_period;
+    }
+
+    public String getPROC_INST_TIMEOUT() {
+        return PROC_INST_TIMEOUT;
+    }
+
+    public void setPROC_INST_TIMEOUT(String PROC_INST_TIMEOUT) {
+        this.PROC_INST_TIMEOUT = PROC_INST_TIMEOUT;
+    }
+
+    public String getBx_area() {
+        return bx_area;
+    }
+
+    public void setBx_area(String bx_area) {
+        this.bx_area = bx_area;
+    }
+
+    public String getLine_key() {
+        return line_key;
+    }
+
+    public void setLine_key(String line_key) {
+        this.line_key = line_key;
+    }
+
+    public String getBx_dk() {
+        return bx_dk;
+    }
+
+    public void setBx_dk(String bx_dk) {
+        this.bx_dk = bx_dk;
+    }
+
+    public String getBx_user() {
+        return bx_user;
+    }
+
+    public void setBx_user(String bx_user) {
+        this.bx_user = bx_user;
+    }
+
+    public long getC_deadline_time() {
+        return c_deadline_time;
+    }
+
+    public void setC_deadline_time(long c_deadline_time) {
+        this.c_deadline_time = c_deadline_time;
+    }
+
+    public long getBx_time() {
+        return bx_time;
+    }
+
+    public void setBx_time(long bx_time) {
+        this.bx_time = bx_time;
+    }
+
+    public String getBx_mobile() {
+        return bx_mobile;
+    }
+
+    public void setBx_mobile(String bx_mobile) {
+        this.bx_mobile = bx_mobile;
+    }
+
+    public String getBx_cate_lv1_id() {
+        return bx_cate_lv1_id;
+    }
+
+    public void setBx_cate_lv1_id(String bx_cate_lv1_id) {
+        this.bx_cate_lv1_id = bx_cate_lv1_id;
+    }
+
+    public String getAssigneeName() {
+        return assigneeName;
+    }
+
+    public void setAssigneeName(String assigneeName) {
+        this.assigneeName = assigneeName;
+    }
+
+    public String getBx_cate_lv3_id() {
+        return bx_cate_lv3_id;
+    }
+
+    public void setBx_cate_lv3_id(String bx_cate_lv3_id) {
+        this.bx_cate_lv3_id = bx_cate_lv3_id;
+    }
+
+    public String getLine_name() {
+        return line_name;
+    }
+
+    public void setLine_name(String line_name) {
+        this.line_name = line_name;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getBx_cate_lv2() {
+        return bx_cate_lv2;
+    }
+
+    public void setBx_cate_lv2(String bx_cate_lv2) {
+        this.bx_cate_lv2 = bx_cate_lv2;
+    }
+
+    public String getBx_cate_lv1() {
+        return bx_cate_lv1;
+    }
+
+    public void setBx_cate_lv1(String bx_cate_lv1) {
+        this.bx_cate_lv1 = bx_cate_lv1;
+    }
+
+    public String getBx_cate_lv3() {
+        return bx_cate_lv3;
+    }
+
+    public void setBx_cate_lv3(String bx_cate_lv3) {
+        this.bx_cate_lv3 = bx_cate_lv3;
+    }
+
+    public String getApp_state() {
+        return app_state;
+    }
+
+    public void setApp_state(String app_state) {
+        this.app_state = app_state;
+    }
+
+    public String getID_() {
+        return ID_;
+    }
+
+    public void setID_(String ID_) {
+        this.ID_ = ID_;
+    }
+
+    public String getQualfieds() {
+        return Qualfieds;
+    }
+
+    public void setQualfieds(String Qualfieds) {
+        this.Qualfieds = Qualfieds;
+    }
+
+    public String getBx_area_id() {
+        return bx_area_id;
+    }
+
+    public void setBx_area_id(String bx_area_id) {
+        this.bx_area_id = bx_area_id;
+    }
+
+    public String getBx_code() {
+        return bx_code;
+    }
+
+    public void setBx_code(String bx_code) {
+        this.bx_code = bx_code;
+    }
+
+    public String getBx_content() {
+        return bx_content;
+    }
+
+    public void setBx_content(String bx_content) {
+        this.bx_content = bx_content;
+    }
+
+    public String getU_project() {
+        return u_project;
+    }
+
+    public void setU_project(String u_project) {
+        this.u_project = u_project;
+    }
+
+    public String getQualfiedNames() {
+        return QualfiedNames;
+    }
+
+    public void setQualfiedNames(String QualfiedNames) {
+        this.QualfiedNames = QualfiedNames;
+    }
+
+    public String getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(String assigneeId) {
+        this.assigneeId = assigneeId;
+    }
+
+    public String getBx_attachment() {
+        return bx_attachment;
+    }
+
+    public void setBx_attachment(String bx_attachment) {
+        this.bx_attachment = bx_attachment;
+    }
+
+    public String getInstance_id() {
+        return instance_id;
+    }
+
+    public void setInstance_id(String instance_id) {
+        this.instance_id = instance_id;
+    }
+
+    public String getBx_house_id() {
+        return bx_house_id;
+    }
+
+    public void setBx_house_id(String bx_house_id) {
+        this.bx_house_id = bx_house_id;
+    }
+
+    public String getRETURN_VISIT_TIMEOUT() {
+        return RETURN_VISIT_TIMEOUT;
+    }
+
+    public void setRETURN_VISIT_TIMEOUT(String RETURN_VISIT_TIMEOUT) {
+        this.RETURN_VISIT_TIMEOUT = RETURN_VISIT_TIMEOUT;
+    }
+
+    public String getBx_cate_lv2_id() {
+        return bx_cate_lv2_id;
+    }
+
+    public void setBx_cate_lv2_id(String bx_cate_lv2_id) {
+        this.bx_cate_lv2_id = bx_cate_lv2_id;
+    }
+
+    public long getBx_appoint_time() {
+        return bx_appoint_time;
+    }
+
+    public void setBx_appoint_time(long bx_appoint_time) {
+        this.bx_appoint_time = bx_appoint_time;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

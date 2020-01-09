@@ -276,4 +276,10 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_ORDER_LIST_PATRO)
     fun orderListPatro(@Body request: DistributePageRequest): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-客户报修
+     */
+    @POST(URLs.URL_ORDER_LIST_REPAIR)
+    fun orderListRepair(@Body request: DistributePageRequest): Flowable<OrderListResponse>
 }

@@ -26,6 +26,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLL
 import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_DISTRIBUTE;
 import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_PATRO;
 import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_PLAN;
+import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_REPAIR;
 
 /**
  * @ProjectName: android-framework
@@ -98,6 +99,27 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
         //工单列表-巡查工单
         if (tag.equals(ORDER_LIST_PATRO)) {
             repository.orderListPatro(request, new CallBack<OrderListPage>() {
+                @Override
+                public void call(OrderListPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+            return;
+        }
+        //工单列表-客户报修
+        if (tag.equals(ORDER_LIST_REPAIR)) {
+            repository.orderListRepair(request, new CallBack<OrderListPage>() {
                 @Override
                 public void call(OrderListPage data) {
                     if (callback instanceof LoadInitialCallback) {

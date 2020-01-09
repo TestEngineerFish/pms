@@ -34,6 +34,23 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun orderListRepair(
+        request: DistributePageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListRepair(request)
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     override fun orderListPatro(
         request: DistributePageRequest,
         callBack: CallBack<OrderListPage>

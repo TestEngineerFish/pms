@@ -24,6 +24,12 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun orderListRepair(
+        request: DistributePageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)    }
+
     override fun orderListPatro(
         request: DistributePageRequest,
         callBack: CallBack<OrderListPage>

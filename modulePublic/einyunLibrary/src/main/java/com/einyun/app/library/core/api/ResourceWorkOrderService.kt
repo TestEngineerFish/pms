@@ -231,4 +231,9 @@ interface ResourceWorkOrderService : EinyunService {
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage>
 
+    //工单列表巡查工单
+    fun orderListRepair(
+        request: DistributePageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
 }
