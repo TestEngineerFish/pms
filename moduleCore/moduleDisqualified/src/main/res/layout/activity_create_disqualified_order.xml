@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="type"
+            type="com.einyun.app.pms.disqualified.SelectType" />
         <variable
             name="bean"
             type="com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest" />
@@ -36,6 +38,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:onClick="@{()->callBack.pleaseSelect(type.AGING)}"
                     style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
@@ -45,12 +48,14 @@
                         android:text="@string/text_divide" />
 
                     <TextView
+                        android:id="@+id/tv_divide"
                         style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
                 <View style="@style/base_underline" />
                 <LinearLayout
+                    android:onClick="@{()->callBack.pleaseSelect(type.CHECK_DATE)}"
                     style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
@@ -60,6 +65,7 @@
                         android:text="@string/tv_check_date" />
 
                     <TextView
+                        android:id="@+id/tv_check_date"
                         style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -90,6 +96,7 @@
 
                 <View style="@style/base_underline" />
                 <LinearLayout
+                    android:onClick="@{()->callBack.pleaseSelect(type.LINE)}"
                     android:layout_marginTop="@dimen/px_20"
                     style="@style/ll_create_order">
 
@@ -100,6 +107,7 @@
                         android:text="@string/text_line" />
 
                     <TextView
+                        android:id="@+id/tv_line"
                         style="@style/tv_create_order_select_single"/>
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -108,6 +116,7 @@
                 <View style="@style/base_underline" />
 
                 <LinearLayout
+                    android:onClick="@{()->callBack.pleaseSelect(type.SEVERITY)}"
                     style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
@@ -117,6 +126,7 @@
                         android:text="@string/tv_severity" />
 
                     <TextView
+                        android:id="@+id/tv_severity"
                         style="@style/tv_create_order_select_single"/>
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -125,6 +135,7 @@
                 <View style="@style/base_underline" />
 
                 <LinearLayout
+                    android:onClick="@{()->callBack.pleaseSelect(type.DEADLINE)}"
                     style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
@@ -134,6 +145,7 @@
                         android:text="@string/tv_correct_deadline" />
 
                     <TextView
+                        android:id="@+id/tv_deal_line"
                         style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -141,6 +153,7 @@
 
                 <View style="@style/base_underline" />
                 <LinearLayout
+                    android:onClick="@{()->callBack.pleaseSelect(type.INSPECTED)}"
                     style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
@@ -150,6 +163,7 @@
                         android:text="@string/tv_inspected" />
 
                     <TextView
+                        android:id="@+id/tv_inspected"
                         style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -165,6 +179,7 @@
                         android:text="@string/picture" />
 
                     <TextView
+                        android:textColor="@color/greyTextColor"
                         style="@style/tv_create_order_red_star"
                         android:text="（最多4张）"
                         android:textSize="@dimen/font_size13" />

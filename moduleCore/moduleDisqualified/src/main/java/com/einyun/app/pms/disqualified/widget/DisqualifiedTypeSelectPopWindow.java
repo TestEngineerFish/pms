@@ -25,6 +25,7 @@ import java.util.List;
 
 public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
     List<DisqualifiedTypesBean> mInquiriesTypesModule;
+    List<DisqualifiedTypesBean> mInquiriesTypesModule2;
     private  View view;
     private Activity context;
     private OnItemClickListener mListener;
@@ -33,9 +34,10 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
     private int mPosition=-1;
     private int mPositionState=-1;
 
-    public DisqualifiedTypeSelectPopWindow(Activity context, List<DisqualifiedTypesBean> mInquiriesTypesModule, int mPosition,int mPositionState) {
+    public DisqualifiedTypeSelectPopWindow(Activity context, List<DisqualifiedTypesBean> mInquiriesTypesModule, List<DisqualifiedTypesBean> mInquiriesTypesModule2,int mPosition,int mPositionState) {
         super(context);
         this.mInquiriesTypesModule=mInquiriesTypesModule;
+        this.mInquiriesTypesModule2=mInquiriesTypesModule2;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.disqualifiedtype_popwindow, null);//alt+ctrl+f
         this.context = context;
@@ -86,8 +88,8 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
 //                }        else {
 //                    mListener.onData( mInquiriesTypesModule.get(mPosition).getDataName());
 //                }
-                mListener.onData( mPosition==-1?"":mInquiriesTypesModule.get(mPosition).getDataKey(),
-                        mPositionState==-1?"":mInquiriesTypesModule.get(mPositionState).getDataKey(),mPosition,mPositionState);
+                mListener.onData( mPosition==-1?"":mInquiriesTypesModule.get(mPosition).getKey(),
+                        mPositionState==-1?"":mInquiriesTypesModule2.get(mPositionState).getKey(),mPosition,mPositionState);
                 dismiss();
             }
         });
@@ -112,7 +114,7 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
                     binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
                     binding.tvContent.setBackgroundResource(R.drawable.shape_line);
                 }
-                binding.tvContent.setText(model.getDataName());
+                binding.tvContent.setText(model.getName());
 
             }
 
@@ -143,7 +145,7 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
                     binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
                     binding.tvContent.setBackgroundResource(R.drawable.shape_line);
                 }
-                binding.tvContent.setText(model.getDataName());
+                binding.tvContent.setText(model.getName());
 
             }
 
@@ -158,7 +160,7 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
         rvLine.setAdapter(adapter);
 
 
-        adapterState.setDataList(mInquiriesTypesModule);
+        adapterState.setDataList(mInquiriesTypesModule2);
         rvOrderState.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
         rvOrderState.setAdapter(adapterState);
     }

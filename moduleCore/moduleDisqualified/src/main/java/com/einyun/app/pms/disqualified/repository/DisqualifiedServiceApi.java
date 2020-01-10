@@ -1,11 +1,13 @@
 package com.einyun.app.pms.disqualified.repository;
 
 
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.pms.disqualified.constants.URLS;
 import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
 import com.einyun.app.pms.disqualified.net.response.DisqualifiedListResponse;
 import com.einyun.app.pms.disqualified.net.response.GetDisqualifiedTypesResponse;
+import com.einyun.app.pms.disqualified.net.response.GetOrderCodeResponse;
 
 
 import io.reactivex.Flowable;
@@ -34,12 +36,25 @@ public interface DisqualifiedServiceApi {
      */
     @GET
     Flowable<GetDisqualifiedTypesResponse> getTypes(@Url String url);
-
+    /**
+     * 获取不合格单号
+     * @param url
+     * @return
+     */
+    @GET
+    Flowable<GetOrderCodeResponse> getOrderCode(@Url String url);
     /**
      * 不合格单列表
      * @param request
      * @return
      */
+    /**
+     * 处理提交
+     * @param
+     * @return
+     */
+    @POST(URLS.URL_CREATE_ORDER)
+    Flowable<BaseResponse> dealSubmit(@Body CreateUnQualityRequest bean);
     @POST
     Flowable<DisqualifiedListResponse> getDisqualifiedList(@Url String url, @Body DisqualifiedListRequest request);
 //    /**

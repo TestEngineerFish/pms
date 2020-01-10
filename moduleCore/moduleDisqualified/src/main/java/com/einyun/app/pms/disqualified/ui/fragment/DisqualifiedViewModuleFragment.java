@@ -31,6 +31,7 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 
 import com.einyun.app.pms.disqualified.BR;
 import com.einyun.app.pms.disqualified.R;
+import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
 import com.einyun.app.pms.disqualified.databinding.FragmentDisqualifiedViewModuleBinding;
 import com.einyun.app.pms.disqualified.databinding.ItemDisqualifiedListBinding;
 import com.einyun.app.pms.disqualified.databinding.ItemDisqualifiedSearchListBinding;
@@ -82,6 +83,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     private PeriodizationView periodizationView;
     private PageSearchFragment searchFragment;
     private List<DisqualifiedTypesBean> model1;
+    private List<DisqualifiedTypesBean> model2;
 
     public static DisqualifiedViewModuleFragment newInstance(Bundle bundle) {
         DisqualifiedViewModuleFragment fragment = new DisqualifiedViewModuleFragment();
@@ -162,9 +164,11 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         activity = (DisqualifiedViewModuleActivity) getActivity();
         switch (getFragmentTag()) {
             case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
-                viewModel.queryAduitType().observe(this,model->{ model1 = model; });
+                viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this, modelLine->{model1 = modelLine; });
+                viewModel.queryAduitType(DisqualifiedDataKey.ORDER_STATE_TYPE_LIST).observe(this, modelState->{ model2 = modelState; });
             case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
-                viewModel.queryAduitType().observe(this,model->{ model1 = model; });
+                viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this, model->{ model1 = model; });
+                viewModel.queryAduitType(DisqualifiedDataKey.ORDER_STATE_TYPE_LIST).observe(this, model->{ model2 = model; });
                 break;
         }
 
@@ -254,6 +258,10 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 
             return;
         }
+        if (model2==null||model2.size()==0) {
+
+            return;
+        }
 
 //        inquiriesTypeSelectPopWindow = new InquiriesTypeSelectPopWindow(getActivity(), activity.mInquiriesTypesModule,mPosition);
 //        inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
@@ -261,7 +269,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
 //        }
         //TODO 数据源
-        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), model1,mPosition,mPositionState);
+        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), model1,model2,mPosition,mPositionState);
         inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
         if (!inquiriesTypeSelectPopWindow.isShowing()) {
             inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
