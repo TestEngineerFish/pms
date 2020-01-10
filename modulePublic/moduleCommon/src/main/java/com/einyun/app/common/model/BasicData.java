@@ -23,7 +23,16 @@ public class BasicData {
     private List<DictDataModel> complainPropertys; //投诉性质
     private AreaModel repairArea;//报修区域
     private List<PreviewSelectModel> previewSelect = new ArrayList<>();//工单预览筛选
-    private Map<String, List<DictDataModel>> dictDataModelMap = new HashMap<>();//网格-楼栋-单元
+    private Map<String, List<DictDataModel>> dictDataModelMap = new HashMap<>();//基础数据
+    private Map<String, List<DictDataModel>> typesListKeyMap = new HashMap<>();
+
+    public Map<String, List<DictDataModel>> getTypesListKeyMap() {
+        return typesListKeyMap;
+    }
+
+    public void setTypesListKeyMap(Map<String, List<DictDataModel>> typesListKeyMap) {
+        this.typesListKeyMap = typesListKeyMap;
+    }
 
     public Map<String, List<DictDataModel>> getDictDataModelMap() {
         return dictDataModelMap;

@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -59,6 +60,7 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        ActivityUtil.setDefaultClass(this.getClass());
         fragmentManager = getSupportFragmentManager();
         HomeTabViewModelActivityPermissionsDispatcher.permissionsWithPermissionCheck(this);
         showFragment(0, null);

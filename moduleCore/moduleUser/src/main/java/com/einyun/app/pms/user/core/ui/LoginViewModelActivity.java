@@ -63,6 +63,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityUtil.setLoginClass(this.getClass());
         ActivityUtil.removeExceptCurrentActivity(LoginViewModelActivity.class);
     }
 

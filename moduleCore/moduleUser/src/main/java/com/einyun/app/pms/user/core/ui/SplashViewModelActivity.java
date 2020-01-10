@@ -56,13 +56,13 @@ public class SplashViewModelActivity extends BaseViewModelActivity<ActivitySplas
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        login();
+        ActivityUtil.setFirstClass(getClass());
+//        login();
         SplashViewModelActivityPermissionsDispatcher.updateWithPermissionCheck(this);
     }
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void update(){
-        ActivityUtil.setFirstClass(getClass());
         viewModel.updateApp().observe(this, updateAppModel -> {
             UpdateManager updateManager = new UpdateManager(this, new UpdateManager.UpdateListener() {
                 @Override

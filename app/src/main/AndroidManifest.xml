@@ -88,8 +88,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity"/>
-        <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity"/>
+        <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity" android:launchMode="singleTask"/>
+        <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity" android:launchMode="singleTask"/>
         <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
         <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
         <activity android:name="com.einyun.app.common.zxing.ScannerActivity"/>

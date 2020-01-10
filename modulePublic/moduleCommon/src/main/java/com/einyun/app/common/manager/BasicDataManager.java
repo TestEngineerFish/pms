@@ -157,18 +157,45 @@ public class BasicDataManager {
     public void loadBasicDataByTypeKey(CallBack<List<DictDataModel>> callBack, String typeKey) {
         List<DictDataModel> dictDataModel = basicData.getDictDataModelMap().get(typeKey);
         if (dictDataModel == null || dictDataModel.isEmpty()) {
-            dictService.getByTypeKey(typeKey, new CallBack<List<DictDataModel>>() {
+            repository.queryData("typeKey" + typeKey, new CallBack<BasicDataDb>() {
                 @Override
-                public void call(List<DictDataModel> data) {
-                    basicData.getDictDataModelMap().put(typeKey, data);
-                    if (callBack != null) {
-                        callBack.call(data);
+                public void call(BasicDataDb basicDataDb) {
+                    if (basicDataDb != null && StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                        List<DictDataModel> model = gson.fromJson(basicDataDb.getBasicData(), new TypeToken<List<DictDataModel>>() {
+                        }.getType());
+                        basicData.getDictDataModelMap().put(typeKey, model);
+                        ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                callBack.call(model);
+                            }
+                        });
                     }
+                    dictService.getByTypeKey(typeKey, new CallBack<List<DictDataModel>>() {
+                        @Override
+                        public void call(List<DictDataModel> data) {
+                            basicData.getDictDataModelMap().put(typeKey, data);
+                            if (basicDataDb == null || !StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                                ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        callBack.call(data);
+                                    }
+                                });
+                            }
+                            repository.insertData("typeKey" + typeKey, data);
+                        }
+
+                        @Override
+                        public void onFaild(Throwable throwable) {
+                            ThrowableParser.onFailed(throwable);
+                        }
+                    });
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    ThrowableParser.onFailed(throwable);
+
                 }
             });
         } else {
@@ -178,11 +205,65 @@ public class BasicDataManager {
         }
     }
 
+    /**
+     * 获取基础数据，并缓存内存,如果有缓存直接返回缓存数据
+     */
+    public void loadBasicDataTypesListKey(CallBack<List<DictDataModel>> callBack, String typeListKey) {
+        List<DictDataModel> dictDataModel = basicData.getTypesListKeyMap().get(typeListKey);
+        if (dictDataModel == null || dictDataModel.isEmpty()) {
+            repository.queryData("typeListKey" + typeListKey, new CallBack<BasicDataDb>() {
+                @Override
+                public void call(BasicDataDb basicDataDb) {
+                    if (basicDataDb != null && StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                        List<DictDataModel> model = gson.fromJson(basicDataDb.getBasicData(), new TypeToken<List<DictDataModel>>() {
+                        }.getType());
+                        basicData.getTypesListKeyMap().put(typeListKey, model);
+                        ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                callBack.call(model);
+                            }
+                        });
+                    }
+                    dictService.getTypesListByKey(typeListKey, new CallBack<List<DictDataModel>>() {
+                        @Override
+                        public void call(List<DictDataModel> data) {
+                            basicData.getTypesListKeyMap().put(typeListKey, data);
+                            if (basicDataDb == null || !StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                                ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        callBack.call(data);
+                                    }
+                                });
+                            }
+                            repository.insertData("typeListKey" + typeListKey, data);
+                        }
+
+                        @Override
+                        public void onFaild(Throwable throwable) {
+                            ThrowableParser.onFailed(throwable);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+
+                }
+            });
+        } else {
+            if (callBack != null) {
+                callBack.call(dictDataModel);
+            }
+        }
+    }
+
+
     Gson gson = new Gson();
 
     /**
      * 获取工单预览筛选条线
-     *
      */
     protected void loadPreviewSelect() {
         repository.queryData(PREVIEW_SELECT.getTypeName(), new CallBack<BasicDataDb>() {
@@ -237,7 +318,6 @@ public class BasicDataManager {
                         callBack.call(basicData);
                     }
                 });
-//                callBack.call(basicData);
             } catch (InterruptedException e) {
                 callBack.onFaild(e);
                 e.printStackTrace();
@@ -247,7 +327,6 @@ public class BasicDataManager {
 
     /**
      * 获取分类 客服，工程，秩序，客服
-     *
      */
     protected void loadLineTypes() {
         repository.queryData(LINE_TYPES.getTypeName(), new CallBack<BasicDataDb>() {
@@ -286,7 +365,6 @@ public class BasicDataManager {
 
     /**
      * 加载所有条线数据
-     *
      */
     protected void loadLines() {
         repository.queryData(LINE.getTypeName(), new CallBack<BasicDataDb>() {
@@ -326,7 +404,6 @@ public class BasicDataManager {
 
     /**
      * 加载所有资源数据
-     *
      */
     protected void loadResources() {
         repository.queryData(RESOURCE.getTypeName(), new CallBack<BasicDataDb>() {
@@ -366,7 +443,6 @@ public class BasicDataManager {
 
     /**
      * 投诉性质
-     *
      */
     protected void loadComplainPropertys() {
         repository.queryData(COMPLAIN_PROPERTYS.getTypeName(), new CallBack<BasicDataDb>() {
@@ -405,7 +481,6 @@ public class BasicDataManager {
 
     /**
      * 投诉性质
-     *
      */
     protected void loadComplainTypes() {
         repository.queryData(COMPLAIN_TYPES.getTypeName(), new CallBack<BasicDataDb>() {
@@ -449,33 +524,65 @@ public class BasicDataManager {
      * @param callBack
      */
     public void loadDivideGrid(String divideId, CallBack<DivideGrid> callBack) {
-        DivideGrid divideGrid = basicData.getDivideGridMap().get(divideId);
-        if (divideGrid == null || divideGrid.isEmpty()) {
-            mdmService.gridPage(divideId, new CallBack<PageResult<GridModel>>() {
-                @Override
-                public void call(PageResult<GridModel> data) {
-                    DivideGrid gridData = new DivideGrid(data);
-                    basicData.getDivideGridMap().put(divideId, gridData);
-                    if (callBack != null) {
-                        callBack.call(gridData);
-                    }
-                }
-
-                @Override
-                public void onFaild(Throwable throwable) {
-                    callBack.call(null);
-                }
-            });
-        } else {
+        if (basicData.getDivideGridMap().get(divideId) != null) {
             if (callBack != null) {
-                callBack.call(divideGrid);
+                callBack.call(basicData.getDivideGridMap().get(divideId));
             }
+            return;
         }
+        repository.queryData("divideGrid" + divideId, new CallBack<BasicDataDb>() {
+            @Override
+            public void call(BasicDataDb basicDataDb) {
+                if (basicDataDb != null && StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                    DivideGrid divideGrid = gson.fromJson(basicDataDb.getBasicData(), new TypeToken<DivideGrid>() {
+                    }.getType());
+                    basicData.getDivideGridMap().put(divideId, divideGrid);
+                    ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (callBack != null) {
+                                callBack.call(divideGrid);
+                            }
+                        }
+                    });
+                }
+                fixedThreadPool.execute(() ->
+                        mdmService.gridPage(divideId, new CallBack<PageResult<GridModel>>() {
+                            @Override
+                            public void call(PageResult<GridModel> data) {
+                                DivideGrid gridData = new DivideGrid(data);
+                                basicData.getDivideGridMap().put(divideId, gridData);
+                                if (basicDataDb == null || !StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                                    ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (callBack != null) {
+                                                callBack.call(gridData);
+                                            }
+                                        }
+                                    });
+                                }
+                                repository.insertData("divideGrid" + divideId, gridData);
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                if (callBack != null) {
+                                    callBack.call(null);
+                                }
+                            }
+                        }));
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
     }
 
     /**
      * 获取报修区域
-     *
      */
     protected void loadRepairArea() {
         repository.queryData(REPAIR_AREA.getTypeName(), new CallBack<BasicDataDb>() {
