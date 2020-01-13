@@ -384,3 +384,4 @@ public *;
 # 魅族通道
 -keep class com.meizu.cloud.** {*;}
 -dontwarn com.meizu.cloud.**
+-keepattributes SourceFile,LineNumberTable

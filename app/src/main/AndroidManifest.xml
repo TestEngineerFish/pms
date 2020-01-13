@@ -152,7 +152,15 @@
         <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity"/>
-       <!--  客户问询结束      -->
+        <!--  客户问询结束      -->
+        <!--  不合格单开始      -->
+        <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity"/>
+        <activity android:name=".disqualified.ui.PropertyListViewModuleActivity"/>
+        <activity android:name=".disqualified.ui.CreateDisqualifiedActivity"/>
+        <activity android:name=".disqualified.ui.DisqualifiedDetailActivity"/>
+        <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity"/>
+        <!--  不合格单结束      -->
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.einyun.app.pms.fileprovider"

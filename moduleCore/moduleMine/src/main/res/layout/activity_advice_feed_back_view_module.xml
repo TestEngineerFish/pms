@@ -20,7 +20,7 @@
          <RelativeLayout
              android:onClick="@{()->callBack.EnterSignName()}"
              android:background="@color/white"
-             android:layout_marginTop="10dp"
+             android:layout_marginTop="1dp"
              android:layout_width="match_parent"
              android:layout_height="50dp">
              <TextView
@@ -78,7 +78,7 @@
          <TextView
              android:onClick="@{()->callBack.btnConfirm()}"
              android:id="@+id/tv_ok"
-             android:background="@drawable/shape_button_blue_corners"
+             android:background="@drawable/select_btn_bg"
              android:textColor="@color/white"
              android:layout_marginLeft="30dp"
              android:layout_marginRight="30dp"

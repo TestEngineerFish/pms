@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="model"
+            type="com.einyun.app.pms.disqualified.model.DisqualifiedListModel" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.disqualified.ui.PropertyListViewModuleActivity" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+             android:layout_marginTop="@dimen/px_20"
+             android:id="@+id/swipe_refresh"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/list"
+                     android:layout_marginBottom="@dimen/px_20"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
+             </LinearLayout>
+
+
+         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+     </LinearLayout>
+</layout>

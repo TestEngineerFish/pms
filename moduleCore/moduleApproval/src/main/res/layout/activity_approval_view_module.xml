@@ -16,40 +16,68 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent">
          <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
-         <RadioGroup
-             android:background="@color/white"
-             android:id="@+id/rg_approval"
+<!--         <RadioGroup-->
+<!--             android:background="@color/white"-->
+<!--             android:id="@+id/rg_approval"-->
+<!--             android:layout_width="match_parent"-->
+<!--             android:layout_height="44dp"-->
+
+<!--             android:orientation="horizontal">-->
+
+<!--             <RadioButton-->
+<!--                 android:layout_marginLeft="25dp"-->
+<!--                 android:layout_marginRight="15dp"-->
+<!--                 android:id="@+id/rbtn_wait_approval"-->
+<!--                 style="@style/home_rbtn_line"-->
+<!--                 android:checked="true"-->
+<!--                 android:text="@string/tv_wait_approval" />-->
+
+<!--             <RadioButton-->
+<!--                 android:layout_marginLeft="15dp"-->
+<!--                 android:layout_marginRight="15dp"-->
+<!--                 android:id="@+id/rbtn_had_approval"-->
+<!--                 style="@style/home_rbtn_line"-->
+<!--                 android:text="@string/tv_had_approval" />-->
+
+<!--             <RadioButton-->
+<!--                 android:layout_marginLeft="15dp"-->
+<!--                 android:layout_marginRight="25dp"-->
+<!--                 android:id="@+id/rbtn_me_started"-->
+<!--                 style="@style/home_rbtn_line"-->
+<!--                 android:text="@string/tv_me_started" />-->
+
+<!--         </RadioGroup>-->
+<!--         <androidx.viewpager.widget.ViewPager-->
+<!--             android:id="@+id/viewpager_approval"-->
+<!--             android:layout_width="match_parent"-->
+<!--             android:layout_height="match_parent" />-->
+         <LinearLayout
+             android:id="@+id/tab_customer_inquiries"
              android:layout_width="match_parent"
-             android:layout_height="44dp"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
 
-             android:orientation="horizontal">
+             <com.google.android.material.tabs.TabLayout
+                 android:id="@+id/tab_send_order"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@color/white"
+                 app:tabIndicatorColor="@color/stress_text_btn_icon_color"
+                 app:tabIndicatorFullWidth="false"
+                 app:tabIndicatorHeight="3dp"
+                 app:tabSelectedTextColor="@color/blackTextColor"
+                 app:tabTextColor="@color/normal_main_text_icon_color" />
 
-             <RadioButton
-                 android:layout_marginLeft="25dp"
-                 android:layout_marginRight="15dp"
-                 android:id="@+id/rbtn_wait_approval"
-                 style="@style/home_rbtn_line"
-                 android:checked="true"
-                 android:text="@string/tv_wait_approval" />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/px_10"
+                 android:background="@color/activity_bg_color" />
+             <androidx.viewpager.widget.ViewPager
+                 android:id="@+id/view_pager"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
 
-             <RadioButton
-                 android:layout_marginLeft="15dp"
-                 android:layout_marginRight="15dp"
-                 android:id="@+id/rbtn_had_approval"
-                 style="@style/home_rbtn_line"
-                 android:text="@string/tv_had_approval" />
-
-             <RadioButton
-                 android:layout_marginLeft="15dp"
-                 android:layout_marginRight="25dp"
-                 android:id="@+id/rbtn_me_started"
-                 style="@style/home_rbtn_line"
-                 android:text="@string/tv_me_started" />
-
-         </RadioGroup>
-         <androidx.viewpager.widget.ViewPager
-             android:id="@+id/viewpager_approval"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent" />
+             </androidx.viewpager.widget.ViewPager>
+         </LinearLayout>
      </LinearLayout>
 </layout>
