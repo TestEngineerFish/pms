@@ -49,7 +49,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             }, { error ->
                 callBack.onFaild(error)
             })
-        return liveData    }
+        return liveData
+    }
 
     override fun postApplyDateInfo(
         request: ExtenDetialRequest,
@@ -175,10 +176,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeOrderPlan(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     callBack.call(response)
                     liveData.postValue(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
@@ -359,6 +360,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
         return liveData; }
+
     //三大客服转派工单
     override fun resendCusOrder(
         request: ResendOrderRequest,
@@ -374,6 +376,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
         return liveData; }
+
     override fun exten(
         request: ExtenDetialRequest,
         callBack: CallBack<BaseResponse<Object>>
@@ -381,10 +384,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<BaseResponse<Object>>()
         serviceApi?.exten(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     liveData.postValue(response)
                     callBack.call(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
 
@@ -563,16 +566,17 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 巡查工单详情
      */
     override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())
-            ?.subscribe(
-                { response ->
-                    if (response.isState) {
-                        callBack.call(response.data)
-                    } else {
-                        callBack.onFaild(EinyunHttpException(response))
-                    }
-                }, { callBack.onFaild(it) }
-            )
+        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())?.doOnError({ error ->
+            Log.e("error",error.toString())
+        })?.subscribe(
+            { response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { callBack.onFaild(it) }
+        )
     }
 
 
@@ -737,10 +741,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeOrder(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     callBack.call(response)
                     liveData.postValue(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
@@ -757,10 +761,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeCustomerOrder(midUrl, request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     callBack.call(response)
                     liveData.postValue(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->

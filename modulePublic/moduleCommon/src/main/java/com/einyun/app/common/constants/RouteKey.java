@@ -13,11 +13,14 @@ package com.einyun.app.common.constants;
  * @Version: 1.0
  */
 public class RouteKey {
+    public static final String KEY_PATH="path";
+    public static final String KEY_PUSH_JUMP="pushJump";
     public static final String KEY_USER_ID="userId";
     public static final String KEY_WEB_URL="webUrl";
     public static final String KEY_WEB_TITLE="webUrlTitle";
     public static final String KEY_PARAMS="params";
     public static final String KEY_TASK_ID="taskId";
+    public static final String KEY_CATE_NAME="cateName";
     public static final String KEY_PHONE="phone";
     public static final String KEY_TASK_NODE_ID="taskNodeId";
     public static final String KEY_PRO_INS_ID="proInsId";

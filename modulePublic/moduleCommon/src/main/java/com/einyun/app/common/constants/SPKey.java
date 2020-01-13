@@ -21,4 +21,5 @@ public class SPKey {
 
     public static final String KEY_WORK_TYPE_CHOOSE_CACHE="work_type_choose_cahce";
     public static final String KEY_ACCOUNT="ACCOUNT";
+    public static final String SP_KEY_TOKEN = "KEY_TOKEN";
 }

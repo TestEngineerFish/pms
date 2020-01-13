@@ -1,5 +1,6 @@
 package com.einyun.app.pms.repairs.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -7,8 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseActivity;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -39,15 +43,15 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
 @Route(path = RouterUtils.ACTIVITY_REPAIRS_PAGING)
 public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBinding, RepairsViewModel> {
     private String[] mTitles;//tab标题
-    public static List<SelectModel> selectModelList=new ArrayList<>();
+    public static List<SelectModel> selectModelList = new ArrayList<>();
 
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_work_repair);
-        mTitles=new String[]{getResources().getString(R.string.text_grab_order),getResources().getString(R.string.text_wait_follow),getResources().getString(R.string.text_wait_feedback),getResources().getString(R.string.text_already_follow),getResources().getString(R.string.text_already_done),getResources().getString(R.string.text_copy_me)};
+        mTitles = new String[]{getResources().getString(R.string.text_grab_order), getResources().getString(R.string.text_wait_follow), getResources().getString(R.string.text_wait_feedback), getResources().getString(R.string.text_already_follow), getResources().getString(R.string.text_already_done), getResources().getString(R.string.text_copy_me)};
         final ArrayList<RepairsViewModelFragment> fragments = new ArrayList<>();
-        String fragmentTags[]=new String[]{FRAGMENT_REPAIR_GRAB,FRAGMENT_REPAIR_WAIT_FOLLOW,FRAGMENT_REPAIR_WAIT_FEED,FRAGMENT_REPAIR_ALREADY_FOLLOW,FRAGMENT_REPAIR_ALREDY_DONE,FRAGMENT_REPAIR_COPY_ME};
+        String fragmentTags[] = new String[]{FRAGMENT_REPAIR_GRAB, FRAGMENT_REPAIR_WAIT_FOLLOW, FRAGMENT_REPAIR_WAIT_FEED, FRAGMENT_REPAIR_ALREADY_FOLLOW, FRAGMENT_REPAIR_ALREDY_DONE, FRAGMENT_REPAIR_COPY_ME};
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
             bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
@@ -106,4 +110,17 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         super.initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 }

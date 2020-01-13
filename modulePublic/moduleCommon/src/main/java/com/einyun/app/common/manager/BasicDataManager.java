@@ -38,6 +38,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
 import static com.einyun.app.common.manager.BasicDataTypeEnum.COMPLAIN_PROPERTYS;
 import static com.einyun.app.common.manager.BasicDataTypeEnum.COMPLAIN_TYPES;
 import static com.einyun.app.common.manager.BasicDataTypeEnum.LINE;
@@ -312,12 +316,15 @@ public class BasicDataManager {
             try {
                 latch.await();
                 reload = false;
-                ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        callBack.call(basicData);
-                    }
-                });
+                Single.just(0)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Integer>(){
+
+                            @Override
+                            public void accept(Integer integer) throws Exception {
+                                callBack.call(basicData);
+                            }
+                        });
             } catch (InterruptedException e) {
                 callBack.onFaild(e);
                 e.printStackTrace();

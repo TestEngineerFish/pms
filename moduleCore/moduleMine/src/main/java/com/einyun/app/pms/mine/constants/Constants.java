@@ -1,8 +1,10 @@
 package com.einyun.app.pms.mine.constants;
 
 
-public class Constants {
+import com.einyun.app.common.BuildConfig;
 
+public class Constants {
+    public static final String PRIVACY_DETAIL_URL = BuildConfig.BASE_URL + "/h5-mobile/web/appPolicy";
     public static final String SP_KEY_TENANT_CODE = "KEY_TENANT_CODE";
     public static final String SIGN_NAME_EDIT = "SIGN_NAME_EDIT";
     public static final String SIGN_USER_ID = "SIGN_USER_ID";
