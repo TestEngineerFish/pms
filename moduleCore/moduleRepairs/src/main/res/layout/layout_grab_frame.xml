@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grab_bg"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="@dimen/px_10">
+    <LinearLayout
+        android:layout_width="@dimen/px_470"
+        android:layout_height="@dimen/px_621"
+        android:orientation="vertical"
+        android:background="@drawable/grab_bg"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_379"
+            android:text="报修类别"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/font_size13"
+            android:textColor="@color/normal_main_text_icon_color"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_12"
+            android:text="工程维修类"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/font_size18"
+            android:textColor="@color/txt_black_order"
+            />
+        <Button
+            android:layout_width="@dimen/px_340"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_42"
+            style="@style/submit_btn"
+            android:paddingTop="@dimen/px_0"
+            android:paddingBottom="@dimen/px_0"
+            android:text="抢单"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/font_size15"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

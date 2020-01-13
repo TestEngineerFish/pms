@@ -5,6 +5,7 @@
     <color name="grayBgColor">#f8f7fb</color>
     <color name="hint_foreground_material_light">#00000000</color>
     <color name="hint_foreground_material_dark">#00000000</color>
+    <color name="grab_bg">#80000000</color>
     <color name="whiteTextColor">#ffffff</color>
     <color name="blackTextColor">#111111</color>
     <color name="grayItemColor">#555555</color>
