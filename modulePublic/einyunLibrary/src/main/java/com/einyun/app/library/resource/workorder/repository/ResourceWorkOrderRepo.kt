@@ -8,7 +8,6 @@ import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.base.paging.bean.QueryBuilder
-import com.einyun.app.base.util.ToastUtil
 import com.einyun.app.library.core.api.ResourceWorkOrderService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
@@ -20,7 +19,8 @@ import com.einyun.app.library.resource.workorder.net.response.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
-import java.util.logging.Logger
+import com.einyun.app.library.workorder.net.request.ComplainPageRequest
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 
 /**
  *
@@ -36,6 +36,118 @@ import java.util.logging.Logger
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun orderListComplain(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        var queryBuilder = queryComplainBuilder(
+            request
+        )
+        serviceApi?.orderListComplain(queryBuilder.build())
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun orderListAsk(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListAsk(request)
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun orderListRepair(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListRepair(queryBuilder.build())
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun orderListPatro(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListPatro(request)
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun orderListPlan(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListPlan(request)
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+//                        liveData.postValue(response.value)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    /**
+     * 工单列表-派工单
+     * */
+    override fun orderListDistribute(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListDistribute(request)
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     override fun getOrderPreviewSelect(callBack: CallBack<List<PreviewSelectModel>>): LiveData<List<PreviewSelectModel>> {
         val liveData = MutableLiveData<List<PreviewSelectModel>>()
         serviceApi?.getOrderPreviewSelect()?.compose(RxSchedulers.inIoMain())
@@ -49,7 +161,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             }, { error ->
                 callBack.onFaild(error)
             })
-        return liveData    }
+        return liveData
+    }
 
     override fun postApplyDateInfo(
         request: ExtenDetialRequest,
@@ -175,10 +288,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeOrderPlan(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     callBack.call(response)
                     liveData.postValue(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
@@ -359,6 +472,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
         return liveData; }
+
     //三大客服转派工单
     override fun resendCusOrder(
         request: ResendOrderRequest,
@@ -374,6 +488,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
         return liveData; }
+
     override fun exten(
         request: ExtenDetialRequest,
         callBack: CallBack<BaseResponse<Object>>
@@ -381,10 +496,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<BaseResponse<Object>>()
         serviceApi?.exten(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     liveData.postValue(response)
                     callBack.call(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
 
@@ -674,7 +789,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * */
     override fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>> {
         val liveData = MutableLiveData<List<WorkOrderTypeModel>>()
-        serviceApi?.getOrderType()?.compose(RxSchedulers.inIo())
+        var typeKey = "pgdlx"
+        serviceApi?.getOrderType(typeKey)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)
@@ -736,10 +852,10 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeOrder(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     callBack.call(response)
                     liveData.postValue(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
@@ -756,16 +872,82 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         val liveData = MutableLiveData<ApplyCloseResponse>()
         serviceApi?.closeCustomerOrder(midUrl, request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
-                if (response.isState){
+                if (response.isState) {
                     callBack.call(response)
                     liveData.postValue(response)
-                }else{
+                } else {
                     callBack.onFaild(EinyunHttpException(response))
                 }
             }, { error ->
                 callBack.onFaild(error)
             })
         return liveData
+    }
+
+    private fun queryRepairBuilder(
+        request: OrderListPageRequest
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "bx_dk_id",
+            request.bx_dk_id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+            .addQueryItem(
+                "bx_area_id",
+                request.bx_area_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "bx_cate_lv1_id",
+                request.bx_cate_lv1_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "bx_cate_lv2_id",
+                request.bx_cate_lv2_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addSort("bx_time", request.DESC)
+            .setPageBean(request.pageBean)
+        return builder
+    }
+
+    private fun queryComplainBuilder(
+        request: OrderListPageRequest
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "F_ts_dk_id",
+            request.ts_dk_id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+            .addQueryItem(
+                "F_ts_property_id",
+                request.F_ts_property_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "F_ts_cate_id",
+                request.F_ts_cate_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addSort("F_ts_time", request.DESC)
+            .setPageBean(request.pageBean)
+        return builder
     }
 
 }

@@ -21,6 +21,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.library.dashboard.model.LineOrder;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -47,7 +48,7 @@ import java.util.Date;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
-public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<ActivityOrderConditionPandectBinding, WorkBenchViewModel> implements View.OnClickListener {
+public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<ActivityOrderConditionPandectBinding, WorkBenchViewModel> implements View.OnClickListener, PeriodizationView.OnPeriodSelectListener {
 
     private RVBindingAdapter<ItemWorkTableNumBinding, String> adapter;
     private RVBindingAdapter<ItemWorkTableBinding, WorkOrder> tableAdapter;
@@ -272,8 +273,15 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         pvTime.show();
     }
 
-    public void selectOrgCodes() {
+    PeriodizationView periodizationView;
 
+    public void selectOrgCodes() {
+        if (periodizationView == null) {
+            //弹出分期view
+            periodizationView = new PeriodizationView();
+            periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
+        }
+        periodizationView.show(getSupportFragmentManager(), "");
     }
 
     @Override
@@ -289,5 +297,13 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     @Override
     protected void initListener() {
         super.initListener();
+    }
+
+    @Override
+    public void onPeriodSelectListener(OrgModel orgModel) {
+        binding.periodSelected.setText(orgModel.getName());
+        binding.setPeriodSelected(true);
+        orgCodes = Arrays.asList(orgModel.getId());
+        fresh();
     }
 }

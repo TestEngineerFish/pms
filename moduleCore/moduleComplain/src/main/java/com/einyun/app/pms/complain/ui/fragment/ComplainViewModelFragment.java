@@ -20,6 +20,7 @@ import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -118,7 +119,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                 public void onFaild(Throwable throwable) {
 
                 }
-            });
+            }, BasicDataTypeEnum.COMPLAIN_PROPERTYS,BasicDataTypeEnum.COMPLAIN_TYPES);
 
         });
     }

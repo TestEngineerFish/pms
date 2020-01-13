@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion deps.android.compileSdkVersion
     defaultConfig {
@@ -9,7 +8,7 @@ android {
         versionCode 200
         versionName "2.0.0"
         multiDexEnabled true
-        flavorDimensions "default"
+//        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
         javaCompileOptions {
@@ -144,4 +143,6 @@ dependencies {
     implementation project(deps.project.module_complain)
     implementation project(deps.project.module_disqualified)
     implementation project(deps.project.module_extra)
+    implementation project(deps.project.module_orderlist)
+//    implementation project(deps.project.module_extra)
 }

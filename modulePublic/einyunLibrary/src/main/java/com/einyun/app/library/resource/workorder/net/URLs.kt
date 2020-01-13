@@ -93,7 +93,7 @@ class URLs {
             "/portal/sys/sysType/v1/getTypesListByKey?typeKey=RESOURCE_TYPE"
         //获取工单类型
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_ORDER_TYPE =
-            "/portal/sys/dataDict/v1/getByTypeKey?typeKey=pgdlx"
+            "/portal/sys/dataDict/v1/getByTypeKey"
         //获取资源类型
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH =
             "/resource/resource-api/v1/resource-basic-info/dispatch"
@@ -145,6 +145,34 @@ class URLs {
         const val URL_CLOSE_CUSTOMER_ORDER = "/workOrder/workOrder/{workOrder}/v1/applyFclose"
         //工作预览筛选跳线数据
         const val URL_ORDER_PREVIEW_SELECT = "/portal/sys/sysType/v1/queryLinkByGroupKey?groupKey=RESOURCE_TYPE"
+        /**
+         * 工单列表-派工单
+         * */
+        const val URL_ORDER_LIST_DISTRIBUTE="/$DOMAIN/res-order/distribute/v2/listByResource"
 
+        /**
+         *工单列表-计划工单
+         * */
+        const val URL_ORDER_LIST_PLAN="/$DOMAIN/res-order/plan/v2/queryList"
+
+        /**
+         * 工单列表-巡查工单
+         * */
+        const val URL_ORDER_LIST_PATRO="$DOMAIN/res-order/patrol/v2/queryList"
+
+        /**
+         * 工单列表-客户报修
+         * */
+        const val URL_ORDER_LIST_REPAIR="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_repair_flow"
+
+        /**
+         * 工单列表-客户投诉
+         * */
+        const val URL_ORDER_LIST_COMPLAIN="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_complain_flow"
+
+        /**
+         * 工单列表-客户问询
+         * */
+        const val URL_ORDER_LIST_ASK="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_enquiry_flow"
     }
 }

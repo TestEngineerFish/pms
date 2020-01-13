@@ -222,7 +222,7 @@ public class SelectRepairsTypeView extends DialogFragment implements ItemClickLi
         if (selectOrgs.size() == 1) {
             adapter.setDataList(doors);
         } else {
-            adapter.setDataList(model.getChildren());
+            adapter.setDataList(selectOrgs.get(selectOrgs.size()-2).getChildren());
         }
         loadTags();
     }

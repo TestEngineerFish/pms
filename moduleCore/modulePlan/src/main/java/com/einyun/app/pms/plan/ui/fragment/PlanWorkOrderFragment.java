@@ -24,6 +24,7 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.SelectModel;
@@ -112,7 +113,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 public void onFaild(Throwable throwable) {
 
                 }
-            });
+            }, BasicDataTypeEnum.RESOURCE, BasicDataTypeEnum.LINE);
 
         });
         binding.panelCondition.search.setVisibility(View.VISIBLE);
