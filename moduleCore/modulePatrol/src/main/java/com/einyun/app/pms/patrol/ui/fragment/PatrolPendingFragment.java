@@ -197,7 +197,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
      */
     protected void showConditionView() {
         if (TextUtils.isEmpty(viewModel.request.getDivideId())) {
-            ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_divide_selected);
+            ToastUtil.show(getContext(), R.string.text_need_divide_selected);
             return;
         }
         if (selectPopUpView == null) {

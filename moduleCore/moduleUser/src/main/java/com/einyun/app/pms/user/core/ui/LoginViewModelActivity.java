@@ -1,6 +1,7 @@
 package com.einyun.app.pms.user.core.ui;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -48,6 +50,15 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     protected UserViewModel initViewModel() {
         return new ViewModelProvider(this, new UserViewModelFactory()).get(UserViewModel.class);
+    }
+
+    String path;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle extras = getIntent().getExtras();
+        path = extras.getString(RouteKey.KEY_PATH);
     }
 
     @Override
@@ -256,9 +267,15 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                                         CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
                                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                                         SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
-                                        ARouter.getInstance()
-                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                                .navigation();
+                                        if (StringUtil.isNullStr(path)) {
+                                            ARouter.getInstance()
+                                                    .build(path).with(getIntent().getExtras())
+                                                    .navigation();
+                                        } else {
+                                            ARouter.getInstance()
+                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                    .navigation();
+                                        }
                                         finish();
                                     });
                 });
@@ -286,5 +303,11 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     protected boolean fullWindowFlag() {
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }

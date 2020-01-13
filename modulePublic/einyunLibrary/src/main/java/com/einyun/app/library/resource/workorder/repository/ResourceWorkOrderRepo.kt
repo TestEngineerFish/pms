@@ -678,16 +678,17 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 巡查工单详情
      */
     override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())
-            ?.subscribe(
-                { response ->
-                    if (response.isState) {
-                        callBack.call(response.data)
-                    } else {
-                        callBack.onFaild(EinyunHttpException(response))
-                    }
-                }, { callBack.onFaild(it) }
-            )
+        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())?.doOnError({ error ->
+            Log.e("error",error.toString())
+        })?.subscribe(
+            { response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { callBack.onFaild(it) }
+        )
     }
 
 

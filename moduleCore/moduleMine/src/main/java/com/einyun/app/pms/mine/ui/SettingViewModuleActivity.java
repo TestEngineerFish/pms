@@ -18,6 +18,7 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 
@@ -59,7 +60,22 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         binding.setCallBack(this);
         binding.tvVersion.setText(viewModel.getVerName(this));
         binding.checkbox.setOnCheckedChangeListener(this);
+        binding.tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPrivacy();
+            }
+        });
     }
+
+    public void goToPrivacy(){
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                .withString(RouteKey.KEY_WEB_URL, Constants.PRIVACY_DETAIL_URL)
+                .withString(RouteKey.KEY_WEB_TITLE, "用户隐私条款概要")
+                .navigation();
+    }
+
     /**
      * 退出登录
      * */
