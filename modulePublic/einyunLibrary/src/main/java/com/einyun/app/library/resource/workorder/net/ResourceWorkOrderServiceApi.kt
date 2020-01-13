@@ -263,23 +263,35 @@ interface ResourceWorkOrderServiceApi {
      * 工单列表-派工单
      */
     @POST(URLs.URL_ORDER_LIST_DISTRIBUTE)
-    fun orderListDistribute(@Body request: DistributePageRequest): Flowable<OrderListResponse>
+    fun orderListDistribute(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
 
     /**
      * 工单列表-派工单
      */
     @POST(URLs.URL_ORDER_LIST_PLAN)
-    fun orderListPlan(@Body request: DistributePageRequest): Flowable<OrderListResponse>
+    fun orderListPlan(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
 
     /**
      * 工单列表-巡查工单
      */
     @POST(URLs.URL_ORDER_LIST_PATRO)
-    fun orderListPatro(@Body request: DistributePageRequest): Flowable<OrderListResponse>
+    fun orderListPatro(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
 
     /**
      * 工单列表-客户报修
      */
     @POST(URLs.URL_ORDER_LIST_REPAIR)
-    fun orderListRepair(@Body request: DistributePageRequest): Flowable<OrderListResponse>
+    fun orderListRepair(@Body request: Query): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-客户投诉
+     */
+    @POST(URLs.URL_ORDER_LIST_COMPLAIN)
+    fun orderListComplain(@Body request: Query): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-客户投诉
+     */
+    @POST(URLs.URL_ORDER_LIST_ASK)
+    fun orderListAsk(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
 }

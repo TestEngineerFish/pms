@@ -21,6 +21,7 @@ import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
@@ -41,23 +42,29 @@ public class OrderListViewModel extends BasePageListViewModel<OrderListModel> {
     LiveData<PagedList<Distribute>> donePageList;
     public int listType = ListType.PENDING.getType();
     private ResourceWorkOrderService resourceWorkOrderService;
-    private DistributePageRequest request = new DistributePageRequest();
+    private OrderListPageRequest request = new OrderListPageRequest();
     LiveData<PagedList<OrderListModel>> liveData;
-    public DistributePageRequest getRequest() {
+    private String tag;
+    public OrderListPageRequest getRequest() {
         return request;
     }
 
-    public void setRequest(DistributePageRequest request) {
+    public void setRequest(OrderListPageRequest request) {
         this.request = request;
     }
 
-/*
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public void setOrgModel(OrgModel orgModel) {
         request.setDivideId(orgModel.getId());
-        switchCondition();
+        refreshUI();
     }
-*/
 
     public MutableLiveData<OrgnizationModel> orgnizationModelLiveData = new MutableLiveData<>();
 
@@ -86,8 +93,8 @@ public class OrderListViewModel extends BasePageListViewModel<OrderListModel> {
      * 获取Paging LiveData
      * @return LiveData
      */
-    public LiveData<PagedList<OrderListModel>> loadPagingData(DistributePageRequest distributePageRequest, String tag){
-        liveData= new LivePagedListBuilder(new DataSourceFactory(distributePageRequest,tag), config)
+    public LiveData<PagedList<OrderListModel>> loadPagingData(OrderListPageRequest orderListPageRequest, String tag){
+        liveData= new LivePagedListBuilder(new DataSourceFactory(orderListPageRequest,tag), config)
                 .build();
         return liveData;
     }

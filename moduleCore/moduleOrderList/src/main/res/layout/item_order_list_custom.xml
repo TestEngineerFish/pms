@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="repair"
+            name="workOrder"
             type="com.einyun.app.library.resource.workorder.model.OrderListModel"
             />
     </data>
@@ -40,7 +40,7 @@
                 android:layout_marginRight="@dimen/px_40"
                 android:gravity="center_vertical"
                 android:maxLength="10"
-                android:text="@{repair.bx_area+@string/text_padding+repair.bx_cate_lv1+@string/text_padding+repair.bx_cate_lv2}"
+                android:text="@{workOrder.bx_area+@string/text_padding+workOrder.bx_cate_lv1+@string/text_padding+workOrder.bx_cate_lv2}"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/px_32" />
 
@@ -54,7 +54,7 @@
                     android:layout_height="@dimen/px_48"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:custom_status="@{repair.state}"
+                    app:custom_status="@{workOrder.state}"
                      />
 
                 <TextView
@@ -63,7 +63,7 @@
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    app:custom_status="@{repair.state}"
+                    app:custom_status="@{workOrder.state}"
                     />
             </RelativeLayout>
         </RelativeLayout>
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@{repair.bx_code}"
+                    android:text="@{workOrder.bx_code}"
                     android:textColor="@color/blackTextColor" />
             </LinearLayout>
 
@@ -127,60 +127,6 @@
                 android:layout_height="1dp"
                 android:background="@color/thin_divider_color" />
 
-            <RelativeLayout
-                android:id="@+id/item_feed_re"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
-                android:layout_marginLeft="@dimen/px_30"
-                android:layout_marginRight="@dimen/px_30"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center"
-                    android:text="@string/tv_feed_back"
-                    android:textColor="@color/blueTextColor" />
-
-                <ImageView
-                    android:layout_width="@dimen/px_26"
-                    android:layout_height="@dimen/px_26"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right_arrow" />
-            </RelativeLayout>
-            <LinearLayout
-                android:id="@+id/item_contact_or_feed_re"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/px_30"
-                android:layout_marginRight="@dimen/px_30"
-                android:visibility="gone">
-                <TextView
-                    android:id="@+id/item_contact"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/text_contact"
-                    android:textColor="@color/blueTextColor" />
-                <View
-                    android:layout_width="@dimen/px_2"
-                    android:layout_height="match_parent"
-                    android:background="@color/thin_divider_color"/>
-                <TextView
-                    android:id="@+id/item_resend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/text_turn_order"
-                    android:textColor="@color/blueTextColor" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>

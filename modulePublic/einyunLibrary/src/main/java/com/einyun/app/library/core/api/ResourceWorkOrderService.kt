@@ -215,25 +215,37 @@ interface ResourceWorkOrderService : EinyunService {
 
     //工单列表派工单
     fun orderListDistribute(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage>
 
     //工单列表计划工单
     fun orderListPlan(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage>
 
     //工单列表巡查工单
     fun orderListPatro(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage>
 
     //工单列表巡查工单
     fun orderListRepair(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表投诉工单
+    fun orderListComplain(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表投诉工单
+    fun orderListAsk(
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage>
 }

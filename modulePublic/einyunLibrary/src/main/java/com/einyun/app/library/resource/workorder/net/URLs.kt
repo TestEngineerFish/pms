@@ -164,5 +164,15 @@ class URLs {
          * 工单列表-客户报修
          * */
         const val URL_ORDER_LIST_REPAIR="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_repair_flow"
+
+        /**
+         * 工单列表-客户投诉
+         * */
+        const val URL_ORDER_LIST_COMPLAIN="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_complain_flow"
+
+        /**
+         * 工单列表-客户问询
+         * */
+        const val URL_ORDER_LIST_ASK="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_enquiry_flow"
     }
 }

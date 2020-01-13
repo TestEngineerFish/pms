@@ -76,11 +76,11 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.og_unwell_order) {
 //                ToastUtil.show(this,"该功能暂未实现");
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_PERCENT).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST_ALL).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_UNWELL).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_COMPLAIN_PAGING).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST_ALL).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_COMPLAIN).navigation();
             }
             if (v.getId() == R.id.client_repairs_order) {
                 //客户报修
@@ -88,7 +88,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.client_enquiry_order) {
                 //客户问询
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_INQUIRIES).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST_ALL).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_ASK).navigation();
             }
         }
 

@@ -12,6 +12,7 @@ import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
 import com.einyun.app.library.resource.workorder.model.OrderListPage;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRepo;
 import com.einyun.app.library.workorder.model.RepairsPage;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
@@ -23,6 +24,8 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_GRAB;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FEED;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_ASK;
+import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_COMPLAIN;
 import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_DISTRIBUTE;
 import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_PATRO;
 import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_PLAN;
@@ -41,15 +44,16 @@ import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_REPAIR;
  * @Version: 1.0
  */
 public class OrderListDataSource extends BaseDataSource<DictDataModel> {
-    private DistributePageRequest request;
+    private OrderListPageRequest request;
     private String tag;
-    public OrderListDataSource(DistributePageRequest request,String tag) {
+
+    public OrderListDataSource(OrderListPageRequest request, String tag) {
         this.request = request;
-        this.tag=tag;
+        this.tag = tag;
     }
 
     //根据页数获取数据
-    public  <T> void loadData(PageBean pageBean,@NonNull T callback) {
+    public <T> void loadData(PageBean pageBean, @NonNull T callback) {
         ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();
         request.setPageSize(PageBean.DEFAULT_PAGE_SIZE);
 //        request.setPage(PageBean.DEFAULT_PAGE);
@@ -138,7 +142,50 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
             });
             return;
         }
+       //工单列表-客户问询
+        if (tag.equals(ORDER_LIST_ASK)) {
+            repository.orderListAsk(request, new CallBack<OrderListPage>() {
+                @Override
+                public void call(OrderListPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
+                }
 
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+            return;
         }
+        //工单列表-客户投诉
+        if (tag.equals(ORDER_LIST_COMPLAIN)) {
+            repository.orderListComplain(request, new CallBack<OrderListPage>() {
+                @Override
+                public void call(OrderListPage data) {
+                    if (callback instanceof LoadInitialCallback) {
+                        LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
+                        loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                    } else if (callback instanceof LoadRangeCallback) {
+                        LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
+                        loadInitialCallback.onResult(data.getRows());
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
+            return;
+        }
+
+
     }
+}
 

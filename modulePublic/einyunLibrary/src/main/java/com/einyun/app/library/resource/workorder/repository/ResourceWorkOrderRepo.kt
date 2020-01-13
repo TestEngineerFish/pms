@@ -19,6 +19,8 @@ import com.einyun.app.library.resource.workorder.net.response.*
 import com.einyun.app.library.resource.workorder.net.response.ApplyCloseResponse
 import com.einyun.app.library.resource.workorder.net.response.DistributeListResponse
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse
+import com.einyun.app.library.workorder.net.request.ComplainPageRequest
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest
 
 /**
  *
@@ -34,12 +36,52 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
-    override fun orderListRepair(
-        request: DistributePageRequest,
+    override fun orderListComplain(
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         val liveData = MutableLiveData<OrderListPage>()
-        serviceApi?.orderListRepair(request)
+        var queryBuilder = queryComplainBuilder(
+            request
+        )
+        serviceApi?.orderListComplain(queryBuilder.build())
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun orderListAsk(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListAsk(request)
+            ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun orderListRepair(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        var queryBuilder = queryRepairBuilder(
+            request
+        )
+        val liveData = MutableLiveData<OrderListPage>()
+        serviceApi?.orderListRepair(queryBuilder.build())
             ?.compose(RxSchedulers.inIoMain<OrderListResponse>())
             ?.subscribe({ response ->
                 if (response.isState) {
@@ -52,7 +94,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     }
 
     override fun orderListPatro(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         val liveData = MutableLiveData<OrderListPage>()
@@ -69,7 +111,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     }
 
     override fun orderListPlan(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         val liveData = MutableLiveData<OrderListPage>()
@@ -90,7 +132,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 工单列表-派工单
      * */
     override fun orderListDistribute(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         val liveData = MutableLiveData<OrderListPage>()
@@ -839,6 +881,72 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 callBack.onFaild(error)
             })
         return liveData
+    }
+
+    private fun queryRepairBuilder(
+        request: OrderListPageRequest
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "bx_dk_id",
+            request.bx_dk_id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+            .addQueryItem(
+                "bx_area_id",
+                request.bx_area_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "bx_cate_lv1_id",
+                request.bx_cate_lv1_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "bx_cate_lv2_id",
+                request.bx_cate_lv2_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addSort("bx_time", request.DESC)
+            .setPageBean(request.pageBean)
+        return builder
+    }
+
+    private fun queryComplainBuilder(
+        request: OrderListPageRequest
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+        builder.addQueryItem(
+            "F_ts_dk_id",
+            request.ts_dk_id,
+            Query.OPERATION_EQUAL,
+            Query.RELATION_AND
+        )
+            .addQueryItem(
+                "F_ts_property_id",
+                request.F_ts_property_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem(
+                "F_ts_cate_id",
+                request.F_ts_cate_id,
+                Query.OPERATION_EQUAL,
+                Query.RELATION_AND
+            )
+            .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
+            .addSort("F_ts_time", request.DESC)
+            .setPageBean(request.pageBean)
+        return builder
     }
 
 }

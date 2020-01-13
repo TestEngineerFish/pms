@@ -24,26 +24,38 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun orderListAsk(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)       }
+
+    override fun orderListComplain(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)    }
+
     override fun orderListRepair(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         return proxy.orderListPatro(request, callBack)    }
 
     override fun orderListPatro(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         return proxy.orderListPatro(request, callBack)     }
 
     override fun orderListPlan(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         return proxy.orderListDistribute(request, callBack)      }
 
     override fun orderListDistribute(
-        request: DistributePageRequest,
+        request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage> {
         return proxy.orderListDistribute(request, callBack)    }

@@ -5,6 +5,7 @@ import androidx.paging.DataSource;
 
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 
 /**
@@ -20,9 +21,9 @@ import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
  * @Version: 1.0
  */
 public class DataSourceFactory extends DataSource.Factory<Integer, DictDataModel> {
-    DistributePageRequest request;
+    OrderListPageRequest request;
     String tag;
-    public DataSourceFactory(DistributePageRequest request,String tag) {
+    public DataSourceFactory(OrderListPageRequest request,String tag) {
         this.request = request;
         this.tag=tag;
     }

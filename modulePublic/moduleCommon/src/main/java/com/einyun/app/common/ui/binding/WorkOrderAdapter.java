@@ -230,7 +230,7 @@ public class WorkOrderAdapter {
         } else if (value.equals(RouteKey.LIST_STATUS_RESPONSE)) {
             view.setText(R.string.text_wait_response);
         } else if (value.equals(RouteKey.LIST_STATUS_HANDLE)) {
-            view.setText(R.string.text_handling);
+            view.setText(R.string.text_wait_response);
         } else if (value.equals(RouteKey.LIST_STATUS_EVALUATE)) {
             view.setText(R.string.text_wait_evaluate);
         } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)) {
