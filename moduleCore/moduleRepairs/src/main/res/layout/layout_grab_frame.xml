@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/grab_bg"/>
     <androidx.cardview.widget.CardView
+        android:id="@+id/grab_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -49,6 +50,13 @@
             android:textStyle="bold"/>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
+    <ImageView
+        android:layout_width="@dimen/px_64"
+        android:layout_height="@dimen/px_64"
+        android:src="@drawable/grab_close"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/grab_card"
+        />
 
 
 </RelativeLayout>
