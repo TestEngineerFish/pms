@@ -13,8 +13,8 @@
 
     <!-- 提交按钮通用样式 -->
     <style name="submit_btn" parent="base_style">
-        <item name="android:layout_marginLeft">@dimen/px_60</item>
-        <item name="android:layout_marginRight">@dimen/px_60</item>
+        <item name="android:layout_marginLeft">@dimen/px_40</item>
+        <item name="android:layout_marginRight">@dimen/px_40</item>
         <item name="android:paddingTop">@dimen/px_22</item>
         <item name="android:paddingBottom">@dimen/px_22</item>
         <item name="android:layout_marginBottom">@dimen/px_40</item>

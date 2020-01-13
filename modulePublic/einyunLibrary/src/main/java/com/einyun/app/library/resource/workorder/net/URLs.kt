@@ -93,7 +93,7 @@ class URLs {
             "/portal/sys/sysType/v1/getTypesListByKey?typeKey=RESOURCE_TYPE"
         //获取工单类型
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_ORDER_TYPE =
-            "/portal/sys/dataDict/v1/getByTypeKey?typeKey=pgdlx"
+            "/portal/sys/dataDict/v1/getByTypeKey"
         //获取资源类型
         const val URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH =
             "/resource/resource-api/v1/resource-basic-info/dispatch"

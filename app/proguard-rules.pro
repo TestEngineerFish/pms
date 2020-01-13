@@ -69,6 +69,8 @@
 #
 #----------------------------------------------------
 # 保持哪些类不被混淆
+#继承阿里Provider不被混淆
+-keep interface * extends com.alibaba.android.arouter.facade.template.IProvider
 #继承activity,application,service,broadcastReceiver,contentprovider....不进行混淆
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application

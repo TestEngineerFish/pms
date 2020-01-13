@@ -365,7 +365,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             if(aBoolean){
                 viewModel.finishTask(orderId).observe(this, aBoolean1 -> {
                     if(aBoolean1){
-                        tipDialog=new TipDialog(getApplication(),getString(R.string.text_handle_success));
+                        tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
                         tipDialog.setTipDialogListener(dialog -> {
                             finish();
                         });

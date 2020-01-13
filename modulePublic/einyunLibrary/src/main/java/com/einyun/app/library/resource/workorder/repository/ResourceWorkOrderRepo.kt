@@ -789,7 +789,8 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * */
     override fun getWorkOrderType(callBack: CallBack<List<WorkOrderTypeModel>>): LiveData<List<WorkOrderTypeModel>> {
         val liveData = MutableLiveData<List<WorkOrderTypeModel>>()
-        serviceApi?.getOrderType()?.compose(RxSchedulers.inIo())
+        var typeKey = "pgdlx"
+        serviceApi?.getOrderType(typeKey)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)

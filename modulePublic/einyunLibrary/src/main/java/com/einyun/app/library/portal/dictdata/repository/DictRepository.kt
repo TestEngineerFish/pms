@@ -177,28 +177,6 @@ class DictRepository : DictService {
     }
 
     /**
-     * 根据分类key获取字典
-     * 个多逗号分隔
-     */
-    fun getByTypeKeys(
-        typeKey: String,
-        callBack: CallBack<List<DictDataModel>>?
-    ): LiveData<List<DictDataModel>> {
-        var liveData = MutableLiveData<List<DictDataModel>>()
-        serviceApi?.getByTypeKeys(typeKey)
-            ?.compose(RxSchedulers.inIoMain())
-            ?.subscribe({ response ->
-                if (response.isState) {
-                    liveData.postValue(response.data)
-                    callBack?.call(response.data)
-                }
-            }, {
-                callBack?.onFaild(it)
-            })
-        return liveData
-    }
-
-    /**
      *
      *根据字典key查询字典下级
      */

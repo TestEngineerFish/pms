@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.JsonUtil;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
@@ -33,6 +35,7 @@ import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
 import com.einyun.app.pms.main.databinding.ItemWorkTablePendingNumBinding;
+import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
@@ -81,6 +84,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             handleUserMenu(userMenu);
             //获取分期数据
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
+                SPUtils.put(BasicApplication.getInstance(),Constants.SP_KEY_STAGING,new Gson().toJson(orgModels));
                 handleStagingData(orgModels);
                 firstFresh = true;
                 freshData();
@@ -294,11 +298,6 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (userMenu.indexOf("gdlbck") != -1) {
             functionList.add("gdlb");
         }
-//  去除抢单
-//        if (userMenu.indexOf("qd") != -1) {
-//            functionList.add("qd");
-//        }
-
 
         functionList.add("gzyl");
         functionList.add("smcl");
@@ -413,15 +412,22 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (type == 0) {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId();
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, url)
+                    .navigation();
+        } else if (type == 2) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
+                    .navigation();
         } else {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId() + "&type=" + type;
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, url)
+                    .navigation();
         }
-
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
-                .withString(RouteKey.KEY_WEB_URL, url)
-                .navigation();
     }
 
     @Override

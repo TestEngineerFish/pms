@@ -20,6 +20,7 @@ import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -69,9 +70,11 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
     private SelectPopUpView selectPopUpView;
     RepairsPageRequest request;
-    public RepairsViewModelFragment(){
+
+    public RepairsViewModelFragment() {
 
     }
+
     public static RepairsViewModelFragment newInstance(Bundle bundle) {
         RepairsViewModelFragment fragment = new RepairsViewModelFragment();
         fragment.setArguments(bundle);
@@ -122,7 +125,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                         public void onFaild(Throwable throwable) {
 
                         }
-                    });
+                    }, BasicDataTypeEnum.REPAIR_AREA);
 
 
                 }

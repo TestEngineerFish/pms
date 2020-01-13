@@ -60,6 +60,24 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
         });
     }
 
+    public LiveData<WorkOrderData> workOrderData(List<String> orgIds,String year,String month) {
+        WorkOrderRequest request = new WorkOrderRequest();
+        request.setOrgIds(orgIds);
+        request.setYear(year);
+        request.setMonth(month);
+        return mService.workOrderData(request, new CallBack<WorkOrderData>() {
+            @Override
+            public void call(WorkOrderData data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+
     @Override
     public LiveData<OperateCaptureData> operateCaptureData(List<String> orgCodes) {
         return mService.operateCaptureData(orgCodes, new CallBack<OperateCaptureData>() {

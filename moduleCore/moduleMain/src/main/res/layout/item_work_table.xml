@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.dashboard.model.WorkOrder" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_org"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_280"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(workOrder.count)}"
+                tools:text="23"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/px_17"
+                android:textColor="#FF132D42"
+                android:textSize="@dimen/font_size15"/>
+
+            <View
+                android:id="@+id/line_height"
+                android:layout_width="@dimen/px_38"
+                android:layout_height="@dimen/px_100"
+                android:background="@drawable/main_work_order_table"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/order_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="计划工单"
+            android:text="@{workOrder.name}"
+            android:layout_marginTop="@dimen/px_36"
+            android:textColor="#FF999999"
+            android:textSize="@dimen/font_size11"
+            />
+
+    </LinearLayout>
+</layout>

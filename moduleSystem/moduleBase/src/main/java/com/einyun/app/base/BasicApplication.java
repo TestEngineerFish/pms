@@ -47,15 +47,6 @@ public class BasicApplication extends Application {
 //        }
     }
 
-//    public void exit() {
-//        for (AppCompatActivity activity : activityList) {
-//            if (activity != null) {
-//                activity.finish();
-//            }
-//        }
-//    }
-
-
     public static BasicApplication getInstance() {
         return app;
     }

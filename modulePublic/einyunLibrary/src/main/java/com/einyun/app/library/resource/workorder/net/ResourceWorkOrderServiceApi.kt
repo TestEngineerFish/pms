@@ -163,7 +163,7 @@ interface ResourceWorkOrderServiceApi {
      *获取工单类型
      **/
     @GET(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_ORDER_TYPE)
-    fun getOrderType(): Flowable<OrderTypeResponse>
+    fun getOrderType(@retrofit2.http.Query("typeKey") typeKey: String): Flowable<OrderTypeResponse>
 
 
     @POST(URLs.URL_RESOURCE_WORKORDER_DISTRIBUTE_DISPATCH)
