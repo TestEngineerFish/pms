@@ -3,7 +3,6 @@
     package="com.einyun.app.pms.main">
 
     <application>
-        <activity android:name=".core.ui.OrderListActivity"></activity>
         <activity android:name=".core.ui.HomeTabViewModelActivity" />
     </application>
 

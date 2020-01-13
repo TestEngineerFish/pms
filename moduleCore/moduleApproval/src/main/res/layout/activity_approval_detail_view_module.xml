@@ -124,11 +124,11 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/ll_creat_change_info"
+                android:visibility="gone"
                 style="@style/cardview_style">
 
                 <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/ll_creat_change_info"
                     android:background="@drawable/shape_white_bg"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -232,11 +232,11 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/ll_delay_close_info"
+                android:visibility="gone"
                 style="@style/cardview_style">
 
                 <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/ll_delay_close_info"
                     android:background="@drawable/shape_white_bg"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -277,7 +277,7 @@
                             />
                         <TextView
                             android:id="@+id/tv_close_order_code"
-                            android:textColor="@color/blueTextColor"
+                            android:textColor="@color/normal_blue_color"
                             style="@style/style_text_approval_right" />
                     </RelativeLayout>
                     <RelativeLayout

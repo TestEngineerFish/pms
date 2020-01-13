@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.OrderListModel" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/px_10"
+        app:cardElevation="0.5dp">
+
+
+        <LinearLayout
+            android:id="@+id/item_order_ln"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <ImageView
+                    android:id="@+id/item_send_work_lf_img"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:src="@drawable/warning" />
+
+                <TextView
+                    android:id="@+id/item_send_work_subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_40"
+                    android:layout_toRightOf="@id/item_send_work_lf_img"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/px_32" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/px_136"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:id="@+id/item_status_img"
+                        android:layout_width="@dimen/px_136"
+                        android:layout_height="@dimen/px_48"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                         />
+
+                    <TextView
+                        android:id="@+id/item_status_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                       />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                android:id="@+id/item_work_send_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/item_complain"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="投诉人" />
+
+                    <TextView
+                        android:id="@+id/item_complain_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/item_repair"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="报修人" />
+
+                    <TextView
+                        android:id="@+id/item_repair_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/item_ask"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="问询人" />
+
+                    <TextView
+                        android:id="@+id/item_ask_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/item_house"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_70"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_house" />
+
+                    <TextView
+                        android:id="@+id/item_house_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/item_location_ln"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_location" />
+
+                    <TextView
+                        android:id="@+id/item_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_70"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_order_num" />
+
+                    <TextView
+                        android:id="@+id/item_order_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_create_time" />
+
+                    <TextView
+                        android:id="@+id/item_create_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text=""
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

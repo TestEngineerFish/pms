@@ -150,7 +150,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 
                         case Constants.INQUIRIES_STATE_RETURN_VISIT:
                             binding.tvApprovalState.setText(getString(R.string.tv_for_respone));
-                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_new);
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_evaluate);
                             break;
                         default:
                             binding.tvApprovalState.setText(getString(R.string.tv_closed));

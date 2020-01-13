@@ -24,6 +24,43 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
  * @Version: 1.0
  */
 class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
+    override fun orderListAsk(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return instance?.orderListPatro(request, callBack)!!    }
+
+    override fun orderListComplain(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return instance?.orderListPatro(request, callBack)!!
+    }
+
+    override fun orderListRepair(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return instance?.orderListPatro(request, callBack)!!     }
+
+    override fun orderListPatro(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return instance?.orderListPatro(request, callBack)!!     }
+
+    override fun orderListPlan(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return instance?.orderListDistribute(request, callBack)!!     }
+
+    override fun orderListDistribute(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return instance?.orderListDistribute(request, callBack)!!    }
+
     override fun getOrderPreviewSelect(callBack: CallBack<List<PreviewSelectModel>>): LiveData<List<PreviewSelectModel>> {
         return instance?.getOrderPreviewSelect(callBack)!!    }
 
