@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,24 +15,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
-import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
-import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.PeriodizationView;
-import com.einyun.app.common.utils.ClickProxy;
-import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
-import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
-
-import com.einyun.app.pms.disqualified.BR;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
+import com.einyun.app.pms.disqualified.databinding.FragmentDisqualifiedOrderListBinding;
 import com.einyun.app.pms.disqualified.databinding.FragmentDisqualifiedViewModuleBinding;
 import com.einyun.app.pms.disqualified.databinding.ItemDisqualifiedListBinding;
-import com.einyun.app.pms.disqualified.databinding.ItemDisqualifiedSearchListBinding;
 import com.einyun.app.pms.disqualified.model.DisqualifiedItemModel;
 import com.einyun.app.pms.disqualified.model.DisqualifiedTypesBean;
 import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
@@ -45,17 +36,11 @@ import com.einyun.app.pms.disqualified.widget.DisqualifiedTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_ORDER_LIST;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
 
 
 /**
@@ -70,9 +55,8 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<FragmentDisqualifiedViewModuleBinding, DisqualifiedFragmentViewModel>  implements ItemClickListener<DisqualifiedItemModel>,PeriodizationView.OnPeriodSelectListener, DisqualifiedTypeSelectPopWindow.OnItemClickListener {
+public class DisqualifiedOrderListFragment extends BaseViewModelFragment<FragmentDisqualifiedOrderListBinding, DisqualifiedFragmentViewModel>  implements ItemClickListener<DisqualifiedItemModel>,PeriodizationView.OnPeriodSelectListener, DisqualifiedTypeSelectPopWindow.OnItemClickListener {
     RVPageListAdapter<ItemDisqualifiedListBinding, DisqualifiedItemModel> adapter;
-    private DisqualifiedViewModuleActivity activity;
     private String divideId="";
     private String divideName="";
     private int mPosition=-1;
@@ -85,8 +69,8 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     private List<DisqualifiedTypesBean> model1;
     private List<DisqualifiedTypesBean> model2;
 
-    public static DisqualifiedViewModuleFragment newInstance(Bundle bundle) {
-        DisqualifiedViewModuleFragment fragment = new DisqualifiedViewModuleFragment();
+    public static DisqualifiedOrderListFragment newInstance(Bundle bundle) {
+        DisqualifiedOrderListFragment fragment = new DisqualifiedOrderListFragment();
         fragment.setArguments(bundle);
         Logger.d("setBundle->"+bundle.getString(RouteKey.KEY_FRAGEMNT_TAG));
         return fragment;
@@ -94,7 +78,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_disqualified_view_module;
+        return R.layout.fragment_disqualified_order_list;
     }
 
 
@@ -158,6 +142,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                             binding.itemCache.setVisibility(View.VISIBLE);
                             break;
                         case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
+                        case FRAGMENT_DISQUALIFIED_ORDER_LIST://liebiao
                             binding.itemCache.setVisibility(View.GONE);
                             break;
                     }
@@ -170,7 +155,6 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         }
         binding.list.setAdapter(adapter);
         adapter.setOnItemClick(this);
-        activity = (DisqualifiedViewModuleActivity) getActivity();
         switch (getFragmentTag()) {
             case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
                 viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this, modelLine->{model1 = modelLine; });
@@ -290,7 +274,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
             periodizationView = new PeriodizationView();
         }
         if (!periodizationView.isVisible()) {
-            periodizationView.setPeriodListener(DisqualifiedViewModuleFragment.this::onPeriodSelectListener);
+            periodizationView.setPeriodListener(DisqualifiedOrderListFragment.this::onPeriodSelectListener);
             periodizationView.show(getActivity().getSupportFragmentManager(),"");
         }
     }

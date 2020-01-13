@@ -16,7 +16,7 @@ public class DisqualifiedListRequest {
 
     private PageBean pageBean;
     private List<QuerysBean> querys;
-    private List<SorterBean> sorter;
+//    private List<SorterBean> sorter;
 
     public PageBean getPageBean() {
         return pageBean;
@@ -34,13 +34,13 @@ public class DisqualifiedListRequest {
         this.querys = querys;
     }
 
-    public List<SorterBean> getSorter() {
-        return sorter;
-    }
-
-    public void setSorter(List<SorterBean> sorter) {
-        this.sorter = sorter;
-    }
+//    public List<SorterBean> getSorter() {
+//        return sorter;
+//    }
+//
+//    public void setSorter(List<SorterBean> sorter) {
+//        this.sorter = sorter;
+//    }
 
     public static class PageBeanBean {
         /**

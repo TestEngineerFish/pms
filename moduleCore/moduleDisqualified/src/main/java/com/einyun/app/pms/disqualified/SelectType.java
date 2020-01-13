@@ -6,7 +6,9 @@ public enum SelectType {
     LINE("条线", "line"),
     SEVERITY("严重程度", "severity"),
     DEADLINE("纠正截止日期", "deadline"),
-    INSPECTED("被检查人", "inspected");
+    INSPECTED("被检查人", "inspected"),
+    FEEDBACK("反馈日期", "feedback_date"),
+    VALIDATE("验证日期", "validate_date");
     // 成员变量
     private String name;
     private String index;

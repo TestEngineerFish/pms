@@ -2,9 +2,12 @@ package com.einyun.app.pms.disqualified.repository;
 
 
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
+import com.einyun.app.base.db.entity.UnQualityFeedBackRequest;
+import com.einyun.app.base.db.entity.UnQualityVerificationRequest;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.pms.disqualified.constants.URLS;
 import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
+import com.einyun.app.pms.disqualified.net.response.DisqualifiedDetailResponse;
 import com.einyun.app.pms.disqualified.net.response.DisqualifiedListResponse;
 import com.einyun.app.pms.disqualified.net.response.GetDisqualifiedTypesResponse;
 import com.einyun.app.pms.disqualified.net.response.GetOrderCodeResponse;
@@ -43,11 +46,7 @@ public interface DisqualifiedServiceApi {
      */
     @GET
     Flowable<GetOrderCodeResponse> getOrderCode(@Url String url);
-    /**
-     * 不合格单列表
-     * @param request
-     * @return
-     */
+
     /**
      * 处理提交
      * @param
@@ -55,8 +54,34 @@ public interface DisqualifiedServiceApi {
      */
     @POST(URLS.URL_CREATE_ORDER)
     Flowable<BaseResponse> dealSubmit(@Body CreateUnQualityRequest bean);
+    /**
+     * 处理反馈
+     * @param
+     * @return
+     */
+    @POST(URLS.URL_FEED_BACH)
+    Flowable<BaseResponse> dealFeedBack(@Body UnQualityFeedBackRequest bean);
+    /**
+     * 处理验证
+     * @param
+     * @return
+     */
+    @POST(URLS.URL_VERIFICATION)
+    Flowable<BaseResponse> dealValidate(@Body UnQualityVerificationRequest bean);
+    /**
+     * 不合格单列表
+     * @param request
+     * @return
+     */
     @POST
     Flowable<DisqualifiedListResponse> getDisqualifiedList(@Url String url, @Body DisqualifiedListRequest request);
+    /**
+     * 获取待跟进详情基本信息
+     * @param
+     * @return
+     */
+    @GET
+    Flowable<DisqualifiedDetailResponse> getTODODetailInfo(@Url String url);
 //    /**
 //     * 获取问询详情基本信息
 //     * @param

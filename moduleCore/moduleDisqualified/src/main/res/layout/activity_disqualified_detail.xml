@@ -39,6 +39,7 @@
                                  android:text="工单信息"
                                  style="@style/unquality_order_info_left" />
                              <TextView
+                                 app:status_detial="@{model.data.unqualified_model.status}"
                                  android:id="@+id/tv_deal_state"
                                  android:gravity="center"
                                  android:layout_marginRight="10dp"
@@ -58,55 +59,55 @@
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="工单编号" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.code}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="创建时间" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.created_time}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="分期" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.divide_name}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="检查日期" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.check_date}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="问题描述" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.problem_description}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="条线" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.line}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -116,24 +117,25 @@
                                  style="@style/style_text_approval_left"
                                  android:text="严重程度" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.severity}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="纠正截止日期" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.correction_date}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="被检查人" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.checked_user_name}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <LinearLayout style="@style/work_order_detail_ln">
@@ -148,7 +150,7 @@
                              android:layout_height="wrap_content"
                              android:orientation="vertical">
                              <androidx.recyclerview.widget.RecyclerView
-                                 android:id="@+id/list_pic_onder_info"
+                                 android:id="@+id/list_pic_order_info"
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"
                                  android:layout_marginBottom="@dimen/px_30"
@@ -159,7 +161,7 @@
                  <!--         反馈信息-->
                  <androidx.cardview.widget.CardView
                      android:id="@+id/cd_feedback_info"
-                     android:visibility="visible"
+                     android:visibility="gone"
                      style="@style/cardview_style">
                      <LinearLayout
                          android:background="@drawable/shape_white_bg"
@@ -183,47 +185,46 @@
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_feedback_date" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.feedback_date}"
                                  android:id="@+id/tv_feedback_date"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_cause_analysis" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.reason}"
                                  android:id="@+id/tv_cause_reason"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_prevention" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.corrective_action}"
                                  android:id="@+id/tv_prevention"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_deal_time" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.feedback_time}"
                                  android:id="@+id/tv_deal_time"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <LinearLayout style="@style/work_order_detail_ln">
                              <TextView
                                  style="@style/work_order_detail_txt_left"
-                                 android:layout_marginBottom="@dimen/px_20"
                                  android:text="图片" />
                          </LinearLayout>
                          <LinearLayout
@@ -243,7 +244,7 @@
                  <!--         验证信息-->
                  <androidx.cardview.widget.CardView
                      android:id="@+id/cd_validation_info"
-                     android:visibility="visible"
+                     android:visibility="gone"
                      style="@style/cardview_style">
                      <LinearLayout
                          android:background="@drawable/shape_white_bg"
@@ -267,40 +268,40 @@
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_valition_person" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.verifier_name}"
                                  android:id="@+id/tv_valition_person"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_valition_date" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.verification_date}"
                                  android:id="@+id/tv_valition_date"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_valition_situation" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.verification_situation}"
                                  android:id="@+id/tv_valition_situation"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
                              style="@style/style_rl_normal">
                              <TextView
-                                 android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
-                                 android:text="@string/tv_finish_time" />
+                                 android:text="完成时间" />
                              <TextView
+                                 android:text="@{model.data.unqualified_model.completion_time}"
                                  android:id="@+id/tv_incalition__time"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -327,7 +328,7 @@
                  <!--          反馈操作       -->
                  <androidx.cardview.widget.CardView
                      android:id="@+id/cd_op_feedback"
-                     android:visibility="visible"
+                     android:visibility="gone"
                      style="@style/cardview_style">
                      <LinearLayout
                          android:layout_width="match_parent"
@@ -348,6 +349,7 @@
                              android:layout_marginRight="10dp"
                              android:src="@drawable/pd_view" />
                          <LinearLayout
+                             android:onClick="@{()->callBack.onFeedBackDateClick()}"
                              android:layout_height="@dimen/px_80"
                              style="@style/ll_create_order">
 
@@ -363,7 +365,6 @@
                                  android:id="@+id/tv_op_feedback_date"
                                  android:textSize="@dimen/font_size14"
                                  android:textColor="@color/blackTextColor"
-                                 android:text="2019-12-23"
                                  style="@style/tv_create_order_select_single" />
 
                              <ImageView
@@ -387,7 +388,7 @@
                              android:layout_height="wrap_content">
 
                              <com.einyun.app.common.ui.component.limit.LimitInput
-                                 android:id="@+id/lt_measures"
+                                 android:id="@+id/lt_reason"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
                                  app:hintText="请输入分析内容"
@@ -411,7 +412,7 @@
                              android:paddingBottom="@dimen/px_30">
 
                              <com.einyun.app.common.ui.component.limit.LimitInput
-                                 android:id="@+id/lt_reason"
+                                 android:id="@+id/lt_measures"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
                                  app:hintText="请输入文字信息"
@@ -463,7 +464,7 @@
                  <!--          验证操作       -->
                  <androidx.cardview.widget.CardView
                      android:id="@+id/cd_op_validation"
-                     android:visibility="visible"
+                     android:visibility="gone"
                      style="@style/cardview_style">
                      <LinearLayout
                          android:layout_width="match_parent"
@@ -496,12 +497,13 @@
                                  android:text="@string/tv_valition_person" />
 
                              <TextView
+                                 android:id="@+id/tv_op_validate_person"
                                  android:textSize="@dimen/font_size14"
                                  android:textColor="@color/blackTextColor"
-                                 android:text="大佬"
                                  style="@style/tv_create_order_select_single" />
                          </LinearLayout>
                          <LinearLayout
+                             android:onClick="@{()->callBack.onValidateDateClick()}"
                              android:layout_height="@dimen/px_80"
                              style="@style/ll_create_order">
 
@@ -514,9 +516,9 @@
                                  android:text="@string/tv_valition_date" />
 
                              <TextView
+                                 android:id="@+id/tv_op_validate_date"
                                  android:textSize="@dimen/font_size14"
                                  android:textColor="@color/blackTextColor"
-                                 android:text="2019-12-23"
                                  style="@style/tv_create_order_select_single" />
 
                              <ImageView

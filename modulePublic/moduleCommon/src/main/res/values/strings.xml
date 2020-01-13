@@ -53,6 +53,9 @@
         <item>待跟进</item>
         <item>已跟进</item>
     </string-array>
+    <string-array name="order_list_less">
+        <item>待跟进</item>
+    </string-array>
     <string name="search">搜索</string>
     <string name="et_limit_input_hint">请输入内容,300字以内。</string>
     <string name="tv_tiao_line">条线</string>

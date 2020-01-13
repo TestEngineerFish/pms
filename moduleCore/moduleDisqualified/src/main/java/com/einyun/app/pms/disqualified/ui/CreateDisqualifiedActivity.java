@@ -213,19 +213,41 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         String s = new Gson().toJson(mRequest, CreateUnQualityRequest.class);
         Log.e(TAG, "onPassClick: requestjson=== "+s );
         if (IsFastClick.isFastDoubleClick()) {
-            viewModel.deal(mRequest).observe(this, module -> {
-                if (module) {
-                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-                    ToastUtil.show(this,"创建成功");
-                    finish();
-                } else {
-                    ToastUtil.show(this, "创建失败");
-
-                }
-            });
+//            viewModel.deal(mRequest).observe(this, module -> {
+//                if (module) {
+//                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
+//                    ToastUtil.show(this,"创建成功");
+//                    finish();
+//                } else {
+//                    ToastUtil.show(this, "创建失败");
+//
+//                }
+//            });
+            uploadImages(mRequest);
         }
     }
-
+    /**
+     * 上传照片
+     * @param mRequest
+     */
+    private void uploadImages(CreateUnQualityRequest mRequest) {
+        //开始上传照片
+        viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
+            hideLoading();
+            if (data != null) {
+                viewModel.deal(mRequest,data).observe(this, flag -> {
+                    if (!flag) {
+                        ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
+                    } else {
+                        ToastUtil.show(getApplicationContext(), R.string.tv_create_suc);
+                        finish();
+                    }
+                });
+            } else {
+                ToastUtil.show(getApplicationContext(), R.string.upload_pic_failed);
+            }
+        });
+    }
     private void checkSubmit() {
         if (binding.tvDivide.getText().toString().equals("请选择")) {
             ToastUtil.show(this,"请选择分期");
@@ -415,10 +437,12 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 photoSelectAdapter.addPhotos(uris);
             }
         }
+        //被检查人
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE && data != null) {
             Bundle bundle = data.getBundleExtra(DataConstants.KEY_CHOOSE_DISPOSE_PERSON_CONTENT);
             OrgModel orgModel = (OrgModel) bundle.getSerializable(DataConstants.KEY_CHOOSE_DISPOSE_PERSON_CONTENT);
-//            request.setProcId(orgModel.getId());
+            mRequest.getBizData().setChecked_user_id(orgModel.getId());
+            mRequest.getBizData().setChecked_user_name(orgModel.getName());
 //            request.setProcName(orgModel.getName());
 //            binding.setBean(request);
         }

@@ -158,6 +158,7 @@
         <activity android:name=".disqualified.ui.PropertyListViewModuleActivity"/>
         <activity android:name=".disqualified.ui.CreateDisqualifiedActivity"/>
         <activity android:name=".disqualified.ui.DisqualifiedDetailActivity"/>
+        <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity"/>
         <!--  不合格单结束      -->
 
         <provider
