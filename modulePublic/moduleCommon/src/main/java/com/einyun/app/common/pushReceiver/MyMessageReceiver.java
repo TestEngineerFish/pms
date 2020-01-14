@@ -41,31 +41,32 @@ public class MyMessageReceiver extends MessageReceiver {
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
         Log.e("MyMessageReceiver", "onNotificationOpened, title: " + title + ", summary: " + summary + ", extraMap:" + extraMap);
         //抢单
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
-                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                .withString(RouteKey.KEY_TASK_ID, "1231")
-                .withString(RouteKey.KEY_CATE_NAME, "321")
-                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
-                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//        PushResultModel pushModel = gson.fromJson(extraMap, new TypeToken<PushResultModel>() {
-//        }.getType());
-//        //抢单提醒
-//        if ("grad".equals(pushModel.getType())) {
-//            if ("repair".equals(pushModel.getSubType())) {
-//                //抢单
-//                ARouter.getInstance()
-//                        .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
-//                        .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-//                        .withString(RouteKey.KEY_CATE_NAME, pushModel.getContent().getCateName())
-//                        .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
-//                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//            }
-//        }
-//        //新待处理工单提醒
-//        if ("reminder".equals(pushModel.getType())) {
-//
-//        }
+//        ARouter.getInstance()
+//                .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+//                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                .withString(RouteKey.KEY_TASK_ID, "1231")
+//                .withString(RouteKey.KEY_CATE_NAME, "321")
+//                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+//                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+        PushResultModel pushModel = gson.fromJson(extraMap, new TypeToken<PushResultModel>() {
+        }.getType());
+        //抢单提醒
+        if ("grad".equals(pushModel.getType())) {
+            if ("repair".equals(pushModel.getSubType())) {
+                //抢单
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
+                        .withString(RouteKey.KEY_CATE_NAME, pushModel.getContent().getCateName())
+                        .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+            }
+        }
+        //新待处理工单提醒
+        if ("reminder".equals(pushModel.getType())) {
+
+        }
 
     }
 

@@ -19,7 +19,7 @@ class URLs {
         //工单处理情况总览
         const val URL_DASHBOARD_WORK_ORDER_DATA = "/$DOMAIN/dashboard/api/workOrderData"
         //运营收缴率
-        const val URL_DASHBOARD_OPERATE_CAPTURE_RATE = "/app/fee/proxy/api/fee/fee-center/api/getTotalRate"
+        const val URL_DASHBOARD_OPERATE_CAPTURE_RATE = "/fee-center/fee-center/api/getTotalRate"
         //首页权限配置
         const val URL_DASHBOARD_USER_MENU = "/portal/sys/sysMenu/v1/getCurrentUserMenu"
         //全部收费项目

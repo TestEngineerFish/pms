@@ -23,7 +23,7 @@ public class RxSchedulers {
     public static <T> FlowableTransformer<T, T> inIoMain() {
 
         return upstream -> upstream.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread()).doOnError(throwable -> {});
     }
 
     /**
@@ -35,7 +35,7 @@ public class RxSchedulers {
     public static <T> FlowableTransformer<T, T> inIo() {
 
         return upstream -> upstream.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io());
+                .observeOn(Schedulers.io()).doOnError(throwable -> {});
     }
 
 //    /**
