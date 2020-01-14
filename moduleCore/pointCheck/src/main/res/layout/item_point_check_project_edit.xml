@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/point_check_bg">
+            android:background="@color/activity_bg_color">
 
             <TextView
                 android:id="@+id/tv_project_name"
@@ -27,6 +27,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginRight="@dimen/px_30"
                 android:layout_marginBottom="6dp"
+                android:textColor="@color/normal_main_text_icon_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -42,7 +43,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/px_10"
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_marginLeft="@dimen/px_10"
+                android:layout_marginBottom="10dp"
                 android:background="@color/white">
 
                 <TextView
@@ -70,13 +73,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/point_check_bg" />
+                android:background="@color/activity_bg_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_10"
-                android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/white">
 
@@ -106,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/point_check_bg"
+                android:background="@color/activity_bg_color"
                 android:orientation="horizontal" />
 
             <LinearLayout
@@ -114,7 +116,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_10"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/white">
 
@@ -143,13 +144,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/point_check_bg" />
+                android:background="@color/activity_bg_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_10"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/white">
 
@@ -193,6 +193,7 @@
                     android:layout_width="@dimen/px_120"
                     android:layout_height="@dimen/px_50"
                     android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_30"
                     android:textSize="@dimen/font_size13"
                     android:background="@drawable/shape_frame_corners_gray"
                     android:textColor="@color/normal_main_text_icon_color"

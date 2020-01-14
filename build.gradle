@@ -6,6 +6,9 @@ buildscript {
 
 //    addRepos(repositories)
     repositories {
+        maven{
+            url "http://maven.hypersmart.cc/nexus/content/repositories/releases"
+        }
         maven {
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
@@ -34,6 +37,9 @@ buildscript {
 
 allprojects {
     repositories {
+        maven{
+            url "http://maven.hypersmart.cc/nexus/content/repositories/releases"
+        }
         maven {
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }

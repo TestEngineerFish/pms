@@ -62,7 +62,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(deps.project.module_base)
     api project(deps.project.einyun_library)
     api project(deps.project.module_db)
     api deps.zxing
@@ -72,6 +71,7 @@ dependencies {
 //    api deps.einyun.db
 //    api deps.einyun.base
 //    api deps.einyun.core
+    api deps.einyun.base
     api deps.skin.support
     api deps.skin.appcompat
     api deps.skin.design
