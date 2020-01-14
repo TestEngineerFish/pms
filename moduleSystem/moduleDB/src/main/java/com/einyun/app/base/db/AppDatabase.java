@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.einyun.app.base.db.converter.BasicDataTypeConvert;
+import com.einyun.app.base.db.converter.BizDataBeanTypeConvert;
 import com.einyun.app.base.db.converter.ButtonTypeConvert;
 import com.einyun.app.base.db.converter.DataBeanTypeConvert;
 import com.einyun.app.base.db.converter.DateConverter;
@@ -17,11 +18,13 @@ import com.einyun.app.base.db.converter.ExtensionApplicationBeanConvert;
 import com.einyun.app.base.db.converter.InitDataTypeConvert;
 import com.einyun.app.base.db.converter.InspectionTypeConvert;
 import com.einyun.app.base.db.converter.PatrolContentConvert;
+import com.einyun.app.base.db.converter.StartFlowParamBeanTypeConvert;
 import com.einyun.app.base.db.converter.StringTypeConvert;
 import com.einyun.app.base.db.converter.SubInspectionTypeConvert;
 import com.einyun.app.base.db.converter.WorkNoteTypeConvert;
 import com.einyun.app.base.db.dao.BasicDataDao;
 import com.einyun.app.base.db.dao.CheckPointDao;
+import com.einyun.app.base.db.dao.CreateQualityRequestDao;
 import com.einyun.app.base.db.dao.DistributeDao;
 import com.einyun.app.base.db.dao.PatrolDao;
 import com.einyun.app.base.db.dao.PatrolInfoDao;
@@ -31,6 +34,7 @@ import com.einyun.app.base.db.dao.SearchHistoryDao;
 import com.einyun.app.base.db.dao.UserDao;
 import com.einyun.app.base.db.entity.BasicDataDb;
 import com.einyun.app.base.db.entity.CheckPoint;
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
@@ -43,13 +47,14 @@ import com.einyun.app.base.db.entity.User;
 
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
         PatrolInfo.class, PatrolLocal.class, Distribute.class, CheckPoint.class,
-        Plan.class, BasicDataDb.class, QualityRequest.class
+        Plan.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
 }, version = 5)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,
         InspectionTypeConvert.class, PatrolContentConvert.class,
-        SubInspectionTypeConvert.class, WorkNoteTypeConvert.class, BasicDataTypeConvert.class
+        SubInspectionTypeConvert.class, WorkNoteTypeConvert.class, BasicDataTypeConvert.class,
+        BizDataBeanTypeConvert.class, StartFlowParamBeanTypeConvert.class
 })
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -75,6 +80,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract BasicDataDao basicDataDao();
 
     public abstract QualityRequestDao qualityRequestDao();
+
+    public abstract CreateQualityRequestDao createQualityRequestDao();
 
     public static AppDatabase getInstance(final Context context) {
         if (sInstance == null) {

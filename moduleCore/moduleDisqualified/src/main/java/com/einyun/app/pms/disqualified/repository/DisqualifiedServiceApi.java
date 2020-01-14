@@ -1,7 +1,7 @@
 package com.einyun.app.pms.disqualified.repository;
 
 
-import com.einyun.app.pms.disqualified.db.CreateUnQualityRequest;
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.http.BaseResponse;
