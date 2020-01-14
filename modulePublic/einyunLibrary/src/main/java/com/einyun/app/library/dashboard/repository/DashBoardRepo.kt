@@ -16,6 +16,7 @@ import com.einyun.app.library.dashboard.model.UserMenuData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.DashBoardServiceApi
 import com.einyun.app.library.dashboard.net.request.AllChargedRequest
+import com.einyun.app.library.dashboard.net.request.RateRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.net.URLs
@@ -79,12 +80,14 @@ class DashBoardRepo : DashBoardService {
 
     override fun operateCaptureData(orgCodes: List<String>, callBack: CallBack<OperateCaptureData>): LiveData<OperateCaptureData> {
         val liveData = MutableLiveData<OperateCaptureData>()
-        serviceApi?.operateCapture(orgCodes)?.compose(RxSchedulers.inIoMain())
+        var request = RateRequest()
+        request.orgCodes = orgCodes
+        serviceApi?.operateCapture(request)?.compose(RxSchedulers.inIoMain())
                 ?.subscribe(
                         Consumer { response ->
                             if (response.code.equals("0")) {
-                                liveData.postValue(response.data)
-                                callBack.call(response.data)
+                                liveData.postValue(response.data.data)
+                                callBack.call(response.data.data)
                             } else {
                                 callBack.onFaild(EinyunHttpException(response))
                             }

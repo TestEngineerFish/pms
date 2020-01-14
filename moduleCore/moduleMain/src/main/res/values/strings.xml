@@ -10,8 +10,8 @@
     <string name="tv_work_order_percentage_complete">工单完成率</string>
     <string name="tv_work_order_timeliness_ratio">工单及时率</string>
     <string name="title_operating_capture_rate">运营收缴率</string>
-    <string name="tv_today_capture_rate">今日收缴率</string>
-    <string name="tv_today_debts_rate">今日清欠率</string>
+    <string name="tv_today_capture_rate">当前收缴率</string>
+    <string name="tv_today_debts_rate">当前清欠率</string>
     <string name="tv_plan_work_order">计划工单</string>
     <string name="tv_patrol_work_order">巡查工单</string>
     <string name="tv_dispatch_work_order">派工单</string>

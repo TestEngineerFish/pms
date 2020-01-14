@@ -21,6 +21,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.widget.PeriodizationNoAutoJumpView;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.library.dashboard.model.LineOrder;
 import com.einyun.app.library.dashboard.model.WorkOrder;
@@ -273,12 +274,12 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         pvTime.show();
     }
 
-    PeriodizationView periodizationView;
+    PeriodizationNoAutoJumpView periodizationView;
 
     public void selectOrgCodes() {
         if (periodizationView == null) {
             //弹出分期view
-            periodizationView = new PeriodizationView();
+            periodizationView = new PeriodizationNoAutoJumpView();
             periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
         }
         periodizationView.show(getSupportFragmentManager(), "");

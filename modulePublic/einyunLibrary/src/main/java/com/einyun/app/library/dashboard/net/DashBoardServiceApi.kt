@@ -3,6 +3,7 @@ package com.einyun.app.library.dashboard.net
 import com.einyun.app.library.dashboard.model.OperateCaptureData
 import com.einyun.app.library.dashboard.model.WorkOrderData
 import com.einyun.app.library.dashboard.net.request.AllChargedRequest
+import com.einyun.app.library.dashboard.net.request.RateRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.net.response.AllChargedResponse
 import com.einyun.app.library.dashboard.net.response.OperateCaptureResponse
@@ -34,7 +35,7 @@ interface DashBoardServiceApi {
     fun workOrder(@Body request: WorkOrderRequest):Flowable<WorkOrderResponse>
 
     @POST(URLs.URL_DASHBOARD_OPERATE_CAPTURE_RATE)
-    fun operateCapture(@Body orgCodes: List<String>):Flowable<OperateCaptureResponse>
+    fun operateCapture(@Body orgCodes: RateRequest):Flowable<OperateCaptureResponse>
 
     /**
      * 根据分类key获取字典
