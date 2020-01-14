@@ -26,7 +26,6 @@
             app:tabIndicatorColor="@color/stress_text_btn_icon_color"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="3dp"
-            app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/blackTextColor"
             app:tabTextColor="@color/normal_main_text_icon_color" />
 

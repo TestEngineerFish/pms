@@ -1,15 +1,19 @@
 package com.einyun.app.pms.orderlist.viewmodel;
 
+import android.text.TextUtils;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -17,10 +21,12 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
+import com.einyun.app.library.resource.workorder.model.GetNodeIdModel;
 import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
@@ -67,6 +73,8 @@ public class OrderListViewModel extends BasePageListViewModel<OrderListModel> {
     }
 
     public MutableLiveData<OrgnizationModel> orgnizationModelLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<GetNodeIdModel> getNodeIdModelMutableLiveData = new MutableLiveData<>();
 
     public OrderListViewModel() {
         this.resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
@@ -120,4 +128,42 @@ public class OrderListViewModel extends BasePageListViewModel<OrderListModel> {
 
         return orgnizationModelLiveData;
     }
+    private String nodeId;
+    /**
+     * 获取组织架构 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<GetNodeIdModel> getNodeId(GetNodeIdRequest request,OrderListModel model) {
+        showLoading();
+        resourceWorkOrderService.getNodeId(request, new CallBack<GetNodeIdModel>() {
+
+
+            @Override
+            public void call(GetNodeIdModel data) {
+                hideLoading();
+                if (TextUtils.isEmpty(data.getNodeId())){
+                    nodeId="";
+                }else {
+                    nodeId=data.getNodeId();
+                }
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+                        .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                        .withString(RouteKey.KEY_TASK_NODE_ID, nodeId)
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, model.getInstance_id())
+                        .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
+                        .navigation();
+                getNodeIdModelMutableLiveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return getNodeIdModelMutableLiveData;
+    }
+
 }

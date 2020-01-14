@@ -55,8 +55,12 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
     //根据页数获取数据
     public <T> void loadData(PageBean pageBean, @NonNull T callback) {
         ResourceWorkOrderRepo repository = new ResourceWorkOrderRepo();
-        request.setPageSize(PageBean.DEFAULT_PAGE_SIZE);
-//        request.setPage(PageBean.DEFAULT_PAGE);
+        if (tag.equals(ORDER_LIST_DISTRIBUTE) || tag.equals(ORDER_LIST_PATRO) || tag.equals(ORDER_LIST_PLAN)) {
+            request.setPageSize(PageBean.DEFAULT_PAGE_SIZE);
+            request.setPage(pageBean.getPage());
+        } else {
+            request.setPageBean(pageBean);
+        }
 //        request.setPageBean(pageBean);
         //工单列表-派工单
         if (tag.equals(ORDER_LIST_DISTRIBUTE)) {
@@ -142,7 +146,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
             });
             return;
         }
-       //工单列表-客户问询
+        //工单列表-客户问询
         if (tag.equals(ORDER_LIST_ASK)) {
             repository.orderListAsk(request, new CallBack<OrderListPage>() {
                 @Override

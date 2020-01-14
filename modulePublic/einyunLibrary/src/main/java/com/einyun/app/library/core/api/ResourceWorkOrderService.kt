@@ -248,4 +248,10 @@ interface ResourceWorkOrderService : EinyunService {
         request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
     ): LiveData<OrderListPage>
+
+    //工单列表投诉工单
+    fun getNodeId(
+        request: GetNodeIdRequest,
+        callBack: CallBack<GetNodeIdModel>
+    ): LiveData<GetNodeIdModel>
 }

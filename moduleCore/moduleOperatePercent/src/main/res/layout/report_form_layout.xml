@@ -56,7 +56,7 @@
                     android:layout_marginLeft="@dimen/px_10"
                     android:layout_marginRight="@dimen/px_10"
                     android:gravity="center"
-                    android:text="筛选"
+                    android:text="时间"
                     android:textColor="@color/normal_main_text_icon_color" />
 
                 <ImageView

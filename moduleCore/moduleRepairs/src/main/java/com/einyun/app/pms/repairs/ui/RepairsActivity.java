@@ -3,6 +3,7 @@ package com.einyun.app.pms.repairs.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -17,6 +18,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.pms.repairs.R;
 import com.einyun.app.pms.repairs.databinding.RepairsActivityBinding;
@@ -41,9 +43,10 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
  * demo of paging
  */
 @Route(path = RouterUtils.ACTIVITY_REPAIRS_PAGING)
-public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBinding, RepairsViewModel> {
+public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBinding, RepairsViewModel> implements View.OnClickListener {
     private String[] mTitles;//tab标题
     public static List<SelectModel> selectModelList = new ArrayList<>();
+    private String taskId;
 
     @Override
     public void initViews(Bundle savedInstanceState) {
@@ -116,11 +119,62 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
+        if (extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+            binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
+            binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
+            binding.grabFrame.grabClose.setOnClickListener(this);
+            binding.grabFrame.grabBtn.setOnClickListener(this);
+            taskId = extras.getString(RouteKey.KEY_TASK_ID);
+        }
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.grab_close) {
+            binding.grabFrame.getRoot().setVisibility(View.GONE);
+            return;
+        }
+        if (v.getId() == R.id.grab_btn) {
+            grab();
+            return;
+        }
+
+    }
+
+    /**
+     * 抢单
+     */
+    private void grab() {
+        if (taskId != null) {
+            viewModel.grabRepair(taskId).observe(this, status -> {
+                if (status.booleanValue()) {
+                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                            .setMsg(getResources().getString(R.string.text_grab_success)).
+                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    binding.grabFrame.getRoot().setVisibility(View.GONE);
+                                }
+                            }).show();
+
+                } else {
+                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                            .setMsg(getResources().getString(R.string.text_grab_faile)).
+                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).show();
+                }
+            });
+        }
     }
 }

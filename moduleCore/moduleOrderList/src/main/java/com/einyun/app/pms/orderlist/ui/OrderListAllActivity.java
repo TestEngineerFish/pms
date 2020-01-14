@@ -41,6 +41,7 @@ import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
+import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -79,12 +80,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     public String tag;
     OrderListPageRequest request;
     protected SelectPopUpView selectPopUpView;
-
+    private GetNodeIdRequest getNodeIdRequest;
     @Override
     public int getLayoutId() {
         return R.layout.activity_order_list_all;
     }
-
+    private String nodeId;
 
     @Override
     protected OrderListViewModel initViewModel() {
@@ -219,6 +220,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     protected void initData() {
         super.initData();
         request = new OrderListPageRequest();
+        getNodeIdRequest=new GetNodeIdRequest();
         //停止刷新
         LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(this, shown -> {
             if (!shown) {
@@ -317,14 +319,9 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             return;
         }
         if (tag.equals(RouteKey.ORDER_LIST_REPAIR)) {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                    .withString(RouteKey.KEY_ORDER_ID, data.getID_())
-                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-                    .withString(RouteKey.KEY_TASK_ID, "")
-                    .withString(RouteKey.KEY_PRO_INS_ID, data.getInstance_id())
-                    .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
-                    .navigation();
-            return;
+            getNodeIdRequest.setDefkey("customer_repair_flow");
+            getNodeIdRequest.setId(data.getID_());
+            getNodeId(data);
         }
         if (tag.equals(RouteKey.ORDER_LIST_COMPLAIN)) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
@@ -477,13 +474,13 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 patroStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_plan_work_order_state());
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getF_creation_date()));
                 binding.itemOrderNum.setText(orderListModel.getF_plan_work_order_code());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_description());
+                binding.itemSendWorkSubject.setText(orderListModel.getF_inspection_work_plan_name());
                 break;
             case RouteKey.ORDER_LIST_PLAN:
                 setStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_STATUS());
                 binding.itemCreateTime.setText(orderListModel.getF_CREATE_TIME());
                 binding.itemOrderNum.setText(orderListModel.getF_ORDER_NO());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_OPER_CONTENT());
+                binding.itemSendWorkSubject.setText(orderListModel.getF_WG_NAME());
                 break;
 
         }
@@ -681,6 +678,15 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             request.setF_ts_cate_id(selected.get(SELECT_COMPLAIN_TYPES) == null ? null : selected.get(SELECT_COMPLAIN_TYPES).getKey());
         }
         loadPagingData();
+    }
+
+    /**
+     *
+     * 根据id获取nodeId
+     * */
+
+    private void getNodeId(OrderListModel data){
+        viewModel.getNodeId(getNodeIdRequest,data);
     }
 
 }

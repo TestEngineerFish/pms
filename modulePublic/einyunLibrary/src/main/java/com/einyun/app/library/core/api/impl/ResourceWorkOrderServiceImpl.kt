@@ -24,6 +24,12 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+    override fun getNodeId(
+        request: GetNodeIdRequest,
+        callBack: CallBack<GetNodeIdModel>
+    ): LiveData<GetNodeIdModel> {
+        return proxy.getNodeId(request, callBack)     }
+
     override fun orderListAsk(
         request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>

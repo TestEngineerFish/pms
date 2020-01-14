@@ -174,5 +174,11 @@ class URLs {
          * 工单列表-客户问询
          * */
         const val URL_ORDER_LIST_ASK="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_enquiry_flow"
+
+        /**
+         * 工单列表-获取nodeid
+         * */
+        const val URL_ORDER_LIST_GET_NODEID="/workOrder/workOrder/task/v1/getInstNodeByID"
+
     }
 }
