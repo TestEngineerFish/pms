@@ -77,7 +77,7 @@
                 style="@style/style_text_approval_left"
                 android:text="@string/tv_create_time"/>
             <TextView
-                app:time="@{model.createTime}"
+                app:time="@{model.created_time}"
                 android:id="@+id/tv_create_time"
                 style="@style/style_text_approval_right"/>
         </RelativeLayout>

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
@@ -21,6 +22,7 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -66,6 +68,8 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     public static final int ZX=2;
     public static final int KF=3;
     private CreateUnQualityRequest mRequest;
+    private String dimCode="";
+    private String divideId="";
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
@@ -150,8 +154,24 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 break;
             case INSPECTED:
                 //被检查人
+                chooseDisposePerson();
                 break;
         }
+    }
+    private void chooseDisposePerson() {
+        if (divideId.isEmpty()) {
+            ToastUtil.show(this,"请先选择分期");
+            return;
+        }
+        if (dimCode.isEmpty()) {
+            ToastUtil.show(this,"请先选择条线");
+            return;
+        }
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).
+                withString(RouteKey.KEY_ORG_ID, divideId).
+                withBoolean(RouteKey.KEY_IS_UNQUALITY, true).
+                withString(RouteKey.KEY_DIM_CODE, dimCode).
+                navigation(this, RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE);
     }
     /**
      * 缓存按钮
@@ -327,6 +347,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     //分期结果
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
+        divideId = orgModel.getId();
         binding.tvDivide.setText(orgModel.getName());
         mRequest.getBizData().setDivide_id(orgModel.getId());
         mRequest.getBizData().setDivide_name(orgModel.getName());
@@ -371,6 +392,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             txStrList.add(data.getName());
         }
         BottomPicker.buildBottomPicker(this, txStrList, txDefaultPosLine, new BottomPicker.OnItemPickListener() {
+
+
+
             @Override
             public void onPick(int position, String label) {
                 if (position != txDefaultPosLine) {
@@ -394,6 +418,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 binding.tvLine.setText(txStrList.get(position));
                 mRequest.getBizData().setLine(lineTypeLists.get(position).getKey());
                 mRequest.getBizData().setCode(mOrderCode);
+                dimCode = lineTypeLists.get(position).getKey();
             }
         });
     }

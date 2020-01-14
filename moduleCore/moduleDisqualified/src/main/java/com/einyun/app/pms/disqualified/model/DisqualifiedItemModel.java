@@ -126,6 +126,9 @@ public class DisqualifiedItemModel {
     }
 
     public String getProInsId() {
+        if (proInsId==null) {
+            proInsId=PROC_INST_ID_;
+        }
         return proInsId;
     }
 
