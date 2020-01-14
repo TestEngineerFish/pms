@@ -105,7 +105,7 @@ public class RouterUtils {
     public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
     public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
     public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
-    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
+//    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;

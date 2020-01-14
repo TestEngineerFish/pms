@@ -148,7 +148,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     protected void setUpData() {
         binding.setCallBack(this);
         if(adapter==null){
-            adapter=new RVPageListAdapter<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), com.einyun.app.pms.disqualified.BR.callBack,mDiffCallback){
+            adapter=new RVPageListAdapter<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), BR.model,mDiffCallback){
                 //                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
@@ -208,46 +208,49 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
      * 搜索按钮点击
      * */
     public void onSearchClick(){
-
+        search();
     }
-//    private void search() {
-//        try {
+    private void search() {
+        try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
-//            if (searchFragment == null) {
-//                searchFragment = new PageSearchFragment<ItemDisqualifiedSearchListBinding, PlanWorkOrder>(getActivity(), com.einyun.app.pms.plan.BR.planModel, new PageSearchListener<PlanWorkOrder>() {
-//                    @Override
-//                    public LiveData<PagedList<PlanWorkOrder>> search(String search) {
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), BR.model, new PageSearchListener<DisqualifiedItemModel>() {
+                    @Override
+                    public LiveData<PagedList<DisqualifiedItemModel>> search(String search) {
 //                        request.setSearchValue(search);
+                        DisqualifiedListRequest requestBean = viewModel.getRequestBean(1, 10, "", "", "");
+                        requestBean.setSearchValue(search);
 //                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-//                            return viewModel.loadPadingNetData(request, getFragmentTag());
+                            return viewModel.loadPadingData(requestBean, getFragmentTag());
 //                        } else {
-//                            return viewModel.loadDonePagingNetData(request, getFragmentTag());
+//                            return viewModel.loadPadingData(requestBean, getFragmentTag());
+//                            return viewModel.loadPadingData(request, getFragmentTag());
 //                        }
-//                    }
-//
-//                    @Override
-//                    public void onItemClick(PlanWorkOrder model) {
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
-//                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
-//                                .navigation();
-//                    }
-//
-//                    @Override
-//                    public int getLayoutId() {
-//                        return R.layout.item_disqualified_search_list;
-//                    }
-//                });
-//                searchFragment.setHint("请搜索工单编号或计划名称");
-//            }
-//            searchFragment.show(getActivity().getSupportFragmentManager(), "");
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+                    }
+
+                    @Override
+                    public void onItemClick(DisqualifiedItemModel model) {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
+                                .navigation();
+                    }
+
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_disqualified_list;
+                    }
+                });
+                searchFragment.setHint("请搜索工单编号或计划名称");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
      * 筛选按钮点击

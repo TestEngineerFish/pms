@@ -47,6 +47,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +71,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     private CreateUnQualityRequest mRequest;
     private String dimCode="";
     private String divideId="";
+    private String format;
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
@@ -99,6 +101,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     @Override
     protected void initData() {
         super.initData();
+
+        binding.tvCheckDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
+        binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
         binding.setCallBack(this);
         viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this,model->{
             lineTypeLists = model;
@@ -356,6 +361,14 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
      * 日期选择
      */
     private void choosePayDate(SelectType type) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy,MM,dd");
+        format = simpleDateFormat.format(System.currentTimeMillis());
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        String[] split = format.split(",");
+        startDate.set(Integer.parseInt(split[0]),Integer.parseInt(split[1])-1,Integer.parseInt(split[2]));//设置起始年份
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2100,1,1);//设置结束年份
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -375,6 +388,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 
             }
         }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+                .setRangDate(startDate,endDate)
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
                 .build();
         pvTime.show();
@@ -462,6 +476,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             OrgModel orgModel = (OrgModel) bundle.getSerializable(DataConstants.KEY_CHOOSE_DISPOSE_PERSON_CONTENT);
             mRequest.getBizData().setChecked_user_id(orgModel.getId());
             mRequest.getBizData().setChecked_user_name(orgModel.getName());
+            binding.tvInspected.setText(orgModel.getName());
 //            request.setProcName(orgModel.getName());
 //            binding.setBean(request);
         }

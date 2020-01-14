@@ -48,7 +48,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.order_un) {
                 //不合格单
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_DISQUALIFIED).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉
@@ -77,7 +77,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.og_unwell_order) {
 //                ToastUtil.show(this,"该功能暂未实现");
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_UNWELL).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_DISQUALIFIED).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_UNWELL).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉

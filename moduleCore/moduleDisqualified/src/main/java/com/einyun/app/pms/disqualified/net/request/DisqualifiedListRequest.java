@@ -16,8 +16,17 @@ public class DisqualifiedListRequest {
 
     private PageBean pageBean;
     private List<QuerysBean> querys;
-//    private List<SorterBean> sorter;
 
+    public String getSearchValue() {
+        return searchValue;
+    }
+
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
+    }
+
+    //    private List<SorterBean> sorter;
+  private String searchValue;
     public PageBean getPageBean() {
         return pageBean;
     }
