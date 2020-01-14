@@ -71,6 +71,6 @@ public class AllChargeActivity extends BaseHeadViewModelActivity<ActivityAllChar
         request.setIncomeType("1");
         request.setFeeItemType("0");
         request.setDate(TimeUtil.getYMdTime(TimeUtil.getCurrentTime()));
-        viewModel.getAllChargedProject(request);
+//        viewModel.getAllChargedProject(request);
     }
 }

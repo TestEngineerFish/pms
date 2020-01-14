@@ -116,7 +116,6 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         binding.clientEnquiryOrder.setOnClickListener(this);
         binding.clientRepairsOrder.setOnClickListener(this);
         binding.ogPlanOrder.setOnClickListener(this);
-        binding.orderUn.setOnClickListener(this);
     }
 
     @Override

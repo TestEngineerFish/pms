@@ -8,13 +8,16 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.library.core.api.DashBoardService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.dashboard.model.AllChargedModel;
+import com.einyun.app.library.dashboard.model.OperateInModel;
 import com.einyun.app.library.dashboard.net.request.AllChargedRequest;
+import com.einyun.app.library.dashboard.net.request.OperateInRequest;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
 import com.einyun.app.pms.operatepercent.ui.AllChargeActivity;
 
 public class OperatePercentViewModel extends BaseViewModel {
     private DashBoardService dashBoardService;
     public MutableLiveData<AllChargedModel> allChargedModelLiveData=new MutableLiveData<>();
+    public MutableLiveData<OperateInModel> operateInModelMutableLiveData=new MutableLiveData<>();
     public OperatePercentViewModel() {
         this.dashBoardService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DASHBOARD);
     }
@@ -44,5 +47,29 @@ public class OperatePercentViewModel extends BaseViewModel {
         });
 
         return allChargedModelLiveData;
+    }
+
+    /**
+     * 获取详情
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<OperateInModel> getOpertate(OperateInRequest request) {
+        showLoading();
+
+        dashBoardService.operatePercentIn(request, new CallBack<OperateInModel>() {
+            @Override
+            public void call(OperateInModel data) {
+                hideLoading();
+                operateInModelMutableLiveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return operateInModelMutableLiveData;
     }
 }

@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.DashBoardService
 import com.einyun.app.library.core.api.UCService
-import com.einyun.app.library.dashboard.model.AllChargedModel
-import com.einyun.app.library.dashboard.model.OperateCaptureData
-import com.einyun.app.library.dashboard.model.UserMenuData
-import com.einyun.app.library.dashboard.model.WorkOrderData
+import com.einyun.app.library.dashboard.model.*
 import com.einyun.app.library.dashboard.net.request.AllChargedRequest
+import com.einyun.app.library.dashboard.net.request.OperateInRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.repository.DashBoardRepo
 import com.einyun.app.library.uc.user.model.TenantModel
@@ -31,6 +29,12 @@ import com.einyun.app.library.uc.user.repository.UserRepository
  * @Version: 1.0
  */
 class DashBoardServiceImplProxy : DashBoardService {
+    override fun operatePercentIn(
+        request: OperateInRequest,
+        callBack: CallBack<OperateInModel>
+    ): LiveData<OperateInModel> {
+        return instance?.operatePercentIn(request, callBack)!!    }
+
     override fun allChargedProject(
         request: AllChargedRequest,
         callBack: CallBack<AllChargedModel>

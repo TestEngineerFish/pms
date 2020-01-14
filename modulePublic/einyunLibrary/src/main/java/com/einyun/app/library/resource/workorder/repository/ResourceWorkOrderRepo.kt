@@ -36,6 +36,23 @@ import com.einyun.app.library.workorder.net.request.RepairsPageRequest
  * @Version:        1.0
  */
 class ResourceWorkOrderRepo : ResourceWorkOrderService {
+    override fun getNodeId(
+        request: GetNodeIdRequest,
+        callBack: CallBack<GetNodeIdModel>
+    ): LiveData<GetNodeIdModel> {
+        val liveData = MutableLiveData<GetNodeIdModel>()
+        serviceApi?.getNodeId(request)
+            ?.compose(RxSchedulers.inIoMain<GetNodeIdResponse>())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
     override fun orderListComplain(
         request: OrderListPageRequest,
         callBack: CallBack<OrderListPage>
@@ -679,7 +696,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      */
     override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
         serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())?.doOnError({ error ->
-            Log.e("error",error.toString())
+            Log.e("error", error.toString())
         })?.subscribe(
             { response ->
                 if (response.isState) {

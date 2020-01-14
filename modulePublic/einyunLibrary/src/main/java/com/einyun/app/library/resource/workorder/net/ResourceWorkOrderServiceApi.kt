@@ -294,4 +294,10 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_ORDER_LIST_ASK)
     fun orderListAsk(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-获取nodeid
+     */
+    @POST(URLs.URL_ORDER_LIST_GET_NODEID)
+    fun getNodeId(@Body request: GetNodeIdRequest): Flowable<GetNodeIdResponse>
 }

@@ -6,11 +6,9 @@ import com.einyun.app.library.core.api.DashBoardService
 import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.core.api.proxy.DashBoardServiceImplProxy
 import com.einyun.app.library.core.api.proxy.UCSericeImplProxy
-import com.einyun.app.library.dashboard.model.AllChargedModel
-import com.einyun.app.library.dashboard.model.OperateCaptureData
-import com.einyun.app.library.dashboard.model.UserMenuData
-import com.einyun.app.library.dashboard.model.WorkOrderData
+import com.einyun.app.library.dashboard.model.*
 import com.einyun.app.library.dashboard.net.request.AllChargedRequest
+import com.einyun.app.library.dashboard.net.request.OperateInRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.uc.user.model.TenantModel
 import com.einyun.app.library.uc.user.model.UserInfoModel
@@ -31,6 +29,12 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @Version:        1.0
  */
 class DashBoardServiceImpl : DashBoardService {
+    override fun operatePercentIn(
+        request: OperateInRequest,
+        callBack: CallBack<OperateInModel>
+    ): LiveData<OperateInModel> {
+        return proxy.operatePercentIn(request,callBack)    }
+
     override fun allChargedProject(
         request: AllChargedRequest,
         callBack: CallBack<AllChargedModel>
