@@ -1,84 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingDefaultResource"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    tools:ignore="MissingDefaultResource">
 
     <data>
+
         <variable
             name="settingModel"
             type="com.einyun.app.pms.mine.model.SettingModule" />
+
         <variable
             name="callBack"
             type="com.einyun.app.pms.mine.ui.SettingViewModuleActivity" />
     </data>
-     <LinearLayout
-         android:orientation="vertical"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
-         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
         <RelativeLayout
-            android:visibility="gone"
-            android:background="@color/white"
-            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100">
+            android:layout_height="@dimen/px_100"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:visibility="gone">
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/blackTextColor"
                 android:text="@string/tv_new_msg_push"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/blackTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <CheckBox
-                android:button="@null"
                 android:id="@+id/checkbox"
+                android:layout_width="@dimen/px_80"
+                android:layout_height="@dimen/px_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:textSize="15sp"
                 android:background="@drawable/select_push_msg"
+                android:button="@null"
                 android:textColor="@color/blackTextColor"
-                android:layout_width="@dimen/px_80"
-                android:layout_height="@dimen/px_40"/>
+                android:textSize="15sp" />
         </RelativeLayout>
-         <RelativeLayout
-             android:background="@color/white"
-             android:layout_marginTop="@dimen/px_20"
-             android:layout_width="match_parent"
-             android:layout_height="@dimen/px_100">
-             <TextView
-                 android:layout_centerVertical="true"
-                 android:layout_marginLeft="15dp"
-                 android:textStyle="bold"
-                 android:textSize="16sp"
-                 android:textColor="@color/blackTextColor"
-                 android:text="@string/current_version"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"/>
-             <TextView
-                 android:id="@+id/tv_version"
-                 android:layout_alignParentRight="true"
-                 android:layout_centerVertical="true"
-                 android:layout_marginRight="15dp"
-                 android:textSize="15sp"
-                 android:textColor="@color/blackTextColor"
-                 android:text="V1.0.0"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"/>
-         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:layout_marginTop="@dimen/px_20"
+            android:background="@color/white">
+
             <TextView
-                android:layout_marginTop="@dimen/px_180"
-                android:background="@color/white"
-                android:onClick="@{()->callBack.onLoginOutClick()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="@string/current_version"
+                android:textColor="@color/blackTextColor"
                 android:textSize="16sp"
-                android:textColor="@color/greyTextColor"
-                android:gravity="center"
-                android:text="@string/tv_login_out"
-                android:id="@+id/tv_login_out"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"/>
-     </LinearLayout>
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="V1.0.0"
+                android:textColor="@color/blackTextColor"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/base_underline"/>
+
+        <LinearLayout
+            android:id="@+id/tv_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:text="隐私说明"
+                android:textColor="@color/blackTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                style="@style/tv_create_order_right_arrow"
+                android:layout_marginRight="15dp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_login_out"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/px_180"
+            android:background="@color/white"
+            android:gravity="center"
+            android:onClick="@{()->callBack.onLoginOutClick()}"
+            android:text="@string/tv_login_out"
+            android:textColor="@color/greyTextColor"
+            android:textSize="16sp" />
+    </LinearLayout>
 </layout>

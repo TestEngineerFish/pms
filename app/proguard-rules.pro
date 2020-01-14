@@ -82,7 +82,7 @@
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
 -keep class android.support.** {*;}## 保留support下的所有类及其内部类
-
+-keep interface * extends com.alibaba.android.arouter.facade.template.IProvider
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 #表示不混淆上面声明的类，最后这两个类我们基本也用不上，是接入Google原生的一些服务时使用的。
@@ -384,3 +384,4 @@ public *;
 # 魅族通道
 -keep class com.meizu.cloud.** {*;}
 -dontwarn com.meizu.cloud.**
+-keepattributes SourceFile,LineNumberTable

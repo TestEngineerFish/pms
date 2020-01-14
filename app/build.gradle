@@ -141,5 +141,8 @@ dependencies {
     implementation project(deps.project.module_plan)
     implementation project(deps.project.module_customerinquiries)
     implementation project(deps.project.module_complain)
+    implementation project(deps.project.module_disqualified)
+    implementation project(deps.project.module_extra)
+    implementation project(deps.project.module_orderlist)
 //    implementation project(deps.project.module_extra)
 }

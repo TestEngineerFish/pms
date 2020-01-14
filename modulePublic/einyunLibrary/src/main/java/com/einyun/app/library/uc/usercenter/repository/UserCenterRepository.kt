@@ -87,7 +87,20 @@ class UserCenterRepository() : UserCenterService {
             }, { error -> callBack.onFaild(error) })
         return liveData
     }
-
+    override fun getCheckedPerson(
+        orgId: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
+        val liveData = MutableLiveData<List<OrgModel>>()
+        serviceApi?.getCheckedPerson(orgId)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState()) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                }
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
     override fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String> {
         val liveData = MutableLiveData<String>()
         serviceApi?.getWorkStatus(userId)?.compose(RxSchedulers.inIoMain())

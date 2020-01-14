@@ -13,11 +13,14 @@ package com.einyun.app.common.constants;
  * @Version: 1.0
  */
 public class RouteKey {
+    public static final String KEY_PATH="path";
+    public static final String KEY_PUSH_JUMP="pushJump";
     public static final String KEY_USER_ID="userId";
     public static final String KEY_WEB_URL="webUrl";
     public static final String KEY_WEB_TITLE="webUrlTitle";
     public static final String KEY_PARAMS="params";
     public static final String KEY_TASK_ID="taskId";
+    public static final String KEY_CATE_NAME="cateName";
     public static final String KEY_PHONE="phone";
     public static final String KEY_TASK_NODE_ID="taskNodeId";
     public static final String KEY_PRO_INS_ID="proInsId";
@@ -48,7 +51,14 @@ public class RouteKey {
     public static final String KEY_CLOSE_ID="KEY_CLOSE_ID";
     public static final String KEY_PATROL_TIME_WORKNODE ="workNode";
     public static final String KEY_QR_ID="qrId";
-
+    //工单列表
+    public static final String ORDER_LIST_DISTRIBUTE="ORDER_LIST_DISTRIBUTE";
+    public static final String ORDER_LIST_PLAN="ORDER_LIST_PLAN";
+    public static final String ORDER_LIST_PATRO="ORDER_LIST_PATRO";
+    public static final String ORDER_LIST_REPAIR="ORDER_LIST_REPAIR";
+    public static final String ORDER_LIST_COMPLAIN="ORDER_LIST_COMPLAIN";
+    public static final String ORDER_LIST_ASK="ORDER_LIST_ASK";
+    public static final String ORDER_LIST_UNWELL="ORDER_LIST_UNWELL";
     public static final String KEY_PLAN = "KEY_PLAN";
     public static final String KEY_SEND_ORDER = "KEY_SEND_ORDER";
     public static final String KEY_CUSTOMER_COMPLAIN = "KEY_CUSTOMER_COMPLAIN";
@@ -100,6 +110,17 @@ public class RouteKey {
     //未解决
     public static final int KEY_NO_SOLVED=0;
 
-
+    //不合格单
+    public static final String FRAGMENT_DISQUALIFIED_WAIT_FOLLOW = "FRAGMENT_DISQUALIFIED_WAIT_FOLLOW";
+    public static final String FRAGMENT_DISQUALIFIED_HAD_FOLLOW = "FRAGMENT_DISQUALIFIED_HAD_FOLLOW";
+    public static final String FRAGMENT_DISQUALIFIED_ORDER_LIST = "FRAGMENT_DISQUALIFIED_ORDER_LIST";
+    public static final String KEY_IS_UNQUALITY = "KEY_IS_UNQUALITY";
+    //工单列表-客服三大工单状态
+    public static final String LIST_STATUS_SEND_ORDER = "for_comfirm";
+    public static final String LIST_STATUS_RESPONSE = "for_response";
+    public static final String LIST_STATUS_HANDLE = "dealing";
+    public static final String LIST_STATUS_EVALUATE= "return_visit";
+    public static final String LIST_STATUS_WAIT_GRAB= "for_grab";
+    public static final String LIST_STATUS_CLOSED= "closed";
 
 }

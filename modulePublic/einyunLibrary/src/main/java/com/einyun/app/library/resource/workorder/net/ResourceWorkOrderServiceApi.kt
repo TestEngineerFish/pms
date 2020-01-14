@@ -2,19 +2,14 @@ package com.einyun.app.library.resource.workorder.net
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.Query
-import com.einyun.app.library.portal.dictdata.net.URLS
-import com.einyun.app.library.resource.workorder.model.ApplyCloseModel
-import com.einyun.app.library.resource.workorder.model.PlanWorkOrder
 import com.einyun.app.library.resource.workorder.net.request.*
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest
-import com.einyun.app.library.resource.workorder.net.request.PageRquest
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest
 import com.einyun.app.library.resource.workorder.net.response.*
 import io.reactivex.Flowable
 import retrofit2.http.*
-import java.util.*
 
 /**
  * @ProjectName: android-framework
@@ -264,4 +259,39 @@ interface ResourceWorkOrderServiceApi {
 
     @POST(URLs.URL_ORDER_PREVIEW_SELECT)
     fun getOrderPreviewSelect():Flowable<PreviewSelectModelResponse>
+    /**
+     * 工单列表-派工单
+     */
+    @POST(URLs.URL_ORDER_LIST_DISTRIBUTE)
+    fun orderListDistribute(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-派工单
+     */
+    @POST(URLs.URL_ORDER_LIST_PLAN)
+    fun orderListPlan(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-巡查工单
+     */
+    @POST(URLs.URL_ORDER_LIST_PATRO)
+    fun orderListPatro(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-客户报修
+     */
+    @POST(URLs.URL_ORDER_LIST_REPAIR)
+    fun orderListRepair(@Body request: Query): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-客户投诉
+     */
+    @POST(URLs.URL_ORDER_LIST_COMPLAIN)
+    fun orderListComplain(@Body request: Query): Flowable<OrderListResponse>
+
+    /**
+     * 工单列表-客户投诉
+     */
+    @POST(URLs.URL_ORDER_LIST_ASK)
+    fun orderListAsk(@Body request: OrderListPageRequest): Flowable<OrderListResponse>
 }
