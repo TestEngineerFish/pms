@@ -74,8 +74,8 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     public static final int ZX=2;
     public static final int KF=3;
     private CreateUnQualityRequest mRequest;
-    private String dimCode;
-    private String divideId;
+    private String dimCode="";
+    private String divideId="";
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
