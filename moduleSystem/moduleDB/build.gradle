@@ -28,7 +28,7 @@ android {
         debugTest {
         }
         uat {
-            minifyEnabled true   //开启混淆
+//            minifyEnabled true   //开启混淆
 //            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -47,15 +47,15 @@ uploadArchives {
     configuration = configurations.archives
     repositories {
         mavenDeployer {
-            repository(url: 'http://maven.hypersmart.cc/nexus/content/repositories/releases/') {
-                authentication(userName: 'huyuezheng', password: '123qweASDZXC')
+            repository(url: deps.einyun.nexus_repo) {
+                authentication(userName: deps.einyun.repo_user, password: deps.einyun.repo_pwd)
             }
             pom.project {
-                version '1.0.0'
+                version '1.0.1'
                 artifactId 'einyun-db'
                 groupId 'com.einyun.app'
                 packaging 'aar'
-                description 'update version 1.0.0'
+                description 'update version 1.0.1'
             }
         }
     }
@@ -67,7 +67,7 @@ dependencies {
     api deps.room.rxjava2
     implementation deps.retrofit.gson
     annotationProcessor deps.room.compiler
-    implementation project(deps.project.einyun_library)
+//    implementation project(deps.project.einyun_library)
 //    implementation deps.kotlin.stdlib
     implementation deps.paging
     implementation deps.lifecycle.runtime
