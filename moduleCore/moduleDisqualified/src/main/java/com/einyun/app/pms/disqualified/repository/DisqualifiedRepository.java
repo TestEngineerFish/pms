@@ -3,7 +3,7 @@ package com.einyun.app.pms.disqualified.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.einyun.app.pms.disqualified.db.CreateUnQualityRequest;
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.event.CallBack;

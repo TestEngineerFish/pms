@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.db.AppDatabase;
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.db.entity.QualityRequest;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
@@ -102,24 +103,32 @@ public class DisqualifiedDbRepository extends CommonRepository {
         });
     }
 
-    public LiveData<CreateUnQualityRequest> getCreateUnQualityRequest() {
-        MutableLiveData liveData = new MutableLiveData();
-        String json = String.valueOf(SPUtils.get(BasicApplication.getInstance(), SPKey.SP_KEY_CREATE, ""));
-        if (StringUtil.isNullStr(json)) {
-            CreateUnQualityRequest request = gson.fromJson(json, new TypeToken<CreateUnQualityRequest>() {
-            }.getType());
-            liveData.postValue(request);
-        } else {
-            liveData.postValue(new CreateUnQualityRequest());
-        }
-        return liveData;
+    public LiveData<List<CreateUnQualityRequest>> loadAllCreateRequest() {
+        MutableLiveData list = new MutableLiveData();
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            list.postValue(db.createQualityRequestDao().loadAllRequest());
+        });
+        return list;
     }
 
-    public void removeCreateUnQualityRequest() {
-        SPUtils.remove(BasicApplication.getInstance(), SPKey.SP_KEY_CREATE);
+    public void deleteCreateRequest(String code) {
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            db.createQualityRequestDao().delete(code);
+        });
     }
 
-    public void setCreateUnQualityRequest(CreateUnQualityRequest request) {
-        SPUtils.put(BasicApplication.getInstance(), SPKey.SP_KEY_CREATE, gson.toJson(request));
+    public void insertCreateRequest(CreateUnQualityRequest request) {
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            request.setCode(request.getBizData().getCode());
+            db.createQualityRequestDao().insert(request);
+        });
+    }
+
+    public LiveData<CreateUnQualityRequest> queryCreateRequest(String code) {
+        MutableLiveData list = new MutableLiveData();
+        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+            list.postValue(db.createQualityRequestDao().queryRequest(code));
+        });
+        return list;
     }
 }
