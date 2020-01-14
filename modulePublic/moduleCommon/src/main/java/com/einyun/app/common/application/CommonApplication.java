@@ -72,7 +72,8 @@ public class CommonApplication extends BasicApplication {
     }
 
     private void initUmeng() {
-        UMConfigure.init(this, "5dad68473fc195309b001055", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+//        UMConfigure.init(this, "5dad68473fc195309b001055", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5ddf3f8a0cafb2f7d700066f", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
         if (com.einyun.app.base.BuildConfig.DEBUG) {
             UMConfigure.setLogEnabled(true);
@@ -134,7 +135,7 @@ public class CommonApplication extends BasicApplication {
                 Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
-        bindAccount("1");
+//        bindAccount("1");
         MiPushRegister.register(applicationContext, "2882303761518226834", "5271822697834"); // 初始化小米辅助推送
         HuaWeiRegister.register(this); // 接入华为辅助推送
         VivoRegister.register(applicationContext);
