@@ -21,4 +21,5 @@ public interface CreateViewModelContract {
     LiveData<List<ResourceTypeBean>> getResourceInfos(CreateSendOrderRequest request);
 
     LiveData<List<OrgModel>> getDisposePerson(String orgId, String dimCode);
+    LiveData<List<OrgModel>> getCheckedPerson(String orgId);
 }

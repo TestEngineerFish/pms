@@ -38,6 +38,8 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
     String orgId;
     @Autowired(name = RouteKey.KEY_DIM_CODE)
     String dimCode;
+    @Autowired(name = RouteKey.KEY_IS_UNQUALITY)
+    boolean isUnquality;
     RVBindingAdapter<ItemChoosePersonBinding, OrgModel> adapter;
     private List<OrgModel> orgModels = new ArrayList<>();
 
@@ -83,10 +85,17 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
             };
         }
         binding.rvChooseDisposePerson.setAdapter(adapter);
-        viewModel.getDisposePerson(orgId, dimCode).observe(this, orgModels -> {
-            this.orgModels = orgModels;
-            adapter.setDataList(orgModels);
-        });
+        if (isUnquality) {//创建不合格单选择人员
+            viewModel.getCheckedPerson(orgId).observe(this, orgModels -> {
+                this.orgModels = orgModels;
+                adapter.setDataList(orgModels);
+            });
+        }else {
+            viewModel.getDisposePerson(orgId, dimCode).observe(this, orgModels -> {
+                this.orgModels = orgModels;
+                adapter.setDataList(orgModels);
+            });
+        }
         DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
     }
 

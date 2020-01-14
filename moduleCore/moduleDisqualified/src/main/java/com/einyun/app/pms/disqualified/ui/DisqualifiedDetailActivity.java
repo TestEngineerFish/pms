@@ -56,6 +56,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_ORDER_LIST;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
@@ -141,6 +142,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 });
                 break;
             case FRAGMENT_DISQUALIFIED_HAD_FOLLOW:
+            case FRAGMENT_DISQUALIFIED_ORDER_LIST:
                 /**
                  * 获取详情信息
                  */
@@ -161,11 +163,15 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         String status = detailModule.getData().getUnqualified_model().getStatus();
         switch (status) {
             case DisqualifiedDataKey.STATUS_CREATE_STEP://新生成
-                binding.cdOpFeedback.setVisibility(View.VISIBLE);
+                if (!fragmenTag.equals(FRAGMENT_DISQUALIFIED_ORDER_LIST)) {
+                    binding.cdOpFeedback.setVisibility(View.VISIBLE);
+                }
                 break;
             case DisqualifiedDataKey.STATUS_PROCESSING_STEP://处理中  显示 工单信息 反馈信息  验证操作
                 binding.cdFeedbackInfo.setVisibility(View.VISIBLE);
-                binding.cdOpValidation.setVisibility(View.VISIBLE);
+                if (!fragmenTag.equals(FRAGMENT_DISQUALIFIED_ORDER_LIST)) {
+                    binding.cdOpValidation.setVisibility(View.VISIBLE);
+                }
 
                 break;
             case DisqualifiedDataKey.STATUS_COMPLETED_STEP://已完成 显示 工单信息 反馈信息  验证信息

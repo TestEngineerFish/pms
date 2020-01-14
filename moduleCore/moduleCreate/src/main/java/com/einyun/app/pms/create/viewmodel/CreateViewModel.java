@@ -312,7 +312,19 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
             }
         });
     }
+    @Override
+    public LiveData<List<OrgModel>> getCheckedPerson(String orgId) {
+        return userCenterService.getCheckedPerson(orgId, new CallBack<List<OrgModel>>() {
+            @Override
+            public void call(List<OrgModel> data) {
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
     /**
      * 获取报修类别与条线
      *
