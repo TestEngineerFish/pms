@@ -12,7 +12,6 @@ import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.huawei.HuaWeiRegister;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
-import com.alibaba.sdk.android.push.register.GcmRegister;
 import com.alibaba.sdk.android.push.register.MeizuRegister;
 import com.alibaba.sdk.android.push.register.MiPushRegister;
 import com.alibaba.sdk.android.push.register.OppoRegister;
@@ -24,9 +23,10 @@ import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinAppCompatViewInflater;
@@ -49,6 +49,7 @@ import skin.support.design.app.SkinMaterialViewInflater;
 public class CommonApplication extends BasicApplication {
     private static final String TAG = "CommonApplication";
     private static CommonApplication app;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -67,6 +68,15 @@ public class CommonApplication extends BasicApplication {
         }
         CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
         initCloudChannel(this);
+        initUmeng();
+    }
+
+    private void initUmeng() {
+        UMConfigure.init(this, "5dad68473fc195309b001055", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        if (com.einyun.app.base.BuildConfig.DEBUG) {
+            UMConfigure.setLogEnabled(true);
+        }
     }
 
     /**
@@ -172,7 +182,7 @@ public class CommonApplication extends BasicApplication {
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             // 通知渠道的id
             String id = "pms_notification_channel_id";
-            // 用户可以看到的通知渠道的名字.
+            // 用户可以看到的通知渠道的名字
             CharSequence name = "消息通知";
             // 用户可以看到的通知渠道的描述
             String description = "消息通知";

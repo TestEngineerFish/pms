@@ -1,13 +1,11 @@
 package com.einyun.app.pms.disqualified.repository;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
-import com.einyun.app.base.db.entity.UnQualityFeedBackRequest;
-import com.einyun.app.base.db.entity.UnQualityVerificationRequest;
+import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
+import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
@@ -16,19 +14,13 @@ import com.einyun.app.pms.disqualified.constants.URLS;
 import com.einyun.app.pms.disqualified.model.DisqualifiedDetailModel;
 import com.einyun.app.pms.disqualified.model.DisqualifiedListModel;
 import com.einyun.app.pms.disqualified.model.DisqualifiedTypesBean;
-import com.einyun.app.pms.disqualified.model.OrderCodeBean;
 import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
 
 import java.util.List;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_ORDER_LIST;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
 
 
 public class DisqualifiedRepository {

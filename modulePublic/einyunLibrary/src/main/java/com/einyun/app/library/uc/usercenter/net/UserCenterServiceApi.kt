@@ -45,6 +45,8 @@ interface UserCenterServiceApi {
     @GET(URLs.URL_GET_DISPOSE_PERSON)
     fun getDisposePerson(@Query("orgId") orgId: String, @Query("dimCode") dimCode: String): Flowable<BaseResponse<List<OrgModel>>>
 
+    @GET(URLs.URL_GET_CHECKED_PERSON)
+    fun getCheckedPerson(@Query("orgId") orgId: String): Flowable<BaseResponse<List<OrgModel>>>
     @POST(URLs.URL_SEARCH_USER_BY_CONDITION)
     fun searchUserByCondition(@Body request: SearchUserRequest):Flowable<BaseResponse<PageResult<GetMappingByUserIdsResponse>>>
 

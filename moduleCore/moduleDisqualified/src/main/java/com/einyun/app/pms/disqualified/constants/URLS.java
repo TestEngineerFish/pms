@@ -14,7 +14,7 @@ public class URLS {
     //已跟进列表
     public static final String URL_GET_HAVE_TO_FOLLOW_UP_LIST ="/workOrder/workOrder/task/v1/getDoneListAliaForApp/unqualified_key";
     //工单列表
-    public static final String URL_GET_ORDER_LIST ="/workOrder/workOrder/task/v1/getWorkListBydefKeyForApp";
+    public static final String URL_GET_ORDER_LIST ="/workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=unqualified_key";
     //待跟进详情
     public static final String URL_GET_TO_FOLLOW_UP_DETAIL ="/bpm-runtime/runtime/task/v1/taskDetailMini?taskId=";
     //已跟进详情

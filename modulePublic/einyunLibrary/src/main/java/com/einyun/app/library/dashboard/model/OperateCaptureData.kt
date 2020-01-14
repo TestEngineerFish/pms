@@ -14,6 +14,8 @@ package com.einyun.app.library.dashboard.model
  * @Version:        1.0
  */
 class OperateCaptureData {
+    val thisMonthIncomeRate: Double?= null
+    val thisMonthArrearsRate: Double?= null
     val todayIncomeRate: Double? = null
     val todayArrearsRate: Double? = null
     val todayIncomeRise: Double? = null

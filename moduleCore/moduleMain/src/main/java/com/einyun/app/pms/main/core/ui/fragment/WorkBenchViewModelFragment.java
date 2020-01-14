@@ -84,7 +84,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             handleUserMenu(userMenu);
             //获取分期数据
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
-                SPUtils.put(BasicApplication.getInstance(),Constants.SP_KEY_STAGING,new Gson().toJson(orgModels));
+                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, new Gson().toJson(orgModels));
                 handleStagingData(orgModels);
                 firstFresh = true;
                 freshData();
@@ -112,11 +112,11 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
-                binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate()));
-                binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate()));
+                binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate() == null ? 0 : operateCaptureData.getTodayIncomeRate()) + "%");
+                binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate() == null ? 0 : operateCaptureData.getTodayArrearsRate()) + "%");
                 //涨幅 下跌
-                calculateOperateUpDown(binding.itemWorkBenchThird.tvDown, binding.itemWorkBenchThird.tvDownNum, operateCaptureData.getTodayIncomeRise());
-                calculateOperateUpDown(binding.itemWorkBenchThird.tvUp, binding.itemWorkBenchThird.tvUpNum, operateCaptureData.getTodayArrearsRise());
+//                calculateOperateUpDown(binding.itemWorkBenchThird.tvDown, binding.itemWorkBenchThird.tvDownNum, operateCaptureData.getTodayIncomeRise());
+//                calculateOperateUpDown(binding.itemWorkBenchThird.tvUp, binding.itemWorkBenchThird.tvUpNum, operateCaptureData.getTodayArrearsRise());
             });
         }
         //工单处理情况总览
@@ -160,6 +160,8 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 binding.itemWorkBenchFirst.tvClentComplainNum.setText(StringUtil.isNullStr(blocklogNums.getComplainNum()) ? blocklogNums.getComplainNum() : "0");
                 binding.itemWorkBenchFirst.tvClentInquiryNum.setText(StringUtil.isNullStr(blocklogNums.getEnquiryNum()) ? blocklogNums.getEnquiryNum() : "0");
                 binding.itemWorkBenchFirst.tvClentRepairsNum.setText(StringUtil.isNullStr(blocklogNums.getRepairNum()) ? blocklogNums.getRepairNum() : "0");
+                binding.itemWorkBenchFirst.tvWorkTableDisqualifiedNum.setText(StringUtil.isNullStr(blocklogNums.getUnqualifiedNum()) ? blocklogNums.getUnqualifiedNum() : "0");
+                binding.itemWorkBenchFirst.ivWaringDisqualified.setVisibility(blocklogNums.getUnqualifiedTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
             });
             //待办统计-计划、巡查、派工单
             viewModel.getWaitCount().observe(this, waitCount -> {
@@ -176,21 +178,25 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
     }
 
-    private void calculateOperateUpDown(TextView tv, TextView tvNum, Double todayRise) {
-        String todayNum = formatDouble.format(todayRise);
-        if (todayRise < 0) {
-            tv.setText(getResources().getString(R.string.down));
-            tvNum.setTextColor(getResources().getColor(R.color.tv_down_color));
-            tvNum.setText(todayNum + "%");
-        } else if (todayRise > 0) {
-            tv.setText(getResources().getString(R.string.up));
-            tvNum.setTextColor(getResources().getColor(R.color.tv_up_color));
-            tvNum.setText(todayNum + "%");
-        } else {
-            todayNum = "0";
-            tvNum.setText(todayNum + "%");
-        }
-    }
+//    private void calculateOperateUpDown(TextView tv, TextView tvNum, Double todayRise) {
+//        if (todayRise == null){
+//            tvNum.setText("0%");
+//            return;
+//        }
+//        String todayNum = formatDouble.format(todayRise);
+//        if (todayRise < 0) {
+//            tv.setText(getResources().getString(R.string.down));
+//            tvNum.setTextColor(getResources().getColor(R.color.tv_down_color));
+//            tvNum.setText(todayNum + "%");
+//        } else if (todayRise > 0) {
+//            tv.setText(getResources().getString(R.string.up));
+//            tvNum.setTextColor(getResources().getColor(R.color.tv_up_color));
+//            tvNum.setText(todayNum + "%");
+//        } else {
+//            todayNum = "0";
+//            tvNum.setText(todayNum + "%");
+//        }
+//    }
 
     @Override
     protected WorkBenchViewModel initViewModel() {
@@ -232,7 +238,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             binding.itemWorkBenchThird.layoutMain.setVisibility(View.VISIBLE);
         } else {
             index++;
-            binding.itemWorkBenchThird.layoutMain.setVisibility(View.GONE);
+//            binding.itemWorkBenchThird.layoutMain.setVisibility(View.GONE);
         }
         //待处理工单列表
         if (userMenu.indexOf("dclgdck") != -1) {

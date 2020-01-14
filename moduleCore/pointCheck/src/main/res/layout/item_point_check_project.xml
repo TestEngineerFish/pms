@@ -55,7 +55,7 @@
             android:layout_weight="3"
             android:text=""
             android:textSize="@dimen/font_size14"
-            android:textColor="@color/normal_main_text_icon_color" />
+            android:textColor="@color/txt_black_order" />
     </LinearLayout>
 
     <LinearLayout
@@ -80,7 +80,7 @@
             android:layout_weight="3"
             android:text=""
             android:textSize="@dimen/font_size14"
-            android:textColor="@color/normal_main_text_icon_color" />
+            android:textColor="@color/txt_black_order" />
     </LinearLayout>
 
     <LinearLayout
@@ -106,7 +106,7 @@
             android:layout_weight="3"
             android:text=""
             android:textSize="@dimen/font_size14"
-            android:textColor="@color/normal_main_text_icon_color" />
+            android:textColor="@color/txt_black_order" />
     </LinearLayout>
 
     <LinearLayout
@@ -132,7 +132,7 @@
             android:layout_weight="3"
             android:text=""
             android:textSize="@dimen/font_size14"
-            android:textColor="@color/normal_main_text_icon_color" />
+            android:textColor="@color/txt_black_order" />
     </LinearLayout>
 </LinearLayout>
 

@@ -1,6 +1,5 @@
 package com.einyun.app.pms.disqualified.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -14,16 +13,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
-import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
-import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -32,16 +31,13 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.IsFastClick;
-import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.SelectType;
 import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
 import com.einyun.app.pms.disqualified.databinding.ActivityCreateDisqualifiedOrderBinding;
 import com.einyun.app.pms.disqualified.model.DisqualifiedTypesBean;
-import com.einyun.app.pms.disqualified.model.OrderCodeBean;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedFragmentViewModel;
-import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModel;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
 import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
@@ -72,6 +68,8 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     public static final int ZX=2;
     public static final int KF=3;
     private CreateUnQualityRequest mRequest;
+    private String dimCode="";
+    private String divideId="";
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
@@ -156,8 +154,24 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 break;
             case INSPECTED:
                 //被检查人
+                chooseDisposePerson();
                 break;
         }
+    }
+    private void chooseDisposePerson() {
+        if (divideId.isEmpty()) {
+            ToastUtil.show(this,"请先选择分期");
+            return;
+        }
+        if (dimCode.isEmpty()) {
+            ToastUtil.show(this,"请先选择条线");
+            return;
+        }
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).
+                withString(RouteKey.KEY_ORG_ID, divideId).
+                withBoolean(RouteKey.KEY_IS_UNQUALITY, true).
+                withString(RouteKey.KEY_DIM_CODE, dimCode).
+                navigation(this, RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE);
     }
     /**
      * 缓存按钮
@@ -333,6 +347,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     //分期结果
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
+        divideId = orgModel.getId();
         binding.tvDivide.setText(orgModel.getName());
         mRequest.getBizData().setDivide_id(orgModel.getId());
         mRequest.getBizData().setDivide_name(orgModel.getName());
@@ -377,6 +392,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             txStrList.add(data.getName());
         }
         BottomPicker.buildBottomPicker(this, txStrList, txDefaultPosLine, new BottomPicker.OnItemPickListener() {
+
+
+
             @Override
             public void onPick(int position, String label) {
                 if (position != txDefaultPosLine) {
@@ -400,6 +418,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 binding.tvLine.setText(txStrList.get(position));
                 mRequest.getBizData().setLine(lineTypeLists.get(position).getKey());
                 mRequest.getBizData().setCode(mOrderCode);
+                dimCode = lineTypeLists.get(position).getKey();
             }
         });
     }

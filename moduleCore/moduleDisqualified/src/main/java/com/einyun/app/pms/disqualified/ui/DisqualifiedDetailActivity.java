@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,15 +15,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.einyun.app.base.db.entity.CreateUnQualityRequest;
-import com.einyun.app.base.db.entity.UnQualityFeedBackRequest;
-import com.einyun.app.base.db.entity.UnQualityVerificationRequest;
-import com.einyun.app.base.util.StringUtil;
-import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
+import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
-import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
@@ -34,28 +28,23 @@ import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
-import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.SelectType;
 import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
 import com.einyun.app.pms.disqualified.databinding.ActivityDisqualifiedDetailBinding;
-import com.einyun.app.pms.disqualified.databinding.ActivityDisqualifiedViewModuleBinding;
 import com.einyun.app.pms.disqualified.model.DisqualifiedDetailModel;
-import com.einyun.app.pms.disqualified.ui.fragment.DisqualifiedViewModuleFragment;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedFragmentViewModel;
-import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModel;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
-import com.google.android.material.tabs.TabLayout;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_ORDER_LIST;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
@@ -141,6 +130,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 });
                 break;
             case FRAGMENT_DISQUALIFIED_HAD_FOLLOW:
+            case FRAGMENT_DISQUALIFIED_ORDER_LIST:
                 /**
                  * 获取详情信息
                  */
@@ -161,11 +151,15 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         String status = detailModule.getData().getUnqualified_model().getStatus();
         switch (status) {
             case DisqualifiedDataKey.STATUS_CREATE_STEP://新生成
-                binding.cdOpFeedback.setVisibility(View.VISIBLE);
+                if (!fragmenTag.equals(FRAGMENT_DISQUALIFIED_ORDER_LIST)) {
+                    binding.cdOpFeedback.setVisibility(View.VISIBLE);
+                }
                 break;
             case DisqualifiedDataKey.STATUS_PROCESSING_STEP://处理中  显示 工单信息 反馈信息  验证操作
                 binding.cdFeedbackInfo.setVisibility(View.VISIBLE);
-                binding.cdOpValidation.setVisibility(View.VISIBLE);
+                if (!fragmenTag.equals(FRAGMENT_DISQUALIFIED_ORDER_LIST)) {
+                    binding.cdOpValidation.setVisibility(View.VISIBLE);
+                }
 
                 break;
             case DisqualifiedDataKey.STATUS_COMPLETED_STEP://已完成 显示 工单信息 反馈信息  验证信息

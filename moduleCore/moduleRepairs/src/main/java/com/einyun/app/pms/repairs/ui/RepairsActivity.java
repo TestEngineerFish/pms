@@ -60,7 +60,6 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
             bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
             fragments.add(RepairsViewModelFragment.newInstance(bundle));
         }
-
         binding.vpRepair.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public RepairsViewModelFragment getItem(int i) {

@@ -41,7 +41,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 @Route(path = RouterUtils.ACTIVITY_USER_SPLASH)
-public class SplashViewModelActivity extends BaseViewModelActivity<ActivitySplashBinding, UserViewModel> {
+public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivitySplashBinding, UserViewModel> {
 
     @Override
     protected UserViewModel initViewModel() {
