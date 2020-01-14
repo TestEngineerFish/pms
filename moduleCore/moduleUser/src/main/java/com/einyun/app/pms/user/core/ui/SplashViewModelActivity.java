@@ -57,7 +57,7 @@ public class SplashViewModelActivity extends BaseViewModelActivity<ActivitySplas
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         ActivityUtil.setFirstClass(getClass());
-//        login();
+        login();
         SplashViewModelActivityPermissionsDispatcher.updateWithPermissionCheck(this);
     }
 

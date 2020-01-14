@@ -1,4 +1,4 @@
-package com.einyun.app.base.db.entity;
+package com.einyun.app.pms.disqualified.db;
 
 public class CreateUnQualityRequest {
 

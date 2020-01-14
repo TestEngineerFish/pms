@@ -172,7 +172,7 @@ public class CommonApplication extends BasicApplication {
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             // 通知渠道的id
             String id = "pms_notification_channel_id";
-            // 用户可以看到的通知渠道的名字.
+            // 用户可以看到的通知渠道的名字
             CharSequence name = "消息通知";
             // 用户可以看到的通知渠道的描述
             String description = "消息通知";

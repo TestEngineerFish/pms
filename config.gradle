@@ -286,6 +286,7 @@ project.module_orderpreview=":moduleCore:moduleOrderPreview"
 project.module_operatepercent=":moduleCore:moduleOperatePercent"
 project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
 project.module_disqualified=":moduleCore:moduleDisqualified"
+project.module_orderlist=":moduleCore:moduleOrderList"
 deps.project = project
 
 def server =[:]
