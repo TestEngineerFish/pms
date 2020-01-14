@@ -66,6 +66,8 @@ dependencies {
     api project(deps.project.einyun_library)
     api project(deps.project.module_db)
     api deps.zxing
+    api deps.umeng.common
+    api deps.umeng.analytics
 //    api deps.einyun.http
 //    api deps.einyun.db
 //    api deps.einyun.base

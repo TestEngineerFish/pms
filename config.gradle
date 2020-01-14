@@ -252,6 +252,10 @@ skin.cardview = "skin.support:skin-support-cardview:$versions.skin" // skin-supp
 skin.constraint = "skin.support:skin-support-constraint-layout:$versions.skin" // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
 deps.skin = skin
 
+def umeng = [:]
+umeng.analytics = "com.umeng.umsdk:analytics:8.0.0"
+umeng.common = "com.umeng.umsdk:common:2.0.0"
+deps.umeng = umeng
 //def leakcanary =[:]
 //leakcanary.debugCompile= "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
 //leakcanary.releaseCompile ="com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
@@ -291,7 +295,7 @@ deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"http://172.16.0.123\""
+server.debug = "\"https://testbms.einyun.com\""
 //测试环境
 server.debug_test = "\"http://120.79.213.146\""
 //UAT环境

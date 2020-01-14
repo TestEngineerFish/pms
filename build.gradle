@@ -16,6 +16,7 @@ buildscript {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         mavenCentral()
         google()
     }
@@ -41,6 +42,7 @@ allprojects {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
 //        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 //        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
         mavenCentral()
