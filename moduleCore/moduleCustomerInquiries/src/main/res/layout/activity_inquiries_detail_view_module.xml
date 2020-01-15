@@ -9,6 +9,9 @@
         <variable
             name="callBack"
             type="com.einyun.app.pms.customerinquiries.ui.InquiriesDetailViewModuleActivity" />
+        <variable
+            name="back"
+            type="com.einyun.app.pms.customerinquiries.ui.InquiriesOrderDetailViewModuleActivity" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

@@ -48,7 +48,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.order_un) {
                 //不合格单
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_DISQUALIFIED).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉
@@ -60,7 +60,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.client_enquiry_order) {
                 //客户问询
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_CLIENT_ENQUIRY_ORDER).navigation();
             }
         } else {
             //预览工单列表
@@ -77,7 +77,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.og_unwell_order) {
 //                ToastUtil.show(this,"该功能暂未实现");
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_UNWELL).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_DISQUALIFIED_ORDER_LIST).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_UNWELL).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {
                 //客户投诉
@@ -89,7 +89,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
             }
             if (v.getId() == R.id.client_enquiry_order) {
                 //客户问询
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST_ALL).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_ASK).navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_LIST).withString(RouteKey.KEY_LIST_TYPE,RouteKey.ORDER_LIST_ASK).navigation();
             }
         }
 
@@ -112,6 +112,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         binding.ogPatroOrder.setOnClickListener(this);
         binding.ogPatroOrder.setOnClickListener(this);
         binding.ogUnwellOrder.setOnClickListener(this);
+        binding.orderUn.setOnClickListener(this);
         binding.clientComplainOrder.setOnClickListener(this);
         binding.clientEnquiryOrder.setOnClickListener(this);
         binding.clientRepairsOrder.setOnClickListener(this);

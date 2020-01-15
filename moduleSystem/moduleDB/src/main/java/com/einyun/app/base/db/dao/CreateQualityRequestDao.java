@@ -1,6 +1,7 @@
 package com.einyun.app.base.db.dao;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -24,5 +25,5 @@ public interface CreateQualityRequestDao {
     CreateUnQualityRequest queryRequest(String code);
 
     @Query("SELECT * from create_unquality_request")
-    LiveData<List<CreateUnQualityRequest>> loadAllRequest();
+    DataSource.Factory<Integer,CreateUnQualityRequest> loadAllRequest();
 }

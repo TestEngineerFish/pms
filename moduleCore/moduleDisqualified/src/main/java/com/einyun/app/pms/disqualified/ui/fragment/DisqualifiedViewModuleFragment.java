@@ -77,13 +77,14 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     private String divideName="";
     private int mPosition=-1;
     private int mPositionState=-1;
-    private String cate="";
+    private String mLine="";
     private String blockName;
     private DisqualifiedTypeSelectPopWindow inquiriesTypeSelectPopWindow;
     private PeriodizationView periodizationView;
     private PageSearchFragment searchFragment;
     private List<DisqualifiedTypesBean> model1;
     private List<DisqualifiedTypesBean> model2;
+    private String mState="";
 
     public static DisqualifiedViewModuleFragment newInstance(Bundle bundle) {
         DisqualifiedViewModuleFragment fragment = new DisqualifiedViewModuleFragment();
@@ -114,7 +115,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     protected void setUpView() {
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
-            loadPagingData(viewModel.getRequestBean(1,10,"","",""),getFragmentTag());
+            loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
            });
         binding.list.setLayoutManager(new LinearLayoutManager(
                 getActivity(),
@@ -148,11 +149,40 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
     protected void setUpData() {
         binding.setCallBack(this);
         if(adapter==null){
-            adapter=new RVPageListAdapter<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), com.einyun.app.pms.disqualified.BR.callBack,mDiffCallback){
+            adapter=new RVPageListAdapter<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), BR.model,mDiffCallback){
                 //                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
-                    binding.setModel(inquiriesItemModule);
+                    DisqualifiedItemModel item = inquiriesItemModule;
+//                    initCached(binding, inquiriesItemModule);
+                    viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
+
+                        if (model==null) {
+                            return;
+                        }
+                        String taskId = model.getDoNextParamt().getTaskId();
+                        if (taskId.equals(item.getTaskId())) {
+
+                            item.cached=true;
+                        }else {
+                            item.cached=false;
+
+                        }
+                        binding.setModel(item);
+                    });
+                    viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
+                        if (model==null) {
+                            return;
+                        }
+                        String taskId = model.getDoNextParamt().getTaskId();
+                        if (taskId.equals(inquiriesItemModule.getTaskId())) {
+                            item.cached=true;
+                        }else {
+                            item.cached=false;
+                        }
+                        binding.setModel(item);
+                    });
+
                     switch (getFragmentTag()) {
                         case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
                             binding.itemCache.setVisibility(View.VISIBLE);
@@ -161,6 +191,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                             binding.itemCache.setVisibility(View.GONE);
                             break;
                     }
+
                 }
                 @Override
                 public int getLayoutId() {
@@ -181,8 +212,56 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_DISQUALIFIED_HAD_FOLLOW);
                 break;
         }
-        loadPagingData(viewModel.getRequestBean(1,10,"","",""),getFragmentTag());
+
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
+    }
+//    private void initCached(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
+//        viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
+////            binding.tvIsCached.setText(R.string.text_no_cached);
+////            binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////            binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            if (model==null) {
+//                return;
+//            }
+//            String taskId = model.getDoNextParamt().getTaskId();
+//            if (taskId.equals(inquiriesItemModule.getTaskId())) {
+////                binding.tvIsCached.setText(R.string.text_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_cached);
+//                inquiriesItemModule.cached=true;
+//            }else {
+//                inquiriesItemModule.cached=false;
+////                binding.tvIsCached.setText(R.string.text_no_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            }
+//        });
+//        viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
+////            binding.tvIsCached.setText(R.string.text_no_cached);
+////            binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////            binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            if (model==null) {
+//                return;
+//            }
+//            String taskId = model.getDoNextParamt().getTaskId();
+//            if (taskId.equals(inquiriesItemModule.getTaskId())) {
+//                inquiriesItemModule.cached=true;
+////                binding.tvIsCached.setText(R.string.text_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_cached);
+//            }else {
+//                inquiriesItemModule=false;
+////                binding.tvIsCached.setText(R.string.text_no_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            }
+//        });
+//    }
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
@@ -208,46 +287,47 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
      * 搜索按钮点击
      * */
     public void onSearchClick(){
-
+        search();
     }
-//    private void search() {
-//        try {
+    private void search() {
+        try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
-//            if (searchFragment == null) {
-//                searchFragment = new PageSearchFragment<ItemDisqualifiedSearchListBinding, PlanWorkOrder>(getActivity(), com.einyun.app.pms.plan.BR.planModel, new PageSearchListener<PlanWorkOrder>() {
-//                    @Override
-//                    public LiveData<PagedList<PlanWorkOrder>> search(String search) {
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), BR.model, new PageSearchListener<DisqualifiedItemModel>() {
+                    @Override
+                    public LiveData<PagedList<DisqualifiedItemModel>> search(String search) {
 //                        request.setSearchValue(search);
+                        DisqualifiedListRequest requestBean = viewModel.getRequestSearchBean(1, 10, "", "", "",search,search);
 //                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-//                            return viewModel.loadPadingNetData(request, getFragmentTag());
+                            return viewModel.loadPadingData(requestBean, getFragmentTag());
 //                        } else {
-//                            return viewModel.loadDonePagingNetData(request, getFragmentTag());
+//                            return viewModel.loadPadingData(requestBean, getFragmentTag());
+//                            return viewModel.loadPadingData(request, getFragmentTag());
 //                        }
-//                    }
-//
-//                    @Override
-//                    public void onItemClick(PlanWorkOrder model) {
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
-//                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
-//                                .navigation();
-//                    }
-//
-//                    @Override
-//                    public int getLayoutId() {
-//                        return R.layout.item_disqualified_search_list;
-//                    }
-//                });
-//                searchFragment.setHint("请搜索工单编号或计划名称");
-//            }
-//            searchFragment.show(getActivity().getSupportFragmentManager(), "");
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+                    }
+
+                    @Override
+                    public void onItemClick(DisqualifiedItemModel model) {
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                                .withString(RouteKey.KEY_TASK_ID,model.getTaskId())
+                                .withString(RouteKey.KEY_PRO_INS_ID,model.getProInsId())
+                                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
+                                .navigation();
+                    }
+
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_disqualified_list;
+                    }
+                });
+                searchFragment.setHint("请搜索工单编号或工单名称");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
      * 筛选按钮点击
@@ -304,7 +384,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         binding.tvDivide.setText(divideName);
         binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
 //        binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
-
+        loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
     /**
      * item点击
@@ -315,6 +395,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                 .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                 .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .withString(RouteKey.KEY_ID,data.getID_())
                 .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
                 .navigation();
     }
@@ -324,12 +405,12 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
      * 筛选过后的position
      */
     @Override
-    public void onData(String dataKey,String state,int position,int positionState) {
-        Log.e("onData", "onData:dataKey=== "+dataKey );
+    public void onData(String line,String state,int position,int positionState) {
         Log.e("onData", "onData:state=== "+state );
         Log.e("onData", "onData:position=== "+position );
         Log.e("onData", "onData:positionState=== "+positionState );
-        cate = dataKey;
+        mLine = line;
+        mState = state;
         mPosition = position;
         mPositionState = positionState;
         if (mPosition==-1&&mPositionState==-1) {
@@ -341,7 +422,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
             binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type_blue);
 
         }
-//        loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag());
+        loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
 
 }

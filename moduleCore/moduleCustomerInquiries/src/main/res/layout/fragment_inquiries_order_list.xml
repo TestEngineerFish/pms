@@ -4,11 +4,11 @@
 
     <data>
         <variable
-            name="model"
-            type="com.einyun.app.pms.disqualified.model.DisqualifiedItemModel" />
+            name="CusInquiriesFragmentViewModel"
+            type="com.einyun.app.pms.customerinquiries.viewmodule.CusInquiriesFragmentViewModel" />
         <variable
             name="callBack"
-            type="com.einyun.app.pms.disqualified.ui.fragment.DisqualifiedOrderListFragment" />
+            type="com.einyun.app.pms.customerinquiries.ui.fragment.InquiriesOrderListFragment" />
     </data>
      <LinearLayout
          android:background="@color/activity_bg_color"
@@ -21,12 +21,9 @@
              android:id="@+id/ll_table_line"
              android:layout_width="match_parent"
              android:layout_height="2dp"/>
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
          <LinearLayout
              android:orientation="horizontal"
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content">
              <LinearLayout
                  android:onClick="@{()->callBack.onPlotClick()}"
@@ -76,36 +73,6 @@
 
              </LinearLayout>
          </LinearLayout>
-             <LinearLayout
-                 android:id="@+id/ll_search"
-                 android:layout_alignParentRight="true"
-                 android:onClick="@{()->callBack.onSearchClick()}"
-                 android:layout_width="wrap_content"
-                 android:layout_height="38.5dp">
-                 <View
-                     android:layout_marginRight="@dimen/px_21"
-                     android:layout_gravity="center_vertical"
-                     android:background="@color/edit_hint_color"
-                     android:layout_width="1dp"
-                     android:layout_height="@dimen/px_35"/>
-                 <ImageView
-                     android:src="@mipmap/icon_search"
-                     android:layout_gravity="center_vertical"
-                     android:layout_width="@dimen/px_24"
-                     android:layout_height="@dimen/px_24"/>
-                 <TextView
-                     android:layout_marginLeft="7dp"
-                     android:layout_marginRight="@dimen/px_30"
-                     android:textSize="13sp"
-                     android:layout_gravity="center_vertical"
-                     android:text="@string/search"
-                     android:textColor="@color/greyTextColor"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"/>
-
-
-             </LinearLayout>
-         </RelativeLayout>
          <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
              android:id="@+id/swipe_refresh"
              android:layout_width="match_parent"
@@ -115,7 +82,7 @@
                  android:layout_width="match_parent"
                  android:layout_height="match_parent">
                  <androidx.recyclerview.widget.RecyclerView
-                     android:id="@+id/list"
+                     android:id="@+id/inquiries_list"
                      android:layout_marginBottom="@dimen/px_20"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"/>

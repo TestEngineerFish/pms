@@ -25,7 +25,7 @@ public class UnQualityVerificationRequest {
 
     public static class BizDataBean {
         public String getVerification_situation() {
-            return verification_situation;
+            return verification_situation==null?"":verification_situation;
         }
 
         public void setVerification_situation(String verification_situation) {
@@ -33,7 +33,7 @@ public class UnQualityVerificationRequest {
         }
 
         public String getVerification_enclosure() {
-            return verification_enclosure;
+            return verification_enclosure==null?"":verification_enclosure;
         }
 
         public void setVerification_enclosure(String verification_enclosure) {
@@ -41,7 +41,7 @@ public class UnQualityVerificationRequest {
         }
 
         public String getVerification_date() {
-            return verification_date;
+            return verification_date==null?"":verification_date;
         }
 
         public void setVerification_date(String verification_date) {
@@ -67,7 +67,7 @@ public class UnQualityVerificationRequest {
         private String taskId;
 
         public String getTaskId() {
-            return taskId;
+            return taskId==null?"":taskId;
         }
 
         public void setTaskId(String taskId) {

@@ -204,6 +204,9 @@
         <item>已办结</item>
         <item>抄送我</item>
     </string-array>
+    <string-array name="inquiries_order_list">
+        <item>待跟进</item>
+    </string-array>
     <string name="text_send_order">派工单</string>
     <string name="text_turn_order">转单</string>
     <string name="text_resend_to">转派至</string>

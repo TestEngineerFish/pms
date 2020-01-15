@@ -24,6 +24,7 @@ import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_INQUIRIES_ORDER_LIST;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FEED_BACK;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
@@ -116,6 +117,22 @@ public class CustomerInquiriesRepository {
                                     mPage5=page.getPageBean().getPage();
                                     callback.call(response.getData());
                                 }
+                            }
+                        }, error -> {
+                            callback.onFaild(error);
+                            error.printStackTrace();
+                        });
+                break;
+            case FRAGMENT_INQUIRIES_ORDER_LIST://问询工单列表
+                url = URLS.URL_GET_ORDER_LIST;
+                serviceApi.getInquiriesList(url,page).compose(RxSchedulers.inIoMain())
+                        .subscribe(response -> {
+                            if(response.isState()){
+//                                if (mPage5==page.getPageBean().getPage()) {
+//                                }else {
+//                                    mPage5=page.getPageBean().getPage();
+                                    callback.call(response.getData());
+//                                }
                             }
                         }, error -> {
                             callback.onFaild(error);

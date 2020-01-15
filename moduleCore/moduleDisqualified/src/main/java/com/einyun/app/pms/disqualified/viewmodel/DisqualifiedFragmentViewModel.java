@@ -11,6 +11,7 @@ import androidx.paging.PagedList;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
+import com.einyun.app.pms.disqualified.db.DisqualifiedDbRepository;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.event.CallBack;
@@ -29,8 +30,10 @@ import com.einyun.app.pms.disqualified.repository.DisqualifiedRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
+import org.mockito.internal.matchers.InstanceOf;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +44,52 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DisqualifiedFragmentViewModel extends BasePageListViewModel<DisqualifiedItemModel> {
     private final Map<String, String> uploadedImages = new ConcurrentHashMap<>();
     private ImageUploadManager uploadManager = new ImageUploadManager();
+    DisqualifiedDbRepository dbRepository=new DisqualifiedDbRepository();
+
+    public void insertCreateRequest(CreateUnQualityRequest request){
+       dbRepository.insertCreateRequest(request);
+    }
+
+    public void deleteCreateRequest(String code){
+       dbRepository.deleteCreateRequest(code);
+    }
+    public  LiveData<CreateUnQualityRequest> queryCreateRequest(String code){
+        return dbRepository.queryCreateRequest(code);
+    }
+    public  LiveData<PagedList<CreateUnQualityRequest>> loadAllCreateRequest(){
+
+        return new LivePagedListBuilder(dbRepository.loadAllCreateRequest(), config)
+//                .setBoundaryCallback(null)
+//                .setFetchExecutor(null)
+                .build();
+    }
+
+    /*
+    * 反馈缓存
+    * */
+    public void insertFeedBackRequest(String orderId, UnQualityFeedBackRequest request){
+        dbRepository.insertFeedBackRequest( orderId,  request);
+    }
+    public void deleteFeedBackRequest(String code){
+        dbRepository.deleteFeedBackRequest(code);
+    }
+    public  LiveData<UnQualityFeedBackRequest> loadFeedBackRequest(String code){
+        return dbRepository.loadFeedBackRequest(code);
+    }
+
+    /*
+    * 验证缓存
+    * */
+    public void insertVerificationRequest(String orderId, UnQualityVerificationRequest request){
+        dbRepository.insertVerificationRequest( orderId,  request);
+    }
+    public void deleteVerificationRequest(String code){
+        dbRepository.deleteVerificationRequest(code);
+    }
+    public  LiveData<UnQualityVerificationRequest> loadVerificationRequest(String code){
+        return dbRepository.loadVerificationRequest(code);
+    }
+
     /**
      * 获取Paging LiveData
      * @return LiveData
@@ -197,6 +246,15 @@ public class DisqualifiedFragmentViewModel extends BasePageListViewModel<Disqual
         return dealFeedBack;
     }
     /*
+    * 图片转json
+    * */
+    public String toJsonString(List<PicUrl> images){
+        if (uploadManager != null) {
+            return uploadManager.toJosnString(images);
+        }
+        return "";
+    }
+    /*
      * 创建接口
      * */
     private MutableLiveData<Boolean> deal=new MutableLiveData<>();
@@ -340,5 +398,134 @@ public class DisqualifiedFragmentViewModel extends BasePageListViewModel<Disqual
         Log.e("客户问询", "RequestTodoList: "+jsonObject.toString() );
 
         return new Gson().fromJson(jsonObject.toString(),DisqualifiedListRequest.class);
+    }
+    public DisqualifiedListRequest getRequestSearchBean(int page, int pageSize, String line, String status, String divideId,String code,String desc){
+
+        JsonObject jsonObject = new JsonObject();
+        JsonObject pageBean = new JsonObject();
+        pageBean.addProperty("page", page);
+        pageBean.addProperty("pageSize", pageSize);
+        pageBean.addProperty("showTotal", false);
+
+        JsonArray querys = new JsonArray();
+
+//        JsonArray sorters = new JsonArray();
+//        JsonObject sorter = new JsonObject();
+//        sorter.addProperty("property", "wx_time");
+//        sorter.addProperty("direction", "DESC");
+//        sorters.add(sorter);
+
+        JsonObject querys1 = new JsonObject();
+        querys1.addProperty("property", "line");
+        querys1.addProperty("operation", "EQUAL");
+        querys1.addProperty("value", line);
+        querys1.addProperty("relation", "AND");
+
+        JsonObject querys2 = new JsonObject();
+        querys2.addProperty("property", "status");
+        querys2.addProperty("operation", "EQUAL");
+        querys2.addProperty("value", status);
+        querys2.addProperty("relation", "AND");
+
+        JsonObject querys3 = new JsonObject();
+        querys3.addProperty("property", "divide_id");
+        querys3.addProperty("operation", "EQUAL");
+        querys3.addProperty("value", divideId);
+        querys3.addProperty("relation", "AND");
+
+        JsonObject querys4 = new JsonObject();
+        querys4.addProperty("property", "code");
+        querys4.addProperty("operation", "LIKE");
+        querys4.addProperty("value", code);
+        querys4.addProperty("relation", "OR");
+
+        JsonObject querys5 = new JsonObject();
+        querys5.addProperty("property", "problem_description");
+        querys5.addProperty("operation", "LIKE");
+        querys5.addProperty("value", desc);
+        querys5.addProperty("relation", "OR");
+        if (!divideId.isEmpty()) {
+            querys.add(querys3);
+        }
+
+        if (!line.isEmpty()) {
+            querys.add(querys1);
+        }
+        if (!status.isEmpty()) {
+            querys.add(querys2);
+        }
+        if (!code.isEmpty()) {
+            querys.add(querys4);
+        }
+        if (!desc.isEmpty()) {
+            querys.add(querys5);
+        }
+        jsonObject.add("pageBean", pageBean);
+        jsonObject.add("querys", querys);
+//        jsonObject.add("sorter", sorters);
+        Log.e("客户问询", "RequestTodoList: "+jsonObject.toString() );
+
+        return new Gson().fromJson(jsonObject.toString(),DisqualifiedListRequest.class);
+    }
+
+    public void cacheFeedBackPhotos(List<Uri> uris, String code,UnQualityFeedBackRequest mRequest) {
+        String paths=new Gson().toJson(cachedPhotoList(uris));
+        mRequest.getBizData().setFeedback_enclosure(paths);
+        insertFeedBackRequest(code,mRequest);
+    }
+    public List<Uri> loadCacheFeedbackPhotoUris(UnQualityFeedBackRequest mRequest){
+        List<Uri> uris=new ArrayList<>();
+        if(!TextUtils.isEmpty(mRequest.getBizData().getFeedback_enclosure())){
+            List<String> list=new Gson().fromJson(mRequest.getBizData().getFeedback_enclosure(),new TypeToken<List<String>>(){}.getType());
+            for(String path:list){
+                Uri uri=Uri.parse(path);
+                uris.add(uri);
+            }
+        }
+        return uris;
+    }
+    public void cacheVerifiPhotos(List<Uri> uris, String code,UnQualityVerificationRequest mRequest) {
+        String paths=new Gson().toJson(cachedPhotoList(uris));
+        mRequest.getBizData().setVerification_enclosure(paths);
+        insertVerificationRequest(code,mRequest);
+    }
+
+    public List<Uri> loadCacheVerifiPhotoUris(UnQualityVerificationRequest mRequest){
+        List<Uri> uris=new ArrayList<>();
+        if(!TextUtils.isEmpty(mRequest.getBizData().getVerification_enclosure())){
+            List<String> list=new Gson().fromJson(mRequest.getBizData().getVerification_enclosure(),new TypeToken<List<String>>(){}.getType());
+            for(String path:list){
+                Uri uri=Uri.parse(path);
+                uris.add(uri);
+            }
+        }
+        return uris;
+    }
+    public void cachePhotos(List<Uri> uris, CreateUnQualityRequest mRequest) {
+        String paths=new Gson().toJson(cachedPhotoList(uris));
+        mRequest.getBizData().setCreate_enclosure(paths);
+        insertCreateRequest(mRequest);
+    }
+    public List<Uri> loadCachePhotoUris(CreateUnQualityRequest mRequest){
+        List<Uri> uris=new ArrayList<>();
+        if(!TextUtils.isEmpty(mRequest.getBizData().getCreate_enclosure())){
+            List<String> list=new Gson().fromJson(mRequest.getBizData().getCreate_enclosure(),new TypeToken<List<String>>(){}.getType());
+            for(String path:list){
+                Uri uri=Uri.parse(path);
+                uris.add(uri);
+            }
+        }
+        return uris;
+    }
+
+
+
+    private List<String> cachedPhotoList(List<Uri> uris){
+        List<String> list=new ArrayList<>();
+        for(Uri uri:uris){
+            String path=uri.toString();
+            list.add(path);
+        }
+        return list;
     }
 }

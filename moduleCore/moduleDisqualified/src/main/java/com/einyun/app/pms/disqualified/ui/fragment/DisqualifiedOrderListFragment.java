@@ -61,7 +61,8 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
     private String divideName="";
     private int mPosition=-1;
     private int mPositionState=-1;
-    private String cate="";
+    private String mLine="";
+    private String mState="";
     private String blockName;
     private DisqualifiedTypeSelectPopWindow inquiriesTypeSelectPopWindow;
     private PeriodizationView periodizationView;
@@ -98,7 +99,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
     protected void setUpView() {
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
-            loadPagingData(viewModel.getRequestBean(1,10,"","",""),getFragmentTag());
+            loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
            });
         binding.list.setLayoutManager(new LinearLayoutManager(
                 getActivity(),
@@ -120,6 +121,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
 //            binding.tvDivide.setText(blockName);
 //        }
 
+        binding.llSearch.setVisibility(View.GONE);
     }
     private void loadPagingData(DisqualifiedListRequest requestBean, String  tag){
 //        初始化数据，LiveData自动感知，刷新页面
@@ -137,15 +139,15 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
                 @Override
                 public void onBindItem(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
                     binding.setModel(inquiriesItemModule);
-                    switch (getFragmentTag()) {
-                        case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
-                            binding.itemCache.setVisibility(View.VISIBLE);
-                            break;
-                        case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
-                        case FRAGMENT_DISQUALIFIED_ORDER_LIST://liebiao
-                            binding.itemCache.setVisibility(View.GONE);
-                            break;
-                    }
+//                    switch (getFragmentTag()) {
+//                        case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
+//                            binding.itemCache.setVisibility(View.VISIBLE);
+//                            break;
+//                        case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
+//                        case FRAGMENT_DISQUALIFIED_ORDER_LIST://liebiao
+//                            binding.itemCache.setVisibility(View.GONE);
+//                            break;
+//                    }
                 }
                 @Override
                 public int getLayoutId() {
@@ -164,8 +166,13 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
                 viewModel.queryAduitType(DisqualifiedDataKey.ORDER_STATE_TYPE_LIST).observe(this, model->{ model2 = model; });
 //                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_DISQUALIFIED_HAD_FOLLOW);
                 break;
+            case FRAGMENT_DISQUALIFIED_ORDER_LIST://工单列表
+                viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this, model->{ model1 = model; });
+                viewModel.queryAduitType(DisqualifiedDataKey.ORDER_STATE_TYPE_LIST).observe(this, model->{ model2 = model; });
+//                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_DISQUALIFIED_HAD_FOLLOW);
+                break;
         }
-        loadPagingData(viewModel.getRequestBean(1,10,"","",""),getFragmentTag());
+        loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
 
     @Override
@@ -288,7 +295,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
         binding.tvDivide.setText(divideName);
         binding.tvDivide.setTextColor(getResources().getColor(R.color.blueTextColor));
 //        binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
-
+        loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
     /**
      * item点击
@@ -308,12 +315,12 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
      * 筛选过后的position
      */
     @Override
-    public void onData(String dataKey,String state,int position,int positionState) {
-        Log.e("onData", "onData:dataKey=== "+dataKey );
+    public void onData(String line,String state,int position,int positionState) {
         Log.e("onData", "onData:state=== "+state );
         Log.e("onData", "onData:position=== "+position );
         Log.e("onData", "onData:positionState=== "+positionState );
-        cate = dataKey;
+        mLine = line;
+        mState = state;
         mPosition = position;
         mPositionState = positionState;
         if (mPosition==-1&&mPositionState==-1) {
@@ -325,7 +332,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
             binding.ivTriangleSelect.setImageResource(R.drawable.iv_approval_sel_type_blue);
 
         }
-//        loadPagingData(viewModel.getRequestBean(1,10,cate,"",divideId),getFragmentTag());
+        loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
 
 }

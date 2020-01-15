@@ -18,6 +18,6 @@ class LineOrder {
      val unfinished_num = 0
      val count = 0
      val name: String? = null
-     val type = 0
+     val type: String? = null
      val timely_num = 0
 }

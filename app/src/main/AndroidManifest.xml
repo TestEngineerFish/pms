@@ -155,6 +155,8 @@
         <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity"/>
+        <activity android:name=".customerinquiries.ui.InquiriesOrderListActivity"/>
+        <activity android:name=".customerinquiries.ui.InquiriesOrderDetailViewModuleActivity"/>
         <!--  客户问询结束      -->
         <!--  不合格单开始      -->
         <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity"/>
