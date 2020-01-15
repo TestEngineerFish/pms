@@ -68,7 +68,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3
  */
 public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
-    private SelectPopUpView selectPopUpView;
+    private SelectPopUpView selectPopUpView=null;
     RepairsPageRequest request;
 
     public RepairsViewModelFragment() {
