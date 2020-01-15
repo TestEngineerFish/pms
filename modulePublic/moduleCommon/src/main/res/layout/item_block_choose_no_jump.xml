@@ -55,6 +55,7 @@
             <ImageView
                 android:layout_width="@dimen/px_30"
                 android:layout_height="@dimen/px_30"
+                android:layout_marginLeft="@dimen/px_20"
                 android:layout_marginRight="@dimen/px_16"
                 app:srcCompat="@mipmap/select" />
 
