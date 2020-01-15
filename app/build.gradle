@@ -39,8 +39,8 @@ android {
 
     signingConfigs {
         release  {
-            keyAlias 'YYKJ_APP'
-            keyPassword 'KEY_APP_YYKY_2019&*()_+'
+            keyAlias 'shimaoapp'
+            keyPassword '123456'
             storeFile file("../cert.jks")
             storePassword '123456'
         }
