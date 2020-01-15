@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseActivity;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
@@ -118,7 +119,7 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
-        if (extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
             binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
             binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
             binding.grabFrame.grabClose.setOnClickListener(this);
@@ -160,6 +161,7 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
                                 @Override
                                 public void onClick(View view) {
                                     binding.grabFrame.getRoot().setVisibility(View.GONE);
+                                    getIntent().setType("1");
                                 }
                             }).show();
 
@@ -169,6 +171,7 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
                             setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    getIntent().setType("1");
 
                                 }
                             }).show();
