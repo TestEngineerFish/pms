@@ -52,7 +52,7 @@ public class MyMessageReceiver extends MessageReceiver {
             PushResultModel pushModel = gson.fromJson(extraMap, new TypeToken<PushResultModel>() {
             }.getType());
             //抢单提醒
-            if ("grad".equals(pushModel.getType())) {
+            if ("grab".equals(pushModel.getType())) {
                 if ("repair".equals(pushModel.getSubType())) {
                     //抢单
                     ARouter.getInstance()
@@ -68,11 +68,9 @@ public class MyMessageReceiver extends MessageReceiver {
             if ("reminder".equals(pushModel.getType())) {
 
             }
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            Log.e("message", e.getMessage());
         }
-
-
     }
 
     @Override
