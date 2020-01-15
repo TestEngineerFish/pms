@@ -57,6 +57,9 @@ public class DisqualifiedDbRepository extends CommonRepository {
     public void insertFeedBackRequest(String orderId, UnQualityFeedBackRequest request) {
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
             QualityRequest qualityRequest = new QualityRequest();
+            if(qualityRequest == null){
+                return;
+            }
             qualityRequest.setId(orderId + FeedBackRequest);
             qualityRequest.setCorrective_action(request.getBizData().getCorrective_action());
             qualityRequest.setFeedback_date(request.getBizData().getFeedback_date());
@@ -95,6 +98,9 @@ public class DisqualifiedDbRepository extends CommonRepository {
     public void insertVerificationRequest(String orderId, UnQualityVerificationRequest request) {
         Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
             QualityRequest qualityRequest = new QualityRequest();
+            if (qualityRequest==null) {
+                return;
+            }
             qualityRequest.setId(orderId + VerificationRequest);
             qualityRequest.setVerification_date(request.getBizData().getVerification_date());
             qualityRequest.setVerification_enclosure(request.getBizData().getVerification_enclosure());

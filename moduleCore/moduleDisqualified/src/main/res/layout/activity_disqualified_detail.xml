@@ -582,7 +582,7 @@
                                  android:layout_marginLeft="10dp"
                                  android:layout_marginRight="5dp"
                                  android:onClick="@{()->callBack.onCreateOrderClick()}"
-                                 android:text="创建新工单"
+                                 android:text="创建不合格单"
                                  style="@style/style_btn_cache" />
                              <TextView
                                  android:layout_marginLeft="5dp"

@@ -89,7 +89,7 @@ public class CreateUnQualityRequest implements Serializable {
         private String create_enclosure;
 
         public String getDivide_id() {
-            return divide_id;
+            return divide_id==null?"":divide_id;
         }
 
         public void setDivide_id(String divide_id) {
@@ -97,7 +97,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getDivide_name() {
-            return divide_name;
+            return divide_name==null?"":divide_name;
         }
 
         public void setDivide_name(String divide_name) {
@@ -105,7 +105,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getCode() {
-            return code;
+            return code==null?"":code;
         }
 
         public void setCode(String code) {
@@ -113,7 +113,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getLine() {
-            return line;
+            return line==null?"":line;
         }
 
         public void setLine(String line) {
@@ -121,7 +121,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getSeverity() {
-            return severity;
+            return severity==null?"":severity;
         }
 
         public void setSeverity(String severity) {
@@ -129,7 +129,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getProblem_description() {
-            return problem_description;
+            return problem_description==null?"":problem_description;
         }
 
         public void setProblem_description(String problem_description) {
@@ -169,7 +169,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getChecked_user_id() {
-            return checked_user_id;
+            return checked_user_id==null?"":checked_user_id;
         }
 
         public void setChecked_user_id(String checked_user_id) {
@@ -177,7 +177,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getChecked_user_name() {
-            return checked_user_name;
+            return checked_user_name==null?"":checked_user_name;
         }
 
         public void setChecked_user_name(String checked_user_name) {
@@ -185,7 +185,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getCheck_date() {
-            return check_date;
+            return check_date==null?"":check_date;
         }
 
         public void setCheck_date(String check_date) {
@@ -193,7 +193,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getCorrection_date() {
-            return correction_date;
+            return correction_date==null?"":correction_date;
         }
 
         public void setCorrection_date(String correction_date) {
@@ -201,7 +201,7 @@ public class CreateUnQualityRequest implements Serializable {
         }
 
         public String getCreate_enclosure() {
-            return create_enclosure;
+            return create_enclosure==null?"":create_enclosure;
         }
 
         public void setCreate_enclosure(String create_enclosure) {

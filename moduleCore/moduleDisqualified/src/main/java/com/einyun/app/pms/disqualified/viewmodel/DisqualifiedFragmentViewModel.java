@@ -30,6 +30,7 @@ import com.einyun.app.pms.disqualified.repository.DisqualifiedRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
 import org.mockito.internal.matchers.InstanceOf;
@@ -465,5 +466,66 @@ public class DisqualifiedFragmentViewModel extends BasePageListViewModel<Disqual
         Log.e("客户问询", "RequestTodoList: "+jsonObject.toString() );
 
         return new Gson().fromJson(jsonObject.toString(),DisqualifiedListRequest.class);
+    }
+
+    public void cacheFeedBackPhotos(List<Uri> uris, String code,UnQualityFeedBackRequest mRequest) {
+        String paths=new Gson().toJson(cachedPhotoList(uris));
+        mRequest.getBizData().setFeedback_enclosure(paths);
+        insertFeedBackRequest(code,mRequest);
+    }
+    public List<Uri> loadCacheFeedbackPhotoUris(UnQualityFeedBackRequest mRequest){
+        List<Uri> uris=new ArrayList<>();
+        if(!TextUtils.isEmpty(mRequest.getBizData().getFeedback_enclosure())){
+            List<String> list=new Gson().fromJson(mRequest.getBizData().getFeedback_enclosure(),new TypeToken<List<String>>(){}.getType());
+            for(String path:list){
+                Uri uri=Uri.parse(path);
+                uris.add(uri);
+            }
+        }
+        return uris;
+    }
+    public void cacheVerifiPhotos(List<Uri> uris, String code,UnQualityVerificationRequest mRequest) {
+        String paths=new Gson().toJson(cachedPhotoList(uris));
+        mRequest.getBizData().setVerification_enclosure(paths);
+        insertVerificationRequest(code,mRequest);
+    }
+
+    public List<Uri> loadCacheVerifiPhotoUris(UnQualityVerificationRequest mRequest){
+        List<Uri> uris=new ArrayList<>();
+        if(!TextUtils.isEmpty(mRequest.getBizData().getVerification_enclosure())){
+            List<String> list=new Gson().fromJson(mRequest.getBizData().getVerification_enclosure(),new TypeToken<List<String>>(){}.getType());
+            for(String path:list){
+                Uri uri=Uri.parse(path);
+                uris.add(uri);
+            }
+        }
+        return uris;
+    }
+    public void cachePhotos(List<Uri> uris, CreateUnQualityRequest mRequest) {
+        String paths=new Gson().toJson(cachedPhotoList(uris));
+        mRequest.getBizData().setCreate_enclosure(paths);
+        insertCreateRequest(mRequest);
+    }
+    public List<Uri> loadCachePhotoUris(CreateUnQualityRequest mRequest){
+        List<Uri> uris=new ArrayList<>();
+        if(!TextUtils.isEmpty(mRequest.getBizData().getCreate_enclosure())){
+            List<String> list=new Gson().fromJson(mRequest.getBizData().getCreate_enclosure(),new TypeToken<List<String>>(){}.getType());
+            for(String path:list){
+                Uri uri=Uri.parse(path);
+                uris.add(uri);
+            }
+        }
+        return uris;
+    }
+
+
+
+    private List<String> cachedPhotoList(List<Uri> uris){
+        List<String> list=new ArrayList<>();
+        for(Uri uri:uris){
+            String path=uri.toString();
+            list.add(path);
+        }
+        return list;
     }
 }

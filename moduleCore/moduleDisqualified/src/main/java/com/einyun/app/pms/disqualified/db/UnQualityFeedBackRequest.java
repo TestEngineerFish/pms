@@ -29,7 +29,7 @@ public class UnQualityFeedBackRequest {
         private String corrective_action;
         private String feedback_date;
         public String getFeedback_enclosure() {
-            return feedback_enclosure;
+            return feedback_enclosure==null?"":feedback_enclosure;
         }
 
         public void setFeedback_enclosure(String feedback_enclosure) {
@@ -37,7 +37,7 @@ public class UnQualityFeedBackRequest {
         }
 
         public String getReason() {
-            return reason;
+            return reason==null?"":reason;
         }
 
         public void setReason(String reason) {
@@ -45,7 +45,7 @@ public class UnQualityFeedBackRequest {
         }
 
         public String getCorrective_action() {
-            return corrective_action;
+            return corrective_action==null?"":corrective_action;
         }
 
         public void setCorrective_action(String corrective_action) {
@@ -53,7 +53,7 @@ public class UnQualityFeedBackRequest {
         }
 
         public String getFeedback_date() {
-            return feedback_date;
+            return feedback_date==null?"":feedback_date;
         }
 
         public void setFeedback_date(String feedback_date) {
@@ -65,7 +65,7 @@ public class UnQualityFeedBackRequest {
         private String taskId;
 
         public String getTaskId() {
-            return taskId;
+            return taskId==null?"":taskId;
         }
 
         public void setTaskId(String taskId) {

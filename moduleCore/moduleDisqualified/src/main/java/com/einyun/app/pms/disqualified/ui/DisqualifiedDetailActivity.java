@@ -16,6 +16,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.einyun.app.base.BasicApplication;
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
+import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.util.ToastUtil;
@@ -152,6 +156,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             if (model==null) {
                 return;
             }
+            updateF_PhotoUI(model);
             binding.ltReason.setText(model.getBizData().getReason());
             binding.ltMeasures.setText(model.getBizData().getCorrective_action());
             binding.tvOpFeedbackDate.setText(model.getBizData().getFeedback_date());
@@ -164,6 +169,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             if (model==null) {
                 return;
             }
+            updateV_PhotoUI(model);
             binding.ltValidation.setText(model.getBizData().getVerification_situation());
             binding.tvOpValidateDate.setText(model.getBizData().getVerification_date());
 
@@ -244,18 +250,19 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
      * 反馈信息缓存按钮
      */
     public void onFeedBackCacheClick(){
-        if (binding.tvOpFeedbackDate.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择反馈日期");
-            return;
-        }
-        if (binding.ltReason.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入原因分析");
-            return;
-        }
-        if (binding.ltMeasures.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入文字信息");
-            return;
-        }
+        cacheF_Photos(photoSelectAdapter.getSelectedPhotos());
+//        if (binding.tvOpFeedbackDate.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择反馈日期");
+//            return;
+//        }
+//        if (binding.ltReason.getString().isEmpty()) {
+//            ToastUtil.show(this,"请输入原因分析");
+//            return;
+//        }
+//        if (binding.ltMeasures.getString().isEmpty()) {
+//            ToastUtil.show(this,"请输入文字信息");
+//            return;
+//        }
         mFeedBackRequest.getBizData().setReason(binding.ltReason.getString());
         mFeedBackRequest.getBizData().setCorrective_action(binding.ltMeasures.getString());
         mFeedBackRequest.getDoNextParamt().setTaskId(mTaskId);
@@ -297,19 +304,35 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     //创建新工单
     public void onCreateOrderClick(){
 
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
-        finish();
+        new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                .setMsg("创建不合格单？")
+                .setNegativeButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                })
+                .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        validateSubmit(true);
+
+                    }
+                }).show();
+
+
     }
     //验证信息缓存
     public void onValidationCacheClick(){
-        if (binding.tvOpValidateDate.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择验证日期");
-            return;
-        }
-        if (binding.ltValidation.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入验证信息");
-            return;
-        }
+        cacheV_Photos(photoValidationSelectAdapter.getSelectedPhotos());
+//        if (binding.tvOpValidateDate.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择验证日期");
+//            return;
+//        }
+//        if (binding.ltValidation.getString().isEmpty()) {
+//            ToastUtil.show(this,"请输入验证信息");
+//            return;
+//        }
         mValidateRequest.getBizData().setVerification_situation(binding.ltValidation.getString());
         mValidateRequest.getBizData().setIs_pass(1);
         mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
@@ -319,6 +342,10 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     }
     //验证信息提交
     public void onValidationPassClick(){
+        validateSubmit(false);
+    }
+
+    private void validateSubmit(boolean isCreateNew) {
         if (binding.tvOpValidateDate.getText().toString().equals("请选择")) {
             ToastUtil.show(this,"请选择验证日期");
             return;
@@ -330,8 +357,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         mValidateRequest.getBizData().setVerification_situation(binding.ltValidation.getString());
         mValidateRequest.getBizData().setIs_pass(1);
         mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
-        uploadValidateImages(mValidateRequest);
+        uploadValidateImages(mValidateRequest,isCreateNew);
     }
+
     @Override
     protected int getColorPrimary() {
         return getResources().getColor(R.color.white);
@@ -361,7 +389,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     /**
      * 验证上传照片
      */
-    private void uploadValidateImages(UnQualityVerificationRequest request) {
+    private void uploadValidateImages(UnQualityVerificationRequest request,boolean isCreateNew) {
         //开始上传照片
         viewModel.uploadImages(photoValidationSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
@@ -370,9 +398,16 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
-                        ToastUtil.show(getApplicationContext(), R.string.tv_validate_suc);
-                        finish();
-                        viewModel.deleteVerificationRequest("v_"+mTaskId);
+                        if (!isCreateNew) {
+                            ToastUtil.show(getApplicationContext(), R.string.tv_validate_suc);
+                            finish();
+                            viewModel.deleteVerificationRequest("v_"+mTaskId);
+                        }else {
+//                            ToastUtil.show(getApplicationContext(), R.string.tv_validate_suc);
+                            viewModel.deleteVerificationRequest("v_"+mTaskId);
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                            finish();
+                        }
                     }
                 });
             } else {
@@ -388,12 +423,14 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
                 photoSelectAdapter.addPhotos(uris);
+                cacheF_Photos(photoSelectAdapter.getSelectedPhotos());
             }
         }else if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK_SECOND){
             if (data == null) return;
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
                 photoValidationSelectAdapter.addPhotos(uris);
+                cacheV_Photos(photoValidationSelectAdapter.getSelectedPhotos());
             }
         }
     }
@@ -485,5 +522,23 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                     .imageEngine(new Glide4Engine())
                     .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK_SECOND);
         }, this);
+    }
+    private void cacheF_Photos(List<Uri> uris){
+        viewModel.cacheFeedBackPhotos(uris,"f_"+mTaskId,mFeedBackRequest);
+    }
+    private void cacheV_Photos(List<Uri> uris){
+        viewModel.cacheVerifiPhotos(uris,"v_"+mTaskId,mValidateRequest);
+    }
+    private void updateF_PhotoUI(UnQualityFeedBackRequest mDbrequest) {
+        List<Uri> uris=viewModel.loadCacheFeedbackPhotoUris(mDbrequest);
+        if(uris.size()>0){
+            photoSelectAdapter.addPhotos(uris);
+        }
+    }
+    private void updateV_PhotoUI(UnQualityVerificationRequest mDbrequest) {
+        List<Uri> uris=viewModel.loadCacheVerifiPhotoUris(mDbrequest);
+        if(uris.size()>0){
+            photoValidationSelectAdapter.addPhotos(uris);
+        }
     }
 }

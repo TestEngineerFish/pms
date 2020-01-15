@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -200,6 +201,15 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 break;
         }
         mRequest.getBizData().setSeverity(mDbrequest.getBizData().getSeverity());
+
+        updatePhotoUI(mDbrequest);
+    }
+
+    private void updatePhotoUI(CreateUnQualityRequest mDbrequest) {
+        List<Uri> uris=viewModel.loadCachePhotoUris(mDbrequest);
+        if(uris.size()>0){
+            photoSelectAdapter.addPhotos(uris);
+        }
     }
 
     /**
@@ -258,41 +268,42 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
      * 缓存按钮
      */
     public void onCacheClick(){
-        if (binding.tvDivide.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择分期");
-            return;
-        }
-        if (binding.tvCheckDate.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择检查日期");
-            return;
-        }
-        if (binding.ltQuestionDesc.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入问题描述");
-            return;
-        }
-        if (binding.tvLine.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择条线");
-            return;
-        }
-        if (binding.tvSeverity.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择严重程度");
-            return;
-        }
-        if (binding.tvDealLine.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择纠正截至日期");
-            return;
-        }
-        if (binding.tvInspected.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择被检查人");
-            return;
-        }
-        long dealtime = TimeUtil.ymdToLong(binding.tvDealLine.getText().toString());
-        long checkTime = TimeUtil.ymdToLong(binding.tvCheckDate.getText().toString());
-        long day=60*60*24*999;
-        if (dealtime-checkTime<day) {
-            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
-            return;
-        }
+        cachePhoto(photoSelectAdapter.getSelectedPhotos());
+//        if (binding.tvDivide.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择分期");
+//            return;
+//        }
+//        if (binding.tvCheckDate.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择检查日期");
+//            return;
+//        }
+//        if (binding.ltQuestionDesc.getString().isEmpty()) {
+//            ToastUtil.show(this,"请输入问题描述");
+//            return;
+//        }
+//        if (binding.tvLine.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择条线");
+//            return;
+//        }
+//        if (binding.tvSeverity.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择严重程度");
+//            return;
+//        }
+//        if (binding.tvDealLine.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择纠正截至日期");
+//            return;
+//        }
+//        if (binding.tvInspected.getText().toString().equals("请选择")) {
+//            ToastUtil.show(this,"请选择被检查人");
+//            return;
+//        }
+//        long dealtime = TimeUtil.ymdToLong(binding.tvDealLine.getText().toString());
+//        long checkTime = TimeUtil.ymdToLong(binding.tvCheckDate.getText().toString());
+//        long day=60*60*24*999;
+//        if (dealtime-checkTime<day) {
+//            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
+//            return;
+//        }
         mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
         viewModel.insertCreateRequest(mRequest);
         ToastUtil.show(this,"缓存成功");
@@ -346,16 +357,6 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         String s = new Gson().toJson(mRequest, CreateUnQualityRequest.class);
         Log.e(TAG, "onPassClick: requestjson=== "+s );
         if (IsFastClick.isFastDoubleClick()) {
-//            viewModel.deal(mRequest).observe(this, module -> {
-//                if (module) {
-//                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-//                    ToastUtil.show(this,"创建成功");
-//                    finish();
-//                } else {
-//                    ToastUtil.show(this, "创建失败");
-//
-//                }
-//            });
             uploadImages(mRequest);
         }
     }
@@ -583,6 +584,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
                 photoSelectAdapter.addPhotos(uris);
+                cachePhoto(photoSelectAdapter.getSelectedPhotos());
             }
         }
         //被检查人
@@ -595,5 +597,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //            request.setProcName(orgModel.getName());
 //            binding.setBean(request);
         }
+    }
+
+    private void cachePhoto(List<Uri> uris){
+        viewModel.cachePhotos(uris,mRequest);
     }
 }
