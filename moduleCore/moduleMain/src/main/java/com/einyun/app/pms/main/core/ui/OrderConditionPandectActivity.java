@@ -63,7 +63,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setHeadTitle(R.string.title_order_condition_pandect);
+        setHeadTitle("工单情况总览");
         binding.setCallBack(this);
         orgModels = new Gson().fromJson(SPUtils.get(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, "").toString(),
                 new TypeToken<List<OrgModel>>() {
@@ -319,11 +319,10 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     PeriodizationNoAutoJumpView periodizationView;
 
     public void selectOrgCodes() {
-        if (periodizationView == null) {
+
             //弹出分期view
             periodizationView = new PeriodizationNoAutoJumpView();
             periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
-        }
         periodizationView.show(getSupportFragmentManager(), "");
     }
 
