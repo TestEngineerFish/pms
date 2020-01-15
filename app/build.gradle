@@ -39,8 +39,8 @@ android {
 
     signingConfigs {
         release  {
-            keyAlias 'YYKJ_APP'
-            keyPassword 'KEY_APP_YYKY_2019&*()_+'
+            keyAlias 'shimaoapp'
+            keyPassword '123456'
             storeFile file("../cert.jks")
             storePassword '123456'
         }
@@ -137,7 +137,7 @@ dependencies {
     implementation project(deps.project.module_mine)
     implementation project(deps.project.module_orderpreview)
     implementation project(deps.project.module_operatepercent)
-//    implementation project(deps.project.module_plan)
+    implementation project(deps.project.module_plan)
     implementation project(deps.project.module_plan)
     implementation project(deps.project.module_customerinquiries)
     implementation project(deps.project.module_complain)

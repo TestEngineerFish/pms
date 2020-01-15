@@ -247,6 +247,19 @@ public *;
     public static ** valueOf(java.lang.String);
 }
 
+#友盟统计
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class com.einyun.app.pms.R$*{
+public static final int *;
+}
+
 #微信开放平台
 -keep class com.tencent.** { *;}
 #皮肤包

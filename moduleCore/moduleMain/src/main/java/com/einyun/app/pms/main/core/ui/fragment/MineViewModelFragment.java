@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;

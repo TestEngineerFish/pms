@@ -12,7 +12,6 @@ import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.huawei.HuaWeiRegister;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
-import com.alibaba.sdk.android.push.register.GcmRegister;
 import com.alibaba.sdk.android.push.register.MeizuRegister;
 import com.alibaba.sdk.android.push.register.MiPushRegister;
 import com.alibaba.sdk.android.push.register.OppoRegister;
@@ -24,9 +23,10 @@ import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinAppCompatViewInflater;
@@ -49,6 +49,7 @@ import skin.support.design.app.SkinMaterialViewInflater;
 public class CommonApplication extends BasicApplication {
     private static final String TAG = "CommonApplication";
     private static CommonApplication app;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -67,6 +68,16 @@ public class CommonApplication extends BasicApplication {
         }
         CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
         initCloudChannel(this);
+        initUmeng();
+    }
+
+    private void initUmeng() {
+//        UMConfigure.init(this, "5dad68473fc195309b001055", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5ddf3f8a0cafb2f7d700066f", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        if (com.einyun.app.base.BuildConfig.DEBUG) {
+            UMConfigure.setLogEnabled(true);
+        }
     }
 
     /**
@@ -124,7 +135,7 @@ public class CommonApplication extends BasicApplication {
                 Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
-        bindAccount("1");
+//        bindAccount("1");
         MiPushRegister.register(applicationContext, "2882303761518226834", "5271822697834"); // 初始化小米辅助推送
         HuaWeiRegister.register(this); // 接入华为辅助推送
         VivoRegister.register(applicationContext);

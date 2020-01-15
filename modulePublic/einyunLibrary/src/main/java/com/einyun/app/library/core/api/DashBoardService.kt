@@ -2,11 +2,9 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.dashboard.model.AllChargedModel
-import com.einyun.app.library.dashboard.model.OperateCaptureData
-import com.einyun.app.library.dashboard.model.UserMenuData
-import com.einyun.app.library.dashboard.model.WorkOrderData
+import com.einyun.app.library.dashboard.model.*
 import com.einyun.app.library.dashboard.net.request.AllChargedRequest
+import com.einyun.app.library.dashboard.net.request.OperateInRequest
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest
 import com.einyun.app.library.dashboard.net.response.WorkOrderResponse
 import com.einyun.app.library.uc.user.model.TenantModel
@@ -36,4 +34,6 @@ interface DashBoardService : EinyunService {
     fun userMenuData(menuType: Int, callBack: CallBack<String>): LiveData<String>
     //全部收费项目
     fun allChargedProject(request:AllChargedRequest,callBack: CallBack<AllChargedModel>):LiveData<AllChargedModel>
+    //运营收缴率内部
+    fun operatePercentIn(request:OperateInRequest,callBack: CallBack<OperateInModel>):LiveData<OperateInModel>
 }

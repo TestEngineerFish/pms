@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -25,10 +27,16 @@ import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PERCENT_GET;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PERCENT_OWE;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLAN;
+
 @Route(path = RouterUtils.ACTIVITY_OPERATE_PERCENT)
 public class OperatePercentActivity extends BaseHeadViewModelActivity<ActivityOperatePercentBinding, OperatePercentViewModel> implements PeriodizationView.OnPeriodSelectListener {
     private String[] mTitles;//tab标题
-
+    @Autowired(name = RouteKey.ORGCODE)
+    public List<String> orgCodes;
+    public String tag;
 
     @Override
     protected OperatePercentViewModel initViewModel() {
@@ -39,21 +47,14 @@ public class OperatePercentActivity extends BaseHeadViewModelActivity<ActivityOp
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        mTitles = new String[]{getResources().getString(R.string.txt_get_report_form), getResources().getString(R.string.txt_own_report_form),getResources().getString(R.string.txt_get_report_rank),getResources().getString(R.string.txt_own_report_rank)};
+        mTitles = new String[]{getResources().getString(R.string.txt_get_report_form), getResources().getString(R.string.txt_own_report_form)};
+//        mTitles = new String[]{getResources().getString(R.string.txt_get_report_form), getResources().getString(R.string.txt_own_report_form),getResources().getString(R.string.txt_get_report_rank),getResources().getString(R.string.txt_own_report_rank)};
         setHeadTitle(R.string.txt_operate_percent);
         final ArrayList<Fragment> fragments = new ArrayList<>();
-//        String fragmentTags[] = new String[]{FRAGMENT_WORK_PREVIEW_PLAN, FRAGMENT_WORK_PREVIEW_PATRO};
-        Bundle bundle = new Bundle();
-        fragments.add(ReportFormFragment.newInstance(bundle));
-        fragments.add(ReportFormFragment.newInstance(bundle));
-        fragments.add(PercentRandFragment.newInstance(bundle));
-        fragments.add(PercentRandFragment.newInstance(bundle));
-       /* for (int i = 0; i < mTitles.length; i++) {
-            Bundle bundle = new Bundle();
-//            bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
-            fragments.add(ReportFormFragment.newInstance(bundle));
+        String fragmentTags[] = new String[]{FRAGMENT_PERCENT_GET, FRAGMENT_PERCENT_OWE};
+        for (int i = 0; i < mTitles.length; i++) {
+            fragments.add(ReportFormFragment.newInstance(fragmentTags[i],orgCodes));
         }
-*/
         binding.vpOperatePercent.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {

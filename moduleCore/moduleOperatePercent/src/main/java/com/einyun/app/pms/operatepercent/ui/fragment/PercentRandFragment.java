@@ -9,7 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;

@@ -75,6 +75,7 @@
     <style name="gallery_layout_style" parent="base_style">
         <item name="android:paddingLeft">@dimen/px_30</item>
         <item name="android:paddingRight">@dimen/px_30</item>
+        <item name="android:layout_marginBottom">@dimen/px_50</item>
         <item name="android:background">@color/activity_bg_color</item>
         <item name="android:orientation">vertical</item>
     </style>

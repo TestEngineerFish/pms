@@ -56,40 +56,41 @@
 
                 <ImageView
                     android:id="@+id/iv_today_capture_rate"
-                    android:layout_width="@dimen/px_86"
-                    android:layout_height="@dimen/px_86"
+                    android:layout_width="@dimen/px_78"
+                    android:layout_height="@dimen/px_78"
                     android:src="@mipmap/img_today_capture_rate" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_20"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_today_capture_rate"
                     android:text="@string/tv_today_capture_rate"
                     android:textColor="@color/tv_main_text_color"
-                    android:textSize="@dimen/font_size14" />
+                    android:textSize="@dimen/font_size15" />
 
-                <TextView
-                    android:id="@+id/tv_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/iv_today_capture_rate"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:text="@string/up"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size13" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_up"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_toRightOf="@id/iv_today_capture_rate"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginLeft="@dimen/px_20"-->
+<!--                    android:text="@string/up"-->
+<!--                    android:textColor="@color/normal_main_text_icon_color"-->
+<!--                    android:textSize="@dimen/font_size13" />-->
 
-                <TextView
-                    android:id="@+id/tv_up_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_up"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/px_4"
-                    tools:text="8%"
-                    android:textColor="@color/tv_up_color"
-                    android:textSize="@dimen/font_size13" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_up_num"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_toRightOf="@id/tv_up"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginLeft="@dimen/px_4"-->
+<!--                    tools:text="8%"-->
+<!--                    android:textColor="@color/tv_up_color"-->
+<!--                    android:textSize="@dimen/font_size13" />-->
 
                 <TextView
                     android:id="@+id/tv_today_income_rate"
@@ -111,40 +112,41 @@
 
                 <ImageView
                     android:id="@+id/iv_today_debts_rate"
-                    android:layout_width="@dimen/px_86"
-                    android:layout_height="@dimen/px_86"
+                    android:layout_width="@dimen/px_78"
+                    android:layout_height="@dimen/px_78"
                     android:src="@mipmap/img_today_debts_rate" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_20"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_today_debts_rate"
                     android:text="@string/tv_today_debts_rate"
                     android:textColor="@color/tv_main_text_color"
-                    android:textSize="@dimen/font_size14" />
+                    android:textSize="@dimen/font_size15" />
 
-                <TextView
-                    android:id="@+id/tv_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/iv_today_debts_rate"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:text="@string/down"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size13" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_down"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_toRightOf="@id/iv_today_debts_rate"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginLeft="@dimen/px_20"-->
+<!--                    android:text="@string/down"-->
+<!--                    android:textColor="@color/normal_main_text_icon_color"-->
+<!--                    android:textSize="@dimen/font_size13" />-->
 
-                <TextView
-                    android:id="@+id/tv_down_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/px_4"
-                    android:layout_toRightOf="@id/tv_down"
-                    android:textColor="@color/tv_down_color"
-                    android:textSize="@dimen/font_size13"
-                    tools:text="8%" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_down_num"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginLeft="@dimen/px_4"-->
+<!--                    android:layout_toRightOf="@id/tv_down"-->
+<!--                    android:textColor="@color/tv_down_color"-->
+<!--                    android:textSize="@dimen/font_size13"-->
+<!--                    tools:text="8%" />-->
 
                 <TextView
                     android:id="@+id/tv_today_arrears_rate"

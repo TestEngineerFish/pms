@@ -9,18 +9,30 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.PeriodizationNoAutoJumpView;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.library.dashboard.net.request.OperateInRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentViewModel;
 import com.einyun.app.pms.operatepercent.R;
 import com.einyun.app.pms.operatepercent.databinding.ReportFormLayoutBinding;
 import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PERCENT_GET;
 
 /**
  * @ProjectName: pms_old
@@ -34,13 +46,23 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
  * @UpdateRemark: 更新说明：
  * @Version: 1.0
  */
-public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBinding, OperatePercentViewModel>  implements View.OnClickListener, PeriodizationView.OnPeriodSelectListener {
+public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBinding, OperatePercentViewModel> implements View.OnClickListener, PeriodizationView.OnPeriodSelectListener {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
-    public static ReportFormFragment newInstance(Bundle bundle) {
-        ReportFormFragment fragment = new ReportFormFragment();
-        fragment.setArguments(bundle);
+    private String tag;
+    OperateInRequest request;
+    private TimePickerView pvTime;
+    PeriodizationNoAutoJumpView periodizationView;
+    private List<String> orgCode=new ArrayList<>();
+    private List<String> orgCodes;
+    public static ReportFormFragment newInstance(String tag, List<String> orgCodes) {
+        ReportFormFragment fragment = new ReportFormFragment(tag,orgCodes);
         return fragment;
+    }
+
+    public ReportFormFragment(String tag,List<String> orgCodes) {
+        this.tag = tag;
+        this.orgCodes=orgCodes;
     }
 
     @Override
@@ -59,6 +81,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     protected void setUpListener() {
         super.setUpListener();
         binding.operatePercentTabPeroidLn.setOnClickListener(this);
+        binding.operatePercentTabSelectLn.setOnClickListener(this);
         binding.operatePercentAllGet.getRoot().setOnClickListener(this);
         binding.operatePercentCarGet.carFee.setOnClickListener(this);
         binding.operatePercentPropertyGet.thingFee.setOnClickListener(this);
@@ -81,6 +104,10 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     protected void setUpView() {
+        Log.d("Test", tag);
+        binding.operatePercentAllGet.setTag(tag);
+        binding.operatePercentCarGet.setTag(tag);
+        binding.operatePercentPropertyGet.setTag(tag);
         binding.reportFormRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         binding.reportFormRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,17 +115,34 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
                 loadPagingData();
             }
         });
+        //组织架构选择
+        periodizationView = new PeriodizationNoAutoJumpView();
+        //时间选择器
+        pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+                String format = dft.format(date);
+                Log.d("Test",format);
+                request.setDate(format);
+                binding.operatePercentSelectSelected.setText(format);
+                loadPagingData();
+            }
+        }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+                .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
+                .build();
 
     }
 
     @Override
     protected void setUpData() {
-        //停止刷新
-        LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(getActivity(), shown -> {
-            if (!shown) {
-                binding.reportFormRefresh.setRefreshing(false);
-            }
-        });
+        request = new OperateInRequest();
+        request.setOrgCodes(orgCodes);
+        if (tag.equals(FRAGMENT_PERCENT_GET)) {
+            request.setIncomeType("1");
+        } else {
+            request.setIncomeType("2");
+        }
 
         //切换筛选条件
         viewModel.getLiveEvent().observe(getActivity(), status -> {
@@ -112,25 +156,39 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     private void loadPagingData() {
 //        //初始化数据，LiveData自动感知，刷新页面
-//        binding.reportFormRefresh.setRefreshing(true);
-
+        binding.reportFormRefresh.setRefreshing(false);
+//        request.setGetYearOrMonth("");
+//        request.setOrgCode("ops-xm01");
+        viewModel.getOpertate(request).observe(this, model -> {
+            binding.operatePercentAllGet.allGetAmountTxt.setText(model.getTotalBaseAmount() + "");
+            binding.operatePercentAllGet.allYearRate.setText(model.getTotalYestAmountRate() + "%");
+            binding.operatePercentAllGet.allGetAmountPro.setProgress(new Double(model.getTotalYestAmountRate()).intValue());
+            binding.operatePercentCarGet.carAmountTxt.setText(model.getCwBaseAmount() + "");
+            binding.operatePercentCarGet.carBasePro.setProgress(new Double(model.getCwYestAmountRate()).intValue());
+            binding.operatePercentCarGet.carBastTxt.setText(model.getCwYestAmountRate() + "%");
+            binding.operatePercentPropertyGet.propertyBaseTxt.setText(model.getWyBaseAmount() + "");
+            binding.operatePercentPropertyGet.propertyRatePro.setProgress(new Double(model.getWyYestAmountRate()).intValue());
+            binding.operatePercentPropertyGet.propertyRateTxt.setText(model.getWyYestAmountRate() + "%");
+        });
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.operate_percent_tab_peroid_ln){
+        if (v.getId() == R.id.operate_percent_tab_peroid_ln) {
             //弹出分期view
-            PeriodizationView periodizationView = new PeriodizationView();
             periodizationView.setPeriodListener(ReportFormFragment.this::onPeriodSelectListener);
             periodizationView.show(getParentFragmentManager(), "");
-        }else {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_OPERATE_TODAY_ALL_GET).navigation();
+        } else if (v.getId() == R.id.operate_percent_tab_select_ln) {
+            pvTime.show();
         }
     }
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-        Log.d("Test",orgModel.getCode());
-
+        Log.d("test", orgModel.getCode());
+        orgCode.removeAll(orgCode);
+        orgCode.add(orgModel.getCode());
+        request.setOrgCodes(orgCode);
+        loadPagingData();
     }
 }

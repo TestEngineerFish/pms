@@ -6,6 +6,9 @@ buildscript {
 
 //    addRepos(repositories)
     repositories {
+        maven{
+            url "http://maven.hypersmart.cc/nexus/content/repositories/releases"
+        }
         maven {
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
@@ -16,6 +19,7 @@ buildscript {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         mavenCentral()
         google()
     }
@@ -33,6 +37,9 @@ buildscript {
 
 allprojects {
     repositories {
+        maven{
+            url "http://maven.hypersmart.cc/nexus/content/repositories/releases"
+        }
         maven {
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
@@ -41,6 +48,7 @@ allprojects {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
 //        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 //        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
         mavenCentral()

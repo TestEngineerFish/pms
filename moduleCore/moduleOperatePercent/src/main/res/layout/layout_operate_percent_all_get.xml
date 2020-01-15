@@ -3,9 +3,13 @@
 
     <data>
 
+        <variable
+            name="tag"
+            type="String" />
     </data>
 
-    <androidx.cardview.widget.CardView style="@style/cardview_style"
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
         android:layout_marginTop="@dimen/px_0">
 
         <LinearLayout
@@ -25,12 +29,13 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/px_20"
                     android:gravity="center_vertical"
-                    android:text="全部收费项目"
+                    allYearBase="@{tag}"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/font_size16"
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:layout_width="@dimen/px_25"
                     android:layout_height="@dimen/px_25"
                     android:layout_alignParentRight="true"
@@ -46,7 +51,8 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/pd_view" />
 
-            <androidx.cardview.widget.CardView style="@style/cardview_style"
+            <androidx.cardview.widget.CardView
+                style="@style/cardview_style"
                 android:layout_marginLeft="@dimen/px_20"
                 android:layout_marginRight="@dimen/px_20"
                 android:layout_marginBottom="@dimen/px_45">
@@ -67,28 +73,30 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/px_25"
                             android:layout_marginTop="@dimen/px_51"
-                            android:text="全年收缴基数万元"
+                            allYearBaseAmount="@{tag}"
                             android:textColor="@color/white"
                             android:textSize="@dimen/font_size12" />
 
                         <TextView
+                            android:id="@+id/all_get_amount_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/px_25"
                             android:layout_marginTop="@dimen/px_24"
-                            android:text="456,99"
+                            android:text="--"
                             android:textColor="@color/white"
                             android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <ProgressBar
+                            android:id="@+id/all_get_amount_pro"
                             style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="@dimen/px_358"
                             android:layout_height="@dimen/px_10"
                             android:layout_marginLeft="@dimen/px_20"
                             android:layout_marginTop="@dimen/px_27"
                             android:max="100"
-                            android:progress="30"
+                            android:progress="0"
                             android:progressDrawable="@drawable/all_year_car_get_bg" />
 
                         <RelativeLayout
@@ -101,15 +109,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:text="昨日收缴率"
+                                allYearRate="@{tag}"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/font_size11" />
 
                             <TextView
+                                android:id="@+id/all_year_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:text="45%"
+                                android:text="--"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/font_size12" />
                         </RelativeLayout>

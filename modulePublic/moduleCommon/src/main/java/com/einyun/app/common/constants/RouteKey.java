@@ -127,4 +127,9 @@ public class RouteKey {
     public static final String LIST_STATUS_WAIT_GRAB= "for_grab";
     public static final String LIST_STATUS_CLOSED= "closed";
 
+    //运营收缴率
+    public static final String FRAGMENT_PERCENT_GET = "FRAGMENT_PERCENT_GET";
+    public static final String FRAGMENT_PERCENT_OWE = "FRAGMENT_PERCENT_OWE";
+    public static final String ORGCODE = "ORGCODE";
+
 }

@@ -31,7 +31,7 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
@@ -68,7 +68,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3
  */
 public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
-    private SelectPopUpView selectPopUpView;
+    private SelectPopUpView selectPopUpView=null;
     RepairsPageRequest request;
 
     public RepairsViewModelFragment() {
