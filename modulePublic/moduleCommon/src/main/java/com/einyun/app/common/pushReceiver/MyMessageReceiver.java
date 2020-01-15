@@ -48,25 +48,30 @@ public class MyMessageReceiver extends MessageReceiver {
 //                .withString(RouteKey.KEY_CATE_NAME, "321")
 //                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
 //                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-        PushResultModel pushModel = gson.fromJson(extraMap, new TypeToken<PushResultModel>() {
-        }.getType());
-        //抢单提醒
-        if ("grad".equals(pushModel.getType())) {
-            if ("repair".equals(pushModel.getSubType())) {
-                //抢单
-                ARouter.getInstance()
-                        .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
-                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-                        .withString(RouteKey.KEY_CATE_NAME, pushModel.getContent().getCateName())
-                        .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
-                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+        try {
+            PushResultModel pushModel = gson.fromJson(extraMap, new TypeToken<PushResultModel>() {
+            }.getType());
+            //抢单提醒
+            if ("grad".equals(pushModel.getType())) {
+                if ("repair".equals(pushModel.getSubType())) {
+                    //抢单
+                    ARouter.getInstance()
+                            .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
+                            .withString(RouteKey.KEY_CATE_NAME, pushModel.getContent().getCateName())
+                            .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+                            .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                }
             }
-        }
-        //新待处理工单提醒
-        if ("reminder".equals(pushModel.getType())) {
+            //新待处理工单提醒
+            if ("reminder".equals(pushModel.getType())) {
+
+            }
+        }catch (Exception e){
 
         }
+
 
     }
 
