@@ -91,7 +91,9 @@ public class RouterUtils {
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
     public static final String ACTIVITY_INQUIRIES_DETAIL = "/customerInquiries/InquiriesDetailActivity";
+    public static final String ACTIVITY_INQUIRIES_ORDER_DETAIL = "/customerInquiries/InquiriesOrderDetailActivity";
     public static final String ACTIVITY_INQUIRIES_FEEDBACK = "/customerInquiries/FeedBackActivity";
+    public static final String ACTIVITY_INQUIRIES_ORDER_LIST = "/customerInquiries/InquiriesOrderList";
     /**********************客户报修****************************/
     public static final String ACTIVITY_CUSTOMER_REPAIR_DETAIL = "/repairs/RepairsDetailActivity";
     public static final String ACTIVITY_CUSTOMER_ADD_MATERIAL = "/repairs/AddMaterialActivity";

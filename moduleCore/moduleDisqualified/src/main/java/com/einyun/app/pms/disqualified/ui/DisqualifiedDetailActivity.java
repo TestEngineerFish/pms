@@ -167,6 +167,33 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 binding.cdValidationInfo.setVisibility(View.VISIBLE);
                 break;
         }
+        String severity = detailModule.getData().getUnqualified_model().getSeverity();
+        switch (severity) {
+            case DisqualifiedDataKey.SEVERITY_HIGHT_LEVEL:
+                binding.tvSeverity.setText("高");
+                break;
+            case DisqualifiedDataKey.SEVERITY_MIDDLE_LEVEL:
+                binding.tvSeverity.setText("中");
+                break;
+            case DisqualifiedDataKey.SEVERITY_LOW_LEVEL:
+                binding.tvSeverity.setText("低");
+                break;
+        }
+        String line = detailModule.getData().getUnqualified_model().getLine();
+        switch (line) {
+            case DisqualifiedDataKey.LINE_ENV://环境
+                binding.tvLine.setText("环境");
+                break;
+            case DisqualifiedDataKey.LINE_ENG://工程
+                binding.tvLine.setText("工程");
+                break;
+            case DisqualifiedDataKey.LINE_ORDER://秩序
+                binding.tvLine.setText("秩序");
+                break;
+            case DisqualifiedDataKey.LINE_CUSTOMER://客服
+                binding.tvLine.setText("客服");
+                break;
+        }
         binding.setModel(detailModule);
         PicUrlModelConvert convert = new PicUrlModelConvert();
 

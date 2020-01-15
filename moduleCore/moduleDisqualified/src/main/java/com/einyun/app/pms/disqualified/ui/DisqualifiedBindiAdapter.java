@@ -68,7 +68,43 @@ public class DisqualifiedBindiAdapter {
             view.setBackgroundResource(R.mipmap.icon_state_closed);
         }
     }
-
+    @BindingAdapter("line")
+    public static void line(TextView view,String  value){
+        if (value==null) {
+            return;
+        }
+        switch (value) {
+            case DisqualifiedDataKey.LINE_ENV://环境
+                view.setText("环境");
+                break;
+            case DisqualifiedDataKey.LINE_ENG://工程
+                view.setText("工程");
+                break;
+            case DisqualifiedDataKey.LINE_ORDER://秩序
+                view.setText("秩序");
+                break;
+            case DisqualifiedDataKey.LINE_CUSTOMER://客服
+                view.setText("客服");
+                break;
+        }
+    }
+    @BindingAdapter("severity")
+    public static void severity(TextView view,String  value){
+        if (value==null) {
+            return;
+        }
+            switch (value) {
+                case DisqualifiedDataKey.SEVERITY_HIGHT_LEVEL:
+                    view.setText("高");
+                    break;
+                case DisqualifiedDataKey.SEVERITY_MIDDLE_LEVEL:
+                    view.setText("中");
+                    break;
+                case DisqualifiedDataKey.SEVERITY_LOW_LEVEL:
+                    view.setText("低");
+                    break;
+            }
+    }
     @BindingAdapter("status_detial")
     public static void status_detial(TextView view,String value){
         if("createStep".equals(value)){

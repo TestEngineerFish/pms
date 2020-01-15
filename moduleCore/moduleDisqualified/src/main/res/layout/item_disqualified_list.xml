@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="44dp">
         <TextView
-            android:text="@{model.taskName}"
+            android:text="@{model.problem_description}"
             android:id="@+id/tv_inquiries_type"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
@@ -82,6 +82,7 @@
                 style="@style/style_text_approval_right"/>
         </RelativeLayout>
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/item_cache"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_90"

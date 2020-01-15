@@ -30,6 +30,7 @@ import com.einyun.app.pms.disqualified.databinding.ItemPropertyListBinding;
 import com.einyun.app.pms.disqualified.model.DisqualifiedItemModel;
 import com.einyun.app.pms.disqualified.model.PropertyItemModel;
 import com.einyun.app.pms.disqualified.ui.fragment.DisqualifiedViewModuleFragment;
+import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedFragmentViewModel;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModel;
 import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
 import com.google.android.material.tabs.TabLayout;
@@ -42,11 +43,11 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAI
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 
 @Route(path = RouterUtils.ACTIVITY_PROPERTY)
-public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<ActivityPropertyViewModuleBinding, DisqualifiedViewModel> implements ItemClickListener<PropertyItemModel> {
+public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<ActivityPropertyViewModuleBinding, DisqualifiedFragmentViewModel> implements ItemClickListener<PropertyItemModel> {
     RVPageListAdapter<ItemPropertyListBinding, PropertyItemModel> adapter;
     @Override
-    protected DisqualifiedViewModel initViewModel() {
-        return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedViewModel.class);
+    protected DisqualifiedFragmentViewModel initViewModel() {
+        return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
     }
 
     @Override
@@ -59,7 +60,9 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(R.string.tv_disqualified_order);
-        setRightOption(R.mipmap.icon_add_blue);
+//        setRightOption(R.mipmap.icon_add_blue);
+        setRightTxt(R.string.add);
+        setRightTxtColor(R.color.blackTextColor);
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
         });
@@ -85,6 +88,13 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
         Log.e(TAG, "onRightOptionClick: " );
         ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
     }
+
+    @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+    }
+
     @Override
     protected void initData() {
         super.initData();

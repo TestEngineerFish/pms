@@ -107,7 +107,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="条线" />
                              <TextView
-                                 android:text="@{model.data.unqualified_model.line}"
+                                 android:id="@+id/tv_line"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout
@@ -117,7 +117,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="严重程度" />
                              <TextView
-                                 android:text="@{model.data.unqualified_model.severity}"
+                                 android:id="@+id/tv_severity"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout

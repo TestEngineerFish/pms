@@ -13,4 +13,5 @@
     <string name="text_cached">已缓存</string>
     <string name="text_no_cached">未缓存</string>
     <string name="tv_create_suc">创建成功</string>
+    <string name="add">新增</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.einyun.app.base.db.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
+import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
@@ -10,7 +12,8 @@ import com.einyun.app.base.db.converter.StartFlowParamBeanTypeConvert;
 
 @Entity(tableName = "create_unquality_request", indices = {@Index(value = {"code"}, unique = true)})
 public class CreateUnQualityRequest {
-
+    @PrimaryKey
+    @NonNull
     private String code;
     /**
      * bizData : {"divide_id":"63872495547056133","divide_name":"长城盛世家园一期","code":"devCode_09","line":"engineering_classification","severity":"middle_level","problem_description":"哦拉拉拉拉.....","parent_id":null,"parent_code":null,"check_user_id":"1","check_user_name":"超级管理员","checked_user_id":"1","checked_user_name":"超级管理员","check_date":"2020-01-08","correction_date":"2020-01-12","create_enclosure":"{.....}"}

@@ -24,6 +24,7 @@ public class RouteKey {
     public static final String KEY_PHONE="phone";
     public static final String KEY_TASK_NODE_ID="taskNodeId";
     public static final String KEY_PRO_INS_ID="proInsId";
+    public static final String KEY_STATE="state";
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
     public static final String KEY_FRAGEMNT_TAG="fragmentTag";
     public static final String KEY_ORDER_ID="orderId";
@@ -86,6 +87,7 @@ public class RouteKey {
     public static final String FRAGMENT_HAVE_TO_FOLLOW_UP = "FRAGMENT_HAVE_TO_FOLLOW_UP";
     public static final String FRAGMENT_TRANSFERRED_TO= "FRAGMENT_TRANSFERRED";//已办结
     public static final String FRAGMENT_COPY_ME = "FRAGMENT_COPY_ME";
+    public static final String FRAGMENT_INQUIRIES_ORDER_LIST = "FRAGMENT_INQUIRIES_ORDER_LIST";//问询工单列表
     public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
     //三大类强制关闭midurl
     public static final String KEY_MID_URL = "KEY_MID_URL";

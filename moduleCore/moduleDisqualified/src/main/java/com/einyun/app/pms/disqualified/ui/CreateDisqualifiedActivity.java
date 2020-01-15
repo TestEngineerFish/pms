@@ -101,9 +101,6 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     @Override
     protected void initData() {
         super.initData();
-
-        binding.tvCheckDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
-        binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
         binding.setCallBack(this);
         viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this,model->{
             lineTypeLists = model;
@@ -118,8 +115,15 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 
         });
         binding.tvInspected.setText(viewModel.getUserName());
+        binding.tvCheckDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
+        binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
         mRequest = new CreateUnQualityRequest();
         mRequest.getStartFlowParamObject().setFlowKey("unqualified_key");
+
+        mRequest.getBizData().setCheck_date(TimeUtil.getYMdTime(System.currentTimeMillis()));
+        mRequest.getBizData().setCorrection_date(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
+
+
         mRequest.getBizData().setCheck_user_id(viewModel.getUserId());
         mRequest.getBizData().setCheck_user_name(viewModel.getUserName());
 
