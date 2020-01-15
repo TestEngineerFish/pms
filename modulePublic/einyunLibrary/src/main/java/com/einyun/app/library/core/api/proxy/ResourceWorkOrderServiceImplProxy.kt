@@ -220,10 +220,10 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     }
 
     override fun getOrgnization(
-        id: String,
-        callBack: CallBack<OrgnizationModel>
-    ): LiveData<OrgnizationModel> {
-        return instance?.getOrgnization(id, callBack)!!
+        request: GetOrgRequest,
+        callBack: CallBack<List<OrgnizationModel>>
+    ): LiveData<List<OrgnizationModel>> {
+        return instance?.getOrgnization(request, callBack)!!
     }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {

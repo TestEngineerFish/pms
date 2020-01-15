@@ -47,13 +47,17 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
     private String[] mTitles;//tab标题
     public static List<SelectModel> selectModelList = new ArrayList<>();
     private String taskId;
-
+     ArrayList<RepairsViewModelFragment> fragments;
+    public interface GrabListener{
+        void onGrabed();
+    }
+    private GrabListener grabListener;
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_work_repair);
         mTitles = new String[]{getResources().getString(R.string.text_grab_order), getResources().getString(R.string.text_wait_follow), getResources().getString(R.string.text_wait_feedback), getResources().getString(R.string.text_already_follow), getResources().getString(R.string.text_already_done), getResources().getString(R.string.text_copy_me)};
-        final ArrayList<RepairsViewModelFragment> fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
         String fragmentTags[] = new String[]{FRAGMENT_REPAIR_GRAB, FRAGMENT_REPAIR_WAIT_FOLLOW, FRAGMENT_REPAIR_WAIT_FEED, FRAGMENT_REPAIR_ALREADY_FOLLOW, FRAGMENT_REPAIR_ALREDY_DONE, FRAGMENT_REPAIR_COPY_ME};
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
@@ -160,6 +164,11 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
                                 @Override
                                 public void onClick(View view) {
                                     binding.grabFrame.getRoot().setVisibility(View.GONE);
+                                    fragments.get(0).loadPagingData();
+                                    fragments.get(1).loadPagingData();
+                                   /* if (grabListener!=null){
+                                        grabListener.onGrabed();
+                                    }*/
                                 }
                             }).show();
 
@@ -175,5 +184,9 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
                 }
             });
         }
+    }
+
+    public void setLinstenr(GrabListener linstenr) {
+        this.grabListener = linstenr;
     }
 }

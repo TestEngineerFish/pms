@@ -825,12 +825,11 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 获取组织结构
      * */
     override fun getOrgnization(
-        id: String,
-        callBack: CallBack<OrgnizationModel>
-    ): LiveData<OrgnizationModel> {
-        val liveData = MutableLiveData<OrgnizationModel>()
-        var url = URLs.URL_SELECT_BY_ORGNIZATION + id
-        serviceApi?.getOrgnization(url)?.compose(RxSchedulers.inIo())
+        request: GetOrgRequest,
+        callBack: CallBack<List<OrgnizationModel>>
+    ): LiveData<List<OrgnizationModel>> {
+        val liveData = MutableLiveData<List<OrgnizationModel>>()
+        serviceApi?.getOrgnization(request)?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)

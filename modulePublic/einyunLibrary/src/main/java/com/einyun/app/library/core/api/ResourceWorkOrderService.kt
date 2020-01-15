@@ -113,7 +113,7 @@ interface ResourceWorkOrderService : EinyunService {
     ): LiveData<List<ResourceTypeBean>>
 
     //获取组织结构
-    fun getOrgnization(id: String, callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel>
+    fun getOrgnization(request: GetOrgRequest, callBack: CallBack<List<OrgnizationModel>>): LiveData<List<OrgnizationModel>>
     //获取审批角色
 
     fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage>

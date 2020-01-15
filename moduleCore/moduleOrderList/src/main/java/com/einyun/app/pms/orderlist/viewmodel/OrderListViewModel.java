@@ -106,11 +106,11 @@ public class OrderListViewModel extends BasePageListViewModel<OrderListModel> {
                 .build();
         return liveData;
     }
-    /**
+   /* *//**
      * 获取组织架构 LiveData
      *
      * @return LiveData
-     */
+     *//*
     public MutableLiveData<OrgnizationModel> getOrgnization(String divideId) {
         showLoading();
         resourceWorkOrderService.getOrgnization(divideId, new CallBack<OrgnizationModel>() {
@@ -127,7 +127,7 @@ public class OrderListViewModel extends BasePageListViewModel<OrderListModel> {
         });
 
         return orgnizationModelLiveData;
-    }
+    }*/
     private String nodeId;
     /**
      * 获取组织架构 LiveData
