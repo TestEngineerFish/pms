@@ -264,6 +264,7 @@ public class SelectPopUpView extends PopupWindow implements View.OnClickListener
         private void handleCheck (List < SelectModel > list, SelectModel selectModel){
             if (selectModel.getIsCheck()) {
                 selectModel.setIsCheck(false);
+                selectedMap.remove(selectModel.getConditionType());
             } else {
                 for (int i = 0; i < list.size(); i++) {
                     if (!list.get(i).getId().equals(selectModel.getId())) {
