@@ -11,6 +11,7 @@ import androidx.paging.PagedList;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
+import com.einyun.app.pms.disqualified.db.DisqualifiedDbRepository;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
 import com.einyun.app.base.event.CallBack;
@@ -31,6 +32,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
+import org.mockito.internal.matchers.InstanceOf;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +43,52 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DisqualifiedFragmentViewModel extends BasePageListViewModel<DisqualifiedItemModel> {
     private final Map<String, String> uploadedImages = new ConcurrentHashMap<>();
     private ImageUploadManager uploadManager = new ImageUploadManager();
+    DisqualifiedDbRepository dbRepository=new DisqualifiedDbRepository();
+
+    public void insertCreateRequest(CreateUnQualityRequest request){
+       dbRepository.insertCreateRequest(request);
+    }
+
+    public void deleteCreateRequest(String code){
+       dbRepository.deleteCreateRequest(code);
+    }
+    public  LiveData<CreateUnQualityRequest> queryCreateRequest(String code){
+        return dbRepository.queryCreateRequest(code);
+    }
+    public  LiveData<PagedList<CreateUnQualityRequest>> loadAllCreateRequest(){
+
+        return new LivePagedListBuilder(dbRepository.loadAllCreateRequest(), config)
+//                .setBoundaryCallback(null)
+//                .setFetchExecutor(null)
+                .build();
+    }
+
+    /*
+    * 反馈缓存
+    * */
+    public void insertFeedBackRequest(String orderId, UnQualityFeedBackRequest request){
+        dbRepository.insertFeedBackRequest( orderId,  request);
+    }
+    public void deleteFeedBackRequest(String code){
+        dbRepository.deleteFeedBackRequest(code);
+    }
+    public  LiveData<UnQualityFeedBackRequest> loadFeedBackRequest(String code){
+        return dbRepository.loadFeedBackRequest(code);
+    }
+
+    /*
+    * 验证缓存
+    * */
+    public void insertVerificationRequest(String orderId, UnQualityVerificationRequest request){
+        dbRepository.insertVerificationRequest( orderId,  request);
+    }
+    public void deleteVerificationRequest(String code){
+        dbRepository.deleteVerificationRequest(code);
+    }
+    public  LiveData<UnQualityVerificationRequest> loadVerificationRequest(String code){
+        return dbRepository.loadVerificationRequest(code);
+    }
+
     /**
      * 获取Paging LiveData
      * @return LiveData
@@ -195,6 +243,15 @@ public class DisqualifiedFragmentViewModel extends BasePageListViewModel<Disqual
             }
         });
         return dealFeedBack;
+    }
+    /*
+    * 图片转json
+    * */
+    public String toJsonString(List<PicUrl> images){
+        if (uploadManager != null) {
+            return uploadManager.toJosnString(images);
+        }
+        return "";
     }
     /*
      * 创建接口

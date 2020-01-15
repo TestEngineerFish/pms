@@ -1,6 +1,7 @@
 package com.einyun.app.pms.disqualified.ui;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -51,6 +52,7 @@ public class DisqualifiedViewModuleActivity extends BaseHeadViewModelActivity<Ac
 //        setBackIcon(R.drawable.back);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(R.string.tv_disqualified_order);
+        binding.tabSendOrder.setVisibility(View.VISIBLE);
         mTitles=getResources().getStringArray(R.array.order_list);
         ArrayList<DisqualifiedViewModuleFragment> fragments = new ArrayList<>();
         String fragmentTags[]=new String[]{FRAGMENT_DISQUALIFIED_WAIT_FOLLOW,FRAGMENT_DISQUALIFIED_HAD_FOLLOW};

@@ -2,20 +2,14 @@ package com.einyun.app.pms.disqualified.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
 
-import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.db.AppDatabase;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.db.entity.QualityRequest;
-import com.einyun.app.base.util.SPUtils;
-import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.application.CommonApplication;
-import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.repository.CommonRepository;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -37,8 +31,12 @@ public class DisqualifiedDbRepository extends CommonRepository {
 
     public LiveData<UnQualityFeedBackRequest> loadFeedBackRequest(String orderId) {
         MutableLiveData list = new MutableLiveData();
-        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+        Observable.just(1).subscribeOn(Schedulers.io()).doOnError(throwable -> {
+        }).subscribe(integer -> {
             QualityRequest request = db.qualityRequestDao().queryRequest(orderId + FeedBackRequest);
+            if(request == null){
+                return;
+            }
             UnQualityFeedBackRequest feedBackRequest = new UnQualityFeedBackRequest();
             feedBackRequest.getBizData().setReason(request.getReason());
             feedBackRequest.getBizData().setCorrective_action(request.getCorrective_action());
@@ -71,8 +69,12 @@ public class DisqualifiedDbRepository extends CommonRepository {
 
     public LiveData<UnQualityVerificationRequest> loadVerificationRequest(String orderId) {
         MutableLiveData list = new MutableLiveData();
-        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+        Observable.just(1).subscribeOn(Schedulers.io()).doOnError(throwable -> {
+        }).subscribe(integer -> {
             QualityRequest request = db.qualityRequestDao().queryRequest(orderId + VerificationRequest);
+            if(request == null){
+                return;
+            }
             UnQualityVerificationRequest feedBackRequest = new UnQualityVerificationRequest();
             feedBackRequest.getBizData().setIs_pass(request.getIs_pass());
             feedBackRequest.getBizData().setVerification_date(request.getVerification_date());
@@ -103,12 +105,8 @@ public class DisqualifiedDbRepository extends CommonRepository {
         });
     }
 
-    public LiveData<List<CreateUnQualityRequest>> loadAllCreateRequest() {
-        MutableLiveData list = new MutableLiveData();
-        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
-            list.postValue(db.createQualityRequestDao().loadAllRequest());
-        });
-        return list;
+    public DataSource.Factory<Integer, CreateUnQualityRequest> loadAllCreateRequest() {
+        return db.createQualityRequestDao().loadAllRequest();
     }
 
     public void deleteCreateRequest(String code) {
@@ -126,7 +124,8 @@ public class DisqualifiedDbRepository extends CommonRepository {
 
     public LiveData<CreateUnQualityRequest> queryCreateRequest(String code) {
         MutableLiveData list = new MutableLiveData();
-        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+        Observable.just(1).subscribeOn(Schedulers.io()).doOnError(throwable -> {
+        }).subscribe(integer -> {
             list.postValue(db.createQualityRequestDao().queryRequest(code));
         });
         return list;

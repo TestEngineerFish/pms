@@ -153,7 +153,36 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                 //                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
                 public void onBindItem(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
-                    binding.setModel(inquiriesItemModule);
+                    DisqualifiedItemModel item = inquiriesItemModule;
+//                    initCached(binding, inquiriesItemModule);
+                    viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
+
+                        if (model==null) {
+                            return;
+                        }
+                        String taskId = model.getDoNextParamt().getTaskId();
+                        if (taskId.equals(item.getTaskId())) {
+
+                            item.cached=true;
+                        }else {
+                            item.cached=false;
+
+                        }
+                        binding.setModel(item);
+                    });
+                    viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
+                        if (model==null) {
+                            return;
+                        }
+                        String taskId = model.getDoNextParamt().getTaskId();
+                        if (taskId.equals(inquiriesItemModule.getTaskId())) {
+                            item.cached=true;
+                        }else {
+                            item.cached=false;
+                        }
+                        binding.setModel(item);
+                    });
+
                     switch (getFragmentTag()) {
                         case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
                             binding.itemCache.setVisibility(View.VISIBLE);
@@ -162,6 +191,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                             binding.itemCache.setVisibility(View.GONE);
                             break;
                     }
+
                 }
                 @Override
                 public int getLayoutId() {
@@ -182,8 +212,56 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //                loadPagingData(viewModel.getRequestBean(1,10,"","",""),FRAGMENT_DISQUALIFIED_HAD_FOLLOW);
                 break;
         }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
+//    private void initCached(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
+//        viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
+////            binding.tvIsCached.setText(R.string.text_no_cached);
+////            binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////            binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            if (model==null) {
+//                return;
+//            }
+//            String taskId = model.getDoNextParamt().getTaskId();
+//            if (taskId.equals(inquiriesItemModule.getTaskId())) {
+////                binding.tvIsCached.setText(R.string.text_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_cached);
+//                inquiriesItemModule.cached=true;
+//            }else {
+//                inquiriesItemModule.cached=false;
+////                binding.tvIsCached.setText(R.string.text_no_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            }
+//        });
+//        viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
+////            binding.tvIsCached.setText(R.string.text_no_cached);
+////            binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////            binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            if (model==null) {
+//                return;
+//            }
+//            String taskId = model.getDoNextParamt().getTaskId();
+//            if (taskId.equals(inquiriesItemModule.getTaskId())) {
+//                inquiriesItemModule.cached=true;
+////                binding.tvIsCached.setText(R.string.text_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_cached);
+//            }else {
+//                inquiriesItemModule=false;
+////                binding.tvIsCached.setText(R.string.text_no_cached);
+////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+////                binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
+//            }
+//        });
+//    }
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
@@ -317,6 +395,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                 .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                 .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .withString(RouteKey.KEY_ID,data.getID_())
                 .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
                 .navigation();
     }

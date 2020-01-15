@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
+import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
@@ -37,14 +38,15 @@ import com.google.android.material.tabs.TabLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 
 @Route(path = RouterUtils.ACTIVITY_PROPERTY)
-public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<ActivityPropertyViewModuleBinding, DisqualifiedFragmentViewModel> implements ItemClickListener<PropertyItemModel> {
-    RVPageListAdapter<ItemPropertyListBinding, PropertyItemModel> adapter;
+public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<ActivityPropertyViewModuleBinding, DisqualifiedFragmentViewModel> implements ItemClickListener<CreateUnQualityRequest> {
+    RVPageListAdapter<ItemPropertyListBinding, CreateUnQualityRequest> adapter;
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
         return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
@@ -100,11 +102,11 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
         super.initData();
         binding.setCallBack(this);
         if(adapter==null){
-            adapter=new RVPageListAdapter<ItemPropertyListBinding, PropertyItemModel>(this, BR.model,mDiffCallback){
+            adapter=new RVPageListAdapter<ItemPropertyListBinding, CreateUnQualityRequest>(this, BR.model,mDiffCallback){
                 //                private static final String TAG = "ApprovalViewModelFragme";
                 @Override
-                public void onBindItem(ItemPropertyListBinding binding, PropertyItemModel itemModule) {
-
+                public void onBindItem(ItemPropertyListBinding binding, CreateUnQualityRequest itemModule) {
+                    binding.setModel(itemModule);
                 }
                 @Override
                 public int getLayoutId() {
@@ -116,6 +118,16 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
         adapter.setOnItemClick(this);
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.loadAllCreateRequest().observe(this,model->{
+            Log.e(TAG, "initData: " +model.size());
+            adapter.submitList(model);
+        });
     }
 
     @Override
@@ -123,24 +135,26 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
         return getResources().getColor(R.color.white);
     }
 
-    @Override
-    public void onItemClicked(View veiw, PropertyItemModel data) {
-
-    }
     //DiffUtil.ItemCallback,标准写法
-    private DiffUtil.ItemCallback<PropertyItemModel> mDiffCallback = new DiffUtil.ItemCallback<PropertyItemModel>() {
+    private DiffUtil.ItemCallback<CreateUnQualityRequest> mDiffCallback = new DiffUtil.ItemCallback<CreateUnQualityRequest>() {
 
 
         @Override
-        public boolean areItemsTheSame(@NonNull PropertyItemModel oldItem, @NonNull PropertyItemModel newItem) {
+        public boolean areItemsTheSame(@NonNull CreateUnQualityRequest oldItem, @NonNull CreateUnQualityRequest newItem) {
             return oldItem==newItem;
         }
 
         @SuppressLint("DiffUtilEquals")
         @Override
-        public boolean areContentsTheSame(@NonNull PropertyItemModel oldItem, @NonNull PropertyItemModel newItem) {
+        public boolean areContentsTheSame(@NonNull CreateUnQualityRequest oldItem, @NonNull CreateUnQualityRequest newItem) {
             return oldItem==newItem;
         }
     };
 
+    @Override
+    public void onItemClicked(View veiw, CreateUnQualityRequest data) {
+
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).withSerializable(RouteKey.KEY_MODEL_DATA,data).navigation();
+
+    }
 }

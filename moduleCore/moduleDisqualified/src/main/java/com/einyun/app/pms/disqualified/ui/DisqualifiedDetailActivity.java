@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
@@ -52,6 +53,8 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAI
 public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<ActivityDisqualifiedDetailBinding, DisqualifiedFragmentViewModel> {
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String mTaskId;
+    @Autowired(name = RouteKey.KEY_ID)
+    String ID;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String mProInstId;
     @Autowired(name = RouteKey.FRAGMENT_TAG)
@@ -128,6 +131,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 viewModel.getTODODetailInfo(mTaskId).observe(this,module->{
                     updateUI(module);
                 });
+                initCache();
                 break;
             case FRAGMENT_DISQUALIFIED_HAD_FOLLOW:
             case FRAGMENT_DISQUALIFIED_ORDER_LIST:
@@ -142,6 +146,35 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 
         binding.tvOpValidatePerson.setText(viewModel.getUserName());
     }
+
+    private void initCache() {
+        viewModel.loadFeedBackRequest("f_"+mTaskId).observe(this,model->{
+            if (model==null) {
+                return;
+            }
+            binding.ltReason.setText(model.getBizData().getReason());
+            binding.ltMeasures.setText(model.getBizData().getCorrective_action());
+            binding.tvOpFeedbackDate.setText(model.getBizData().getFeedback_date());
+            mFeedBackRequest.getBizData().setFeedback_date(model.getBizData().getFeedback_date());
+            mFeedBackRequest.getBizData().setReason(binding.ltReason.getString());
+            mFeedBackRequest.getBizData().setCorrective_action(binding.ltMeasures.getString());
+            mFeedBackRequest.getDoNextParamt().setTaskId(mTaskId);
+        });
+        viewModel.loadVerificationRequest("v_"+mTaskId).observe(this,model->{
+            if (model==null) {
+                return;
+            }
+            binding.ltValidation.setText(model.getBizData().getVerification_situation());
+            binding.tvOpValidateDate.setText(model.getBizData().getVerification_date());
+
+            mValidateRequest.getBizData().setVerification_situation(binding.ltValidation.getString());
+            mValidateRequest.getBizData().setIs_pass(1);
+            mValidateRequest.getBizData().setVerification_date(model.getBizData().getVerification_date()
+            );
+            mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
+        });
+    }
+
     private void updateUI(DisqualifiedDetailModel detailModule) {
         if (detailModule == null) {
 //            updatePageUIState(PageUIState.LOAD_FAILED.getState());
@@ -157,7 +190,8 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 break;
             case DisqualifiedDataKey.STATUS_PROCESSING_STEP://处理中  显示 工单信息 反馈信息  验证操作
                 binding.cdFeedbackInfo.setVisibility(View.VISIBLE);
-                if (!fragmenTag.equals(FRAGMENT_DISQUALIFIED_ORDER_LIST)) {
+                if (fragmenTag.equals(FRAGMENT_DISQUALIFIED_ORDER_LIST)||fragmenTag.equals(FRAGMENT_DISQUALIFIED_HAD_FOLLOW)) {
+                }else {
                     binding.cdOpValidation.setVisibility(View.VISIBLE);
                 }
 
@@ -209,7 +243,28 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     /**
      * 反馈信息缓存按钮
      */
-    public void onFeedBackCacheClick(){}
+    public void onFeedBackCacheClick(){
+        if (binding.tvOpFeedbackDate.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择反馈日期");
+            return;
+        }
+        if (binding.ltReason.getString().isEmpty()) {
+            ToastUtil.show(this,"请输入原因分析");
+            return;
+        }
+        if (binding.ltMeasures.getString().isEmpty()) {
+            ToastUtil.show(this,"请输入文字信息");
+            return;
+        }
+        mFeedBackRequest.getBizData().setReason(binding.ltReason.getString());
+        mFeedBackRequest.getBizData().setCorrective_action(binding.ltMeasures.getString());
+        mFeedBackRequest.getDoNextParamt().setTaskId(mTaskId);
+//        uploadFeedBackImages(mFeedBackRequest);
+        String fCode="f_"+mTaskId;
+        viewModel.insertFeedBackRequest(fCode,mFeedBackRequest);
+        ToastUtil.show(this,"反馈信息缓存成功");
+        finish();
+    }
     /**
      * 反馈信息提交
      */
@@ -240,9 +295,28 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         choosePayDate(SelectType.VALIDATE);
     }
     //创建新工单
-    public void onCreateOrderClick(){}
+    public void onCreateOrderClick(){
+
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+        finish();
+    }
     //验证信息缓存
-    public void onValidationCacheClick(){}
+    public void onValidationCacheClick(){
+        if (binding.tvOpValidateDate.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择验证日期");
+            return;
+        }
+        if (binding.ltValidation.getString().isEmpty()) {
+            ToastUtil.show(this,"请输入验证信息");
+            return;
+        }
+        mValidateRequest.getBizData().setVerification_situation(binding.ltValidation.getString());
+        mValidateRequest.getBizData().setIs_pass(1);
+        mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
+        viewModel.insertVerificationRequest("v_"+mTaskId,mValidateRequest);
+        ToastUtil.show(this,"验证信息缓存成功");
+        finish();
+    }
     //验证信息提交
     public void onValidationPassClick(){
         if (binding.tvOpValidateDate.getText().toString().equals("请选择")) {
@@ -274,8 +348,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
-                        ToastUtil.show(getApplicationContext(), R.string.tv_create_suc);
+                        ToastUtil.show(getApplicationContext(), R.string.tv_feed_back_suc);
                         finish();
+                        viewModel.deleteFeedBackRequest("f_"+mTaskId);
                     }
                 });
             } else {
@@ -295,8 +370,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
-                        ToastUtil.show(getApplicationContext(), R.string.tv_create_suc);
+                        ToastUtil.show(getApplicationContext(), R.string.tv_validate_suc);
                         finish();
+                        viewModel.deleteVerificationRequest("v_"+mTaskId);
                     }
                 });
             } else {

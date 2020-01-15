@@ -90,25 +90,26 @@
             android:layout_marginRight="@dimen/px_20">
 
             <ImageView
+                app:isCached="@{model.cached}"
+                android:src="@drawable/icon_no_cache"
                 android:id="@+id/iv_is_cached"
                 android:layout_marginRight="@dimen/px_14"
                 android:layout_width="@dimen/px_30"
                 android:layout_height="@dimen/px_30"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                app:isCached="@{model.cached}"
-                >
+                android:gravity="center">
 
             </ImageView>
             <TextView
+                app:isCached="@{model.cached}"
+                android:text="@string/text_no_cached"
                 android:id="@+id/tv_is_cached"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/iv_is_cached"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                app:isCached="@{model.cached}" />
+                android:gravity="center" />
 
         </RelativeLayout>
     </LinearLayout>

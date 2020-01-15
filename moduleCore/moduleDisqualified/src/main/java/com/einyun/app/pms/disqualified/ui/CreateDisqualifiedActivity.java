@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -45,6 +46,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,6 +74,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     private String dimCode="";
     private String divideId="";
     private String format;
+    @Autowired(name = RouteKey.KEY_MODEL_DATA)
+    Serializable DbRequest;
+    private CreateUnQualityRequest mDbRequest;
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
@@ -97,6 +102,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             }
         });
 
+        if (DbRequest!=null) {
+            mDbRequest = (CreateUnQualityRequest) DbRequest;
+        }
     }
     @Override
     protected void initData() {
@@ -114,6 +122,14 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             orderCodeChange = model2;
 
         });
+        if (DbRequest==null) {
+            createData();
+        }else {
+            createDbData(mDbRequest);
+        }
+    }
+
+    private void createData() {
         binding.tvInspected.setText(viewModel.getUserName());
         binding.tvCheckDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
         binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
@@ -130,6 +146,62 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         mRequest.getBizData().setChecked_user_id(viewModel.getUserId());
         mRequest.getBizData().setChecked_user_name(viewModel.getUserName());
     }
+    private void createDbData(CreateUnQualityRequest mDbrequest) {
+        binding.tvInspected.setText(mDbrequest.getBizData().getChecked_user_name());
+        binding.tvCheckDate.setText(mDbrequest.getBizData().getCheck_date());
+        binding.tvDealLine.setText(mDbrequest.getBizData().getCorrection_date());
+        binding.ltQuestionDesc.setText(mDbrequest.getBizData().getProblem_description());
+        binding.tvDivide.setText(mDbrequest.getBizData().getDivide_name());
+        divideId=mDbrequest.getBizData().getDivide_id();
+        mRequest = new CreateUnQualityRequest();
+        mRequest.getStartFlowParamObject().setFlowKey("unqualified_key");
+        mRequest.getBizData().setCode(mDbrequest.getCode());
+        mRequest.getBizData().setDivide_id(mDbrequest.getBizData().getDivide_id());
+        mRequest.getBizData().setDivide_name(mDbrequest.getBizData().getDivide_name());
+
+        mRequest.getBizData().setCheck_date(mDbrequest.getBizData().getCheck_date());
+        mRequest.getBizData().setCorrection_date(mDbrequest.getBizData().getCorrection_date());
+
+
+        mRequest.getBizData().setCheck_user_id(viewModel.getUserId());
+        mRequest.getBizData().setCheck_user_name(viewModel.getUserName());
+
+        mRequest.getBizData().setChecked_user_id(mDbrequest.getBizData().getChecked_user_id());
+        mRequest.getBizData().setChecked_user_name(mDbrequest.getBizData().getChecked_user_name());
+
+        mRequest.getBizData().setLine(mDbrequest.getBizData().getLine());
+        String severity = mDbrequest.getBizData().getSeverity();
+        switch (severity) {
+            case DisqualifiedDataKey.SEVERITY_HIGHT_LEVEL:
+                binding.tvSeverity.setText("高");
+
+                break;
+            case DisqualifiedDataKey.SEVERITY_MIDDLE_LEVEL:
+                binding.tvSeverity.setText("中");
+                break;
+            case DisqualifiedDataKey.SEVERITY_LOW_LEVEL:
+                binding.tvSeverity.setText("低");
+                break;
+        }
+        String line = mDbrequest.getBizData().getLine();
+        dimCode=mDbrequest.getBizData().getLine();
+        switch (line) {
+            case DisqualifiedDataKey.LINE_ENV://环境
+                binding.tvLine.setText("环境");
+                break;
+            case DisqualifiedDataKey.LINE_ENG://工程
+                binding.tvLine.setText("工程");
+                break;
+            case DisqualifiedDataKey.LINE_ORDER://秩序
+                binding.tvLine.setText("秩序");
+                break;
+            case DisqualifiedDataKey.LINE_CUSTOMER://客服
+                binding.tvLine.setText("客服");
+                break;
+        }
+        mRequest.getBizData().setSeverity(mDbrequest.getBizData().getSeverity());
+    }
+
     /**
      * 点击事件回馈
      *
@@ -186,7 +258,45 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
      * 缓存按钮
      */
     public void onCacheClick(){
-
+        if (binding.tvDivide.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择分期");
+            return;
+        }
+        if (binding.tvCheckDate.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择检查日期");
+            return;
+        }
+        if (binding.ltQuestionDesc.getString().isEmpty()) {
+            ToastUtil.show(this,"请输入问题描述");
+            return;
+        }
+        if (binding.tvLine.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择条线");
+            return;
+        }
+        if (binding.tvSeverity.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择严重程度");
+            return;
+        }
+        if (binding.tvDealLine.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择纠正截至日期");
+            return;
+        }
+        if (binding.tvInspected.getText().toString().equals("请选择")) {
+            ToastUtil.show(this,"请选择被检查人");
+            return;
+        }
+        long dealtime = TimeUtil.ymdToLong(binding.tvDealLine.getText().toString());
+        long checkTime = TimeUtil.ymdToLong(binding.tvCheckDate.getText().toString());
+        long day=60*60*24*999;
+        if (dealtime-checkTime<day) {
+            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
+            return;
+        }
+        mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
+        viewModel.insertCreateRequest(mRequest);
+        ToastUtil.show(this,"缓存成功");
+        finish();
     }
     /**
      * 创建提交按钮
@@ -263,6 +373,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
                         ToastUtil.show(getApplicationContext(), R.string.tv_create_suc);
+                        viewModel.deleteCreateRequest(mRequest.getBizData().getCode());
                         finish();
                     }
                 });

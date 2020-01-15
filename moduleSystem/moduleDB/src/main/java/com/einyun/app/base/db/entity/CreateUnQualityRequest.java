@@ -10,8 +10,10 @@ import androidx.room.TypeConverters;
 import com.einyun.app.base.db.converter.BizDataBeanTypeConvert;
 import com.einyun.app.base.db.converter.StartFlowParamBeanTypeConvert;
 
+import java.io.Serializable;
+
 @Entity(tableName = "create_unquality_request", indices = {@Index(value = {"code"}, unique = true)})
-public class CreateUnQualityRequest {
+public class CreateUnQualityRequest implements Serializable {
     @PrimaryKey
     @NonNull
     private String code;
@@ -51,7 +53,7 @@ public class CreateUnQualityRequest {
         this.code = code;
     }
 
-    public static class BizDataBean {
+    public static class BizDataBean implements Serializable{
         /**
          * divide_id : 63872495547056133
          * divide_name : 长城盛世家园一期
@@ -207,7 +209,7 @@ public class CreateUnQualityRequest {
         }
     }
 
-    public static class StartFlowParamObjectBean {
+    public static class StartFlowParamObjectBean implements Serializable{
         /**
          * flowKey : unqualified_key
          */
