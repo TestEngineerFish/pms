@@ -112,6 +112,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         binding.ogPatroOrder.setOnClickListener(this);
         binding.ogPatroOrder.setOnClickListener(this);
         binding.ogUnwellOrder.setOnClickListener(this);
+        binding.orderUn.setOnClickListener(this);
         binding.clientComplainOrder.setOnClickListener(this);
         binding.clientEnquiryOrder.setOnClickListener(this);
         binding.clientRepairsOrder.setOnClickListener(this);
