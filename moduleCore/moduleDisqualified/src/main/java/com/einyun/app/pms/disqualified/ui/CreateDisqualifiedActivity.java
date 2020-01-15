@@ -304,6 +304,10 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
 //            return;
 //        }
+        if (binding.tvLine.getText().toString().equals("请选择")||binding.tvLine.getText().toString().isEmpty()) {
+            ToastUtil.show(this,"请选择条线");
+            return;
+        }
         mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
         viewModel.insertCreateRequest(mRequest);
         ToastUtil.show(this,"缓存成功");
