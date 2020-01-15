@@ -237,8 +237,8 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (userMenu.indexOf("sjlck") != -1) {
             binding.itemWorkBenchThird.layoutMain.setVisibility(View.VISIBLE);
         } else {
-           /* index++;
-            binding.itemWorkBenchThird.layoutMain.setVisibility(View.GONE);*/
+            index++;
+            binding.itemWorkBenchThird.layoutMain.setVisibility(View.GONE);
         }
         //待处理工单列表
         if (userMenu.indexOf("dclgdck") != -1) {
@@ -426,10 +426,10 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
                     .navigation();
-        } else if (type==1){
+        } else if (type == 1) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
-                    .withObject(RouteKey.ORGCODE,projectCode)
+                    .withObject(RouteKey.ORGCODE, projectCode)
                     .navigation();
         } else {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
