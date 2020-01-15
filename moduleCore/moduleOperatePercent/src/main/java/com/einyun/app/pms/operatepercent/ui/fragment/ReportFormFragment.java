@@ -17,6 +17,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.widget.PeriodizationNoAutoJumpView;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.library.dashboard.net.request.OperateInRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -28,6 +29,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PERCENT_GET;
 
@@ -49,14 +51,16 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     private String tag;
     OperateInRequest request;
     private TimePickerView pvTime;
-
-    public static ReportFormFragment newInstance(String tag) {
-        ReportFormFragment fragment = new ReportFormFragment(tag);
+    PeriodizationNoAutoJumpView periodizationView;
+    private List<String> orgCodes;
+    public static ReportFormFragment newInstance(String tag, List<String> orgCodes) {
+        ReportFormFragment fragment = new ReportFormFragment(tag,orgCodes);
         return fragment;
     }
 
-    public ReportFormFragment(String tag) {
+    public ReportFormFragment(String tag,List<String> orgCodes) {
         this.tag = tag;
+        this.orgCodes=orgCodes;
     }
 
     @Override
@@ -98,7 +102,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     protected void setUpView() {
-        Log.d("Test",tag);
+        Log.d("Test", tag);
         binding.operatePercentAllGet.setTag(tag);
         binding.operatePercentCarGet.setTag(tag);
         binding.operatePercentPropertyGet.setTag(tag);
@@ -109,6 +113,8 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
                 loadPagingData();
             }
         });
+        //组织架构选择
+        periodizationView = new PeriodizationNoAutoJumpView();
         //时间选择器
         pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
             @Override
@@ -128,6 +134,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     @Override
     protected void setUpData() {
         request = new OperateInRequest();
+        request.setOrgCodes(orgCodes);
         if (tag.equals(FRAGMENT_PERCENT_GET)) {
             request.setIncomeType("1");
         } else {
@@ -148,10 +155,10 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 //        //初始化数据，LiveData自动感知，刷新页面
         binding.reportFormRefresh.setRefreshing(false);
         request.setGetYearOrMonth("");
-        request.setOrgCode("ops-xm01");
+//        request.setOrgCode("ops-xm01");
         viewModel.getOpertate(request).observe(this, model -> {
             binding.operatePercentAllGet.allGetAmountTxt.setText(model.getTotalBaseAmount() + "");
-            binding.operatePercentAllGet.allYearRate.setText(model.getTotalYestAmountRate()+"%");
+            binding.operatePercentAllGet.allYearRate.setText(model.getTotalYestAmountRate() + "%");
             binding.operatePercentAllGet.allGetAmountPro.setProgress(new Double(model.getTotalYestAmountRate()).intValue());
             binding.operatePercentCarGet.carAmountTxt.setText(model.getCwBaseAmount() + "");
             binding.operatePercentCarGet.carBasePro.setProgress(new Double(model.getCwYestAmountRate()).intValue());
@@ -166,7 +173,6 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     public void onClick(View v) {
         if (v.getId() == R.id.operate_percent_tab_peroid_ln) {
             //弹出分期view
-            PeriodizationView periodizationView = new PeriodizationView();
             periodizationView.setPeriodListener(ReportFormFragment.this::onPeriodSelectListener);
             periodizationView.show(getParentFragmentManager(), "");
         } else if (v.getId() == R.id.operate_percent_tab_select_ln) {
@@ -176,7 +182,8 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-        Log.d("Test", orgModel.getCode());
-
+        Log.d("test", orgModel.getCode());
+        request.setOrgCode(orgModel.getCode());
+        loadPagingData();
     }
 }

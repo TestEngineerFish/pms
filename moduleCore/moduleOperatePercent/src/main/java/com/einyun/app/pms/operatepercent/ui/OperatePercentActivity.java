@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
@@ -33,7 +34,9 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PLA
 @Route(path = RouterUtils.ACTIVITY_OPERATE_PERCENT)
 public class OperatePercentActivity extends BaseHeadViewModelActivity<ActivityOperatePercentBinding, OperatePercentViewModel> implements PeriodizationView.OnPeriodSelectListener {
     private String[] mTitles;//tab标题
-
+    @Autowired(name = RouteKey.ORGCODE)
+    public List<String> orgCodes;
+    public String tag;
 
     @Override
     protected OperatePercentViewModel initViewModel() {
@@ -50,7 +53,7 @@ public class OperatePercentActivity extends BaseHeadViewModelActivity<ActivityOp
         final ArrayList<Fragment> fragments = new ArrayList<>();
         String fragmentTags[] = new String[]{FRAGMENT_PERCENT_GET, FRAGMENT_PERCENT_OWE};
         for (int i = 0; i < mTitles.length; i++) {
-            fragments.add(ReportFormFragment.newInstance(fragmentTags[i]));
+            fragments.add(ReportFormFragment.newInstance(fragmentTags[i],orgCodes));
         }
         binding.vpOperatePercent.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override

@@ -426,6 +426,11 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
                     .navigation();
+        } else if (type==1){
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
+                    .withObject(RouteKey.ORGCODE,projectCode)
+                    .navigation();
         } else {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId() + "&type=" + type;

@@ -39,7 +39,7 @@ public class HttpService {
     public String getBaseUrl(){
         return BASE_URL;
     }
-    public static HttpService getInstance() {
+    public static HttpService getInstance() {F
         if(netWorkManager==null){
             synchronized (HttpService.class){
                 if (netWorkManager == null) {
