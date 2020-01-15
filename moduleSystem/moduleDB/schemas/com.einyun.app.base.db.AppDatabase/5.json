@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "4ac39843bebd94436ef77520dde7df9a",
+    "identityHash": "f185af279aaa65221be347fcc6d109e9",
     "entities": [
       {
         "tableName": "users",
@@ -917,12 +917,136 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "quality_request",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `taskId` TEXT NOT NULL, `verification_situation` TEXT, `verification_enclosure` TEXT, `verification_date` TEXT, `is_pass` INTEGER NOT NULL, `feedback_enclosure` TEXT, `reason` TEXT, `corrective_action` TEXT, `feedback_date` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "taskId",
+            "columnName": "taskId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "verification_situation",
+            "columnName": "verification_situation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "verification_enclosure",
+            "columnName": "verification_enclosure",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "verification_date",
+            "columnName": "verification_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_pass",
+            "columnName": "is_pass",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "feedback_enclosure",
+            "columnName": "feedback_enclosure",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "corrective_action",
+            "columnName": "corrective_action",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "feedback_date",
+            "columnName": "feedback_date",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_quality_request_id",
+            "unique": true,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_quality_request_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "create_unquality_request",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`code` TEXT NOT NULL, `bizData` TEXT, `startFlowParamObject` TEXT, PRIMARY KEY(`code`))",
+        "fields": [
+          {
+            "fieldPath": "code",
+            "columnName": "code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bizData",
+            "columnName": "bizData",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startFlowParamObject",
+            "columnName": "startFlowParamObject",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "code"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_create_unquality_request_code",
+            "unique": true,
+            "columnNames": [
+              "code"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_create_unquality_request_code` ON `${TABLE_NAME}` (`code`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ac39843bebd94436ef77520dde7df9a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f185af279aaa65221be347fcc6d109e9')"
     ]
   }
 }
