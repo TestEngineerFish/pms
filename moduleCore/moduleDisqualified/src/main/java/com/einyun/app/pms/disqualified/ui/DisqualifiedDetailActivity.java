@@ -276,7 +276,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
      * 反馈信息提交
      */
     public void onFeedBackPassClick(){
-        if (binding.tvOpFeedbackDate.getText().toString().equals("请选择")) {
+        if (binding.tvOpFeedbackDate.getText().toString().equals("请选择")||binding.tvOpFeedbackDate.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择反馈日期");
             return;
         }
@@ -346,7 +346,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     }
 
     private void validateSubmit(boolean isCreateNew) {
-        if (binding.tvOpValidateDate.getText().toString().equals("请选择")) {
+        if (binding.tvOpValidateDate.getText().toString().equals("请选择")||binding.tvOpValidateDate.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择验证日期");
             return;
         }

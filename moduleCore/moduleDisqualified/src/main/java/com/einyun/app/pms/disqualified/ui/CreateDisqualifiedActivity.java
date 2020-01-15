@@ -318,11 +318,11 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //        Log.e(TAG, "onPassClick: "+viewModel.getUserId());
 //        Log.e(TAG, "onPassClick: "+viewModel.getUserName());
 //        checkSubmit();
-        if (binding.tvDivide.getText().toString().equals("请选择")) {
+        if (binding.tvDivide.getText().toString().equals("请选择")||binding.tvDivide.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择分期");
             return;
         }
-        if (binding.tvCheckDate.getText().toString().equals("请选择")) {
+        if (binding.tvCheckDate.getText().toString().equals("请选择")||binding.tvCheckDate.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择检查日期");
             return;
         }
@@ -330,19 +330,19 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             ToastUtil.show(this,"请输入问题描述");
             return;
         }
-        if (binding.tvLine.getText().toString().equals("请选择")) {
+        if (binding.tvLine.getText().toString().equals("请选择")||binding.tvLine.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择条线");
             return;
         }
-        if (binding.tvSeverity.getText().toString().equals("请选择")) {
+        if (binding.tvSeverity.getText().toString().equals("请选择")||binding.tvSeverity.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择严重程度");
             return;
         }
-        if (binding.tvDealLine.getText().toString().equals("请选择")) {
+        if (binding.tvDealLine.getText().toString().equals("请选择")||binding.tvDealLine.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择纠正截至日期");
             return;
         }
-        if (binding.tvInspected.getText().toString().equals("请选择")) {
+        if (binding.tvInspected.getText().toString().equals("请选择")||binding.tvInspected.getText().toString().isEmpty()) {
             ToastUtil.show(this,"请选择被检查人");
             return;
         }
