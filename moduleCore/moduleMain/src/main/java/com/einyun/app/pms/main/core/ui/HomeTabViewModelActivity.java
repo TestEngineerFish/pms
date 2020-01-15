@@ -28,7 +28,7 @@ import com.einyun.app.pms.main.core.viewmodel.HomeTabViewModel;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.databinding.ActivityHomeBinding;
 import com.orhanobut.logger.Logger;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.main.R;
 
