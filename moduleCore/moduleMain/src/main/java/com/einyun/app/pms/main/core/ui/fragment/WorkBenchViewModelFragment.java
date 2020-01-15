@@ -237,8 +237,8 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (userMenu.indexOf("sjlck") != -1) {
             binding.itemWorkBenchThird.layoutMain.setVisibility(View.VISIBLE);
         } else {
-            index++;
-            binding.itemWorkBenchThird.layoutMain.setVisibility(View.GONE);
+           /* index++;
+            binding.itemWorkBenchThird.layoutMain.setVisibility(View.GONE);*/
         }
         //待处理工单列表
         if (userMenu.indexOf("dclgdck") != -1) {

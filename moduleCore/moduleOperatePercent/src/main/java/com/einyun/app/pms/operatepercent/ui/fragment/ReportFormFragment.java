@@ -28,6 +28,7 @@ import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     OperateInRequest request;
     private TimePickerView pvTime;
     PeriodizationNoAutoJumpView periodizationView;
+    private List<String> orgCode=new ArrayList<>();
     private List<String> orgCodes;
     public static ReportFormFragment newInstance(String tag, List<String> orgCodes) {
         ReportFormFragment fragment = new ReportFormFragment(tag,orgCodes);
@@ -119,13 +121,14 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
         pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM");
+                SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
                 String format = dft.format(date);
-                request.setGetYearOrMonth(format);
+                Log.d("Test",format);
+                request.setDate(format);
                 binding.operatePercentSelectSelected.setText(format);
                 loadPagingData();
             }
-        }).setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
+        }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
                 .build();
 
@@ -154,7 +157,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     private void loadPagingData() {
 //        //初始化数据，LiveData自动感知，刷新页面
         binding.reportFormRefresh.setRefreshing(false);
-        request.setGetYearOrMonth("");
+//        request.setGetYearOrMonth("");
 //        request.setOrgCode("ops-xm01");
         viewModel.getOpertate(request).observe(this, model -> {
             binding.operatePercentAllGet.allGetAmountTxt.setText(model.getTotalBaseAmount() + "");
@@ -183,7 +186,9 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         Log.d("test", orgModel.getCode());
-        request.setOrgCode(orgModel.getCode());
+        orgCode.removeAll(orgCode);
+        orgCode.add(orgModel.getCode());
+        request.setOrgCodes(orgCode);
         loadPagingData();
     }
 }
