@@ -57,7 +57,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         ActivityUtil.setFirstClass(getClass());
-        login();
+//        login();
         SplashViewModelActivityPermissionsDispatcher.updateWithPermissionCheck(this);
     }
 
