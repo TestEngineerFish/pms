@@ -132,6 +132,13 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
     private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
+            binding.panelCondition.setConditionSelected(true);
+        } else {
+            binding.panelCondition.setConditionSelected(false);
+        }
+        request.setF_ts_property_id(null);
+        request.setF_ts_cate_id(null);
+        if (selected.size() > 0) {
             request.setF_ts_property_id(selected.get(SELECT_COMPLAIN_PROPERTYS) == null ? null : selected.get(SELECT_COMPLAIN_PROPERTYS).getKey());
             request.setF_ts_cate_id(selected.get(SELECT_COMPLAIN_TYPES) == null ? null : selected.get(SELECT_COMPLAIN_TYPES).getKey());
         }

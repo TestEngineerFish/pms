@@ -23,6 +23,8 @@ class DistributePageRequest : PageRquest(), Cloneable {
         fState = null
         envType2 = null
         envType3 = null
+        period = null
+        otStatus = null
     }
 
     @Throws(CloneNotSupportedException::class)

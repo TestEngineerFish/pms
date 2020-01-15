@@ -64,7 +64,7 @@ public class PlanOrderBindAdapter {
     }
 
     /**
-     * 派工单详情显示状态
+     * 计划工单延期
      *
      * @param view
      * @param state
