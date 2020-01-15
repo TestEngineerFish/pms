@@ -180,6 +180,30 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     Float heightLine = 0F;
 
     private void setWorkTable(List<WorkOrder> workOrders) {
+        List<WorkOrder> orders = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            for (WorkOrder workOrder2 : workOrders) {
+                if (i == 0 && "5".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 1 && "6".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 2 && "4".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 3 && "1".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 4 && "2".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 5 && "3".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+            }
+        }
+
         int width = binding.cvTable.getWidth();
         int llHeightHeight = binding.llHeight.getHeight();
         heightOne = llHeightHeight / max;
@@ -211,10 +235,27 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
             controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
             binding.cvTable.setLayoutAnimation(controller);
         }
-        tableAdapter.setDataList(workOrders);
+        tableAdapter.setDataList(orders);
     }
 
     private void setWorkTableLine(List<LineOrder> lineOrders) {
+        List<LineOrder> orders = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            for (LineOrder workOrder2 : lineOrders) {
+                if (i == 0 && "1".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 1 && "3".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 2 && "4".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+                if (i == 3 && "2".equals(workOrder2.getType())){
+                    orders.add(workOrder2);
+                }
+            }
+        }
         int width = binding.cvLineTable.getWidth();
         int llHeightHeight = binding.llLineHeight.getHeight();
         heightLine = llHeightHeight / lineMax;
@@ -249,7 +290,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
             controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
             binding.cvLineTable.setLayoutAnimation(controller);
         }
-        lineAdapter.setDataList(lineOrders);
+        lineAdapter.setDataList(orders);
     }
 
     TimePickerView pvTime;
@@ -263,6 +304,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
                     binding.setConditionSelected(true);
                     year = String.valueOf(date.getYear() + 1900);
                     month = String.valueOf(date.getMonth() + 1);
+                    binding.selectSelected.setText(year + "-" + month);
                     fresh();
                 }
             }).setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
