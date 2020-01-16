@@ -404,6 +404,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
                                     @Override
                                     public void onClick(View view) {
                                         queryOrderInfo();
+                                        binding.limitInput.setText("");
 //                                finish();
                                     }
                                 });

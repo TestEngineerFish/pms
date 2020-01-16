@@ -247,9 +247,9 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
      * */
     public void onPlotClick(){
         //弹出分期view
-        PeriodizationView periodizationView = new PeriodizationView();
+        PeriodizationView periodizationView=new PeriodizationView();
         periodizationView.setPeriodListener(InquiriesOrderListFragment.this::onPeriodSelectListener);
-        periodizationView.show(getParentFragmentManager(), "");
+        periodizationView.show(getActivity().getSupportFragmentManager(),"");
     }
     /**
      *分期返回

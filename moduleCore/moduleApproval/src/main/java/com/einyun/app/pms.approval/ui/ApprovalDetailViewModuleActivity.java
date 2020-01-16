@@ -265,6 +265,17 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                     binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
                     binding.rlLine.setVisibility(View.GONE);//条线
                     break;
+                case ApprovalDataKey.POSTPONED_PLAN://计划工单 三个都隐藏
+                case ApprovalDataKey.FORCE_CLOSE_PLAN:
+                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
+                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
+                    binding.rlLine.setVisibility(View.GONE);//条线
+                    break;
+                case ApprovalDataKey.POSTPONED_PATROL://巡查 延期闭单 都要隐藏 工单负责人 派工单类型 显示 条线
+                case ApprovalDataKey.FORCE_CLOSE_PATROL:
+                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
+                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
+                    break;
             }
             binding.llDelayCloseInfo.setVisibility(View.VISIBLE);
             binding.tvCloseOrderType.setText(approvalFormdata.getFlowType());//工单类型
