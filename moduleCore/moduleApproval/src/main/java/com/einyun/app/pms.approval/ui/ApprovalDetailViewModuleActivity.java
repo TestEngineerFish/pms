@@ -259,11 +259,11 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 case ApprovalDataKey.FORCE_CLOSE_ENQUIRY:
                 case ApprovalDataKey.POSTPONED_COMPLAIN:
                 case ApprovalDataKey.POSTPONED_REPAIR:
-//                    binding.rlCreateTime.setVisibility(View.GONE);
-//                    binding.rlFinishTime.setVisibility(View.GONE);
-//                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
-//                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
-//                    binding.rlLine.setVisibility(View.GONE);//条线
+                    binding.rlCreateTime.setVisibility(View.GONE);
+                    binding.rlFinishTime.setVisibility(View.GONE);
+                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
+                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
+                    binding.rlLine.setVisibility(View.GONE);//条线
                     break;
             }
             binding.llDelayCloseInfo.setVisibility(View.VISIBLE);
