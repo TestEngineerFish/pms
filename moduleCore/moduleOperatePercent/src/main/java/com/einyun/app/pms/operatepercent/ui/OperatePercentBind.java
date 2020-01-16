@@ -30,10 +30,10 @@ public class OperatePercentBind {
     @BindingAdapter("allYearRate")
     public static void allYearRate(TextView view, String tag) {
         if (tag.equals(FRAGMENT_PERCENT_GET)) {
-            view.setText("全年收缴率");
+            view.setText("前日收缴率");
 
         } else if (tag.equals(FRAGMENT_PERCENT_OWE)) {
-            view.setText("全年清欠率");
+            view.setText("前日清欠率");
         }
     }
 
@@ -49,9 +49,9 @@ public class OperatePercentBind {
     @BindingAdapter("nowRateAmount")
     public static void nowRateAmount(TextView view, String tag) {
         if (tag.equals(FRAGMENT_PERCENT_GET)) {
-            view.setText("当前收缴率");
+            view.setText("前日收缴率");
         } else if (tag.equals(FRAGMENT_PERCENT_OWE)) {
-            view.setText("当前清欠率");
+            view.setText("前日清欠率");
         }
     }
 }
