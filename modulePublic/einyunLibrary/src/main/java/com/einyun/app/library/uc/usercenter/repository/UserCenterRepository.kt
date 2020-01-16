@@ -65,8 +65,8 @@ class UserCenterRepository() : UserCenterService {
         serviceApi?.searchUserByCondition(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState){
-                    callBack.call(response.data.rows)
-                    liveData.postValue(response.data.rows)
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
                 }
             }, { error -> callBack.onFaild(error) })
         return liveData

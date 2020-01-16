@@ -71,7 +71,8 @@ public class RouteKey {
 
     //选择处理人
     public static final String KEY_ORG_ID_LIST = "orgIdList";
-    public static final String KEY_JOB_ID_LIST = "jobIdList";
+
+    public static final String KEY_ROLE_ID_LIST = "roleIdList";
 
     public static final String KEY_WORK_ORDER_LIST_TYPE = "KEY_WORK_ORDER_LIST_TYPE";
     //用户信息
