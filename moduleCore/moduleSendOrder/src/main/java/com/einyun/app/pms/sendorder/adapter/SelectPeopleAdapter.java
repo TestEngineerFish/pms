@@ -114,12 +114,11 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                 @Override
                 public void onClick(View v) {
                     ArrayList<String> list1=new ArrayList<>();
-                    /*list1.add(orgnizationModel.getValue().getId());
-                    list1.add(orgnizationModel.getValue().getParentId());*/
+                    list1.add(orgnizationModelList.getValue().get(0).getParentId());
                     ArrayList<String> list2=new ArrayList<>();
                     list2.add(jobList.getValue().get(childPosition).getId());
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list1)
-                            .withStringArrayList(RouteKey.KEY_JOB_ID_LIST,list2).navigation();
+                            .withStringArrayList(RouteKey.KEY_ROLE_ID_LIST,list2).navigation();
                 }
             });
         }
