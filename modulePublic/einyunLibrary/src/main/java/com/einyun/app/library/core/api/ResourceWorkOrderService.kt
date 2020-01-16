@@ -116,7 +116,7 @@ interface ResourceWorkOrderService : EinyunService {
     fun getOrgnization(request: GetOrgRequest, callBack: CallBack<List<OrgnizationModel>>): LiveData<List<OrgnizationModel>>
     //获取审批角色
 
-    fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage>
+    fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>>
 
     //转派工单
     fun resendOrder(

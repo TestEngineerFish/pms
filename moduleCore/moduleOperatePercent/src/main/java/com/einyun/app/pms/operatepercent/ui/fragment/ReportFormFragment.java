@@ -123,9 +123,9 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
                 String format = dft.format(date);
-                Log.d("Test",format);
                 request.setDate(format);
                 binding.operatePercentSelectSelected.setText(format);
+                binding.operatePercentSelectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
                 loadPagingData();
             }
         }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
@@ -185,6 +185,8 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
+        binding.periodSelected.setText(orgModel.getName());
+        binding.periodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         Log.d("test", orgModel.getCode());
         orgCode.removeAll(orgCode);
         orgCode.add(orgModel.getCode());

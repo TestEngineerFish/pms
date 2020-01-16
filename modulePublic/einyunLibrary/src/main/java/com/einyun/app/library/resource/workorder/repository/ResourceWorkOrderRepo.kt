@@ -845,9 +845,9 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 获取审批角色
      * */
 
-    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
-        val liveData = MutableLiveData<JobPage>()
-        serviceApi?.getJob(request)?.compose(RxSchedulers.inIo())
+    override fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>> {
+        val liveData = MutableLiveData<List<JobModel>>()
+        serviceApi?.getJob()?.compose(RxSchedulers.inIo())
             ?.subscribe({ response ->
                 if (response.isState) {
                     callBack.call(response.data)

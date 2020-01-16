@@ -326,6 +326,8 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         request.setBx_dk_id(orgModel.getId());
+        binding.repairPeriodSelected.setText(orgModel.getName());
+        binding.repairPeriodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         loadPagingData();
     }
 

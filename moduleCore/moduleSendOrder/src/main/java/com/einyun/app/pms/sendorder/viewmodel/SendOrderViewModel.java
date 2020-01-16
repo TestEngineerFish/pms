@@ -176,11 +176,11 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      */
     public MutableLiveData<List<JobModel>> getJob(GetJobRequest request) {
         showLoading();
-        resourceWorkOrderService.getJob(request, new CallBack<JobPage>() {
+        resourceWorkOrderService.getJob(request, new CallBack<List<JobModel>>() {
             @Override
-            public void call(JobPage data) {
+            public void call(List<JobModel> data) {
                 hideLoading();
-                jobModels.postValue(data.getRows());
+                jobModels.postValue(data);
             }
 
             @Override

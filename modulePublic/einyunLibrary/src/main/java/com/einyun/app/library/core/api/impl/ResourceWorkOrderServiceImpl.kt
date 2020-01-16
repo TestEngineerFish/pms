@@ -225,7 +225,7 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         proxy.distributeCheck(request, callBack)
     }
 
-    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+    override fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>> {
         return proxy.getJob(request, callBack)
     }
 

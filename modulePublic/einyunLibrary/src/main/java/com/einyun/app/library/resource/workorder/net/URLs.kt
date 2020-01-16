@@ -100,7 +100,7 @@ class URLs {
         //获取组织架构
         const val URL_SELECT_BY_ORGNIZATION = "/user-center/api/usercenter/v1/ucOrg/getAllDimOrgListByOrg"
         //获取审批角色
-        const val URL_SELECT_BY_JOB = "/user-center/api/usercenter/v1/ucOrgJob/filterJobByOrgId"
+        const val URL_SELECT_BY_JOB = "/uc/api/role/v1/roles/getAll"
         //转派
         const val URL_RESEND_ORDER = "/$DOMAIN/res-order/distribute/direct"
         //客服类转派

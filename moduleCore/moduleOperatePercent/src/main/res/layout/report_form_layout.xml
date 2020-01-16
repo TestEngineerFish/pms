@@ -30,7 +30,7 @@
                     android:layout_marginLeft="@dimen/px_10"
                     android:layout_marginRight="@dimen/px_10"
                     android:gravity="center"
-                    android:text="分期"
+                    android:text="全国"
                     android:textColor="@color/normal_main_text_icon_color" />
 
                 <ImageView

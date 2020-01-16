@@ -179,7 +179,7 @@ interface ResourceWorkOrderServiceApi {
      * 获取审批角色
      */
     @POST(URLs.URL_SELECT_BY_JOB)
-    fun getJob(@Body reJobRequest: GetJobRequest): Flowable<GetJobResponse>
+    fun getJob(): Flowable<GetJobResponse>
 
     @POST(URLs.URL_EXTEN)
     fun exten(@Body request: ExtenDetialRequest): Flowable<BaseResponse<Object>>

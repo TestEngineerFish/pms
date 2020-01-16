@@ -204,11 +204,11 @@ public class PlanOrderViewModel extends BasePageListViewModel<PlanWorkOrder> {
      */
     public MutableLiveData<List<JobModel>> getJob(GetJobRequest request) {
         showLoading();
-        resourceWorkOrderRepo.getJob(request,new CallBack<JobPage>() {
+        resourceWorkOrderRepo.getJob(request,new CallBack<List<JobModel>>() {
             @Override
-            public void call(JobPage data) {
+            public void call(List<JobModel> data) {
                 hideLoading();
-                jobModels.postValue(data.getRows());
+                jobModels.postValue(data);
             }
 
             @Override
