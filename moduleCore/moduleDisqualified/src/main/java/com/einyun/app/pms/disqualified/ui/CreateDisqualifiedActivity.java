@@ -131,7 +131,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     }
 
     private void createData() {
-        binding.tvInspected.setText(viewModel.getUserName());
+//        binding.tvInspected.setText(viewModel.getUserName());
         binding.tvCheckDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
         binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
         mRequest = new CreateUnQualityRequest();
@@ -144,11 +144,11 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         mRequest.getBizData().setCheck_user_id(viewModel.getUserId());
         mRequest.getBizData().setCheck_user_name(viewModel.getUserName());
 
-        mRequest.getBizData().setChecked_user_id(viewModel.getUserId());
-        mRequest.getBizData().setChecked_user_name(viewModel.getUserName());
+//        mRequest.getBizData().setChecked_user_id(viewModel.getUserId());
+//        mRequest.getBizData().setChecked_user_name(viewModel.getUserName());
     }
     private void createDbData(CreateUnQualityRequest mDbrequest) {
-        binding.tvInspected.setText(mDbrequest.getBizData().getChecked_user_name());
+        binding.tvInspected.setText(mDbrequest.getBizData().getChecked_user_name().isEmpty()?"请选择":mDbrequest.getBizData().getChecked_user_name());
         binding.tvCheckDate.setText(mDbrequest.getBizData().getCheck_date());
         binding.tvDealLine.setText(mDbrequest.getBizData().getCorrection_date());
         binding.ltQuestionDesc.setText(mDbrequest.getBizData().getProblem_description());

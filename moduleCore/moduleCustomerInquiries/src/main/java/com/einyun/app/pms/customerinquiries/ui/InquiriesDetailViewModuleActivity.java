@@ -64,7 +64,7 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
     private InquiriesItemModule inquiriesItemModule;
     private PhotoListAdapter photoListInfoAdapter;
     private PhotoListAdapter forseClosephotoListInfoAdapter;
-    private int evaluation;
+    private int evaluation=1;
     private AlertDialog alertDialog;
     private OrderDetailInfoModule orderDetailInfoModule;
     private RVBindingAdapter<ItemInquiriseFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean> adapter;

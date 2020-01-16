@@ -419,7 +419,7 @@
                                  app:maxNumber="300" />
                          </LinearLayout>
                          <LinearLayout style="@style/ll_create_order">
-                             <TextView style="@style/tv_create_order_red_star" />
+<!--                             <TextView style="@style/tv_create_order_red_star" />-->
                              <TextView
                                  android:textStyle="normal"
                                  style="@style/tv_create_order_name"
@@ -549,7 +549,7 @@
                                  app:maxNumber="300" />
                          </LinearLayout>
                          <LinearLayout style="@style/ll_create_order">
-                             <TextView style="@style/tv_create_order_red_star" />
+<!--                             <TextView style="@style/tv_create_order_red_star" />-->
                              <TextView
                                  android:textStyle="normal"
                                  style="@style/tv_create_order_name"

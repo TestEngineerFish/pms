@@ -566,7 +566,7 @@
 
                  <LinearLayout style="@style/ll_create_order">
 
-
+                     <TextView style="@style/tv_create_order_red_star" />
                      <TextView
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
@@ -580,6 +580,7 @@
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content">
                          <RadioButton
+                             android:checked="true"
                              android:id="@+id/rb_solve"
                              android:layout_width="@dimen/px_30"
                              android:layout_height="@dimen/px_30"
@@ -613,6 +614,7 @@
 
                  <LinearLayout
                      android:id="@+id/ll_is_solved"
+                     android:visibility="gone"
                      android:orientation="vertical"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content">
