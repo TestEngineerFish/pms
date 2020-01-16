@@ -19,6 +19,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
 import com.einyun.app.pms.disqualified.db.UnQualityVerificationRequest;
@@ -127,6 +128,10 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     @Override
     protected void initData() {
         super.initData();
+        binding.tvOpFeedbackDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
+        mFeedBackRequest.getBizData().setFeedback_date(TimeUtil.getYMdTime(System.currentTimeMillis()));
+        binding.tvOpValidateDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
+        mValidateRequest.getBizData().setVerification_date(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
         switch (fragmenTag) {
             case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW:
                 /**
@@ -264,6 +269,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //            return;
 //        }
         mFeedBackRequest.getBizData().setReason(binding.ltReason.getString());
+        mFeedBackRequest.getBizData().setFeedback_date(binding.tvOpFeedbackDate.getText().toString());
         mFeedBackRequest.getBizData().setCorrective_action(binding.ltMeasures.getString());
         mFeedBackRequest.getDoNextParamt().setTaskId(mTaskId);
 //        uploadFeedBackImages(mFeedBackRequest);
@@ -335,6 +341,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //        }
         mValidateRequest.getBizData().setVerification_situation(binding.ltValidation.getString());
         mValidateRequest.getBizData().setIs_pass(1);
+        mValidateRequest.getBizData().setVerification_date(binding.tvOpValidateDate.getText().toString());
         mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
         viewModel.insertVerificationRequest("v_"+mTaskId,mValidateRequest);
         ToastUtil.show(this,"验证信息缓存成功");
