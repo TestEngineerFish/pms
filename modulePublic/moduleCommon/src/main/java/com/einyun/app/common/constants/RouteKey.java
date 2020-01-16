@@ -120,6 +120,7 @@ public class RouteKey {
     public static final String FRAGMENT_DISQUALIFIED_ORDER_LIST = "FRAGMENT_DISQUALIFIED_ORDER_LIST";
     public static final String KEY_IS_UNQUALITY = "KEY_IS_UNQUALITY";
     public static final String KEY_MODEL_DATA = "KEY_MODEL_DATA";
+    public static final String CODE = "CODE";
     //工单列表-客服三大工单状态
     public static final String LIST_STATUS_SEND_ORDER = "for_comfirm";
     public static final String LIST_STATUS_RESPONSE = "for_response";

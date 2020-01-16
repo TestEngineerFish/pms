@@ -16,4 +16,5 @@ public class DisqualifiedDataKey {
     public static final String LINE_ENG="engineering_classification";
     public static final String LINE_ORDER="order_classification";
     public static final String LINE_CUSTOMER="customer_service_classification";
+    public static final String CODE="CODE";
 }
