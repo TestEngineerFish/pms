@@ -64,6 +64,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.einyun_library)
     api project(deps.project.module_db)
+//    api project(deps.project.module_base)
     api deps.zxing
     api deps.umeng.common
     api deps.umeng.analytics
