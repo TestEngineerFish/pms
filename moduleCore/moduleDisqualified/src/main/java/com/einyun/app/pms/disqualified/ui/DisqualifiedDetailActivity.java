@@ -46,6 +46,7 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     private PhotoListAdapter photoValidationInfoAdapter;
     private UnQualityFeedBackRequest mFeedBackRequest;
     private UnQualityVerificationRequest mValidateRequest;
-
+    private String format;
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
         return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
@@ -445,6 +446,14 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
      * 日期选择
      */
     private void choosePayDate(SelectType type) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy,MM,dd");
+        format = simpleDateFormat.format(System.currentTimeMillis());
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        String[] split = format.split(",");
+        startDate.set(Integer.parseInt(split[0]),Integer.parseInt(split[1])-1,Integer.parseInt(split[2]));//设置起始年份
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2100,1,1);//设置结束年份
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -464,6 +473,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 
             }
         }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+                .setRangDate(startDate,endDate)
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
                 .build();
         pvTime.show();

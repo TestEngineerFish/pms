@@ -354,7 +354,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         long checkTime = TimeUtil.ymdToLong(binding.tvCheckDate.getText().toString());
         long day=60*60*24*999;
         if (dealtime-checkTime<day) {
-            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
+            ToastUtil.show(this,"纠正日期至少大于检查日期一天");
             return;
         }
         mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
