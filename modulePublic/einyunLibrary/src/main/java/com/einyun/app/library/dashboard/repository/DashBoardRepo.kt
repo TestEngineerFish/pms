@@ -43,8 +43,8 @@ class DashBoardRepo : DashBoardService {
             ?.subscribe(
                 Consumer { response ->
                     if (response.isState) {
-                        liveData.postValue(response.data)
-                        callBack.call(response.data)
+                        liveData.postValue(response.data.data)
+                        callBack.call(response.data.data)
                     } else {
                         callBack.onFaild(EinyunHttpException(response))
                     }

@@ -89,7 +89,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     protected OperatePercentViewModel initViewModel() {
-        return new ViewModelProvider(getActivity(), new OperatePercentModelFactory()).get(OperatePercentViewModel.class);
+        return new ViewModelProvider(this, new OperatePercentModelFactory()).get(OperatePercentViewModel.class);
     }
 
     protected String getFragmentTag() {
@@ -115,6 +115,10 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
                 loadPagingData();
             }
         });
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        binding.operatePercentSelectSelected.setText(formatter.format(date));
+//        binding.operatePercentSelectSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         //组织架构选择
         periodizationView = new PeriodizationNoAutoJumpView();
         //时间选择器
