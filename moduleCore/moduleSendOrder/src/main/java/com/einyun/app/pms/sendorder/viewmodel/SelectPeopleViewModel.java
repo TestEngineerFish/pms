@@ -28,10 +28,10 @@ public class SelectPeopleViewModel extends BaseViewModel {
         workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
     }
 
-    public LiveData<List<GetMappingByUserIdsResponse>> searchUserByCondition(List<String> jobIdList, List<String> orgIdList) {
+    public LiveData<List<GetMappingByUserIdsResponse>> searchUserByCondition(List<String> roleIdList, List<String> orgIdList) {
         SearchUserRequest request = new SearchUserRequest();
         SearchUserRequest.UserIds userIds = new SearchUserRequest.UserIds();
-        userIds.setJobIdList(jobIdList);
+        userIds.setRoleIdList(roleIdList);
         userIds.setOrgIdList(orgIdList);
         request.setParams(userIds);
         return userCenterService.searchUserByCondition(request, new CallBack<List<GetMappingByUserIdsResponse>>() {

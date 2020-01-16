@@ -39,8 +39,8 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
 
     @Autowired(name = RouteKey.KEY_ORG_ID_LIST)
     ArrayList<String> orgIdList;
-    @Autowired(name = RouteKey.KEY_JOB_ID_LIST)
-    ArrayList<String> jobIdList;
+    @Autowired(name = RouteKey.KEY_ROLE_ID_LIST)
+    ArrayList<String> roleIdList;
     RVBindingAdapter<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse> adapter;
     public List<GetMappingByUserIdsResponse> users = new ArrayList<>();
 
@@ -84,22 +84,8 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         }
         binding.rvChooseDisposePerson.setAdapter(adapter);
 
-        viewModel.searchUserByCondition(jobIdList, orgIdList).observe(this, users -> {
-            List<String> request = new ArrayList<>();
-            for (GetMappingByUserIdsResponse response : users) {
-                request.add(response.getId());
-            }
-            viewModel.getMappingByUserIds(request).observe(this, data -> {
-                for (GetMappingByUserIdsResponse user : users) {
-                    if (data.get(user.getId()) == null) {
-                        user.setPendingCount(0);
-                    } else {
-                        user.setPendingCount(data.get(user.getId()).getPendingCount());
-                    }
-                }
-                this.users = users;
-                adapter.setDataList(this.users);
-            });
+        viewModel.searchUserByCondition(roleIdList, orgIdList).observe(this, users -> {
+            adapter.setDataList(users);
         });
         binding.rvChooseDisposePerson.addItemDecoration(new SpacesItemDecoration(0));
     }
