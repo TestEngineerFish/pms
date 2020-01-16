@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -20,6 +21,7 @@ import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ScreenUtils;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.PeriodizationNoAutoJumpView;
 import com.einyun.app.common.ui.widget.PeriodizationView;
@@ -82,7 +84,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     }
 
     private void fresh() {
-        viewModel.workOrderData(orgCodes, year, month).observe(this, workOrderData -> {
+        viewModel.workOrderData(orgCodes, year, month, userModuleService.getUserId()).observe(this, workOrderData -> {
             if (workOrderData.getRate() != null) {
                 //工单完成率
                 String completedRate = workOrderData.getRate().getCompletedRate();
@@ -183,22 +185,22 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         List<WorkOrder> orders = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             for (WorkOrder workOrder2 : workOrders) {
-                if (i == 0 && "5".equals(workOrder2.getType())){
+                if (i == 0 && "5".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 1 && "6".equals(workOrder2.getType())){
+                if (i == 1 && "6".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 2 && "4".equals(workOrder2.getType())){
+                if (i == 2 && "4".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 3 && "1".equals(workOrder2.getType())){
+                if (i == 3 && "1".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 4 && "2".equals(workOrder2.getType())){
+                if (i == 4 && "2".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 5 && "3".equals(workOrder2.getType())){
+                if (i == 5 && "3".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
             }
@@ -242,16 +244,16 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         List<LineOrder> orders = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (LineOrder workOrder2 : lineOrders) {
-                if (i == 0 && "1".equals(workOrder2.getType())){
+                if (i == 0 && "1".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 1 && "3".equals(workOrder2.getType())){
+                if (i == 1 && "3".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 2 && "4".equals(workOrder2.getType())){
+                if (i == 2 && "4".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
-                if (i == 3 && "2".equals(workOrder2.getType())){
+                if (i == 3 && "2".equals(workOrder2.getType())) {
                     orders.add(workOrder2);
                 }
             }
@@ -320,9 +322,9 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
 
     public void selectOrgCodes() {
 
-            //弹出分期view
-            periodizationView = new PeriodizationNoAutoJumpView();
-            periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
+        //弹出分期view
+        periodizationView = new PeriodizationNoAutoJumpView();
+        periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");
     }
 
@@ -330,6 +332,9 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     protected WorkBenchViewModel initViewModel() {
         return new ViewModelProvider(this, new ViewModelFactory()).get(WorkBenchViewModel.class);
     }
+
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
 
     @Override
     public int getLayoutId() {
