@@ -299,9 +299,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
         //加载数据
         viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
+            if (planInfo == null || planInfo.getData() == null) {
+                return;
+            }
             updateUI(planInfo);
             updateElapsedTime(planInfo);
-            if (planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
+            if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
                 resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
