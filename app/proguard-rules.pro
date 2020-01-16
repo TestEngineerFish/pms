@@ -205,6 +205,7 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.google.gson.examples.android.model.** { *; }
 -keep class **.model.** {*;}
+-keep class **.db.** {*;}
 -keep class **.bean.** {*;}
 -keep class **.entity.** {*;}
 -keep class **.converter.** {*;}
