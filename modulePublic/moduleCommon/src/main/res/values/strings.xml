@@ -106,7 +106,7 @@
     <string name="txt_one_month">1个月</string>
     <string name="txt_two_month">2个月</string>
     <string name="txt_three_month">3个月</string>
-    <string name="txt_get_report_form">收费率日报表</string>
+    <string name="txt_get_report_form">收缴率日报表</string>
     <string name="txt_own_report_form">清欠率日报表</string>
     <string name="txt_get_report_rank">收缴率排名</string>
     <string name="txt_own_report_rank">清欠率排名</string>
