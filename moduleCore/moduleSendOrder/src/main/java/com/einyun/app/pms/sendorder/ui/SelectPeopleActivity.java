@@ -13,6 +13,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.net.request.GetJobRequest;
+import com.einyun.app.library.resource.workorder.net.request.GetOrgRequest;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.adapter.SelectPeopleAdapter;
 import com.einyun.app.pms.sendorder.databinding.ActivitySelectPeopleBinding;
@@ -54,12 +55,14 @@ public class SelectPeopleActivity extends BaseHeadViewModelActivity<ActivitySele
         super.initData();
 
         GetJobRequest request=new GetJobRequest();
+        GetOrgRequest getOrgRequest=new GetOrgRequest();
         List<String> idList=new ArrayList<>();
         idList.add(divideID);
         idList.add(projectID);
         request.params=request.new params(idList);
+        getOrgRequest.setOrgIdList(idList);
         viewModel.getJob(request);
-        viewModel.getOrgnization(divideID).observe(this,model ->{
+        viewModel.getOrgnization(getOrgRequest).observe(this,model ->{
                 selectPeopleAdapter = new SelectPeopleAdapter(SelectPeopleActivity.this, viewModel.jobModels, viewModel.orgnizationModelLiveData);
                 binding.selectPeopleList.setAdapter(selectPeopleAdapter);
         });

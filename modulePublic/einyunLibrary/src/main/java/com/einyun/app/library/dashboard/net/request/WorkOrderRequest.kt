@@ -14,7 +14,7 @@ package com.einyun.app.library.dashboard.net.request
  * @Version:        1.0
  */
 class WorkOrderRequest {
-    var orgIds:List<String>?=null
+    var orgIds:String?=null
     var year:String?=null
     var month:String?=null
 }

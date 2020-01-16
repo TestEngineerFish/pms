@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -73,7 +74,7 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
             }
         });
         checkNotifySetting();
-        binding.cbNotification.setOnClickListener(new View.OnClickListener() {
+        binding.rvNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setNotify();

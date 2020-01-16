@@ -1,6 +1,7 @@
 package com.einyun.app.pms.repairs.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,7 @@ import com.einyun.app.pms.repairs.BR;
 import com.einyun.app.pms.repairs.R;
 import com.einyun.app.pms.repairs.databinding.ItemOrderRepairBinding;
 import com.einyun.app.pms.repairs.databinding.RepairsFragmentBinding;
+import com.einyun.app.pms.repairs.ui.RepairsActivity;
 import com.einyun.app.pms.repairs.viewmodel.RepairsViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
@@ -66,7 +68,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3
  * Paging Demo
  * Paging Component
  */
-public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener {
+public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener , RepairsActivity.GrabListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
     private SelectPopUpView selectPopUpView=null;
     RepairsPageRequest request;
@@ -87,6 +89,12 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         return R.layout.repairs_fragment;
     }
 
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        RepairsActivity activityRepair = (RepairsActivity) activity;
+        activityRepair.setLinstenr(this);
+    }
 
     @Override
     protected void init() {
@@ -158,7 +166,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         binding.repairsList.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 30));
     }
 
-    private void loadPagingData() {
+    public void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
@@ -318,6 +326,8 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         request.setBx_dk_id(orgModel.getId());
+        binding.repairPeriodSelected.setText(orgModel.getName());
+        binding.repairPeriodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         loadPagingData();
     }
 
@@ -331,5 +341,13 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getId());
         }
         loadPagingData();
+    }
+
+    @Override
+    public void onGrabed() {
+        Log.d("test","hhh");
+        viewModel.loadPagingData(request, FRAGMENT_REPAIR_GRAB).observe(this, dataBeans -> {
+            adapter.submitList(dataBeans);
+        });
     }
 }

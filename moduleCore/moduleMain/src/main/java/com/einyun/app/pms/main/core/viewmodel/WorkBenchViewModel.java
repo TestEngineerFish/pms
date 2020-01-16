@@ -41,9 +41,9 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
     }
 
     @Override
-    public LiveData<WorkOrderData> workOrderData(List<String> orgIds) {
+    public LiveData<WorkOrderData> workOrderData(String orgId) {
         WorkOrderRequest request = new WorkOrderRequest();
-        request.setOrgIds(orgIds);
+        request.setOrgIds(orgId);
         Calendar c = Calendar.getInstance();
         request.setYear(String.valueOf(c.get(Calendar.YEAR)));
         request.setMonth(String.valueOf(c.get(Calendar.MONTH) + 1));
@@ -60,9 +60,9 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
         });
     }
 
-    public LiveData<WorkOrderData> workOrderData(List<String> orgIds,String year,String month) {
+    public LiveData<WorkOrderData> workOrderData(String orgId,String year,String month) {
         WorkOrderRequest request = new WorkOrderRequest();
-        request.setOrgIds(orgIds);
+        request.setOrgIds(orgId);
         request.setYear(year);
         request.setMonth(month);
         return mService.workOrderData(request, new CallBack<WorkOrderData>() {

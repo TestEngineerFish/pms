@@ -53,6 +53,7 @@
                 android:textColor="@color/blackTextColor"
                 android:textSize="15sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_100"
@@ -69,20 +70,27 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/cb_notification"
-                android:layout_width="@dimen/px_80"
-                android:layout_height="@dimen/px_40"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:button="@null"
-                android:background="@drawable/select_push_msg"
-                />
+            <RelativeLayout
+                android:id="@+id/rv_notify"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <CheckBox
+                    android:id="@+id/cb_notification"
+                    android:layout_width="@dimen/px_80"
+                    android:layout_height="@dimen/px_40"
+                    android:layout_alignParentRight="true"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/select_push_msg"
+                    android:button="@null" />
+            </RelativeLayout>
         </RelativeLayout>
 
-        <View
-            style="@style/base_underline"/>
+        <View style="@style/base_underline" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_100"
@@ -110,8 +118,7 @@
                 android:textSize="15sp" />
         </RelativeLayout>
 
-        <View
-            style="@style/base_underline"/>
+        <View style="@style/base_underline" />
 
         <LinearLayout
             android:id="@+id/tv_privacy"
@@ -124,8 +131,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="15dp"
+                android:layout_weight="1"
                 android:text="隐私说明"
                 android:textColor="@color/blackTextColor"
                 android:textSize="16sp"
@@ -133,8 +140,7 @@
 
             <ImageView
                 style="@style/tv_create_order_right_arrow"
-                android:layout_marginRight="15dp"
-                />
+                android:layout_marginRight="15dp" />
         </LinearLayout>
 
         <TextView

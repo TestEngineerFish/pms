@@ -496,6 +496,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        onOptionClick(view);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {

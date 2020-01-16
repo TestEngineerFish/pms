@@ -24,6 +24,8 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+
+
     override fun getNodeId(
         request: GetNodeIdRequest,
         callBack: CallBack<GetNodeIdModel>
@@ -223,15 +225,15 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         proxy.distributeCheck(request, callBack)
     }
 
-    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+    override fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>> {
         return proxy.getJob(request, callBack)
     }
 
     override fun getOrgnization(
-        id: String,
-        callBack: CallBack<OrgnizationModel>
-    ): LiveData<OrgnizationModel> {
-        return proxy.getOrgnization(id, callBack)
+        request: GetOrgRequest,
+        callBack: CallBack<List<OrgnizationModel>>
+    ): LiveData<List<OrgnizationModel>> {
+        return proxy.getOrgnization(request, callBack)
     }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {

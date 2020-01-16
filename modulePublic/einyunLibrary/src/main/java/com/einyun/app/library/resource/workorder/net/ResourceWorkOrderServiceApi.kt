@@ -172,14 +172,14 @@ interface ResourceWorkOrderServiceApi {
     /**
      *获取组织架构
      **/
-    @GET
-    fun getOrgnization(@Url url: String): Flowable<GetOrgnizationResponse>
+    @POST(URLs.URL_SELECT_BY_ORGNIZATION)
+    fun getOrgnization(@Body request: GetOrgRequest): Flowable<GetOrgnizationResponse>
 
     /**
      * 获取审批角色
      */
     @POST(URLs.URL_SELECT_BY_JOB)
-    fun getJob(@Body request: GetJobRequest): Flowable<GetJobResponse>
+    fun getJob(): Flowable<GetJobResponse>
 
     @POST(URLs.URL_EXTEN)
     fun exten(@Body request: ExtenDetialRequest): Flowable<BaseResponse<Object>>

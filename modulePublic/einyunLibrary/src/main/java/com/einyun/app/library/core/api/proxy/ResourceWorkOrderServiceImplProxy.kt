@@ -215,15 +215,15 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
         return instance?.distributeCheck(request, callBack)!!
     }
 
-    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+    override fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>> {
         return instance?.getJob(request, callBack)!!
     }
 
     override fun getOrgnization(
-        id: String,
-        callBack: CallBack<OrgnizationModel>
-    ): LiveData<OrgnizationModel> {
-        return instance?.getOrgnization(id, callBack)!!
+        request: GetOrgRequest,
+        callBack: CallBack<List<OrgnizationModel>>
+    ): LiveData<List<OrgnizationModel>> {
+        return instance?.getOrgnization(request, callBack)!!
     }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {
