@@ -16,7 +16,32 @@ import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkSate;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 
+import static com.einyun.app.common.constants.RouteKey.ENGINER;
+import static com.einyun.app.common.constants.RouteKey.ENVIRONMENTAL;
+import static com.einyun.app.common.constants.RouteKey.SERVICE;
+
 public class WorkOrderAdapter {
+
+    /**
+     * 工单预览-条线
+     *
+     * @param view
+     * @param value
+     */
+    @BindingAdapter("orderLine")
+    public static void orderLine(TextView view, String value) {
+        if (value.equals(RouteKey.ORDER )) {
+            view.setText(R.string.preview_order);
+        } else if (value.equals(RouteKey.MULTI)) {
+            view.setText(R.string.preview_multi);
+        } else if (value.equals(ENGINER)) {
+            view.setText(R.string.preview_enginer);
+        } else if (value.equals(ENVIRONMENTAL)) {
+            view.setText(R.string.preview_environment);
+        }else if (value.equals(SERVICE)) {
+            view.setText(R.string.preview_service);
+        }
+    }
     /**
      * 列表状态
      *

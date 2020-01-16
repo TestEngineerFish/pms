@@ -132,5 +132,12 @@ public class RouteKey {
     public static final String FRAGMENT_PERCENT_GET = "FRAGMENT_PERCENT_GET";
     public static final String FRAGMENT_PERCENT_OWE = "FRAGMENT_PERCENT_OWE";
     public static final String ORGCODE = "ORGCODE";
+    //条线code
+    public static final String ORDER = "order_classification";
+    public static final String MULTI = "multi_battalion_classification";
+    public static final String ENGINER = "engineering_classification";
+    public static final String ENVIRONMENTAL = "environmental_classification";
+    public static final String SERVICE = "customer_service_classification";
+
 
 }

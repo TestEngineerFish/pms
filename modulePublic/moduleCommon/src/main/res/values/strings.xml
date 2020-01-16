@@ -267,4 +267,9 @@
         <item>我发起的</item>
     </string-array>
     <!-- 审批结束   -->
+    <string name="preview_order">秩序</string>
+    <string name="preview_multi">多营</string>
+    <string name="preview_enginer">工程</string>
+    <string name="preview_service">客服</string>
+    <string name="preview_environment">环境</string>
 </resources>

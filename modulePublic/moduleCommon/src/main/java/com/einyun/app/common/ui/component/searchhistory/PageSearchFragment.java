@@ -133,10 +133,6 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
                 dismiss();
             }
         });
-        listener.search("").observe(getViewLifecycleOwner(), list -> {
-            this.list = list;
-            adapter.submitList(this.list);
-        });
         recycleView.setAdapter(adapter);
         RecyclerViewAnimUtil.getInstance().closeDefaultAnimator(recycleView);
         recycleView.addItemDecoration(new SpacesItemDecoration(30));

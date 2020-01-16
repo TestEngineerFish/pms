@@ -141,6 +141,11 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
 
                 @Override
                 public void onBindItem(ItemOrderPreviewBinding binding, OrderPreviewModel orderPreviewModel) {
+                    if(getFragmentTag().equals(FRAGMENT_WORK_PREVIEW_PLAN)){
+                        binding.itemPreviewName.setText(orderPreviewModel.getWorkPlanName());
+                    }else {
+                        binding.itemPreviewName.setText(orderPreviewModel.getInspectionWorkPlanName());
+                    }
                 }
 
                 @Override

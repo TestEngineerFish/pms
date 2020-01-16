@@ -47,6 +47,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
@@ -298,9 +299,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
         //加载数据
         viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
+            if (planInfo == null || planInfo.getData() == null) {
+                return;
+            }
             updateUI(planInfo);
             updateElapsedTime(planInfo);
-            if (planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
+            if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
                 resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
@@ -607,19 +611,20 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         return t1;
     }
 
-    AlertDialog alertDialog;
+    CreateNewOrderDialog alertDialog;
 
     /**
      * 是否创建派工单
      */
     private void createSendOrder() {
         if (alertDialog == null) {
-            alertDialog = new AlertDialog(this).builder()
-                    .setTitle(getString(R.string.text_alert))
-                    .setMsg(getString(R.string.text_request_create_distribute))
-                    .setPositiveButton(getString(R.string.ok), v -> {
+            alertDialog = new CreateNewOrderDialog(this).builder()
+                    .setCreateSendOrder(v -> {
                         goPaiGongDan(); //跳转至创建派工单
-                    }).setNegativeButton(getString(R.string.cancel), v -> {
+                    }).setCreateUnOrder(v -> {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                        finish();
+                    }).setCancel(v -> {
                         finish();
                     });
             alertDialog.show();

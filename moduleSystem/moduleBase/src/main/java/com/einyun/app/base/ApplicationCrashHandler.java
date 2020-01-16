@@ -90,15 +90,16 @@ public class ApplicationCrashHandler implements Thread.UncaughtExceptionHandler 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            Intent intent = new Intent(mContext.getApplicationContext(), ActivityUtil.getFirstClass());
-            AlarmManager mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-            //重启应用，得使用PendingIntent
-            PendingIntent restartIntent = PendingIntent.getActivity(
-                    mContext.getApplicationContext(), 0, intent,
-                    Intent.FLAG_ACTIVITY_NEW_TASK);
-            mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 2000,
-                    restartIntent); // 重启应用
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(10);
+//            Intent intent = new Intent(mContext.getApplicationContext(), ActivityUtil.getFirstClass());
+//            AlarmManager mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//            //重启应用，得使用PendingIntent
+//            PendingIntent restartIntent = PendingIntent.getActivity(
+//                    mContext.getApplicationContext(), 0, intent,
+//                    Intent.FLAG_ACTIVITY_NEW_TASK);
+//            mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 2000,
+//                    restartIntent); // 重启应用
         }
 
     }
