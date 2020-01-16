@@ -85,6 +85,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
         binding.rvChooseDisposePerson.setAdapter(adapter);
 
         viewModel.searchUserByCondition(roleIdList, orgIdList).observe(this, users -> {
+            this.users = users;
             adapter.setDataList(users);
         });
         binding.rvChooseDisposePerson.addItemDecoration(new SpacesItemDecoration(0));

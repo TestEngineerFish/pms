@@ -121,7 +121,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
         //工单处理情况总览
         if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
-            viewModel.workOrderData(divideCode).observe(this, workOrderData -> {
+            viewModel.workOrderData("").observe(this, workOrderData -> {
                 if (workOrderData.getRate() != null) {
                     //工单完成率
                     String completedRate = workOrderData.getRate().getCompletedRate();

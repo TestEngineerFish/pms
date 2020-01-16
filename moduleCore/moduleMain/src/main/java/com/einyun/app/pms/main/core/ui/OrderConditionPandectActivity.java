@@ -55,7 +55,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     private RVBindingAdapter<ItemWorkTableBinding, WorkOrder> tableAdapter;
     private RVBindingAdapter<ItemWorkTableLineBinding, LineOrder> lineAdapter;
     private List<OrgModel> orgModels;
-    List<String> orgCodes;
+    String orgCodes;
     DecimalFormat formatInt = new DecimalFormat("#,###");
     private String year;
     private String month;
@@ -72,7 +72,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         Calendar c = Calendar.getInstance();
         year = String.valueOf(c.get(Calendar.YEAR));
         month = String.valueOf(c.get(Calendar.MONTH) + 1);
-        orgCodes = handleStagingData(orgModels);
+        orgCodes = "";
         fresh();
     }
 
@@ -345,7 +345,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     public void onPeriodSelectListener(OrgModel orgModel) {
         binding.periodSelected.setText(orgModel.getName());
         binding.setPeriodSelected(true);
-        orgCodes = Arrays.asList(orgModel.getId());
+        orgCodes = orgModel.getId();
         fresh();
     }
 }
