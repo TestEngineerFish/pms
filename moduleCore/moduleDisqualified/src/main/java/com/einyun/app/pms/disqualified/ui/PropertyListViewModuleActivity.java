@@ -117,22 +117,13 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
         binding.list.setAdapter(adapter);
         adapter.setOnItemClick(this);
 
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         viewModel.loadAllCreateRequest().observe(this,model->{
-            Log.e(TAG, "initData: " +model.size());
-            if (model.size()>0) {
-
                 adapter.submitList(model);
-            }else {
-                ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
-                finish();
-            }
         });
     }
 

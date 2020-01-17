@@ -270,7 +270,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
      * 缓存按钮
      */
     public void onCacheClick(){
-        cachePhoto(photoSelectAdapter.getSelectedPhotos());
+
 //        if (binding.tvDivide.getText().toString().equals("请选择")) {
 //            ToastUtil.show(this,"请选择分期");
 //            return;
@@ -310,6 +310,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             ToastUtil.show(this,"请选择条线");
             return;
         }
+        cachePhoto(photoSelectAdapter.getSelectedPhotos());
         mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
         viewModel.insertCreateRequest(mRequest);
         ToastUtil.show(this,"缓存成功");
