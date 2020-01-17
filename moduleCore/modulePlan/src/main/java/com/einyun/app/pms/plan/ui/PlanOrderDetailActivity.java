@@ -315,6 +315,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             updateUI(planInfo);
             updateElapsedTime(planInfo);
             if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
+                binding.tvResource.setText(String.format(getResources().getString(R.string.text_already_resource), "" + planInfo.getData().getZyjhgd().getSub_jhgdzyb().size()));
                 resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);

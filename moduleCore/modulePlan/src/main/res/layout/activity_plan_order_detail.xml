@@ -270,6 +270,7 @@
 
 
                             <TextView
+                                android:id="@+id/tv_resource"
                                 style="@style/detail_title_tv"
                                 android:text="已关联资源" />
 
