@@ -107,15 +107,9 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                         tableItem(binding,model, position);
                         //设置签到
 
-
-                        if(model.is_photo<=0&&(SignInType.NONE.equals(model.sign_type)|| TextUtils.isEmpty(model.sign_type))){
+                        if(!setUpCapture(binding,model)&&!setUpCapture(binding,model)){
                             onNoneHandle(binding);
-                        }else{
-                            setUpSignIn(binding,model);
-                            //设置拍照
-                            setUpCapture(binding,model);
                         }
-
                     }
                 }
 
@@ -148,7 +142,8 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                  * @param binding
                  * @param model
                  */
-                protected void setUpSignIn(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                protected boolean setUpSignIn(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                    boolean flag=true;
                     //按照签到方式
                     if(SignInType.NONE.equals(model.sign_type)|| TextUtils.isEmpty(model.sign_type)){//不需要签到
                         binding.llSign.setVisibility(View.GONE);
@@ -158,8 +153,10 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                             binding.llSignComplete.setVisibility(View.VISIBLE);
                         }else{//未签到
                             binding.llSignComplete.setVisibility(View.GONE);
+                            flag=false;
                         }
                     }
+                    return flag;
                 }
 
                 /**
@@ -167,18 +164,21 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                  * @param binding
                  * @param model
                  */
-                protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                protected boolean setUpCapture(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                    boolean flag=true;
                     //是否需要拍照
                     if(model.is_photo>0){//需要拍照
                         if(!TextUtils.isEmpty(model.pic_url)||model.getCachedImages()!=null){//是否已有拍照记录，有拍照记录，显示已拍照
                             binding.llPhotoComplete.setVisibility(View.VISIBLE);
                         }else{//无拍照记录
                             binding.llPhotoComplete.setVisibility(View.GONE);
+                            flag=false;
                         }
                     }else{//不需要拍照，不显示任何拍照按钮
                         binding.llPhotoComplete.setVisibility(View.GONE);
                         binding.llCapture.setVisibility(View.GONE);
                     }
+                    return flag;
                 }
 
                 //处理表头
