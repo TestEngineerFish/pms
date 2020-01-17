@@ -16,16 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.pms.disqualified.BR;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.databinding.DisqualifiedPopwindowItemBinding;
 import com.einyun.app.pms.disqualified.model.DisqualifiedTypesBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
     List<DisqualifiedTypesBean> mInquiriesTypesModule;
     List<DisqualifiedTypesBean> mInquiriesTypesModule2;
+    List<DisqualifiedTypesBean> mInquiriesNewCreateTypesModule=new ArrayList<>();
     private  View view;
     private Activity context;
     private OnItemClickListener mListener;
@@ -33,11 +36,12 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
     private RVBindingAdapter<DisqualifiedPopwindowItemBinding, DisqualifiedTypesBean> adapterState;//二级适配器
     private int mPosition=-1;
     private int mPositionState=-1;
-
-    public DisqualifiedTypeSelectPopWindow(Activity context, List<DisqualifiedTypesBean> mInquiriesTypesModule, List<DisqualifiedTypesBean> mInquiriesTypesModule2,int mPosition,int mPositionState) {
+    private String fragmentTag;
+    public DisqualifiedTypeSelectPopWindow(Activity context, List<DisqualifiedTypesBean> mInquiriesTypesModule, List<DisqualifiedTypesBean> mInquiriesTypesModule2,int mPosition,int mPositionState,String fragmentTag) {
         super(context);
         this.mInquiriesTypesModule=mInquiriesTypesModule;
         this.mInquiriesTypesModule2=mInquiriesTypesModule2;
+        this.fragmentTag=fragmentTag;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.disqualifiedtype_popwindow, null);//alt+ctrl+f
         this.context = context;
@@ -145,7 +149,11 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
                     binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
                     binding.tvContent.setBackgroundResource(R.drawable.shape_line);
                 }
-                binding.tvContent.setText(model.getName());
+                if (position==0) {
+                    binding.tvContent.setText("待处理");
+                }else {
+                    binding.tvContent.setText(model.getName());
+                }
 
             }
 
@@ -160,7 +168,16 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
         rvLine.setAdapter(adapter);
 
 
-        adapterState.setDataList(mInquiriesTypesModule2);
+        if (mInquiriesTypesModule2.size()>0) {
+            mInquiriesNewCreateTypesModule.addAll(mInquiriesTypesModule2);
+            mInquiriesNewCreateTypesModule.remove(mInquiriesNewCreateTypesModule.size()-1);
+        }
+        if (fragmentTag.equals(RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW)) {
+
+            adapterState.setDataList(mInquiriesNewCreateTypesModule);
+        }else {
+            adapterState.setDataList(mInquiriesTypesModule2);
+        }
         rvOrderState.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
         rvOrderState.setAdapter(adapterState);
     }

@@ -122,6 +122,7 @@
         <activity android:name=".patrol.ui.PatrolTimeHandleActivity"/>
         <activity android:name=".patrol.ui.PatrolTimeDetialActivity"/>
         <activity android:name=".patrol.ui.PatrolDetialActivity"/>
+<!--        <activity android:name="com.einyun.app.common.pushReceiver.PopupPushActivity" android:exported="true"/>-->
         <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity"/>
         <activity android:name=".patrol.ui.PatrolSignInScannerActivity"/>
         <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity"/>

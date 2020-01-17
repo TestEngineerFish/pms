@@ -230,9 +230,9 @@
                      style="@style/style_rl_normal">
                      <TextView
                          style="@style/style_text_approval_left"
-                         android:text="@string/tv_finish_time" />
+                         android:text="实际完成时间" />
                      <TextView
-                         android:text="@{module.data.customer_enquiry_model.c_deadline_time}"
+                         android:text="@{module.data.customer_enquiry_model.close_time}"
                          android:id="@+id/tv_finish_time"
                          style="@style/style_text_approval_right"/>
                  </RelativeLayout>
@@ -278,12 +278,12 @@
          </androidx.cardview.widget.CardView>
          <!--        回复历史-->
          <androidx.cardview.widget.CardView
+             android:id="@+id/ll_history"
+             android:visibility="gone"
              style="@style/cardview_style">
              <LinearLayout
-                 android:id="@+id/ll_history"
                  android:focusable="true"
                  android:focusableInTouchMode="true"
-                 android:visibility="gone"
                  android:background="@drawable/shape_white_bg"
                  android:layout_width="match_parent"
                  android:orientation="vertical"
@@ -350,11 +350,12 @@
          </androidx.cardview.widget.CardView>
          <!--         回复内容-->
          <androidx.cardview.widget.CardView
+             android:visibility="gone"
+             android:id="@+id/ll_reply_content"
              style="@style/cardview_style">
 
              <LinearLayout
-                 android:visibility="gone"
-                 android:id="@+id/ll_reply_content"
+
                  android:layout_marginBottom="20dp"
                  android:background="@drawable/shape_white_bg"
                  android:layout_width="match_parent"
@@ -390,12 +391,12 @@
 <!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
         <!--        强制闭单信息 -->
          <androidx.cardview.widget.CardView
-             android:layout_marginTop="0dp"
+             android:id="@+id/forceCloseInfo"
+             android:visibility="gone"
              style="@style/cardview_style">
 
              <LinearLayout
-                 android:visibility="gone"
-                 android:id="@+id/forceCloseInfo"
+
                  android:layout_width="match_parent"
                  android:layout_height="match_parent">
 
@@ -531,14 +532,14 @@
 
         <!--         评价-->
          <androidx.cardview.widget.CardView
+             android:id="@+id/ll_evaluation"
+             android:visibility="gone"
              style="@style/cardview_style">
              <LinearLayout
-                 android:id="@+id/ll_evaluation"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:background="@drawable/shape_white_bg"
-                 android:orientation="vertical"
-                 android:visibility="gone">
+                 android:orientation="vertical">
 
                  <RelativeLayout
                      android:layout_width="match_parent"
