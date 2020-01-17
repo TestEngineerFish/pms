@@ -130,6 +130,7 @@
     <string name="text_resolve_dis">处理说明</string>
     <string name="text_work_nodes">工作节点</string>
     <string name="text_work_plan">工作计划</string>
+    <string name="work_plan">计划工单</string>
     <string name="text_responsible_job">负责岗位</string>
     <string name="text_location">位置</string>
     <string name="text_alert">提示</string>

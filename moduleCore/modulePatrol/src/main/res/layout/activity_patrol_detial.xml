@@ -461,6 +461,37 @@
                                 android:layout_marginRight="@dimen/px_20"
                                 android:layout_marginBottom="@dimen/px_30"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                            <RelativeLayout
+                                android:id="@+id/patro_histroy_more"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:id="@+id/handle_add_more"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/px_100"
+                                    android:layout_centerInParent="true"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="加载更多"
+                                        android:textColor="@color/material_add_material_color"
+                                        android:textSize="@dimen/font_size14" />
+
+                                    <ImageView
+                                        android:id="@+id/handle_arrow"
+                                        android:layout_width="@dimen/px_26"
+                                        android:layout_height="@dimen/px_16"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginLeft="@dimen/px_20"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/iv_arrow_blue_down" />
+                                </LinearLayout>
+                            </RelativeLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 

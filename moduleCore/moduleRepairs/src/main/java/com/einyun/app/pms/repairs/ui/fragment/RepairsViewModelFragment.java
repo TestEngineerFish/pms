@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -188,6 +189,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             adapter = new RVPageListAdapter<ItemOrderRepairBinding, RepairsModel>(getActivity(), BR.repair, mDiffCallback) {
                 @Override
                 public void onBindItem(ItemOrderRepairBinding binding, RepairsModel repairsModel) {
+
                     if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
                         binding.itemGrabRe.setVisibility(View.VISIBLE);
                     }
@@ -348,5 +350,18 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         viewModel.loadPagingData(request, FRAGMENT_REPAIR_GRAB).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
+    }
+
+
+    /**
+     * 超出10个字显示省略号
+     */
+    public String LimitText(TextView textView) {
+        if (textView.getText().length() > 10) {
+            return textView.getText().toString().substring(0, 10) + "...";
+        } else {
+            return textView.getText().toString();
+        }
+
     }
 }

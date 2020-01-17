@@ -112,7 +112,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 setHeadTitle(R.string.text_send_order);
                 break;
             case RouteKey.ORDER_LIST_PLAN:
-                setHeadTitle(R.string.text_work_plan);
+                setHeadTitle(R.string.work_plan);
                 break;
             case RouteKey.ORDER_LIST_PATRO:
                 setHeadTitle(R.string.title_patrol);
@@ -315,13 +315,30 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             return;
         }
         if (tag.equals(RouteKey.ORDER_LIST_PATRO)) {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+           /* ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                     .withString(RouteKey.KEY_ORDER_ID, data.getID_())
                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                     .withString(RouteKey.KEY_TASK_ID, "")
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-                    .navigation();
+                    .navigation();*/
+            if((data.getF_patrol_line_id()!=null)){
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
+                        .withString(RouteKey.KEY_TASK_ID,"")
+                        .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                        .withInt(RouteKey.KEY_LIST_TYPE,ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                        .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID())
+                        .navigation();
+            }else{
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                        .withString(RouteKey.KEY_TASK_ID,"")
+                        .withString(RouteKey.KEY_ORDER_ID,data.getID_())
+                        .withInt(RouteKey.KEY_LIST_TYPE,ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                        .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID())
+                        .navigation();
+            }
             return;
         }
         if (tag.equals(RouteKey.ORDER_LIST_REPAIR)) {
@@ -460,7 +477,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 break;
             case RouteKey.ORDER_LIST_REPAIR:
                 setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getState());
-                binding.itemSendWorkSubject.setText(orderListModel.getBx_area() + "-" + orderListModel.getBx_cate_lv1() + "-" + orderListModel.getBx_cate_lv2() + "-" + orderListModel.getBx_cate_lv3());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getBx_area()+ orderListModel.getBx_cate_lv1() + "-" + orderListModel.getBx_cate_lv2() + "-" + orderListModel.getBx_cate_lv3()));
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getBx_time()));
                 binding.itemOrderNum.setText(orderListModel.getBx_code());
                 binding.itemRepair.setVisibility(View.VISIBLE);
@@ -484,9 +501,9 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 break;
             case RouteKey.ORDER_LIST_PLAN:
                 setStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_STATUS());
-                binding.itemCreateTime.setText(orderListModel.getF_CREATE_TIME());
+                binding.itemCreateTime.setText(FormatUtil.formatDate(Long.parseLong(orderListModel.getF_CREATE_TIME())));
                 binding.itemOrderNum.setText(orderListModel.getF_ORDER_NO());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_WG_NAME());
+                binding.itemSendWorkSubject.setText(orderListModel.getF_WP_NAME());
                 break;
 
         }
@@ -692,6 +709,19 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
 
     private void getNodeId(OrderListModel data) {
         viewModel.getNodeId(getNodeIdRequest, data);
+    }
+
+
+    /**
+     * 超出10个字显示省略号
+     */
+    public String LimitText(String s) {
+        if (s.length() > 10) {
+            return s.substring(0, 10) + "...";
+        } else {
+            return s;
+        }
+
     }
 
 }

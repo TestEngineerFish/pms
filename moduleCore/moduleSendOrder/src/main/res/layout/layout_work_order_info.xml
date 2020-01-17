@@ -95,7 +95,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.typeName}" />
+                android:text="@{workOrder.data.info.typeName+@string/text_padding+workOrder.data.info.envirmentType2Name+@string/text_padding+workOrder.data.info.envirmentType3Name}" />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
