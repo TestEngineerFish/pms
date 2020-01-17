@@ -133,8 +133,8 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         super.initData();
         binding.tvOpFeedbackDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
         mFeedBackRequest.getBizData().setFeedback_date(TimeUtil.getYMdTime(System.currentTimeMillis()));
-        binding.tvOpValidateDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
-        mValidateRequest.getBizData().setVerification_date(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
+        binding.tvOpValidateDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
+        mValidateRequest.getBizData().setVerification_date(TimeUtil.getYMdTime(System.currentTimeMillis()));
         switch (fragmenTag) {
             case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW:
                 /**
