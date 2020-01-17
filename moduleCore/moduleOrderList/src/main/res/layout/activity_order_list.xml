@@ -87,7 +87,7 @@
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 style="@style/order_list_main"
-                android:id="@+id/og_patro_order"
+                android:id="@+id/og_unwell_order"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_marginLeft="@dimen/px_20"
@@ -98,18 +98,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical">
 
                     <ImageView
                         style="@style/order_list_main_img"
-                        android:src="@mipmap/patro_icon" />
+                        android:src="@mipmap/un_well" />
 
                     <TextView
                         style="@style/order_list_main_txt"
-                        android:text="巡查工单" />
+                        android:text="不合格单" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
 
 
             <androidx.cardview.widget.CardView
@@ -147,10 +147,9 @@
             android:visibility="visible"
             android:background="@color/activity_bg_color"
             android:orientation="horizontal">
-
             <androidx.cardview.widget.CardView
                 style="@style/order_list_main"
-                android:id="@+id/og_unwell_order"
+                android:id="@+id/og_patro_order"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_marginLeft="@dimen/px_20"
@@ -161,15 +160,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:orientation="vertical">
 
                     <ImageView
                         style="@style/order_list_main_img"
-                        android:src="@mipmap/un_well" />
+                        android:src="@mipmap/patro_icon" />
 
                     <TextView
                         style="@style/order_list_main_txt"
-                        android:text="不合格单" />
+                        android:text="巡查工单" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

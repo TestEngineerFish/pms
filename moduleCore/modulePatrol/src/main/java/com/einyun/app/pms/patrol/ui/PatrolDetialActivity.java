@@ -437,7 +437,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected void updateWorkNodesUI(PatrolInfo patrol) {
         List<WorkNode> nodes = viewModel.loadNodes(patrol);
         nodes.add(0, new WorkNode());
-        nodesAdapter.addAll(nodes);
+        nodesAdapter.setDataList(nodes);
     }
 
     @Override
