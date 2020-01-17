@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +30,7 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.util.Base64Util;
+import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
@@ -50,6 +53,7 @@ import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.common.utils.Glide4Engine;
 
 import com.einyun.app.library.resource.workorder.model.ApplyType;
@@ -77,10 +81,15 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 @Route(path = RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
 public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityPlanOrderDetailBinding, PlanOrderDetailViewModel> {
@@ -103,6 +112,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     String taskNodeId;
 
     private PlanInfo planInfo;
+    private File imageFile;
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -356,17 +366,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
                 return;
             }
-            Matisse.from(this) //加号添加图片
-                    .choose(MimeType.ofImage())
-                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
-                    .capture(true)
-                    .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
-                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                    .thumbnailScale(0.85f)
-                    .imageEngine(new Glide4Engine())
-                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+            imageFile = CaptureUtils.startCapture(this);
         }, this);
     }
 
@@ -634,6 +634,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private void goPaiGongDan() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                .withString(RouteKey.ID, id)
+                .withString(RouteKey.KEY_ORDER_NO, planInfo.getData().getZyjhgd().getF_ORDER_NO())
                 .navigation();
         finish();
     }
@@ -657,12 +659,22 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
-            if (data == null) return;
-            List<Uri> uris = Matisse.obtainResult(data);
-            if (uris != null && uris.size() > 0) {
-                photoSelectAdapter.addPhotos(uris);
+        if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                uri = FileProvider.getUriForFile(this, DataConstants.DATA_PROVIDER_NAME, imageFile);
+            } else {
+                uri = Uri.fromFile(imageFile);
             }
+            Observable.just(imageFile).subscribeOn(Schedulers.io())
+                    .subscribe(file -> {
+                        BitmapUtil.AddTimeWatermark(file);
+                        runOnUiThread(() -> {
+                            if (uri != null) {
+                                photoSelectAdapter.addPhotos(Arrays.asList(uri));
+                            }
+                        });
+                    });
         }
     }
 
