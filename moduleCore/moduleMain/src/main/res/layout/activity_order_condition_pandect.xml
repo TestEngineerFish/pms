@@ -50,7 +50,7 @@
                     android:layout_marginLeft="@dimen/px_10"
                     android:layout_marginRight="@dimen/px_10"
                     android:gravity="center"
-                    android:text="分期"
+                    android:text="集团"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size13"
                     android:textStyle="bold"

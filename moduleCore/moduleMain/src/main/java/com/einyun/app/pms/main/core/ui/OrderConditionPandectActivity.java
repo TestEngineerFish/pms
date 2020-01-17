@@ -74,6 +74,8 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         Calendar c = Calendar.getInstance();
         year = String.valueOf(c.get(Calendar.YEAR));
         month = String.valueOf(c.get(Calendar.MONTH) + 1);
+        binding.setConditionSelected(true);
+        binding.selectSelected.setText(year + "-" + month);
         orgCodes = "";
         fresh();
     }

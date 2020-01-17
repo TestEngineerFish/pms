@@ -193,7 +193,7 @@
 
                                 <TextView
                                     style="@style/detail_item_left_tv"
-                                    android:text="@string/text_responsible_job" />
+                                    android:text="负责角色" />
 
                                 <TextView
                                     android:id="@+id/tv_grid"
