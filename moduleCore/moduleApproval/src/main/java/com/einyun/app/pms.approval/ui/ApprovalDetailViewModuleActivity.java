@@ -231,8 +231,14 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.llCreatChangeInfo.setVisibility(View.VISIBLE);
             binding.tvCreateLine.setText(approvalFormdata.getLine());//条线
             binding.tvCreatePlanName.setText(approvalFormdata.getWorkPlanName());//计划名称
-            binding.tvCreateResourceClassification.setText(approvalFormdata.getResourceClassificationName());//资源分类
             binding.tvCreateWorkInstruction.setText(approvalFormdata.getWorkGuidanceName());//工作指导
+            switch (subType) {//巡查计划 都需要把资源分类改为分类，工单负责职位 改为工单负责人（根据pc端修改）
+                case ApprovalDataKey.UPDATE_PATROL_PLAN:
+                case ApprovalDataKey.CREATE_PATROL_PLAN:
+                    binding.tvType.setText("分类");
+                    break;
+            }
+            binding.tvCreateResourceClassification.setText(approvalFormdata.getResourceClassificationName());//资源分类
             binding.tvCreateWorkOrderRespone.setText(approvalFormdata.getPrincipal());//工单负责职位
             String effectivePeriod = approvalFormdata.getEffectivePeriod();
             if (effectivePeriod!=null) {
