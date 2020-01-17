@@ -66,6 +66,7 @@
                     <include layout="@layout/layout_apply_close_and_postpone" android:id="@+id/apply_force_close_and_postpone" android:visibility="gone"/>
                     <include layout="@layout/layout_check_and_accept" android:id="@+id/check_and_accept" android:visibility="gone"/>
                     <include layout="@layout/layout_apply_postpone" android:id="@+id/apply_postpone" android:visibility="gone"/>
+                    <include layout="@layout/layout_check_and_accept_info" android:id="@+id/check_and_accept_info" android:visibility="gone"/>
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/px_140"/>
