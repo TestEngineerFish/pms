@@ -70,7 +70,7 @@ public class BasicDataManager {
     private BasicDataManager() {
         basicData = new BasicData();
         repository = new BasicDataRepository();
-        fixedThreadPool = Executors.newFixedThreadPool(5);
+        fixedThreadPool = Executors.newFixedThreadPool(8);
         resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         resourceService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE);
         mdmService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_MDM);

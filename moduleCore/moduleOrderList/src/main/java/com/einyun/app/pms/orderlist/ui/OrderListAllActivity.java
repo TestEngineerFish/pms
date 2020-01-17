@@ -24,6 +24,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
@@ -55,6 +56,9 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.manager.BasicDataTypeEnum.LINE_TYPES;
+import static com.einyun.app.common.manager.BasicDataTypeEnum.REPAIR_AREA;
+import static com.einyun.app.common.manager.BasicDataTypeEnum.RESOURCE;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_FIR;
 import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_AREA_SEC;
@@ -154,15 +158,17 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                                     List<SelectModel> condition = builder.build();
                                     selectPopUpView = new SelectPopUpView(OrderListAllActivity.this, condition)
                                             .setOnSelectedListener(selected -> handleRepairSelect(selected));
+                                    selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                                }else {
+                                    selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                                 }
-                                selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                             }
 
                             @Override
                             public void onFaild(Throwable throwable) {
 
                             }
-                        });
+                        },REPAIR_AREA);
                         break;
                     case RouteKey.ORDER_LIST_PATRO:
                         showPatroConditionView();
@@ -182,7 +188,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                             public void onFaild(Throwable throwable) {
 
                             }
-                        });
+                        },LINE_TYPES,RESOURCE);
                         break;
                     case RouteKey.ORDER_LIST_COMPLAIN:
                         BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
@@ -205,7 +211,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                             public void onFaild(Throwable throwable) {
 
                             }
-                        });
+                        }, BasicDataTypeEnum.COMPLAIN_PROPERTYS,BasicDataTypeEnum.COMPLAIN_TYPES);
                         break;
                     case RouteKey.ORDER_LIST_ASK:
                         break;
@@ -571,7 +577,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                         public void onFaild(Throwable throwable) {
 
                         }
-                    });
+                    }, BasicDataTypeEnum.LINE_TYPES,BasicDataTypeEnum.RESOURCE);
 
                 }
 
@@ -607,7 +613,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             public void onFaild(Throwable throwable) {
 
             }
-        });
+        },BasicDataTypeEnum.LINE, BasicDataTypeEnum.RESOURCE);
     }
 
     /**

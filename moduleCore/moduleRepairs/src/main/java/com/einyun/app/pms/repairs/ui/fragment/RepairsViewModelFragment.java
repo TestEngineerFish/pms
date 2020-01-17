@@ -68,9 +68,9 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3
  * Paging Demo
  * Paging Component
  */
-public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener , RepairsActivity.GrabListener {
+public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener, RepairsActivity.GrabListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
-    private SelectPopUpView selectPopUpView=null;
+    private SelectPopUpView selectPopUpView = null;
     RepairsPageRequest request;
 
     public RepairsViewModelFragment() {
@@ -127,6 +127,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                             List<SelectModel> condition = builder.build();
                             selectPopUpView = new SelectPopUpView(getActivity(), condition)
                                     .setOnSelectedListener(selected -> handleSelect(selected));
+                            selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
                         }
 
                         @Override
@@ -134,10 +135,9 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
                         }
                     }, BasicDataTypeEnum.REPAIR_AREA);
-
-
+                } else {
+                    selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
                 }
-                selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
             }
         });
     }
@@ -345,7 +345,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
 
     @Override
     public void onGrabed() {
-        Log.d("test","hhh");
+        Log.d("test", "hhh");
         viewModel.loadPagingData(request, FRAGMENT_REPAIR_GRAB).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });

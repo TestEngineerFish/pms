@@ -5,8 +5,8 @@ android {
         applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 201
-        versionName "2.0.1"
+        versionCode 202
+        versionName "2.0.2"
         multiDexEnabled true
 //        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
