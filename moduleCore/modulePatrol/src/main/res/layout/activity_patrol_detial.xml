@@ -21,7 +21,7 @@
         <include
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
-        <include layout="@layout/layout_page_state" android:id="@+id/page_state"/>
+        <include android:visibility="gone"  layout="@layout/layout_page_state" android:id="@+id/page_state"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
