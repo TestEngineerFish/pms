@@ -553,10 +553,10 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 txDefaultPosLine = position;
                 binding.tvLine.setText(txStrList.get(position));
                 mRequest.getBizData().setLine(lineTypeLists.get(position).getKey());
-                if (mCode.isEmpty()) {//正常创建
-                    mRequest.getBizData().setCode(mOrderCode);
+                mRequest.getBizData().setCode(mOrderCode);
+                if (mCode==null) {//正常创建
                 }else {//详情创建不合格单 关联编号
-                    mRequest.getBizData().setCode(mCode);
+                    mRequest.getBizData().setParent_code(mCode);
                 }
                 dimCode = lineTypeLists.get(position).getKey();
             }
