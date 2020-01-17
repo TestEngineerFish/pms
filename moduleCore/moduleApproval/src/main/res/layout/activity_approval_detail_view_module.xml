@@ -173,6 +173,7 @@
                     <RelativeLayout
                         style="@style/style_rl_normal">
                         <TextView
+                            android:id="@+id/tv_type"
                             android:text="@string/tv_resource_classification"
                             style="@style/style_text_approval_left" />
                         <TextView
@@ -192,7 +193,7 @@
                         style="@style/style_rl_normal">
                         <TextView
                             style="@style/style_text_approval_left"
-                            android:text="工单负责职位" />
+                            android:text="工单负责人" />
                         <TextView
                             android:id="@+id/tv_create_work_order_respone"
                             style="@style/style_text_approval_right" />

@@ -345,7 +345,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 //            inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);
 //        }
         //TODO 数据源
-        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), model1,model2,mPosition,mPositionState);
+        inquiriesTypeSelectPopWindow = new DisqualifiedTypeSelectPopWindow(getActivity(), model1,model2,mPosition,mPositionState,getFragmentTag());
         inquiriesTypeSelectPopWindow.setOnItemClickListener(this);
         if (!inquiriesTypeSelectPopWindow.isShowing()) {
             inquiriesTypeSelectPopWindow.showAsDropDown(binding.llTableLine);

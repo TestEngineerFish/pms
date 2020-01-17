@@ -230,9 +230,9 @@
                      style="@style/style_rl_normal">
                      <TextView
                          style="@style/style_text_approval_left"
-                         android:text="@string/tv_finish_time" />
+                         android:text="实际完成时间" />
                      <TextView
-                         android:text="@{module.data.customer_enquiry_model.c_deadline_time}"
+                         android:text="@{module.data.customer_enquiry_model.close_time}"
                          android:id="@+id/tv_finish_time"
                          style="@style/style_text_approval_right"/>
                  </RelativeLayout>
