@@ -91,7 +91,6 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     protected void init() {
         super.init();
-        loadPagingData();
         binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,10 +192,17 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
     }
 
+    boolean isfresh = true;
+
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.refresh();
+        if (isfresh){
+            loadPagingData();
+            isfresh = false;
+        }else{
+            viewModel.refresh();
+        }
     }
 
     @Override
