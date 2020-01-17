@@ -111,7 +111,10 @@ public class PlanOrderActivity extends BaseHeadViewModelActivity<ActivityPlanOrd
         binding.tabSendOrder.setupWithViewPager(binding.vpSendWork);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void initData() {
