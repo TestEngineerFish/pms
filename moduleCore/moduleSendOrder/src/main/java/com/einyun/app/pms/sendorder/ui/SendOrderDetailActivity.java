@@ -272,10 +272,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         PicUrlModelConvert convert = new PicUrlModelConvert();
-        List<PicUrlModel> modelList = convert.stringToSomeObjectList(distributeWorkOrder.getData().getInfo().getPgdAttachment());
+        if (distributeWorkOrder.getData().getInfo().getPgdAttachment()!=null){
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(distributeWorkOrder.getData().getInfo().getPgdAttachment());
+            photoListInfoAdapter.updateList(modelList);
+        }
         if (distributeWorkOrder.getData().getInfo().getAftPic() != null) {
             List<PicUrlModel> modelListHandle = convert.stringToSomeObjectList(distributeWorkOrder.getData().getInfo().getAftPic());
-            photoListInfoAdapter.updateList(modelList);
             photoHandleListAdapter.updateList(modelListHandle);
         }
     }

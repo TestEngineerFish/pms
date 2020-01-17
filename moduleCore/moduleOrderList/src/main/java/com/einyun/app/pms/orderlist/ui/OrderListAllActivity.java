@@ -85,10 +85,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     OrderListPageRequest request;
     protected SelectPopUpView selectPopUpView;
     private GetNodeIdRequest getNodeIdRequest;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_order_list_all;
     }
+
     private String nodeId;
 
     @Override
@@ -158,17 +160,15 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                                     List<SelectModel> condition = builder.build();
                                     selectPopUpView = new SelectPopUpView(OrderListAllActivity.this, condition)
                                             .setOnSelectedListener(selected -> handleRepairSelect(selected));
-                                    selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
-                                }else {
-                                    selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                                 }
+                                selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                             }
 
                             @Override
                             public void onFaild(Throwable throwable) {
 
                             }
-                        },REPAIR_AREA);
+                        }, REPAIR_AREA);
                         break;
                     case RouteKey.ORDER_LIST_PATRO:
                         showPatroConditionView();
@@ -188,7 +188,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                             public void onFaild(Throwable throwable) {
 
                             }
-                        },LINE_TYPES,RESOURCE);
+                        }, LINE_TYPES, RESOURCE);
                         break;
                     case RouteKey.ORDER_LIST_COMPLAIN:
                         BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
@@ -211,7 +211,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                             public void onFaild(Throwable throwable) {
 
                             }
-                        }, BasicDataTypeEnum.COMPLAIN_PROPERTYS,BasicDataTypeEnum.COMPLAIN_TYPES);
+                        }, BasicDataTypeEnum.COMPLAIN_PROPERTYS, BasicDataTypeEnum.COMPLAIN_TYPES);
                         break;
                     case RouteKey.ORDER_LIST_ASK:
                         break;
@@ -226,7 +226,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     protected void initData() {
         super.initData();
         request = new OrderListPageRequest();
-        getNodeIdRequest=new GetNodeIdRequest();
+        getNodeIdRequest = new GetNodeIdRequest();
         //停止刷新
         LiveEventBus.get(LiveDataBusKey.STOP_REFRESH, Boolean.class).observe(this, shown -> {
             if (!shown) {
@@ -577,7 +577,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                         public void onFaild(Throwable throwable) {
 
                         }
-                    }, BasicDataTypeEnum.LINE_TYPES,BasicDataTypeEnum.RESOURCE);
+                    }, BasicDataTypeEnum.LINE_TYPES, BasicDataTypeEnum.RESOURCE);
 
                 }
 
@@ -613,7 +613,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             public void onFaild(Throwable throwable) {
 
             }
-        },BasicDataTypeEnum.LINE, BasicDataTypeEnum.RESOURCE);
+        }, BasicDataTypeEnum.LINE, BasicDataTypeEnum.RESOURCE);
     }
 
     /**
@@ -687,12 +687,11 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     }
 
     /**
-     *
      * 根据id获取nodeId
-     * */
+     */
 
-    private void getNodeId(OrderListModel data){
-        viewModel.getNodeId(getNodeIdRequest,data);
+    private void getNodeId(OrderListModel data) {
+        viewModel.getNodeId(getNodeIdRequest, data);
     }
 
 }

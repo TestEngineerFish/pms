@@ -118,26 +118,25 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             @Override
             public void onClick(View v) {
                 //弹出筛选view
-                if (selectPopUpView == null) {
-                    BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
-                        @Override
-                        public void call(BasicData data) {
+
+                BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                    @Override
+                    public void call(BasicData data) {
+                        if (selectPopUpView == null) {
                             ConditionBuilder builder = new ConditionBuilder();
                             builder.addRepairArea(data.getRepairArea());
                             List<SelectModel> condition = builder.build();
                             selectPopUpView = new SelectPopUpView(getActivity(), condition)
                                     .setOnSelectedListener(selected -> handleSelect(selected));
-                            selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
                         }
+                        selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
+                    }
 
-                        @Override
-                        public void onFaild(Throwable throwable) {
+                    @Override
+                    public void onFaild(Throwable throwable) {
 
-                        }
-                    }, BasicDataTypeEnum.REPAIR_AREA);
-                } else {
-                    selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
-                }
+                    }
+                }, BasicDataTypeEnum.REPAIR_AREA);
             }
         });
     }
