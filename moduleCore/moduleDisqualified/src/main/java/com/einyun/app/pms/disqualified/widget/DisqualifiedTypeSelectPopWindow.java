@@ -168,8 +168,10 @@ public class DisqualifiedTypeSelectPopWindow extends PopupWindow {
         rvLine.setAdapter(adapter);
 
 
-        mInquiriesNewCreateTypesModule.addAll(mInquiriesTypesModule2);
-        mInquiriesNewCreateTypesModule.remove(mInquiriesNewCreateTypesModule.size()-1);
+        if (mInquiriesTypesModule2.size()>0) {
+            mInquiriesNewCreateTypesModule.addAll(mInquiriesTypesModule2);
+            mInquiriesNewCreateTypesModule.remove(mInquiriesNewCreateTypesModule.size()-1);
+        }
         if (fragmentTag.equals(RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW)) {
 
             adapterState.setDataList(mInquiriesNewCreateTypesModule);
