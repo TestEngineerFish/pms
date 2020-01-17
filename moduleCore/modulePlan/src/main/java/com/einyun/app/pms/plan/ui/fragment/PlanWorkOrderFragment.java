@@ -91,7 +91,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     protected void init() {
         super.init();
-
+        loadPagingData();
         binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +196,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onResume() {
         super.onResume();
-        loadPagingData();
+        viewModel.refresh();
     }
 
     @Override
@@ -221,7 +221,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         //切换筛选条件
         viewModel.getLiveEvent().observe(getActivity(), status -> {
             if (status.isRefresShown()) {
-                loadPagingData();
+                viewModel.switchCondition(getFragmentTag());
             }
         });
         RecyclerView mRecyclerView = binding.workSendList;
