@@ -190,6 +190,7 @@
                             style="@style/style_text_approval_right" />
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/ll_order"
                         style="@style/style_rl_normal">
                         <TextView
                             style="@style/style_text_approval_left"

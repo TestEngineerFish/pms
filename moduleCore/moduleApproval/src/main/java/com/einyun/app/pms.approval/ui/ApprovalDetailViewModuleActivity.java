@@ -235,6 +235,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             switch (subType) {//巡查计划 都需要把资源分类改为分类，工单负责职位 改为工单负责人（根据pc端修改）
                 case ApprovalDataKey.UPDATE_PATROL_PLAN:
                 case ApprovalDataKey.CREATE_PATROL_PLAN:
+                    binding.llOrder.setVisibility(View.GONE);
                     binding.tvType.setText("分类");
                     break;
             }
