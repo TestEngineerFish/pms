@@ -282,14 +282,9 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      * */
     public void onPlotClick(){
         //弹出分期view
-        if (periodizationView==null) {
-
-            periodizationView = new PeriodizationView();
-        }
-        if (!periodizationView.isVisible()) {
-            periodizationView.setPeriodListener(CustomerInquiriesViewModuleFragment.this::onPeriodSelectListener);
-            periodizationView.show(getActivity().getSupportFragmentManager(),"");
-        }
+        PeriodizationView periodizationView=new PeriodizationView();
+        periodizationView.setPeriodListener(CustomerInquiriesViewModuleFragment.this::onPeriodSelectListener);
+        periodizationView.show(getActivity().getSupportFragmentManager(),"");
     }
     /**
      *分期返回

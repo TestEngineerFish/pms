@@ -77,6 +77,8 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     private String format;
     @Autowired(name = RouteKey.KEY_MODEL_DATA)
     Serializable DbRequest;
+    @Autowired(name =RouteKey.CODE )
+    String mCode;
     private CreateUnQualityRequest mDbRequest;
 
     @Override
@@ -552,6 +554,10 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 binding.tvLine.setText(txStrList.get(position));
                 mRequest.getBizData().setLine(lineTypeLists.get(position).getKey());
                 mRequest.getBizData().setCode(mOrderCode);
+                if (mCode==null) {//正常创建
+                }else {//详情创建不合格单 关联编号
+                    mRequest.getBizData().setParent_code(mCode);
+                }
                 dimCode = lineTypeLists.get(position).getKey();
             }
         });

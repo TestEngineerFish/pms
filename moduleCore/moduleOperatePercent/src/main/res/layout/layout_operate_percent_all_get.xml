@@ -64,9 +64,11 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginRight="@dimen/px_40">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -91,7 +93,7 @@
                         <ProgressBar
                             android:id="@+id/all_get_amount_pro"
                             style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="@dimen/px_358"
+                            android:layout_width="match_parent"
                             android:layout_height="@dimen/px_10"
                             android:layout_marginLeft="@dimen/px_20"
                             android:layout_marginTop="@dimen/px_27"
@@ -124,12 +126,13 @@
                         </RelativeLayout>
                     </LinearLayout>
                     <ImageView
-                        android:layout_width="@dimen/px_192"
-                        android:layout_height="@dimen/px_192"
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/all_get_icon"
                         android:layout_marginTop="@dimen/px_47"
-                        android:layout_marginLeft="@dimen/px_40"
-                        android:scaleType="fitXY"/>
+                        android:layout_marginRight="@dimen/px_20"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

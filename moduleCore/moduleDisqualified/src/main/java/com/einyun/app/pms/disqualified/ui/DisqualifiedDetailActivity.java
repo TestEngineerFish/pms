@@ -74,6 +74,8 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     private UnQualityFeedBackRequest mFeedBackRequest;
     private UnQualityVerificationRequest mValidateRequest;
     private String format;
+    private String code;
+
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
         return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
@@ -193,6 +195,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             return;
         }
 //        updatePageUIState(PageUIState.FILLDATA.getState());
+        code = detailModule.getData().getUnqualified_model().getCode();
         String status = detailModule.getData().getUnqualified_model().getStatus();
         switch (status) {
             case DisqualifiedDataKey.STATUS_CREATE_STEP://新生成
@@ -413,7 +416,10 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                         }else {
 //                            ToastUtil.show(getApplicationContext(), R.string.tv_validate_suc);
                             viewModel.deleteVerificationRequest("v_"+mTaskId);
-                            ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
+                                    .withString(DisqualifiedDataKey.CODE,code)
+                                    .navigation();
                             finish();
                         }
                     }

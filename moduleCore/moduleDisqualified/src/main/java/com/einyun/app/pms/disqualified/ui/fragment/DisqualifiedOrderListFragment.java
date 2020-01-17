@@ -276,14 +276,9 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
      * */
     public void onPlotClick(){
         //弹出分期view
-        if (periodizationView==null) {
-
-            periodizationView = new PeriodizationView();
-        }
-        if (!periodizationView.isVisible()) {
-            periodizationView.setPeriodListener(DisqualifiedOrderListFragment.this::onPeriodSelectListener);
-            periodizationView.show(getActivity().getSupportFragmentManager(),"");
-        }
+        PeriodizationView periodizationView=new PeriodizationView();
+        periodizationView.setPeriodListener(DisqualifiedOrderListFragment.this::onPeriodSelectListener);
+        periodizationView.show(getActivity().getSupportFragmentManager(),"");
     }
     /**
      *分期返回
