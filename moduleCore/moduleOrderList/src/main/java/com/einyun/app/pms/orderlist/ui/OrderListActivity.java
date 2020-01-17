@@ -30,10 +30,9 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.order_list);
         if (DataConstants.WORK_ORDER_LIST_TYPE_CREATE.equals(type)) {
-            binding.ogPlanOrder.setVisibility(View.GONE);
+            binding.ogPlanOrder.setVisibility(View.INVISIBLE);
             binding.secondLine.setVisibility(View.GONE);
             binding.ogPatroOrder.setVisibility(View.INVISIBLE);
-            binding.orderUn.setVisibility(View.VISIBLE);
             setHeadTitle("创建工单");
         }
     }
@@ -46,7 +45,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
                 //创建派工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER).navigation();
             }
-            if (v.getId() == R.id.order_un) {
+            if (v.getId() == R.id.og_unwell_order) {
                 //不合格单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
             }
@@ -112,7 +111,6 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
         binding.ogPatroOrder.setOnClickListener(this);
         binding.ogPatroOrder.setOnClickListener(this);
         binding.ogUnwellOrder.setOnClickListener(this);
-        binding.orderUn.setOnClickListener(this);
         binding.clientComplainOrder.setOnClickListener(this);
         binding.clientEnquiryOrder.setOnClickListener(this);
         binding.clientRepairsOrder.setOnClickListener(this);

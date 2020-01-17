@@ -146,6 +146,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.panelHandleForm.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+        binding.panelHandleInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
     }
 
     /**
@@ -298,6 +299,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         ExtensionApplicationConvert convert = new ExtensionApplicationConvert();
         updateForceCloseUI(patrol, convert);//更新强制关闭信息
         uploadPostponeUI(patrol, convert);//更新申请超时信息
+        if (binding.panelHandleInfo.getRoot().getVisibility() == View.VISIBLE) {
+            if (patrolInfo.getData() != null && patrolInfo.getData().getZyxcgd() != null && StringUtil.isNullStr(patrolInfo.getData().getZyxcgd().getF_files())) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
+                binding.panelHandleInfo.imgList.setLayoutManager(new LinearLayoutManager(
+                        this,
+                        LinearLayoutManager.HORIZONTAL,
+                        false));
+                binding.panelHandleInfo.imgList.setAdapter(adapter);
+                PicUrlModelConvert imgConvert = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = imgConvert.stringToSomeObjectList(patrolInfo.getData().getZyxcgd().getF_files());
+                adapter.updateList(modelList);
+            }
+        }
     }
 
     protected void updatePageUIState(int state) {
