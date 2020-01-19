@@ -122,8 +122,6 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                             } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                 onAgree(binding);
                             }
-                        }else{
-                            onNoneHandle(binding);
                         }
                     }
                 }

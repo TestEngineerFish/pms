@@ -140,8 +140,11 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 
     @Override
     protected void setUpData() {
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
         request = new OperateInRequest();
         request.setOrgCodes(orgCodes);
+        request.setDate(formatter.format(date));
         if (tag.equals(FRAGMENT_PERCENT_GET)) {
             request.setIncomeType("1");
         } else {
