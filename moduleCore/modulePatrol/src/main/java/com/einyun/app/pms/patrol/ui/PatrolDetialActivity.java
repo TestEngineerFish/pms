@@ -432,6 +432,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
                 binding.cdWorkNodes.setVisibility(View.VISIBLE);
             }
+        } else if (state == ApplyState.REJECT.getState()){
+            binding.cdWorkNodes.setVisibility(View.VISIBLE);
+            binding.panelHandleForm.setVisibility(View.VISIBLE);
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
+            binding.btnSubmit.setVisibility(View.VISIBLE);
         }
     }
 
