@@ -13,7 +13,7 @@ import com.einyun.app.base.db.converter.ExtensionApplicationBeanConvert;
 
 import java.util.List;
 
-@Entity(tableName = "patrols_info",primaryKeys = {"id","userId"})
+@Entity(tableName = "patrols_info", primaryKeys = {"id", "userId"})
 public class PatrolInfo {
     private String taskId;
     @NonNull
@@ -72,6 +72,16 @@ public class PatrolInfo {
 
     public ExtensionApplication getDelayExtensionApplication() {
         return delayExtensionApplication;
+    }
+
+    public ExtensionApplication getDelayExtensionApplicationPost(int applyType) {
+        if (delayExtensionApplication == null) {
+            return null;
+        }
+        if (applyType == delayExtensionApplication.getApplicationState()) {
+            return delayExtensionApplication;
+        }
+        return null;
     }
 
     public void setDelayExtensionApplication(ExtensionApplication delayExtensionApplication) {

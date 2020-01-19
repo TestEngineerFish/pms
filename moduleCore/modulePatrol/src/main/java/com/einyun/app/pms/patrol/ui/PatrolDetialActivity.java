@@ -47,6 +47,7 @@ import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
+import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.pms.patrol.R;
@@ -433,6 +434,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
                 binding.cdWorkNodes.setVisibility(View.VISIBLE);
             }
+        } else if (state == ApplyState.REJECT.getState()){
+            binding.cdWorkNodes.setVisibility(View.VISIBLE);
+            binding.panelHandleForm.setVisibility(View.VISIBLE);
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
+            binding.btnSubmit.setVisibility(View.VISIBLE);
         }
     }
 
@@ -594,8 +601,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
-                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplication() == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
-                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplication() == null ? 0 : 1)
+                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
+                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : 1)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_OPTION);
     }
 

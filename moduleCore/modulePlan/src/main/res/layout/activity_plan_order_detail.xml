@@ -509,7 +509,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="申请关闭" />
+                                android:text="强制关闭" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
