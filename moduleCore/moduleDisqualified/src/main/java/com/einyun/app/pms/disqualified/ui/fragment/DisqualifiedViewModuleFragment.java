@@ -25,6 +25,7 @@ import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
 import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -378,6 +379,9 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
      */
     @Override
     public void onItemClicked(View veiw, DisqualifiedItemModel data) {
+        if (!IsFastClick.isFastDoubleClick()) {
+            return;
+        }
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())

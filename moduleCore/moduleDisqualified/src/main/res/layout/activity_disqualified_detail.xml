@@ -225,6 +225,7 @@
                          <LinearLayout style="@style/work_order_detail_ln">
                              <TextView
                                  style="@style/work_order_detail_txt_left"
+                                 android:layout_marginBottom="@dimen/px_20"
                                  android:text="图片" />
                          </LinearLayout>
                          <LinearLayout
