@@ -164,15 +164,27 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
 //        request.setGetYearOrMonth("");
 //        request.setOrgCode("ops-xm01");
         viewModel.getOpertate(request).observe(this, model -> {
-            binding.operatePercentAllGet.allGetAmountTxt.setText(model.getTotalBaseAmount() + "");
-            binding.operatePercentAllGet.allYearRate.setText(model.getTotalYestAmountRate() + "%");
-            binding.operatePercentAllGet.allGetAmountPro.setProgress(new Double(model.getTotalYestAmountRate()).intValue());
-            binding.operatePercentCarGet.carAmountTxt.setText(model.getCwBaseAmount() + "");
-            binding.operatePercentCarGet.carBasePro.setProgress(new Double(model.getCwYestAmountRate()).intValue());
-            binding.operatePercentCarGet.carBastTxt.setText(model.getCwYestAmountRate() + "%");
-            binding.operatePercentPropertyGet.propertyBaseTxt.setText(model.getWyBaseAmount() + "");
-            binding.operatePercentPropertyGet.propertyRatePro.setProgress(new Double(model.getWyYestAmountRate()).intValue());
-            binding.operatePercentPropertyGet.propertyRateTxt.setText(model.getWyYestAmountRate() + "%");
+            try {
+                binding.operatePercentAllGet.allGetAmountTxt.setText(model.getTotalBaseAmount() + "");
+                binding.operatePercentAllGet.allYearRate.setText(model.getTotalYestAmountRate() + "%");
+                binding.operatePercentAllGet.allGetAmountPro.setProgress(new Double(model.getTotalYestAmountRate()).intValue());
+                binding.operatePercentCarGet.carAmountTxt.setText(model.getCwBaseAmount() + "");
+                binding.operatePercentCarGet.carBasePro.setProgress(new Double(model.getCwYestAmountRate()).intValue());
+                binding.operatePercentCarGet.carBastTxt.setText(model.getCwYestAmountRate() + "%");
+                binding.operatePercentPropertyGet.propertyBaseTxt.setText(model.getWyBaseAmount() + "");
+                binding.operatePercentPropertyGet.propertyRatePro.setProgress(new Double(model.getWyYestAmountRate()).intValue());
+                binding.operatePercentPropertyGet.propertyRateTxt.setText(model.getWyYestAmountRate() + "%");
+            }catch (Exception e){
+                binding.operatePercentAllGet.allGetAmountTxt.setText(0 + "");
+                binding.operatePercentAllGet.allYearRate.setText(0 + "%");
+                binding.operatePercentAllGet.allGetAmountPro.setProgress(0);
+                binding.operatePercentCarGet.carAmountTxt.setText(0+ "");
+                binding.operatePercentCarGet.carBasePro.setProgress(0);
+                binding.operatePercentCarGet.carBastTxt.setText(0 + "%");
+                binding.operatePercentPropertyGet.propertyBaseTxt.setText(0 + "");
+                binding.operatePercentPropertyGet.propertyRatePro.setProgress(0);
+                binding.operatePercentPropertyGet.propertyRateTxt.setText(0 + "%");
+            }
         });
     }
 

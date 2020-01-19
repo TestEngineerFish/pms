@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -344,13 +345,14 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.limitInput.setText(local.getNote());
             }
             if (local.getNodes() != null) {
-              /*  if (local.getNodes().size()>=3){
-                    nodesAdapter.setDataList(local.getNodes().subList(0,2));
+                if (local.getNodes().size() >3) {
+                    nodesAdapter.setDataList(local.getNodes().subList(0, 3));
                     binding.patroHistroyMore.setVisibility(View.VISIBLE);
-                }else {
-                nodesAdapter.setDataList(local.getNodes());
-                    binding.patroHistroyMore.setVisibility(View.GONE);}*/
-                nodesAdapter.setDataList(local.getNodes());
+                } else {
+                    nodesAdapter.setDataList(local.getNodes());
+                    binding.patroHistroyMore.setVisibility(View.GONE);
+                }
+                addMore(local.getNodes());
             }
         }
     }
@@ -457,13 +459,25 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected void updateWorkNodesUI(PatrolInfo patrol) {
         List<WorkNode> nodes = viewModel.loadNodes(patrol);
         nodes.add(0, new WorkNode());
-       /* if (nodes.size()>=3){
-            nodesAdapter.setDataList(nodes.subList(0,2));
+        if (nodes.size() >3) {
+            nodesAdapter.setDataList(nodes.subList(0, 3));
             binding.patroHistroyMore.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             nodesAdapter.setDataList(nodes);
-            binding.patroHistroyMore.setVisibility(View.GONE);}*/
-        nodesAdapter.setDataList(nodes);
+            binding.patroHistroyMore.setVisibility(View.GONE);
+        }
+        addMore(nodes);
+    }
+
+    //点击展示更多
+    private void addMore(List<WorkNode> nodes) {
+        binding.patroHistroyMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nodesAdapter.setDataList(nodes);
+                binding.patroHistroyMore.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
