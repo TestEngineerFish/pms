@@ -367,6 +367,19 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
         binding.orderHandle.setWorkOrder(detialModel);
 
+        if(!TextUtils.isEmpty(detialModel.getData().getInfo().getCheckResult())) {
+            binding.checkAndAcceptInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.checkAndAcceptInfo.setWorkOrder(detialModel);
+            if (detialModel.getData().getInfo().getCheckResult().equals("1")) {
+                binding.checkAndAcceptInfo.btnAgree.setVisibility(View.VISIBLE);
+            } else {
+                binding.checkAndAcceptInfo.btnReject.setVisibility(View.VISIBLE);
+            }
+            if (!TextUtils.isEmpty(detialModel.getData().getInfo().getCheckContent())) {
+                binding.checkAndAcceptInfo.checkContent.setText(detialModel.getData().getInfo().getCheckContent());
+            }
+        }
+
     }
 
     /**

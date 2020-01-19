@@ -1,5 +1,6 @@
 package com.einyun.app.pms.patrol.ui;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -121,8 +122,20 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                             } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                 onAgree(binding);
                             }
+                        }else{
+                            onNoneHandle(binding);
                         }
                     }
+                }
+
+                protected void onNoneHandle(ItemPatrolWorkNodeBinding binding) {
+                    binding.btnReject.setVisibility(View.GONE);
+                    binding.btnAgree.setVisibility(View.GONE);
+                    binding.tvResult.setVisibility(View.VISIBLE);
+                    binding.tvResult.setText(R.string.text_un_need_handle);
+                    binding.tvResult.setTypeface(null, Typeface.NORMAL);
+                    binding.tvResult.setTextSize(12);
+                    binding.tvResult.setTextColor(CommonApplication.getInstance().getResources().getColor(R.color.normal_main_text_icon_color));
                 }
 
                 protected void onReject(ItemPatrolWorkNodeBinding binding) {

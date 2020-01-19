@@ -20,6 +20,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
@@ -201,44 +202,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
     public void onSearchClick(){
 
     }
-//    private void search() {
-//        try {
-//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
-//            if (searchFragment == null) {
-//                searchFragment = new PageSearchFragment<ItemDisqualifiedSearchListBinding, PlanWorkOrder>(getActivity(), com.einyun.app.pms.plan.BR.planModel, new PageSearchListener<PlanWorkOrder>() {
-//                    @Override
-//                    public LiveData<PagedList<PlanWorkOrder>> search(String search) {
-//                        request.setSearchValue(search);
-//                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-//                            return viewModel.loadPadingNetData(request, getFragmentTag());
-//                        } else {
-//                            return viewModel.loadDonePagingNetData(request, getFragmentTag());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onItemClick(PlanWorkOrder model) {
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
-//                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
-//                                .navigation();
-//                    }
-//
-//                    @Override
-//                    public int getLayoutId() {
-//                        return R.layout.item_disqualified_search_list;
-//                    }
-//                });
-//                searchFragment.setHint("请搜索工单编号或计划名称");
-//            }
-//            searchFragment.show(getActivity().getSupportFragmentManager(), "");
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 
     /*
      * 筛选按钮点击
@@ -297,6 +261,9 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
      */
     @Override
     public void onItemClicked(View veiw, DisqualifiedItemModel data) {
+        if (!IsFastClick.isFastDoubleClick()) {
+            return;
+        }
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())

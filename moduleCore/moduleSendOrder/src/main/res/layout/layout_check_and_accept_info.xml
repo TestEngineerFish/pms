@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <data>
+        <variable
+            name="workOrder"
+            type="com.einyun.app.library.resource.workorder.model.DisttributeDetialModel" />
+    </data>
     <androidx.cardview.widget.CardView
         style="@style/cardview_style"
         >
@@ -38,8 +42,6 @@
 
         <LinearLayout style="@style/ll_create_order">
 
-            <TextView style="@style/tv_create_order_red_star" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,6 +53,7 @@
                 android:id="@+id/btn_agree"
                 android:layout_width="@dimen/px_104"
                 android:layout_height="@dimen/px_40"
+                android:visibility="gone"
                 android:layout_marginLeft="@dimen/px_75"
                 android:background="@drawable/shape_frame_corners_gray"
                 android:padding="@dimen/px_5"
@@ -61,6 +64,7 @@
                 android:id="@+id/btn_reject"
                 android:layout_width="@dimen/px_104"
                 android:layout_height="@dimen/px_40"
+                android:visibility="gone"
                 android:layout_marginLeft="@dimen/px_40"
                 android:padding="@dimen/px_5"
                 android:textSize="@dimen/font_size12"
@@ -96,27 +100,18 @@
 
         <LinearLayout style="@style/ll_create_order">
 
-            <TextView style="@style/tv_create_order_red_star" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="验收意见"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size14" />
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/ll_create_order"
-            android:layout_height="wrap_content">
-
-            <com.einyun.app.common.ui.component.limit.LimitInput
-                android:id="@+id/et_limit_suggestion"
+            <TextView
+                android:id="@+id/check_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/px_30"
-                app:hintText="请输入文字信息"
-                app:maxNumber="300" />
+                android:textSize="@dimen/font_size14"
+                android:layout_marginLeft="@dimen/px_20"/>
         </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
