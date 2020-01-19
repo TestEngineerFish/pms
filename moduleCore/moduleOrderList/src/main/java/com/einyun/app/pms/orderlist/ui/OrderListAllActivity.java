@@ -188,7 +188,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                             public void onFaild(Throwable throwable) {
 
                             }
-                        }, LINE_TYPES, RESOURCE);
+                        }, BasicDataTypeEnum.RESOURCE, BasicDataTypeEnum.LINE);
                         break;
                     case RouteKey.ORDER_LIST_COMPLAIN:
                         BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
