@@ -27,7 +27,9 @@ public class RouterUtils {
     public static final String ACTIVITY_BLOCK_CHOOSE="/choose/BlockChooseActivity";
     public static final String ACTIVITY_X5_WEBVIEW="/webview/X5WebViewActivity";
     public static final String ACTIVITY_SCANNER="/common/ScannerActivity";
-    public static final String ACTIVITY_ORDER_LIST="/main/OrderListActivity";
+    public static final String ACTIVITY_ORDER_LIST="/orderList/OrderListActivity";
+    public static final String ACTIVITY_ORDER_LIST_ALL="/orderList/OrderListAllActivity";
+    public static final String ACTIVITY_ORDER_CONDITION_PANDECT="/main/OrderConditionPandectActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
@@ -89,7 +91,9 @@ public class RouterUtils {
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
     public static final String ACTIVITY_INQUIRIES_DETAIL = "/customerInquiries/InquiriesDetailActivity";
+    public static final String ACTIVITY_INQUIRIES_ORDER_DETAIL = "/customerInquiries/InquiriesOrderDetailActivity";
     public static final String ACTIVITY_INQUIRIES_FEEDBACK = "/customerInquiries/FeedBackActivity";
+    public static final String ACTIVITY_INQUIRIES_ORDER_LIST = "/customerInquiries/InquiriesOrderList";
     /**********************客户报修****************************/
     public static final String ACTIVITY_CUSTOMER_REPAIR_DETAIL = "/repairs/RepairsDetailActivity";
     public static final String ACTIVITY_CUSTOMER_ADD_MATERIAL = "/repairs/AddMaterialActivity";
@@ -97,6 +101,13 @@ public class RouterUtils {
     //客户投诉
     public static final String ACTIVITY_COMPLAIN_PAGING="/complain/ComplainActivity";
     public static final String ACTIVITY_CUSTOMER_COMPLAIN_DETAIL = "/complain/ComplainDetailActivity";
+    //不合格单
+    public static final String ACTIVITY_DISQUALIFIED = "/disqualified/DisqualifiedActivity";
+    public static final String ACTIVITY_DISQUALIFIED_ORDER_LIST = "/disqualified/DisqualifiedOrderList";
+    public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
+    public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
+    public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
+//    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;
     public static final int ACTIVITY_REQUEST_CAMERA_OK =102;
@@ -105,6 +116,7 @@ public class RouterUtils {
     public static final int ACTIVITY_REQUEST_PERSON_CHOOSE = 105;
     public static final int ACTIVITY_REQUEST_SIGN_IN = 106;
     public static final int ACTIVITY_REQUEST_OPTION = 107;
+    public static final int ACTIVITY_REQUEST_REQUEST_PIC_PICK_SECOND = 108;
 
 
     public static final String ACTIVITY_COMMUNICATION="/complain/CommunicationActivity";

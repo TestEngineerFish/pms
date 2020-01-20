@@ -92,6 +92,9 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         divideId = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_ID, "").toString();
         divideName = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_NAME, "").toString();
         binding.tvCheckDivide.setText(divideName);
+        if(!TextUtils.isEmpty(divideName)){
+            binding.setPeriodSelected(true);
+        }
         //初始化图片
         initPhotoList();
 
@@ -106,6 +109,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
             BottomPicker.buildBottomPicker(this, items, (position, label) -> {
 
                 binding.tvCheckProject.setText(label);
+                binding.setItemSelected(true);
                 viewModel.loadProjectContent(label).observe(this, projectContentModel -> {
                     binding.tvCheckObject.setText(projectContentModel.getResourceName());
                     binding.tvPointCheckObjAddress.setText(projectContentModel.getSpecificLocation());
@@ -374,6 +378,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         divideId = orgModel.getId();
         divideName = orgModel.getName();
         divideCode = orgModel.getCode();
+        binding.setPeriodSelected(true);
         binding.tvCheckDivide.setText(divideName);
     }
 }

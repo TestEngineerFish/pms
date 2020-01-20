@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 
 import com.einyun.app.base.event.ItemClickListener;
@@ -150,7 +150,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 
                         case Constants.INQUIRIES_STATE_RETURN_VISIT:
                             binding.tvApprovalState.setText(getString(R.string.tv_for_respone));
-                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_new);
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_evaluate);
                             break;
                         default:
                             binding.tvApprovalState.setText(getString(R.string.tv_closed));
@@ -282,14 +282,9 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      * */
     public void onPlotClick(){
         //弹出分期view
-        if (periodizationView==null) {
-
-            periodizationView = new PeriodizationView();
-        }
-        if (!periodizationView.isVisible()) {
-            periodizationView.setPeriodListener(CustomerInquiriesViewModuleFragment.this::onPeriodSelectListener);
-            periodizationView.show(getActivity().getSupportFragmentManager(),"");
-        }
+        PeriodizationView periodizationView=new PeriodizationView();
+        periodizationView.setPeriodListener(CustomerInquiriesViewModuleFragment.this::onPeriodSelectListener);
+        periodizationView.show(getActivity().getSupportFragmentManager(),"");
     }
     /**
      *分期返回

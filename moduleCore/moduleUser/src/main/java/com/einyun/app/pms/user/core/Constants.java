@@ -15,7 +15,6 @@ import com.einyun.app.common.BuildConfig;
  * @Version: 1.0
  */
 public class Constants {
-    public static final String SP_KEY_TOKEN = "KEY_TOKEN";
     public static final String SP_KEY_USERID = "KEY_USERID";
     public static final String SP_KEY_SHOW_PRIVACY = "KEY_SHOW_PRIVACY";
     public static final String SP_KEY_TENANT_CODE = "KEY_TENANT_CODE";

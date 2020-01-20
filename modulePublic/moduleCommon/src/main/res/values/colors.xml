@@ -5,6 +5,7 @@
     <color name="grayBgColor">#f8f7fb</color>
     <color name="hint_foreground_material_light">#00000000</color>
     <color name="hint_foreground_material_dark">#00000000</color>
+    <color name="grab_bg">#80000000</color>
     <color name="whiteTextColor">#ffffff</color>
     <color name="blackTextColor">#111111</color>
     <color name="grayItemColor">#555555</color>
@@ -76,5 +77,6 @@
     <color name="repair_detail_grab_color">#458dfe</color>
     <color name="repair_detail_evaluate_color">#2ebaf1</color>
     <color name="repair_detail_close_color">#cecdcd</color>
-
+    <color name="repair_circle_color">#4a5bef</color>
+    <color name="all_left_tt_color">#f36161</color>
 </resources>

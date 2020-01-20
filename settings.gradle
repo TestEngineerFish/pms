@@ -1,10 +1,11 @@
 include ':app',
         ':moduleCore',':moduleCore:moduleUser',':moduleCore:moduleMain',':moduleCore:moduleRepairs',
         ':moduleCore:moduleComplain',
+        ':moduleCore:moduleDisqualified',
         ':moduleCore:moduleExtra',
         ':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",":moduleCore:moduleSendOrder",
         ':moduleCore:moduleApproval',':moduleCore:modulePlan',":moduleCore:moduleCreate",":moduleCore:moduleOrderPreview",":moduleCore:moduleOperatePercent",
 
         ':modulePublic',':modulePublic:moduleCommon',
         ':modulePublic:einyunLibrary',
-        ':moduleSystem',':moduleSystem:moduleBase',':moduleSystem:moduleDB',':moduleSystem:moduleHttp',':moduleCore:moduleCustomerInquiries'
+        ':moduleSystem',':moduleSystem:moduleDB',':moduleCore:moduleCustomerInquiries',':moduleCore:moduleOrderList'

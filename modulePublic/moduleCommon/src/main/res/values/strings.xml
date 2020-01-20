@@ -53,6 +53,9 @@
         <item>待跟进</item>
         <item>已跟进</item>
     </string-array>
+    <string-array name="order_list_less">
+        <item>待跟进</item>
+    </string-array>
     <string name="search">搜索</string>
     <string name="et_limit_input_hint">请输入内容,300字以内。</string>
     <string name="tv_tiao_line">条线</string>
@@ -92,6 +95,7 @@
     <string name="create">创建</string>
     <string name="resend_success">转派成功</string>
     <string name="order_list">工单列表</string>
+    <string name="title_order_condition_pandect">工单列表</string>
     <string name="plan_order">计划工单</string>
     <string name="patro_order">巡查工单</string>
     <string name="work_preview">工作预览</string>
@@ -102,7 +106,7 @@
     <string name="txt_one_month">1个月</string>
     <string name="txt_two_month">2个月</string>
     <string name="txt_three_month">3个月</string>
-    <string name="txt_get_report_form">收费率日报表</string>
+    <string name="txt_get_report_form">收缴率日报表</string>
     <string name="txt_own_report_form">清欠率日报表</string>
     <string name="txt_get_report_rank">收缴率排名</string>
     <string name="txt_own_report_rank">清欠率排名</string>
@@ -126,6 +130,7 @@
     <string name="text_resolve_dis">处理说明</string>
     <string name="text_work_nodes">工作节点</string>
     <string name="text_work_plan">工作计划</string>
+    <string name="work_plan">计划工单</string>
     <string name="text_responsible_job">负责岗位</string>
     <string name="text_location">位置</string>
     <string name="text_alert">提示</string>
@@ -200,6 +205,9 @@
         <item>已办结</item>
         <item>抄送我</item>
     </string-array>
+    <string-array name="inquiries_order_list">
+        <item>待跟进</item>
+    </string-array>
     <string name="text_send_order">派工单</string>
     <string name="text_turn_order">转单</string>
     <string name="text_resend_to">转派至</string>
@@ -235,4 +243,34 @@
     <string name="text_repair_area">报修区域</string>
     <string name="text_repair_type_first">报修大类</string>
     <string name="text_repair_type_second">报修小类</string>
+    <string name="text_all_get">全部收费项目</string>
+    <string name="title_patrol">巡查工单</string>
+    <string name="title_ask">客户问询</string>
+    <string name="title_unwell">不合格单</string>
+
+    <!-- 不合格单开始-->
+    <string name="tv_disqualified_order">不合格单</string>
+    <string name="tv_cached">已缓存</string>
+    <string name="tv_cache">缓存</string>
+    <string name="tv_check_date">检查日期</string>
+    <string name="tv_severity">严重程度</string>
+    <string name="tv_correct_deadline">纠正截止日期</string>
+    <string name="tv_inspected">被检查人</string>
+    <!-- 不合格单结束-->
+    <!-- 审批开始   -->
+    <string-array name="approval_list_two">
+        <item>待审批</item>
+        <item>已审批</item>
+    </string-array>
+    <string-array name="approval_list_three">
+        <item>待审批</item>
+        <item>已审批</item>
+        <item>我发起的</item>
+    </string-array>
+    <!-- 审批结束   -->
+    <string name="preview_order">秩序</string>
+    <string name="preview_multi">多营</string>
+    <string name="preview_enginer">工程</string>
+    <string name="preview_service">客服</string>
+    <string name="preview_environment">环境</string>
 </resources>

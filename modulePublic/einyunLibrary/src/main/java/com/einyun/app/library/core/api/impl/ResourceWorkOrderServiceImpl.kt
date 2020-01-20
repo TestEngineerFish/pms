@@ -24,6 +24,50 @@ import com.einyun.app.library.resource.workorder.net.response.ResendOrderRespons
  * @Version:        1.0
  */
 class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
+
+
+    override fun getNodeId(
+        request: GetNodeIdRequest,
+        callBack: CallBack<GetNodeIdModel>
+    ): LiveData<GetNodeIdModel> {
+        return proxy.getNodeId(request, callBack)     }
+
+    override fun orderListAsk(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)       }
+
+    override fun orderListComplain(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)    }
+
+    override fun orderListRepair(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)    }
+
+    override fun orderListPatro(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListPatro(request, callBack)     }
+
+    override fun orderListPlan(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListDistribute(request, callBack)      }
+
+    override fun orderListDistribute(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage> {
+        return proxy.orderListDistribute(request, callBack)    }
+
     override fun getOrderPreviewSelect(callBack: CallBack<List<PreviewSelectModel>>): LiveData<List<PreviewSelectModel>> {
         return proxy.getOrderPreviewSelect(callBack)    }
 
@@ -181,15 +225,15 @@ class ResourceWorkOrderServiceImpl : ResourceWorkOrderService {
         proxy.distributeCheck(request, callBack)
     }
 
-    override fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage> {
+    override fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>> {
         return proxy.getJob(request, callBack)
     }
 
     override fun getOrgnization(
-        id: String,
-        callBack: CallBack<OrgnizationModel>
-    ): LiveData<OrgnizationModel> {
-        return proxy.getOrgnization(id, callBack)
+        request: GetOrgRequest,
+        callBack: CallBack<List<OrgnizationModel>>
+    ): LiveData<List<OrgnizationModel>> {
+        return proxy.getOrgnization(request, callBack)
     }
 
     override fun distributeDetial(orderId: String, callBack: CallBack<DisttributeDetialModel>) {

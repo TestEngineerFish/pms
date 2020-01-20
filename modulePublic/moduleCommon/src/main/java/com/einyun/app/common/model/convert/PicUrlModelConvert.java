@@ -38,7 +38,7 @@ public class PicUrlModelConvert {
     @TypeConverter
     public String someObjectListToString(List<PicUrlModel> someObjects) {
         return gson.toJson(someObjects);
-    }
+}
 
     @TypeConverter
     public String someObjectToString(PicUrlModel someObject) {

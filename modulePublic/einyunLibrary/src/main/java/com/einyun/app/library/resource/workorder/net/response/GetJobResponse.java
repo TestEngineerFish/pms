@@ -6,5 +6,5 @@ import com.einyun.app.library.resource.workorder.model.JobPage;
 
 import java.util.List;
 
-public class GetJobResponse extends BaseResponse<JobPage> {
+public class GetJobResponse extends BaseResponse<List<JobModel>> {
 }

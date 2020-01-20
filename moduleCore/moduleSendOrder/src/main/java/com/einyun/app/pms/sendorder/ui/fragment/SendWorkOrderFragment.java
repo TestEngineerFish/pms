@@ -19,7 +19,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.db.entity.Patrol;
@@ -30,6 +30,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PageUIState;
@@ -53,6 +54,7 @@ import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +79,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
 
     protected SelectPopUpView selectPopUpView;
 
-    public SendWorkOrderFragment(){
+    public SendWorkOrderFragment() {
 
     }
 
@@ -215,16 +217,16 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             public void onFaild(Throwable throwable) {
 
             }
-        });
+        }, BasicDataTypeEnum.LINE, BasicDataTypeEnum.RESOURCE);
     }
 
     private void loadPagingData() {
         viewModel.getRequest().setUserId(userModuleService.getUserId());
         if (listType == ListType.PENDING.getType()) {
             viewModel.loadPadingData().observe(this, dataBeans -> {
-                if(dataBeans.size()==0){
+                if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
-                }else{
+                } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
                 adapter.submitList(dataBeans);
@@ -232,9 +234,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             });
         } else {
             viewModel.loadDonePagingData().observe(this, dataBeans -> {
-                if(dataBeans.size()==0){
+                if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
-                }else{
+                } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
                 adapter.submitList(dataBeans);
@@ -243,7 +245,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         }
     }
 
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 
@@ -264,7 +266,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
         @SuppressLint("DiffUtilEquals")
         @Override
         public boolean areContentsTheSame(@NonNull Distribute oldItem, @NonNull Distribute newItem) {
-            return oldItem.getID_()==newItem.getID_();
+            return oldItem.getID_() == newItem.getID_();
         }
 
         @Nullable
@@ -338,7 +340,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     private void handleSelect(Map selected) {
         if (selected.size() > 0) {
             binding.panelCondition.setConditionSelected(true);
-        }else{
+        } else {
             binding.panelCondition.setConditionSelected(false);
         }
         viewModel.onConditionSelected(selected);

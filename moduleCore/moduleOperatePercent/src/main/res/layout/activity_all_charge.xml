@@ -7,18 +7,27 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.AllChargeActivity">
+        android:layout_height="match_parent">
 
-        <include
-            layout="@layout/include_layout_activity_head"
-            android:id="@+id/head_bar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.AllChargeActivity">
 
-        <include
-            layout="@layout/layout_operate_today_all_get"
-            android:id="@+id/rank_list" />
-    </LinearLayout>
+            <include
+                android:id="@+id/head_bar"
+                layout="@layout/include_layout_activity_head" />
+
+            <include
+                android:id="@+id/rank_list"
+                layout="@layout/layout_operate_today_all_get" />
+
+            <include
+                android:id="@+id/target_finish"
+                layout="@layout/layout_finish" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -1,3 +1,3 @@
-include ':moduleBase', ':moduleDB', ':moduleHttp', ':moduleService'
+include  ':moduleDB', ':moduleHttp', ':moduleService'
 
 

@@ -11,6 +11,8 @@
 
     <androidx.cardview.widget.CardView
         style="@style/cardview_style"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="@dimen/px_20"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground">
@@ -18,8 +20,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
@@ -49,6 +49,13 @@
                     android:text="@string/tv_approval_wait"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
+                <ImageView
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/iv_pop_line"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </RelativeLayout>
 
             <ImageView

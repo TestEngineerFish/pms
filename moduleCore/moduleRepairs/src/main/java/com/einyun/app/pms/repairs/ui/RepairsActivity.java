@@ -1,18 +1,25 @@
 package com.einyun.app.pms.repairs.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseActivity;
+import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.workorder.model.AreaModel;
 import com.einyun.app.pms.repairs.R;
 import com.einyun.app.pms.repairs.databinding.RepairsActivityBinding;
@@ -37,23 +44,27 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_P
  * demo of paging
  */
 @Route(path = RouterUtils.ACTIVITY_REPAIRS_PAGING)
-public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBinding, RepairsViewModel> {
+public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBinding, RepairsViewModel> implements View.OnClickListener {
     private String[] mTitles;//tab标题
-    public static List<SelectModel> selectModelList=new ArrayList<>();
-
+    public static List<SelectModel> selectModelList = new ArrayList<>();
+    private String taskId;
+     ArrayList<RepairsViewModelFragment> fragments;
+    public interface GrabListener{
+        void onGrabed();
+    }
+    private GrabListener grabListener;
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_work_repair);
-        mTitles=new String[]{getResources().getString(R.string.text_grab_order),getResources().getString(R.string.text_wait_follow),getResources().getString(R.string.text_wait_feedback),getResources().getString(R.string.text_already_follow),getResources().getString(R.string.text_already_done),getResources().getString(R.string.text_copy_me)};
-        final ArrayList<RepairsViewModelFragment> fragments = new ArrayList<>();
-        String fragmentTags[]=new String[]{FRAGMENT_REPAIR_GRAB,FRAGMENT_REPAIR_WAIT_FOLLOW,FRAGMENT_REPAIR_WAIT_FEED,FRAGMENT_REPAIR_ALREADY_FOLLOW,FRAGMENT_REPAIR_ALREDY_DONE,FRAGMENT_REPAIR_COPY_ME};
+        mTitles = new String[]{getResources().getString(R.string.text_grab_order), getResources().getString(R.string.text_wait_follow), getResources().getString(R.string.text_wait_feedback), getResources().getString(R.string.text_already_follow), getResources().getString(R.string.text_already_done), getResources().getString(R.string.text_copy_me)};
+        fragments = new ArrayList<>();
+        String fragmentTags[] = new String[]{FRAGMENT_REPAIR_GRAB, FRAGMENT_REPAIR_WAIT_FOLLOW, FRAGMENT_REPAIR_WAIT_FEED, FRAGMENT_REPAIR_ALREADY_FOLLOW, FRAGMENT_REPAIR_ALREDY_DONE, FRAGMENT_REPAIR_COPY_ME};
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
             bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);
             fragments.add(RepairsViewModelFragment.newInstance(bundle));
         }
-
         binding.vpRepair.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public RepairsViewModelFragment getItem(int i) {
@@ -106,4 +117,79 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         super.initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
+        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+            binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
+            binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
+            binding.grabFrame.grabClose.setOnClickListener(this);
+            binding.grabFrame.grabBtn.setOnClickListener(this);
+            taskId = extras.getString(RouteKey.KEY_TASK_ID);
+        }
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.grab_close) {
+            binding.grabFrame.getRoot().setVisibility(View.GONE);
+            return;
+        }
+        if (v.getId() == R.id.grab_btn) {
+            grab();
+            return;
+        }
+
+    }
+
+    /**
+     * 抢单
+     */
+    private void grab() {
+        if (taskId != null) {
+            viewModel.grabRepair(taskId).observe(this, status -> {
+                if (status.booleanValue()) {
+                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                            .setMsg(getResources().getString(R.string.text_grab_success)).
+                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    binding.grabFrame.getRoot().setVisibility(View.GONE);
+                                    fragments.get(0).loadPagingData();
+                                    fragments.get(1).loadPagingData();
+                                   /* if (grabListener!=null){
+                                        grabListener.onGrabed();
+                                    }*/
+                                    getIntent().setType("1");
+                                }
+                            }).show();
+
+                } else {
+                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                            .setMsg(getResources().getString(R.string.text_grab_faile)).
+                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    getIntent().setType("1");
+
+                                }
+                            }).show();
+                }
+            });
+        }
+    }
+
+    public void setLinstenr(GrabListener linstenr) {
+        this.grabListener = linstenr;
+    }
 }

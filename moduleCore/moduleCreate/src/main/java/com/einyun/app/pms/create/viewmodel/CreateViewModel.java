@@ -10,7 +10,9 @@ import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.ImageUploadManager;
+import com.einyun.app.common.model.BasicData;
 import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -63,32 +65,36 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
 
     @Override
     public LiveData<List<DictDataModel>> getByTypeKey(String typeKey) {
-        return dictService.getByTypeKey(typeKey, new CallBack<List<DictDataModel>>() {
+        MutableLiveData<List<DictDataModel>> liveData = new MutableLiveData<>();
+        BasicDataManager.getInstance().loadBasicDataByTypeKey(new CallBack<List<DictDataModel>>() {
             @Override
             public void call(List<DictDataModel> data) {
-
+                liveData.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
+
             }
-        });
+        }, typeKey);
+        return liveData;
     }
 
     @Override
     public LiveData<List<DictDataModel>> getTypesListByKey(String typeKey) {
-        return dictService.getTypesListByKey(typeKey, new CallBack<List<DictDataModel>>() {
+        MutableLiveData<List<DictDataModel>> liveData = new MutableLiveData<>();
+        BasicDataManager.getInstance().loadBasicDataTypesListKey(new CallBack<List<DictDataModel>>() {
             @Override
             public void call(List<DictDataModel> data) {
-
+                liveData.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
+
             }
-        });
+        }, typeKey);
+        return liveData;
     }
 
     public LiveData<List<TypeAndLine>> typeAndLineList() {
@@ -237,7 +243,7 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
     }
 
     public LiveData<ComplainModelPageResult> complainWorkListdPage(String mobile) {
-        return workOrderService.complainWorkListdPage(new PageBean(PageBean.DEFAULT_PAGE,PageBean.MAX_PAGE_SIZE), mobile, new CallBack<ComplainModelPageResult>() {
+        return workOrderService.complainWorkListdPage(new PageBean(PageBean.DEFAULT_PAGE, PageBean.MAX_PAGE_SIZE), mobile, new CallBack<ComplainModelPageResult>() {
             @Override
             public void call(ComplainModelPageResult data) {
             }
@@ -306,9 +312,22 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
             }
         });
     }
+    @Override
+    public LiveData<List<OrgModel>> getCheckedPerson(String orgId) {
+        return userCenterService.getCheckedPerson(orgId, new CallBack<List<OrgModel>>() {
+            @Override
+            public void call(List<OrgModel> data) {
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
     /**
      * 获取报修类别与条线
+     *
      * @return
      */
     public LiveData<Door> repairTypeList() {

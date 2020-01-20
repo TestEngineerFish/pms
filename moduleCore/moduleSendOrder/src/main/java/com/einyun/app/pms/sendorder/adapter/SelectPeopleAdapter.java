@@ -27,15 +27,15 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
     ItemSelectPeopleGroupBinding groupBinding;
     ItemSelectPeopleChildBinding childBinding;
     private MutableLiveData<List<JobModel>>jobList=new MutableLiveData<>();
-    private MutableLiveData<OrgnizationModel> orgnizationModel;
+    private MutableLiveData<List<OrgnizationModel>> orgnizationModelList;
     public SelectPeopleAdapter(Context mcontext) {
         this.mcontext = mcontext;
     }
 
-    public SelectPeopleAdapter(Context mcontext, MutableLiveData<List<JobModel>> list, MutableLiveData<OrgnizationModel> orgnizationModel) {
+    public SelectPeopleAdapter(Context mcontext, MutableLiveData<List<JobModel>> list, MutableLiveData<List<OrgnizationModel>> orgnizationModel) {
         this.mcontext = mcontext;
         this.jobList = list;
-        this.orgnizationModel = orgnizationModel;
+        this.orgnizationModelList = orgnizationModel;
     }
 
     public String[] groupString = {"按组织架构选择", "按审批角色选择"};
@@ -63,7 +63,7 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         if (groupPosition==0){
-            return orgnizationModel;
+            return orgnizationModelList.getValue().get(childPosition);
         }else {
             return jobList.getValue().get(childPosition);
         }
@@ -97,13 +97,13 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
         View view=LayoutInflater.from(mcontext).inflate(R.layout.item_select_people_child,null);
         childBinding=DataBindingUtil.bind(view);
         if (groupPosition==0){
-            childBinding.itemSelectChildTxt.setText(orgnizationModel.getValue().getName());
+            childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition).getName());
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         ArrayList<String> list=new ArrayList<>();
-                        list.add(orgnizationModel.getValue().getId());
-                        list.add(orgnizationModel.getValue().getParentId());
+                        list.add(orgnizationModelList.getValue().get(childPosition).getId());
+                        list.add(orgnizationModelList.getValue().get(childPosition).getParentId());
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list)
                                 .navigation();
                 }
@@ -114,12 +114,11 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                 @Override
                 public void onClick(View v) {
                     ArrayList<String> list1=new ArrayList<>();
-                    list1.add(orgnizationModel.getValue().getId());
-                    list1.add(orgnizationModel.getValue().getParentId());
+                    list1.add(orgnizationModelList.getValue().get(0).getParentId());
                     ArrayList<String> list2=new ArrayList<>();
                     list2.add(jobList.getValue().get(childPosition).getId());
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list1)
-                            .withStringArrayList(RouteKey.KEY_JOB_ID_LIST,list2).navigation();
+                            .withStringArrayList(RouteKey.KEY_ROLE_ID_LIST,list2).navigation();
                 }
             });
         }

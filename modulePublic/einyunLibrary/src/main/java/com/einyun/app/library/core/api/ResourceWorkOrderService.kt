@@ -113,10 +113,10 @@ interface ResourceWorkOrderService : EinyunService {
     ): LiveData<List<ResourceTypeBean>>
 
     //获取组织结构
-    fun getOrgnization(id: String, callBack: CallBack<OrgnizationModel>): LiveData<OrgnizationModel>
+    fun getOrgnization(request: GetOrgRequest, callBack: CallBack<List<OrgnizationModel>>): LiveData<List<OrgnizationModel>>
     //获取审批角色
 
-    fun getJob(request: GetJobRequest, callBack: CallBack<JobPage>): LiveData<JobPage>
+    fun getJob(request: GetJobRequest, callBack: CallBack<List<JobModel>>): LiveData<List<JobModel>>
 
     //转派工单
     fun resendOrder(
@@ -212,4 +212,46 @@ interface ResourceWorkOrderService : EinyunService {
     fun getOrderPreviewSelect(
         callBack: CallBack<List<PreviewSelectModel>>
         ): LiveData<List<PreviewSelectModel>>
+
+    //工单列表派工单
+    fun orderListDistribute(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表计划工单
+    fun orderListPlan(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表巡查工单
+    fun orderListPatro(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表巡查工单
+    fun orderListRepair(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表投诉工单
+    fun orderListComplain(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表投诉工单
+    fun orderListAsk(
+        request: OrderListPageRequest,
+        callBack: CallBack<OrderListPage>
+    ): LiveData<OrderListPage>
+
+    //工单列表投诉工单
+    fun getNodeId(
+        request: GetNodeIdRequest,
+        callBack: CallBack<GetNodeIdModel>
+    ): LiveData<GetNodeIdModel>
 }

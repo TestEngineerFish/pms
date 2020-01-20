@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="itemSelected"
+            type="Boolean" />
+        <variable
+            name="periodSelected"
+            type="Boolean" />
         <variable
             name="callBack"
             type="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity" />
@@ -21,7 +26,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/point_check_bg"
+            android:background="@color/activity_bg_color"
             >
 
             <androidx.core.widget.NestedScrollView
@@ -33,12 +38,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/px_10"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/px_2"
                         android:background="#ffffff"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -74,9 +80,10 @@
                             android:background="@null"
                             android:gravity="right|center_vertical"
                             android:hint="@string/text_choose_hint"
+                            app:condition_select="@{periodSelected}"
                             android:onClick="@{()->callBack.onDivideClick()}"
                             android:textColorHint="@color/normal_main_text_icon_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/font_size15" />
 
                         <ImageView
                             android:id="@+id/iv_check_divide_arrow"
@@ -125,6 +132,7 @@
                             android:background="@null"
                             android:gravity="right"
                             android:hint="@string/text_choose_hint"
+                            app:condition_select="@{itemSelected}"
                             android:onClick="@{()->callBack.onProjectClick()}"
                             android:textColorHint="@color/normal_main_text_icon_color"
                             android:textSize="15sp" />
@@ -148,7 +156,7 @@
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/px_30"
                         android:paddingTop="8dp"
-                        android:paddingRight="10dp"
+                        android:paddingRight="@dimen/px_30"
                         android:paddingBottom="8dp">
 
 
@@ -175,7 +183,7 @@
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_marginLeft="4dp"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             app:srcCompat="@mipmap/icon_arrow_right" />
 
                     </LinearLayout>
@@ -190,7 +198,7 @@
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/px_30"
                         android:paddingTop="8dp"
-                        android:paddingRight="10dp"
+                        android:paddingRight="@dimen/px_30"
                         android:paddingBottom="8dp">
 
                         <TextView
@@ -216,7 +224,7 @@
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_marginLeft="4dp"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             app:srcCompat="@mipmap/icon_arrow_right" />
                     </LinearLayout>
 
@@ -248,7 +256,7 @@
                             android:text="*"
                             android:textColor="#e33535"
                             android:textSize="20sp"
-                            android:visibility="invisible" />
+                            android:visibility="gone" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -318,6 +326,7 @@
                                 android:id="@+id/point_ck_imglist"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_20"
                                 android:layout_marginTop="8dp">
 
                             </androidx.recyclerview.widget.RecyclerView>

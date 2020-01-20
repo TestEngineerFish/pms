@@ -47,6 +47,12 @@ class UserCenterServiceImplProxy : UserCenterService {
         return instance?.getDisposePerson(orgId, dimCode, callBack)!!
     }
 
+    override fun getCheckedPerson(
+        orgId: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
+        return instance?.getCheckedPerson(orgId,  callBack)!!
+    }
     override fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String> {
         return instance?.getWorkStatus(userId, callBack)!!
     }
