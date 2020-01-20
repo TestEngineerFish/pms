@@ -405,8 +405,13 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     }
 
     private void showOrHide(){
-        binding.sendOrder.getRoot().setVisibility(View.GONE);
-        binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+        if (StringUtil.isNullStr(detail.getF_pd_time())){
+            binding.sendOrder.getRoot().setVisibility(View.GONE);
+            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+        }else{
+            binding.sendOrder.getRoot().setVisibility(View.GONE);
+            binding.sendOrderInfo.getRoot().setVisibility(View.GONE);
+        }
     }
 
     /**
