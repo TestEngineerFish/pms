@@ -69,7 +69,13 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
         }
         ApprovalDetailInfoBean.RowsBean rowsBean = rows.get(position);
         hodler.tvTime.setText( TimeUtil.getAllTime(rowsBean.getAudit_date(),true));
-        hodler.tvApprovalContent.setText(rowsBean.getComment());
+        if (rowsBean.getComment().isEmpty()) {
+
+            hodler.tvApprovalContent.setVisibility(View.GONE);
+        }else {
+            hodler.tvApprovalContent.setText(rowsBean.getComment());
+
+        }
         //富文本
         String content=rowsBean.getAuditor()+" ("+rowsBean.getApprovalRole()+ ")";
         SpannableString mSpannableString = new SpannableString(rowsBean.getAuditor()+" ("+rowsBean.getApprovalRole()+")");

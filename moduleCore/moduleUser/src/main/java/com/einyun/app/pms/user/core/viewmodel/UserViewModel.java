@@ -1,5 +1,6 @@
 package com.einyun.app.pms.user.core.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
@@ -83,6 +84,9 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 if (isShowLoading) {
                     //关闭Loading
                     hideLoading();
+                } else {
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                    ActivityUtil.getActivityList().get(0).finish();
                 }
                 ThrowableParser.onFailed(throwable);
             }
@@ -110,7 +114,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             @Override
             public void onFaild(Throwable throwable) {
                 ThrowableParser.onFailed(throwable);
-                if (splash){
+                if (splash) {
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
                 }
             }

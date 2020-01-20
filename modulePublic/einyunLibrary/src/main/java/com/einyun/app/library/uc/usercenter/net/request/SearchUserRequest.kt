@@ -19,7 +19,7 @@ class SearchUserRequest {
     var params: UserIds? = null
 
     class UserIds {
-        var jobIdList: List<String>? = null
+        var roleIdList: List<String>? = null
         var orgIdList: List<String>? = null
     }
 }

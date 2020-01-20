@@ -1,0 +1,60 @@
+<resources>
+
+    <style name="style_rl_normal">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="unquality_order_info_left">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="style_text_disqualified_left_feedback">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/px_50</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/greyTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="tv_disqualified_detail_left">
+        <item name="android:layout_width">@dimen/px_190</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:textSize">@dimen/font_size16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="style_btn_cache">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:background">@drawable/shape_iv_unpass</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textColor">@color/blueTextColor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginRight">7.5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="style_btn_submit">
+        <item name="android:layout_marginLeft">7.5dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:background">@drawable/select_btn_bg</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+</resources>

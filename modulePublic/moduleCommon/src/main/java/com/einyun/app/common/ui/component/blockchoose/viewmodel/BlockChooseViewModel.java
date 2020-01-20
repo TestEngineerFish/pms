@@ -116,6 +116,37 @@ public class BlockChooseViewModel extends BaseViewModel {
         return liveData;
     }
 
+//    public void saveBlock2LocalNoJump(String blockId, String blockName, String blockCode) {
+//        if (!TextUtils.isEmpty(blockId)) {
+//            SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID_NO_JUMP, blockId);
+//        }
+//        if (!TextUtils.isEmpty(blockCode)) {
+//            SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CODE_NO_JUMP, blockCode);
+//        }
+//        if (!TextUtils.isEmpty(blockName)) {
+//            SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME_NO_JUMP, blockName);
+//        }
+//    }
+//
+//
+//    public void saveChache2LocalNoJump(List<OrgModel> selected) {
+//        String josn = new Gson().toJson(selected);
+//        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CHOOSE_CACHE_NO_JUMP, josn);
+//    }
+//
+//    public LiveData<List<OrgModel>> loadFromCacheNoJump() {
+//        MutableLiveData<List<OrgModel>> liveData = new MutableLiveData<>();
+//        String json = SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CHOOSE_CACHE_NO_JUMP, "").toString();
+//        if (!TextUtils.isEmpty(json)) {
+//            List<OrgModel> list = new Gson().fromJson(json, new TypeToken<List<OrgModel>>() {
+//            }.getType());
+//            liveData.postValue(list);
+//        } else {
+//            liveData.postValue(null);
+//        }
+//        return liveData;
+//    }
+
     public void saveChacheWorkType(List<DictDataModel> selected) {
         String josn = new Gson().toJson(selected);
         SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_WORK_TYPE_CHOOSE_CACHE, josn);

@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.FileUtil;
 import com.einyun.app.pms.health.Constants;

@@ -13,8 +13,8 @@
 
     <!-- 提交按钮通用样式 -->
     <style name="submit_btn" parent="base_style">
-        <item name="android:layout_marginLeft">@dimen/px_60</item>
-        <item name="android:layout_marginRight">@dimen/px_60</item>
+        <item name="android:layout_marginLeft">@dimen/px_40</item>
+        <item name="android:layout_marginRight">@dimen/px_40</item>
         <item name="android:paddingTop">@dimen/px_22</item>
         <item name="android:paddingBottom">@dimen/px_22</item>
         <item name="android:layout_marginBottom">@dimen/px_40</item>
@@ -75,6 +75,7 @@
     <style name="gallery_layout_style" parent="base_style">
         <item name="android:paddingLeft">@dimen/px_30</item>
         <item name="android:paddingRight">@dimen/px_30</item>
+        <item name="android:layout_marginBottom">@dimen/px_50</item>
         <item name="android:background">@color/activity_bg_color</item>
         <item name="android:orientation">vertical</item>
     </style>
@@ -378,6 +379,13 @@
         <item name="android:layout_marginTop">@dimen/px_20</item>
         <item name="android:layout_marginRight">@dimen/px_30</item>
         <item name="android:layout_marginLeft">@dimen/px_30</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardElevation">@dimen/px_1</item>
+        <item name="cardCornerRadius">@dimen/px_10</item>
+    </style>
+    <style name="main_cardview_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="cardBackgroundColor">@color/white</item>
         <item name="cardElevation">@dimen/px_1</item>
         <item name="cardCornerRadius">@dimen/px_10</item>

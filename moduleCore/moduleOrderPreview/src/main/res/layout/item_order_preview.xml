@@ -34,6 +34,7 @@
                 android:layout_marginRight="10dp">
 
                 <TextView
+                    android:id="@+id/item_preview_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/px_20"
@@ -41,7 +42,6 @@
                     android:gravity="center_vertical"
                     android:maxLength="10"
                     android:textColor="@color/blackTextColor"
-                    android:text="@{orderPreview.inspectionWorkPlanName}"
                     android:textSize="@dimen/px_32" />
             </RelativeLayout>
 
@@ -91,10 +91,11 @@
                         android:text="@string/tv_tiao_line" />
 
                     <TextView
+                        android:id="@+id/item_preview_line"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="@{orderPreview.lineName}"
+                        orderLine="@{orderPreview.lineCode}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 

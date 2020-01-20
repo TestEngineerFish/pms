@@ -1,0 +1,4 @@
+file=/Users/yao/AndroidStudioProjects/pms/modulePublic/moduleCommon/build/outputs/mapping/release/mapping.txt
+sha1=436d6546d9bcc81a0efb9c2b83ab06b30717f5aa
+appId=ac69f9ff00
+

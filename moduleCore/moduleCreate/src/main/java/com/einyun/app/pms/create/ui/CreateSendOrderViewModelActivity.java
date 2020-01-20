@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.util.StringUtil;
@@ -44,6 +45,10 @@ import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
 public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateSendOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
+    @Autowired(name = RouteKey.ID)
+    String id;
+    @Autowired(name = RouteKey.KEY_ORDER_NO)
+    String orderNo;
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private CreateSendOrderRequest request;
@@ -445,6 +450,12 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     private CreateSendOrderRequest buidRequest() {
         request.setDesc(binding.ltQuestionDesc.getString());
         request.setLocation(binding.ltLocationInfo.getString());
+        if (StringUtil.isNullStr(id)){
+            request.setId(id);
+        }
+        if (StringUtil.isNullStr(orderNo)){
+            request.setOrderNo(orderNo);
+        }
         return request;
     }
 

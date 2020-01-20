@@ -162,7 +162,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.listview.setVisibility(View.GONE);//
             binding.rlApprovalSug.setVisibility(View.VISIBLE);
             binding.limitInput.setVisibility(View.VISIBLE);
-            binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
             binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
         } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_PASS)) {//通过
 
@@ -192,14 +192,14 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 binding.limitInput.setVisibility(View.VISIBLE);
 
                 binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
-                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_send_color));
             }else {//自己审批过 显示审批列表 UserAuditStatus 不为空
                 binding.listview.setVisibility(View.VISIBLE);//显示审批信息列表
                 binding.rlApprovalSug.setVisibility(View.GONE);
                 binding.limitInput.setVisibility(View.GONE);
                 binding.llPass.setVisibility(View.GONE);
                 binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
-                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.blueTextColor));
+                binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_send_color));
 //                if ("approve".equals(approvalItemmodule.getUserAuditStatus())) {
 ////                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_approval_pass);
 ////                    binding.tvApprovalState.setText(getString(R.string.tv_had_approval));
@@ -231,8 +231,15 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.llCreatChangeInfo.setVisibility(View.VISIBLE);
             binding.tvCreateLine.setText(approvalFormdata.getLine());//条线
             binding.tvCreatePlanName.setText(approvalFormdata.getWorkPlanName());//计划名称
-            binding.tvCreateResourceClassification.setText(approvalFormdata.getResourceClassificationName());//资源分类
             binding.tvCreateWorkInstruction.setText(approvalFormdata.getWorkGuidanceName());//工作指导
+            switch (subType) {//巡查计划 都需要把资源分类改为分类，工单负责职位 改为工单负责人（根据pc端修改）
+                case ApprovalDataKey.UPDATE_PATROL_PLAN:
+                case ApprovalDataKey.CREATE_PATROL_PLAN:
+                    binding.llOrder.setVisibility(View.GONE);
+                    binding.tvType.setText("分类");
+                    break;
+            }
+            binding.tvCreateResourceClassification.setText(approvalFormdata.getResourceClassificationName());//资源分类
             binding.tvCreateWorkOrderRespone.setText(approvalFormdata.getPrincipal());//工单负责职位
             String effectivePeriod = approvalFormdata.getEffectivePeriod();
             if (effectivePeriod!=null) {
@@ -259,11 +266,22 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 case ApprovalDataKey.FORCE_CLOSE_ENQUIRY:
                 case ApprovalDataKey.POSTPONED_COMPLAIN:
                 case ApprovalDataKey.POSTPONED_REPAIR:
-//                    binding.rlCreateTime.setVisibility(View.GONE);
-//                    binding.rlFinishTime.setVisibility(View.GONE);
+                    binding.rlCreateTime.setVisibility(View.GONE);
+                    binding.rlFinishTime.setVisibility(View.GONE);
+                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
+                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
+                    binding.rlLine.setVisibility(View.GONE);//条线
+                    break;
+                case ApprovalDataKey.POSTPONED_PLAN://计划工单 三个都隐藏
+                case ApprovalDataKey.FORCE_CLOSE_PLAN:
 //                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
 //                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
-//                    binding.rlLine.setVisibility(View.GONE);//条线
+////                    binding.rlLine.setVisibility(View.GONE);//条线
+//                    break;
+                case ApprovalDataKey.POSTPONED_PATROL://巡查 延期闭单 都要隐藏 工单负责人 派工单类型 显示 条线
+                case ApprovalDataKey.FORCE_CLOSE_PATROL:
+                    binding.rlHeader.setVisibility(View.GONE);//工单负责人
+                    binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
                     break;
             }
             binding.llDelayCloseInfo.setVisibility(View.VISIBLE);

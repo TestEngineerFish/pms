@@ -40,10 +40,11 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                         | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
                 int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
                 decorView.setSystemUiVisibility(option);
                 getWindow().setStatusBarColor(Color.TRANSPARENT);
-            }else{
+            } else {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 //状态栏覆盖在contentView上面，设置透明使contentView的背景透出来
                 getWindow().setStatusBarColor(getColorPrimary());
             }
@@ -143,8 +144,22 @@ public abstract class BaseViewModelActivity<V extends ViewDataBinding, VM extend
 
     @Override
     public void finish() {
-        super.finish();
-        ActivityUtil.removeActivity(this.getClass());
+        if (ActivityUtil.getDefaultClass() != null && this.getClass().equals(ActivityUtil.getDefaultClass())) {
+            super.finish();
+            ActivityUtil.removeActivity(this.getClass());
+        } else if (ActivityUtil.getFirstClass() != null && this.getClass().equals(ActivityUtil.getFirstClass())) {
+            super.finish();
+            ActivityUtil.removeActivity(this.getClass());
+        } else if (ActivityUtil.getLoginClass() != null && this.getClass().equals(ActivityUtil.getLoginClass())) {
+            super.finish();
+            ActivityUtil.removeActivity(this.getClass());
+        } else {
+            if (ActivityUtil.getActivityList() != null && ActivityUtil.getActivityList().size() == 1) {
+                ARouter.getInstance().build("/main/Home").navigation();
+            }
+            super.finish();
+            ActivityUtil.removeActivity(this.getClass());
+        }
     }
 
     @Override

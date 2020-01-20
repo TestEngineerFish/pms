@@ -493,7 +493,7 @@ public class InquiriesDetailModule {
             }
 
             public String getClose_time() {
-                return close_time;
+                return close_time==null?"":close_time;
             }
 
             public void setClose_time(String close_time) {

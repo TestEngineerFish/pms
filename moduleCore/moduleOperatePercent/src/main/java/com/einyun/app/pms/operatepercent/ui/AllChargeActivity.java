@@ -1,6 +1,6 @@
 package com.einyun.app.pms.operatepercent.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,16 +8,17 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.SpacesItemDecoration;
+import com.einyun.app.library.dashboard.net.request.AllChargedRequest;
 import com.einyun.app.pms.operatepercent.BR;
-import com.einyun.app.pms.operatepercent.OperatePercentViewModel;
+import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentModelFactory;
+import com.einyun.app.pms.operatepercent.viewmodel.OperatePercentViewModel;
 import com.einyun.app.pms.operatepercent.R;
 import com.einyun.app.pms.operatepercent.databinding.ActivityAllChargeBinding;
-import com.einyun.app.pms.operatepercent.databinding.ActivityOperatePercentBinding;
 import com.einyun.app.pms.operatepercent.databinding.ItemTodayGetRankBinding;
-import com.einyun.app.pms.operatepercent.model.OperatePercentModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class AllChargeActivity extends BaseHeadViewModelActivity<ActivityAllChar
     private RecyclerView.LayoutManager layoutManager;
     @Override
     protected OperatePercentViewModel initViewModel() {
-        return null;
+        return new ViewModelProvider(this, new OperatePercentModelFactory()).get(OperatePercentViewModel.class);
     }
 
     @Override
@@ -59,6 +60,17 @@ public class AllChargeActivity extends BaseHeadViewModelActivity<ActivityAllChar
         binding.rankList.operateAllGetList.setLayoutManager(layoutManager);
         binding.rankList.operateAllGetList.setAdapter(adapter);
         binding.rankList.operateAllGetList.addItemDecoration(new SpacesItemDecoration(30,0,0,0));
+        setHeadTitle(R.string.text_all_get);
+    }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        AllChargedRequest request=new AllChargedRequest();
+        request.setOrgCode("ops-ccssjyyq");
+        request.setIncomeType("1");
+        request.setFeeItemType("0");
+        request.setDate(TimeUtil.getYMdTime(TimeUtil.getCurrentTime()));
+//        viewModel.getAllChargedProject(request);
     }
 }

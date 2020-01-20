@@ -7,6 +7,7 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.db.AppDatabase;
 import com.einyun.app.base.db.entity.User;
 import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.library.uc.user.model.UserModel;
 
 import java.util.List;
@@ -80,7 +81,7 @@ public class UserServiceManager {
      */
     public String getToken() {
         if (TextUtils.isEmpty(token)) {
-            token = SPUtils.get(getContext(), Constants.SP_KEY_TOKEN, "").toString();
+            token = SPUtils.get(getContext(), SPKey.SP_KEY_TOKEN, "").toString();
         }
         return token;
     }
@@ -92,7 +93,7 @@ public class UserServiceManager {
      */
     public void saveToken(@Nonnull String token) {
         this.token = token;
-        SPUtils.put(getContext(), Constants.SP_KEY_TOKEN, token);
+        SPUtils.put(getContext(), SPKey.SP_KEY_TOKEN, token);
     }
 
     /**

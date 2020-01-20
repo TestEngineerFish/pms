@@ -73,7 +73,17 @@
                 android:text="@{workOrder.data.info.procDate}"
                 />
         </LinearLayout>
+        <LinearLayout style="@style/work_order_detail_ln"
+            >
 
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="处理结果" />
+
+            <TextView style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.procContent}"/>
+
+        </LinearLayout>
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView
@@ -95,17 +105,7 @@
         </LinearLayout>
 
 
-        <LinearLayout style="@style/work_order_detail_ln"
-            android:layout_marginBottom="@dimen/px_30"
-            >
 
-            <TextView
-                style="@style/work_order_detail_left_txt"
-                android:text="执行人" />
-
-            <TextView style="@style/work_order_detail_txt_right" />
-
-        </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

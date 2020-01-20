@@ -6,6 +6,7 @@ import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -26,20 +27,6 @@ public class HomeTabViewModel extends BaseViewModel implements HomeTabViewModelC
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
-
-    public void loadBasicData(){
-        BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
-            @Override
-            public void call(BasicData data) {
-                Logger.d("loadBasicData->success");
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                Logger.d("loadBasicData->faild");
-            }
-        });
-    }
     /**
      * 获取用户Id
      *

@@ -41,33 +41,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/pd_view" />
 
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:paddingLeft="0dp">
-                <TextView style="@style/tv_create_order_red_star"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="服务态度"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
 
-                <com.einyun.app.common.ui.component.rating.RatingBar
-                    android:id="@+id/repair_attitude_score"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_75"
-                    app:starCount="5"
-                    app:starEmpty="@mipmap/rating_uncheck"
-                    app:starFill="@mipmap/rating_check"
-                    app:starHalf="@mipmap/rating_uncheck"
-                    app:starImageSize="@dimen/px_26"
-                    app:starPadding="@dimen/px_12"
-                    app:starStep="5"
-                    app:stepSize="Full" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,6 +102,33 @@
                             android:textColor="@color/txt_black_order" />
 
                     </RadioGroup>
+
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:paddingLeft="0dp">
+                    <TextView style="@style/tv_create_order_red_star"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="服务态度"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textSize="@dimen/font_size14" />
+
+                    <com.einyun.app.common.ui.component.rating.RatingBar
+                        android:id="@+id/repair_attitude_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_75"
+                        app:starCount="5"
+                        app:starEmpty="@mipmap/rating_uncheck"
+                        app:starFill="@mipmap/rating_check"
+                        app:starHalf="@mipmap/rating_uncheck"
+                        app:starImageSize="@dimen/px_26"
+                        app:starPadding="@dimen/px_12"
+                        app:starStep="5"
+                        app:stepSize="Full" />
 
                 </LinearLayout>
                 <LinearLayout

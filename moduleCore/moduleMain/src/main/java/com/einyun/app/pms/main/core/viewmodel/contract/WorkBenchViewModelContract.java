@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface WorkBenchViewModelContract {
     //待处理工单
-    LiveData<WorkOrderData> workOrderData(List<String> orgIds);
+    LiveData<WorkOrderData> workOrderData(String orgId,String userId);
 
     //运营收缴率
     LiveData<OperateCaptureData> operateCaptureData(List<String> orgCodes);

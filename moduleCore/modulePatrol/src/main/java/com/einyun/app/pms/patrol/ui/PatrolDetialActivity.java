@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
@@ -45,6 +47,7 @@ import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
+import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.pms.patrol.R;
@@ -145,6 +148,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.panelHandleForm.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+        binding.panelHandleInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
     }
 
     /**
@@ -297,6 +301,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         ExtensionApplicationConvert convert = new ExtensionApplicationConvert();
         updateForceCloseUI(patrol, convert);//更新强制关闭信息
         uploadPostponeUI(patrol, convert);//更新申请超时信息
+        if (binding.panelHandleInfo.getRoot().getVisibility() == View.VISIBLE) {
+            if (patrolInfo.getData() != null && patrolInfo.getData().getZyxcgd() != null && StringUtil.isNullStr(patrolInfo.getData().getZyxcgd().getF_files())) {
+                PhotoListAdapter adapter = new PhotoListAdapter(this);
+                binding.panelHandleInfo.imgList.setLayoutManager(new LinearLayoutManager(
+                        this,
+                        LinearLayoutManager.HORIZONTAL,
+                        false));
+                binding.panelHandleInfo.imgList.setAdapter(adapter);
+                PicUrlModelConvert imgConvert = new PicUrlModelConvert();
+                List<PicUrlModel> modelList = imgConvert.stringToSomeObjectList(patrolInfo.getData().getZyxcgd().getF_files());
+                adapter.updateList(modelList);
+            }
+        }
     }
 
     protected void updatePageUIState(int state) {
@@ -329,7 +346,14 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.limitInput.setText(local.getNote());
             }
             if (local.getNodes() != null) {
-                nodesAdapter.setDataList(local.getNodes());
+                if (local.getNodes().size() >3) {
+                    nodesAdapter.setDataList(local.getNodes().subList(0, 3));
+                    binding.patroHistroyMore.setVisibility(View.VISIBLE);
+                } else {
+                    nodesAdapter.setDataList(local.getNodes());
+                    binding.patroHistroyMore.setVisibility(View.GONE);
+                }
+                addMore(local.getNodes());
             }
         }
     }
@@ -410,6 +434,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
                 binding.cdWorkNodes.setVisibility(View.VISIBLE);
             }
+        } else if (state == ApplyState.REJECT.getState()){
+            binding.cdWorkNodes.setVisibility(View.VISIBLE);
+            binding.panelHandleForm.setVisibility(View.VISIBLE);
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
+            binding.btnSubmit.setVisibility(View.VISIBLE);
         }
     }
 
@@ -436,7 +466,25 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected void updateWorkNodesUI(PatrolInfo patrol) {
         List<WorkNode> nodes = viewModel.loadNodes(patrol);
         nodes.add(0, new WorkNode());
-        nodesAdapter.addAll(nodes);
+        if (nodes.size() >3) {
+            nodesAdapter.setDataList(nodes.subList(0, 3));
+            binding.patroHistroyMore.setVisibility(View.VISIBLE);
+        } else {
+            nodesAdapter.setDataList(nodes);
+            binding.patroHistroyMore.setVisibility(View.GONE);
+        }
+        addMore(nodes);
+    }
+
+    //点击展示更多
+    private void addMore(List<WorkNode> nodes) {
+        binding.patroHistroyMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nodesAdapter.setDataList(nodes);
+                binding.patroHistroyMore.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -495,6 +543,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        onOptionClick(view);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
@@ -547,8 +601,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
-                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplication() == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
-                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplication() == null ? 0 : 1)
+                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
+                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : 1)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_OPTION);
     }
 

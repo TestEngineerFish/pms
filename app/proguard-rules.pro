@@ -69,6 +69,8 @@
 #
 #----------------------------------------------------
 # 保持哪些类不被混淆
+#继承阿里Provider不被混淆
+-keep interface * extends com.alibaba.android.arouter.facade.template.IProvider
 #继承activity,application,service,broadcastReceiver,contentprovider....不进行混淆
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -80,7 +82,7 @@
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
 -keep class android.support.** {*;}## 保留support下的所有类及其内部类
-
+-keep interface * extends com.alibaba.android.arouter.facade.template.IProvider
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 #表示不混淆上面声明的类，最后这两个类我们基本也用不上，是接入Google原生的一些服务时使用的。
@@ -203,6 +205,7 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.google.gson.examples.android.model.** { *; }
 -keep class **.model.** {*;}
+-keep class **.db.** {*;}
 -keep class **.bean.** {*;}
 -keep class **.entity.** {*;}
 -keep class **.converter.** {*;}
@@ -243,6 +246,19 @@ public *;
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);
+}
+
+#友盟统计
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class com.einyun.app.pms.R$*{
+public static final int *;
 }
 
 #微信开放平台
@@ -337,3 +353,49 @@ public *;
 ##bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+
+##阿里推送
+-keepclasseswithmembernames class ** {
+    native <methods>;
+}
+-keepattributes Signature
+-keep class sun.misc.Unsafe { *; }
+-keep class com.taobao.** {*;}
+-keep class com.alibaba.** {*;}
+-keep class com.alipay.** {*;}
+-keep class com.ut.** {*;}
+-keep class com.ta.** {*;}
+-keep class anet.**{*;}
+-keep class anetwork.**{*;}
+-keep class org.android.spdy.**{*;}
+-keep class org.android.agoo.**{*;}
+-keep class android.os.**{*;}
+-keep class org.json.**{*;}
+-dontwarn com.taobao.**
+-dontwarn com.alibaba.**
+-dontwarn com.alipay.**
+-dontwarn anet.**
+-dontwarn org.android.spdy.**
+-dontwarn org.android.agoo.**
+-dontwarn anetwork.**
+-dontwarn com.ut.**
+-dontwarn com.ta.**
+
+# 小米通道
+-keep class com.xiaomi.** {*;}
+-dontwarn com.xiaomi.**
+# 华为通道
+-keep class com.huawei.** {*;}
+-dontwarn com.huawei.**
+# GCM/FCM通道
+-keep class com.google.firebase.**{*;}
+-dontwarn com.google.firebase.**
+# OPPO通道
+-keep public class * extends android.app.Service
+# VIVO通道
+-keep class com.vivo.** {*;}
+-dontwarn com.vivo.**
+# 魅族通道
+-keep class com.meizu.cloud.** {*;}
+-dontwarn com.meizu.cloud.**
+-keepattributes SourceFile,LineNumberTable

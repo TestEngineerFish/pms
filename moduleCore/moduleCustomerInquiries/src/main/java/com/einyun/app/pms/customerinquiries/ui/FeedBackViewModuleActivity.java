@@ -74,7 +74,9 @@ String taskID;
         List<FeedBackModule.CommuReceiversBean> commuReceivers = module.getCommuReceivers();
         if (commuReceivers!=null&&commuReceivers.size()>0) {
             long expectTime = commuReceivers.get(0).getExpectTime();
-            binding.tvBackTime.setText(TimeUtil.getAllTime(expectTime));
+            if (expectTime!=0) {
+                binding.tvBackTime.setText(TimeUtil.getAllTime(expectTime));
+            }
         }
     }
 
@@ -108,7 +110,7 @@ String taskID;
                 LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                 finish();
             }else {
-                ToastUtil.show(this, "反馈失败");
+                ToastUtil.show(this, "此任务已被处理或不存在");
             }
         });
     }

@@ -18,6 +18,8 @@ public class URLS {
 
     //抄送我
     public static final String URL_GET_COPY_ME_LIST ="work-order/workOrder/task/v1/getReceiverCopyToForApp/customer_enquiry_flow";
+    //问询工单列表
+    public static final String URL_GET_ORDER_LIST ="workOrder/workOrder/task/v1/getWorkListBydefKeyForApp?defKey=customer_enquiry_flow";
     //获取详情基本信息
     public static final String URL_GET_INQUIRIES_DETAIL_INFO ="/bpm-runtime/runtime/instance/v1/getInstBO?proInstId=";
     //处理提交

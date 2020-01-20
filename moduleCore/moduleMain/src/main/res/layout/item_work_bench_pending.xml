@@ -66,12 +66,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:text="物业工单"
+                    android:layout_marginTop="@dimen/px_30"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="@dimen/font_size14"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_160"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+                    <RelativeLayout
+                        style="@style/base_style"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_DISQUALIFIED)}">
+
+                        <LinearLayout
+                            android:id="@+id/ll_1"
+                            style="@style/ll_work_table_pending">
+
+                            <TextView
+                                android:id="@+id/tv_work_table_disqualified_num"
+                                style="@style/tv_work_table_pending_num"
+                                android:text="0" />
+
+                            <TextView
+                                style="@style/tv_work_table_pending_name"
+                                android:layout_width="wrap_content"
+                                android:text="不合格单" />
+
+                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/iv_waring_disqualified"
+                            style="@style/iv_light_waring"
+                            android:layout_alignBottom="@id/ll_1"
+                            android:layout_toRightOf="@id/ll_1" />
+                    </RelativeLayout>
 
                     <RelativeLayout
                         style="@style/base_style"
@@ -100,7 +135,6 @@
                             android:layout_alignBottom="@id/ll_work_wenxiu"
                             android:layout_toRightOf="@id/ll_work_wenxiu" />
 
-                        <View style="@style/vertical_line" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -130,7 +164,6 @@
                             android:layout_alignBottom="@id/ll_work_tousu"
                             android:layout_toRightOf="@id/ll_work_tousu" />
 
-                        <View style="@style/vertical_line" />
 
                     </RelativeLayout>
 
@@ -142,7 +175,8 @@
 
                         <LinearLayout
                             android:id="@+id/ll_work_baoxiu"
-                            style="@style/ll_work_table_pending">
+                            style="@style/ll_work_table_pending"
+                            >
 
                             <TextView
                                 android:id="@+id/tv_work_table_patrol_num"
@@ -166,7 +200,14 @@
                     </RelativeLayout>
 
                 </LinearLayout>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:text="客服工单"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="@dimen/font_size14"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
@@ -199,7 +240,6 @@
                             android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_paigongdan"
                             android:layout_toRightOf="@id/ll_work_paigongdan" />
-                        <View style="@style/vertical_line" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -228,7 +268,6 @@
                             android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_jiahuaagongdan"
                             android:layout_toRightOf="@id/ll_work_jiahuaagongdan" />
-                        <View style="@style/vertical_line" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -257,6 +296,11 @@
                             android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_xunchagongdan"
                             android:layout_toRightOf="@id/ll_work_xunchagongdan" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        style="@style/base_style"
+                        android:layout_width="0dp"
+                        android:layout_weight="1">
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

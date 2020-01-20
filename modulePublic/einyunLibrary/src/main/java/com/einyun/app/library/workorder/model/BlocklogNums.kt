@@ -28,4 +28,8 @@ class BlocklogNums {
     var repairTimeout: Int? = 0
     @SerializedName("customer_enquiry_flowis_coming_timeout")
     var enquiryTimeout: Int? = 0
+    @SerializedName("unqualified_key")
+    var unqualifiedNum:String?=null
+    @SerializedName("unqualified_keyis_coming_timeout")
+    var unqualifiedTimeout:Int?=0
 }

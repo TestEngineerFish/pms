@@ -447,6 +447,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
         runnable.run();
         bindData(repairsOrderDetail);
+        if (detialModel.getData().getCustomer_repair_model().getPd_time()==null){
+            binding.sendOrderInfo.getRoot().setVisibility(View.GONE);
+        }
         if (detialModel.getData().getCustomer_repair_model().getHandle_time() != null) {
             binding.tvHandleTime.setText(TimeUtil.getTimeExpend(detialModel.getData().getCustomer_repair_model().getHandle_time().toString()));
         }

@@ -477,6 +477,7 @@ public class ConditionBuilder {
     public SelectModel buildReapirArea(AreaModel model){
         SelectModel selectModel=new SelectModel();
         selectModel.setId(model.getId());
+        selectModel.setKey(model.getDataKey());
         selectModel.setName(model.getDataName());
         if(model.getParentId().equals("-")){
             model.setGrade(0);
