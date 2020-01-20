@@ -85,6 +85,14 @@
                         android:id="@+id/layout_add_complain_info"
                         layout="@layout/layout_add_complain_info"
                         android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/send_order_info"
+                        layout="@layout/layout_send_order_info"
+                        android:visibility="visible"
+                        app:complain="@{complain}"
+                        />
+
                     <!-- 响应信息 -->
                     <include
                         android:id="@+id/layout_response_info"
@@ -113,6 +121,12 @@
                         layout="@layout/layout_already_complain_evaluate"
                         android:visibility="gone"
                         app:complain="@{complain}" />
+
+                    <include
+                        android:id="@+id/send_order"
+                        layout="@layout/layout_send_order"
+                        android:visibility="gone" />
+
                     <!-- 首次沟通 -->
                     <include
                         android:id="@+id/layout_complain_response"

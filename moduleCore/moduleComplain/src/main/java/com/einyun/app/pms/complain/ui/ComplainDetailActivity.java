@@ -21,6 +21,7 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.databinding.ItemFeedbackHistoryLayoutBinding;
@@ -36,6 +37,7 @@ import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
+import com.einyun.app.library.resource.workorder.model.ComplainNodeIdState;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -46,11 +48,13 @@ import com.einyun.app.library.workorder.model.CustomerComplainModelBean;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.model.TypeAndLine;
 import com.einyun.app.library.workorder.net.request.ComplainDetailCompleteRequest;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.complain.BR;
 import com.einyun.app.pms.complain.R;
 import com.einyun.app.pms.complain.databinding.ActivityComplainDetailBinding;
 import com.einyun.app.pms.complain.viewmodel.DetailViewModel;
 import com.einyun.app.pms.complain.viewmodel.ViewModelFactory;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +82,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     private List<TypeAndLine> lines = new ArrayList<>();
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, RepairsDetailModel.HandleListBean> adapter;
     private RVBindingAdapter<ItemFeedbackHistoryLayoutBinding, ComplainAppendBean> addAdapter;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_complain_detail;
@@ -126,6 +131,18 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
 
             }
         });
+        binding.sendOrder.repairSelectPeople.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPeple();
+            }
+        });
+        //选择人员
+        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
+            binding.sendOrder.repairSelectedPepple.setText(model.getFullname());
+            request.getBizData().setF_pd_assignor(model.getFullname());
+            request.getBizData().setF_pd_assignor_id(model.getId());
+        });
         fresh();
     }
 
@@ -142,25 +159,29 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .navigation();
     }
-    protected void updatePageUIState(int state){
+
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
+
     private void fresh() {
         viewModel.getComplainDetail(proInsId, taskId).observe(this, repairsDetailModel -> {
             updateUI(repairsDetailModel);
         });
     }
-
+    String nodeId = "";
     /**
      * 刷新UI
+     *
      * @param repairsDetailModel
      */
     private void updateUI(RepairsDetailModel repairsDetailModel) {
-        if(repairsDetailModel==null){
+        if (repairsDetailModel == null) {
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
         this.detail = repairsDetailModel.getData().getCustomer_complain_model();
+        nodeId = repairsDetailModel.getInfo() == null?"":repairsDetailModel.getInfo().getNodeId();
         updatePageUIState(PageUIState.FILLDATA.getState());
         updateElapsedTime();
         //延期
@@ -176,7 +197,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         complainAppendList();
         //隐藏展示
         String value = detail.getF_state();
-        setStatus(value);
+        setStatus(value, nodeId);
 
         binding.layoutApplyCloseBtn.llApplyLate.setOnClickListener(this);
         binding.layoutApplyCloseBtn.llClose.setOnClickListener(new ClickProxy(this));
@@ -224,16 +245,29 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         }
     }
 
+    /**
+     * 选择指派人
+     */
+    private void selectPeple() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                .withString(RouteKey.KEY_DIVIDE_ID, detail.getF_ts_dk_id())
+                .withString(RouteKey.KEY_PROJECT_ID, detail.getU_project_id())
+                .navigation();
+    }
 
-    private void setStatus(String value) {
+
+    private void setStatus(String value, String nodeId) {
         //只有待跟进才能操作   其余无法操作
         if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(fragmentKey)) {
-            if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+            if (ComplainNodeIdState.Confirm.getState().equals(nodeId)) {
                 binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
-                binding.layoutComplainResponse.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
+                binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+                binding.sendOrderInfo.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
                 binding.save.setVisibility(View.GONE);
                 binding.submit.setVisibility(View.VISIBLE);
@@ -251,9 +285,42 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 request.getBizData().setF_line_key(detail.getF_line_key());
                 request.getBizData().setF_line_name(detail.getF_line_name());
                 binding.layoutReportComplainInfo.setRequest(request);
-            } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
-                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
-                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
+            } else if (ComplainNodeIdState.Response.getState().equals(nodeId)) {
+                binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.layoutComplainResponse.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
+                showOrHide();
+                binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
+                binding.save.setVisibility(View.GONE);
+                binding.submit.setVisibility(View.VISIBLE);
+                //获取投诉性质
+                viewModel.getByTypeKey(Constants.COMPLAIN_WAY).observe(this, dictDataModels -> {
+                    dictComplainNatureList = dictDataModels;
+                });
+                viewModel.typeAndLineList().observe(this, lines -> {
+                    this.lines = lines;
+                });
+                request.getBizData().setF_ts_property_id(detail.getF_ts_property_id());
+                request.getBizData().setF_ts_property(detail.getF_ts_property());
+                request.getBizData().setF_ts_cate(detail.getF_ts_cate());
+                request.getBizData().setF_ts_cate_id(detail.getF_ts_cate_id());
+                request.getBizData().setF_line_key(detail.getF_line_key());
+                request.getBizData().setF_line_name(detail.getF_line_name());
+                binding.layoutReportComplainInfo.setRequest(request);
+            }  else if (value.equals(ComplainOrderState.CLOSED.getState())) {
+                if (StringUtil.isNullStr(detail.getF_response_time())){
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }else{
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+                }
+                if (StringUtil.isNullStr(detail.getF_return_time())){
+                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                }else{
+                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                }
+                showOrHide();
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
@@ -263,26 +330,36 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score() == null ? 0 : detail.getF_return_score());
                 binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score() == null ? 0 : detail.getService_quality_score());
             } else if (value.equals(ComplainOrderState.DEALING.getState())) {
-                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                if (StringUtil.isNullStr(detail.getF_response_time())){
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }else{
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+                }
                 binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                showOrHide();
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
                 binding.layoutComplainDeadline.getRoot().setVisibility(View.VISIBLE);
                 binding.save.setVisibility(View.VISIBLE);
                 binding.submit.setVisibility(View.VISIBLE);
             } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
                 //待评价
-                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                if (StringUtil.isNullStr(detail.getF_response_time())){
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }else{
+                    binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+                }
                 binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                showOrHide();
                 binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
                 binding.save.setVisibility(View.GONE);
                 binding.submit.setVisibility(View.VISIBLE);
             }
-            if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+            if (ComplainNodeIdState.Confirm.getState().equals(nodeId)||ComplainNodeIdState.Response.getState().equals(nodeId)) {
                 binding.layoutReportComplainInfo.llComplainType1.setVisibility(View.GONE);
                 binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.GONE);
                 binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.VISIBLE);
@@ -298,9 +375,14 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             binding.layoutReportComplainInfo.llComplainNature1.setVisibility(View.VISIBLE);
             binding.layoutReportComplainInfo.llComplainType2.setVisibility(View.GONE);
             binding.layoutReportComplainInfo.llComplainNature2.setVisibility(View.GONE);
-            binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detail.getF_response_time())){
+                binding.layoutResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }else{
+                binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
+            }
             binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
             binding.complainEvaluate.getRoot().setVisibility(View.GONE);
+            showOrHide();
             binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
             binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
             binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
@@ -310,12 +392,21 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             binding.layoutAlreadyComplainEvaluate.rbAttr.setStar(detail.getF_return_score() == null ? 0 : detail.getF_return_score());
             binding.layoutAlreadyComplainEvaluate.rbQuality.setStar(detail.getService_quality_score() == null ? 0 : detail.getService_quality_score());
             if (value.equals(ComplainOrderState.CLOSED.getState())) {
-                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                if (StringUtil.isNullStr(detail.getF_return_time())){
+                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                }else{
+                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                }
             }
             if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
                 binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
             }
         }
+    }
+
+    private void showOrHide(){
+        binding.sendOrder.getRoot().setVisibility(View.GONE);
+        binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
     }
 
     /**
@@ -502,7 +593,14 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     private void submit() {
         request.getDoNextParam().setTaskId(taskId);
         String value = detail.getF_state();
-        if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {
+        if (nodeId.equals(ComplainNodeIdState.Confirm.getState())) {
+            //判断指派人
+            if (!StringUtil.isNullStr(request.getBizData().getF_pd_assignor_id())) {
+                ToastUtil.show(this, "请选择指派人");
+                return;
+            }
+            request.getBizData().setF_pd_remark(binding.sendOrder.repairSendReason.getString());
+        } else if (nodeId.equals(ComplainNodeIdState.Response.getState())) {
             String reasonString = binding.layoutComplainResponse.ltResponseReason.getString();
             if (!StringUtil.isNullStr(reasonString)) {
                 ToastUtil.show(this, "请输入沟通结果");
@@ -668,7 +766,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (handler != null){
+        if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
     }
