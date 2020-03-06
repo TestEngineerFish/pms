@@ -36,6 +36,7 @@ class RepairsDetailModel {
     var forceCloseInfo: ForceCloseInfoBean? = null
     var handleList: List<HandleListBean>? = null
     var nodeId:String? =""
+    var info:Info?=null
     /**
      * 获取强制逼单或申请延期信息
      */
@@ -423,6 +424,13 @@ class RepairsDetailModel {
         var attachment: String? = null
         var setToInvalid: Any? = null
         var invalidReasonCategory: Any? = null
+    }
+
+    class Info{
+        var formkey:String?=null
+        var flowKey:String?=null
+        var nodeId:String?=null
+        var parentFlowKey:String?=null
     }
 
     class HandleListBean {

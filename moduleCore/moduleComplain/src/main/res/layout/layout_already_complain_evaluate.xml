@@ -54,6 +54,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <TextView
+                    android:id="@+id/complain_evaluate_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
