@@ -167,6 +167,15 @@
         <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity"/>
         <!--  不合格单结束      -->
 
+        <!--  收费开始      -->
+        <activity android:name=".toll.ui.TollViewModelActivity"/>
+        <activity android:name=".toll.ui.LackDetailViewModelActivity"/>
+        <activity android:name=".toll.ui.PaymentAdvanceActivity" />
+        <activity android:name=".toll.ui.LackListActivity"/>
+        <activity android:name=".toll.ui.FeeActivity" android:launchMode="singleTask"/>
+        <activity android:name=".toll.ui.FeeSucActivity" android:launchMode="singleTask"/>
+        <!--  收费结束      -->
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.einyun.app.pms.fileprovider"

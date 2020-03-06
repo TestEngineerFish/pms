@@ -294,6 +294,7 @@ project.module_operatepercent=":moduleCore:moduleOperatePercent"
 project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
 project.module_disqualified=":moduleCore:moduleDisqualified"
 project.module_orderlist=":moduleCore:moduleOrderList"
+project.module_toll=":moduleCore:moduleToll"
 deps.project = project
 
 def server =[:]

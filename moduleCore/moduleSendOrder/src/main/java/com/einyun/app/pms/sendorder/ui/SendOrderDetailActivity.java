@@ -41,6 +41,7 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
+import com.einyun.app.common.ui.component.rating.RatingBar;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
@@ -334,6 +335,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.checkAndAccept.getRoot().setVisibility(View.VISIBLE);//显示验收
+            binding.checkAndAccept.ratingBar.setStar(5f);
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);//显示处理信息
             binding.sendOrderDetailSubmit.setText(com.einyun.app.common.R.string.text_work_order_apply);
         } else {
@@ -377,6 +379,9 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             }
             if (!TextUtils.isEmpty(detialModel.getData().getInfo().getCheckContent())) {
                 binding.checkAndAcceptInfo.checkContent.setText(detialModel.getData().getInfo().getCheckContent());
+            }
+            if (!TextUtils.isEmpty(detialModel.getData().getInfo().getScore())) {
+                binding.checkAndAcceptInfo.ratingBar.setStar(Float.valueOf(detialModel.getData().getInfo().getScore()));
             }
         }
 
@@ -569,6 +574,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             DistributeCheckRequest request = new DistributeCheckRequest();
             request.setId(orderId);
             request.setTaskId(taskId);
+            request.setFScore(binding.checkAndAccept.ratingBar.getSelectedStarts()+"");
             request.setFCheckResult(checkResult);
             request.setFEvaluation(binding.checkAndAccept.ratingBar.getSelectedStarts() + "");
             request.setFCheckContent(binding.checkAndAccept.etLimitSuggestion.getString());

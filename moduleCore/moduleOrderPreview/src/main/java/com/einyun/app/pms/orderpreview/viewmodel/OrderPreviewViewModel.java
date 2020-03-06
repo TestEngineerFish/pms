@@ -66,7 +66,10 @@ public class OrderPreviewViewModel extends BasePageListViewModel<OrderPreviewMod
         }
         if (selected.get(PREVIEW_SELECT_TIAOXIAN) != null) {
             String id = selected.get(PREVIEW_SELECT_TIAOXIAN).getId();
-            request.addTiaoXian(id);
+            request.addTiaoXian(false,id);
+        }else {
+            request.addTiaoXian(true,"3");
+
         }
         refreshUI();
     }

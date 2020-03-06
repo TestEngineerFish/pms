@@ -535,6 +535,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         }
         viewModel.complainDetailComplete(request).observe(this, aBoolean -> {
             if (aBoolean) {
+                ToastUtil.show(this, "工单提交成功");
                 finish();
             }
         });

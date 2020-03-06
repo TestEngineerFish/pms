@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="toll"
+            type="com.einyun.app.pms.toll.model.PaymentAdvanceModel" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.toll.ui.PaymentAdvanceActivity" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <RelativeLayout
+             android:id="@+id/rl_empty"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerInParent="true"
+             android:gravity="center_horizontal"
+             android:orientation="vertical"
+             >
+             <ImageView
+                 android:layout_width="@dimen/px_200"
+                 android:layout_height="@dimen/px_200"
+                 android:src="@mipmap/icon_empty"
+                 />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="@dimen/px_20"
+                 android:textSize="@dimen/font_size12"
+                 android:textColor="@color/normal_main_text_icon_color"
+                 android:text="该房产无任何收费项"
+                 />
+
+         </LinearLayout>
+
+     </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+               <LinearLayout
+
+             android:layout_width="match_parent"
+             android:orientation="vertical"
+             android:layout_height="match_parent">
+                   <View
+                       android:id="@+id/view"
+                       android:layout_width="match_parent"
+                       android:layout_height="5dp"/>
+
+              <TextView
+                  android:id="@+id/tv_name"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/px_80"
+             android:gravity="center_vertical"
+             android:layout_marginLeft="@dimen/px_30"
+             android:text="张**（长城盛世ssssss花园1栋2单元102）"
+             android:textColor="#ff4877ea"
+             android:textSize="14sp"
+             />
+                   <androidx.recyclerview.widget.RecyclerView
+                       android:layout_width="match_parent"
+                       android:id="@+id/list"
+                       android:layout_marginBottom="@dimen/px_120"
+                       android:layout_height="match_parent"/>
+
+            </LinearLayout>
+               <RelativeLayout
+                 android:layout_alignParentBottom="true"
+                 android:background="@color/white"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/px_100">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent">
+                       <TextView
+
+                           android:layout_marginLeft="@dimen/px_29"
+                           android:layout_width="wrap_content"
+                           android:gravity="center_vertical"
+                           android:layout_height="match_parent"
+                           android:text="总计："
+                           android:textColor="@color/greyTextColor"
+                           android:textSize="@dimen/font_size15"
+                           />
+                       <TextView
+                           android:id="@+id/tv_toall_money"
+                           android:layout_width="wrap_content"
+                           android:gravity="center_vertical"
+                           android:layout_height="match_parent"
+                           android:text=""
+                           android:textColor="@color/redTextColor"
+                           android:textSize="@dimen/font_size15"
+                           />
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:gravity="center_vertical"
+                           android:layout_height="match_parent"
+                           android:text="元"
+                           android:textColor="@color/greyTextColor"
+                           android:textSize="@dimen/font_size15"
+                           />
+                   </LinearLayout>
+
+                 <TextView
+                     android:onClick="@{()->callBack.onFeeClick()}"
+                     android:layout_alignParentRight="true"
+                     android:layout_marginLeft="@dimen/px_29"
+                     android:layout_width="@dimen/px_214"
+                     android:gravity="center"
+                     android:layout_height="match_parent"
+                     android:text="收费"
+                     android:background="@drawable/shape_btn_bg"
+                     android:textColor="@color/white"
+                     android:textSize="@dimen/font_size17"
+                     />
+             </RelativeLayout>
+         </RelativeLayout>
+     </LinearLayout>
+</layout>

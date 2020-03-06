@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.pointcheck.model.ProjectContentModel;
@@ -56,8 +58,13 @@ public class CreateCheckViewModel extends BaseViewModel {
         repository.projects(ids, new CallBack<List<ProjectModel>>() {
             @Override
             public void call(List<ProjectModel> data) {
-                projectItems.postValue(loadProjectItems(data));
-                projects.postValue(data);
+                List<String> strings = loadProjectItems(data);
+                if (strings.size()==0) {
+                    ToastUtil.show(CommonApplication.getInstance(), "该分期下无点检事项");
+                }else {
+                    projectItems.postValue(loadProjectItems(data));
+                    projects.postValue(data);
+                }
             }
 
             @Override

@@ -267,6 +267,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                                         CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
                                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                                         SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
+                                        SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, binding.etOrgCode.getText().toString());
                                         if (StringUtil.isNullStr(path)) {
                                             ARouter.getInstance()
                                                     .build(path).with(getIntent().getExtras())

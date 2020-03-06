@@ -185,6 +185,8 @@ interface ResourceWorkOrderService : EinyunService {
 
     fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>)
 
+    fun checkQrCodeModel(request: String, callBack: CallBack<ForseScanCodeModel>)
+
     /**
      * 通用强制闭单
      */

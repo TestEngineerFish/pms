@@ -22,7 +22,9 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 
@@ -164,6 +166,9 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                     @Override
                     public void onClick(View view) {
                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "");
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CHOOSE_CACHE, "");
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_USER_LOGIN)
                                 .navigation();

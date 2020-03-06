@@ -107,6 +107,14 @@ public class RouterUtils {
     public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
     public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
     public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
+
+    //收费
+    public static final String ACTIVITY_TOLL = "/toll/TollActivity";
+    public static final String ACTIVITY_LACK_DETAIL = "/lack/LackDetailActivity";
+    public static final String ACTIVITY_PAYMENT_ADVANCE = "/payment/PaymentAdvanceActivity";
+    public static final String ACTIVITY_LACK_LIST = "/lack/LackListActivity";
+    public static final String ACTIVITY_FEE = "/fee/FeeActivity";
+    public static final String ACTIVITY_FEE_SUC = "/feesuc/FeeSucActivity";
 //    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

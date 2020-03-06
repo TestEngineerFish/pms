@@ -17,6 +17,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,22 +25,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.Base64Util;
 import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.JsonUtil;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
+import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.manager.GetUploadJson;
+import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
@@ -56,12 +64,14 @@ import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.common.utils.Glide4Engine;
 
+import com.einyun.app.library.portal.dictdata.net.URLS;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb;
+import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.resource.workorder.model.Zyjhgd;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
@@ -71,9 +81,12 @@ import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanResouceBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeBinding;
+import com.einyun.app.pms.plan.model.PlanOrderResLineModel;
 import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderDetailViewModel;
 import com.google.gson.Gson;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.orhanobut.logger.Logger;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -90,6 +103,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
+import static com.einyun.app.library.resource.workorder.net.URLs.URL_RESOURCE_WORKORDER_PLAN_QRCODE;
 
 @Route(path = RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
 public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityPlanOrderDetailBinding, PlanOrderDetailViewModel> {
@@ -114,6 +131,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private PlanInfo planInfo;
     private File imageFile;
 
+    private int mClickPosition;
+    boolean isSubmit=true;
+    private List<WorkOrderTypeModel> lines;
+    private List<PlanOrderResLineModel> mPlanResLines=new ArrayList<>();
+
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
         return new ViewModelProvider(this, new PlanOdViewModelFactory()).get(PlanOrderDetailViewModel.class);
@@ -133,7 +155,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
 
-        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
+        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
             binding.btnSubmit.setVisibility(View.GONE);
@@ -168,6 +190,17 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
             }
         });
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
+
+        viewModel.getLastWorthTime("ldzd").observe(this,model->{
+
+            mPlanResLines = model;
+        });
     }
 
     //false为不可以闭单  true为可以闭单
@@ -200,7 +233,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         agree(binding, model);
                         //选中不通过
                         reject(binding, model);
-                        if (RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {
+                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {
                             if (!TextUtils.isEmpty(model.result)) {
                                 //成功
                                 if ("1".equals(nodes.get(position).getResult())) {
@@ -293,7 +326,39 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             resourceAdapter = new RVBindingAdapter<ItemPlanResouceBinding, Sub_jhgdzyb>(this, BR.resource) {
                 @Override
                 public void onBindItem(ItemPlanResouceBinding binding, Sub_jhgdzyb model, int position) {
+                    switch (fragmentTag) {
+                        case FRAGMENT_PLAN_OWRKORDER_PENDING://待跟进
+                            binding.llForceScan.setVisibility(View.VISIBLE);
+                            if (model.is_forced()==0) {//  0 不强制
+                                binding.ivScan.setVisibility(View.GONE);
+                                binding.llScanReasult.setVisibility(View.GONE);
+                            }else {//1 强制扫码
+                                binding.ivScan.setVisibility(View.VISIBLE);
+                                binding.llScanReasult.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case FRAGMENT_PLAN_OWRKORDER_DONE:
 
+                            break;
+                    }
+                    for (PlanOrderResLineModel line : mPlanResLines) {
+                        String f_sp_type = model.getF_SP_TYPE();
+
+                        String key = line.getKey();
+
+                        if (key.equals(f_sp_type)) {
+
+                            binding.tvAirType.setText(line.getName());
+                            Log.e(TAG, "onBindItem: 空间分类"+line.getName() );
+                        }
+
+                    }
+                    binding.ivScan.setOnClickListener(view -> {
+                        mClickPosition=position;
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_SCANNER)
+                                .navigation(PlanOrderDetailActivity.this, RouterUtils.ACTIVITY_REQUEST_SCANNER);
+                    });
                 }
 
                 @Override
@@ -303,8 +368,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             };
         }
         binding.rvResource.setAdapter(resourceAdapter);
+        requestData();
     }
-
     private void requestData() {
 
         //加载数据
@@ -343,7 +408,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @Override
     protected void onResume() {
         super.onResume();
-        requestData();
+//        requestData();
     }
 
     private String createTime;
@@ -521,7 +586,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             ToastUtil.show(this, R.string.text_alert_photo_empty);
             return false;
         }
-
         return true;
     }
 
@@ -591,15 +655,23 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
-                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
-                tipDialog.setTipDialogListener(dialog -> {
-                    if (hasException()) {
-                        createSendOrder();
-                    } else {
-                        finish();
-                    }
-                });
-                tipDialog.show();
+//                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
+//                tipDialog.setTipDialogListener(dialog -> {
+//                    if (hasException()) {
+//                        createSendOrder();
+//                    } else {
+//                        finish();
+//                    }
+//                });
+//                tipDialog.show();
+                if (hasException()) {
+                    createSendOrder();
+//                    ToastUtil.show(PlanOrderDetailActivity.this,"工单处理成功");
+                } else {
+                    ToastUtil.show(PlanOrderDetailActivity.this,"工单提交成功");
+                    finish();
+                }
+
             }
         });
     }
@@ -635,8 +707,15 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private void goPaiGongDan() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
-                .withString(RouteKey.ID, id)
+                .withString(RouteKey.KEY_ORDER_ID, id)
                 .withString(RouteKey.KEY_ORDER_NO, planInfo.getData().getZyjhgd().getF_ORDER_NO())
+                .withString(RouteKey.KEY_LINE, planInfo.getData().getZyjhgd().getF_TX_NAME())
+                .withString(RouteKey.KEY_RESOUSE, planInfo.getData().getZyjhgd().getF_RES_NAME())
+//                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
                 .navigation();
         finish();
     }
@@ -646,10 +725,40 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 提交
      */
     public void onSubmitClick() {
+        isSubmit=true;
         if (!validateFormData()) {
             return;
         }
+        if (validateForceScan()) return;
         uploadImages(planInfo);
+    }
+
+    private boolean validateForceScan() {
+        List<Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
+        if (sub_jhgdzyb!=null&&sub_jhgdzyb.size()>0) {
+
+            for (Sub_jhgdzyb dzyb : sub_jhgdzyb) {
+                if (dzyb.is_forced()==1) {//强制扫码下 有 失败的 不准提交
+                    if (dzyb.is_suc()==0) {//0 失败
+                        isSubmit=false;
+
+                    }
+                }
+            }
+        }
+        if (!isSubmit) {
+            new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                    .setMsg("请完成扫码！")
+                    .setPositiveButton("我知道了", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    }).show();
+
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -677,8 +786,32 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         });
                     });
         }
-    }
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
+//                f_RES_CODE
+                String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
+                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE+"/"+stringExtra).observe(this, aBoolean -> {
 
+                    Log.e(TAG, "onActivityResult: "+aBoolean );
+                    if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
+                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                      }else {
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(2);
+                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                        ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
+                    }
+                });
+//                planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
+//                planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
+//                resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+//                ToastUtil.show(PlanOrderDetailActivity.this, data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
+            }
+        }
+        }
+
+    private static final String TAG = "PlanOrderDetailActivity";
     @Override
     public void onRightOptionClick(View view) {
         super.onRightOptionClick(view);

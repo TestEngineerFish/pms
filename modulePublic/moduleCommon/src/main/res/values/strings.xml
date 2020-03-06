@@ -64,7 +64,7 @@
     <string name="tv_order_type_two">工单类型(二级)</string>
     <string name="tv_order_type_three">工单类型(三级)</string>
     <string name="tv_if_late">是否超期</string>
-    <string name="text_handle_success">处理成功</string>
+    <string name="text_handle_success">工单提交成功</string>
     <string name="please_select">请选择</string>
     <string name="please_input">请输入</string>
     <string name="resource_type">资源分类</string>
@@ -76,7 +76,7 @@
     <string name="picture">图片</string>
     <string name="text_choose_org">请选择组织</string>
     <string name="alert_submit_error">提交失败</string>
-    <string name="alert_submit_work_order_success">派工单创建成功</string>
+    <string name="alert_submit_work_order_success">创建派工单成功</string>
     <string name="text_get_order">接单</string>
     <string name="text_is_overdue">是否超期</string>
     <string name="text_line_types">分类</string>
@@ -111,8 +111,8 @@
     <string name="txt_get_report_rank">收缴率排名</string>
     <string name="txt_own_report_rank">清欠率排名</string>
     <string name="txt_operate_percent">运营收缴率</string>
-    <string name="apply_close_success">强制闭单成功,请等待审批</string>
-    <string name="apply_late_success">申请延期成功,请等待审批</string>
+    <string name="apply_close_success">提交成功</string>
+    <string name="apply_late_success">提交成功</string>
     <string name="text_complete_time">完成截止时间</string>
     <string name="text_date_day">当天</string>
     <string name="text_date_week">本周</string>
@@ -143,12 +143,12 @@
     <string name="text_order_num">工单编号</string>
     <string name="yes">是</string>
     <string name="no">否</string>
-    <string name="alert_submit_client_enquire_order_success">客户问询工单创建成功</string>
+    <string name="alert_submit_client_enquire_order_success">创建客户问询工单成功</string>
     <string name="text_ordered">有序</string>
     <string name="text_unordered">无序</string>
     <string name="text_user_add_complain_info">此用户已有%1$s条投诉信息</string>
-    <string name="alert_submit_client_complain_order_success">客户投诉工单创建成功</string>
-    <string name="alert_submit_client_repair_order_success">客户报修工单创建成功</string>
+    <string name="alert_submit_client_complain_order_success">创建客户投诉工单成功</string>
+    <string name="alert_submit_client_repair_order_success">创建客户报修工单成功</string>
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
     <string name="text_work_repair">客户报修</string>
@@ -228,7 +228,7 @@
 
 
     <string name="text_alert_input_suggestion">请输入验收意见</string>
-    <string name="text_check_success">验收成功</string>
+    <string name="text_check_success">验收提交成功</string>
     <string name="text_alert_check_result">请输入验收结论</string>
     <string name="text_reply_success">批复成功</string>
     <string name="text_work_order_reply">批复</string>

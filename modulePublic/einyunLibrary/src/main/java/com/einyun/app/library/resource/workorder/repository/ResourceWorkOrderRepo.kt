@@ -456,6 +456,21 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             )
     }
+    //checkQrCodeModel
+    override fun checkQrCodeModel(request: String, callBack: CallBack<ForseScanCodeModel>) {
+        serviceApi?.checkQrCodeModel(request)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe(
+                {
+                    if (it.isState) {
+                        callBack.call(it.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(it))
+                    }
+                }, {
+                    callBack.onFaild(it)
+                }
+            )
+    }
 
     //获取历史流程
     override fun getHistroy(
@@ -897,6 +912,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
                 }
             }, { error ->
                 callBack.onFaild(error)
+
             })
         return liveData
     }

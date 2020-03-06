@@ -536,6 +536,14 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     request.setUnitId(unitId);
                     break;
             }
+        }else {
+            if (tag.equals(RouteKey.ORDER_LIST_DISTRIBUTE)) {
+                request.setTxId(null);
+                request.setType(null);
+                request.setEnvType2(null);
+                request.setEnvType3(null);
+                request.setFState(null);
+            }
         }
         loadPagingData();
     }
@@ -641,6 +649,10 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getKey());
             request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getKey());
             request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getKey());
+        }else {
+            request.setBx_area_id(null);
+            request.setBx_cate_lv1_id(null);
+            request.setBx_cate_lv2_id(null);
         }
         loadPagingData();
     }
@@ -699,6 +711,9 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         if (selected.size() > 0) {
             request.setF_ts_property_id(selected.get(SELECT_COMPLAIN_PROPERTYS) == null ? null : selected.get(SELECT_COMPLAIN_PROPERTYS).getKey());
             request.setF_ts_cate_id(selected.get(SELECT_COMPLAIN_TYPES) == null ? null : selected.get(SELECT_COMPLAIN_TYPES).getKey());
+        }else {
+            request.setF_ts_property_id(null);
+            request.setF_ts_cate_id(null);
         }
         loadPagingData();
     }

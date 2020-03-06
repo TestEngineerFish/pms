@@ -88,6 +88,11 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_PLAN_SUBMIT)
     fun planSubmit(@Body request: PatrolSubmitRequest):Flowable<BaseResponse<Any>>
+    /**
+     * checkQrCodeModel
+     */
+    @GET
+    fun checkQrCodeModel(@Url url: String):Flowable<ForseScanCodeResponse>
 
     /**
      * 2.31派工单-待办列表

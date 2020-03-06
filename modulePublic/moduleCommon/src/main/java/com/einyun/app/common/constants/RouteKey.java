@@ -30,6 +30,8 @@ public class RouteKey {
     public static final String KEY_FRAGEMNT_TAG="fragmentTag";
     public static final String KEY_ORDER_ID="orderId";
     public static final String KEY_ORDER_NO="orderNo";
+    public static final String KEY_LINE="orderLine";
+    public static final String KEY_RESOUSE="orderResouse";
     public static final String KEY_LIST_TYPE="listType";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
     public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
@@ -141,5 +143,10 @@ public class RouteKey {
     public static final String ENVIRONMENTAL = "environmental_classification";
     public static final String SERVICE = "customer_service_classification";
 
-
+    //收费
+    public static final String HOUSE_ID = "houseid";
+    public static final String HOUSE_FEE_ID = "houseFeeid";
+    public static final String HOUSE_TITLE = "house_title";
+    public static final String KEY_ALL_NAME = "ALL_NAME";
+    public static final String KEY_CLIENT_NAME = "CLIENT_NAME";
 }

@@ -16,7 +16,7 @@
     <string name="text_take_order_success">接单成功</string>
     <string name="text_alert_handle_result">请输入处理结果</string>
     <string name="text_alert_handle_pic">请选择处理后图片</string>
-    <string name="text_handle_success">处理成功</string>
+    <string name="text_handle_success">工单提交成功</string>
     <string name="text_add_people">添加人员</string>
     <string name="text_pending_work_order">待处理工单：</string>
     <string name="text_apply_late">申请延期</string>

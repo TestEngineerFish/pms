@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
@@ -13,11 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -36,6 +40,7 @@ import com.einyun.app.pms.create.SelectType;
 import com.einyun.app.pms.create.viewmodel.CreateViewModel;
 import com.einyun.app.pms.create.viewmodel.CreateViewModelFactory;
 import com.einyun.app.pms.create.databinding.ActivityCreateSendOrderBinding;
+import com.google.gson.Gson;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -45,10 +50,22 @@ import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
 public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateSendOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
-    @Autowired(name = RouteKey.ID)
+    @Autowired(name = RouteKey.KEY_ORDER_ID)
     String id;
     @Autowired(name = RouteKey.KEY_ORDER_NO)
     String orderNo;
+    @Autowired(name = RouteKey.KEY_TASK_ID)
+    String taskId;
+    @Autowired(name = RouteKey.KEY_PRO_INS_ID)
+    String proInsId;
+    @Autowired(name = RouteKey.KEY_FRAGEMNT_TAG)
+    String fragmentTag;
+    @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
+    String taskNodeId;
+    @Autowired(name = RouteKey.KEY_LINE)
+    String lineName;
+    @Autowired(name = RouteKey.KEY_RESOUSE)
+    String resouseName;
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private CreateSendOrderRequest request;
@@ -84,6 +101,16 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             lineDictDataModelList = dictDataModels;
         });
         selectPng();
+        if (StringUtil.isNullStr(orderNo)){
+            binding.llOld.setVisibility(View.VISIBLE);
+            binding.llLine.setVisibility(View.VISIBLE);
+            binding.tvOldCode.setText(orderNo);
+            binding.tvLine.setText(lineName);
+            binding.tvRes.setText(resouseName);
+            request.setResName(resouseName);
+            request.setTxName(lineName);
+            binding.setBean(request);
+        }
     }
 
     /**
@@ -149,7 +176,16 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                 break;
         }
     }
-
+    //点击原工单号 跳转至计划工单详情界面
+    public void onOldCodeClick(){
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                .withString(RouteKey.KEY_ORDER_ID, id)
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                .withString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTag)
+                .navigation();
+    }
     private void chooseDisposePerson() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).
                 withString(RouteKey.KEY_ORG_ID, request.getDivideId()).
@@ -422,6 +458,11 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             request.setDivideCode(orgModel.getCode());
             request.setDivideName(orgModel.getName());
             binding.setBean(request);
+            String[] split = orgModel.getPathName().split("/");
+            if (split.length>1) {
+
+                request.setProjectName(split[split.length-2]);
+            }
         }
     }
 

@@ -63,6 +63,9 @@ class Sub_jhgdzyb {
     var F_PG_ID: String? = null
     var F_RES_LOCATION: String? = null
     var F_RES_TYPE: String? = null
+    var F_RES_TYPENAME: String? = null
+    var is_forced: Int? = 0
+    var is_suc: Int? = 0
 
 }
 

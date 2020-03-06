@@ -107,6 +107,7 @@ public class SlideShowView extends FrameLayout {
 
         List<LinearLayout> items = new ArrayList<>();
         items.add(linearLayout.findViewById(R.id.ll_point_check));
+        items.add(linearLayout.findViewById(R.id.ll_toll));
         items.add(linearLayout.findViewById(R.id.ll_work_gongdanliebiao));
         items.add(linearLayout.findViewById(R.id.ll_work_chuangjiangongdan));
         items.add(linearLayout.findViewById(R.id.ll_approval));
@@ -140,6 +141,12 @@ public class SlideShowView extends FrameLayout {
 //                            item.setOnClickListener(v -> readyGo(ApprovalActivity.class));
                             item.setOnClickListener(v ->
                                     ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL).navigation());
+                            break;
+                        case "sf":
+                            //收费
+//                            item.setOnClickListener(v -> readyGo(ApprovalActivity.class));
+                            item.setOnClickListener(v ->
+                                    ARouter.getInstance().build(RouterUtils.ACTIVITY_TOLL).navigation());
                             break;
                         case "gzyl":
                             //工作预览

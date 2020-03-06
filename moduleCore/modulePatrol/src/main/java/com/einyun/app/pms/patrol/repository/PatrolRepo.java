@@ -9,18 +9,25 @@ import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.library.core.net.EinyunHttpService;
+import com.einyun.app.pms.patrol.model.DelayDay;
 
 public class PatrolRepo {
     PatrolDao dao;
     PatrolInfoDao infoDao;
     AppDatabase db;
+    private final DelayDayServiceApi serviceApi;
 
     public PatrolRepo() {
         db = AppDatabase.getInstance(CommonApplication.getInstance());
         dao = db.patrolDao();
         infoDao = db.patrolInfoDao();
+        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(DelayDayServiceApi.class);
     }
+
+
 
     /**
      * 获取用户本地输入数据
@@ -92,5 +99,22 @@ public class PatrolRepo {
      */
     public void updatePatrolCached(String orderId,String userId) {
         dao.updateCachedState(orderId,userId);
+    }
+    /**
+     * get
+     * 获取问询详情基本信息
+     */
+    public void getDealyInfo(String id, CallBack<DelayDay> callBack) {
+        String url = "/resource-workorder/res-order/patrol/getDelayByCondition/POSTPONED_PATROL/"+id;
+        serviceApi.getDealyInfo(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
     }
 }

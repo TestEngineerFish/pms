@@ -340,6 +340,10 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getKey());
             request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getKey());
             request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getKey());
+        }else {
+            request.setBx_area_id(null);
+            request.setBx_cate_lv1_id(null);
+            request.setBx_cate_lv2_id(null);
         }
         loadPagingData();
     }
