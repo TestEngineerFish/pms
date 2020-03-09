@@ -80,8 +80,8 @@ public class FeeActivity extends BaseHeadViewModelActivity<ActivityFeeBinding, T
         String baseUrl = BuildConfig.BASE_URL;
         String key_tenant_id = (String) SPUtils.get(this, "KEY_TENANT_ID", "");
         String key_token = (String) SPUtils.get(this, "KEY_TOKEN", "");
-        GlideUrl url = new GlideUrl(baseUrl+URL_GET_FEE_QR_CODE+orderId, new LazyHeaders.Builder()//debug
-//        GlideUrl url = new GlideUrl("https://fee.einyun.com/fee-center-api/payInfo/getQRCode?orderId="+orderId, new LazyHeaders.Builder()//relase
+//        GlideUrl url = new GlideUrl(baseUrl+URL_GET_FEE_QR_CODE+orderId, new LazyHeaders.Builder()//debug
+        GlideUrl url = new GlideUrl("https://fee.einyun.com/fee-center-api/payInfo/getQRCode?orderId="+orderId, new LazyHeaders.Builder()//relase
                 .addHeader("Authorization","Bearer "+key_token )
                 .addHeader("tenant-id",key_tenant_id)
                 .build());

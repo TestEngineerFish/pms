@@ -67,7 +67,7 @@
 
                     <include
                         android:id="@+id/send_order_info"
-                        layout="@layout/layout_send_order_info"
+                        layout="@layout/layout_repairs_send_order_info"
                         android:visibility="gone"
                          />
                     <include
@@ -88,7 +88,7 @@
                         android:visibility="gone"/>
                     <include
                         android:id="@+id/send_order"
-                        layout="@layout/layout_send_order"
+                        layout="@layout/layout_repairs_send_order"
                         android:visibility="gone" />
 
                     <include

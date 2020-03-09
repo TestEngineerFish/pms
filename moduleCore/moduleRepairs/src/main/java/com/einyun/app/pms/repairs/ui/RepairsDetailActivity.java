@@ -522,7 +522,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         }
         if (customerRepair.getService_quality_score() != null) {
             binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
-            binding.repairEvaluateInfo.qualityStar.setClickable(false);
+//            binding.repairEvaluateInfo.qualityStar.setClickable(false);
         }
         //设置性质评估
         if (customerRepair.getBx_property_ass_id() != null) {

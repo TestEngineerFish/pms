@@ -295,12 +295,13 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                 tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
                 tipDialog.setTipDialogListener(dialog -> {
                     if(hasException(patrol)){
+                        tipDialog.dismiss();
                         createSendOrder();
                     }else{
                         finish();
                     }
                 });
-                tipDialog.show();
+                tipDialog.showNoCancle();
             }
         });
     }
@@ -321,6 +322,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                         finish();
                     });
             alertDialog.show();
+            alertDialog.setCancelable(false);
         }
     }
 
