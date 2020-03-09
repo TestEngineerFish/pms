@@ -75,6 +75,9 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                 goToPrivacy();
             }
         });
+        binding.tvUserAgreement.setOnClickListener(view -> {
+            goToUserAgreement();
+        });
         checkNotifySetting();
         binding.rvNotify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +94,13 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                 .withString(RouteKey.KEY_WEB_TITLE, "用户隐私条款概要")
                 .navigation();
     }
-
+    public void goToUserAgreement(){
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                .withString(RouteKey.KEY_WEB_URL, Constants.USER_AGREEMENT_DETAIL_URL)
+                .withString(RouteKey.KEY_WEB_TITLE, "用户协议")
+                .navigation();
+    }
     private void setNotify(){
         try {
             // 根据isOpened结果，判断是否需要提醒用户跳转AppInfo页面，去打开App通知权限

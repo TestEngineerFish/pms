@@ -51,8 +51,8 @@ public class TollRepository {
     TollServiceApi serviceApi2;
     String baseUrl;
     public TollRepository() {
-//        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi("http://106.75.162.186:10018",TollServiceApi.class);
-        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi("https://fee.einyun.com/",TollServiceApi.class);
+        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi("http://106.75.162.186:10018",TollServiceApi.class);
+//        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi("https://fee.einyun.com/",TollServiceApi.class);
 }
 
     public TollRepository(String s) {

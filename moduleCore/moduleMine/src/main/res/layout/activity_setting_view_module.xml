@@ -142,7 +142,29 @@
                 style="@style/tv_create_order_right_arrow"
                 android:layout_marginRight="15dp" />
         </LinearLayout>
+        <View style="@style/base_underline" />
+        <LinearLayout
+            android:id="@+id/tv_user_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="用户协议"
+                android:textColor="@color/blackTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                style="@style/tv_create_order_right_arrow"
+                android:layout_marginRight="15dp" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_login_out"
             android:layout_width="match_parent"

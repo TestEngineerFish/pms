@@ -26,6 +26,7 @@ import com.einyun.app.pms.user.core.Constants;
  */
 public class PrivacyTermView extends Dialog implements View.OnClickListener {
     TextView tvTrem;
+    TextView tvUserAgreement;
     Button btnReject;
     Button btnAgree;
     private MaxHeightScrollView scrollView;
@@ -64,6 +65,7 @@ public class PrivacyTermView extends Dialog implements View.OnClickListener {
 
     private void initView() {
         tvTrem = findViewById(R.id.tv_privacy_term);
+        tvUserAgreement = findViewById(R.id.tv_user_agreement);
         btnReject = findViewById(R.id.btn_reject);
         btnAgree = findViewById(R.id.btn_agree);
         scrollView = findViewById(R.id.scroll_view);
@@ -76,6 +78,7 @@ public class PrivacyTermView extends Dialog implements View.OnClickListener {
 
     private void initEvent() {
         tvTrem.setOnClickListener(this);
+        tvUserAgreement.setOnClickListener(this);
         btnReject.setOnClickListener(this);
         btnAgree.setOnClickListener(this);
     }
@@ -95,6 +98,12 @@ public class PrivacyTermView extends Dialog implements View.OnClickListener {
                     .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
                     .withString(RouteKey.KEY_WEB_URL, Constants.PRIVACY_DETAIL_URL)
                     .withString(RouteKey.KEY_WEB_TITLE, context.getResources().getString(R.string.privacy_title_text))
+                    .navigation();
+        } else if (v.getId() == R.id.tv_user_agreement) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, Constants.USER_AGREEMENT_DETAIL_URL)
+                    .withString(RouteKey.KEY_WEB_TITLE, context.getResources().getString(R.string.user_agreement))
                     .navigation();
         }
     }

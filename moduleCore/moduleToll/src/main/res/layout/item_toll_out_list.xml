@@ -10,6 +10,7 @@
     </data>
 
     <LinearLayout
+        android:layout_marginTop="@dimen/px_20"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:orientation="vertical"

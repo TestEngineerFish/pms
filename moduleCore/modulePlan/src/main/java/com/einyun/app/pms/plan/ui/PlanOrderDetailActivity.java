@@ -432,7 +432,18 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
                 return;
             }
-            imageFile = CaptureUtils.startCapture(this);
+//            imageFile = CaptureUtils.startCapture(this);//只能拍照
+            Matisse.from(this) //加号添加图片  拍照本地都可以选择
+                    .choose(MimeType.ofImage())
+                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
+                    .capture(true)
+                    .countable(true)
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
+                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .thumbnailScale(0.85f)
+                    .imageEngine(new Glide4Engine())
+                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
         }, this);
     }
 
@@ -769,6 +780,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //本地和拍照都有
+        if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
+            if (data == null) return;
+            List<Uri> uris = Matisse.obtainResult(data);
+            if (uris != null && uris.size() > 0) {
+                photoSelectAdapter.addPhotos(uris);
+//                cachePhoto(photoSelectAdapter.getSelectedPhotos());
+            }
+        }
+        //原来只能拍照得
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
             Uri uri;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
