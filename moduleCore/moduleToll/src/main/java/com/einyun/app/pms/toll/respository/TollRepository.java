@@ -139,23 +139,23 @@ public class TollRepository {
                     callBack.onFaild(error);
                 });
     }
-    /**
-     * get
-     * s生成收款二维码
-     */
-    public void createQrCode(int orderId, CallBack<Byte> callBack) {
-        String url=URLS.URL_GET_FEE_QR_CODE+orderId;
-        serviceApi.createQrCode(url).compose(RxSchedulers.inIoMain())
-                .subscribe(response -> {
-//                    if(response.isState()){
-                        callBack.call(response);
-//                    }else{
-//                        callBack.onFaild(new Exception(response));
-//                    }
-                }, error -> {
-                    callBack.onFaild(error);
-                });
-    }
+//    /**
+//     * get
+//     * s生成收款二维码
+//     */
+//    public void createQrCode(int orderId, CallBack<Byte> callBack) {
+//        String url=URLS.URL_GET_FEE_QR_CODE+orderId;
+//        serviceApi.createQrCode(url).compose(RxSchedulers.inIoMain())
+//                .subscribe(response -> {
+////                    if(response.isState()){
+//                        callBack.call(response);
+////                    }else{
+////                        callBack.onFaild(new Exception(response));
+////                    }
+//                }, error -> {
+//                    callBack.onFaild(error);
+//                });
+//    }
     /**
      * get
      * 预缴验证

@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static androidx.test.InstrumentationRegistry.getContext;
-import static com.einyun.app.common.constants.SPKey.SP_KEY_TOKEN;
 import static com.einyun.app.pms.toll.constants.URLS.URL_GET_FEE_QR_CODE;
 
 

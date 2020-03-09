@@ -175,26 +175,26 @@ public class TollViewModel extends BaseViewModel  {
         });
         return jumopModule;
     }
-    /**
-     * 生成收款二维码
-     */
-    private MutableLiveData<Byte> createQrCodeModel=new MutableLiveData<>();
-    public LiveData<Byte> createQrCode(int orderId){
-        showLoading();
-        repository.createQrCode(orderId, new CallBack<Byte>() {
-            @Override
-            public void call(Byte data) {
-                hideLoading();
-                createQrCodeModel.postValue(data);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                hideLoading();
-            }
-        });
-        return createQrCodeModel;
-    }
+//    /**
+//     * 生成收款二维码
+//     */
+//    private MutableLiveData<Byte> createQrCodeModel=new MutableLiveData<>();
+//    public LiveData<Byte> createQrCode(int orderId){
+//        showLoading();
+//        repository.createQrCode(orderId, new CallBack<Byte>() {
+//            @Override
+//            public void call(Byte data) {
+//                hideLoading();
+//                createQrCodeModel.postValue(data);
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//                hideLoading();
+//            }
+//        });
+//        return createQrCodeModel;
+//    }
 //    /**
 //     * 生成订单
 //     */

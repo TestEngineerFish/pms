@@ -186,11 +186,11 @@
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"/>
                              <RelativeLayout
+                                 android:visibility="gone"
                                  android:id="@+id/rl_load_more_record"
                                  android:layout_width="match_parent"
                                  android:layout_height="@dimen/px_100">
                                  <TextView
-
                                      android:layout_centerInParent="true"
                                      android:text="展开更多∨"
                                      android:textColor="@color/blueTextColor"

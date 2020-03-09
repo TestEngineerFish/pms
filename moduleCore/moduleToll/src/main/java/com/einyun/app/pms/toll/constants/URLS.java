@@ -32,9 +32,9 @@ public class URLS {
     //获取feedid
     public static final String URL_GET_FEE_DIVIDE_ID =relaseBasesUrl+"/payInfo/queryIdByMdmid/";
     //获取Defauft分期Id
-    public static final String URL_GET_DEFAUFT_DIVIDE_ID =relaseBasesUrl+"/uc/api/org/v1/getCurrentOrg/";
+    public static final String URL_GET_DEFAUFT_DIVIDE_ID ="/uc/api/org/v1/getCurrentOrg/";
     //获取Defauft分期名字
-    public static final String URL_GET_DEFAUFT_DIVIDE_NAME =relaseBasesUrl+"/user-center/api/usercenter/v1/ucOrg/userList/";
+    public static final String URL_GET_DEFAUFT_DIVIDE_NAME ="/user-center/api/usercenter/v1/ucOrg/userList/";
     //获取上次催缴时间
     public static final String URL_GET_LAST_WORTH_TIME =relaseBasesUrl+"/payment/getOverduePaymentByDivideId/";
 
