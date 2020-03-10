@@ -328,6 +328,10 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     private void navigatSendWorkOrder(){
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                .withString(RouteKey.KEY_ORDER_ID, patrolInfo.getId())
+                .withString(RouteKey.KEY_ORDER_NO, patrolInfo.getData().getZyxcgd().getF_plan_work_order_code())
+                .withString(RouteKey.KEY_LINE, patrolInfo.getData().getZyxcgd().getF_line_name())
+                .withString(RouteKey.KEY_RESOUSE, patrolInfo.getData().getZyxcgd().getF_type_name())
                 .navigation();
     }
 
