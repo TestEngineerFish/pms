@@ -2,8 +2,8 @@ package com.einyun.app.pms.toll.constants;
 
 public class URLS {
 //    public static final String uatBaseUrl="";
-    public static final String relaseBasesUrl="fee-center-api";
-//    public static final String relaseBasesUrl="";
+    public static final String relaseBasesUrl="fee-center-api";//生产环境
+//    public static final String relaseBasesUrl="";//uat环境
     //获取问询类型
     public static final String URL_GET_QUIRIES_TYPES ="workOrder/workOrder/bizData/v1/getBaseList?categoryKey=workorder_type_and_line";
     //获取欠费信息 栋 单元  房产通用

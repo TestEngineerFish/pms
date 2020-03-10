@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -43,6 +45,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -73,7 +76,7 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
     private ArrayList<CreateOrderRequest.PaymentDetailsBean>  paymentDetailsBeans = new ArrayList<>();;
     private String clientName="";
 
-    public  static PaymentAdvanceActivity instance;
+//    public  static PaymentAdvanceActivity instance;
     @Override
     protected TollViewModel initViewModel() {
         return new ViewModelProvider(this, new TollViewModelFactory()).get(TollViewModel.class);
@@ -91,10 +94,24 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
         setHeadTitle("预存收费");
         binding.setCallBack(this);
 
-        instance=this;
+//        instance=this;
         binding.tvName.setText(divideName+title);
-
+        /**
+         * 付款成功关闭页面
+         */
+        FeeSucFinish();
     }
+
+    private void FeeSucFinish() {
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
+    }
+
     /**
      *
      * 收费

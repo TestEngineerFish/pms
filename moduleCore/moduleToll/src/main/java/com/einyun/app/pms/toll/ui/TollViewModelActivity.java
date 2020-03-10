@@ -115,10 +115,11 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
             super.onBackOnClick(view);
         }else if (binding.llBuild.isShown()){
             hiddenAllView();
+            queryData(false);
         }else if (binding.llUnit.isShown()){
             hiddenAllView();
+            queryData(false);
         }
-        queryData(false);
     }
 
     @Override
@@ -127,10 +128,11 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
             super.onBackPressed();
         }else if (binding.llBuild.isShown()){
             hiddenAllView();
+            queryData(false);
         }else if (binding.llUnit.isShown()){
             hiddenAllView();
+            queryData(false);
         }
-        queryData(false);
     }
 
     @Override

@@ -60,7 +60,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
     private String allName;
     private String clientPhone="";
     private String starsPhone="";
-    public  static LackDetailViewModelActivity instance;
+//    public  static LackDetailViewModelActivity instance;
     @Override
     protected TollViewModel initViewModel() {
         return new ViewModelProvider(this, new TollViewModelFactory()).get(TollViewModel.class);
@@ -76,7 +76,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         headBinding.tvHeaderTitle.setText(title);
-        instance=this;
+//        instance=this;
     }
 
     @Override

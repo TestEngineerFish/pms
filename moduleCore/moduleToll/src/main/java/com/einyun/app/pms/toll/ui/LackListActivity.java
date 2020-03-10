@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -42,6 +44,7 @@ import com.einyun.app.pms.toll.viewmodel.TollViewModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -71,7 +74,7 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
     private ArrayList<PaymentDetailsBean>  paymentDetailsBeans = new ArrayList<>();;
     private List<PaymentList.ListBean> inListDatas=new ArrayList<>();
     private List<PaymentList.ListBean> inListThreeDatas=new ArrayList<>();
-    public  static LackListActivity instance;
+//    public  static LackListActivity instance;
     @Override
     protected TollViewModel initViewModel() {
         return new ViewModelProvider(this, new TollViewModelFactory()).get(TollViewModel.class);
@@ -88,8 +91,18 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle("欠费详单");
 
-        instance=this;
+//        instance=this;
 
+        FeeSucFinish();
+    }
+    private void FeeSucFinish() {
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
     }
 /**
  * 提交

@@ -116,12 +116,12 @@ public class FeeActivity extends BaseHeadViewModelActivity<ActivityFeeBinding, T
                         .navigation();
                 timer.cancel();
                 LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-                if (PaymentAdvanceActivity.instance!=null) {
-                    PaymentAdvanceActivity.instance.finish();
-                }
-                if (LackListActivity.instance!=null) {
-                    LackListActivity.instance.finish();
-                }
+//                if (PaymentAdvanceActivity.instance!=null) {
+//                    PaymentAdvanceActivity.instance.finish();
+//                }
+//                if (LackListActivity.instance!=null) {
+//                    LackListActivity.instance.finish();
+//                }
                 finish();
 
             }
