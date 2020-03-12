@@ -85,6 +85,7 @@ public class RouterUtils {
     public static final String ACTIVITY_MINE_SETTING = "/mine/setting";
     public static final String ACTIVITY_USER_INFO = "/mine/userinfo";
     public static final String ACTIVITY_SIGN_SET = "/mine/signset";
+    public static final String ACTIVITY_MESSAGE_CENTER = "/mine/messageCenter";
     public static final String ACTIVITY_USER_HEAD_SHOT = "/mine/userHeadShot";
     public static final String ACTIVITY_ADVICE_FEED_BACK = "/mine/advcieFeedBack";
 

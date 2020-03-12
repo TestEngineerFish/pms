@@ -133,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:text="隐私说明"
+                android:text="隐私政策"
                 android:textColor="@color/blackTextColor"
                 android:textSize="16sp"
                 android:textStyle="bold" />

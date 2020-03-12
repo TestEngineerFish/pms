@@ -241,6 +241,13 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
 //                                }
 //                            }
 //                            binding.tvHouseToallFee.setText("欠费："+mHouseToallFee);
+            Collections.sort(mFeeHouseList, new Comparator<BuildModel.GridRangeBean>() {
+                @Override
+                public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
+                    return o2.getFeeAmount().compareTo(o1.getFeeAmount());//顺序
+
+                }
+            });
             unitAdapter.setDataList(mFeeHouseList);
         });
     }

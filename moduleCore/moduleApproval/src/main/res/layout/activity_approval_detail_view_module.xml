@@ -278,6 +278,7 @@
                             style="@style/style_text_approval_left"
                             />
                         <TextView
+                            android:onClick="@{()->callBack.goToOrderDetailClick()}"
                             android:id="@+id/tv_close_order_code"
                             android:textColor="@color/normal_blue_color"
                             style="@style/style_text_approval_right" />

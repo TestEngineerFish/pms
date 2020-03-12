@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="signSetModule"
+            type="com.einyun.app.pms.mine.model.SignSetModule" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.mine.ui.MessageCenterActivity" />
+    </data>
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+
+         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+             android:id="@+id/swipe_refresh"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/list"
+                     android:layout_marginBottom="@dimen/px_20"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
+             </LinearLayout>
+
+
+         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+     </LinearLayout>
+</layout>

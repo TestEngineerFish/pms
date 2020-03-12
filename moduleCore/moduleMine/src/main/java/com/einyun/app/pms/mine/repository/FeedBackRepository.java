@@ -7,15 +7,22 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
+import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.library.core.net.EinyunHttpService;
 
 import com.einyun.app.pms.mine.constants.URLS;
 import com.einyun.app.pms.mine.model.FeedBackBean;
 import com.einyun.app.pms.mine.model.GetUserByccountBean;
+import com.einyun.app.pms.mine.model.MsgListModel;
+import com.einyun.app.pms.mine.model.RequestPageBean;
 import com.einyun.app.pms.mine.model.SignSetModule;
 import com.einyun.app.pms.mine.model.UCUserDetailsBean;
 import com.einyun.app.pms.mine.model.UserStarsBean;
 import com.einyun.app.pms.mine.net.response.FeedBackServiceApi;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_ORDER_LIST;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
 
 public class FeedBackRepository {
     FeedBackServiceApi serviceApi;
@@ -24,7 +31,20 @@ public class FeedBackRepository {
         serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(FeedBackServiceApi.class);
     }
 
+    public void pageQuery(RequestPageBean page, String tag, CallBack<MsgListModel> callback) {
+        String url = URLS.URL_GET_MSG_LIST;
 
+        serviceApi.getMsgList(url,page).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callback.call(response.getData());
+
+                    }
+                }, error -> {
+                    callback.onFaild(error);
+                    error.printStackTrace();
+                });
+    }
 
     /**
      * 意见提交
@@ -116,6 +136,42 @@ public class FeedBackRepository {
     public LiveData<Boolean> SignTextSumit(SignSetModule request, CallBack<Boolean> callBack) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
         serviceApi.setSignText(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    /**
+     * 单个已读
+     * @param id
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> singleRead(String id, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        String url=URLS.URL_GET_SINGLE_READ+id;
+        serviceApi.singleRead(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    /**
+     * 全部已读
+     * @param
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> allRead(String startTime,String endTime, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        String url=URLS.URL_GET_ALL_READ;
+        serviceApi.allRead(url).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
                     liveData.postValue(response.isState());
                     callBack.call(response.isState());

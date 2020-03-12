@@ -112,6 +112,15 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             sumit(ApprovalDataKey.APPROVAL_SUMIT_AGREE);
         }
     }
+    /**
+    * 点击工单编码跳转工单详情
+    * */
+    public void goToOrderDetailClick() {
+        if (IsFastClick.isFastDoubleClick()) {
+           //根据不同类型得单子分别跳转不同的详情界面
+
+        }
+    }
     /*
      * 审批不通过按钮
      * */

@@ -148,6 +148,7 @@
         <activity android:name=".mine.ui.SignSetViewModuleActivity"/>
         <activity android:name=".mine.ui.UserHeadShotViewModuleActivity"/>
         <activity android:name=".mine.ui.UserInfoViewModuleActivity"/>
+        <activity android:name=".mine.ui.MessageCenterActivity"/>
         <activity android:name=".create.ui.AddComplainInfoActivity"/>
         <activity android:name=".complain.ui.CommunicationActivity"/>
         <activity android:name=".complain.ui.ComplainActivity"/>

@@ -149,4 +149,7 @@ public class RouteKey {
     public static final String HOUSE_TITLE = "house_title";
     public static final String KEY_ALL_NAME = "ALL_NAME";
     public static final String KEY_CLIENT_NAME = "CLIENT_NAME";
+    //消息中心
+    public static final String KEY_START_TIME = "START_TIME";
+    public static final String KEY_END_TIME = "EDN_TIME";
 }

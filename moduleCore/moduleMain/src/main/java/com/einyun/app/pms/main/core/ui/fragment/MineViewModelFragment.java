@@ -1,5 +1,6 @@
 package com.einyun.app.pms.main.core.ui.fragment;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,8 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBinding, MineViewModel> {
 
     private UserInfoModel userInfoModel1;
+    private String startTime;
+    private String endTime;
 
     public static MineViewModelFragment newInstance() {
         return new MineViewModelFragment();
@@ -81,6 +84,32 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        hasRead();
+    }
+
+    private void hasRead() {
+        /**
+         * 获取已读状态
+         * */
+        viewModel.hadRead().observe(this, model -> {
+
+            if (model!=null) {
+                if (model.isMsgFlag()) {
+                    binding.tvRedPoint.setVisibility(View.VISIBLE);
+                }else {
+                    binding.tvRedPoint.setVisibility(View.GONE);
+
+                }
+//                startTime = model.getLastListTime();
+//                endTime = model.getCurrentTime();
+            }
+
+        });
+    }
+
     /**
      * 更新工作状态组件
      *
@@ -131,6 +160,19 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                     .withString(RouteKey.NAME,userInfoModel1.getFullname())
                     .withString(RouteKey.PHONE,userInfoModel1.getMobile())
                     .withString(RouteKey.ID,userInfoModel1.getId())
+                    .navigation();
+        }
+
+    }
+    /**
+    * 跳转消息中心
+    * */
+    public void goToMsgCenter(){
+        if (userInfoModel1!=null) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_MESSAGE_CENTER)
+                    .withString(RouteKey.KEY_START_TIME,startTime)
+                    .withString(RouteKey.KEY_END_TIME,endTime)
                     .navigation();
         }
 
