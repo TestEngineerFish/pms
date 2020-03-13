@@ -50,6 +50,7 @@ import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
@@ -123,7 +124,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         setRightOption(R.drawable.iv_histroy);
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
-        setView(nodeId);//根据状态值显示相应布局
+//        setView(nodeId);//根据状态值显示相应布局
         //选择人员
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
             binding.sendOrder.repairSelectedPepple.setText(model.getFullname());
@@ -197,8 +198,29 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             taskId = "";
         }
         viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-            updateUI(repairsDetail);
-            saveHandleRequest = new SaveHandleRequest(orderId, detialModel.getData().getCustomer_repair_model());
+            GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
+            getNodeIdRequest.setDefkey("customer_repair_flow");
+            getNodeIdRequest.setId(repairsDetail.getData().getCustomer_repair_model().getId_());
+            viewModel.getNodeId(getNodeIdRequest).observe(this,nodeIdModel->{
+                if (nodeIdModel==null) {
+                    return;
+                }
+
+                if (nodeIdModel.getNodeId()==null) {
+                    setView("");//此接口为解决消息中心状态显示不对
+                    repairsDetail.setNodeId("");
+                    nodeId="";
+                }else {
+                    nodeId=nodeIdModel.getNodeId();
+                    setView(nodeIdModel.getNodeId());
+                    repairsDetail.setNodeId(nodeIdModel.getNodeId());
+                }
+//            detialModel.setNodeId(nodeIdModel.getNodeId()==null?"":nodeIdModel.getNodeId());
+//                bindData(detialModel);
+                updateUI(repairsDetail);
+                saveHandleRequest = new SaveHandleRequest(orderId, detialModel.getData().getCustomer_repair_model());
+            });
+
         });
         //获取报修类别与条线
         viewModel.repairTypeList().observe(this, doorResult -> {
@@ -442,10 +464,13 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         }
         detialModel = repairsOrderDetail;
         updatePageUIState(PageUIState.FILLDATA.getState());
-        detialModel.setNodeId(nodeId);
+//        detialModel.setNodeId(nodeId);
         customerRepair = detialModel.getData().getCustomer_repair_model();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
-        runnable.run();
+        if (detialModel.getNodeId().equals("closed")||detialModel.getNodeId().equals("")) {
+        }else {
+                 runnable.run();
+        }
         bindData(repairsOrderDetail);
         if (detialModel.getData().getCustomer_repair_model().getPd_time()==null){
             binding.sendOrderInfo.getRoot().setVisibility(View.GONE);

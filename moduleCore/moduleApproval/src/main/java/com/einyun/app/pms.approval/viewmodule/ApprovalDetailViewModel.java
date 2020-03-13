@@ -183,5 +183,71 @@ public class ApprovalDetailViewModel extends BaseViewModel {
         map.put(ApprovalDataKey.APPROVAL_SUMIT_PARMS,approvalSumitBean);
         return map;
     }
-
+    public String  getTypeValue(String auditType ,String auditSubType) {
+        String typeValue="";
+        switch (auditType) {
+            case "INNER_AUDIT_CREATE_PLAN"://创建计划
+                switch (auditSubType) {
+                    case "CREATE_WORK_PLAN"://创建工作计划
+                        typeValue="创建计划-创建工作计划";
+                        break;
+                    case "CREATE_PATROL_PLAN"://创建巡查计划
+                        typeValue="创建计划-创建巡查计划";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_FORCE_CLOSE"://强制闭单
+                switch (auditSubType) {
+                    case "FORCE_CLOSE_COMPLAIN"://客户投诉工单
+                        typeValue="强制闭单-客户投诉工单";
+                        break;
+                    case "FORCE_CLOSE_ENQUIRY"://客户问询工单
+                        typeValue="强制闭单-客户问询工单";
+                        break;
+                    case "FORCE_CLOSE_REPAIR"://客户报修工单
+                        typeValue="强制闭单-客户报修工单";
+                        break;
+                    case "FORCE_CLOSE_PATROL"://巡查工单
+                        typeValue="强制闭单-巡查工单";
+                        break;
+                    case "FORCE_CLOSE_PLAN"://计划工单
+                        typeValue="强制闭单-计划工单";
+                        break;
+                    case "FORCE_CLOSE_ALLOCATE"://派工单
+                        typeValue="强制闭单-派工单";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_UPDATE_PLAN"://修改计划
+                switch (auditSubType) {
+                    case "UPDATE_PATROL_PLAN"://修改巡查计划
+                        typeValue="修改计划-修改巡查计划";
+                        break;
+                    case "UPDATE_WORK_PLAN"://修改工作计划
+                        typeValue="修改计划-修改工作计划";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_POSTPONED": //工单延期
+                switch (auditSubType) {
+                    case "POSTPONED_REPAIR"://客户报修工单
+                        typeValue="工单延期-客户报修工单";
+                        break;
+                    case "POSTPONED_COMPLAIN"://客户投诉工单
+                        typeValue="工单延期-客户投诉工单";
+                        break;
+                    case "POSTPONED_PATROL"://巡查工单
+                        typeValue="工单延期-巡查工单";
+                        break;
+                    case "POSTPONED_PLAN"://计划工单
+                        typeValue="工单延期-计划工单";
+                        break;
+                    case "POSTPONED_ALLOCATE"://派工单
+                        typeValue="工单延期-派工单";
+                        break;
+                }
+                break;
+        }
+        return typeValue;
+    }
 }

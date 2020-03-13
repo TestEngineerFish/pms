@@ -12,12 +12,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.fastjson.JSON;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.pms.approval.R;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
-import com.einyun.app.pms.approval.constants.RouteKey;
 import com.einyun.app.pms.approval.databinding.ActivityApprovalDetailViewModuleBinding;
 import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.model.ApprovalFormdata;
@@ -38,11 +38,10 @@ import java.util.List;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_APPROVAL_DETAIL)
 public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<ActivityApprovalDetailViewModuleBinding, ApprovalDetailViewModel> {
-    @Autowired(name = RouteKey.APPROVAL_ITEM_DATA)
-    Serializable data;
-    @Autowired(name = RouteKey.APPROVAL_DETAIL_TYPE_VALUE)
-    String typeValue;
-    private ApprovalItemmodule approvalItemmodule;
+    @Autowired(name = RouteKey.KEY_PRO_INS_ID)
+    String mProinsId;
+    @Autowired(name = RouteKey.KEY_TASK_ID)
+    String mTaskId;
     private ApprovalFormdata approvalFormdata;
     private UrlxcgdGetInstBOModule urlxcgdGetInstBOModule;
 
@@ -63,7 +62,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 //        setBackIcon(R.drawable.back);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(getString(R.string.tv_approval_detail));
-        approvalItemmodule = (ApprovalItemmodule)data;
+
 
     }
 
@@ -78,7 +77,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         /*
          * 获取基本信息
          * */
-        viewModel.queryApprovalBasicInfo(approvalItemmodule.getProInsId()).observe(this, model -> {
+        viewModel.queryApprovalBasicInfo(mProinsId).observe(this, model -> {
             urlxcgdGetInstBOModule = model;
             String form_data = model.getData().getWorkorder_audit_model().getForm_data();
             approvalFormdata = JSON.parseObject(form_data, ApprovalFormdata.class);
@@ -86,7 +85,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             /*
              * 获取审批信息列表数据
              * */
-            viewModel.queryApprovalDetialInfo(approvalItemmodule.getID_()).observe(this, model2 -> {
+            viewModel.queryApprovalDetialInfo(model.getData().getWorkorder_audit_model().getId_()).observe(this, model2 -> {
                 List<ApprovalDetailInfoBean.RowsBean> rows = model2.getRows();
                 if (rows!=null) {
                     ApprovalDetailInfoBean.RowsBean rowsBean = new ApprovalDetailInfoBean.RowsBean();
@@ -145,7 +144,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             return;
         }
         //获取请求参数
-        HashMap<Object, Object> approve = viewModel.approval(actionName, urlxcgdGetInstBOModule, approvalItemmodule.getProInsId(), approvalItemmodule.getTaskId(), comment, approvalFormdata);
+        HashMap<Object, Object> approve = viewModel.approval(actionName, urlxcgdGetInstBOModule, mProinsId, mTaskId, comment, approvalFormdata);
         /*
          *提交审批
          * */
@@ -194,7 +193,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
         } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_IN_APPROVAL)) {//审批中
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
-            if (approvalItemmodule.getUserAuditStatus()==null) {//自己没有审批过
+            if (model.getData().getWorkorder_audit_model().getStatus()==null) {//自己没有审批过
 
                 binding.listview.setVisibility(View.GONE);//
                 binding.rlApprovalSug.setVisibility(View.VISIBLE);
@@ -229,7 +228,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         binding.tvIntallment.setText(workorder_audit_model.getDivide_name());
         binding.tvApplyPerson.setText(workorder_audit_model.getApply_user());
         binding.tvApplyTime.setText(workorder_audit_model.getApply_date());
-        binding.tvApprovalType.setText(typeValue);
+        binding.tvApprovalType.setText(viewModel.getTypeValue(workorder_audit_model.getAudit_type(),workorder_audit_model.getAudit_sub_type()));
         /*
         * 申请信息
         * */

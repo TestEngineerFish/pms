@@ -36,6 +36,7 @@ class RepairsDetailModel {
     var forceCloseInfo: ForceCloseInfoBean? = null
     var handleList: List<HandleListBean>? = null
     var nodeId:String? =""
+    var id_:String? =""
     var info:Info?=null
     /**
      * 获取强制逼单或申请延期信息
