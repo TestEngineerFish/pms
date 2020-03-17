@@ -39,7 +39,7 @@
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{messageCenter.content}"
+                android:text="@{messageCenter.subject}"
                 android:layout_marginTop="@dimen/px_34"
                 android:layout_marginLeft="@dimen/px_124"
                 android:textSize="@dimen/font_size16"/>

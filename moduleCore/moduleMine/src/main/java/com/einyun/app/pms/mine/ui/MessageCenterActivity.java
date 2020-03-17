@@ -1,6 +1,7 @@
 package com.einyun.app.pms.mine.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +16,14 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.util.LogTime;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.service.LoginNavigationCallbackImpl;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
@@ -142,7 +145,13 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 switch (msgExtendVars.getSubType()) {
                     case "repair"://报修
-
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
+                                .withString(RouteKey.KEY_CATE_NAME, msgExtendVars.getContent().getCateName())
+                                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                         break;
                 }
 
@@ -153,6 +162,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
                                 .withString(RouteKey.KEY_PRO_INS_ID,msgExtendVars.getContent().getProcInstId())
                                 .withString(RouteKey.KEY_TASK_ID,msgExtendVars.getContent().getTaskId())
+                                .withString(RouteKey.KEY_APPROVAL_USER_STATE,"msgCenter")
                                 .navigation();
                         break;
                     case "dispatch"://派工单消息

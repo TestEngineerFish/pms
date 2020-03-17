@@ -198,6 +198,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             taskId = "";
         }
         viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
+            if (repairsDetail==null) {
+                return;
+            }
             GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
             getNodeIdRequest.setDefkey("customer_repair_flow");
             getNodeIdRequest.setId(repairsDetail.getData().getCustomer_repair_model().getId_());

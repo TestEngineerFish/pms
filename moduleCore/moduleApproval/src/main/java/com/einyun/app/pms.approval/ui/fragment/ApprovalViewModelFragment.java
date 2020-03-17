@@ -395,6 +395,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
                 .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .withString(RouteKey.KEY_APPROVAL_USER_STATE,data.getUserAuditStatus())
                 .navigation();
     }
 

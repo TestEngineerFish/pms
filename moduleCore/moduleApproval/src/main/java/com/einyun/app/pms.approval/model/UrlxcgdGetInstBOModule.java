@@ -97,6 +97,7 @@ public class UrlxcgdGetInstBOModule {
             private String apply_instance_id;
             private String district_id;
             private String audit_type;
+            private String proc_inst_id_;
             private String status;
             private InitDataBean initData;
 
@@ -298,6 +299,14 @@ public class UrlxcgdGetInstBOModule {
 
             public void setInitData(InitDataBean initData) {
                 this.initData = initData;
+            }
+
+            public String getProc_inst_id_() {
+                return proc_inst_id_;
+            }
+
+            public void setProc_inst_id_(String proc_inst_id_) {
+                this.proc_inst_id_ = proc_inst_id_;
             }
 
             public static class InitDataBean {

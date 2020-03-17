@@ -41,7 +41,7 @@ public class PushResultModel {
     public class Content{
         private String cateName;
         private String taskId;
-        private String instId;
+        private String procInstId;
 
         public String getCateName() {
             return cateName;
@@ -60,11 +60,11 @@ public class PushResultModel {
         }
 
         public String getInstId() {
-            return instId;
+            return procInstId;
         }
 
         public void setInstId(String instId) {
-            this.instId = instId;
+            this.procInstId = instId;
         }
     }
 }

@@ -280,7 +280,7 @@ class RepairsDetailModel {
             var material_cost: Any? = ""
             var project_fee: Any? = null
             var work_order_timeout: Any? = null
-            var id_: String? = null
+            var id_: String? = ""
             var receive_user: String? = null
             var joint_processor: Any? = null
             var u_project_id: String? = null
