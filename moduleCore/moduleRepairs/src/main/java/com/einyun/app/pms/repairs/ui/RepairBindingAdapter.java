@@ -99,6 +99,20 @@ public class RepairBindingAdapter {
         }
 
     }
+    @BindingAdapter("asses")
+    public static void asses(TextView view, String value) {
+        if (value == null) {
+            return;
+        }
+        if ("normal".equals(value)) {
+            view.setText("一般");
+        }else if ("general".equals(value)){
+            view.setText("轻微");
+        }else {
+            view.setText("严重");
+        }
+
+    }
 
     @BindingAdapter("setText")
     public static void setText(TextView view, String value) {

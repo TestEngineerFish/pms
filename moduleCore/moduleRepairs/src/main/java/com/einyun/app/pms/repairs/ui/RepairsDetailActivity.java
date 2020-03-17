@@ -467,7 +467,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         }
         detialModel = repairsOrderDetail;
         updatePageUIState(PageUIState.FILLDATA.getState());
-//        detialModel.setNodeId(nodeId);
+        detialModel.setNodeId(nodeId);
+        if ("normal".equals(detialModel.getData().getCustomer_repair_model().getBx_property_ass_id())) {
+            binding.repairsInfo.repairAssesTxt.setText("一般");
+        }else if ("general".equals(detialModel.getData().getCustomer_repair_model().getBx_property_ass_id())){
+            binding.repairsInfo.repairAssesTxt.setText("轻微");
+        }else {
+            binding.repairsInfo.repairAssesTxt.setText("严重");
+        }
         customerRepair = detialModel.getData().getCustomer_repair_model();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
         if (detialModel.getNodeId().equals("closed")||detialModel.getNodeId().equals("")) {

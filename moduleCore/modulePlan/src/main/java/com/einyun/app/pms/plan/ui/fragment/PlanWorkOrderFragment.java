@@ -112,7 +112,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 public void onFaild(Throwable throwable) {
 
                 }
-            }, BasicDataTypeEnum.RESOURCE, BasicDataTypeEnum.LINE);
+            }, BasicDataTypeEnum.LINE);
 
         });
         binding.panelCondition.search.setVisibility(View.VISIBLE);
@@ -128,7 +128,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     protected void showConditionView(BasicData data) {
         if (selectPopUpView == null) {
             ConditionBuilder builder = new ConditionBuilder();
-            List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+            List<SelectModel> conditions = builder.addOnlyLines(data.getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                     .mergeLineRes(data.getResources())

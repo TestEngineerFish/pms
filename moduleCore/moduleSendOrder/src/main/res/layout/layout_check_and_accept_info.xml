@@ -88,7 +88,7 @@
                 android:layout_height="@dimen/px_38"
                 android:layout_marginLeft="@dimen/px_144"
                 android:layout_weight="1"
-                app:clickable="true"
+                app:clickable="false"
                 app:starCount="5"
                 app:starEmpty="@mipmap/rating_uncheck"
                 app:starFill="@mipmap/rating_check"

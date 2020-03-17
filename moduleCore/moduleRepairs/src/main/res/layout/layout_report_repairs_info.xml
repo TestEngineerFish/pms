@@ -185,7 +185,6 @@
                 style="@style/work_order_detail_txt_right"
                 android:layout_width="wrap_content"
                 android:layout_marginBottom="@dimen/px_0"
-                android:text="@{repairs.data.customer_repair_model.bx_property_ass}"
                 android:visibility="gone"
                 />
             <RadioGroup
