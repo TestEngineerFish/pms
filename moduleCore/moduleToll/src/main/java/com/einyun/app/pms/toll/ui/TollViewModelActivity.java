@@ -27,6 +27,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -55,11 +56,13 @@ import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -319,6 +322,7 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
      * 一键催缴
      */
     public  void  onWorthClick(){
+        MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName());
         if (!feeDivideId.isEmpty()) {
             FeeRequset feeRequset = new FeeRequset();
             feeRequset.setDivideId(feeDivideId);

@@ -25,6 +25,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 
@@ -37,6 +38,7 @@ import com.einyun.app.pms.mine.viewmodule.SettingViewModel;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -82,6 +84,7 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         binding.rvNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(SettingViewModuleActivity.this, CustomEventTypeEnum.MSG_SWITCH.getTypeName());
                 setNotify();
             }
         });

@@ -22,6 +22,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
@@ -38,6 +39,7 @@ import com.einyun.app.pms.main.databinding.ItemWorkTablePendingNumBinding;
 import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -423,11 +425,13 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                     .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
                     .withString(RouteKey.KEY_WEB_URL, url)
                     .navigation();
-        } else if (type == 2) {
+        } else if (type == 2) {//工单处理情况总览 更多点击
+            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.ORDER_HANDLE.getTypeName());
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
                     .navigation();
-        } else if (type == 1) {
+        } else if (type == 1) {//运营收缴率 更多点击
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName());
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
                     .withObject(RouteKey.ORGCODE, projectCode)

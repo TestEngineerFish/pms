@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
@@ -45,6 +46,7 @@ import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
 import com.einyun.app.pms.disqualified.widget.DisqualifiedTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -283,6 +285,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         search();
     }
     private void search() {
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName());
         try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {

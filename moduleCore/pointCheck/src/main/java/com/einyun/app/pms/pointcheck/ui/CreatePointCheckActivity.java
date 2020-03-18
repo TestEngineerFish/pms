@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -40,13 +42,16 @@ import com.einyun.app.pms.pointcheck.model.ProjectResultModel;
 import com.einyun.app.pms.pointcheck.net.request.CreatePointCheckRequest;
 import com.einyun.app.pms.pointcheck.viewmodel.CreateCheckViewModel;
 import com.einyun.app.pms.pointcheck.viewmodel.ViewModelFactory;
+import com.umeng.analytics.MobclickAgent;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -268,11 +273,25 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         viewModel.loadProjects(divideId);
     }
 
+    private static final String TAG = "CreatePointCheckActivit";
     public void onSubmitClick() {
+        MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName());
         if (!validateForm(true)) {
             return;
         }
         uploadImages();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     /**

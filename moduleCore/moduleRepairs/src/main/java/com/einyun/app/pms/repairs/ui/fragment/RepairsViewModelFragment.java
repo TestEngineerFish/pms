@@ -23,6 +23,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -47,6 +48,7 @@ import com.einyun.app.pms.repairs.viewmodel.RepairsViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.Map;
@@ -207,6 +209,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     binding.itemRepairGrab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.REPAIR_GRAB.getTypeName());
                             viewModel.grabRepair(repairsModel.getTaskId()).observe(getActivity(), status -> {
                                 if (status.booleanValue()) {
                                     new AlertDialog(getActivity()).builder().setTitle(getResources().getString(R.string.tip))
@@ -236,6 +239,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     binding.itemContact.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.REPAIR_COMMUN.getTypeName());
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                     .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
                                     .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
@@ -257,6 +261,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     binding.itemResend.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName());
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                     .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())

@@ -12,6 +12,7 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
@@ -47,6 +48,7 @@ import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemWorkPatrolBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.Map;
@@ -253,6 +255,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     protected void search() {
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PATOL_ORDER_SEARCH.getTypeName());
         if (searchFragment == null) {
             searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
                 @Override

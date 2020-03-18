@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
@@ -23,6 +24,7 @@ import com.einyun.app.pms.main.core.viewmodel.MineViewModel;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.databinding.FragmentMineBinding;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 我的page
@@ -154,6 +156,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     * */
     public void adviceFeedBack(){
         if (userInfoModel1!=null) {
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName());
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ADVICE_FEED_BACK)
                     .withString(RouteKey.ACCOUNT,userInfoModel1.getAccount())

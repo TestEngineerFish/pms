@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 
@@ -43,6 +44,7 @@ import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewMode
 import com.einyun.app.pms.customerinquiries.widget.InquiriesTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
@@ -179,6 +181,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     binding.tvWorkOrderNum.setText(inquiriesItemModule.wx_code);
                     binding.tvCreateTime.setText(TimeUtil.getAllTime(inquiriesItemModule.createTime));
                     binding.tvTurnOrder.setOnClickListener(new ClickProxy(view -> {
+                        MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName());
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
@@ -190,6 +193,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 
                     }));
                     binding.tvTalk.setOnClickListener(new ClickProxy(view -> {
+                        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.INQUIRIES_COMMUN.getTypeName());
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
                                 .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)

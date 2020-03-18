@@ -18,6 +18,7 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.library.mdm.model.GridModel;
@@ -45,6 +46,7 @@ import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -109,6 +111,7 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
  */
 
     public  void onSubmitClick(){
+        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL_LIST.getTypeName());
         feeLists.clear();
         for (PaymentList paymentList : paymentLists) {
             for (PaymentList.ListBean listBean : paymentList.getList()) {

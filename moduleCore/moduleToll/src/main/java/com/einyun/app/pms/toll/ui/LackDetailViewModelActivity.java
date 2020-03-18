@@ -14,6 +14,7 @@ import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
@@ -30,6 +31,7 @@ import com.einyun.app.pms.toll.model.LackDetailModel;
 import com.einyun.app.pms.toll.model.TollModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,6 +202,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
      * 催缴
      */
     public void onRejectClick(){
+        MobclickAgent.onEvent(this,CustomEventTypeEnum.SINGLE_WORTH.getTypeName());
         ArrayList<String> builds = new ArrayList<>();
         builds.add(houseId);
         FeeRequset feeRequset = new FeeRequset();
@@ -231,6 +234,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
      * 收费
      */
     public void onPassClick(){
+        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL.getTypeName());
         if (data==null) {
             return;
         }

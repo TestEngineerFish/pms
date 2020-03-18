@@ -23,8 +23,10 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.main.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -127,6 +129,7 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gdlb":
                             //工单列表
+                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.ORDER_LIST.getTypeName());
                             item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation());
                             break;
                         case "cjgd":
@@ -150,10 +153,12 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gzyl":
                             //工作预览
+                            MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName());
                             item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation());
                             break;
                         case "smcl":
                             //扫码处理
+                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.SWEEP_CODE.getTypeName());
                             item.setOnClickListener(v -> ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_SCANNER)
                                     .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER));

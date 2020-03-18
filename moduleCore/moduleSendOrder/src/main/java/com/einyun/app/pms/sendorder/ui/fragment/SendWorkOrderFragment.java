@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
@@ -54,6 +55,7 @@ import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.Map;
@@ -153,6 +155,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                     binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName());
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                     .withString(RouteKey.KEY_TASK_ID, distribute.getTaskId())

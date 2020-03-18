@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -31,6 +32,7 @@ import com.einyun.app.pms.approval.viewmodule.ApprovalDetailViewModel;
 import com.einyun.app.pms.approval.viewmodule.ApprovalViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -207,6 +209,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     * 提交审批
     * */
     private void sumit(String actionName) {
+        MobclickAgent.onEvent(this, CustomEventTypeEnum.APPROVAL_SUBMIT.getTypeName());
         String comment=binding.limitInput.getString().trim();
         if (comment.isEmpty()) {
             ToastUtil.show(getApplicationContext(), R.string.tv_empty_sug);

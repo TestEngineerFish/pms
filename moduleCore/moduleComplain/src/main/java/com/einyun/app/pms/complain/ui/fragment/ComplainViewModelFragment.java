@@ -21,6 +21,7 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -44,6 +45,7 @@ import com.einyun.app.pms.complain.viewmodel.ComplainViewModel;
 import com.einyun.app.pms.complain.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.Map;
@@ -194,6 +196,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                         binding.tvTurnOrder.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName());
                                 ARouter.getInstance()
                                         .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                         .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
@@ -208,6 +211,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                         binding.tvTalk.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.COMPLAIN_COMMUN.getTypeName());
                                 ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                         .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
                                         .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())

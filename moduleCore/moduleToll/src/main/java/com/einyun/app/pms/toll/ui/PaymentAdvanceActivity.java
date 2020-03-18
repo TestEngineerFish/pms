@@ -57,26 +57,27 @@ import java.util.List;
 @Route(path = RouterUtils.ACTIVITY_PAYMENT_ADVANCE)
 public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPaymentAdvanceBinding, TollViewModel> {
     @Autowired(name = RouteKey.HOUSE_TITLE)
-    String  title;
+    String title;
     @Autowired(name = RouteKey.KEY_DIVIDE_NAME)
-    String  divideName;
+    String divideName;
     @Autowired(name = RouteKey.HOUSE_ID)
-    String  houseId;
+    String houseId;
     @Autowired(name = RouteKey.HOUSE_FEE_ID)
-    String  houseFeeId;
+    String houseFeeId;
     @Autowired(name = RouteKey.KEY_DIVIDE_ID)
-    String  divideId;
+    String divideId;
     @Autowired(name = RouteKey.NAME)
-    String  houseName;
+    String houseName;
     RVBindingAdapter<ItemPaymentAdvanceListBinding, PaymentAdvanceModel2.DataBean.DataListBean> adapter;
     private String mAdvanceMoney;
     private int mPosition;
-//    private List<PaymentAdvanceModel.DataBean> mData;
-    private List<PaymentAdvanceModel2.DataBean.DataListBean> mData=new ArrayList<>();
-    private ArrayList<CreateOrderRequest.PaymentDetailsBean>  paymentDetailsBeans = new ArrayList<>();;
-    private String clientName="";
+    //    private List<PaymentAdvanceModel.DataBean> mData;
+    private List<PaymentAdvanceModel2.DataBean.DataListBean> mData = new ArrayList<>();
+    private ArrayList<CreateOrderRequest.PaymentDetailsBean> paymentDetailsBeans = new ArrayList<>();
+    ;
+    private String clientName = "";
 
-//    public  static PaymentAdvanceActivity instance;
+    //    public  static PaymentAdvanceActivity instance;
     @Override
     protected TollViewModel initViewModel() {
         return new ViewModelProvider(this, new TollViewModelFactory()).get(TollViewModel.class);
@@ -95,7 +96,7 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
         binding.setCallBack(this);
 
 //        instance=this;
-        binding.tvName.setText(divideName+title);
+        binding.tvName.setText(divideName + title);
         /**
          * 付款成功关闭页面
          */
@@ -113,11 +114,11 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
     }
 
     /**
-     *
      * 收费
      */
     ArrayList<String> feeItemIds = new ArrayList<>();
-    public void onFeeClick(){
+
+    public void onFeeClick() {
         feeItemIds.clear();
         JumpAdvanceRequset jumpAdvanceRequset = new JumpAdvanceRequset();
         jumpAdvanceRequset.setDivideId(divideId);
@@ -130,16 +131,16 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
             }
         }
         jumpAdvanceRequset.setFeeItemIds(feeItemIds);
-        if (feeItemIds.size()==0) {
-            ToastUtil.show(this,"请选择收费项");
+        if (feeItemIds.size() == 0) {
+            ToastUtil.show(this, "请选择收费项");
             return;
         }
-        viewModel.jumpAdvanceVerify(jumpAdvanceRequset).observe(this,model->{
+        viewModel.jumpAdvanceVerify(jumpAdvanceRequset).observe(this, model -> {
 
             String respone = new Gson().toJson(model);
             JSONObject jsonObject = JSON.parseObject(respone);
             String data = jsonObject.getString("data");
-            if (data==null) {
+            if (data == null) {
                 return;
             }
             if (data.equals("{}")) {
@@ -151,7 +152,7 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
 
                 boolean token = jsondata.getBoolean(feeItemId);
                 if (!token) {
-                    ToastUtil.show(PaymentAdvanceActivity.this,"你有欠费");
+                    ToastUtil.show(PaymentAdvanceActivity.this, "你有欠费");
 
                     return;
                 }
@@ -166,30 +167,30 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
             createOrderRequest.setPayAmount(Double.valueOf(binding.tvToallMoney.getText().toString()));
 //                createOrderRequest.setPayAmount(0.01);
             for (PaymentAdvanceModel2.DataBean.DataListBean paymentList : mData) {
-                    if (paymentList.isCheck()) {
-                        CreateOrderRequest.PaymentDetailsBean paymentDetailsBean = new CreateOrderRequest.PaymentDetailsBean();
-                        paymentDetailsBean.setChargeAmount(paymentList.getChargeAmount());
+                if (paymentList.isCheck()) {
+                    CreateOrderRequest.PaymentDetailsBean paymentDetailsBean = new CreateOrderRequest.PaymentDetailsBean();
+                    paymentDetailsBean.setChargeAmount(paymentList.getChargeAmount());
 //                            paymentDetailsBean.setChargeAmount(new BigDecimal("0.01"));
-                        paymentDetailsBean.setChargeReceivableId(paymentList.getFeeItemId());
-                        paymentDetailsBean.setChargeTypeCode(paymentList.getFeeIAttribute());
-                        paymentDetailsBeans.add(paymentDetailsBean);
-                    }
+                    paymentDetailsBean.setChargeReceivableId(paymentList.getFeeItemId());
+                    paymentDetailsBean.setChargeTypeCode(paymentList.getFeeIAttribute());
+                    paymentDetailsBeans.add(paymentDetailsBean);
+                }
 
 
             }
             createOrderRequest.setPaymentDetails(paymentDetailsBeans);
 //            ToastUtil.show(PaymentAdvanceActivity.this,"没有欠费");
-            viewModel.createOrder(createOrderRequest).observe(this,orderModel->{
-                if (orderModel.getData()!=0) {//创建订单成功  跳转二维码界面生成二维码
+            viewModel.createOrder(createOrderRequest).observe(this, orderModel -> {
+                if (orderModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
 
-                    Log.e(TAG, "checkJumpVerity: "+orderModel.getData());
+                    Log.e(TAG, "checkJumpVerity: " + orderModel.getData());
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
-                            .withInt(RouteKey.KEY_ORDER_ID,orderModel.getData())
-                            .withString("MONEY",binding.tvToallMoney.getText().toString())
-                            .withString(RouteKey.KEY_DIVIDE_NAME,divideName)
-                            .withString(RouteKey.KEY_ALL_NAME,binding.tvName.getText().toString())
-                            .withString(RouteKey.KEY_CLIENT_NAME,allName)
-                            .withString(RouteKey.HOUSE_TITLE,title)
+                            .withInt(RouteKey.KEY_ORDER_ID, orderModel.getData())
+                            .withString("MONEY", binding.tvToallMoney.getText().toString())
+                            .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+                            .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
+                            .withString(RouteKey.KEY_CLIENT_NAME, allName)
+                            .withString(RouteKey.HOUSE_TITLE, title)
                             .navigation();
 //                    finish();
                 }
@@ -200,11 +201,12 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
 
 
     }
+
     @Override
     protected void initData() {
         super.initData();
-        Log.e(TAG, "initData: houseId"+houseId );
-        Log.e(TAG, "initData: divideId"+divideId );
+        Log.e(TAG, "initData: houseId" + houseId);
+        Log.e(TAG, "initData: divideId" + divideId);
         refreData();
 
         initAdapter();
@@ -222,18 +224,18 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
         feeDetailRequset.setHouseId(houseId);
 //        feeDetailRequset.setDivideId("7");
 //        feeDetailRequset.setHouseId("67605181830795270");
-        viewModel.getPaymentAdvanceList(feeDetailRequset).observe(this,model->{
+        viewModel.getPaymentAdvanceList(feeDetailRequset).observe(this, model -> {
 
-            if (model.getData()==null) {
+            if (model.getData() == null) {
                 return;
             }
-                    mData = model.getData().getDataList();
+            mData = model.getData().getDataList();
 
-            if (mData !=null) {
+            if (mData != null) {
 
-                if (mData.size()==0) {
+                if (mData.size() == 0) {
                     binding.rlEmpty.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     binding.rlEmpty.setVisibility(View.GONE);
                 }
                 adapter.setDataList(mData);
@@ -242,27 +244,28 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
 
         });
     }
-    private String allName="";
-    private void initAdapter() {
-        if(adapter==null){
-            adapter=new RVBindingAdapter<ItemPaymentAdvanceListBinding, PaymentAdvanceModel2.DataBean.DataListBean>(this, com.einyun.app.pms.toll.BR.payadvance){
 
+    private String allName = "";
+
+    private void initAdapter() {
+        if (adapter == null) {
+            adapter = new RVBindingAdapter<ItemPaymentAdvanceListBinding, PaymentAdvanceModel2.DataBean.DataListBean>(this, com.einyun.app.pms.toll.BR.payadvance) {
 
 
                 @Override
                 public void onBindItem(ItemPaymentAdvanceListBinding listBinding, PaymentAdvanceModel2.DataBean.DataListBean item, int position) {
 
-                    listBinding.tvParkNum.setText(item.getParkingName()+item.getParkingNum());
-                    listBinding.tvMonthTimes.setText(item.getMonths()+"");
+                    listBinding.tvParkNum.setText(item.getParkingName() + item.getParkingNum());
+                    listBinding.tvMonthTimes.setText(item.getMonths() + "");
                     clientName = item.getClientName();
-                    if (clientName.length()>=2) {
+                    if (clientName.length() >= 2) {
                         String firstName = clientName.substring(0, 1);
-                        if (clientName.length()==2) {
-                            allName = firstName+"*";
-                        }else if (clientName.length()==3){
-                            allName=firstName+"**";
-                        }else if (clientName.length()==4){
-                             allName=firstName+"***";
+                        if (clientName.length() == 2) {
+                            allName = firstName + "*";
+                        } else if (clientName.length() == 3) {
+                            allName = firstName + "**";
+                        } else if (clientName.length() == 4) {
+                            allName = firstName + "***";
                         }
 
                     }
@@ -272,54 +275,53 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
                     listBinding.tvItemName.setText(item.getFeeItemName());
                     item.setChargeAmount(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString())));
 //                    listBinding.tvAdvanceMoney.setText(item.getUnitPrice().setScale(2,BigDecimal.ROUND_HALF_UP)+"");
-                    listBinding.tvAdvanceMoney.setText(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString())).setScale(2,BigDecimal.ROUND_HALF_UP)+"");
+                    listBinding.tvAdvanceMoney.setText(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString())).setScale(2, BigDecimal.ROUND_HALF_UP) + "");
 
-                    listBinding.tvResidueAmount.setText("可用余额:"+item.getResidueAmount().setScale(2,BigDecimal.ROUND_HALF_UP)+"元");
-                   /**
-                    * 预缴项目类型FeeAttribute
-                    * 1:水费,
-                    * 2:车位服务费,
-                    * 3:临时收费,
-                    * 4:物业服务费,
-                    * 5:电费,
-                    * 6:押金,
-                    **/
+                    listBinding.tvResidueAmount.setText("可用余额:" + item.getResidueAmount().setScale(2, BigDecimal.ROUND_HALF_UP) + "元");
+                    /**
+                     * 预缴项目类型FeeAttribute
+                     * 1:水费,
+                     * 2:车位服务费,
+                     * 3:临时收费,
+                     * 4:物业服务费,
+                     * 5:电费,
+                     * 6:押金,
+                     **/
                     if (item.getFeeIAttribute().equals("2")) {
                         listBinding.tvParkNum.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         listBinding.tvParkNum.setVisibility(View.GONE);
-                        listBinding.tvParkNum.setText(item.getParkingName()+item.getParkingNum());
+                        listBinding.tvParkNum.setText(item.getParkingName() + item.getParkingNum());
                     }
-
 
 
                     listBinding.tvAdd.setOnClickListener(view -> {
                         int integer = Integer.valueOf(listBinding.tvMonthTimes.getText().toString());
-                        integer=integer+1;
+                        integer = integer + 1;
 
                         item.setMonths(integer);
-                        listBinding.tvMonthTimes.setText(integer+"");
+                        listBinding.tvMonthTimes.setText(integer + "");
                         item.setChargeAmount(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString())));
 //                        listBinding.tvAdvanceMoney.setText(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString()))+"");
                         adapter.notifyDataSetChanged();
                         initToallMoney();
-                        });
+                    });
                     listBinding.tvReduce.setOnClickListener(view -> {
                         int integer = Integer.valueOf(listBinding.tvMonthTimes.getText().toString());
-                        if (integer==1) {
-                            ToastUtil.show(PaymentAdvanceActivity.this,"月份不能小于零");
+                        if (integer == 1) {
+                            ToastUtil.show(PaymentAdvanceActivity.this, "月份不能小于零");
                             return;
                         }
-                        integer=integer-1;
+                        integer = integer - 1;
                         item.setMonths(integer);
-                        listBinding.tvMonthTimes.setText(integer+"");
+                        listBinding.tvMonthTimes.setText(integer + "");
                         item.setChargeAmount(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString())));
 //                        listBinding.tvAdvanceMoney.setText(item.getUnitPrice().multiply(new BigDecimal(listBinding.tvMonthTimes.getText().toString()))+"");
                         adapter.notifyDataSetChanged();
                         initToallMoney();
                     });
                     listBinding.tvChangeMoney.setOnClickListener(view -> {
-                        InputMoneyPopWindow    inputMoneyPopWindow = new InputMoneyPopWindow(PaymentAdvanceActivity.this, position);
+                        InputMoneyPopWindow inputMoneyPopWindow = new InputMoneyPopWindow(PaymentAdvanceActivity.this, position);
 //                        inputMoneyPopWindow.setOnItemClickListener(PaymentAdvanceActivity.this);
                         if (!inputMoneyPopWindow.isShowing()) {
                             inputMoneyPopWindow.showAsDropDown(binding.view);
@@ -328,15 +330,15 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
                             @Override
                             public void onData(String cate, int position) {
                                 if (cate.isEmpty()) {
-                                    ToastUtil.show(PaymentAdvanceActivity.this,"输入不能为空");
+                                    ToastUtil.show(PaymentAdvanceActivity.this, "输入不能为空");
                                     return;
                                 }
-                                if (Double.valueOf(cate)==0) {
-                                    ToastUtil.show(PaymentAdvanceActivity.this,"输入不能为0");
+                                if (Double.valueOf(cate) == 0) {
+                                    ToastUtil.show(PaymentAdvanceActivity.this, "输入不能为0");
                                     return;
                                 }
                                 item.setChargeAmount(new BigDecimal(cate));
-                                listBinding.tvAdvanceMoney.setText(new BigDecimal(cate).setScale(2, RoundingMode.HALF_UP)+"");
+                                listBinding.tvAdvanceMoney.setText(new BigDecimal(cate).setScale(2, RoundingMode.HALF_UP) + "");
                                 initToallMoney();
                                 inputMoneyPopWindow.dismiss();
                             }
@@ -350,7 +352,7 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
                             if (b) {
                                 item.setCheck(true);
 
-                            }else {
+                            } else {
                                 item.setCheck(false);
                             }
                             initToallMoney();
@@ -359,6 +361,7 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
                     });
 
                 }
+
                 @Override
                 public int getLayoutId() {
                     return R.layout.item_payment_advance_list;
@@ -375,21 +378,22 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
         for (PaymentAdvanceModel2.DataBean.DataListBean datum : mData) {
             if (datum.isCheck()) {
 //                                    bigDecimal= bigDecimal.add(new BigDecimal(listBinding.tvAdvanceMoney.getText().toString()));
-                bigDecimal= bigDecimal.add(datum.getChargeAmount());
+                bigDecimal = bigDecimal.add(datum.getChargeAmount());
             }
         }
-        binding.tvToallMoney.setText(bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP)+"");
+        binding.tvToallMoney.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");
     }
+
     private void initToallMoney2() {
         BigDecimal bigDecimal = new BigDecimal("0.00");
         for (PaymentAdvanceModel2.DataBean.DataListBean datum : mData) {
             if (datum.isCheck()) {
 //                                    bigDecimal= bigDecimal.add(new BigDecimal(listBinding.tvAdvanceMoney.getText().toString()));
 //                bigDecimal= bigDecimal.add(datum.getUnitPrice());
-                bigDecimal= bigDecimal.add(datum.getUnitPrice().multiply(new BigDecimal(datum.getMonths())));
+                bigDecimal = bigDecimal.add(datum.getUnitPrice().multiply(new BigDecimal(datum.getMonths())));
             }
         }
-        binding.tvToallMoney.setText(bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP)+"");
+        binding.tvToallMoney.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");
     }
 
     @Override

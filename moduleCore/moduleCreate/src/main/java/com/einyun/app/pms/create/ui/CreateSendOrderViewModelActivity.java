@@ -48,6 +48,8 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
+
 @Route(path = RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
 public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<ActivityCreateSendOrderBinding, CreateViewModel> implements RadioGroup.OnCheckedChangeListener, PeriodizationView.OnPeriodSelectListener {
     @Autowired(name = RouteKey.KEY_ORDER_ID)
@@ -178,13 +180,22 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     }
     //点击原工单号 跳转至计划工单详情界面
     public void onOldCodeClick(){
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-                .withString(RouteKey.KEY_ORDER_ID, id)
-                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                .withString(RouteKey.KEY_TASK_ID, taskId)
-                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
-                .withString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTag)
-                .navigation();
+        if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                    .withString(RouteKey.KEY_ORDER_ID, id)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withString(RouteKey.KEY_TASK_ID, taskId)
+                    .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                    .withString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTag)
+                    .navigation();
+        }else {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                    .withString(RouteKey.KEY_ORDER_ID, id)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withString(RouteKey.KEY_TASK_ID, taskId)
+                    .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                    .navigation();
+        }
     }
     private void chooseDisposePerson() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).

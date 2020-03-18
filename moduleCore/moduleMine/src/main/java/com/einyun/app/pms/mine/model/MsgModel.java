@@ -174,7 +174,7 @@ public class MsgModel {
 
 
     public String getReceiveTime() {
-        return receiveTime;
+        return receiveTime==null?"":receiveTime;
     }
 
     public void setReceiveTime(String receiveTime) {

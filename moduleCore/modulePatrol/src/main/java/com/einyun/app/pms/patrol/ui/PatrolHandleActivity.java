@@ -44,6 +44,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PATRO;
+
 /**
  * 巡查处理
  */
@@ -332,6 +335,10 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                 .withString(RouteKey.KEY_ORDER_NO, patrolInfo.getData().getZyxcgd().getF_plan_work_order_code())
                 .withString(RouteKey.KEY_LINE, patrolInfo.getData().getZyxcgd().getF_line_name())
                 .withString(RouteKey.KEY_RESOUSE, patrolInfo.getData().getZyxcgd().getF_type_name())
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_WORK_PREVIEW_PATRO)
                 .navigation();
     }
 
