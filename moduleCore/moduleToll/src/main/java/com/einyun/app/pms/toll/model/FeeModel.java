@@ -60,6 +60,7 @@ public class FeeModel {
 
             private String buildingId;
             private String unitId;
+            private String name;
 
             public String getUnitId() {
                 return unitId;
@@ -138,6 +139,14 @@ public class FeeModel {
 
             public void setFeeTotal(String feeTotal) {
                 this.feeTotal = feeTotal;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
             }
         }
     }

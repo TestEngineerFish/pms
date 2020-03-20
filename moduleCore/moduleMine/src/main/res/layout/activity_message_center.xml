@@ -17,7 +17,36 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent">
          <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+         <RelativeLayout
+             android:id="@+id/rl_empty"
+             android:visibility="visible"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:gravity="center_horizontal"
+                 android:orientation="vertical"
+                 >
+                 <ImageView
+                     android:layout_width="@dimen/px_200"
+                     android:layout_height="@dimen/px_200"
+                     android:src="@mipmap/icon_empty"
+                     />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/px_20"
+                     android:textSize="@dimen/font_size12"
+                     android:textColor="@color/normal_main_text_icon_color"
+                     android:text="暂无任何内容"
+                     />
+
+             </LinearLayout>
+
+         </RelativeLayout>
          <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
              android:id="@+id/swipe_refresh"
              android:layout_width="match_parent"

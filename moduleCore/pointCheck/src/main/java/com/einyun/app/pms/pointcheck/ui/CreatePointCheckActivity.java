@@ -33,6 +33,7 @@ import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.pointcheck.R;
 import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckCreateBinding;
@@ -275,7 +276,7 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
 
     private static final String TAG = "CreatePointCheckActivit";
     public void onSubmitClick() {
-        MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName());
+
         if (!validateForm(true)) {
             return;
         }
@@ -351,6 +352,10 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                     } else {
                         finish();
                     }
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("user_name",UserUtil.getUserName());
+                    Log.e(TAG, "onSubmitClick: "+UserUtil.getUserName());
+                    MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
                 });
             } else {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_failed);

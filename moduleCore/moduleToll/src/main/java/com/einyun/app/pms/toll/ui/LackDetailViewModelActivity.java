@@ -18,6 +18,7 @@ import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.pms.toll.BR;
 import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivityLackDetailViewModelBinding;
@@ -34,6 +35,7 @@ import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -202,7 +204,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
      * 催缴
      */
     public void onRejectClick(){
-        MobclickAgent.onEvent(this,CustomEventTypeEnum.SINGLE_WORTH.getTypeName());
+
         ArrayList<String> builds = new ArrayList<>();
         builds.add(houseId);
         FeeRequset feeRequset = new FeeRequset();
@@ -210,7 +212,9 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
         feeRequset.setHouseIdS(builds);
         viewModel.allWorth(feeRequset).observe(this,model->{
             if (model.getCode()==0) {
-
+                HashMap<String, String> map = new HashMap<>();
+                map.put("user_name", UserUtil.getUserName());
+                MobclickAgent.onEvent(this,CustomEventTypeEnum.SINGLE_WORTH.getTypeName(),map);
             if (alertDialog == null) {
                 alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
                         .setMsg("催缴消息已发送成功！")
@@ -234,7 +238,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
      * 收费
      */
     public void onPassClick(){
-        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL.getTypeName());
+
         if (data==null) {
             return;
         }
@@ -314,6 +318,9 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                                 .withString(RouteKey.KEY_CLIENT_NAME,data.getClientName())
                                 .withString("MONEY",data.getFeeAmount()+"")
                                 .navigation();
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("user_name",UserUtil.getUserName());
+                        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL.getTypeName(),map);
                     }
 
                 });

@@ -6,20 +6,31 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.einyun.app.base.BasicApplication;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.common.R;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PushResultModel;
+import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.common.service.LoginNavigationCallbackImpl;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
+import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
+import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
+import com.einyun.app.common.viewmodel.MsgModelFactory;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.util.Map;
 
@@ -30,13 +41,17 @@ public class MyMessageReceiver extends MessageReceiver {
     public static final String REC_TAG = "receiver";
     Gson gson = new Gson();
     public static MediaPlayer player;
+    private BaseWorkOrderHandelViewModel viewModel;
+    private MsgRepository repository;
+
 
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         super.onNotification(context, title, summary, extraMap);
         // TODO 处理推送通知
         Log.e("MyMessageReceiver", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
-
+        //通知刷新界面
+        LiveEventBus.get(LiveDataBusKey.BELL_STATE_FRESH, String.class).post("");
         try {
             if (extraMap.containsKey("type") && extraMap.containsKey("subType")) {
                 String type = extraMap.get("type");
@@ -66,13 +81,13 @@ public class MyMessageReceiver extends MessageReceiver {
 
                             break;
                         case "complain"://投诉工单消息
-                            initVoice(context, R.raw.complaint_response);
+//                            initVoice(context, R.raw.complaint_response);
                             break;
                         case "enquiry"://问询消息
-                            initVoice(context, R.raw.query_transaction);
+//                            initVoice(context, R.raw.query_transaction);
                             break;
                         case "repair"://报修消息
-                            initVoice(context, R.raw.repair_grap);
+//                            initVoice(context, R.raw.repair_grap);
                             break;
                     }
                 }
@@ -112,9 +127,12 @@ public class MyMessageReceiver extends MessageReceiver {
 //                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
 //                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
 
+
         try {
             PushResultModel pushModel = gson.fromJson(extraMap, new TypeToken<PushResultModel>() {
             }.getType());
+
+
             //抢单提醒
             if ("grab".equals(pushModel.getType())) {
                 if ("repair".equals(pushModel.getSubType())) {
@@ -189,12 +207,6 @@ public class MyMessageReceiver extends MessageReceiver {
                                 .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                         break;
                     case "repair"://报修消息
-//                        getNodeIdRequest.setDefkey("customer_repair_flow");
-////                        getNodeIdRequest.setId("74374815867208710");
-//                        OrderListModel orderListModel = new OrderListModel();
-//                        orderListModel.setID_(msgModel.getId());
-//                        orderListModel.setInstance_id(msgExtendVars.getContent().getProcInstId());
-//                        getNodeId(orderListModel);
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
                                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 .withString(RouteKey.KEY_ORDER_ID, "")
@@ -207,6 +219,21 @@ public class MyMessageReceiver extends MessageReceiver {
                         break;
                 }
             }
+            if (repository==null) {
+                repository = new MsgRepository();
+            }
+            repository.singleRead(pushModel.getMsgId(), new CallBack<Boolean>() {
+                @Override
+                public void call(Boolean aBoolean) {
+
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+
+                }
+            });
+
         } catch (Exception e) {
             Log.e("message", e.getMessage());
         }

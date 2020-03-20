@@ -171,6 +171,7 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
                                         grabListener.onGrabed();
                                     }*/
                                     getIntent().setType("1");
+                                    binding.tabRepairOrder.getTabAt(1).select();
                                 }
                             }).show();
 
@@ -181,7 +182,7 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
                                 @Override
                                 public void onClick(View view) {
                                     getIntent().setType("1");
-
+                                    binding.grabFrame.getRoot().setVisibility(View.GONE);
                                 }
                             }).show();
                 }

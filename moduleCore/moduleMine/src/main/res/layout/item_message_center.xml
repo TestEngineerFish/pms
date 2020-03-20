@@ -39,7 +39,7 @@
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{messageCenter.subject}"
+                android:text="@{messageCenter.content}"
                 android:layout_marginTop="@dimen/px_34"
                 android:layout_marginLeft="@dimen/px_124"
                 android:textSize="@dimen/font_size16"/>
@@ -47,7 +47,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{messageCenter.sendTime}"
+                app:status_time="@{messageCenter.sendTime}"
                 android:layout_marginTop="@dimen/px_18"
                 android:layout_marginBottom="@dimen/px_42"
                 android:layout_marginLeft="@dimen/px_124"

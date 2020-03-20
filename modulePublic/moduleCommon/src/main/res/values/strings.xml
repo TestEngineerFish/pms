@@ -162,7 +162,7 @@
     <string name="text_report_repair_people">报修人</string>
     <string name="text_create_time">创建时间</string>
     <string name="text_grab_success">抢单成功，请在"待跟进"中查看</string>
-    <string name="text_grab_faile">抢单失败</string>
+    <string name="text_grab_faile">该抢单任务已失效</string>
     <string name="text_initiate_communication">发起沟通</string>
     <string name="text_repairs_type">报修类别</string>
     <string name="text_contact">沟通</string>

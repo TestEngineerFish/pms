@@ -17,6 +17,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.model.UserStarsBean;
@@ -25,6 +26,8 @@ import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.databinding.FragmentMineBinding;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
 
 /**
  * 我的page
@@ -56,12 +59,23 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                         initData();
                     }
                 });
+        LiveEventBus
+                .get(LiveDataBusKey.BELL_STATE_FRESH,String.class)
+                .observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        Log.e(TAG, "onChanged: "+"来了新消息显示小红点");
+                        binding.tvRedPoint.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
+    private static final String TAG = "MineViewModelFragment";
     @Override
     protected void setUpData() {
         binding.setCallBack(this);
         initData();
+
     }
 
     private void initData() {
@@ -105,6 +119,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                     binding.tvRedPoint.setVisibility(View.GONE);
 
                 }
+//                binding.tvRedPoint.setVisibility(View.GONE);
 //                startTime = model.getLastListTime();
 //                endTime = model.getCurrentTime();
             }
@@ -156,7 +171,9 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     * */
     public void adviceFeedBack(){
         if (userInfoModel1!=null) {
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName(),map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ADVICE_FEED_BACK)
                     .withString(RouteKey.ACCOUNT,userInfoModel1.getAccount())
@@ -172,6 +189,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     * */
     public void goToMsgCenter(){
         if (userInfoModel1!=null) {
+            binding.tvRedPoint.setVisibility(View.GONE);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_MESSAGE_CENTER)
                     .withString(RouteKey.KEY_START_TIME,startTime)

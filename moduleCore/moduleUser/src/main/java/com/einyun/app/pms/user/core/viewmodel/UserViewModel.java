@@ -78,6 +78,8 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 CommonHttpService.getInstance().authorToken(data.getToken());
                 mUsersRepo.saveOrUpdateUser(new UserModel("", data.getUserId(), "", username, password));
                 SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TOKEN, data.getToken());
+                SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_NAME, data.getAccount());
+
             }
 
             @Override

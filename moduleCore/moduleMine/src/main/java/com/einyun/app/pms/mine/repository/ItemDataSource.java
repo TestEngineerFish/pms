@@ -8,9 +8,11 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.pms.mine.model.MsgListModel;
 import com.einyun.app.pms.mine.model.MsgModel;
 import com.einyun.app.pms.mine.model.RequestPageBean;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 
 /**
@@ -45,10 +47,13 @@ public class ItemDataSource extends BaseDataSource<MsgModel> {
                 if(callback instanceof LoadInitialCallback){
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
                     loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
-                    Log.e("tag"+data.getRows().size(), "call: " );
+                    Log.e("tag"+data.getRows().size(), "call:data.getTotal() " +data.getTotal());
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
                     loadInitialCallback.onResult(data.getRows());
+                }
+                if (data.getTotal()!=0) {
+                    LiveEventBus.get(LiveDataBusKey.MSG_EMPTY_FRESH,String.class).post("");
                 }
             }
 

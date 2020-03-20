@@ -21,6 +21,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.pms.toll.BR;
 import com.einyun.app.pms.toll.R;
@@ -50,6 +51,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -111,7 +113,7 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
  */
 
     public  void onSubmitClick(){
-        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL_LIST.getTypeName());
+
         feeLists.clear();
         for (PaymentList paymentList : paymentLists) {
             for (PaymentList.ListBean listBean : paymentList.getList()) {
@@ -180,6 +182,9 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
                                 .withString(RouteKey.KEY_CLIENT_NAME,clientName)
                                 .withString(RouteKey.HOUSE_TITLE,title)
                                 .navigation();
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("user_name", UserUtil.getUserName());
+                        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL_LIST.getTypeName(),map);
                         finish();
                     }
 

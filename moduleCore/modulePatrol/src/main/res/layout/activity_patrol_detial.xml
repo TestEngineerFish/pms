@@ -672,18 +672,18 @@
                     </androidx.cardview.widget.CardView>
                     <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
                     <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
-
+                    <Button
+                        android:id="@+id/btn_submit"
+                        style="@style/submit_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_88"
+                        android:onClick="@{()->callBack.onSubmitClick()}"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone"
+                        android:text="@string/text_submit" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
-            <Button
-                android:id="@+id/btn_submit"
-                style="@style/submit_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_88"
-                android:onClick="@{()->callBack.onSubmitClick()}"
-                android:layout_alignParentBottom="true"
-                android:visibility="gone"
-                android:text="@string/text_submit" />
+
         </RelativeLayout>
     </LinearLayout>
 

@@ -19,6 +19,7 @@ import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.IsFastClick;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.pms.approval.R;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.databinding.ActivityApprovalDetailViewModuleBinding;
@@ -87,6 +88,10 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
          * */
         viewModel.queryApprovalBasicInfo(mProinsId).observe(this, model -> {
             urlxcgdGetInstBOModule = model;
+            if (urlxcgdGetInstBOModule==null||model.getData().getWorkorder_audit_model()==null) {
+                return;
+            }
+
             String form_data = model.getData().getWorkorder_audit_model().getForm_data();
             approvalFormdata = JSON.parseObject(form_data, ApprovalFormdata.class);
             showBasicInfo(model);
@@ -209,7 +214,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     * 提交审批
     * */
     private void sumit(String actionName) {
-        MobclickAgent.onEvent(this, CustomEventTypeEnum.APPROVAL_SUBMIT.getTypeName());
+
         String comment=binding.limitInput.getString().trim();
         if (comment.isEmpty()) {
             ToastUtil.show(getApplicationContext(), R.string.tv_empty_sug);
@@ -233,6 +238,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 ToastUtil.show(getApplicationContext(), R.string.tv_no_pass);
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
             }
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(this, CustomEventTypeEnum.APPROVAL_SUBMIT.getTypeName(),map);
         });
     }
 

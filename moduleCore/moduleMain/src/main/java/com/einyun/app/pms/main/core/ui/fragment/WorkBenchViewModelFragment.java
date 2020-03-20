@@ -27,6 +27,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
@@ -44,6 +45,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static androidx.appcompat.app.AppCompatActivity.RESULT_OK;
@@ -426,12 +428,16 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                     .withString(RouteKey.KEY_WEB_URL, url)
                     .navigation();
         } else if (type == 2) {//工单处理情况总览 更多点击
-            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.ORDER_HANDLE.getTypeName());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.ORDER_HANDLE.getTypeName(),map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
                     .navigation();
         } else if (type == 1) {//运营收缴率 更多点击
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name",UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName(),map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
                     .withObject(RouteKey.ORGCODE, projectCode)

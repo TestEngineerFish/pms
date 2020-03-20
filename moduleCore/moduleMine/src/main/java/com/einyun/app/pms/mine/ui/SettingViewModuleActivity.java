@@ -31,6 +31,7 @@ import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 
 
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.constants.Constants;
 import com.einyun.app.pms.mine.databinding.ActivitySettingViewModuleBinding;
@@ -84,7 +85,9 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
         binding.rvNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MobclickAgent.onEvent(SettingViewModuleActivity.this, CustomEventTypeEnum.MSG_SWITCH.getTypeName());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("user_name", UserUtil.getUserName());
+                MobclickAgent.onEvent(SettingViewModuleActivity.this, CustomEventTypeEnum.MSG_SWITCH.getTypeName(),map);
                 setNotify();
             }
         });

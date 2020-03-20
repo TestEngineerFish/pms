@@ -28,6 +28,7 @@ import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
@@ -309,23 +310,41 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         });
     }
 
+//    /**
+//     * 是否创建派工单
+//     */
+//    protected void createSendOrder() {
+//        if(alertDialog==null){
+//            alertDialog=new AlertDialog(PatrolHandleActivity.this).builder()
+//                    .setTitle(getString(R.string.text_alert))
+//                    .setMsg(getString(R.string.text_request_create_distribute))
+//                    .setPositiveButton(getString(R.string.ok), v -> {
+//                         //goPaiGongDan(); 跳转至创建派工单
+//                        navigatSendWorkOrder();
+//                        finish();
+//                    }).setNegativeButton(getString(R.string.cancel), v -> {
+//                        finish();
+//                    });
+//            alertDialog.show();
+//            alertDialog.setCancelable(false);
+//        }
+//    }
     /**
      * 是否创建派工单
      */
-    protected void createSendOrder() {
-        if(alertDialog==null){
-            alertDialog=new AlertDialog(PatrolHandleActivity.this).builder()
-                    .setTitle(getString(R.string.text_alert))
-                    .setMsg(getString(R.string.text_request_create_distribute))
-                    .setPositiveButton(getString(R.string.ok), v -> {
-                         //goPaiGongDan(); 跳转至创建派工单
-                        navigatSendWorkOrder();
+    private void createSendOrder() {
+        if (alertDialog == null) {
+            alertDialog = new CreateNewOrderDialog(this).builder()
+                    .setCreateSendOrder(v -> {
+                        navigatSendWorkOrder();//跳转至创建派工单
                         finish();
-                    }).setNegativeButton(getString(R.string.cancel), v -> {
+                    }).setCreateUnOrder(v -> {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                        finish();
+                    }).setCancel(v -> {
                         finish();
                     });
             alertDialog.show();
-            alertDialog.setCancelable(false);
         }
     }
 

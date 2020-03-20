@@ -8,6 +8,8 @@ public class PushResultModel {
     private String type;
     private String subType;
     private String content;
+    private String msgId;
+    private String _ALIYUN_NOTIFICATION_ID_;
 
     public String getType() {
         return type;
@@ -36,6 +38,22 @@ public class PushResultModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String get_ALIYUN_NOTIFICATION_ID_() {
+        return _ALIYUN_NOTIFICATION_ID_;
+    }
+
+    public void set_ALIYUN_NOTIFICATION_ID_(String _ALIYUN_NOTIFICATION_ID_) {
+        this._ALIYUN_NOTIFICATION_ID_ = _ALIYUN_NOTIFICATION_ID_;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 
     public class Content{

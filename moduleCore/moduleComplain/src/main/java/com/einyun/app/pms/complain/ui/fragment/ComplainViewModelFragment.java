@@ -32,6 +32,7 @@ import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
@@ -47,6 +48,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -196,13 +198,13 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                         binding.tvTurnOrder.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName());
                                 ARouter.getInstance()
                                         .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                         .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
                                         .withString(RouteKey.KEY_ORDER_ID, complainModel.getID_())
                                         .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
                                         .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
                                         .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                                         .navigation();
                             }
@@ -211,9 +213,9 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                         binding.tvTalk.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.COMPLAIN_COMMUN.getTypeName());
                                 ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                         .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_COMMUN.getTypeName())
                                         .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
                                         .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
                                         .navigation();

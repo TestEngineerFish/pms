@@ -43,6 +43,7 @@ import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
@@ -90,7 +91,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected RVBindingAdapter nodesAdapter;
     protected PatrolLocal patrolLocal;
     protected PatrolInfo patrolInfo;
-    protected AlertDialog alertDialog;
+    protected CreateNewOrderDialog alertDialog;
     protected TipDialog tipDialog;
     protected File imageFile;
 

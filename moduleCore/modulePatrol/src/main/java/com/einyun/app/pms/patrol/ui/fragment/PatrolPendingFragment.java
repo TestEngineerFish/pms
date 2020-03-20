@@ -35,6 +35,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkOrder;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
@@ -50,6 +51,7 @@ import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -255,7 +257,9 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     protected void search() {
-        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PATOL_ORDER_SEARCH.getTypeName());
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PATOL_ORDER_SEARCH.getTypeName(),map);
         if (searchFragment == null) {
             searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
                 @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.LoginNavigationCallbackImpl;
@@ -39,6 +41,7 @@ import com.einyun.app.pms.mine.model.RequestPageBean;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.einyun.app.pms.mine.viewmodule.SignSetViewModel;
 import com.google.gson.Gson;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
 
@@ -72,17 +75,26 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
         getNodeIdRequest = new GetNodeIdRequest();
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
-
+            loadPagingData(new RequestPageBean(),"");
         });
+        showLoading();
         loadPagingData(new RequestPageBean(),"");
         initAdapter();
+        LiveEventBus.get(LiveDataBusKey.MSG_EMPTY_FRESH,String.class).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                binding.rlEmpty.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     private void loadPagingData(RequestPageBean requestBean, String  tag){
 //        初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPadingData(requestBean,tag).observe(this, dataBeans ->
-                adapter.submitList(dataBeans)
-        );
+        viewModel.loadPadingData(requestBean,tag).observe(this, dataBeans ->{
+            hideLoading();
+            adapter.submitList(dataBeans);
+        });
 
     }
     @Override
@@ -102,6 +114,12 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
             adapter=new RVPageListAdapter<ItemMessageCenterBinding, MsgModel>(this, com.einyun.app.pms.mine.BR.messageCenter,mDiffCallback){
                 @Override
                 public void onBindItem(ItemMessageCenterBinding itemBinding, MsgModel itemModel) {
+                    if (itemModel.isHasRead()) {
+                        itemBinding.ivMsgType.setAlpha(0.5f);
+                    }else {
+                        itemBinding.ivMsgType.setAlpha(1f);
+
+                    }
 
                 }
                 @Override

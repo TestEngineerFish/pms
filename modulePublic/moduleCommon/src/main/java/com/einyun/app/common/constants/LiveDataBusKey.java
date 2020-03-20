@@ -8,6 +8,10 @@ public class LiveDataBusKey {
     public static final String WORK_BENCH_FRESH = "WORK_BENCH_FRESH";
     //刷新我的
     public static final String MINE_FRESH = "MINE_FRESH";
+    //刷新小铃铛状态
+    public static final String BELL_STATE_FRESH = "BELL_STATE_FRESH";
+   //刷新消息空状态
+    public static final String MSG_EMPTY_FRESH = "MSG_EMPTY_FRESH";
 
     //停止swiperefresh
     public static final String STOP_REFRESH = "STOP_REFRESH";

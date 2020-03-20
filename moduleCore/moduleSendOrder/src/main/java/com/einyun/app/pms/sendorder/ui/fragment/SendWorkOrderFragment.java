@@ -44,6 +44,7 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PageRquest;
@@ -57,6 +58,7 @@ import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -155,9 +157,9 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                     binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName());
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName())
                                     .withString(RouteKey.KEY_TASK_ID, distribute.getTaskId())
                                     .withString(RouteKey.KEY_ORDER_ID, distribute.getID_())
                                     .withString(RouteKey.KEY_DIVIDE_ID, distribute.getF_DIVIDE_ID())

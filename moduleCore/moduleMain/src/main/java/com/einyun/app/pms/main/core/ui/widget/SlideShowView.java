@@ -25,11 +25,13 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.pms.main.R;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -129,7 +131,9 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gdlb":
                             //工单列表
-                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.ORDER_LIST.getTypeName());
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("user_name", UserUtil.getUserName());
+                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.ORDER_LIST.getTypeName(),map);
                             item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation());
                             break;
                         case "cjgd":
@@ -153,12 +157,16 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gzyl":
                             //工作预览
-                            MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName());
+                            HashMap<String, String> map2 = new HashMap<>();
+                            map2.put("user_name",UserUtil.getUserName());
+                            MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName(),map2);
                             item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation());
                             break;
                         case "smcl":
                             //扫码处理
-                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.SWEEP_CODE.getTypeName());
+                            HashMap<String, String> map3 = new HashMap<>();
+                            map3.put("user_name",UserUtil.getUserName());
+                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.SWEEP_CODE.getTypeName(),map3);
                             item.setOnClickListener(v -> ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_SCANNER)
                                     .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER));
