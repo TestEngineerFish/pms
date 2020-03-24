@@ -92,8 +92,8 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     private void loadPagingData(RequestPageBean requestBean, String  tag){
 //        初始化数据，LiveData自动感知，刷新页面
         viewModel.loadPadingData(requestBean,tag).observe(this, dataBeans ->{
-            hideLoading();
             adapter.submitList(dataBeans);
+            hideLoading();
         });
 
     }
@@ -174,6 +174,8 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 }
 
                 break;
+            case "end"://强制关闭
+            case "copyto"://抄送
             case "reminder"://新待处理工单提醒
                 switch (msgExtendVars.getSubType()) {
                     case "audit"://审批消息
@@ -244,7 +246,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                         break;
                 }
-
                 break;
         }
 

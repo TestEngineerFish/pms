@@ -70,7 +70,7 @@ public class PushResultModel {
         }
 
         public String getTaskId() {
-            return taskId;
+            return taskId==null?"":taskId;
         }
 
         public void setTaskId(String taskId) {

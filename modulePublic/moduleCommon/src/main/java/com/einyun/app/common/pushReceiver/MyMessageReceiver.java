@@ -147,7 +147,7 @@ public class MyMessageReceiver extends MessageReceiver {
                 }
             }
             //新待处理工单提醒
-            if ("reminder".equals(pushModel.getType())) {
+            if ("reminder".equals(pushModel.getType())||"end".equals(pushModel.getType())||"copyto".equals(pushModel.getType())) {
                 switch (pushModel.getSubType()) {
                     case "audit"://审批消息
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)

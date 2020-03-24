@@ -49,7 +49,7 @@ public class BuildModel {
         }
 
         public String getCode() {
-            return code;
+            return code==null?"":code;
         }
 
         public void setCode(String code) {
@@ -73,7 +73,7 @@ public class BuildModel {
         }
 
         public String getName() {
-            return name;
+            return name==null?"":name;
         }
 
         public void setName(String name) {

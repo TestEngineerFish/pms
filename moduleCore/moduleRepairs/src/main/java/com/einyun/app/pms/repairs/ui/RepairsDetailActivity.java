@@ -554,6 +554,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //评价状态评分
         if (customerRepair.getReturn_score() != null) {
             binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
+        }else {
+            binding.repairEvaluateInfo.getRoot().setVisibility(View.GONE);
         }
         if (customerRepair.getService_quality_score() != null) {
             binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));

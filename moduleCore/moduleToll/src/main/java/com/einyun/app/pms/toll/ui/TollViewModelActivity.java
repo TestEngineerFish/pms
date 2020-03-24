@@ -286,7 +286,7 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
                         Collections.sort(mFeeHouseList, new Comparator<BuildModel.GridRangeBean>() {
                             @Override
                             public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
-                                return o2.getCode().compareTo(o1.getCode());//高～低
+                                return o2.getName().compareTo(o1.getName());//高～低
 
                             }
                         });
@@ -296,7 +296,7 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
                         Collections.sort(mFeeHouseList, new Comparator<BuildModel.GridRangeBean>() {
                             @Override
                             public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
-                                return o1.getCode().compareTo(o2.getCode());//顺序
+                                return o1.getName().compareTo(o2.getName());//顺序
 
                             }
                         });

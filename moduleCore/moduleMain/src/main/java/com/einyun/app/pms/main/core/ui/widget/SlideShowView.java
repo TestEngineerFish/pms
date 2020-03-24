@@ -131,10 +131,12 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gdlb":
                             //工单列表
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("user_name", UserUtil.getUserName());
-                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.ORDER_LIST.getTypeName(),map);
-                            item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation());
+                            item.setOnClickListener(v -> {
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(mContext,CustomEventTypeEnum.ORDER_LIST.getTypeName(),map);
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation();
+                            });
                             break;
                         case "cjgd":
                             //创建工单
@@ -157,19 +159,23 @@ public class SlideShowView extends FrameLayout {
                             break;
                         case "gzyl":
                             //工作预览
-                            HashMap<String, String> map2 = new HashMap<>();
-                            map2.put("user_name",UserUtil.getUserName());
-                            MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName(),map2);
-                            item.setOnClickListener(v -> ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation());
+                            item.setOnClickListener(v -> {
+                                HashMap<String, String> map2 = new HashMap<>();
+                                map2.put("user_name",UserUtil.getUserName());
+                                MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName(),map2);
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation();
+                            });
                             break;
                         case "smcl":
                             //扫码处理
-                            HashMap<String, String> map3 = new HashMap<>();
-                            map3.put("user_name",UserUtil.getUserName());
-                            MobclickAgent.onEvent(mContext,CustomEventTypeEnum.SWEEP_CODE.getTypeName(),map3);
-                            item.setOnClickListener(v -> ARouter.getInstance()
+                            item.setOnClickListener(v -> {
+                                HashMap<String, String> map3 = new HashMap<>();
+                                map3.put("user_name",UserUtil.getUserName());
+                                MobclickAgent.onEvent(mContext,CustomEventTypeEnum.SWEEP_CODE.getTypeName(),map3);
+                                ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_SCANNER)
-                                    .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER));
+                                    .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER);
+                            });
                             break;
                     }
                 }

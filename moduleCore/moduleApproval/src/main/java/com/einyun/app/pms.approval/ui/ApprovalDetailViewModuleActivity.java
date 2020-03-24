@@ -216,9 +216,11 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     private void sumit(String actionName) {
 
         String comment=binding.limitInput.getString().trim();
-        if (comment.isEmpty()) {
-            ToastUtil.show(getApplicationContext(), R.string.tv_empty_sug);
-            return;
+        if (ApprovalDataKey.APPROVAL_SUMIT_REJECT.equals(actionName)) {
+            if (comment.isEmpty()) {
+                ToastUtil.show(getApplicationContext(), R.string.tv_empty_sug);
+                return;
+            }
         }
         if (approvalFormdata==null) {
             return;
