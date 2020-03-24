@@ -77,7 +77,7 @@ public class FeeActivity extends BaseHeadViewModelActivity<ActivityFeeBinding, T
         });
         binding.tvHouseName.setText("尊敬的"+clientName+"业主"+"("+title+")");
         binding.tvMoney.setText("￥"+money);
-        String baseUrl = BuildConfig.BASE_URL;
+        String baseUrl = BuildConfig.BASE_FEE_URL;
         String key_tenant_id = (String) SPUtils.get(this, "KEY_TENANT_ID", "");
         String key_token = (String) SPUtils.get(this, "KEY_TOKEN", "");
         GlideUrl url = new GlideUrl(baseUrl+URL_GET_FEE_QR_CODE+orderId, new LazyHeaders.Builder()//debug

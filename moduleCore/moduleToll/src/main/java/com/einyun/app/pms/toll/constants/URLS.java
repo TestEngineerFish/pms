@@ -1,9 +1,11 @@
 package com.einyun.app.pms.toll.constants;
 
+import com.einyun.app.common.BuildConfig;
+
 public class URLS {
 //    public static final String uatBaseUrl="";
 //    public static final String relaseBasesUrl="fee-center-api";//生产环境
-    public static final String relaseBasesUrl="";//uat环境
+    public static final String relaseBasesUrl= BuildConfig.FEE_MID_URL;//uat环境
     //获取问询类型
     public static final String URL_GET_QUIRIES_TYPES ="workOrder/workOrder/bizData/v1/getBaseList?categoryKey=workorder_type_and_line";
     //获取欠费信息 栋 单元  房产通用
@@ -18,7 +20,7 @@ public class URLS {
     //跳缴验证
     public static final String URL_GET_FEE_JUMP_VERIFY =relaseBasesUrl+"/payment/check_jump";
     //收款二维码
-    public static final String URL_GET_FEE_QR_CODE=":10018/payInfo/getQRCode?orderId=";
+    public static final String URL_GET_FEE_QR_CODE=relaseBasesUrl+"/payInfo/getQRCode?orderId=";
     //预缴验证
     public static final String URL_GET_FEE_JUMP_ADVANCE_VERIFY =relaseBasesUrl+"/payment/prepaycheck_in";
     //生成订单

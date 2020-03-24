@@ -299,11 +299,13 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
         List<String> functionList = new ArrayList<>();
         functionList.add("dj");
-        functionList.add("sf");
+
         //审批
         if (userMenu.indexOf("sprk") != -1) {
             functionList.add("sp");
         }
+        //收费
+        functionList.add("sf");
         //创建工单
         functionList.add("cjgd");
         if (userMenu.indexOf("gdlbck") != -1) {

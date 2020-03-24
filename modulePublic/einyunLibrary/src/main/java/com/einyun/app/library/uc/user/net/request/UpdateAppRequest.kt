@@ -7,4 +7,5 @@ class UpdateAppRequest {
     var type: Int? = 0
     var osVersion: String? = DeviceUtil.getSDKVersion().toString()
     var version: String? = DeviceUtil.getVersionName(BasicApplication.getInstance()).toString()
+    var appCode: String? = "cms"
 }

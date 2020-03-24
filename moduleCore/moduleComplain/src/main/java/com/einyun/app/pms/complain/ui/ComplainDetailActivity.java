@@ -101,7 +101,6 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
-        request.getBizData().setC_is_solve(1);
         binding.submit.setOnClickListener(new ClickProxy(this));
         binding.save.setOnClickListener(new ClickProxy(this));
         binding.layoutApplyLateInfo.sendOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18));
@@ -620,9 +619,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             }
             request.getBizData().setF_handle_result(reasonString);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-            if (request.getBizData().getC_is_solve() == -1) {
-                ToastUtil.show(this, "请先选择处理结果");
-                return;
+            if (request.getBizData().getC_is_solve() == null) {
+                request.getBizData().setC_is_solve(1);
             }
             if (request.getBizData().getC_is_solve() == 0) {
                 if (!StringUtil.isNullStr(binding.complainEvaluate.ltExplain.getString())) {
