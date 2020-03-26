@@ -3,6 +3,7 @@ package com.einyun.app.pms.approval.net.response;
 
 
 import com.einyun.app.base.http.BaseResponse;
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.library.workorder.net.URLs;
 import com.einyun.app.pms.approval.model.ApprovalBean;
 import com.einyun.app.pms.approval.model.ApprovalSumitBean;
@@ -13,6 +14,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Url;
+
+import static com.einyun.app.pms.approval.net.URL.URL_GET_PATROL_TYPE;
 
 /**
  * @ProjectName: pms_old
@@ -70,6 +73,10 @@ public interface ApprovalServiceApi {
      */
     @GET
     Flowable<GetApprovalBasicInfoResponse> getApprovalBasicInfo(@Url String url);
+
+    //获取巡查类型
+    @POST(URL_GET_PATROL_TYPE)
+    Flowable<PatrolTypeResponse> getPatrolType(@Body PatrolDetialRequest bean);
     /**
      * 获取审批详情页  审批详情信息
      * @param

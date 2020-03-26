@@ -178,13 +178,23 @@ public class MyMessageReceiver extends MessageReceiver {
                                 .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                         break;
                     case "inspection"://巡查工单消息
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
                                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 .withString(RouteKey.KEY_TASK_ID, "")
                                 .withString(RouteKey.KEY_ORDER_ID, "")
                                 .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
                                 .withString(RouteKey.KEY_TASK_NODE_ID, "")
                                 .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
+                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                        break;
+                    case "patrol"://巡更工单消息
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
+                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                .withString(RouteKey.KEY_TASK_ID,"")
+                                .withString(RouteKey.KEY_ORDER_ID,"")
+                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                                .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                                .withString(RouteKey.KEY_PRO_INS_ID,pushModel.getContent().getInstId())
                                 .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                         break;
                     case "complain"://投诉工单消息

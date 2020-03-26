@@ -8,10 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.library.core.api.ResourceWorkOrderService;
+import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.resource.workorder.model.PatrolInfo;
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.model.ApprovalFormdata;
 import com.einyun.app.pms.approval.model.ApprovalSumitBean;
+import com.einyun.app.pms.approval.model.PatrolTypeModel;
 import com.einyun.app.pms.approval.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.pms.approval.repository.ApprovalkDetailRepository;
 import com.google.gson.Gson;
@@ -21,6 +26,8 @@ import java.util.HashMap;
 
 public class ApprovalDetailViewModel extends BaseViewModel {
     ApprovalkDetailRepository repository=new ApprovalkDetailRepository();
+    ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+    public PatrolDetialRequest request=new PatrolDetialRequest();
     /*
     * 获取审批详情页 基本信息数据
     * */
@@ -44,7 +51,24 @@ public class ApprovalDetailViewModel extends BaseViewModel {
         });
         return approvalBasicInfo;
     }
+    private MutableLiveData<PatrolTypeModel> patrolType=new MutableLiveData<>();
+    public LiveData<PatrolTypeModel> getPatrolType(String id){
+        showLoading();
+        request.setProInsId(id);
+        repository.getPatrolType(request, new CallBack<PatrolTypeModel>() {
+            @Override
+            public void call(PatrolTypeModel data) {
+                hideLoading();
+                patrolType.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return patrolType;
+    }
     /*
     * 获取审批详情页 审批信息列表数据
     * */
@@ -64,6 +88,32 @@ public class ApprovalDetailViewModel extends BaseViewModel {
             }
         });
         return approvalDetailInfo;
+    }
+    /**
+     * 获取已办详情
+     * @param orderId
+     * @return
+     */
+    MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
+    public LiveData<PatrolInfo> loadDoneDetial(String orderId){
+        request.setProInsId(orderId);
+        service.patrolDoneDetial(request, new CallBack<PatrolInfo>() {
+            @Override
+            public void call(PatrolInfo data) {
+//                PatrolInfo patrolInfo = saveCache(data, orderId);
+                liveData.postValue(data);
+//                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+//                hideLoading();
+//                if(patrolInfo==null){
+//                    liveData.postValue(null);
+//                }
+            }
+        });
+        return liveData;
     }
     /*
      * 审批

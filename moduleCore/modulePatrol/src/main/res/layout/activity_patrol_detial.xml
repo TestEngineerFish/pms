@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/px_160"
+                    android:layout_marginBottom="0dp"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -609,6 +609,11 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                     <include layout="@layout/layout_patrol_handle_result" android:id="@+id/panel_handle_info"/>
+
+
+                    <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
+                    <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
+                    <!--   申请延期强制闭单操作                 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/panel_apply_force_close_and_postpone"
                         android:layout_width="match_parent"
@@ -670,8 +675,6 @@
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                    <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
-                    <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
                     <Button
                         android:id="@+id/btn_submit"
                         style="@style/submit_btn"

@@ -442,6 +442,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
             binding.btnSubmit.setVisibility(View.VISIBLE);
         }
+        if (listType == ListType.DONE.getType()) {
+            binding.panelHandleForm.setVisibility(View.GONE);
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+            binding.btnSubmit.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -515,7 +520,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
         patrolLocal.setImages(images);
         patrolLocal.setNote(binding.limitInput.getString());
-        patrolLocal.setNodes(nodesAdapter.getDataList());
+        List<WorkNode> workNodes = viewModel.loadNodes(patrolInfo);
+        workNodes.add(0,new WorkNode());
+        List<WorkNode> dataList = nodesAdapter.getDataList();
+
+        if (workNodes.size()==dataList.size()) {
+
+            patrolLocal.setNodes(nodesAdapter.getDataList());
+        }else {
+            List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
+            dataList.addAll(workNodes1);
+            patrolLocal.setNodes(dataList);
+        }
+
         viewModel.saveLocal(patrolLocal);
     }
 

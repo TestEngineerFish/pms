@@ -670,7 +670,68 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      * 派单，响应,处理，评价
      */
     private void doReuest() {
-        filterRequest(nodeId);
+//        filterRequest(nodeId);
+        //响应状态
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_RESPONSE)) {
+            if (TextUtils.isEmpty(binding.repariResponse.repairResponseReason.getString())) {
+                ToastUtil.show(this, R.string.text_please_enter_reason);
+                return;
+            } else {
+                customerRepair.setResponse_result(binding.repariResponse.repairResponseReason.getString());
+            }
+            if (binding.repariResponse.rgs.getCheckedRadioButtonId() == R.id.rb_normal) {
+                customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
+            } else {
+                customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
+            }
+
+        }
+        //处理状态
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_HANDLE)) {
+            mergeHandleRequest();
+
+        }
+        //超时派单
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
+            if (TextUtils.isEmpty(binding.sendOrder.repairSelectedPepple.getText().toString())||"请选择".equals(binding.sendOrder.repairSelectedPepple.getText().toString())) {
+                ToastUtil.show(this, R.string.txt_plese_select_people);
+                return;
+            }
+
+        }
+        //待评价状态
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_EVALUATE)) {
+            mergeEvaluateRequest();
+            if (binding.repairEvaluate.radiogroup.getCheckedRadioButtonId() == R.id.rb_solve) {
+
+            }else {
+                if (TextUtils.isEmpty(binding.repairEvaluate.unsolvedMark.getString())) {
+                    ToastUtil.show(this, R.string.text_please_enter_reason);
+                    return;
+                }
+            }
+        }
+        //待派单
+        if (nodeId.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
+            if (TextUtils.isEmpty(binding.sendOrder.repairSendReason.getString())) {
+            } else {
+                detialModel.getData().getCustomer_repair_model().setHandle_result(binding.sendOrder.repairSendReason.getString());
+                return;
+            }
+            String s = binding.repairsInfo.repairReportArea.getText().toString();
+            if (s!=null&&s.equals("户内")) {
+                if (binding.repairsInfo.repairAppointPeriod.getText().toString().isEmpty()) {
+                    ToastUtil.show(this, R.string.txt_plese_select_time);
+                    return;
+                }
+            }
+            if (TextUtils.isEmpty(detialModel.getData().getCustomer_repair_model().getAssign_grab_user())) {
+                ToastUtil.show(this, R.string.txt_plese_select_people);
+                return;
+            }
+        }
         if (nodeId.equals(RouteKey.REPAIR_STATUS_HANDLE)){
             //上传图片后异步提交
         }else {
@@ -889,11 +950,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (TextUtils.isEmpty(binding.sendOrder.repairSendReason.getString())) {
             } else {
                 detialModel.getData().getCustomer_repair_model().setHandle_result(binding.sendOrder.repairSendReason.getString());
+                return;
             }
             if (TextUtils.isEmpty(detialModel.getData().getCustomer_repair_model().getAssign_grab_user())) {
                 ToastUtil.show(this, R.string.txt_plese_select_people);
+                return;
             }
-            return;
         }
     }
 
@@ -908,6 +970,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             detialModel.getData().getCustomer_repair_model().setC_is_solve(0);//未解决
             if (TextUtils.isEmpty(binding.repairEvaluate.unsolvedMark.getString())) {
                 ToastUtil.show(this, R.string.text_please_enter_reason);
+                return;
             } else {
                 detialModel.getData().getCustomer_repair_model().setReturn_result(binding.repairEvaluate.unsolvedMark.getString());
             }
@@ -924,6 +987,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     private void mergeHandleRequest() {
         if (TextUtils.isEmpty(binding.repairHandleResult.repairHandleReason.getString())) {
             ToastUtil.show(this, R.string.text_please_enter_reason);
+            return;
         } else {
             //维修工时
             customerRepair.setHandle_man_hour(binding.repairHandle.repairWorkHours.getText().toString().trim());

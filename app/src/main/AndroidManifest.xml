@@ -118,10 +118,10 @@
 
         <!--巡查工单Start-->
         <activity android:name=".patrol.ui.PatrolListActivity"/>
-        <activity android:name=".patrol.ui.PatrolHandleActivity"/>
-        <activity android:name=".patrol.ui.PatrolTimeHandleActivity"/>
-        <activity android:name=".patrol.ui.PatrolTimeDetialActivity"/>
-        <activity android:name=".patrol.ui.PatrolDetialActivity"/>
+        <activity android:name=".patrol.ui.PatrolHandleActivity" android:launchMode="singleTask"/>
+        <activity android:name=".patrol.ui.PatrolTimeHandleActivity" android:launchMode="singleTask"/>
+        <activity android:name=".patrol.ui.PatrolTimeDetialActivity" android:launchMode="singleTask"/>
+        <activity android:name=".patrol.ui.PatrolDetialActivity" android:launchMode="singleTask"/>
 <!--        <activity android:name="com.einyun.app.common.pushReceiver.PopupPushActivity" android:exported="true"/>-->
         <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity"/>
         <activity android:name=".patrol.ui.PatrolSignInScannerActivity"/>

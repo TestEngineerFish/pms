@@ -375,6 +375,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/cd_limit"
                 style="@style/cardview_style">
 
                 <LinearLayout

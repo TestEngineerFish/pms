@@ -204,7 +204,16 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                                 .navigation();
                         break;
                     case "inspection"://巡查工单消息
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
+                                .withString(RouteKey.KEY_TASK_ID,"")
+                                .withString(RouteKey.KEY_ORDER_ID,"")
+                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                                .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                                .withString(RouteKey.KEY_PRO_INS_ID,msgExtendVars.getContent().getProcInstId())
+                                .navigation();
+                        break;
+                    case "patrol"://巡更工单消息
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
                                 .withString(RouteKey.KEY_TASK_ID,"")
                                 .withString(RouteKey.KEY_ORDER_ID,"")
                                 .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())

@@ -1,6 +1,7 @@
 package com.einyun.app.pms.approval.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -51,6 +52,8 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     String mTaskId;
     @Autowired(name = RouteKey.KEY_APPROVAL_USER_STATE)
     String userAudioState;
+    @Autowired(name = RouteKey.KEY_TAB_ID)
+    int tabId;
     private ApprovalFormdata approvalFormdata;
     private UrlxcgdGetInstBOModule urlxcgdGetInstBOModule;
 
@@ -70,7 +73,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 //        setTitleBarColor(R.color.white);
 //        setBackIcon(R.drawable.back);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
-        setHeadTitle(getString(R.string.tv_approval_detail));
+        setHeadTitle(getString(R.string.tv_approval));
 
 
     }
@@ -148,13 +151,28 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 case ApprovalDataKey.CREATE_PATROL_PLAN:
                 case ApprovalDataKey.FORCE_CLOSE_PATROL:
                 case ApprovalDataKey.UPDATE_PATROL_PLAN:
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-                            .withString(RouteKey.KEY_TASK_ID,"")
-                            .withString(RouteKey.KEY_ORDER_ID,workorder_audit_model.getId_())
-                            .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-                            .withString(RouteKey.KEY_TASK_NODE_ID,"")
-                            .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
-                            .navigation();
+                    viewModel.getPatrolType(workorder_audit_model.getApply_instance_id()).observe(this,model->{
+
+                        if (model.getData().getZyxcgd().getF_patrol_line_id()==null) {//巡查
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                                    .withString(RouteKey.KEY_TASK_ID,"")
+                                    .withString(RouteKey.KEY_ORDER_ID,workorder_audit_model.getId_())
+                                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                                    .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
+                                    .navigation();
+                        }else {//巡更
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
+                                    .withString(RouteKey.KEY_TASK_ID,"")
+                                    .withString(RouteKey.KEY_ORDER_ID,workorder_audit_model.getId_())
+                                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                                    .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
+                                    .navigation();
+                        }
+
+                    });
+
                     break;
                 case ApprovalDataKey.FORCE_CLOSE_ALLOCATE://派工单
                 case ApprovalDataKey.POSTPONED_ALLOCATE:
@@ -395,6 +413,10 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 
         }
 
+        if (tabId==2) {//我发起的tab 不能操作
+            binding.llPass.setVisibility(View.GONE);
+            binding.cdLimit.setVisibility(View.GONE);
+        }
     }
 
     @Override

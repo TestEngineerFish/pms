@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.library.core.net.EinyunHttpService;
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.model.ApprovalSumitBean;
+import com.einyun.app.pms.approval.model.PatrolTypeModel;
 import com.einyun.app.pms.approval.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.pms.approval.net.URL;
 import com.einyun.app.pms.approval.net.response.ApprovalServiceApi;
@@ -28,6 +30,18 @@ public class ApprovalkDetailRepository {
                         callBack.call(response.getData());
                     }else{
                         callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    public void getPatrolType(PatrolDetialRequest request, CallBack<PatrolTypeModel> callBack) {
+        serviceApi.getPatrolType(request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+
                     }
                 }, error -> {
                     callBack.onFaild(error);

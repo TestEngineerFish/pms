@@ -110,6 +110,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                         if(!setUpCapture(binding,model)&&!setUpCapture(binding,model)){
                             onNoneHandle(binding);
                         }
+                        setUpSignIn(binding,model);
                     }
                 }
 

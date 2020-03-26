@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/px_10"
                     android:layout_marginBottom="@dimen/px_10"
-                    android:text="@{node.workThings}"
+                    android:text="@{node.workNode}"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size12"
                     android:textStyle="bold" />
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_10"
-                    android:text="@{node.workNode}"
+                    android:text="@{node.workThings}"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size12" />
 
