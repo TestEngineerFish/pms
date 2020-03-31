@@ -188,7 +188,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                             public void onFaild(Throwable throwable) {
 
                             }
-                        }, BasicDataTypeEnum.RESOURCE, BasicDataTypeEnum.LINE);
+                        }, BasicDataTypeEnum.LINE);
                         break;
                     case RouteKey.ORDER_LIST_COMPLAIN:
                         BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
@@ -327,7 +327,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                         .withString(RouteKey.KEY_TASK_ID,"")
                         .withString(RouteKey.KEY_ORDER_ID,data.getID_())
                         .withInt(RouteKey.KEY_LIST_TYPE,ListType.DONE.getType())
-                        .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                        .withString(RouteKey.KEY_TASK_NODE_ID,"UserTask1")
                         .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID())
                         .navigation();
             }else{
@@ -554,7 +554,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     protected void showPlanConditionView(BasicData data) {
         if (selectPopUpView == null) {
             ConditionBuilder builder = new ConditionBuilder();
-            List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+            List<SelectModel> conditions = builder.addOnlyLines(data.getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                     .mergeLineRes(data.getResources())

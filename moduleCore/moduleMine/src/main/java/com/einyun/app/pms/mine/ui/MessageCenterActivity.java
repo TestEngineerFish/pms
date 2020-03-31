@@ -3,6 +3,7 @@ package com.einyun.app.pms.mine.ui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
@@ -49,6 +51,8 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
 public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMessageCenterBinding, SignSetViewModel> implements ItemClickListener<MsgModel> {
     RVPageListAdapter<ItemMessageCenterBinding, MsgModel> adapter;
     private GetNodeIdRequest getNodeIdRequest;
+    private boolean isFlag=false;
+
     @Override
     protected SignSetViewModel initViewModel() {
         return new ViewModelProvider(this, new SettingViewModelFactory()).get(SignSetViewModel.class);
@@ -149,10 +153,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     private static final String TAG = "MessageCenterActivity";
     @Override
     public void onItemClicked(View view, MsgModel msgModel) {
-        viewModel.singleRead(msgModel.getId()).observe(this,model->{
-            msgModel.setHasRead(true);
-            adapter.notifyDataSetChanged();
-        });
+
         MsgExtendVars msgExtendVars = new Gson().fromJson(msgModel.getExtendVars(), MsgExtendVars.class);
 
         if (msgExtendVars==null) {
@@ -163,13 +164,27 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 switch (msgExtendVars.getSubType()) {
                     case "repair"://报修
-                        ARouter.getInstance()
-                                .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
-                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
-                                .withString(RouteKey.KEY_CATE_NAME, msgExtendVars.getContent().getCateName())
-                                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
-                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+
+                        viewModel.isGrap(msgExtendVars.getContent().getTaskId()).observe(this,model2->{
+                            Log.e(TAG, "onItemClicked: "+model2.isState());
+
+                            isFlag=model2.isState();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (isFlag){
+                                        ARouter.getInstance()
+                                                .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+                                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
+                                                .withString(RouteKey.KEY_CATE_NAME, msgExtendVars.getContent().getCateName())
+                                                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+                                                .navigation();
+                                    }else {
+                                        ToastUtil.show(MessageCenterActivity.this,"该抢单任务已失效");
+                                    }
+                                }
+                            },500);
+                        });
                         break;
                 }
 
@@ -204,7 +219,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                                 .navigation();
                         break;
                     case "inspection"://巡查工单消息
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                                 .withString(RouteKey.KEY_TASK_ID,"")
                                 .withString(RouteKey.KEY_ORDER_ID,"")
                                 .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
@@ -213,7 +228,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                                 .navigation();
                         break;
                     case "patrol"://巡更工单消息
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
                                 .withString(RouteKey.KEY_TASK_ID,"")
                                 .withString(RouteKey.KEY_ORDER_ID,"")
                                 .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
@@ -257,6 +272,10 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 }
                 break;
         }
+        viewModel.singleRead(msgModel.getId()).observe(this,model->{
+            msgModel.setHasRead(true);
+            adapter.notifyDataSetChanged();
+        });
 
     }
     /**

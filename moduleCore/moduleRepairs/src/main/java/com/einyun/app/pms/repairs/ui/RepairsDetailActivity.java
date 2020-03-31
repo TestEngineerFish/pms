@@ -468,12 +468,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         detialModel = repairsOrderDetail;
         updatePageUIState(PageUIState.FILLDATA.getState());
         detialModel.setNodeId(nodeId);
-        if ("normal".equals(detialModel.getData().getCustomer_repair_model().getBx_property_ass_id())) {
-            binding.repairsInfo.repairAssesTxt.setText("一般");
-        }else if ("general".equals(detialModel.getData().getCustomer_repair_model().getBx_property_ass_id())){
-            binding.repairsInfo.repairAssesTxt.setText("轻微");
-        }else {
-            binding.repairsInfo.repairAssesTxt.setText("严重");
+//        if ("normal".equals(detialModel.getData().getCustomer_repair_model().getBx_property_ass_id())) {
+//            binding.repairsInfo.repairAssesTxt.setText("一般");
+//        }else if ("general".equals(detialModel.getData().getCustomer_repair_model().getBx_property_ass_id())){
+//            binding.repairsInfo.repairAssesTxt.setText("轻微");
+//        }else {
+//            binding.repairsInfo.repairAssesTxt.setText("严重");
+//        }
+        if (detialModel.getData().getCustomer_repair_model().getBx_property_ass()!=null) {
+            binding.repairsInfo.repairAssesTxt.setText(detialModel.getData().getCustomer_repair_model().getBx_property_ass());
         }
         customerRepair = detialModel.getData().getCustomer_repair_model();
         binding.tvHandleTime.setText(TimeUtil.getTimeExpend(customerRepair.getBx_time()));
@@ -837,6 +840,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repairEvaluate.getRoot().setVisibility(View.VISIBLE);
@@ -876,9 +880,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrder.repairSendTxt.setText(R.string.text_late_send_order);
+            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
-                binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
             }
             return;

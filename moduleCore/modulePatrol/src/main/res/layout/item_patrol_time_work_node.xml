@@ -96,6 +96,7 @@
                     android:background="@drawable/shape_button_corners_blue">
 
                     <ImageView
+                        android:id="@+id/iv_scan"
                         android:layout_width="13.5dp"
                         android:layout_height="13.5dp"
                         android:src="@mipmap/icon_qr_scan"
@@ -104,6 +105,7 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/tv_sign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
@@ -141,6 +143,7 @@
                     android:background="@drawable/shape_frame_corners_blue">
 
                     <ImageView
+                        android:id="@+id/iv_pic"
                         android:layout_width="13.5dp"
                         android:layout_height="13.5dp"
                         android:src="@mipmap/icon_photo"
@@ -149,6 +152,7 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/tv_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"

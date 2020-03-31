@@ -10,6 +10,7 @@ import androidx.paging.PagedList;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
 import com.einyun.app.common.constants.RouteKey;
@@ -19,6 +20,7 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.model.GetNodeIdModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
+import com.einyun.app.pms.mine.model.IsGrabModel;
 import com.einyun.app.pms.mine.model.MsgModel;
 import com.einyun.app.pms.mine.model.RequestPageBean;
 import com.einyun.app.pms.mine.model.SignSetModule;
@@ -62,6 +64,25 @@ public class SignSetViewModel extends BasePageListViewModel<MsgModel> {
             }
         });
         return singleReadModel;
+    }
+    /**
+     * 抢单是否失效
+     */
+    private MutableLiveData<BaseResponse> isGrapModel=new MutableLiveData<>();
+    public LiveData<BaseResponse> isGrap(String id){
+        repository.isGrap(id, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
+                hideLoading();
+                isGrapModel.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return isGrapModel;
     }
     /**
      * 全部已读

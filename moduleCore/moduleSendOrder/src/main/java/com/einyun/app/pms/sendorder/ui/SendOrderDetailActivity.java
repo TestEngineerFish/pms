@@ -46,6 +46,7 @@ import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
+import com.einyun.app.library.resource.workorder.model.DisttributeMainModel;
 import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.DistributeCheckRequest;
@@ -158,6 +159,11 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             if (model.isClosed() == false) {
                 showIfHasClosed();
             }
+            if (binding.forceCloseInfo.getRoot().isShown()) {
+                binding.orderForm.getRoot().setVisibility(View.GONE);
+                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
+                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
+            }
         });
     }
 
@@ -237,6 +243,18 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         updateElapsedTime();
         updateImagesUI(distributeWorkOrder);
         switchState(distributeWorkOrder.getData().getInfo().getStatus());
+        StringBuffer type=new StringBuffer();
+        DisttributeMainModel info = distributeWorkOrder.getData().getInfo();
+//        distributeWorkOrder.getData().info.typeName+@string/text_padding+workOrder.data.info.envirmentType2Name+@string/text_padding+workOrder.data.info.envirmentType3Name
+                type.append(info.getTypeName());
+
+        if (info.getEnvirmentType2Name()!=null) {
+            type.append("-"+info.getEnvirmentType2Name());
+        }
+        if (info.getEnvirmentType3Name()!=null) {
+            type.append("-"+info.getEnvirmentType3Name());
+        }
+        binding.orderInfo.orderType.setText(type);
     }
 
     protected void updatePageUIState(int state) {
@@ -310,7 +328,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             if (state == OrderState.NEW.getState()) {//接单-显示接单按钮
                 showTakeOrder();
             } else if ((state == OrderState.HANDING.getState())) {//处理-提交
-                showSubmit();
+                if (binding.forceCloseInfo.getRoot().isShown()) {
+
+                }else {
+
+                    showSubmit();
+                }
             } else if (state == OrderState.APPLY.getState()) {//验收
                 showApply();
             } else {
@@ -417,6 +440,9 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         ExtensionApplication extForceClose = detialModel.getExtApplication(ApplyType.FORCECLOSE.getState());
         if (extForceClose != null) {
             binding.forceCloseInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.orderForm.getRoot().setVisibility(View.GONE);
+            binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
+            binding.sendOrderDetailSubmit.setVisibility(View.GONE);
             binding.forceCloseInfo.setExt(extForceClose);
             if (extForceClose.getApplyFiles() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);

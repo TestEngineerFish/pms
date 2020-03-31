@@ -5,6 +5,7 @@ import androidx.room.TypeConverter;
 import com.einyun.app.base.db.bean.PatrolButton;
 import com.einyun.app.common.model.PicUrlModel;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -31,8 +32,13 @@ public class PicUrlModelConvert {
         }
 
         Type listType = new TypeToken<List<PicUrlModel>>() {}.getType();
-
-        return gson.fromJson(data, listType);
+        List<PicUrlModel> modelList= null;
+        try {
+            modelList = gson.fromJson(data, listType);
+        } catch (JsonSyntaxException e) {
+            return Collections.emptyList();
+        }
+        return modelList;
     }
 
     @TypeConverter

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -16,6 +18,7 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.common.R;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
@@ -25,6 +28,7 @@ import com.einyun.app.common.service.LoginNavigationCallbackImpl;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
+import com.einyun.app.common.utils.MsgUtils;
 import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.common.viewmodel.MsgModelFactory;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
@@ -95,6 +99,12 @@ public class MyMessageReceiver extends MessageReceiver {
         } catch (Exception e) {
             Log.e("message", e.getMessage());
         }
+//        MsgUtils.setBadgeNum(1, CommonApplication.getInstance());
+//        MsgUtils.setGoogleBadge(CommonApplication.getInstance(),"1");
+//        MsgUtils.setSanXingBadge(CommonApplication.getInstance(),1);
+//        MsgUtils.setVivoBadge(CommonApplication.getInstance(),"1");
+//        MsgUtils.setXiaoMiBadge(CommonApplication.getInstance(),1);
+        MsgUtils.setBadge(CommonApplication.getInstance(),1);
     }
 
     private void initVoice(Context context, int resId) {
@@ -178,7 +188,7 @@ public class MyMessageReceiver extends MessageReceiver {
                                 .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                         break;
                     case "inspection"://巡查工单消息
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 .withString(RouteKey.KEY_TASK_ID, "")
                                 .withString(RouteKey.KEY_ORDER_ID, "")
@@ -257,6 +267,7 @@ public class MyMessageReceiver extends MessageReceiver {
     @Override
     protected void onNotificationReceivedInApp(Context context, String title, String summary, Map<String, String> extraMap, int openType, String openActivity, String openUrl) {
         Log.e("MyMessageReceiver", "onNotificationReceivedInApp, title: " + title + ", summary: " + summary + ", extraMap:" + extraMap + ", openType:" + openType + ", openActivity:" + openActivity + ", openUrl:" + openUrl);
+        MsgUtils.setBadge(CommonApplication.getInstance(),0);
     }
 
     @Override

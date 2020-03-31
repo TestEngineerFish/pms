@@ -81,6 +81,11 @@ public interface FeedBackServiceApi {
     @GET()
     Flowable<BaseResponse> singleRead(@Url String url);
     /**
+     * 是否抢单
+     */
+    @GET()
+    Flowable<BaseResponse> isGrap(@Url String url);
+    /**
      * 全部已读
      */
     @GET()

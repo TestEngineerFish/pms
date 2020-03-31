@@ -12,6 +12,8 @@ public class URLS {
     public static final String URL_GET_MSG_LIST="portal/innermsg/messageReceiver/v1/list";
     //单个已读
     public static final String URL_GET_SINGLE_READ="portal/innermsg/messageReceiver/v1/get?id=";
+    //是否抢单
+    public static final String URL_GET_IS_GRAP="/bpm-runtime/runtime/task/v1/taskDetailMini?taskId=";
     //全部已读
     public static final String URL_GET_ALL_READ="/portal/innermsg/messageReceiver/v1/signAllReadMsg";
 

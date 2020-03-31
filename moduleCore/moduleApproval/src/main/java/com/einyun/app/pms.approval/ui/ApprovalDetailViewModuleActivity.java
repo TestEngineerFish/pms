@@ -156,7 +156,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                         if (model.getData().getZyxcgd().getF_patrol_line_id()==null) {//巡查
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                                     .withString(RouteKey.KEY_TASK_ID,"")
-                                    .withString(RouteKey.KEY_ORDER_ID,workorder_audit_model.getId_())
+                                    .withString(RouteKey.KEY_ORDER_ID,model.getData().getZyxcgd().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
                                     .withString(RouteKey.KEY_TASK_NODE_ID,"")
                                     .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
@@ -164,9 +164,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                         }else {//巡更
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
                                     .withString(RouteKey.KEY_TASK_ID,"")
-                                    .withString(RouteKey.KEY_ORDER_ID,workorder_audit_model.getId_())
+                                    .withString(RouteKey.KEY_ORDER_ID,model.getData().getZyxcgd().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-                                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
+                                    .withString(RouteKey.KEY_TASK_NODE_ID,"UserTask1")
                                     .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
                                     .navigation();
                         }

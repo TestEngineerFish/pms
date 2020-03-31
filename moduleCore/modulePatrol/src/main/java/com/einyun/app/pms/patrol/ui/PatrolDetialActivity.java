@@ -59,6 +59,7 @@ import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
 import org.jetbrains.annotations.NotNull;
+import org.mockito.internal.stubbing.BaseStubbing;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -195,9 +196,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 }
 
                 protected void onNoneHandle(ItemPatrolWorkNodeBinding binding) {
-                    binding.btnReject.setVisibility(View.GONE);
-                    binding.btnAgree.setVisibility(View.GONE);
-                    binding.tvResult.setVisibility(View.VISIBLE);
+                    binding.btnReject.setVisibility(View.VISIBLE);
+                    binding.btnAgree.setVisibility(View.VISIBLE);
+                    binding.btnAgree.setEnabled(false);
+                    binding.btnReject.setEnabled(false);
+                    binding.tvResult.setVisibility(View.GONE);
                     binding.tvResult.setText(R.string.text_un_need_handle);
                     binding.tvResult.setTypeface(null, Typeface.NORMAL);
                     binding.tvResult.setTextSize(12);

@@ -23,6 +23,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!-- 设置华为角标的显示 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
     <!-- 可选的权限 -->
     <!-- 启用错误分析功能，须添加该权限 -->
     <!-- 使用GPS获取用户精确定位信息 -->
@@ -156,6 +158,7 @@
        <!--  客户问询开始      -->
         <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity"/>
+        <activity android:name=".customerinquiries.ui.InquiriesDetailMsgViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesOrderListActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesOrderDetailViewModuleActivity"/>

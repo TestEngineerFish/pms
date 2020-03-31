@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.library.core.net.EinyunHttpService;
@@ -13,6 +14,7 @@ import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.mine.constants.URLS;
 import com.einyun.app.pms.mine.model.FeedBackBean;
 import com.einyun.app.pms.mine.model.GetUserByccountBean;
+import com.einyun.app.pms.mine.model.IsGrabModel;
 import com.einyun.app.pms.mine.model.MsgListModel;
 import com.einyun.app.pms.mine.model.RequestPageBean;
 import com.einyun.app.pms.mine.model.SignSetModule;
@@ -161,6 +163,24 @@ public class FeedBackRepository {
                     callBack.onFaild(error);
                 });
         return liveData;
+    }
+    /**
+     * 是否抢单
+     * @param id
+     * @param callBack
+     * @return
+     */
+    public LiveData<BaseResponse> isGrap(String id, CallBack<BaseResponse> callBack) {
+        MutableLiveData<BaseResponse> liveData2 = new MutableLiveData<>();
+        String url=URLS.URL_GET_IS_GRAP+id+"&reqParams=";
+        serviceApi.isGrap(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+//                    liveData2.postValue(response);
+                    callBack.call(response);
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData2;
     }
     /**
      * 全部已读

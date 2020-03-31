@@ -116,10 +116,17 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
 
                 protected void onNoneHandle(ItemPatrolTimeWorkNodeBinding binding) {
                     binding.llPhotoComplete.setVisibility(View.GONE);
-                    binding.llCapture.setVisibility(View.GONE);
-                    binding.llSign.setVisibility(View.GONE);
+                    binding.llCapture.setVisibility(View.VISIBLE);
+                    binding.llSign.setVisibility(View.VISIBLE);
+                    binding.llCapture.setEnabled(false);
+                    binding.llSign.setEnabled(false);
+                    binding.llSign.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.llCapture.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.ivPic.setColorFilter(getResources().getColor(R.color.white));
+                    binding.tvPhoto.setTextColor(getResources().getColor(R.color.white));
+
                     binding.llSignComplete.setVisibility(View.GONE);
-                    binding.tvResult.setVisibility(View.VISIBLE);
+                    binding.tvResult.setVisibility(View.GONE);
                     binding.tvResult.setText(R.string.text_un_need_handle);
                     binding.tvResult.setTypeface(null, Typeface.NORMAL);
                     binding.tvResult.setTextSize(12);
