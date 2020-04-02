@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.RouteKey;
@@ -66,18 +67,19 @@ public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
     /**
      * 派单
      * */
-    public LiveData<Boolean> repairSend(RepairSendOrderRequest request){
-        MutableLiveData<Boolean> liveData = new MutableLiveData<Boolean>();
+    public LiveData<BaseResponse<Object>> repairSend(RepairSendOrderRequest request){
+        MutableLiveData<BaseResponse<Object>> liveData = new MutableLiveData<BaseResponse<Object>>();
         showLoading();
-        workOrderService.repaireSend(request, new CallBack<Boolean>() {
+        workOrderService.repaireSend(request, new CallBack<BaseResponse<Object>>() {
             @Override
-            public void call(Boolean data) {
+            public void call(BaseResponse<Object> data) {
                 hideLoading();
                 liveData.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });

@@ -507,6 +507,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //添加材料
         if (detialModel.getData().getCustomer_repair_model().getSub_repair_materials() != null) {
             materialAdapter.setDataList(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
+        }else {
+//            binding.repairUseMaterial.getRoot().setVisibility(View.GONE);
         }
         //申请闭单信息
         if (detialModel.getForceCloseInfo() != null) {
@@ -746,7 +748,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      * */
     private void submit(){
         viewModel.repairSend(new RepairSendOrderRequest(customerRepair, new RepairSendOrderRequest.DoNextParamBean(taskId))).observe(this, status -> {
-            if (status) {
+            if (status.isState()) {
                 new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
                         .setMsg(getResources().getString(R.string.text_submit_success)).
                         setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
@@ -757,7 +759,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                             }
                         }).show();
             } else {
-                ToastUtil.show(this, R.string.text_submit_fale);
+
+                ToastUtil.show(this, status.getMsg());
             }
         });
     }
@@ -851,6 +854,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //待派单
         if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
+//            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED)&&!listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
@@ -862,6 +866,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairsInfo.repairReportAppointChange.setVisibility(View.VISIBLE);
                 binding.repairsInfo.rgs.setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
+            }else {
+                binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             }
             return;
         }

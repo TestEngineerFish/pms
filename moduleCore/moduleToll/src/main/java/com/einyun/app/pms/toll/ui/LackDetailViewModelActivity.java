@@ -315,7 +315,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                                 .withString(RouteKey.KEY_DIVIDE_NAME,divideName)
                                 .withString(RouteKey.HOUSE_TITLE,title)
                                 .withString(RouteKey.KEY_ALL_NAME,allName)
-                                .withString(RouteKey.KEY_CLIENT_NAME,data.getClientName())
+                                .withString(RouteKey.KEY_CLIENT_NAME,startName)
                                 .withString("MONEY",data.getFeeAmount()+"")
                                 .navigation();
                         HashMap<String, String> map = new HashMap<>();

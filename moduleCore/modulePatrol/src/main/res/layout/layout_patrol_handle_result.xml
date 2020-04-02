@@ -94,6 +94,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/iv_deal"
                     style="@style/work_order_detail_txt_left"
                     android:text="处理后图片" />
 

@@ -249,7 +249,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
                                 .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TRANSFERRED_TO)
-                                .withString(RouteKey.KEY_TASK_ID,msgExtendVars.getContent().getTaskId())
+                                .withString(RouteKey.KEY_TASK_ID,"")
                                 .withString(RouteKey.KEY_PRO_INS_ID,msgExtendVars.getContent().getProcInstId())
                                 .navigation();
                         break;

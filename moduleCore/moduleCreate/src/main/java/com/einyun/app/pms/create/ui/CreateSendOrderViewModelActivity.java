@@ -22,6 +22,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -192,7 +193,8 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                     .withString(RouteKey.KEY_ORDER_ID, id)
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                    .withString(RouteKey.KEY_TASK_ID, taskId)
+                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                    .withString(RouteKey.KEY_TASK_ID, "")
                     .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
                     .navigation();
         }

@@ -246,8 +246,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                     binding.btnAgree.setVisibility(View.GONE);
                                 }
                             } else {
-                                binding.btnReject.setVisibility(View.GONE);
-                                binding.btnAgree.setVisibility(View.GONE);
+                                binding.btnReject.setVisibility(View.VISIBLE);
+                                binding.btnAgree.setVisibility(View.VISIBLE);
+                                binding.btnReject.setEnabled(false);
+                                binding.btnAgree.setEnabled(false);
                             }
                         } else {
                             if (!TextUtils.isEmpty(model.result)) {

@@ -88,6 +88,7 @@ public class RepairBindingAdapter {
     @BindingAdapter("ifpay")
     public static void ifpay(TextView view, String value) {
         if (value == null) {
+            view.setText(R.string.no);
             return;
         }
         if (value.equals(RouteKey.KEY_PAID)) {

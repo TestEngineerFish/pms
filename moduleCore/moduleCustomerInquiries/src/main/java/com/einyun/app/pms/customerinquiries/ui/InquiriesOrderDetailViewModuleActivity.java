@@ -125,6 +125,8 @@ public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelAct
             default:
 //                binding.tvDealState.setText(getString(R.string.tv_finish));
                 binding.tvDealState.setText("已完成");
+                binding.llEvaluationClose.setVisibility(View.VISIBLE);
+                binding.llHistory.setVisibility(View.VISIBLE);
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
 //                binding.llHistory.setVisibility(View.VISIBLE);
 //                binding.forceCloseInfo.setVisibility(View.VISIBLE);

@@ -72,6 +72,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
+        binding.panelHandleInfo.ivDeal.setVisibility(View.GONE);
     }
 
     @Override
