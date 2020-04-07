@@ -180,6 +180,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             return;
         }
         this.detail = repairsDetailModel.getData().getCustomer_complain_model();
+        id=detail.getId_();
         nodeId = repairsDetailModel.getInfo() == null?"":repairsDetailModel.getInfo().getNodeId();
         updatePageUIState(PageUIState.FILLDATA.getState());
         updateElapsedTime();
@@ -678,6 +679,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             request.setId(id);
             request.setType(WorkOrder.POSTPONED_COMPLAIN);
             viewModel.isClosed(request, true);
+//            navigatApply(RouterUtils.ACTIVITY_LATE);//强制关闭
         }
         if (v.getId() == R.id.ll_close) {
             if (isCloseClose) {

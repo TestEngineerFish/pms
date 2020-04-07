@@ -115,7 +115,7 @@
 
         <!--计划工单Start-->
         <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderActivity"/>
-        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity"/>
+        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity" android:launchMode="singleTask"/>
         <!--计划工单End-->
 
         <!--巡查工单Start-->

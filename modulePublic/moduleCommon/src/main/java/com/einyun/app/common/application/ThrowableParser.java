@@ -59,7 +59,9 @@ public class ThrowableParser {
             EinyunHttpException exception= (EinyunHttpException) throwable;
             if (exception.getResponse().getMsg().contains("userAccount")) {
                 ToastUtil.show(CommonApplication.getInstance(), "沟通人员不能为自己");
-            }else {
+            }else if (exception.getResponse().getCode().equals("34516")){
+                ToastUtil.show(CommonApplication.getInstance(), "任务不存在，可能已经被处理了");
+            } else {
                 ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
             }
         }

@@ -9,17 +9,25 @@ import androidx.paging.PagedList;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
+import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.core.api.WorkOrderService;
+import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.GetNodeIdModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
+import com.einyun.app.library.resource.workorder.model.PlanInfo;
+import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
+import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.pms.mine.model.IsGrabModel;
 import com.einyun.app.pms.mine.model.MsgModel;
 import com.einyun.app.pms.mine.model.RequestPageBean;
@@ -27,9 +35,14 @@ import com.einyun.app.pms.mine.model.SignSetModule;
 import com.einyun.app.pms.mine.repository.DataSourceFactory;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
+
 public class SignSetViewModel extends BasePageListViewModel<MsgModel> {
     FeedBackRepository repository=new FeedBackRepository();
+    private WorkOrderService workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
+    ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     private MutableLiveData<Boolean> approval=new MutableLiveData<>();
+    MutableLiveData<DisttributeDetialModel> workOrderLiveData = new MutableLiveData<>();
     public LiveData<Boolean> sumitSignText(SignSetModule Bean){
         showLoading();
         repository.SignTextSumit(Bean, new CallBack<Boolean>() {
@@ -162,6 +175,96 @@ public class SignSetViewModel extends BasePageListViewModel<MsgModel> {
 
         return getNodeIdModelMutableLiveData;
     }
+    /**
+     *报修详情
+     * */
+    public LiveData<RepairsDetailModel> getRepairDetail(String instId){
+        MutableLiveData<RepairsDetailModel> liveData = new MutableLiveData<>();
+//        showLoading();
+        workOrderService.getRepairDetail(instId, new CallBack<RepairsDetailModel>() {
+            @Override
+            public void call(RepairsDetailModel data) {
+//                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+//                hideLoading();
+//                ThrowableParser.onFailed(throwable);
+                liveData.postValue(null);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 派工单获取代办详情
+     *
+     * @param taskId
+     * @return
+     */
+    public LiveData<DisttributeDetialModel> pendingDetial(String taskId) {
+//        showLoading();
+        service.distributeWaitDetial(taskId, new CallBack<DisttributeDetialModel>() {
+            @Override
+            public void call(DisttributeDetialModel data) {
+                workOrderLiveData.postValue(data);
+//                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+//                hideLoading();
+                workOrderLiveData.postValue(null);
+            }
+        });
+        return workOrderLiveData;
+    }
+    /**
+     *计划工单 获取代办详情
+     *
+     * @return
+     */
+    MutableLiveData<PlanInfo> liveData = new MutableLiveData<>();
+    public LiveData<PlanInfo> loadDetail(String proInsId, String taskId) {
+            service.planOrderDetail(taskId, new CallBack<PlanInfo>() {
+                @Override
+                public void call(PlanInfo data) {
+                    liveData.postValue(data);
+                    hideLoading();
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    liveData.postValue(null);
+//                    ThrowableParser.onFailed(throwable);
+                }
+            });
 
 
+        return liveData;
+    }
+    /**
+     * 获取巡查详情
+     *
+     * @return
+     */
+   public PatrolDetialRequest request=new PatrolDetialRequest();
+    MutableLiveData<com.einyun.app.library.resource.workorder.model.PatrolInfo> liveData2 = new MutableLiveData<>();
+    public LiveData<com.einyun.app.library.resource.workorder.model.PatrolInfo> loadPendingDetial() {
+
+        service.patrolPendingDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
+            @Override
+            public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
+                liveData2.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                    liveData2.postValue(null);
+
+            }
+        });
+        return liveData2;
+    }
 }

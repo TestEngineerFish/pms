@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:text="延期天数(天)" />
 
-            <EditText
+            <com.einyun.app.common.ui.widget.BaseEditText
                 android:id="@+id/delay_date"
                 style="@style/tv_create_order_right"
                 android:layout_weight="3"

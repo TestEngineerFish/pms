@@ -19,7 +19,7 @@
             android:textColor="@color/main_color"
             android:textSize="16dp" />
 
-        <EditText
+        <com.einyun.app.common.ui.widget.BaseEditText
             android:id="@+id/et_title"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

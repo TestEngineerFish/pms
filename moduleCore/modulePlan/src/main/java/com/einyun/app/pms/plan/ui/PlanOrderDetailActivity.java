@@ -387,6 +387,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
             }
+            if (id.isEmpty()) {
+                id=planInfo.getData().getZyjhgd().getId_();
+            }
             IsClosedRequest request = new IsClosedRequest();
             request.setId(id);
             request.setType(WorkOrder.FORCE_CLOSE_PLAN);

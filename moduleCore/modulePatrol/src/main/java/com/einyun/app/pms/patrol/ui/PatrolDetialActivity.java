@@ -295,6 +295,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        if (orderId.isEmpty()) {
+            orderId=patrol.getData().getZyxcgd().getId_();
+        }
         this.patrolInfo = patrol;
         updateElapsedTime(patrol);
         binding.setPatrol(patrol);
