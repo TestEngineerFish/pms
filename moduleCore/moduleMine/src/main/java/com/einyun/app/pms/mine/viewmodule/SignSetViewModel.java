@@ -39,10 +39,10 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_D
 
 public class SignSetViewModel extends BasePageListViewModel<MsgModel> {
     FeedBackRepository repository=new FeedBackRepository();
-    private WorkOrderService workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
-    ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+    public WorkOrderService workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
+    public ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     private MutableLiveData<Boolean> approval=new MutableLiveData<>();
-    MutableLiveData<DisttributeDetialModel> workOrderLiveData = new MutableLiveData<>();
+   public MutableLiveData<DisttributeDetialModel> workOrderLiveData = new MutableLiveData<>();
     public LiveData<Boolean> sumitSignText(SignSetModule Bean){
         showLoading();
         repository.SignTextSumit(Bean, new CallBack<Boolean>() {

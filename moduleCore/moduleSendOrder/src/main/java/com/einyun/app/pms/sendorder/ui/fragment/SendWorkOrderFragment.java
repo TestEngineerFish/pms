@@ -226,24 +226,31 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     }
 
     private void loadPagingData() {
+        showLoading(getActivity());
         viewModel.getRequest().setUserId(userModuleService.getUserId());
         if (listType == ListType.PENDING.getType()) {
+
             viewModel.loadPadingData().observe(this, dataBeans -> {
+//                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
+//                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
         } else {
             viewModel.loadDonePagingData().observe(this, dataBeans -> {
+//                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

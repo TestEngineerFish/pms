@@ -724,7 +724,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (TextUtils.isEmpty(binding.sendOrder.repairSendReason.getString())) {
             } else {
                 detialModel.getData().getCustomer_repair_model().setHandle_result(binding.sendOrder.repairSendReason.getString());
-                return;
+//                return;
             }
             String s = binding.repairsInfo.repairReportArea.getText().toString();
             if (s!=null&&s.equals("户内")) {

@@ -5,7 +5,7 @@
     <application>
         <activity android:name=".ui.AddMaterialActivity"></activity>
         <activity android:name=".ui.ContactActivity" />
-        <activity android:name=".ui.RepairsDetailActivity" />
+        <activity android:name=".ui.RepairsDetailActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.RepairsActivity" />
     </application>
 

@@ -17,16 +17,24 @@
         android:orientation="horizontal"
         android:background="@android:color/white"
         >
-
+        <TextView
+            android:id="@+id/tv_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/greyTextColor"
+            android:textSize="@dimen/px_28"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/tv_itemname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="24dp"
+            android:paddingLeft="14dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="@={org.name}"
             android:textColor="@color/blackTextColor"
             android:textSize="@dimen/px_28"
             android:textStyle="bold" />

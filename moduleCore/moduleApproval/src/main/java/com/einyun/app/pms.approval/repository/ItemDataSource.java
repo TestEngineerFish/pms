@@ -8,9 +8,11 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.pms.approval.model.ApprovalBean;
 import com.einyun.app.pms.approval.model.ApprovalItemmodule;
 import com.einyun.app.pms.approval.model.ApprovalListModule;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
 
@@ -47,6 +49,9 @@ public class ItemDataSource extends BaseDataSource<ApprovalItemmodule> {
                 if(callback instanceof LoadInitialCallback){
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
                     loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
+                    if (data.getTotal()==0) {
+                        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY, String.class).post("");
+                    }
                     Log.e("tag"+data.getRows().size(), "call: " );
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;

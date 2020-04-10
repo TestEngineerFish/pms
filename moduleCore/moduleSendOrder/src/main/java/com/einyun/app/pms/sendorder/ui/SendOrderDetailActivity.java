@@ -159,11 +159,11 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             if (model.isClosed() == false) {
                 showIfHasClosed();
             }
-            if (binding.forceCloseInfo.getRoot().isShown()) {
-                binding.orderForm.getRoot().setVisibility(View.GONE);
-                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
-                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
-            }
+//            if (binding.forceCloseInfo.getRoot().isShown()) {
+//                binding.orderForm.getRoot().setVisibility(View.GONE);
+//                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
+//                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
+//            }
         });
     }
 
@@ -330,7 +330,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 showTakeOrder();
             } else if ((state == OrderState.HANDING.getState())) {//处理-提交
                 if (binding.forceCloseInfo.getRoot().isShown()) {
-
+                    showSubmit();
                 }else {
 
                     showSubmit();

@@ -120,7 +120,7 @@
                         style="@style/login_input_ll_img"
                         app:srcCompat="@mipmap/img_login_password" />
 
-                    <com.einyun.app.common.ui.widget.BaseEditText
+                    <com.einyun.app.common.ui.widget.NoMenuEditText
                         android:id="@+id/et_password"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入密码"

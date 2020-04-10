@@ -461,7 +461,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         switch (tag) {
             case RouteKey.ORDER_LIST_COMPLAIN:
                 setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_state());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_ts_content());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_ts_content()));
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getF_ts_time()));
                 binding.itemOrderNum.setText(orderListModel.getF_ts_code());
                 binding.itemComplain.setVisibility(View.VISIBLE);
@@ -471,7 +471,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 break;
             case RouteKey.ORDER_LIST_ASK:
                 setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getState());
-                binding.itemSendWorkSubject.setText(orderListModel.getWx_content());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getWx_content()));
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getWx_time()));
                 binding.itemOrderNum.setText(orderListModel.getWx_code());
                 break;
@@ -489,7 +489,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 setStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_STATUS());
                 binding.itemCreateTime.setText(orderListModel.getF_CREATE_TIME());
                 binding.itemOrderNum.setText(orderListModel.getF_ORDER_NO());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_DESC());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_DESC()));
                 binding.itemLocationLn.setVisibility(View.VISIBLE);
                 binding.itemLocation.setText(orderListModel.getF_LOCATION());
                 break;
@@ -497,13 +497,13 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 patroStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_plan_work_order_state());
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getF_creation_date()));
                 binding.itemOrderNum.setText(orderListModel.getF_plan_work_order_code());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_inspection_work_plan_name());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_inspection_work_plan_name()));
                 break;
             case RouteKey.ORDER_LIST_PLAN:
                 setStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_STATUS());
                 binding.itemCreateTime.setText(FormatUtil.formatDate(Long.parseLong(orderListModel.getF_CREATE_TIME())));
                 binding.itemOrderNum.setText(orderListModel.getF_ORDER_NO());
-                binding.itemSendWorkSubject.setText(orderListModel.getF_WP_NAME());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_WP_NAME()));
                 break;
 
         }
@@ -545,6 +545,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 request.setFState(null);
             }
         }
+        binding.panelCondition.setConditionSelected(true);
         loadPagingData();
     }
 
@@ -654,6 +655,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             request.setBx_cate_lv1_id(null);
             request.setBx_cate_lv2_id(null);
         }
+        binding.panelCondition.setConditionSelected(true);
         loadPagingData();
     }
 
@@ -686,6 +688,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         request.setGridId(gridId);
         request.setBuildingId(budingId);
         request.setUnitId(unitId);
+        binding.panelCondition.setConditionSelected(true);
         loadPagingData();
     }
 
@@ -700,6 +703,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         request.setEnvType2(selected.get(SELECT_ORDER_TYPE2) == null ? null : selected.get(SELECT_ORDER_TYPE2).getKey());
         request.setEnvType3(selected.get(SELECT_ORDER_TYPE3) == null ? null : selected.get(SELECT_ORDER_TYPE3).getKey());
         request.setOtStatus(selected.get(SELECT_IS_OVERDUE) == null ? null : selected.get(SELECT_IS_OVERDUE).getKey());
+        binding.panelCondition.setConditionSelected(true);
         loadPagingData();
     }
 
@@ -715,6 +719,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             request.setF_ts_property_id(null);
             request.setF_ts_cate_id(null);
         }
+        binding.panelCondition.setConditionSelected(true);
         loadPagingData();
     }
 

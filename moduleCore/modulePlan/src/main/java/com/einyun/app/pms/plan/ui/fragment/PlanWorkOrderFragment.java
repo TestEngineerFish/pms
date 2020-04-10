@@ -262,6 +262,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
 //        binding.sendOrderRef.setRefreshing(true);
+        showLoading(getActivity());
         binding.sendOrderRef.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         String fragmentTag = getFragmentTag();
         if (viewModel.getOrgModel() != null) {
@@ -275,6 +276,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });
@@ -285,6 +287,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

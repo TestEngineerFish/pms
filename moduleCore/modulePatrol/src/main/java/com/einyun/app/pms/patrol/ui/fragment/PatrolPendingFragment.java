@@ -139,12 +139,14 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     protected void loadData() {
+        showLoading(getActivity());
         viewModel.loadPendingData().observe(getActivity(), patrols -> {
             if (patrols.size() == 0) {
                 updatePageUIState(PageUIState.EMPTY.getState());
             } else {
                 updatePageUIState(PageUIState.FILLDATA.getState());
             }
+            hideLoading();
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
         });

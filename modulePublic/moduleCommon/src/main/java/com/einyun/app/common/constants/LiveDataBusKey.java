@@ -8,6 +8,8 @@ public class LiveDataBusKey {
     public static final String WORK_BENCH_FRESH = "WORK_BENCH_FRESH";
     //刷新我的
     public static final String MINE_FRESH = "MINE_FRESH";
+    //审批空页面显示
+    public static final String APPROVAL_EMPTY = "APPROVAL_EMPTY";
     //刷新小铃铛状态
     public static final String BELL_STATE_FRESH = "BELL_STATE_FRESH";
    //刷新消息空状态

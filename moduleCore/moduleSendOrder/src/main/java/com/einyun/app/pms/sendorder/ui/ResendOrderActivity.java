@@ -50,6 +50,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     String reSendKey;
     @Autowired(name = RouteKey.KEY_CUSTOM_TYPE)
     String customType;
+
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -62,7 +63,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
         ARouter.getInstance().inject(this);
         if (!StringUtil.isNullStr(reSendKey)) {
             setHeadTitle(R.string.text_resend_order);
-        }else {
+        } else {
             setHeadTitle(R.string.text_resend_cus_order);
         }
         resendOrderRequest = new ResendOrderRequest();
@@ -111,7 +112,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                             ToastUtil.show(ResendOrderActivity.this, model.getMsg());
                         }
                     });
-                }else {//客服三大类转派工单
+                } else {//客服三大类转派工单
                     viewModel.resendCusOrder(resendOrderRequest).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
@@ -120,27 +121,27 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                         } else {
                             ToastUtil.show(ResendOrderActivity.this, model.getMsg());
                         }
-                        if (customType!=null) {
+                        if (customType != null) {
                             if (CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName().equals(customType)) {
                                 HashMap<String, String> map = new HashMap<>();
                                 map.put("user_name", UserUtil.getUserName());
-                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName(),map);
-                            }else if (CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName().equals(customType)){
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName(), map);
+                            } else if (CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName().equals(customType)) {
 
                                 HashMap<String, String> map = new HashMap<>();
                                 map.put("user_name", UserUtil.getUserName());
-                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName(),map);
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName(), map);
 
-                            }else if (CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName().equals(customType)){
-
-                                HashMap<String, String> map = new HashMap<>();
-                                map.put("user_name", UserUtil.getUserName());
-                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName(),map);
-                            }else if (CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName().equals(customType)){
+                            } else if (CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName().equals(customType)) {
 
                                 HashMap<String, String> map = new HashMap<>();
                                 map.put("user_name", UserUtil.getUserName());
-                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName(),map);
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName(), map);
+                            } else if (CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName().equals(customType)) {
+
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName(), map);
                             }
 
                         }

@@ -88,7 +88,7 @@ public class UserInfoViewModuleActivity extends BaseHeadViewModelActivity<Activi
             Glide.with(this)
                     .load(imageUrl)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-//                    .placeholder(R.drawable.iv_default_head_shot)
+                    .placeholder(R.drawable.iv_default_head_shot)
 //                    .centerCrop()
                     .into(binding.ivHeadShot);
         });

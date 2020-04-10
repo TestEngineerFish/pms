@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -192,6 +194,12 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         adapter.setOnItemClick(this);
 //        loadPagingData(viewModel.getData(1,10,"",blockName,"","",""),tabId);
         loadPagingData(viewModel.getData(1,10,"","","","",""),tabId);
+        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY, String.class).observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(@Nullable String s) {
+                        binding.empty.getRoot().setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     private String  getTypeValue(String auditType ,String auditSubType) {
@@ -261,9 +269,12 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         return typeValue;
     }
 
+    private static final String TAG = "ApprovalViewModelFragme";
     private void loadPagingData(ApprovalBean approvalBean,int tabId){
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPadingData(approvalBean,tabId).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        viewModel.loadPadingData(approvalBean,tabId).observe(this, dataBeans ->{
+            adapter.submitList(dataBeans);
+        });
 
     }
     /*

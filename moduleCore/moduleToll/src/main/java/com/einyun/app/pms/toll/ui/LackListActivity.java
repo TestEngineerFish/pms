@@ -270,11 +270,13 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
                     outListBinding.tvItemName.setText(itemParentModel.getChargeTypeName());
                     outListBinding.tvToallFee.setText(itemParentModel.getFeeTotal()+"");
                     if (itemParentModel.getChargeTypeCode().equals("2")) {
-                        outListBinding.tvPark.setVisibility(View.GONE);
+                        outListBinding.ivItem.setImageResource(R.drawable.iv_park_fee);
+                        outListBinding.tvPark.setVisibility(View.VISIBLE);
                     }else {
                         outListBinding.tvPark.setVisibility(View.GONE);
 
                     }
+                    outListBinding.tvPark.setText(itemParentModel.getParkingNum());
                     outListBinding.cbOutCheck.setChecked(itemParentModel.isCheckParent());
                     outListBinding.cbOutCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override

@@ -61,12 +61,14 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
     }
 
     protected void loadData() {
+        showLoading(getActivity());
         viewModel.loadCloseData().observe(getActivity(), patrols -> {
             if(patrols.size()==0){
                 updatePageUIState(PageUIState.EMPTY.getState());
             }else{
                 updatePageUIState(PageUIState.FILLDATA.getState());
             }
+            hideLoading();
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
         });

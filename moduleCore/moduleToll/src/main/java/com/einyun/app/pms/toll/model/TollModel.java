@@ -90,6 +90,7 @@ public class TollModel {
             private String feeItemCode;
             private String feeItemName;
             private String chargeTypeCode;
+            private String parkingNum;
             private String chargeTypeName;
             private List<ListBean> list;
 
@@ -162,6 +163,14 @@ public class TollModel {
 
             public void setLoreMore(boolean loreMore) {
                 isLoreMore = loreMore;
+            }
+
+            public String getParkingNum() {
+                return parkingNum==null?"":parkingNum;
+            }
+
+            public void setParkingNum(String parkingNum) {
+                this.parkingNum = parkingNum;
             }
 
             public static class ListBean {

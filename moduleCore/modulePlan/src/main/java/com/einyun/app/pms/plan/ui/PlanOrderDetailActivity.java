@@ -340,7 +340,13 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             }
                             break;
                         case FRAGMENT_PLAN_OWRKORDER_DONE:
+                            binding.llForceScan.setVisibility(View.VISIBLE);
+                            if (model.is_forced()==0) {//  0 不强制
+                                binding.llScanReasult.setVisibility(View.GONE);
+                            }else {//1 强制扫码
 
+                                binding.llScanReasult.setVisibility(View.VISIBLE);
+                            }
                             break;
                     }
                     for (PlanOrderResLineModel line : mPlanResLines) {
@@ -387,7 +393,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
             }
-            if (id.isEmpty()) {
+            if (id==null) {
                 id=planInfo.getData().getZyjhgd().getId_();
             }
             IsClosedRequest request = new IsClosedRequest();
