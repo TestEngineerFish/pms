@@ -46,7 +46,12 @@ class UserCenterServiceImpl : UserCenterService {
     ): LiveData<List<OrgModel>> {
         return proxy.getDisposePerson(orgId, dimCode, callBack)
     }
-
+    override fun getCheckedPerson(
+        orgId: String,
+        callBack: CallBack<List<OrgModel>>
+    ): LiveData<List<OrgModel>> {
+        return proxy.getCheckedPerson(orgId, callBack)
+    }
     override fun updateWorkStatus(
         userId: String,
         userName: String,

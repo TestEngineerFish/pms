@@ -9,6 +9,9 @@
         <variable
             name="callBack"
             type="com.einyun.app.pms.customerinquiries.ui.InquiriesDetailViewModuleActivity" />
+        <variable
+            name="back"
+            type="com.einyun.app.pms.customerinquiries.ui.InquiriesOrderDetailViewModuleActivity" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,11 +41,14 @@
                  android:layout_height="match_parent"
                  android:background="@color/grayBgColor"
                  android:gravity="center_vertical"
+                 android:textSize="@dimen/font_size13"
+                 android:textStyle="bold"
                  android:paddingLeft="16dp"
                  android:paddingRight="5dp"
                  android:text="处理用时:"
                  android:textColor="@color/important_red_color" />
              <TextView
+                 android:textStyle="bold"
                  android:id="@+id/tv_handle_time"
                  android:layout_width="wrap_content"
                  android:layout_height="match_parent"
@@ -52,6 +58,7 @@
          </LinearLayout>
          <!--         工单信息-->
          <androidx.cardview.widget.CardView
+             android:layout_marginTop="@dimen/px_2"
              style="@style/cardview_style">
 
              <LinearLayout
@@ -64,6 +71,7 @@
                      android:layout_width="match_parent"
                      android:layout_height="44dp">
                      <TextView
+                         android:textStyle="bold"
                          android:id="@+id/tv_approvaler_name"
                          android:layout_marginLeft="10dp"
                          android:gravity="center_vertical"
@@ -73,6 +81,7 @@
                          android:layout_width="wrap_content"
                          android:layout_height="match_parent"/>
                      <TextView
+                         android:textStyle="bold"
                          android:id="@+id/tv_deal_state"
                          android:gravity="center"
                          android:layout_marginRight="10dp"
@@ -95,7 +104,6 @@
                      <TextView
 
                          style="@style/style_text_approval_left"
-                         android:layout_marginBottom="10dp"
                          android:text="@string/tv_work_nums" />
                      <TextView
                          android:id="@+id/tv_work_num"
@@ -107,8 +115,6 @@
 
                      <TextView
                          style="@style/style_text_approval_left"
-                         android:layout_alignParentBottom="true"
-                         android:layout_marginBottom="10dp"
                          android:text="@string/tv_divide" />
                      <TextView
                          android:id="@+id/tv_divide"
@@ -119,7 +125,6 @@
                      style="@style/style_rl_normal">
                      <TextView
                          android:text="@string/tv_real_estate"
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"/>
                      <TextView
                          android:text="@{module.data.customer_enquiry_model.wx_house}"
@@ -129,7 +134,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_phone" />
                      <TextView
@@ -140,7 +144,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_asking_people" />
                      <TextView
@@ -165,6 +168,7 @@
                      android:layout_height="@dimen/px_90">
 
                      <TextView
+                         android:textStyle="bold"
                          android:textColor="@color/blackTextColor"
                          android:layout_width="wrap_content"
                          android:layout_height="match_parent"
@@ -185,7 +189,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_complaint_time" />
                      <TextView
@@ -196,7 +199,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_record_person" />
                      <TextView
@@ -207,7 +209,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_ask_way" />
                      <TextView
@@ -218,7 +219,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_ask_type" />
                      <TextView
@@ -229,18 +229,16 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
-                         android:text="@string/tv_finish_time" />
+                         android:text="实际完成时间" />
                      <TextView
-                         android:text="@{module.data.customer_enquiry_model.c_deadline_time}"
+                         android:text="@{module.data.customer_enquiry_model.close_time}"
                          android:id="@+id/tv_finish_time"
                          style="@style/style_text_approval_right"/>
                  </RelativeLayout>
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_current_deal_person" />
                      <TextView
@@ -251,7 +249,6 @@
                  <RelativeLayout
                      style="@style/style_rl_normal">
                      <TextView
-                         android:layout_marginBottom="10dp"
                          style="@style/style_text_approval_left"
                          android:text="@string/tv_inquiries_content" />
                      <TextView
@@ -279,14 +276,154 @@
                  </LinearLayout>
              </LinearLayout>
          </androidx.cardview.widget.CardView>
+         <!--        强制闭单信息 -->
+         <androidx.cardview.widget.CardView
+             android:id="@+id/forceCloseInfo"
+             android:visibility="gone"
+             style="@style/cardview_style">
+
+             <LinearLayout
+
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/shape_white_bg"
+                     android:orientation="vertical">
+
+                     <RelativeLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="@dimen/px_90">
+
+                         <TextView
+                             android:textStyle="bold"
+                             android:layout_width="wrap_content"
+                             android:layout_height="match_parent"
+                             android:layout_alignParentLeft="true"
+                             android:layout_marginLeft="@dimen/px_20"
+                             android:gravity="center_vertical"
+                             android:text="@string/tv_apply_close_info"
+                             android:textColor="@color/blackTextColor"
+                             android:textSize="@dimen/font_size16" />
+
+                     </RelativeLayout>
+
+                     <ImageView
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="10dp"
+                         android:layout_marginRight="10dp"
+                         android:src="@drawable/pd_view" />
+
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="审批结果" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             android:id="@+id/tv_approval_result"
+                             style="@style/work_order_detail_txt_right2" />
+                     </LinearLayout>
+
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="审批时间" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             android:id="@+id/tv_approval_time"
+                             style="@style/work_order_detail_txt_right2"
+                             />
+                     </LinearLayout>
+
+
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请人" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             style="@style/work_order_detail_txt_right2"
+                             android:id="@+id/tv_applyer"
+                             />
+                     </LinearLayout>
+
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请时间" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             style="@style/work_order_detail_txt_right2"
+                             android:id="@+id/tv_apply_time"
+                             />
+                     </LinearLayout>
+
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请原因" />
+
+                         <TextView
+                             android:gravity="center_vertical"
+                             style="@style/work_order_detail_txt_right2"
+                             android:id="@+id/tv_apply_reason"
+                             />
+                     </LinearLayout>
+
+                     <LinearLayout
+                         android:layout_marginTop="0dp"
+                         style="@style/work_order_detail_ln2">
+
+                         <TextView
+                             style="@style/work_order_detail_txt_left2"
+                             android:text="申请照片" />
+                     </LinearLayout>
+                     <LinearLayout
+                         android:background="@drawable/shape_white_bg"
+                         style="@style/work_order_detail_ln">
+                         <androidx.recyclerview.widget.RecyclerView
+                             android:id="@+id/list_apply_pic"
+                             android:layout_marginTop="@dimen/px_30"
+                             android:layout_marginLeft="@dimen/px_10"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_marginBottom="@dimen/px_30"
+                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                             />
+                     </LinearLayout>
+                 </LinearLayout>
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
          <!--        回复历史-->
          <androidx.cardview.widget.CardView
+             android:id="@+id/ll_history"
+             android:visibility="gone"
              style="@style/cardview_style">
              <LinearLayout
-                 android:id="@+id/ll_history"
                  android:focusable="true"
                  android:focusableInTouchMode="true"
-                 android:visibility="gone"
                  android:background="@drawable/shape_white_bg"
                  android:layout_width="match_parent"
                  android:orientation="vertical"
@@ -295,6 +432,7 @@
                      android:layout_width="match_parent"
                      android:layout_height="44dp">
                      <TextView
+                         android:textStyle="bold"
                          android:layout_marginLeft="10dp"
                          android:gravity="center_vertical"
                          android:textSize="16sp"
@@ -350,13 +488,17 @@
                  </RelativeLayout>
              </LinearLayout>
          </androidx.cardview.widget.CardView>
+
+<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
+
          <!--         回复内容-->
          <androidx.cardview.widget.CardView
+             android:visibility="gone"
+             android:id="@+id/ll_reply_content"
              style="@style/cardview_style">
 
              <LinearLayout
-                 android:visibility="gone"
-                 android:id="@+id/ll_reply_content"
+
                  android:layout_marginBottom="20dp"
                  android:background="@drawable/shape_white_bg"
                  android:layout_width="match_parent"
@@ -370,6 +512,7 @@
                      <TextView style="@style/tv_create_order_red_star" />
 
                      <TextView
+                         android:textStyle="bold"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
                          android:text="@string/tv_feed_content"
@@ -388,146 +531,16 @@
 
              </LinearLayout>
          </androidx.cardview.widget.CardView>
-<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
-        <!--        强制闭单信息 -->
-         <androidx.cardview.widget.CardView
-             android:layout_marginTop="0dp"
-             style="@style/cardview_style">
-
-             <LinearLayout
-                 android:visibility="gone"
-                 android:id="@+id/forceCloseInfo"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent">
-
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:background="@drawable/shape_white_bg"
-                     android:orientation="vertical">
-
-                     <RelativeLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="@dimen/px_90">
-
-                         <TextView
-                             android:layout_width="wrap_content"
-                             android:layout_height="match_parent"
-                             android:layout_alignParentLeft="true"
-                             android:layout_marginLeft="@dimen/px_20"
-                             android:gravity="center_vertical"
-                             android:text="@string/tv_apply_close_info"
-                             android:textColor="@color/blackTextColor"
-                             android:textSize="@dimen/font_size16" />
-
-                     </RelativeLayout>
-
-                     <ImageView
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_marginLeft="10dp"
-                         android:layout_marginRight="10dp"
-                         android:src="@drawable/pd_view" />
-
-                     <LinearLayout
-                         style="@style/work_order_detail_ln">
-
-                         <TextView
-                             style="@style/work_order_detail_txt_left2"
-                             android:text="审批结果" />
-
-                         <TextView
-                             android:gravity="center_vertical"
-                             android:id="@+id/tv_approval_result"
-                             style="@style/work_order_detail_txt_right2" />
-                     </LinearLayout>
-
-                     <LinearLayout style="@style/work_order_detail_ln">
-
-                         <TextView
-                             style="@style/work_order_detail_txt_left2"
-                             android:text="审批时间" />
-
-                         <TextView
-                             android:gravity="center_vertical"
-                             android:id="@+id/tv_approval_time"
-                             style="@style/work_order_detail_txt_right2"
-                             />
-                     </LinearLayout>
-
-
-                     <LinearLayout style="@style/work_order_detail_ln">
-
-                         <TextView
-                             style="@style/work_order_detail_txt_left2"
-                             android:text="申请人" />
-
-                         <TextView
-                             android:gravity="center_vertical"
-                             style="@style/work_order_detail_txt_right2"
-                             android:id="@+id/tv_applyer"
-                             />
-                     </LinearLayout>
-
-                     <LinearLayout style="@style/work_order_detail_ln">
-
-                         <TextView
-                             style="@style/work_order_detail_txt_left2"
-                             android:text="申请时间" />
-
-                         <TextView
-                             android:gravity="center_vertical"
-                             style="@style/work_order_detail_txt_right2"
-                             android:id="@+id/tv_apply_time"
-                             />
-                     </LinearLayout>
-
-                     <LinearLayout style="@style/work_order_detail_ln">
-
-                         <TextView
-                             style="@style/work_order_detail_txt_left2"
-                             android:text="申请原因" />
-
-                         <TextView
-                             android:gravity="center_vertical"
-                             style="@style/work_order_detail_txt_right2"
-                             android:id="@+id/tv_apply_reason"
-                             />
-                     </LinearLayout>
-
-                     <LinearLayout style="@style/work_order_detail_ln">
-
-                         <TextView
-                             style="@style/work_order_detail_txt_left2"
-                             android:text="申请照片" />
-                     </LinearLayout>
-                     <LinearLayout
-                         android:background="@drawable/shape_white_bg"
-                         style="@style/work_order_detail_ln">
-                         <androidx.recyclerview.widget.RecyclerView
-                             android:id="@+id/list_apply_pic"
-                             android:layout_marginTop="@dimen/px_30"
-                             android:layout_marginLeft="@dimen/px_10"
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_marginBottom="@dimen/px_30"
-                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                             />
-                     </LinearLayout>
-                 </LinearLayout>
-             </LinearLayout>
-         </androidx.cardview.widget.CardView>
-
         <!--         评价-->
          <androidx.cardview.widget.CardView
+             android:id="@+id/ll_evaluation"
+             android:visibility="gone"
              style="@style/cardview_style">
              <LinearLayout
-                 android:id="@+id/ll_evaluation"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:background="@drawable/shape_white_bg"
-                 android:orientation="vertical"
-                 android:visibility="gone">
+                 android:orientation="vertical">
 
                  <RelativeLayout
                      android:layout_width="match_parent"
@@ -555,7 +568,7 @@
 
                  <LinearLayout style="@style/ll_create_order">
 
-
+                     <TextView style="@style/tv_create_order_red_star" />
                      <TextView
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
@@ -569,6 +582,7 @@
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content">
                          <RadioButton
+                             android:checked="true"
                              android:id="@+id/rb_solve"
                              android:layout_width="@dimen/px_30"
                              android:layout_height="@dimen/px_30"
@@ -602,6 +616,7 @@
 
                  <LinearLayout
                      android:id="@+id/ll_is_solved"
+                     android:visibility="gone"
                      android:orientation="vertical"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content">

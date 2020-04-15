@@ -34,8 +34,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/px_10"
             android:max="100"
-            android:progress="100"
-            android:progressDrawable="@drawable/all_year_car_get_bg" />
+            android:progress="60"
+            android:progressDrawable="@drawable/today_rank_bg" />
 
         <TextView
             android:layout_width="wrap_content"

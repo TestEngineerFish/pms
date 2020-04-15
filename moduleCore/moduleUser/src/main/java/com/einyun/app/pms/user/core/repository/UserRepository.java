@@ -77,8 +77,12 @@ public class UserRepository extends CommonRepository {
      */
     public LiveData<List<String>> loadAllUserName() {
         MutableLiveData list = new MutableLiveData();
-        Observable.just(1).subscribeOn(Schedulers.io()).subscribe(integer -> {
+        Observable.just(1).subscribeOn(Schedulers.io()).doOnError(throwable -> {
+
+        }).subscribe(integer -> {
             list.postValue(db.userDao().loadAllUserName());
+        }, throwable -> {
+            list.postValue(null);
         });
         return list;
     }
@@ -105,12 +109,8 @@ public class UserRepository extends CommonRepository {
             UserDao userDao = db.userDao();
             User user = new User(userModel.getUsername(), userModel.getPassword());
             user.setId(userModel.getUserId());
-            User user1 = userDao.selectUserByName(userModel.getUsername());
-            if (user1 == null) {
-                userDao.insertUsers(user);
-            } else {
-                userDao.updateUser(user);
-            }
+//            User user1 = userDao.selectUserByName(userModel.getUsername());
+            userDao.insertUsers(user);
         });
     }
 }

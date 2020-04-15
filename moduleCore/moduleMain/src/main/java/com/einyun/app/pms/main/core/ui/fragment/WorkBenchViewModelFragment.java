@@ -13,17 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.util.JsonUtil;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
@@ -33,12 +37,15 @@ import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
 import com.einyun.app.pms.main.databinding.ItemWorkTablePendingNumBinding;
+import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static androidx.appcompat.app.AppCompatActivity.RESULT_OK;
@@ -81,6 +88,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             handleUserMenu(userMenu);
             //获取分期数据
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
+                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, new Gson().toJson(orgModels));
                 handleStagingData(orgModels);
                 firstFresh = true;
                 freshData();
@@ -102,28 +110,34 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
      * 刷新当前页面
      */
     public void freshData() {
-        if (!firstFresh){
+        if (!firstFresh) {
             return;
         }
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
-                binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate()));
-                binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate()));
+                binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate() == null ? 0 : operateCaptureData.getTodayIncomeRate()) + "%");
+                binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate() == null ? 0 : operateCaptureData.getTodayArrearsRate()) + "%");
                 //涨幅 下跌
-                calculateOperateUpDown(binding.itemWorkBenchThird.tvDown, binding.itemWorkBenchThird.tvDownNum, operateCaptureData.getTodayIncomeRise());
-                calculateOperateUpDown(binding.itemWorkBenchThird.tvUp, binding.itemWorkBenchThird.tvUpNum, operateCaptureData.getTodayArrearsRise());
+//                calculateOperateUpDown(binding.itemWorkBenchThird.tvDown, binding.itemWorkBenchThird.tvDownNum, operateCaptureData.getTodayIncomeRise());
+//                calculateOperateUpDown(binding.itemWorkBenchThird.tvUp, binding.itemWorkBenchThird.tvUpNum, operateCaptureData.getTodayArrearsRise());
             });
         }
         //工单处理情况总览
         if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
-            viewModel.workOrderData(divideCode).observe(this, workOrderData -> {
-                //工单完成率
-                String completedRate = workOrderData.getRate().getCompletedRate();
-                binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
-                //工单及时率
-                String timelyRate = workOrderData.getRate().getTimelyRate();
-                binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
+            viewModel.workOrderData("",userModuleService.getUserId()).observe(this, workOrderData -> {
+                if (workOrderData.getRate() != null) {
+                    //工单完成率
+                    String completedRate = workOrderData.getRate().getCompletedRate();
+                    binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
+                    //工单及时率
+                    String timelyRate = workOrderData.getRate().getTimelyRate();
+                    binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
+                } else {
+                    binding.itemWorkBenchSecond.tvWorkOrderProcess.setText("0%");
+                    binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText("0%");
+                }
+
                 //总单总数
                 int num = 0;
                 for (WorkOrder workOrder : workOrderData.getWorkOrder()) {
@@ -133,6 +147,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 setWorkTablePendingNum(format.toCharArray());
             });
         }
+
         //获取审批数量
         if (binding.itemWorkBenchFirst.ssvCommonFun.getVisibility() == View.VISIBLE) {
             viewModel.getAuditCount().observe(this, integer -> {
@@ -143,18 +158,20 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (binding.itemWorkBenchFirst.llWorkOrderList.getVisibility() == View.VISIBLE) {
             //获取待办数量（客户报修，客户询问，客户投诉）
             viewModel.getBlocklogNums().observe(this, blocklogNums -> {
-                binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
                 binding.itemWorkBenchFirst.tvClentComplainNum.setText(StringUtil.isNullStr(blocklogNums.getComplainNum()) ? blocklogNums.getComplainNum() : "0");
                 binding.itemWorkBenchFirst.tvClentInquiryNum.setText(StringUtil.isNullStr(blocklogNums.getEnquiryNum()) ? blocklogNums.getEnquiryNum() : "0");
                 binding.itemWorkBenchFirst.tvClentRepairsNum.setText(StringUtil.isNullStr(blocklogNums.getRepairNum()) ? blocklogNums.getRepairNum() : "0");
+                binding.itemWorkBenchFirst.tvWorkTableDisqualifiedNum.setText(StringUtil.isNullStr(blocklogNums.getUnqualifiedNum()) ? blocklogNums.getUnqualifiedNum() : "0");
+                binding.itemWorkBenchFirst.ivWaringDisqualified.setVisibility(blocklogNums.getUnqualifiedTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
             });
             //待办统计-计划、巡查、派工单
             viewModel.getWaitCount().observe(this, waitCount -> {
-                binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1?View.VISIBLE:View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
                 //派工单
                 binding.itemWorkBenchFirst.tvWorkTableDispatchNum.setText("" + waitCount.getDispatchOrderCount());
                 //计划工单
@@ -165,21 +182,25 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
     }
 
-    private void calculateOperateUpDown(TextView tv, TextView tvNum, Double todayRise) {
-        String todayNum = formatDouble.format(todayRise);
-        if (todayRise < 0) {
-            tv.setText(getResources().getString(R.string.down));
-            tvNum.setTextColor(getResources().getColor(R.color.tv_down_color));
-            tvNum.setText(todayNum + "%");
-        } else if (todayRise > 0) {
-            tv.setText(getResources().getString(R.string.up));
-            tvNum.setTextColor(getResources().getColor(R.color.tv_up_color));
-            tvNum.setText(todayNum + "%");
-        } else {
-            todayNum = "0";
-            tvNum.setText(todayNum + "%");
-        }
-    }
+//    private void calculateOperateUpDown(TextView tv, TextView tvNum, Double todayRise) {
+//        if (todayRise == null){
+//            tvNum.setText("0%");
+//            return;
+//        }
+//        String todayNum = formatDouble.format(todayRise);
+//        if (todayRise < 0) {
+//            tv.setText(getResources().getString(R.string.down));
+//            tvNum.setTextColor(getResources().getColor(R.color.tv_down_color));
+//            tvNum.setText(todayNum + "%");
+//        } else if (todayRise > 0) {
+//            tv.setText(getResources().getString(R.string.up));
+//            tvNum.setTextColor(getResources().getColor(R.color.tv_up_color));
+//            tvNum.setText(todayNum + "%");
+//        } else {
+//            todayNum = "0";
+//            tvNum.setText(todayNum + "%");
+//        }
+//    }
 
     @Override
     protected WorkBenchViewModel initViewModel() {
@@ -278,20 +299,18 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
         List<String> functionList = new ArrayList<>();
         functionList.add("dj");
+
         //审批
         if (userMenu.indexOf("sprk") != -1) {
             functionList.add("sp");
         }
+        //收费
+        functionList.add("sf");
         //创建工单
         functionList.add("cjgd");
         if (userMenu.indexOf("gdlbck") != -1) {
             functionList.add("gdlb");
         }
-//  去除抢单
-//        if (userMenu.indexOf("qd") != -1) {
-//            functionList.add("qd");
-//        }
-
 
         functionList.add("gzyl");
         functionList.add("smcl");
@@ -406,15 +425,33 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (type == 0) {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId();
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, url)
+                    .navigation();
+        } else if (type == 2) {//工单处理情况总览 更多点击
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.ORDER_HANDLE.getTypeName(),map);
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
+                    .navigation();
+        } else if (type == 1) {//运营收缴率 更多点击
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name",UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName(),map);
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
+                    .withObject(RouteKey.ORGCODE, projectCode)
+                    .navigation();
         } else {
             url = Constants.MORE_HTML_URL + "userToken=" + userModuleService.getUserId()
                     + "&userId=" + userModuleService.getUserId() + "&type=" + type;
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                    .withString(RouteKey.KEY_WEB_URL, url)
+                    .navigation();
         }
-
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
-                .withString(RouteKey.KEY_WEB_URL, url)
-                .navigation();
     }
 
     @Override

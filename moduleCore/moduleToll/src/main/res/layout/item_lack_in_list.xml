@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="inList"
+            type="com.einyun.app.pms.toll.model.TollModel.DataBean.PaymentList.ListBean" />
+    </data>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_130">
+            <CheckBox
+                android:id="@+id/cb_in_check"
+                android:layout_marginLeft="@dimen/px_29"
+                android:layout_marginTop="@dimen/px_24"
+                android:checked="false"
+                android:background="@drawable/select_check"
+                android:button="@null"
+                android:layout_width="@dimen/px_30"
+                android:layout_height="@dimen/px_30"/>
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019年12月"
+                android:layout_marginTop="@dimen/px_21"
+                android:layout_marginLeft="@dimen/px_89"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14"
+                />
+            <TextView
+                android:id="@+id/tv_fee"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_30"
+                android:layout_marginTop="@dimen/px_21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30元"
+                android:textColor="@color/blackTextColor"
+                android:textSize="13sp"
+                />
+            <TextView
+                android:id="@+id/tv_cycle_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="费用周期：2019年12.1～2019.12.31"
+                android:layout_marginTop="@dimen/px_70"
+                android:layout_marginLeft="@dimen/px_89"
+                android:textColor="@color/greyTextColor"
+                android:textSize="@dimen/font_size14"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
+

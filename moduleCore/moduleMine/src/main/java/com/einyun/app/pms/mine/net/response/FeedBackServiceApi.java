@@ -3,9 +3,11 @@ package com.einyun.app.pms.mine.net.response;
 
 import com.einyun.app.base.http.BaseResponse;
 
+import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.pms.mine.constants.URLS;
 import com.einyun.app.pms.mine.model.FeedBackBean;
 import com.einyun.app.pms.mine.model.GetUserByccountBean;
+import com.einyun.app.pms.mine.model.RequestPageBean;
 import com.einyun.app.pms.mine.model.SignSetModule;
 import com.einyun.app.pms.mine.model.UserStarsBean;
 
@@ -28,7 +30,13 @@ import retrofit2.http.Url;
  * @Version: 1.0
  */
 public interface FeedBackServiceApi {
-
+    /**
+     * 消息列表
+     * @param request
+     * @return
+     */
+    @POST
+    Flowable<MsgListResponse> getMsgList(@Url String url, @Body RequestPageBean request);
     /**
      * 提交审批
      * @param
@@ -67,4 +75,19 @@ public interface FeedBackServiceApi {
      */
     @POST(URLS.URL_SET_SIGN_TEXT)
     Flowable<BaseResponse> setSignText(@Body SignSetModule bean);
+    /**
+     * 单个已读
+     */
+    @GET()
+    Flowable<BaseResponse> singleRead(@Url String url);
+    /**
+     * 是否抢单
+     */
+    @GET()
+    Flowable<BaseResponse> isGrap(@Url String url);
+    /**
+     * 全部已读
+     */
+    @GET()
+    Flowable<BaseResponse> allRead(@Url String url);
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="gridinbean"
+            type="com.einyun.app.pms.toll.model.BuildModel.GridRangeBean" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/ll_item"
+        android:layout_margin="@dimen/px_5"
+        android:background="@drawable/shape_rect_gray"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="@dimen/px_154">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:text="1栋"
+            android:layout_marginTop="@dimen/px_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_owe"
+            android:textColor="@color/blueTextColor"
+            android:background="@color/toll_item_grey_bg_color"
+            android:layout_centerHorizontal="true"
+            android:text="暂无欠费▶"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="@dimen/px_64"/>
+    </RelativeLayout>
+
+</layout>
+

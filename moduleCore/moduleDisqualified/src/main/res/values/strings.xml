@@ -1,0 +1,29 @@
+<resources>
+
+    <string name="tv_feedback_date">反馈日期</string>
+    <string name="tv_cause_analysis">原因分析</string>
+    <string name="tv_prevention">纠正预防措施</string>
+    <string name="tv_deal_time">处理时间</string>
+    <string name="tv_valition_info">验证信息</string>
+    <string name="tv_valition_person">验证人</string>
+    <string name="tv_valition_date">验证日期</string>
+    <string name="tv_valition_situation">验证情况</string>
+    <string name="tv_finish_time">完成时间</string>
+    <string name="tv_feedback_info">反馈信息</string>
+    <string name="text_cached">已缓存</string>
+    <string name="text_no_cached">未缓存</string>
+    <string name="tv_create_suc">创建不合格工单成功</string>
+    <string name="tv_validate_suc">提交成功</string>
+    <string name="tv_feed_back_suc">提交成功</string>
+    <string name="add">新增</string>
+    <string name="tv_unquality_order_info">工单信息</string>
+    <string name="tv_unquality_order_code">工单编号</string>
+    <string name="tv_unquality_create_time">创建时间</string>
+    <string name="tv_unquality_divide">分期</string>
+    <string name="tv_unquality_check_date">检查日期</string>
+    <string name="tv_unquality_ques_desc">问题描述</string>
+    <string name="tv_unquality_line">条线</string>
+    <string name="tv_unquality_severity">严重程度</string>
+    <string name="tv_unquality_correct_date">纠正截止日期</string>
+    <string name="tv_checked_user">被检查人</string>
+</resources>

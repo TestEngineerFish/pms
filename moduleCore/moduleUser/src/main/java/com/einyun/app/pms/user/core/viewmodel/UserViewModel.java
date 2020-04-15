@@ -1,5 +1,6 @@
 package com.einyun.app.pms.user.core.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
@@ -76,6 +77,9 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 UserServiceManager.getInstance().saveUserModel(data);
                 CommonHttpService.getInstance().authorToken(data.getToken());
                 mUsersRepo.saveOrUpdateUser(new UserModel("", data.getUserId(), "", username, password));
+                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TOKEN, data.getToken());
+                SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_NAME, data.getAccount());
+
             }
 
             @Override
@@ -83,6 +87,9 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 if (isShowLoading) {
                     //关闭Loading
                     hideLoading();
+                } else {
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                    ActivityUtil.getActivityList().get(0).finish();
                 }
                 ThrowableParser.onFailed(throwable);
             }
@@ -105,12 +112,13 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 CommonHttpService.getInstance().tenantId(data.getId());
                 Logger.d(TAG, "tentantId:" + data.getId());
                 SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, code);
+                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_ID, data.getId());
             }
 
             @Override
             public void onFaild(Throwable throwable) {
                 ThrowableParser.onFailed(throwable);
-                if (splash){
+                if (splash) {
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
                 }
             }

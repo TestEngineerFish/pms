@@ -31,14 +31,20 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", deps.server.debug)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.debug)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.debug)
             minifyEnabled false
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
             buildConfigField("String", "BASE_URL", deps.server.debug_test)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.debug_test)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.debug_test)
         }
         uat {
             buildConfigField("String", "BASE_URL", deps.server.uat)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.uat)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.uat)
             minifyEnabled true   //开启混淆
 //            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -46,6 +52,8 @@ android {
         release.initWith(uat)
         release {
             buildConfigField("String", "BASE_URL", deps.server.release)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.release)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.release)
         }
     }
     compileOptions {
@@ -62,14 +70,17 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(deps.project.module_base)
     api project(deps.project.einyun_library)
     api project(deps.project.module_db)
+//    api project(deps.project.module_base)
     api deps.zxing
+    api deps.umeng.common
+    api deps.umeng.analytics
 //    api deps.einyun.http
 //    api deps.einyun.db
 //    api deps.einyun.base
 //    api deps.einyun.core
+    api deps.einyun.base
     api deps.skin.support
     api deps.skin.appcompat
     api deps.skin.design
@@ -94,7 +105,18 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor deps.arouter_compiler
     implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指
+//    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指 native
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 //    implementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation ('com.aliyun.ams:alicloud-android-push:3.1.6@aar') {
+        transitive true
+    }
+    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.9@aar'
+
+    implementation 'com.aliyun.ams:meizu-push:3.8.3-fix'
+    implementation 'com.aliyun.ams:huawei-push:2.6.3.305'
+    implementation 'com.aliyun.ams:huawei-push-base:2.6.3.305'
+    implementation ('com.google.firebase:firebase-messaging:17.6.0')
+    //高亮显示指引
+//    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
 }

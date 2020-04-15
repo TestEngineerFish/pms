@@ -42,10 +42,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginRight="@dimen/px_40"
+                    android:layout_marginRight="@dimen/px_140"
                     android:layout_toRightOf="@id/item_send_work_lf_img"
                     android:gravity="center_vertical"
-                    android:maxLength="10"
+                    android:singleLine="true"
                     android:text="@{planWorkOrder.F_WP_NAME}"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/px_32" />

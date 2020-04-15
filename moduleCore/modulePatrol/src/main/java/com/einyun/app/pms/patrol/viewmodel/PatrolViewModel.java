@@ -31,6 +31,7 @@ import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.convert.PatrolInfoTypeConvert;
+import com.einyun.app.pms.patrol.model.DelayDay;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
@@ -415,5 +416,23 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
             uris.add(uri);
         }
         return uris;
+    }
+
+    private MutableLiveData<DelayDay> delayDay=new MutableLiveData<>();
+    public LiveData<DelayDay> getDealyInfo(String id){
+        showLoading();
+        repo.getDealyInfo(id, new CallBack<DelayDay>() {
+            @Override
+            public void call(DelayDay data) {
+                hideLoading();
+                delayDay.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return delayDay;
     }
 }

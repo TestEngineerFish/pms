@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="messageCenter"
+            type="com.einyun.app.pms.mine.model.MsgModel" />
+    </data>
+
+    <LinearLayout
+        android:background="@drawable/shape_white_bg"
+        android:layout_marginTop="@dimen/px_20"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rl_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                app:status_image="@{messageCenter.extendVars}"
+                android:id="@+id/iv_msg_type"
+                android:layout_marginLeft="@dimen/px_13"
+                android:layout_marginTop="@dimen/px_34"
+                android:src="@drawable/iv_reminder"
+                android:layout_width="@dimen/px_80"
+                android:layout_height="@dimen/px_80"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            <TextView
+                app:status_read="@{messageCenter.hasRead}"
+                android:layout_marginRight="@dimen/px_22"
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{messageCenter.content}"
+                android:layout_marginTop="@dimen/px_34"
+                android:layout_marginLeft="@dimen/px_124"
+                android:textSize="@dimen/font_size16"/>
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:status_time="@{messageCenter.sendTime}"
+                android:layout_marginTop="@dimen/px_18"
+                android:layout_marginBottom="@dimen/px_42"
+                android:layout_marginLeft="@dimen/px_124"
+                android:textColor="@color/greyTextColor"
+                android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
+

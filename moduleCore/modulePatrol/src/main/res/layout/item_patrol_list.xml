@@ -11,10 +11,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px_20"
+        android:layout_marginBottom="@dimen/px_20"
         android:layout_marginLeft="@dimen/px_20"
         android:layout_marginRight="@dimen/px_20"
-        android:layout_marginBottom="@dimen/px_5"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="0dp"
         app:cardCornerRadius="@dimen/px_10"
@@ -130,19 +129,20 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/txt_black_order"
-                    app:time="@{patrol.createTime}"
+                    app:time="@{patrol.F_creation_date}"
                     />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="@color/thin_divider_color" />
 
             <RelativeLayout
                 android:id="@+id/item_cache"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
+                android:layout_height="@dimen/px_80"
                 android:layout_marginLeft="@dimen/px_30"
                 android:layout_marginRight="@dimen/px_30"
                 android:visibility="visible"

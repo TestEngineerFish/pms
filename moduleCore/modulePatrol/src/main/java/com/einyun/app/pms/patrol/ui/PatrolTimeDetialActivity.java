@@ -1,5 +1,6 @@
 package com.einyun.app.pms.patrol.ui;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -12,11 +13,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeWorkNodeBinding;
+import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
@@ -69,6 +72,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
+        binding.panelHandleInfo.ivDeal.setVisibility(View.GONE);
     }
 
     @Override
@@ -85,6 +89,8 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         binding.llTypes.setVisibility(View.GONE);
         binding.itemCaptures.setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+        binding.llPatrolRoadName.setVisibility(View.VISIBLE);
+        binding.llPatrolRoadDuration.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -101,10 +107,31 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                         //处理节点
                         tableItem(binding,model, position);
                         //设置签到
+
+                        if(!setUpCapture(binding,model)&&!setUpCapture(binding,model)){
+                            onNoneHandle(binding);
+                        }
                         setUpSignIn(binding,model);
-                        //设置拍照
-                        setUpCapture(binding,model);
                     }
+                }
+
+                protected void onNoneHandle(ItemPatrolTimeWorkNodeBinding binding) {
+                    binding.llPhotoComplete.setVisibility(View.GONE);
+                    binding.llCapture.setVisibility(View.VISIBLE);
+                    binding.llSign.setVisibility(View.VISIBLE);
+                    binding.llCapture.setEnabled(false);
+                    binding.llSign.setEnabled(false);
+                    binding.llSign.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.llCapture.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.ivPic.setColorFilter(getResources().getColor(R.color.white));
+                    binding.tvPhoto.setTextColor(getResources().getColor(R.color.white));
+
+                    binding.llSignComplete.setVisibility(View.GONE);
+                    binding.tvResult.setVisibility(View.GONE);
+                    binding.tvResult.setText(R.string.text_un_need_handle);
+                    binding.tvResult.setTypeface(null, Typeface.NORMAL);
+                    binding.tvResult.setTextSize(12);
+                    binding.tvResult.setTextColor(CommonApplication.getInstance().getResources().getColor(R.color.normal_main_text_icon_color));
                 }
 
                 //处理节点
@@ -124,7 +151,8 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                  * @param binding
                  * @param model
                  */
-                protected void setUpSignIn(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                protected boolean setUpSignIn(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                    boolean flag=true;
                     //按照签到方式
                     if(SignInType.NONE.equals(model.sign_type)|| TextUtils.isEmpty(model.sign_type)){//不需要签到
                         binding.llSign.setVisibility(View.GONE);
@@ -134,8 +162,10 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                             binding.llSignComplete.setVisibility(View.VISIBLE);
                         }else{//未签到
                             binding.llSignComplete.setVisibility(View.GONE);
+                            flag=false;
                         }
                     }
+                    return flag;
                 }
 
                 /**
@@ -143,18 +173,21 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                  * @param binding
                  * @param model
                  */
-                protected void setUpCapture(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                protected boolean setUpCapture(ItemPatrolTimeWorkNodeBinding binding,WorkNode model){
+                    boolean flag=true;
                     //是否需要拍照
                     if(model.is_photo>0){//需要拍照
                         if(!TextUtils.isEmpty(model.pic_url)||model.getCachedImages()!=null){//是否已有拍照记录，有拍照记录，显示已拍照
                             binding.llPhotoComplete.setVisibility(View.VISIBLE);
                         }else{//无拍照记录
                             binding.llPhotoComplete.setVisibility(View.GONE);
+                            flag=false;
                         }
                     }else{//不需要拍照，不显示任何拍照按钮
                         binding.llPhotoComplete.setVisibility(View.GONE);
                         binding.llCapture.setVisibility(View.GONE);
                     }
+                    return flag;
                 }
 
                 //处理表头

@@ -1,20 +1,29 @@
 package com.einyun.app.pms.repairs.viewmodel;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.DictService;
+import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.WorkOrderService;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
+import com.einyun.app.library.resource.workorder.model.GetNodeIdModel;
+import com.einyun.app.library.resource.workorder.model.OrderListModel;
+import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.net.request.RepairSendOrderRequest;
@@ -23,12 +32,13 @@ import com.einyun.app.library.workorder.net.request.SaveHandleRequest;
 import java.util.List;
 
 public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
-
+    private ResourceWorkOrderService resourceWorkOrderService;
     private WorkOrderService workOrderService;
     private DictService dictService;
     public RepairDetailViewModel() {
         workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
         dictService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DICT);
+        resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     }
 
 
@@ -57,18 +67,19 @@ public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
     /**
      * 派单
      * */
-    public LiveData<Boolean> repairSend(RepairSendOrderRequest request){
-        MutableLiveData<Boolean> liveData = new MutableLiveData<Boolean>();
+    public LiveData<BaseResponse<Object>> repairSend(RepairSendOrderRequest request){
+        MutableLiveData<BaseResponse<Object>> liveData = new MutableLiveData<BaseResponse<Object>>();
         showLoading();
-        workOrderService.repaireSend(request, new CallBack<Boolean>() {
+        workOrderService.repaireSend(request, new CallBack<BaseResponse<Object>>() {
             @Override
-            public void call(Boolean data) {
+            public void call(BaseResponse<Object> data) {
                 hideLoading();
                 liveData.postValue(data);
             }
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 hideLoading();
             }
         });
@@ -127,5 +138,47 @@ public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
                 ThrowableParser.onFailed(throwable);
             }
         });
+    }
+    public MutableLiveData<GetNodeIdModel> getNodeIdModelMutableLiveData = new MutableLiveData<>();
+    private String nodeId;
+    /**
+     * 获取组织架构 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<GetNodeIdModel> getNodeId(GetNodeIdRequest request) {
+        showLoading();
+        resourceWorkOrderService.getNodeId(request, new CallBack<GetNodeIdModel>() {
+
+
+            @Override
+            public void call(GetNodeIdModel data) {
+                hideLoading();
+                if (data==null) {
+                    nodeId="";
+                }else {
+                    if (TextUtils.isEmpty(data.getNodeId())){
+                        nodeId="";
+                    }else {
+                        nodeId=data.getNodeId();
+                    }
+                }
+//                ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+//                        .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+//                        .withString(RouteKey.KEY_TASK_NODE_ID, nodeId)
+//                        .withString(RouteKey.KEY_TASK_ID, "")
+//                        .withString(RouteKey.KEY_PRO_INS_ID, model.getInstance_id())
+//                        .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
+//                        .navigation();
+                getNodeIdModelMutableLiveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return getNodeIdModelMutableLiveData;
     }
 }

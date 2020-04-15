@@ -3,6 +3,7 @@ package com.einyun.app.pms.main.core.repository;
 
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.pms.main.core.model.UserStarsBean;
+import com.einyun.app.pms.main.core.respone.HasReadResponse;
 import com.einyun.app.pms.main.core.respone.UserStarsResponse;
 
 
@@ -32,5 +33,12 @@ public interface MainServiceApi {
      */
     @POST(URLS.URL_GET_USER_STARS)
     Flowable<UserStarsResponse> getStars(@Body UserStarsBean bean);
+    /**
+     * 是否已读
+     * @param
+     * @return
+     */
+    @GET(URLS.URL_GET_HAS_READ)
+    Flowable<HasReadResponse> hasRead();
 
 }

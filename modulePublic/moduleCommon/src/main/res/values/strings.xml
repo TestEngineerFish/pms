@@ -53,6 +53,9 @@
         <item>待跟进</item>
         <item>已跟进</item>
     </string-array>
+    <string-array name="order_list_less">
+        <item>待跟进</item>
+    </string-array>
     <string name="search">搜索</string>
     <string name="et_limit_input_hint">请输入内容,300字以内。</string>
     <string name="tv_tiao_line">条线</string>
@@ -61,7 +64,7 @@
     <string name="tv_order_type_two">工单类型(二级)</string>
     <string name="tv_order_type_three">工单类型(三级)</string>
     <string name="tv_if_late">是否超期</string>
-    <string name="text_handle_success">处理成功</string>
+    <string name="text_handle_success">工单提交成功</string>
     <string name="please_select">请选择</string>
     <string name="please_input">请输入</string>
     <string name="resource_type">资源分类</string>
@@ -73,7 +76,7 @@
     <string name="picture">图片</string>
     <string name="text_choose_org">请选择组织</string>
     <string name="alert_submit_error">提交失败</string>
-    <string name="alert_submit_work_order_success">派工单创建成功</string>
+    <string name="alert_submit_work_order_success">创建派工单成功</string>
     <string name="text_get_order">接单</string>
     <string name="text_is_overdue">是否超期</string>
     <string name="text_line_types">分类</string>
@@ -89,26 +92,28 @@
     <string name="text_choose_work_order_type">请选择%1$s级分类</string>
     <string name="text_update_app_title">发现新版本(V%1$s)</string>
     <string name="search_name_or_phone">请搜索姓名或手机号</string>
-    <string name="create">创建</string>
+    <string name="create">提交</string>
     <string name="resend_success">转派成功</string>
     <string name="order_list">工单列表</string>
+    <string name="title_order_condition_pandect">工单列表</string>
     <string name="plan_order">计划工单</string>
     <string name="patro_order">巡查工单</string>
     <string name="work_preview">工作预览</string>
     <string name="txt_plese_enter_reason">请输入原因</string>
     <string name="txt_plese_select_img">请选择图片</string>
     <string name="txt_plese_select_people">请选择人员</string>
+    <string name="txt_plese_select_time">请选择预约上门时间</string>
     <string name="txt_time_circle">周期</string>
     <string name="txt_one_month">1个月</string>
     <string name="txt_two_month">2个月</string>
     <string name="txt_three_month">3个月</string>
-    <string name="txt_get_report_form">收费率日报表</string>
+    <string name="txt_get_report_form">收缴率日报表</string>
     <string name="txt_own_report_form">清欠率日报表</string>
     <string name="txt_get_report_rank">收缴率排名</string>
     <string name="txt_own_report_rank">清欠率排名</string>
     <string name="txt_operate_percent">运营收缴率</string>
-    <string name="apply_close_success">强制闭单成功,请等待审批</string>
-    <string name="apply_late_success">申请延期成功,请等待审批</string>
+    <string name="apply_close_success">提交成功</string>
+    <string name="apply_late_success">提交成功</string>
     <string name="text_complete_time">完成截止时间</string>
     <string name="text_date_day">当天</string>
     <string name="text_date_week">本周</string>
@@ -126,6 +131,7 @@
     <string name="text_resolve_dis">处理说明</string>
     <string name="text_work_nodes">工作节点</string>
     <string name="text_work_plan">工作计划</string>
+    <string name="work_plan">计划工单</string>
     <string name="text_responsible_job">负责岗位</string>
     <string name="text_location">位置</string>
     <string name="text_alert">提示</string>
@@ -138,12 +144,12 @@
     <string name="text_order_num">工单编号</string>
     <string name="yes">是</string>
     <string name="no">否</string>
-    <string name="alert_submit_client_enquire_order_success">客户问询工单创建成功</string>
+    <string name="alert_submit_client_enquire_order_success">创建客户问询工单成功</string>
     <string name="text_ordered">有序</string>
     <string name="text_unordered">无序</string>
     <string name="text_user_add_complain_info">此用户已有%1$s条投诉信息</string>
-    <string name="alert_submit_client_complain_order_success">客户投诉工单创建成功</string>
-    <string name="alert_submit_client_repair_order_success">客户报修工单创建成功</string>
+    <string name="alert_submit_client_complain_order_success">创建客户投诉工单成功</string>
+    <string name="alert_submit_client_repair_order_success">创建客户报修工单成功</string>
     <string name="text_request_create_distribute">是否创建派工单</string>
     <string name="text_result">结果</string>
     <string name="text_work_repair">客户报修</string>
@@ -157,7 +163,7 @@
     <string name="text_report_repair_people">报修人</string>
     <string name="text_create_time">创建时间</string>
     <string name="text_grab_success">抢单成功，请在"待跟进"中查看</string>
-    <string name="text_grab_faile">抢单失败</string>
+    <string name="text_grab_faile">该抢单任务已失效</string>
     <string name="text_initiate_communication">发起沟通</string>
     <string name="text_repairs_type">报修类别</string>
     <string name="text_contact">沟通</string>
@@ -200,6 +206,9 @@
         <item>已办结</item>
         <item>抄送我</item>
     </string-array>
+    <string-array name="inquiries_order_list">
+        <item>待跟进</item>
+    </string-array>
     <string name="text_send_order">派工单</string>
     <string name="text_turn_order">转单</string>
     <string name="text_resend_to">转派至</string>
@@ -220,7 +229,7 @@
 
 
     <string name="text_alert_input_suggestion">请输入验收意见</string>
-    <string name="text_check_success">验收成功</string>
+    <string name="text_check_success">验收提交成功</string>
     <string name="text_alert_check_result">请输入验收结论</string>
     <string name="text_reply_success">批复成功</string>
     <string name="text_work_order_reply">批复</string>
@@ -235,4 +244,34 @@
     <string name="text_repair_area">报修区域</string>
     <string name="text_repair_type_first">报修大类</string>
     <string name="text_repair_type_second">报修小类</string>
+    <string name="text_all_get">全部收费项目</string>
+    <string name="title_patrol">巡查工单</string>
+    <string name="title_ask">客户问询</string>
+    <string name="title_unwell">不合格单</string>
+
+    <!-- 不合格单开始-->
+    <string name="tv_disqualified_order">不合格单</string>
+    <string name="tv_cached">已缓存</string>
+    <string name="tv_cache">缓存</string>
+    <string name="tv_check_date">检查日期</string>
+    <string name="tv_severity">严重程度</string>
+    <string name="tv_correct_deadline">纠正截止日期</string>
+    <string name="tv_inspected">被检查人</string>
+    <!-- 不合格单结束-->
+    <!-- 审批开始   -->
+    <string-array name="approval_list_two">
+        <item>待审批</item>
+        <item>已审批</item>
+    </string-array>
+    <string-array name="approval_list_three">
+        <item>待审批</item>
+        <item>已审批</item>
+        <item>我发起的</item>
+    </string-array>
+    <!-- 审批结束   -->
+    <string name="preview_order">秩序</string>
+    <string name="preview_multi">多营</string>
+    <string name="preview_enginer">工程</string>
+    <string name="preview_service">客服</string>
+    <string name="preview_environment">环境</string>
 </resources>

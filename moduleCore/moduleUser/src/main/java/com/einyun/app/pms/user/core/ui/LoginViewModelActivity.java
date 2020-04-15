@@ -1,6 +1,7 @@
 package com.einyun.app.pms.user.core.ui;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +24,8 @@ import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -49,6 +52,15 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         return new ViewModelProvider(this, new UserViewModelFactory()).get(UserViewModel.class);
     }
 
+    String path;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle extras = getIntent().getExtras();
+        path = extras.getString(RouteKey.KEY_PATH);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;
@@ -62,6 +74,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityUtil.setLoginClass(this.getClass());
         ActivityUtil.removeExceptCurrentActivity(LoginViewModelActivity.class);
     }
 
@@ -80,7 +93,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         binding.setCallBack(this);
         binding.etOrgCode.setText(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString());
         setUserList();
-
+        CommonApplication.getInstance().unbindAccount();
         initEvent();
     }
 
@@ -251,11 +264,19 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                     viewModel.login(binding.etUser.getText().toString(), model.getPassword(), true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
+                                        CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
                                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                                         SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
-                                        ARouter.getInstance()
-                                                .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                                .navigation();
+                                        SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, binding.etOrgCode.getText().toString());
+                                        if (StringUtil.isNullStr(path)) {
+                                            ARouter.getInstance()
+                                                    .build(path).with(getIntent().getExtras())
+                                                    .navigation();
+                                        } else {
+                                            ARouter.getInstance()
+                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                                    .navigation();
+                                        }
                                         finish();
                                     });
                 });
@@ -283,5 +304,11 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     protected boolean fullWindowFlag() {
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }

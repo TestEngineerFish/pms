@@ -20,6 +20,8 @@ import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -29,7 +31,8 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
@@ -43,7 +46,9 @@ import com.einyun.app.pms.complain.viewmodel.ComplainViewModel;
 import com.einyun.app.pms.complain.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -118,7 +123,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                 public void onFaild(Throwable throwable) {
 
                 }
-            });
+            }, BasicDataTypeEnum.COMPLAIN_PROPERTYS,BasicDataTypeEnum.COMPLAIN_TYPES);
 
         });
     }
@@ -131,8 +136,18 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
     private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
+            binding.panelCondition.setConditionSelected(true);
+        } else {
+            binding.panelCondition.setConditionSelected(false);
+        }
+        request.setF_ts_property_id(null);
+        request.setF_ts_cate_id(null);
+        if (selected.size() > 0) {
             request.setF_ts_property_id(selected.get(SELECT_COMPLAIN_PROPERTYS) == null ? null : selected.get(SELECT_COMPLAIN_PROPERTYS).getKey());
             request.setF_ts_cate_id(selected.get(SELECT_COMPLAIN_TYPES) == null ? null : selected.get(SELECT_COMPLAIN_TYPES).getKey());
+        }else {
+            request.setF_ts_property_id(null);
+            request.setF_ts_cate_id(null);
         }
         loadPagingData();
     }
@@ -189,6 +204,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                                         .withString(RouteKey.KEY_ORDER_ID, complainModel.getID_())
                                         .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
                                         .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
                                         .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                                         .navigation();
                             }
@@ -199,6 +215,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
                             public void onClick(View v) {
                                 ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                         .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_COMMUN.getTypeName())
                                         .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
                                         .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
                                         .navigation();

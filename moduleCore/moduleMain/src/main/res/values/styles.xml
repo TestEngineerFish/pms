@@ -51,14 +51,13 @@
         <item name="android:layout_marginTop">@dimen/px_8</item>
         <item name="android:textColor">#80FFFFFF</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:textSize">@dimen/font_size14</item>
+        <item name="android:textSize">@dimen/font_size13</item>
     </style>
     <style name="ll_work_table_pending">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/font_size14</item>
         <item name="android:layout_centerInParent">true</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
     </style>
@@ -67,7 +66,7 @@
         <item name="android:layout_width">@dimen/px_24</item>
         <item name="android:layout_height">@dimen/px_24</item>
         <item name="android:src">@mipmap/img_light_warn</item>
-        <item name="android:layout_marginLeft">@dimen/px_10</item>
+        <item name="android:layout_marginLeft">@dimen/px_2</item>
         <item name="android:layout_marginBottom">@dimen/px_40</item>
         <item name="android:visibility">invisible</item>
     </style>

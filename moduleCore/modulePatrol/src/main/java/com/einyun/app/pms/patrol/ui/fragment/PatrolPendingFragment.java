@@ -12,7 +12,8 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
 import com.einyun.app.base.event.CallBack;
@@ -21,6 +22,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PageUIState;
@@ -33,6 +35,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkOrder;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
@@ -46,7 +49,9 @@ import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemWorkPatrolBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,9 +140,9 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
     protected void loadData() {
         viewModel.loadPendingData().observe(getActivity(), patrols -> {
-            if(patrols.size()==0){
+            if (patrols.size() == 0) {
                 updatePageUIState(PageUIState.EMPTY.getState());
-            }else{
+            } else {
                 updatePageUIState(PageUIState.FILLDATA.getState());
             }
             adapter.submitList(patrols);
@@ -145,7 +150,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         });
     }
 
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 
@@ -155,7 +160,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
         @Override
         public boolean areItemsTheSame(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getId()==newItem.getId();
+            return oldItem.getId() == newItem.getId();
         }
 
         @SuppressLint("DiffUtilEquals")
@@ -167,7 +172,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         @Nullable
         @Override
         public Object getChangePayload(@NonNull Patrol oldItem, @NonNull Patrol newItem) {
-            return oldItem.getId()==newItem.getId();
+            return oldItem.getId() == newItem.getId();
         }
     };
 
@@ -196,14 +201,14 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
      */
     protected void showConditionView() {
         if (TextUtils.isEmpty(viewModel.request.getDivideId())) {
-            ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_divide_selected);
+            ToastUtil.show(getContext(), R.string.text_need_divide_selected);
             return;
         }
-        if(selectPopUpView==null){
+        if (selectPopUpView == null) {
             BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(), new CallBack<DivideGrid>() {
                 @Override
                 public void call(DivideGrid divideGrid) {
-                    BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                    BasicDataManager.getInstance().loadBasicData( new CallBack<BasicData>() {
                         @Override
                         public void call(BasicData data) {
                             ConditionBuilder builder = new ConditionBuilder();
@@ -214,20 +219,20 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                                     .mergeLineRes(data.getResources())
                                     .build();
-                           selectPopUpView= new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
+                            selectPopUpView = new SelectPopUpView(getActivity(), conditions).setOnSelectedListener(new SelectPopUpView.OnSelectedListener() {
                                 @Override
                                 public void onSelected(Map selected) {
                                     handleSelect(selected);
                                 }
                             });
-                           selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
+                            selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
                         }
 
                         @Override
                         public void onFaild(Throwable throwable) {
 
                         }
-                    });
+                    }, BasicDataTypeEnum.LINE_TYPES,BasicDataTypeEnum.RESOURCE);
 
                 }
 
@@ -236,8 +241,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
                 }
             });
-        }
-        else{
+        } else {
             selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabPeroidLn);
         }
 
@@ -249,10 +253,13 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         binding.panelCondition.periodSelected.setText(orgModel.getName());
         wrapDivideId(orgModel.getId(), viewModel.request);
         viewModel.onCondition();
-        BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(),null);//预先加载筛选条件的网格数据
+        BasicDataManager.getInstance().loadDivideGrid(viewModel.request.getDivideId(), null);//预先加载筛选条件的网格数据
     }
 
     protected void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PATOL_ORDER_SEARCH.getTypeName(),map);
         if (searchFragment == null) {
             searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
                 @Override
@@ -262,7 +269,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
                 @Override
                 public void onItemClick(Patrol model) {
-                    onItemClicked(null,model);
+                    onItemClicked(null, model);
                 }
 
                 @Override
@@ -281,7 +288,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     protected void handleSelect(Map selected) {
         if (selected.size() > 0) {
             binding.panelCondition.setConditionSelected(true);
-        }else{
+        } else {
             binding.panelCondition.setConditionSelected(false);
         }
         wrapCondition(selected, viewModel.request);
@@ -296,10 +303,10 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         String gridId = selected.get(SELECT_GRID) == null ? null : selected.get(SELECT_GRID).getId();
         String budingId = selected.get(SELECT_BUILDING) == null ? null : selected.get(SELECT_BUILDING).getId();
         String unitId = selected.get(SELECT_UNIT) == null ? null : selected.get(SELECT_UNIT).getId();
-        request.setTxId(selected.get(SELECT_LINE)==null?null:selected.get(SELECT_LINE).getKey());
-        request.setTypeId(selected.get(SELECT_LINE_TYPES)==null?null:selected.get(SELECT_LINE_TYPES).getKey());
-        request.setPeriod(selected.get(SELECT_DATE)==null?null:selected.get(SELECT_DATE).getKey());
-        request.setTimeout(selected.get(SELECT_IS_OVERDUE)==null?null:selected.get(SELECT_IS_OVERDUE).getKey());
+        request.setTxId(selected.get(SELECT_LINE) == null ? null : selected.get(SELECT_LINE).getKey());
+        request.setTypeId(selected.get(SELECT_LINE_TYPES) == null ? null : selected.get(SELECT_LINE_TYPES).getKey());
+        request.setPeriod(selected.get(SELECT_DATE) == null ? null : selected.get(SELECT_DATE).getKey());
+        request.setTimeout(selected.get(SELECT_IS_OVERDUE) == null ? null : selected.get(SELECT_IS_OVERDUE).getKey());
         request.setGridId(gridId);
         request.setBuildingId(budingId);
         request.setUnitId(unitId);

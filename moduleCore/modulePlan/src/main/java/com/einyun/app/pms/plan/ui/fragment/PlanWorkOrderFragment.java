@@ -16,7 +16,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Plan;
 import com.einyun.app.base.event.CallBack;
@@ -24,6 +25,7 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.SelectModel;
@@ -36,6 +38,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -48,7 +51,9 @@ import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +95,6 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     protected void init() {
         super.init();
-
         binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +116,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 public void onFaild(Throwable throwable) {
 
                 }
-            });
+            }, BasicDataTypeEnum.LINE);
 
         });
         binding.panelCondition.search.setVisibility(View.VISIBLE);
@@ -128,7 +132,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     protected void showConditionView(BasicData data) {
         if (selectPopUpView == null) {
             ConditionBuilder builder = new ConditionBuilder();
-            List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+            List<SelectModel> conditions = builder.addOnlyLines(data.getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                     .mergeLineRes(data.getResources())
@@ -140,49 +144,51 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     }
 
     private void search() {
-        if (searchFragment == null) {
-            searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {
-                @Override
-                public LiveData<PagedList<PlanWorkOrder>> search(String search) {
-                    try {
-                        DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(),map);
+            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {
+                    @Override
+                    public LiveData<PagedList<PlanWorkOrder>> search(String search) {
                         request.setSearchValue(search);
                         if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-                            return viewModel.loadPadingNetData(getFragmentTag());
+                            return viewModel.loadPadingNetData(request, getFragmentTag());
                         } else {
-                            return viewModel.loadDonePagingNetData(getFragmentTag());
+                            return viewModel.loadDonePagingNetData(request, getFragmentTag());
                         }
-                    } catch (CloneNotSupportedException e) {
-                        e.printStackTrace();
                     }
-                    return null;
-                }
 
-                @Override
-                public void onItemClick(PlanWorkOrder model) {
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-                            .withString(RouteKey.KEY_ORDER_ID, model.getID_())
-                            .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
-                            .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
-                            .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
-                            .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
-                            .navigation();
-                }
+                    @Override
+                    public void onItemClick(PlanWorkOrder model) {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
+                                .navigation();
+                    }
 
-                @Override
-                public int getLayoutId() {
-                    return R.layout.item_search_work_plan;
-                }
-            });
-            searchFragment.setHint("请搜索工单编号或计划名称");
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_search_work_plan;
+                    }
+                });
+                searchFragment.setHint("请搜索工单编号或计划名称");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
-        searchFragment.show(getActivity().getSupportFragmentManager(), "");
     }
 
     private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
             binding.panelCondition.setConditionSelected(true);
-        }else{
+        } else {
             binding.panelCondition.setConditionSelected(false);
         }
         viewModel.onConditionSelected(selected);
@@ -193,10 +199,17 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
     }
 
+    boolean isfresh = true;
+
     @Override
     public void onResume() {
         super.onResume();
-        loadPagingData();
+        if (isfresh){
+            loadPagingData();
+            isfresh = false;
+        }else{
+            viewModel.refresh();
+        }
     }
 
     @Override
@@ -221,7 +234,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         //切换筛选条件
         viewModel.getLiveEvent().observe(getActivity(), status -> {
             if (status.isRefresShown()) {
-                loadPagingData();
+                viewModel.switchCondition(getFragmentTag());
             }
         });
         RecyclerView mRecyclerView = binding.workSendList;
@@ -257,9 +270,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         viewModel.request.setUserId(userModuleService.getUserId());
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             viewModel.loadPendingInDB().observe(this, dataBeans -> {
-                if(dataBeans.size()==0){
+                if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
-                }else{
+                } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
                 adapter.submitList(dataBeans);
@@ -267,9 +280,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
             });
         } else {
             viewModel.loadDoneInDB().observe(this, dataBeans -> {
-                if(dataBeans.size()==0){
+                if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
-                }else{
+                } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
                 adapter.submitList(dataBeans);
@@ -278,7 +291,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         }
     }
 
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 

@@ -21,7 +21,7 @@
         <include
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
-        <include layout="@layout/layout_page_state" android:id="@+id/page_state"/>
+        <include android:visibility="gone"  layout="@layout/layout_page_state" android:id="@+id/page_state"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/px_160"
+                    android:layout_marginBottom="0dp"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -461,6 +461,29 @@
                                 android:layout_marginRight="@dimen/px_20"
                                 android:layout_marginBottom="@dimen/px_30"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                            <RelativeLayout
+                                android:id="@+id/patro_histroy_more"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:id="@+id/handle_add_more"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/px_100"
+                                    android:layout_centerInParent="true"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="点击展示更多"
+                                        android:textColor="@color/material_add_material_color"
+                                        android:textSize="@dimen/font_size14" />
+
+                                </LinearLayout>
+                            </RelativeLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -534,7 +557,7 @@
                                 android:layout_marginTop="@dimen/px_20"
                                 android:layout_marginRight="@dimen/px_30"
                                 android:layout_marginBottom="@dimen/px_30"
-                                app:hintText="@string/text_alert_handle_content"
+                                app:hintText="请输入处理信息"
                                 />
 
                             <LinearLayout
@@ -586,6 +609,11 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                     <include layout="@layout/layout_patrol_handle_result" android:id="@+id/panel_handle_info"/>
+
+
+                    <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
+                    <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
+                    <!--   申请延期强制闭单操作                 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/panel_apply_force_close_and_postpone"
                         android:layout_width="match_parent"
@@ -647,20 +675,18 @@
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                    <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
-                    <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
-
+                    <Button
+                        android:id="@+id/btn_submit"
+                        style="@style/submit_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_88"
+                        android:onClick="@{()->callBack.onSubmitClick()}"
+                        android:layout_alignParentBottom="true"
+                        android:visibility="gone"
+                        android:text="@string/text_submit" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
-            <Button
-                android:id="@+id/btn_submit"
-                style="@style/submit_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_88"
-                android:onClick="@{()->callBack.onSubmitClick()}"
-                android:layout_alignParentBottom="true"
-                android:visibility="gone"
-                android:text="@string/text_submit" />
+
         </RelativeLayout>
     </LinearLayout>
 

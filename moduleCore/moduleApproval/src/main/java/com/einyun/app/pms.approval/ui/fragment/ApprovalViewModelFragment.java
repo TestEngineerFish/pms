@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.SPUtils;
@@ -26,7 +27,6 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.approval.BR;
 import com.einyun.app.pms.approval.R;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
-import com.einyun.app.pms.approval.constants.RouteKey;
 import com.einyun.app.pms.approval.databinding.FragmentApprovalBinding;
 import com.einyun.app.pms.approval.databinding.ItemApprovalListBinding;
 import com.einyun.app.pms.approval.model.ApprovalBean;
@@ -130,6 +130,11 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     @Override
     protected void setUpData() {
      binding.setCallBack(this);
+        viewModel.queryAduitType().observe(this, model -> {
+            approvalAuditTypeModule= viewModel.sortAuditTypelist(model);
+//            approvalAuditTypeModule= model;
+
+        });
      /*
      * 审批状态数据
      * */
@@ -140,10 +145,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         /*
          * 审批类型数据
          * */
-        viewModel.queryAduitType().observe(this, model -> {
-            approvalAuditTypeModule= model;
 
-        });
         if(adapter==null){
             adapter=new RVPageListAdapter<ItemApprovalListBinding, ApprovalItemmodule>(getActivity(), BR.approvallist,mDiffCallback){
 //                private static final String TAG = "ApprovalViewModelFragme";
@@ -268,7 +270,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     * 筛选按钮点击
     * */
     public void onInstallmentClick(){
-        boolean flag=false;
+        viewModel.isFirst=true;
         if (IsFastClick.isFastDoubleClick()) {
         if (approvalAuditStateModule.size()==0||approvalAuditTypeModule.size()==0) {
             /*
@@ -277,7 +279,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
             viewModel.queryAduitState().observe(this, model -> {
                 approvalAuditStateModule = model;
                 viewModel.queryAduitType().observe(this, model2 -> {
-                    approvalAuditTypeModule= model2;
+//                    approvalAuditTypeModule= viewModel.sortAuditTypelist(model2);
 
                     if (approvalAuditStateModule.size()!=0&&approvalAuditTypeModule.size()!=0) {
                         if (customPopWindow==null) {
@@ -391,13 +393,17 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     @Override
     public void onItemClicked(View veiw, ApprovalItemmodule data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
-                .withString(RouteKey.APPROVAL_DETAIL_TYPE_VALUE,getTypeValue(data.getAudit_type(),data.getAudit_sub_type()))
-                .withSerializable(RouteKey.APPROVAL_ITEM_DATA,data).navigation();
+                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .withInt(RouteKey.KEY_TAB_ID,tabId)
+                .withString(RouteKey.KEY_APPROVAL_USER_STATE,data.getUserAuditStatus())
+                .navigation();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         initPage();
+        viewModel.isFirst=true;
     }
 }

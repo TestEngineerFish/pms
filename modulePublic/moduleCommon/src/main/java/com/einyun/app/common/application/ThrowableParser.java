@@ -57,7 +57,11 @@ public class ThrowableParser {
         }else if(throwable instanceof EinyunHttpException){
             //API业务错误
             EinyunHttpException exception= (EinyunHttpException) throwable;
-            ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+            if (exception.getResponse().getMsg().contains("userAccount")) {
+                ToastUtil.show(CommonApplication.getInstance(), "沟通人员不能为自己");
+            }else {
+                ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+            }
         }
         else if (throwable instanceof JsonParseException
                 || throwable instanceof JSONException

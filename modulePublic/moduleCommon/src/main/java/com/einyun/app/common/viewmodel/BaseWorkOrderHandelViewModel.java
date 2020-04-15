@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.model.IsClosedState;
+import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
@@ -112,5 +113,26 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
           });
 
           return isClosedLiveData;
+     }
+
+     MsgRepository repository=new MsgRepository();
+     /**
+      * 单个消息从未读到已读
+      */
+     private MutableLiveData<Boolean> singleReadModel=new MutableLiveData<>();
+     public LiveData<Boolean> singleRead(String id){
+          repository.singleRead(id, new CallBack<Boolean>() {
+               @Override
+               public void call(Boolean data) {
+                    hideLoading();
+                    singleReadModel.postValue(data);
+               }
+
+               @Override
+               public void onFaild(Throwable throwable) {
+                    hideLoading();
+               }
+          });
+          return singleReadModel;
      }
 }

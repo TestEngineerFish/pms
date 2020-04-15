@@ -23,6 +23,7 @@ import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.GetJobRequest;
+import com.einyun.app.library.resource.workorder.net.request.GetOrgRequest;
 import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -66,7 +67,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         switchCondition();
     }
 
-    public MutableLiveData<OrgnizationModel> orgnizationModelLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<OrgnizationModel>> orgnizationModelLiveData = new MutableLiveData<>();
 
     public SendOrderViewModel() {
         repo = new SendOrderRespository();
@@ -150,11 +151,11 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      *
      * @return LiveData
      */
-    public MutableLiveData<OrgnizationModel> getOrgnization(String divideId) {
+    public MutableLiveData<List<OrgnizationModel>> getOrgnization(GetOrgRequest request) {
         showLoading();
-        resourceWorkOrderService.getOrgnization(divideId, new CallBack<OrgnizationModel>() {
+        resourceWorkOrderService.getOrgnization(request, new CallBack<List<OrgnizationModel>>() {
             @Override
-            public void call(OrgnizationModel data) {
+            public void call(List<OrgnizationModel> data) {
                 hideLoading();
                 orgnizationModelLiveData.postValue(data);
             }
@@ -175,11 +176,11 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      */
     public MutableLiveData<List<JobModel>> getJob(GetJobRequest request) {
         showLoading();
-        resourceWorkOrderService.getJob(request, new CallBack<JobPage>() {
+        resourceWorkOrderService.getJob(request, new CallBack<List<JobModel>>() {
             @Override
-            public void call(JobPage data) {
+            public void call(List<JobModel> data) {
                 hideLoading();
-                jobModels.postValue(data.getRows());
+                jobModels.postValue(data);
             }
 
             @Override

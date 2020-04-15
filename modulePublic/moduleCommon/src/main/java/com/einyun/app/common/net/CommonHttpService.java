@@ -1,5 +1,6 @@
 package com.einyun.app.common.net;
 
+import com.einyun.app.library.BuildConfig;
 import com.einyun.app.library.core.net.EinyunHttpService;
 
 import java.util.concurrent.locks.Lock;
@@ -40,6 +41,10 @@ public class CommonHttpService extends EinyunHttpService {
 
 
     public void init() {
+        if (BuildConfig.DEBUG) {
+            DEBUG = true;
+            super.DEBUG = true;
+        }
         super.init();
         //添加自定义请求头
 

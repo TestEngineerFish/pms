@@ -23,6 +23,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!-- 设置华为角标的显示 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
     <!-- 可选的权限 -->
     <!-- 启用错误分析功能，须添加该权限 -->
     <!-- 使用GPS获取用户精确定位信息 -->
@@ -51,6 +53,18 @@
     <!-- 屏幕管理权限 -->
     <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
+    <!-- 阿里云推送相关权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <meta-data android:value="5dad68473fc195309b001055" android:name="UMENG_APPKEY"/>
 
     <!--多渠道打包-->
@@ -61,21 +75,27 @@
         android:name="com.einyun.app.common.application.CommonApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:label="${APP_NAME}"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        tools:replace="android:label"
         android:supportsRtl="true"
         android:theme="@style/AppThemeFullScreen">
+<!--        <meta-data android:name="com.alibaba.app.appkey" android:value="28234922"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
+<!--        <meta-data android:name="com.alibaba.app.appsecret" android:value="a74f45b4bfea4a5d481892d9c0a1d3ad"/> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;-->
+<!-- 公司的阿里key -->
+        <meta-data android:name="com.alibaba.app.appkey" android:value="28169242"/> <!-- 请填写你自己的- appKey -->
+        <meta-data android:name="com.alibaba.app.appsecret" android:value="ecd0a9e3c22cfe011cc5a31b9a63a433"/> <!-- 请填写你自己的appSecret -->
         <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
-            android:theme="@style/AppThemeFullScreen">
+            android:theme="@style/NoActionBarAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity"/>
-        <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity"/>
-        <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"/>
+        <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity" android:launchMode="singleTask"/>
+        <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity" android:launchMode="singleTask"/>
+        <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity" android:launchMode="singleTask"/>
         <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
         <activity android:name="com.einyun.app.common.zxing.ScannerActivity"/>
         <activity  android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
@@ -83,7 +103,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             />
         <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"/>
-
+        <activity android:name=".main.core.ui.OrderConditionPandectActivity"/>
         <activity android:name="com.einyun.app.common.ui.activity.BaseApplyForceCloseActivity"/>
         <activity android:name="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity"/>
 
@@ -100,10 +120,11 @@
 
         <!--巡查工单Start-->
         <activity android:name=".patrol.ui.PatrolListActivity"/>
-        <activity android:name=".patrol.ui.PatrolHandleActivity"/>
-        <activity android:name=".patrol.ui.PatrolTimeHandleActivity"/>
-        <activity android:name=".patrol.ui.PatrolTimeDetialActivity"/>
-        <activity android:name=".patrol.ui.PatrolDetialActivity"/>
+        <activity android:name=".patrol.ui.PatrolHandleActivity" android:launchMode="singleTask"/>
+        <activity android:name=".patrol.ui.PatrolTimeHandleActivity" android:launchMode="singleTask"/>
+        <activity android:name=".patrol.ui.PatrolTimeDetialActivity" android:launchMode="singleTask"/>
+        <activity android:name=".patrol.ui.PatrolDetialActivity" android:launchMode="singleTask"/>
+<!--        <activity android:name="com.einyun.app.common.pushReceiver.PopupPushActivity" android:exported="true"/>-->
         <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity"/>
         <activity android:name=".patrol.ui.PatrolSignInScannerActivity"/>
         <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity"/>
@@ -129,6 +150,7 @@
         <activity android:name=".mine.ui.SignSetViewModuleActivity"/>
         <activity android:name=".mine.ui.UserHeadShotViewModuleActivity"/>
         <activity android:name=".mine.ui.UserInfoViewModuleActivity"/>
+        <activity android:name=".mine.ui.MessageCenterActivity"/>
         <activity android:name=".create.ui.AddComplainInfoActivity"/>
         <activity android:name=".complain.ui.CommunicationActivity"/>
         <activity android:name=".complain.ui.ComplainActivity"/>
@@ -136,8 +158,28 @@
        <!--  客户问询开始      -->
         <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity"/>
+        <activity android:name=".customerinquiries.ui.InquiriesDetailMsgViewModuleActivity"/>
         <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity"/>
-       <!--  客户问询结束      -->
+        <activity android:name=".customerinquiries.ui.InquiriesOrderListActivity"/>
+        <activity android:name=".customerinquiries.ui.InquiriesOrderDetailViewModuleActivity"/>
+        <!--  客户问询结束      -->
+        <!--  不合格单开始      -->
+        <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity"/>
+        <activity android:name=".disqualified.ui.PropertyListViewModuleActivity"/>
+        <activity android:name=".disqualified.ui.CreateDisqualifiedActivity"/>
+        <activity android:name=".disqualified.ui.DisqualifiedDetailActivity"/>
+        <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity"/>
+        <!--  不合格单结束      -->
+
+        <!--  收费开始      -->
+        <activity android:name=".toll.ui.TollViewModelActivity"/>
+        <activity android:name=".toll.ui.LackDetailViewModelActivity"/>
+        <activity android:name=".toll.ui.PaymentAdvanceActivity" />
+        <activity android:name=".toll.ui.LackListActivity"/>
+        <activity android:name=".toll.ui.FeeActivity" android:launchMode="singleTask"/>
+        <activity android:name=".toll.ui.FeeSucActivity" android:launchMode="singleTask"/>
+        <!--  收费结束      -->
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.einyun.app.pms.fileprovider"
@@ -147,6 +189,58 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <!-- 消息接收监听器 （用户可自主扩展） -->
+        <receiver
+            android:name="com.einyun.app.common.pushReceiver.MyMessageReceiver"
+            android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=101286213" />
+        <!-- 请填写你自己华为平台上注册的appid -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="xxxxxxxxxxxxxxxxxxx" />
+        <!-- 请填写您自己的vivo平台上的appKey -->
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="xxxx" />
+        <!-- 请填写您自己的vivo平台上的appId -->
+
+       <!-- <service
+            android:name="com.einyun.app.common.pushReceiver.MyMessageIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
+            </intent-filter>
+        </service>-->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=101286213" /><!-- 请填写你自己华为平台上注册的appid -->
+
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="xxxxxxxxxxxxxxxxxxx" />  <!-- 请填写您自己的vivo平台上的appKey -->
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="xxxx" />    <!-- 请填写您自己的vivo平台上的appId -->
     </application>
 
 </manifest>

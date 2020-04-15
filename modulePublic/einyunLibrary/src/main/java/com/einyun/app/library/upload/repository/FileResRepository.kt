@@ -59,7 +59,7 @@ open class FileResRepository :UploadService{
         var liveData=MutableLiveData<PicUrl>()
         var image = File(filePath)
         var requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), image)
-        val body = MultipartBody.Part.createFormData("file", image.name, requestFile)
+        val body = MultipartBody.Part.createFormData("file", System.currentTimeMillis().toString(), requestFile)
         serviceApi?.upload(body)?.compose(RxSchedulers.inIo())
                 ?.subscribe({ response ->
                     if (response.isState) {

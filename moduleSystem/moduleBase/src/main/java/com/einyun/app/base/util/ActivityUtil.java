@@ -39,16 +39,34 @@ public class ActivityUtil {
 
     private static Class firstClass;
 
+    private static Class loginClass;
+
+    public static Class getLoginClass() {
+        return loginClass;
+    }
+
+    public static void setLoginClass(Class loginClass) {
+        ActivityUtil.loginClass = loginClass;
+    }
+
     public static Class getFirstClass() {
         return firstClass;
     }
 
-    public static void setFirstClass(Class firstClass) {
-        firstClass = firstClass;
+    public static void setFirstClass(Class className) {
+        firstClass = className;
     }
 
     public static void setDefaultClass(Class className) {
         defaultClass = className;
+    }
+
+    public static Class getDefaultClass() {
+        return defaultClass;
+    }
+
+    public static List<AppCompatActivity> getActivityList() {
+        return activityList;
     }
 
     private static final int enterAnima = 0;
@@ -128,7 +146,7 @@ public class ActivityUtil {
         return false;
     }
 
-    private static Activity getLastActivty() {
+    public static AppCompatActivity getLastActivty() {
         if (activityList.size() > 0) {
             return activityList.get(activityList.size() - 1);
         }

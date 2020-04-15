@@ -72,13 +72,6 @@ interface DictDataServiceApi {
     fun getByTypeKeyForComBo(@Part("typeKey") typeKey: String):Flowable<DictListResponse>
 
     /**
-     * 根据分类key获取字典
-     * 个多逗号分隔
-     */
-    @GET(URLS.URL_DATA_DICT_GET_BY_TYPE_KEYS)
-    fun getByTypeKeys(@Query("typeKeys") typeKeys: String): Flowable<DictListResponse>
-
-    /**
      *
      *根据字典key查询字典下级
      */

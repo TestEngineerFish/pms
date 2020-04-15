@@ -1,9 +1,11 @@
 package com.einyun.app.pms.repairs.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +22,8 @@ import com.einyun.app.base.paging.bean.Query;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
+import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
@@ -30,8 +34,9 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
-import com.einyun.app.base.BaseViewModelFragment;
+import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.utils.SpacesItemDecoration;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.library.workorder.model.RepairsModel;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
@@ -39,11 +44,14 @@ import com.einyun.app.pms.repairs.BR;
 import com.einyun.app.pms.repairs.R;
 import com.einyun.app.pms.repairs.databinding.ItemOrderRepairBinding;
 import com.einyun.app.pms.repairs.databinding.RepairsFragmentBinding;
+import com.einyun.app.pms.repairs.ui.RepairsActivity;
 import com.einyun.app.pms.repairs.viewmodel.RepairsViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,13 +73,15 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_ORDER_TYPE3
  * Paging Demo
  * Paging Component
  */
-public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener {
+public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragmentBinding, RepairsViewModel> implements ItemClickListener<RepairsModel>, PeriodizationView.OnPeriodSelectListener, RepairsActivity.GrabListener {
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
-    private SelectPopUpView selectPopUpView;
+    private SelectPopUpView selectPopUpView = null;
     RepairsPageRequest request;
-    public RepairsViewModelFragment(){
+
+    public RepairsViewModelFragment() {
 
     }
+
     public static RepairsViewModelFragment newInstance(Bundle bundle) {
         RepairsViewModelFragment fragment = new RepairsViewModelFragment();
         fragment.setArguments(bundle);
@@ -84,6 +94,12 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         return R.layout.repairs_fragment;
     }
 
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        RepairsActivity activityRepair = (RepairsActivity) activity;
+        activityRepair.setLinstenr(this);
+    }
 
     @Override
     protected void init() {
@@ -107,26 +123,25 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             @Override
             public void onClick(View v) {
                 //弹出筛选view
-                if (selectPopUpView == null) {
-                    BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
-                        @Override
-                        public void call(BasicData data) {
+
+                BasicDataManager.getInstance().loadBasicData(new CallBack<BasicData>() {
+                    @Override
+                    public void call(BasicData data) {
+                        if (selectPopUpView == null) {
                             ConditionBuilder builder = new ConditionBuilder();
                             builder.addRepairArea(data.getRepairArea());
                             List<SelectModel> condition = builder.build();
                             selectPopUpView = new SelectPopUpView(getActivity(), condition)
                                     .setOnSelectedListener(selected -> handleSelect(selected));
                         }
+                        selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
+                    }
 
-                        @Override
-                        public void onFaild(Throwable throwable) {
+                    @Override
+                    public void onFaild(Throwable throwable) {
 
-                        }
-                    });
-
-
-                }
-                selectPopUpView.showAsDropDown(binding.repairOrderTabLn);
+                    }
+                }, BasicDataTypeEnum.REPAIR_AREA);
             }
         });
     }
@@ -155,9 +170,8 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         binding.repairsList.addItemDecoration(new SpacesItemDecoration(0, 0, 0, 30));
     }
 
-    private void loadPagingData() {
+    public void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
-
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
@@ -179,6 +193,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
             adapter = new RVPageListAdapter<ItemOrderRepairBinding, RepairsModel>(getActivity(), BR.repair, mDiffCallback) {
                 @Override
                 public void onBindItem(ItemOrderRepairBinding binding, RepairsModel repairsModel) {
+
                     if (getFragmentTag().equals(FRAGMENT_REPAIR_GRAB)) {
                         binding.itemGrabRe.setVisibility(View.VISIBLE);
                     }
@@ -196,6 +211,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     binding.itemRepairGrab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             viewModel.grabRepair(repairsModel.getTaskId()).observe(getActivity(), status -> {
                                 if (status.booleanValue()) {
                                     new AlertDialog(getActivity()).builder().setTitle(getResources().getString(R.string.tip))
@@ -206,6 +222,9 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                                                     viewModel.refreshUI();
                                                 }
                                             }).show();
+                                    HashMap<String, String> map = new HashMap<>();
+                                    map.put("user_name", UserUtil.getUserName());
+                                    MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.REPAIR_GRAB.getTypeName(),map);
                                     loadPagingData();
 
                                 } else {
@@ -227,6 +246,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                         public void onClick(View v) {
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                     .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.REPAIR_COMMUN.getTypeName())
                                     .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
                                     .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
                                     .navigation();
@@ -248,6 +268,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName())
                                     .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
                                     .withString(RouteKey.KEY_ORDER_ID, repairsModel.getID_())
                                     .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
@@ -316,6 +337,8 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         request.setBx_dk_id(orgModel.getId());
+        binding.repairPeriodSelected.setText(orgModel.getName());
+        binding.repairPeriodSelected.setTextColor(getResources().getColor(R.color.blueTextColor));
         loadPagingData();
     }
 
@@ -324,10 +347,35 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
      */
     private void handleSelect(Map<String, SelectModel> selected) {
         if (selected.size() > 0) {
-            request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getId());
-            request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getId());
-            request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getId());
+            request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getKey());
+            request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getKey());
+            request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getKey());
+        }else {
+            request.setBx_area_id(null);
+            request.setBx_cate_lv1_id(null);
+            request.setBx_cate_lv2_id(null);
         }
         loadPagingData();
+    }
+
+    @Override
+    public void onGrabed() {
+        Log.d("test", "hhh");
+        viewModel.loadPagingData(request, FRAGMENT_REPAIR_GRAB).observe(this, dataBeans -> {
+            adapter.submitList(dataBeans);
+        });
+    }
+
+
+    /**
+     * 超出10个字显示省略号
+     */
+    public String LimitText(TextView textView) {
+        if (textView.getText().length() > 10) {
+            return textView.getText().toString().substring(0, 10) + "...";
+        } else {
+            return textView.getText().toString();
+        }
+
     }
 }

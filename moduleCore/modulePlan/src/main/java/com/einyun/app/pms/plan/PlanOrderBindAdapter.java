@@ -64,7 +64,7 @@ public class PlanOrderBindAdapter {
     }
 
     /**
-     * 派工单详情显示状态
+     * 计划工单延期
      *
      * @param view
      * @param state
@@ -130,4 +130,39 @@ public class PlanOrderBindAdapter {
 //    public static void status(TextView view, GetMappingByUserIdsResponse value) {
 //        view.setText(value.getFullname() + "(" + value.getAccount() + ")");
 //    }
+    /**
+     * 是否强制扫码
+     *
+     * @param view
+     * @param state
+     */
+    @BindingAdapter("isScan")
+    public static void is_force_scan(TextView view, int state) {
+        if (state == 0) {
+            view.setText("否");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
+        } else if (state == 1) {
+            view.setText("是");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.redTextColor));
+        }
+    }
+    /**
+     * 是否强制扫码
+     *
+     * @param view
+     * @param state
+     */
+    @BindingAdapter("scanReasult")
+    public static void scan_reasult(TextView view, int state) {
+        if (state == 2) {
+            view.setText("失败");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.redTextColor));
+        } else if (state == 1) {
+            view.setText("成功");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
+        }else if (state == 0) {
+            view.setText("");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
+        }
+    }
 }

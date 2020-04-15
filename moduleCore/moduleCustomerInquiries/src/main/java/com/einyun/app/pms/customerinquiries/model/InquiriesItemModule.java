@@ -91,6 +91,9 @@ public class InquiriesItemModule implements Serializable {
     }
 
     public String getProInsId() {
+        if (proInsId==null) {
+            proInsId=instance_id;
+        }
         return proInsId;
     }
 

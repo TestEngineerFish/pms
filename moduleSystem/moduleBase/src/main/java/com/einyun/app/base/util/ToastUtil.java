@@ -34,7 +34,7 @@ public class ToastUtil {
             if(Looper.getMainLooper().getThread() != Thread.currentThread()){
                 Looper.prepare();
             }
-            toast = Toast.makeText(contextWeakReference.get().getApplicationContext(), msg, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(contextWeakReference.get().getApplicationContext(), msg, Toast.LENGTH_LONG);
         } else {
             toast.setText(msg);
         }

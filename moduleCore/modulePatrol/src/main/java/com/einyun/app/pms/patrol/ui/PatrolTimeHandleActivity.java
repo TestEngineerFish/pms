@@ -71,6 +71,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
+        binding.panelHandleInfo.ivDeal.setVisibility(View.GONE);
     }
 
     @Override
@@ -365,7 +366,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             if(aBoolean){
                 viewModel.finishTask(orderId).observe(this, aBoolean1 -> {
                     if(aBoolean1){
-                        tipDialog=new TipDialog(getApplication(),getString(R.string.text_handle_success));
+                        tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
                         tipDialog.setTipDialogListener(dialog -> {
                             finish();
                         });

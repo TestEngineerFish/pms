@@ -42,6 +42,7 @@ class GridModel {
     var updateTimes: Int = 0 // 0
     var updatedBy: String? = null // 徐玲玲
     var updationDate: String? = null // 2019-12-18 16:48:04
+    var isLoadMore: Boolean? = true //
 
     var children: List<BuildingUnit>? = null
 

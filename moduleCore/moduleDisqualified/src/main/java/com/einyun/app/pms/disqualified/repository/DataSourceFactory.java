@@ -1,0 +1,37 @@
+package com.einyun.app.pms.disqualified.repository;
+
+import androidx.annotation.NonNull;
+import androidx.paging.DataSource;
+
+
+import com.einyun.app.pms.disqualified.model.DisqualifiedItemModel;
+import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
+
+
+/**
+ * @ProjectName: pms
+ * @Package: com.einyun.app.pms.pointcheck.repository
+ * @ClassName: DataSourceFactory
+ * @Description: java类作用描述
+ * @Author:
+ * @CreateDate: 2019/11/20 0020 下午 14:06
+ * @UpdateUser: 更新者
+ * @UpdateDate: 2019/11/20 0020 下午 14:06
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
+public class DataSourceFactory extends DataSource.Factory<Integer, DisqualifiedItemModel>{
+
+    private DisqualifiedListRequest bean;
+    String  table;
+    public DataSourceFactory(DisqualifiedListRequest requestBean, String table) {
+        bean = requestBean;
+        this.table=table;
+    }
+
+    @NonNull
+    @Override
+    public DataSource<Integer, DisqualifiedItemModel> create() {
+        return new ItemDataSource(bean,table);
+    }
+}

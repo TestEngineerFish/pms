@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.BaseViewModelActivity;
 import com.einyun.app.common.R;
+import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseSkinViewModelActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends BaseViewModelActivity<V,VM>{
     @NonNull
@@ -18,4 +19,15 @@ public abstract class BaseSkinViewModelActivity<V extends ViewDataBinding, VM ex
         return SkinAppCompatDelegateImpl.get(this, this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

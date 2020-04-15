@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="false"
                     app:starEmpty="@mipmap/rating_uncheck"
-                    app:starFill="@mipmap/rating_on"
+                    app:starFill="@mipmap/rating_check"
                     app:starHalf="@mipmap/rating_uncheck"
                     app:starImageSize="@dimen/px_26"
                     app:starPadding="@dimen/px_12"

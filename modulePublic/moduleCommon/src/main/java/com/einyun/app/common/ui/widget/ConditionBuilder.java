@@ -70,7 +70,16 @@ public class ConditionBuilder {
         addLineItem(key, selectModels);
         return this;
     }
-
+    /**
+     *添加条线  不显示内部层级
+     */
+    private ConditionBuilder addItemOnChirld(String key, List<SelectModel> selectModels) {
+        if (selectModels == null) {
+            return this;
+        }
+        addOnlyLineItem(key, selectModels);
+        return this;
+    }
     /**
      * 投诉类别数据
      * @param types
@@ -138,6 +147,15 @@ public class ConditionBuilder {
         addItem(SelectPopUpView.SELECT_LINE,listAll);
         return this;
     }
+    /**
+     * 添加条线数据 隐藏内部层级（计划工单专用）
+     * @param models
+     */
+    public ConditionBuilder addOnlyLines(List<WorkOrderTypeModel> models){
+        List<SelectModel> listAll=createAllLineModels(models);
+        addItemOnChirld(SelectPopUpView.SELECT_LINE,listAll);
+        return this;
+    }
 
     /**
      * 分类，环境，秩序，工程，客服
@@ -202,7 +220,28 @@ public class ConditionBuilder {
         }
         return this;
     }
-
+    /**
+     * 添加条线数据不显示内部层级
+     * @param key
+     * @param selectModels
+     */
+    protected ConditionBuilder addOnlyLineItem(String key, List<SelectModel> selectModels) {
+        if (key.equals(SELECT_LINE)) {//条线数据
+            if (!selectModelMap.containsKey(SELECT_LINE)) {
+                lineRoot = new SelectModel();
+                lineRoot.setType(CommonApplication.getInstance().getResources().getString(R.string.text_line));
+                lineRoot.setConditionType(SELECT_ROOT);
+                List<SelectModel> lines = getLines(selectModels);
+                lineRoot.setSelectModelList(lines);
+//                for (SelectModel model : lines) {//
+//                    setChildern(model, selectModels);//递归获取
+//                }
+                selectModelMap.put(SELECT_LINE, lineRoot);
+                conditions.add(lineRoot);
+            }
+        }
+        return this;
+    }
     /**
      * 添加网格数据 网格-楼栋-单元
      * @param divideGrid
@@ -477,6 +516,7 @@ public class ConditionBuilder {
     public SelectModel buildReapirArea(AreaModel model){
         SelectModel selectModel=new SelectModel();
         selectModel.setId(model.getId());
+        selectModel.setKey(model.getDataKey());
         selectModel.setName(model.getDataName());
         if(model.getParentId().equals("-")){
             model.setGrade(0);

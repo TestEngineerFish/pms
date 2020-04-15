@@ -82,7 +82,7 @@ interface WorkOrderService : EinyunService {
     ): LiveData<Boolean>
 
     //报修-派单
-    fun repaireSend(request: RepairSendOrderRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun repaireSend(request: RepairSendOrderRequest, callBack: CallBack<BaseResponse<Any>>): LiveData<BaseResponse<Any>>
 
     fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>>
     fun startEnquiry(
