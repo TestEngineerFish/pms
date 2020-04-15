@@ -8,6 +8,8 @@ public class PushResultModel {
     private String type;
     private String subType;
     private String content;
+    private String msgId;
+    private String _ALIYUN_NOTIFICATION_ID_;
 
     public String getType() {
         return type;
@@ -38,10 +40,26 @@ public class PushResultModel {
         this.content = content;
     }
 
+    public String get_ALIYUN_NOTIFICATION_ID_() {
+        return _ALIYUN_NOTIFICATION_ID_;
+    }
+
+    public void set_ALIYUN_NOTIFICATION_ID_(String _ALIYUN_NOTIFICATION_ID_) {
+        this._ALIYUN_NOTIFICATION_ID_ = _ALIYUN_NOTIFICATION_ID_;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
+    }
+
     public class Content{
         private String cateName;
         private String taskId;
-        private String instId;
+        private String procInstId;
 
         public String getCateName() {
             return cateName;
@@ -52,7 +70,7 @@ public class PushResultModel {
         }
 
         public String getTaskId() {
-            return taskId;
+            return taskId==null?"":taskId;
         }
 
         public void setTaskId(String taskId) {
@@ -60,11 +78,11 @@ public class PushResultModel {
         }
 
         public String getInstId() {
-            return instId;
+            return procInstId;
         }
 
         public void setInstId(String instId) {
-            this.instId = instId;
+            this.procInstId = instId;
         }
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
@@ -26,6 +27,7 @@ import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.common.utils.IsFastClick;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -45,8 +47,10 @@ import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
 import com.einyun.app.pms.disqualified.widget.DisqualifiedTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
@@ -283,6 +287,9 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         search();
     }
     private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(),map);
         try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {

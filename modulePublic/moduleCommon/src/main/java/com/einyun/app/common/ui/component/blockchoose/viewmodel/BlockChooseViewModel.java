@@ -1,6 +1,7 @@
 package com.einyun.app.common.ui.component.blockchoose.viewmodel;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -100,6 +101,7 @@ public class BlockChooseViewModel extends BaseViewModel {
 
     public void saveChache2Local(List<OrgModel> selected) {
         String josn = new Gson().toJson(selected);
+        Log.e("ss", "saveChache2Local: "+josn );
         SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CHOOSE_CACHE, josn);
     }
 

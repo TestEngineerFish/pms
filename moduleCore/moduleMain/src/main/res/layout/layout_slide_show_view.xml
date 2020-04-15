@@ -28,7 +28,20 @@
                 android:text="点检" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_toll"
+            style="@style/ll_slide_show_view"
+            android:tag="sf">
 
+            <ImageView
+                style="@style/iv_slide_show_view"
+                app:srcCompat="@mipmap/img_fee" />
+
+            <TextView
+                style="@style/tv_slide_show_view"
+                android:text="收费助理" />
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_work_gongdanliebiao"
             style="@style/ll_slide_show_view"

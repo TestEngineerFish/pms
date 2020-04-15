@@ -15,8 +15,15 @@ public class OrderPreviewRequest extends PageRquest {
         sorters.add(new sorter());
     }
 
-    public void addTiaoXian(String txId) {
-        query query = new query("line", txId);
+    public void addTiaoXian(boolean isReset,String txId) {
+        querys.clear();
+        query query;
+        if (isReset) {
+             query = new query("queryRange", "3");
+        }else {
+
+             query = new query("line", txId);
+        }
         querys.add(query);
     }
 

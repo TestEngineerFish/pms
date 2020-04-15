@@ -62,6 +62,10 @@ public class TipDialog {
     public void show() {
         dialog.show();
     }
+    public void showNoCancle() {
+        dialog.show();
+        dialog.setCancelable(false);
+    }
 
     public void setTipDialogListener(TipDialogListener listener) {
         this.listener = listener;

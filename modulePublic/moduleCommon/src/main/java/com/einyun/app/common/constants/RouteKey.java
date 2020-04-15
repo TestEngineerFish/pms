@@ -20,6 +20,8 @@ public class RouteKey {
     public static final String KEY_WEB_TITLE="webUrlTitle";
     public static final String KEY_PARAMS="params";
     public static final String KEY_TASK_ID="taskId";
+    public static final String KEY_TAB_ID="tabId";
+    public static final String KEY_APPROVAL_USER_STATE="userState";
     public static final String KEY_CATE_NAME="cateName";
     public static final String KEY_PHONE="phone";
     public static final String KEY_TASK_NODE_ID="taskNodeId";
@@ -30,7 +32,10 @@ public class RouteKey {
     public static final String KEY_FRAGEMNT_TAG="fragmentTag";
     public static final String KEY_ORDER_ID="orderId";
     public static final String KEY_ORDER_NO="orderNo";
+    public static final String KEY_LINE="orderLine";
+    public static final String KEY_RESOUSE="orderResouse";
     public static final String KEY_LIST_TYPE="listType";
+    public static final String KEY_CUSTOM_TYPE="KEY_CUSTOM_TYPE";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
     public static final String FRAGMENT_SEND_OWRKORDER_DONE="SEND_WORKORDER_DONE";
     public static final String FRAGMENT_WORK_PREVIEW_PLAN="WORK_PREVIEW_PLAN";
@@ -84,6 +89,8 @@ public class RouteKey {
 
     //审批
     public static final String APPROVAL_LIST_FROM = "APPROVAL_LIST_FROM";
+    public static final String APPROVAL_ITEM_DATA="data";
+    public static final String APPROVAL_DETAIL_TYPE_VALUE="typeValue";
     //客户问询
     public static final String FRAGMENT_TO_FOLLOW_UP = "FRAGMENT_TO_FOLLOW_UP";
     public static final String FRAGMENT_TO_FEED_BACK = "FRAGMENT_TO_FEED_BACK";
@@ -141,5 +148,13 @@ public class RouteKey {
     public static final String ENVIRONMENTAL = "environmental_classification";
     public static final String SERVICE = "customer_service_classification";
 
-
+    //收费
+    public static final String HOUSE_ID = "houseid";
+    public static final String HOUSE_FEE_ID = "houseFeeid";
+    public static final String HOUSE_TITLE = "house_title";
+    public static final String KEY_ALL_NAME = "ALL_NAME";
+    public static final String KEY_CLIENT_NAME = "CLIENT_NAME";
+    //消息中心
+    public static final String KEY_START_TIME = "START_TIME";
+    public static final String KEY_END_TIME = "EDN_TIME";
 }

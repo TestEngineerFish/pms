@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Plan;
@@ -37,6 +38,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -49,7 +51,9 @@ import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,7 +116,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 public void onFaild(Throwable throwable) {
 
                 }
-            }, BasicDataTypeEnum.RESOURCE, BasicDataTypeEnum.LINE);
+            }, BasicDataTypeEnum.LINE);
 
         });
         binding.panelCondition.search.setVisibility(View.VISIBLE);
@@ -128,7 +132,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     protected void showConditionView(BasicData data) {
         if (selectPopUpView == null) {
             ConditionBuilder builder = new ConditionBuilder();
-            List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+            List<SelectModel> conditions = builder.addOnlyLines(data.getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                     .mergeLineRes(data.getResources())
@@ -141,6 +145,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     private void search() {
         try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(),map);
             DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {
                 searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {

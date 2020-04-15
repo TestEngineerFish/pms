@@ -19,7 +19,9 @@ import com.alibaba.sdk.android.push.register.VivoRegister;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.net.CommonHttpService;
+import com.einyun.app.common.utils.AppActiveStatusHelper;
 import com.einyun.app.common.utils.IsFastClick;
+import com.einyun.app.common.utils.MsgUtils;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
@@ -49,7 +51,7 @@ import skin.support.design.app.SkinMaterialViewInflater;
 public class CommonApplication extends BasicApplication {
     private static final String TAG = "CommonApplication";
     private static CommonApplication app;
-
+    private boolean inBackground = false;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -64,17 +66,39 @@ public class CommonApplication extends BasicApplication {
         preinitX5WebCore();
         initSkin();
         if (IsFastClick.isDebugVersion(this)) {
-            LeakCanary.install(this);
+//            LeakCanary.install(this);
         }
         CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
         initCloudChannel(this);
         initUmeng();
+        initAppStatus();
+    }
+
+    private void initAppStatus() {
+        AppActiveStatusHelper helper = new AppActiveStatusHelper();
+        helper.register(this, new AppActiveStatusHelper.OnAppStatusListener() {
+            @Override
+            public void onFront() {
+                Log.e(TAG, "应用进入前台");
+                if (inBackground) {
+                    inBackground = false;
+                }
+                MsgUtils.setBadge(CommonApplication.getInstance(),0);
+            }
+
+            @Override
+            public void onBackground() {
+
+                Log.e(TAG, "应用进入后台");
+                inBackground = true;
+            }
+        });
     }
 
     private void initUmeng() {
-//        UMConfigure.init(this, "5dad68473fc195309b001055", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
-        UMConfigure.init(this, "5ddf3f8a0cafb2f7d700066f", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
-        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        UMConfigure.init(this, "5dad68473fc195309b001055", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+//        UMConfigure.init(this, "5ddf3f8a0cafb2f7d700066f", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.LEGACY_MANUAL);
         if (com.einyun.app.base.BuildConfig.DEBUG) {
             UMConfigure.setLogEnabled(true);
         }

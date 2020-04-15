@@ -26,6 +26,7 @@ class ComplainDetailCompleteRequest {
     var doNextParam: DoNextParamBean? = DoNextParamBean()
 
     class BizDataBean {
+        var F_pd_assignor_id: String? = null
         /**
          * F_ts_property : 一般投诉
          * F_ts_property_id : common_complain
@@ -44,14 +45,17 @@ class ComplainDetailCompleteRequest {
         var F_line_name: String? = null
         var F_response_result: String? = null
         var F_handle_result: String? = null
+        var F_pd_remark: String? = null
         var sub_complain_append: List<ComplainAppendBean>? =
             null
         var service_quality_content: String? = null
-        var service_quality_score: Int = 0
-        var F_return_score: Int = 0
+        var service_quality_score: Int ?=null
+        var F_return_score: Int?=null
         var service_attitude_content: String? = null
-        var c_is_solve: Int = -1
+        var c_is_solve: Int ?=null
         var F_return_result: String? = null
+        var F_pd_assignor: String? = null
+
     }
 
     class DoNextParamBean {

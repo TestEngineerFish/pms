@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
@@ -26,7 +27,6 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.approval.BR;
 import com.einyun.app.pms.approval.R;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
-import com.einyun.app.pms.approval.constants.RouteKey;
 import com.einyun.app.pms.approval.databinding.FragmentApprovalBinding;
 import com.einyun.app.pms.approval.databinding.ItemApprovalListBinding;
 import com.einyun.app.pms.approval.model.ApprovalBean;
@@ -393,8 +393,11 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     @Override
     public void onItemClicked(View veiw, ApprovalItemmodule data) {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
-                .withString(RouteKey.APPROVAL_DETAIL_TYPE_VALUE,getTypeValue(data.getAudit_type(),data.getAudit_sub_type()))
-                .withSerializable(RouteKey.APPROVAL_ITEM_DATA,data).navigation();
+                .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
+                .withInt(RouteKey.KEY_TAB_ID,tabId)
+                .withString(RouteKey.KEY_APPROVAL_USER_STATE,data.getUserAuditStatus())
+                .navigation();
     }
 
     @Override

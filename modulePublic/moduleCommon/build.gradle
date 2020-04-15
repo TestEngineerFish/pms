@@ -31,14 +31,20 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", deps.server.debug)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.debug)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.debug)
             minifyEnabled false
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
             buildConfigField("String", "BASE_URL", deps.server.debug_test)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.debug_test)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.debug_test)
         }
         uat {
             buildConfigField("String", "BASE_URL", deps.server.uat)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.uat)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.uat)
             minifyEnabled true   //开启混淆
 //            zipAlignEnabled true  //压缩优化
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -46,6 +52,8 @@ android {
         release.initWith(uat)
         release {
             buildConfigField("String", "BASE_URL", deps.server.release)
+            buildConfigField("String", "BASE_FEE_URL", deps.fee_server.release)
+            buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.release)
         }
     }
     compileOptions {
@@ -109,4 +117,6 @@ dependencies {
     implementation 'com.aliyun.ams:huawei-push:2.6.3.305'
     implementation 'com.aliyun.ams:huawei-push-base:2.6.3.305'
     implementation ('com.google.firebase:firebase-messaging:17.6.0')
+    //高亮显示指引
+//    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
 }

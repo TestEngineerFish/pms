@@ -79,4 +79,11 @@
     <color name="repair_detail_close_color">#cecdcd</color>
     <color name="repair_circle_color">#4a5bef</color>
     <color name="all_left_tt_color">#f36161</color>
+    <color name="toll_payment_line_color">#EBEBEB</color>
+    <color name="toll_item_grey_bg_color">#2ed3d3d3</color>
+    <color name="toll_item_red_bg_color">#2effa8a8</color>
+    <color name="toll_item_yellow_bg_color">#2ef7b500</color>
+    <color name="toll_red_text__color">#ffdc3839</color>
+    <color name="toll_yellow_text__color">#fff7b500</color>
+    <color name="toll_blue_bg__color">#ffecf1ff</color>
 </resources>

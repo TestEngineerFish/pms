@@ -23,13 +23,33 @@
         android:paddingTop="20dp"
         android:paddingRight="@dimen/px_30">
 
-        <ImageView
+        <RelativeLayout
+            android:layout_marginTop="@dimen/px_25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginBottom="@dimen/px_5"
+                android:id="@+id/iv_bell"
+            android:onClick="@{()->callBack.goToMsgCenter()}"
             android:layout_width="@dimen/px_46"
             android:layout_height="@dimen/px_46"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/px_25"
+                android:layout_marginTop="@dimen/px_5"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px_30"
             android:src="@mipmap/img_message_center"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
+            <TextView
+                android:id="@+id/tv_red_point"
+                android:textColor="@color/important_red_color"
+                android:gravity="bottom"
+                android:layout_marginRight="@dimen/px_15"
+                android:text="●"
+                android:textSize="@dimen/font_size10"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"

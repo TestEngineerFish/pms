@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.*
 import com.einyun.app.library.core.api.WorkOrderService
@@ -125,13 +126,13 @@ class WorkOrderRepository : WorkOrderService {
     //报修-派单
     override fun repaireSend(
         request: RepairSendOrderRequest,
-        callBack: CallBack<Boolean>
-    ): LiveData<Boolean> {
-        var liveData = MutableLiveData<Boolean>()
+        callBack: CallBack<BaseResponse<Any>>
+    ): LiveData<BaseResponse<Any>> {
+        var liveData = MutableLiveData<BaseResponse<Any>>()
         serviceApi?.repairSend(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({
-                callBack.call(it.isState)
-                liveData.postValue(it.isState)
+                callBack.call(it)
+                liveData.postValue(it)
             }, {
                 callBack.onFaild(it)
             })

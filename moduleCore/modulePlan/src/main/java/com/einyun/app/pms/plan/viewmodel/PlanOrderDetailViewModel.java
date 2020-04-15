@@ -12,6 +12,8 @@ import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
@@ -19,11 +21,16 @@ import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
+import com.einyun.app.library.resource.workorder.model.ForseScanCodeModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
+import com.einyun.app.pms.plan.model.PlanOrderResLineModel;
+import com.einyun.app.pms.plan.repository.PlanOrderRepository;
+import com.einyun.app.pms.plan.repository.PlanOrderServiceApi;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +50,7 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
 
     }
+    PlanOrderRepository repository2= new PlanOrderRepository("");
     /**
      * 提交
      * @return
@@ -65,7 +73,50 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         });
         return liveData;
     }
+    /**
+     * checkQrCode
+     * @return
+     */
+    public LiveData<ForseScanCodeModel> checkQrCode(String  request){
+        MutableLiveData<ForseScanCodeModel> checkQrCodeModel=new MutableLiveData();
+        showLoading();
+        service.checkQrCodeModel(request, new CallBack<ForseScanCodeModel>() {
+            @Override
+            public void call(ForseScanCodeModel data) {
+                hideLoading();
+                checkQrCodeModel.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ToastUtil.show(CommonApplication.getInstance(), "请扫描正确的二维码");
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return checkQrCodeModel;
+    }
+
+    /**
+     * 获取上次催缴time
+     */
+    private MutableLiveData<List<PlanOrderResLineModel>> getLastWorthTime=new MutableLiveData<>();
+    public LiveData<List<PlanOrderResLineModel>> getLastWorthTime(String did){
+//        showLoading();
+        repository2.getLastWorthTime( did,new CallBack<List<PlanOrderResLineModel>>() {
+            @Override
+            public void call(List<PlanOrderResLineModel> data) {
+                hideLoading();
+                getLastWorthTime.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return getLastWorthTime;
+    }
     /**
      * 工作节点
      *

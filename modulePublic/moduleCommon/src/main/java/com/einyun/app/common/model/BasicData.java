@@ -17,6 +17,7 @@ import java.util.Map;
 public class BasicData {
     private List<ResourceTypeBean> resources; //所有资源
     private List<WorkOrderTypeModel> lines;  //获取条线
+    private List<WorkOrderTypeModel> planOrderLines;  //获取条线
     private List<LineType> listLineTypes;  //获取分类 环境，工程，秩序
     private Map<String, DivideGrid> divideGridMap = new HashMap<>();//网格-楼栋-单元
     private List<TypeAndLine> complainTypes; //投诉类型
@@ -106,4 +107,11 @@ public class BasicData {
         return previewSelect;
     }
 
+    public List<WorkOrderTypeModel> getPlanOrderLines() {
+        return planOrderLines;
+    }
+
+    public void setPlanOrderLines(List<WorkOrderTypeModel> planOrderLines) {
+        this.planOrderLines = planOrderLines;
+    }
 }

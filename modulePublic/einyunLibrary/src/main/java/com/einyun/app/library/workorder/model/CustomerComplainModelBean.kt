@@ -98,7 +98,11 @@ class CustomerComplainModelBean {
      * sub_complain_append : []
      * initData : {"complain_append":{"F_ac_time":"","F_ac_content":"","F_ac_user":"","F_ac_user_id":""}}
      */
-
+    var F_pd_user: String? = null
+    var F_pd_user_id: String? = null
+    var F_pd_time: String? = null
+    var F_pd_remark: String? = null
+    var F_pd_assignor: String? = null
     var dispatch_close: Any? = null
     var F_ts_mobile: String? = null
     var F_line_name: String? = null
@@ -132,7 +136,7 @@ class CustomerComplainModelBean {
     var F_ts_cate: String? = null
     var F_fclose_apply_attach: Any? = null
     var F_invalid_reason_cate: Any? = null
-    var F_return_time: Any? = null
+    var F_return_time: String? = null
     var F_return_user: Any? = null
     var grid_name: Any? = null
     var F_ts_build_id: String? = null
@@ -205,6 +209,7 @@ class CustomerComplainModelBean {
 
     }
 }
+
 class ComplainAppendBean {
     /**
      * F_ac_time :

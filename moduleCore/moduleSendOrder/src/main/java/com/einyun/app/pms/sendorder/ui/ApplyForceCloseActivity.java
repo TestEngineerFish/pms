@@ -211,20 +211,22 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                         if (RouteKey.KEY_PLAN.equals(keyId)) {
                             viewModel.applyClosePlan(request, data).observe(this, model -> {
                                 if (model.getCode().equals("0")) {
+                                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                                     ToastUtil.show(this, R.string.apply_close_success);
                                     this.finish();
                                 } else {
-                                    ToastUtil.show(this, model.getMsg());
+                                    ToastUtil.show(this,"强制闭单失败！");
                                 }
                             });
                         }
                     } else {
                         viewModel.applyClose(request, data).observe(this, model -> {
                             if (model.getCode().equals("0")) {
+                                LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                                 ToastUtil.show(this, R.string.apply_close_success);
                                 this.finish();
                             } else {
-                                ToastUtil.show(this, model.getMsg());
+                                ToastUtil.show(this, "强制闭单失败！");
                             }
                         });
                     }
@@ -246,7 +248,7 @@ public class ApplyForceCloseActivity extends BaseHeadViewModelActivity<ActivityA
                             ToastUtil.show(this, R.string.apply_close_success);
                             this.finish();
                         } else {
-                            ToastUtil.show(this, model.getMsg());
+                            ToastUtil.show(this, "强制闭单失败！");
                         }
                     });
                 }

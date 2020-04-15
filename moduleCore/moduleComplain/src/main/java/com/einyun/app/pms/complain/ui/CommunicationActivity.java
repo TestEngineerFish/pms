@@ -18,10 +18,12 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BottomPickerModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.widget.BottomPicker;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.workorder.net.request.PostCommunicationRequest;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
@@ -30,12 +32,14 @@ import com.einyun.app.pms.complain.databinding.ActivityCommunicationBinding;
 import com.einyun.app.pms.complain.viewmodel.DetailViewModel;
 import com.einyun.app.pms.complain.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Route(path = RouterUtils.ACTIVITY_COMMUNICATION)
@@ -46,6 +50,8 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
     String divideID;
     @Autowired(name = RouteKey.KEY_PROJECT_ID)
     String projectID;
+    @Autowired(name = RouteKey.KEY_CUSTOM_TYPE)
+    String customType;
 
     @Override
     protected DetailViewModel initViewModel() {
@@ -111,6 +117,25 @@ public class CommunicationActivity extends BaseHeadViewModelActivity<ActivityCom
         request.setTaskId(taskId);
         request.setOpinion(binding.delayInfo.getString());
         viewModel.postCommunication(request).observe(this, b -> {
+            if (customType!=null) {
+                if (CustomEventTypeEnum.COMPLAIN_COMMUN.getTypeName().equals(customType)) {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("user_name", UserUtil.getUserName());
+                    MobclickAgent.onEvent(CommunicationActivity.this, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName(),map);
+                }else if (CustomEventTypeEnum.INQUIRIES_COMMUN.getTypeName().equals(customType)){
+
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("user_name", UserUtil.getUserName());
+                    MobclickAgent.onEvent(CommunicationActivity.this, CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName(),map);
+
+                }else if (CustomEventTypeEnum.REPAIR_COMMUN.getTypeName().equals(customType)){
+
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("user_name", UserUtil.getUserName());
+                    MobclickAgent.onEvent(CommunicationActivity.this, CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName(),map);
+                }
+
+            }
             finish();
         });
     }

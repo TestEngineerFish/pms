@@ -8,10 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.library.core.api.ResourceWorkOrderService;
+import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.resource.workorder.model.PatrolInfo;
+import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.pms.approval.constants.ApprovalDataKey;
 import com.einyun.app.pms.approval.model.ApprovalDetailInfoBean;
 import com.einyun.app.pms.approval.model.ApprovalFormdata;
 import com.einyun.app.pms.approval.model.ApprovalSumitBean;
+import com.einyun.app.pms.approval.model.PatrolTypeModel;
 import com.einyun.app.pms.approval.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.pms.approval.repository.ApprovalkDetailRepository;
 import com.google.gson.Gson;
@@ -21,6 +26,8 @@ import java.util.HashMap;
 
 public class ApprovalDetailViewModel extends BaseViewModel {
     ApprovalkDetailRepository repository=new ApprovalkDetailRepository();
+    ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+    public PatrolDetialRequest request=new PatrolDetialRequest();
     /*
     * 获取审批详情页 基本信息数据
     * */
@@ -44,7 +51,24 @@ public class ApprovalDetailViewModel extends BaseViewModel {
         });
         return approvalBasicInfo;
     }
+    private MutableLiveData<PatrolTypeModel> patrolType=new MutableLiveData<>();
+    public LiveData<PatrolTypeModel> getPatrolType(String id){
+        showLoading();
+        request.setProInsId(id);
+        repository.getPatrolType(request, new CallBack<PatrolTypeModel>() {
+            @Override
+            public void call(PatrolTypeModel data) {
+                hideLoading();
+                patrolType.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return patrolType;
+    }
     /*
     * 获取审批详情页 审批信息列表数据
     * */
@@ -64,6 +88,32 @@ public class ApprovalDetailViewModel extends BaseViewModel {
             }
         });
         return approvalDetailInfo;
+    }
+    /**
+     * 获取已办详情
+     * @param orderId
+     * @return
+     */
+    MutableLiveData<PatrolInfo> liveData = new MutableLiveData<>();
+    public LiveData<PatrolInfo> loadDoneDetial(String orderId){
+        request.setProInsId(orderId);
+        service.patrolDoneDetial(request, new CallBack<PatrolInfo>() {
+            @Override
+            public void call(PatrolInfo data) {
+//                PatrolInfo patrolInfo = saveCache(data, orderId);
+                liveData.postValue(data);
+//                hideLoading();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+//                hideLoading();
+//                if(patrolInfo==null){
+//                    liveData.postValue(null);
+//                }
+            }
+        });
+        return liveData;
     }
     /*
      * 审批
@@ -183,5 +233,71 @@ public class ApprovalDetailViewModel extends BaseViewModel {
         map.put(ApprovalDataKey.APPROVAL_SUMIT_PARMS,approvalSumitBean);
         return map;
     }
-
+    public String  getTypeValue(String auditType ,String auditSubType) {
+        String typeValue="";
+        switch (auditType) {
+            case "INNER_AUDIT_CREATE_PLAN"://创建计划
+                switch (auditSubType) {
+                    case "CREATE_WORK_PLAN"://创建工作计划
+                        typeValue="创建计划-创建工作计划";
+                        break;
+                    case "CREATE_PATROL_PLAN"://创建巡查计划
+                        typeValue="创建计划-创建巡查计划";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_FORCE_CLOSE"://强制闭单
+                switch (auditSubType) {
+                    case "FORCE_CLOSE_COMPLAIN"://客户投诉工单
+                        typeValue="强制闭单-客户投诉工单";
+                        break;
+                    case "FORCE_CLOSE_ENQUIRY"://客户问询工单
+                        typeValue="强制闭单-客户问询工单";
+                        break;
+                    case "FORCE_CLOSE_REPAIR"://客户报修工单
+                        typeValue="强制闭单-客户报修工单";
+                        break;
+                    case "FORCE_CLOSE_PATROL"://巡查工单
+                        typeValue="强制闭单-巡查工单";
+                        break;
+                    case "FORCE_CLOSE_PLAN"://计划工单
+                        typeValue="强制闭单-计划工单";
+                        break;
+                    case "FORCE_CLOSE_ALLOCATE"://派工单
+                        typeValue="强制闭单-派工单";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_UPDATE_PLAN"://修改计划
+                switch (auditSubType) {
+                    case "UPDATE_PATROL_PLAN"://修改巡查计划
+                        typeValue="修改计划-修改巡查计划";
+                        break;
+                    case "UPDATE_WORK_PLAN"://修改工作计划
+                        typeValue="修改计划-修改工作计划";
+                        break;
+                }
+                break;
+            case "INNER_AUDIT_POSTPONED": //工单延期
+                switch (auditSubType) {
+                    case "POSTPONED_REPAIR"://客户报修工单
+                        typeValue="工单延期-客户报修工单";
+                        break;
+                    case "POSTPONED_COMPLAIN"://客户投诉工单
+                        typeValue="工单延期-客户投诉工单";
+                        break;
+                    case "POSTPONED_PATROL"://巡查工单
+                        typeValue="工单延期-巡查工单";
+                        break;
+                    case "POSTPONED_PLAN"://计划工单
+                        typeValue="工单延期-计划工单";
+                        break;
+                    case "POSTPONED_ALLOCATE"://派工单
+                        typeValue="工单延期-派工单";
+                        break;
+                }
+                break;
+        }
+        return typeValue;
+    }
 }

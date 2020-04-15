@@ -55,21 +55,12 @@ import java.util.List;
 public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelActivity<ActivityInquiriesDetailViewModuleBinding, InquiriesDetailViewModel> {
 //    @Autowired(name = Constants.INQUIRIES_BEAN);
 //    Serializable data;
-    @Autowired(name = Constants.INQUIRIES_BEAN)
-    Serializable data;
     @Autowired(name = RouteKey.FRAGMENT_TAG)
     String fragment;
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String mTaskID;
-    @Autowired(name = RouteKey.KEY_ORDER_ID)
-    String ID;
-    @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
-    String mTaskNodeId;
-    @Autowired(name = RouteKey.KEY_STATE)
-    String mState;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String mProInsId;
-    private InquiriesItemModule inquiriesItemModule;
     private PhotoListAdapter photoListInfoAdapter;
     private PhotoListAdapter forseClosephotoListInfoAdapter;
     private int evaluation;
@@ -99,9 +90,17 @@ public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelAct
         setRightTxt(R.string.tv_history);
         setRightTxtColor(R.color.blueTextColor);
         initRadioGroup();
-        inquiriesItemModule = (InquiriesItemModule) data;
+//        initState(mState);
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+               finish();
+            }
+        });
+    }
 
-        switch (mState) {
+    private void initState(String state) {
+        switch (state) {
             case RouteKey.LIST_STATUS_HANDLE:
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
                     binding.llReplyContent.setVisibility(View.VISIBLE);
@@ -126,18 +125,15 @@ public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelAct
             default:
 //                binding.tvDealState.setText(getString(R.string.tv_finish));
                 binding.tvDealState.setText("已完成");
+                binding.llEvaluationClose.setVisibility(View.VISIBLE);
+                binding.llHistory.setVisibility(View.VISIBLE);
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
 //                binding.llHistory.setVisibility(View.VISIBLE);
 //                binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 break;
         }
-        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-               finish();
-            }
-        });
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -249,6 +245,7 @@ public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelAct
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        initState(inquiriesDetailModule.getData().getCustomer_enquiry_model().getState());
         //处理时长
         detail = inquiriesDetailModule.getData().getCustomer_enquiry_model();
         updatePageUIState(PageUIState.FILLDATA.getState());
@@ -284,7 +281,7 @@ public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelAct
      *
      * @param orderDetailInfoModule*/
     public  void isCanApplyClose(OrderDetailInfoModule orderDetailInfoModule) {
-        viewModel.isCanApply(ID,"FORCE_CLOSE_ENQUIRY").observe(this,module->{
+        viewModel.isCanApply(orderDetailInfoModule.getData().getCustomer_repair_model().getId_(),"FORCE_CLOSE_ENQUIRY").observe(this,module->{
 
             isApplyForseClose = module;
             Log.e("isCanApplyClose", "isCanApplyClose: "+isApplyForseClose );
@@ -401,7 +398,7 @@ public class InquiriesOrderDetailViewModuleActivity extends BaseHeadViewModelAct
                 return;
             }
             DealSaveRequest dealRequest = new DealSaveRequest();
-            dealRequest.setID_(ID);
+//            dealRequest.setID_(ID);
             dealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
             viewModel.dealSave(dealRequest).observe(this, module -> {
 

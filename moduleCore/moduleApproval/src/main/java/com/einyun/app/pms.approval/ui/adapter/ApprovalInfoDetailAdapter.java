@@ -73,6 +73,7 @@ public class ApprovalInfoDetailAdapter extends BaseAdapter {
 
             hodler.tvApprovalContent.setVisibility(View.GONE);
         }else {
+            hodler.tvApprovalContent.setVisibility(View.VISIBLE);
             hodler.tvApprovalContent.setText(rowsBean.getComment());
 
         }

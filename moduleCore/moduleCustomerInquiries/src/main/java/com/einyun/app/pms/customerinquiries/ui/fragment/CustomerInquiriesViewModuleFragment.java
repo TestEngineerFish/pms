@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 
@@ -26,6 +27,7 @@ import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -43,6 +45,9 @@ import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewMode
 import com.einyun.app.pms.customerinquiries.widget.InquiriesTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
@@ -182,6 +187,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
+                                .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName())
                                 .withString(RouteKey.KEY_ORDER_ID,inquiriesItemModule.getID_())
                                 .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
                                 .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
@@ -192,6 +198,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     binding.tvTalk.setOnClickListener(new ClickProxy(view -> {
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
                                 .withString(RouteKey.KEY_TASK_ID,inquiriesItemModule.getTaskId())
+                                .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.INQUIRIES_COMMUN.getTypeName())
                                 .withString(RouteKey.KEY_DIVIDE_ID,inquiriesItemModule.wx_dk_id)
                                 .withString(RouteKey.KEY_PROJECT_ID,inquiriesItemModule.getU_project_id())
                                 .navigation();

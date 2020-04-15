@@ -2,16 +2,20 @@ package com.einyun.app.pms.sendorder.viewmodel;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.library.core.api.DictService;
 import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.core.net.EinyunHttpException;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCloseRequest;
 import com.einyun.app.library.resource.workorder.net.request.ApplyCusCloseRequest;
@@ -21,8 +25,12 @@ import com.einyun.app.library.upload.model.PicUrl;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 public class ApplyCloseViewModel extends BaseUploadViewModel {
     private ResourceWorkOrderRepo resourceWorkOrderRepo;
@@ -52,6 +60,10 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                if(throwable instanceof EinyunHttpException){
+                    EinyunHttpException exception= (EinyunHttpException) throwable;
+                    ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+                }
             }
         });
 
@@ -78,6 +90,10 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                if(throwable instanceof EinyunHttpException){
+                    EinyunHttpException exception= (EinyunHttpException) throwable;
+                    ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+                }
             }
         });
 
@@ -148,6 +164,10 @@ public class ApplyCloseViewModel extends BaseUploadViewModel {
             @Override
             public void onFaild(Throwable throwable) {
                 hideLoading();
+                if(throwable instanceof EinyunHttpException){
+                    EinyunHttpException exception= (EinyunHttpException) throwable;
+                    ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+                }
             }
         });
 

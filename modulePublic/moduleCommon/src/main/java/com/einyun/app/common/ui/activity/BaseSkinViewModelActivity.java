@@ -22,10 +22,12 @@ public abstract class BaseSkinViewModelActivity<V extends ViewDataBinding, VM ex
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

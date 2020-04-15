@@ -24,5 +24,5 @@ public class Constants {
     public static final String REPAIR_PAY_TYPE="pay_type";
     public static final String REPAIR_WORK_ASCRIPTION="Work_Ascription";
     public static final String COMPLAIN_REASON="invalidate_reason_category";
-
+    public static final String SP_KEY_USER_NAME = "KEY_USER_NAME";
 }

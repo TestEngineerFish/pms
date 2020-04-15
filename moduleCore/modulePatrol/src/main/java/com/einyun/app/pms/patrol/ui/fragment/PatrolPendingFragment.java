@@ -12,6 +12,7 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Patrol;
@@ -34,6 +35,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkOrder;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
@@ -47,7 +49,9 @@ import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemWorkPatrolBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolListViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -253,6 +257,9 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     protected void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PATOL_ORDER_SEARCH.getTypeName(),map);
         if (searchFragment == null) {
             searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
                 @Override

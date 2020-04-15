@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">moduleToll</string>
+    <string name="tv_toll_assant">收费助理</string>
+    <string name="tv_lack_detail">收费详情</string>
+    <string name="tv_change_trun">切换排序</string>
+</resources>

@@ -22,12 +22,16 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 
 
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.pms.mine.R;
 import com.einyun.app.pms.mine.constants.Constants;
 import com.einyun.app.pms.mine.databinding.ActivitySettingViewModuleBinding;
@@ -35,6 +39,7 @@ import com.einyun.app.pms.mine.viewmodule.SettingViewModel;
 import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -73,10 +78,16 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                 goToPrivacy();
             }
         });
+        binding.tvUserAgreement.setOnClickListener(view -> {
+            goToUserAgreement();
+        });
         checkNotifySetting();
         binding.rvNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("user_name", UserUtil.getUserName());
+                MobclickAgent.onEvent(SettingViewModuleActivity.this, CustomEventTypeEnum.MSG_SWITCH.getTypeName(),map);
                 setNotify();
             }
         });
@@ -89,7 +100,13 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                 .withString(RouteKey.KEY_WEB_TITLE, "用户隐私条款概要")
                 .navigation();
     }
-
+    public void goToUserAgreement(){
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_X5_WEBVIEW)
+                .withString(RouteKey.KEY_WEB_URL, Constants.USER_AGREEMENT_DETAIL_URL)
+                .withString(RouteKey.KEY_WEB_TITLE, "用户协议")
+                .navigation();
+    }
     private void setNotify(){
         try {
             // 根据isOpened结果，判断是否需要提醒用户跳转AppInfo页面，去打开App通知权限
@@ -164,6 +181,9 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                     @Override
                     public void onClick(View view) {
                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "");
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CHOOSE_CACHE, "");
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_USER_LOGIN)
                                 .navigation();

@@ -65,15 +65,62 @@
 
         <LinearLayout style="@style/work_order_detail_ln">
 
+        <TextView
+            style="@style/work_order_detail_left_txt"
+            android:text="处理时间" />
+
+        <TextView style="@style/work_order_detail_txt_right"
+            android:text="@{workOrder.data.info.procDate}"
+            />
+    </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:text="处理时间" />
+                android:text="实际完成时间" />
 
             <TextView style="@style/work_order_detail_txt_right"
-                android:text="@{workOrder.data.info.procDate}"
+                android:text="@{workOrder.data.info.actFinishTime}"
+                />
+        </LinearLayout>
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="实际截止时间" />
+
+            <TextView style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.deadLineTime}"
+                />
+        </LinearLayout>
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="处理后图片" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/send_order_handle_pic_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginTop="@dimen/px_2"
+                android:layout_marginRight="@dimen/px_20"
+                android:layout_marginBottom="@dimen/px_3"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
         </LinearLayout>
         <LinearLayout style="@style/work_order_detail_ln"
+            android:layout_marginTop="@dimen/px_2"
+            android:layout_marginBottom="@dimen/px_22"
             >
 
             <TextView
@@ -84,26 +131,6 @@
                 android:text="@{workOrder.data.info.procContent}"/>
 
         </LinearLayout>
-        <LinearLayout style="@style/work_order_detail_ln">
-
-            <TextView
-                style="@style/work_order_detail_left_txt"
-                android:text="处理后图片" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/work_order_detail_ln">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/send_order_handle_pic_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px_20"
-                android:layout_marginTop="@dimen/px_20"
-                android:layout_marginRight="@dimen/px_20"
-                android:layout_marginBottom="@dimen/px_30"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
-        </LinearLayout>
-
 
 
     </LinearLayout>

@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.service.RouterUtils;
@@ -19,6 +20,7 @@ import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderDetialViewModel;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,7 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
                 viewModel.applyLatePlan(request, data).observe(this, o -> {
                     if ("0".equals(o.getCode())) {
                         ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                         finish();
                     }
 
@@ -98,6 +101,7 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
                 viewModel.postApplyDateInfo(request,data).observe(this,aBoolean -> {
                     if (aBoolean){
                         ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                         finish();
                     }
                 });
@@ -106,6 +110,7 @@ public class ApplyLateActivity extends BaseApplyPostPoneActivity<SendOrderDetial
             viewModel.applyLate(request, data).observe(this, o -> {
                 if ("0".equals(o.getCode())) {
                     ToastUtil.show(getApplicationContext(), R.string.apply_late_success);
+                    LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
                     finish();
                 }
             });

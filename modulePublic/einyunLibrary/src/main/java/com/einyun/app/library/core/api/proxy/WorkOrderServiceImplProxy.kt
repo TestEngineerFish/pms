@@ -2,6 +2,7 @@ package com.einyun.app.library.core.api.proxy
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.library.core.api.WorkOrderService
 import com.einyun.app.library.workorder.model.RepairsPage
@@ -123,8 +124,8 @@ class WorkOrderServiceImplProxy : WorkOrderService {
 
     override fun repaireSend(
         request: RepairSendOrderRequest,
-        callBack: CallBack<Boolean>
-    ): LiveData<Boolean> {
+        callBack: CallBack<BaseResponse<Any>>
+    ): LiveData<BaseResponse<Any>> {
         return instance?.repaireSend(
             request,
             callBack

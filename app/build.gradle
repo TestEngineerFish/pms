@@ -5,8 +5,8 @@ android {
         applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 202
-        versionName "2.0.2"
+        versionCode 220
+        versionName "2.2.0"
         multiDexEnabled true
         flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -84,13 +84,14 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             def createTime = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
+//            outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${createTime}.apk"
             outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${variant.productFlavors[0].name}_${createTime}.apk"
         }
     }
 
     //多渠道打包支持
     productFlavors {
-//        请勿删除，上线提交多渠道开启
+        //请勿删除，上线提交多渠道开启
         Tencent {//投放应用宝市场
             manifestPlaceholders=[UMENG_CHANNEL_VALUE:"tencent"]
         }
@@ -144,5 +145,6 @@ dependencies {
     implementation project(deps.project.module_disqualified)
     implementation project(deps.project.module_extra)
     implementation project(deps.project.module_orderlist)
+    implementation project(deps.project.module_toll)
 //    implementation project(deps.project.module_extra)
 }

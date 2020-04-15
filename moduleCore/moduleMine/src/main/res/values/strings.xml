@@ -5,6 +5,7 @@
     <string name="tv_setting">设置</string>
     <string name="tv_advice_feed_back">意见反馈</string>
     <string name="tv_sign_set">设置个性签名</string>
+    <string name="tv_message_center">消息通知</string>
     <string name="tv_person_head">个人头像</string>
     <string name="tv_user_info">个人信息</string>
     <string name="tv_head_icon">头像</string>
@@ -14,6 +15,7 @@
     <string name="tv_start">评价星级</string>
     <string name="tv_sign_name">个性签名</string>
     <string name="tv_finish">完成</string>
+    <string name="tv_sign_read">标为已读</string>
     <string name="tv_quest_type">问题类型</string>
     <string name="tv_feed_back_content">反馈内容 </string>
     <string name="tv_pl_select">请选择</string>
