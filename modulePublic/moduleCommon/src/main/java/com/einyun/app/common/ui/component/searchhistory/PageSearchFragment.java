@@ -105,6 +105,7 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                etSearch.setText("");
                 dismiss();
             }
         });

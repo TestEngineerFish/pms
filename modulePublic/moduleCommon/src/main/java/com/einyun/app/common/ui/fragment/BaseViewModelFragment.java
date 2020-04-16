@@ -21,7 +21,8 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.R.attr;
-import com.einyun.app.base.widget.LoadingDialog;
+
+import com.einyun.app.common.ui.widget.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseViewModelFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends com.einyun.app.base.BaseViewModelFragment<V, VM> {

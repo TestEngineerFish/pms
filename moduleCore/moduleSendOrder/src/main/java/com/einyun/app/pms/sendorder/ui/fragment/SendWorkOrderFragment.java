@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -233,12 +234,18 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             viewModel.loadPadingData().observe(this, dataBeans -> {
 //                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
+                    showLoading(getActivity());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoading();
+                        }
+                    },3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
+                    hideLoading();
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
-                hideLoading();
-//                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

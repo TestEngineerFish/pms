@@ -201,12 +201,12 @@ interface ResourceWorkOrderServiceApi {
     /**
      * 转派
      */
-    @POST(URLs.URL_RESEND_ORDER)
+    @POST(URLs.URL_RESEND_ORDER_CUS)
     fun resendOrder(@Body request:ResendOrderRequest):Flowable<ResendOrderResponse>
     /**
      * 三大客服转派
      */
-    @POST(URLs.URL_RESEND_ORDER)
+    @POST(URLs.URL_RESEND_ORDER_CUS)
     fun resendCusOrder(@Body request:ResendOrderRequest):Flowable<ResendOrderResponse>
     /**
      * 申请闭单

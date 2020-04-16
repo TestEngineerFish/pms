@@ -137,6 +137,8 @@
     <string name="text_alert">提示</string>
     <string name="text_applying">审批中</string>
     <string name="text_applying_wait">审批中,请等待</string>
+    <string name="text_applying_postponed">该工单已申请延期操作，请耐心等待审批</string>
+    <string name="text_applying_force_close">该工单已申请闭单操作，请耐心等待审批</string>
     <string name="text_state_pass">通过</string>
     <string name="text_state_reject">驳回</string>
     <string name="text_work_order_apply">验收</string>

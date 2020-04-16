@@ -3,6 +3,7 @@ package com.einyun.app.pms.plan.ui.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -272,11 +273,18 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             viewModel.loadPendingInDB().observe(this, dataBeans -> {
                 if (dataBeans.size() == 0) {
+                    showLoading(getActivity());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoading();
+                        }
+                    },3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
+                    hideLoading();
                 }
-                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

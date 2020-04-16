@@ -1,6 +1,7 @@
 package com.einyun.app.pms.complain.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -143,6 +144,12 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             request.getBizData().setF_pd_assignor_id(model.getId());
         });
         fresh();
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
     }
 
     //false为不可以闭单  true为可以闭单

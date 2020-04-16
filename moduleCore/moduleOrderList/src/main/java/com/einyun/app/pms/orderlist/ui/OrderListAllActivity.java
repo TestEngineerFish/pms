@@ -267,9 +267,9 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     }
 
 
-    protected void updatePageUIState(int state) {
-        binding.pageState.setPageState(state);
-    }
+//    protected void updatePageUIState(int state) {
+//        binding.pageState.setPageState(state);
+//    }
 
     //DiffUtil.ItemCallback,标准写法
     private DiffUtil.ItemCallback<OrderListModel> mDiffCallback = new DiffUtil.ItemCallback<OrderListModel>() {
@@ -309,6 +309,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     .withString(RouteKey.KEY_ORDER_ID, data.getREF_ID())
                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                     .withString(RouteKey.KEY_TASK_ID, "")
+                    .withBoolean(RouteKey.KEY_IS_ORDER_LIST, true)
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
                     .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
                     .navigation();

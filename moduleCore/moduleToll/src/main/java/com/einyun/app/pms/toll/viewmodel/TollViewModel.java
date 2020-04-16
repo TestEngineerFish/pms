@@ -45,7 +45,7 @@ import java.util.function.BinaryOperator;
 public class TollViewModel extends BaseViewModel  {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
-    TollRepository repository= new TollRepository();
+    public TollRepository repository= new TollRepository();
     TollRepository repository2= new TollRepository("");
     private MutableLiveData<WorthModel> allWorth=new MutableLiveData<>();
     public LiveData<WorthModel> allWorth(FeeRequset requset){
@@ -240,7 +240,7 @@ public class TollViewModel extends BaseViewModel  {
  */
     private MutableLiveData<CreateOrderModel> createOrderModule=new MutableLiveData<>();
     public LiveData<CreateOrderModel> createOrder(CreateOrderRequest requset){
-        showLoading();
+//        showLoading();
         repository.createOrder(requset, new CallBack<CreateOrderModel>() {
             @Override
             public void call(CreateOrderModel data) {

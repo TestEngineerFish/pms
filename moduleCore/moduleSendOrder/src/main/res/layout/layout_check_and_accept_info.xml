@@ -68,8 +68,8 @@
                 android:layout_marginLeft="@dimen/px_40"
                 android:padding="@dimen/px_5"
                 android:textSize="@dimen/font_size12"
-                android:background="@drawable/shape_frame_corners_gray"
-                android:textColor="@color/normal_main_text_icon_color"
+                android:background="@drawable/shape_red_bg"
+                android:textColor="@color/white"
                 android:text="@string/text_reject"
                 />
         </LinearLayout>

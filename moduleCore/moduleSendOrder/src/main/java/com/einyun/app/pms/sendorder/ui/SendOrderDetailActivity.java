@@ -165,6 +165,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
 //                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
 //            }
         });
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -262,11 +268,14 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         binding.pageState.setPageState(state);
     }
 
+    private static final String TAG = "SendOrderDetailActivity";
     private void updateElapsedTime() {
         if (StringUtil.isNullStr(detialModel.getData().getInfo().getCreateTime())) {
             createTime = detialModel.getData().getInfo().getCreateTime();
             if (detialModel.getData().getInfo().getStatus().equals(String.valueOf(OrderState.CLOSED.getState()))) {
                 if (StringUtil.isNullStr(detialModel.getData().getInfo().getActFinishTime()))
+                    Log.e(TAG, "updateElapsedTime: "+createTime );
+                    Log.e(TAG, "getActFinishTim e: "+detialModel.getData().getInfo().getActFinishTime() );
                     binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime, detialModel.getData().getInfo().getActFinishTime()));
             } else {
                 binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
@@ -406,6 +415,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             }
             if (!TextUtils.isEmpty(detialModel.getData().getInfo().getScore())) {
                 binding.checkAndAcceptInfo.ratingBar.setStar(Float.valueOf(detialModel.getData().getInfo().getScore()));
+            }else {
+                binding.checkAndAcceptInfo.ratingBar.setStar(Float.valueOf(0));
             }
         }
 

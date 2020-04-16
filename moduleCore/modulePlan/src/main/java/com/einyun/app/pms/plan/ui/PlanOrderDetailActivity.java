@@ -127,6 +127,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
     String taskNodeId;
+    @Autowired(name = RouteKey.KEY_IS_ORDER_LIST)
+    boolean isOrderList;
 
     private PlanInfo planInfo;
     private File imageFile;
@@ -349,6 +351,41 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             }
                             break;
                     }
+                    ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
+                    if (extForceClose == null) {
+                        String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
+                        Log.e(TAG, "onBindItem: f_status=="+f_status);
+                        if ("4".equals(f_status)) {
+
+                            binding.tvScanReasult.setText("成功");
+
+                        }else {
+                            if (model.is_suc()==1) {
+
+                                binding.tvScanReasult.setText("成功");
+                            }else if (model.is_suc()==2){
+                                binding.tvScanReasult.setText("失败");
+                            }else {
+                                binding.tvScanReasult.setText("");
+
+                            }
+                        }
+                    }else {
+                        if (model.is_suc()==1) {
+
+                            binding.tvScanReasult.setText("成功");
+                        }else if (model.is_suc()==2){
+                            binding.tvScanReasult.setText("失败");
+                        }else {
+                            binding.tvScanReasult.setText("");
+
+                        }
+                    }
+                    if (isOrderList) {
+//                        binding.llScanReasult.setVisibility(View.GONE);
+//                        binding.llForceScan.setVisibility(View.GONE);
+                        binding.ivScan.setVisibility(View.GONE);
+                    }
                     for (PlanOrderResLineModel line : mPlanResLines) {
                         String f_sp_type = model.getF_SP_TYPE();
 
@@ -393,9 +430,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
             }
+            Log.e(TAG, "requestData: id=="+id );
             if (id==null) {
+//                id=planInfo.getData().getZyjhgd().getId_();
                 id=planInfo.getData().getZyjhgd().getId_();
             }
+            Log.e(TAG, "requestData: id=="+id );
             IsClosedRequest request = new IsClosedRequest();
             request.setId(id);
             request.setType(WorkOrder.FORCE_CLOSE_PLAN);
@@ -761,7 +801,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
             for (Sub_jhgdzyb dzyb : sub_jhgdzyb) {
                 if (dzyb.is_forced()==1) {//强制扫码下 有 失败的 不准提交
-                    if (dzyb.is_suc()==0) {//0 失败
+                    if (dzyb.is_suc()!=1) {//0 失败
                         isSubmit=false;
 
                     }
@@ -829,9 +869,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+//                        resourceAdapter.notifyItemChanged(mClickPosition);
                       }else {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(2);
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+//                        resourceAdapter.notifyItemChanged(mClickPosition);
                         ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
                     }
                 });

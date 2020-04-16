@@ -9,6 +9,7 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.pms.approval.model.ApprovalBean;
 import com.einyun.app.pms.approval.model.ApprovalItemmodule;
 import com.einyun.app.pms.approval.model.ApprovalListModule;
@@ -49,9 +50,13 @@ public class ItemDataSource extends BaseDataSource<ApprovalItemmodule> {
                 if(callback instanceof LoadInitialCallback){
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
                     loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
-                    if (data.getTotal()==0) {
-                        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY, String.class).post("");
-                    }
+//                    if (data.getTotal()==0) {
+//                        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY,Boolean.class).post(true);
+//                    }else {
+//                        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY,Boolean.class).post(false);
+//
+//                    }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.APPROVAL_EMPTY+table,data.getTotal());
                     Log.e("tag"+data.getRows().size(), "call: " );
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;

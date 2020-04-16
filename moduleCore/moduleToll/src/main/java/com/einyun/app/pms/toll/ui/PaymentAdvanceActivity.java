@@ -1,6 +1,7 @@
 package com.einyun.app.pms.toll.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -16,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -101,6 +103,19 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
          * 付款成功关闭页面
          */
         FeeSucFinish();
+        viewModel.repository.getFeeDivideId(houseFeeId,"3/", new CallBack<String>() {
+            @Override
+            public void call(String data) {
+                hideLoading();
+                houseFeeId=data;
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+
     }
 
     private void FeeSucFinish() {
@@ -148,14 +163,19 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
             }
             JSONObject jsondata = JSON.parseObject(data);
 
-            for (String feeItemId : feeItemIds) {
+            try {
+                for (String feeItemId : feeItemIds) {
+                    if (jsondata.containsKey(feeItemId)) {
+                        boolean token = jsondata.getBoolean(feeItemId);
+                        if (!token) {
+                            ToastUtil.show(PaymentAdvanceActivity.this, "你有欠费");
 
-                boolean token = jsondata.getBoolean(feeItemId);
-                if (!token) {
-                    ToastUtil.show(PaymentAdvanceActivity.this, "你有欠费");
-
-                    return;
+                            return;
+                        }
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             paymentDetailsBeans.clear();
             CreateOrderRequest createOrderRequest = new CreateOrderRequest();
@@ -239,7 +259,13 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
                     binding.rlEmpty.setVisibility(View.GONE);
                 }
                 adapter.setDataList(mData);
-                initToallMoney2();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        initToallMoney2(mData);
+                    }
+                },1000);
             }
 
         });
@@ -384,14 +410,14 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
         binding.tvToallMoney.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");
     }
 
-    private void initToallMoney2() {
+    private void initToallMoney2(List<PaymentAdvanceModel2.DataBean.DataListBean> mData) {
         BigDecimal bigDecimal = new BigDecimal("0.00");
         for (PaymentAdvanceModel2.DataBean.DataListBean datum : mData) {
-            if (datum.isCheck()) {
+//            if (datum.isCheck()) {
 //                                    bigDecimal= bigDecimal.add(new BigDecimal(listBinding.tvAdvanceMoney.getText().toString()));
 //                bigDecimal= bigDecimal.add(datum.getUnitPrice());
                 bigDecimal = bigDecimal.add(datum.getUnitPrice().multiply(new BigDecimal(datum.getMonths())));
-            }
+//            }
         }
         binding.tvToallMoney.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");
     }

@@ -27,6 +27,7 @@ import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.common.utils.IsFastClick;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -210,6 +211,18 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                 break;
         }
 
+//        LiveEventBus.get(LiveDataBusKey.DISQUALITY_EMPTY,Boolean.class).observe(this, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if (aBoolean) {
+//                    binding.empty.getRoot().setVisibility(View.VISIBLE);
+//                }else {
+//                    binding.empty.getRoot().setVisibility(View.GONE);
+//
+//                }
+//            }
+//        });
+        LiveDataBusUtils.getLiveBusData( binding.empty.getRoot(),LiveDataBusKey.DISQUALITY_EMPTY+getFragmentTag(),this);
     }
 
     @Override
@@ -321,6 +334,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                         return R.layout.item_disqualified_list;
                     }
                 });
+
                 searchFragment.setHint("请搜索工单编号或工单名称");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");

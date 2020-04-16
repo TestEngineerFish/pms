@@ -277,7 +277,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                                     .navigation();
                         }
                     });
-                    binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getCreateTime()));
+                    binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getBx_time()));
                 }
 
                 @Override

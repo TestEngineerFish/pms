@@ -1,5 +1,6 @@
 package com.einyun.app.pms.patrol.ui.fragment;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -25,6 +26,7 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.library.mdm.model.DivideGrid;
+import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolListBinding;
 import com.jeremyliao.liveeventbus.LiveEventBus;
@@ -67,8 +69,22 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
                 updatePageUIState(PageUIState.EMPTY.getState());
             }else{
                 updatePageUIState(PageUIState.FILLDATA.getState());
+                hideLoading();
             }
             hideLoading();
+//            if (patrols.size() == 0) {
+//                updatePageUIState(PageUIState.EMPTY.getState());
+//                showLoading(getActivity());
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        hideLoading();
+//                    }
+//                },3500);
+//            } else {
+//                updatePageUIState(PageUIState.FILLDATA.getState());
+//                hideLoading();
+//            }
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
         });
@@ -80,6 +96,14 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
         });
     }
 
+    @Override
+    public void onPeriodSelectListener(OrgModel orgModel) {
+        binding.panelCondition.setPeriodSelected(true);
+        binding.panelCondition.periodSelected.setText(orgModel.getName());
+        wrapDivideId(orgModel.getId(), viewModel.requestDone);
+        viewModel.onCondition();
+        BasicDataManager.getInstance().loadDivideGrid(viewModel.requestDone.getDivideId(), null);//预先加载筛选条件的网格数据
+    }
 
     /**
      * 处理筛选返回数据

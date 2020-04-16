@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.constants.URLS;
+import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.WorkOrderService;
@@ -16,6 +17,8 @@ import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
+
+import java.net.URL;
 
 public class MsgRepository {
    public MsgServiceApi serviceApi;
@@ -137,5 +140,19 @@ public class MsgRepository {
             }
         });
         return liveData2;
+    }
+
+    public void getApprovalBasicInfo(String id, CallBack<UrlxcgdGetInstBOModule> callBack) {
+        String url = URLS.URL_GET_APPROVAL_BASIC_INFO+id+"&reqParams=";
+        serviceApi.getApprovalBasicInfo(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
     }
 }

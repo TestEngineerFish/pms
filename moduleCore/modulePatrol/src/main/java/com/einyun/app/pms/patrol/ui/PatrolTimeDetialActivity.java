@@ -17,6 +17,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeWorkNodeBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
@@ -76,11 +77,15 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
     }
 
     @Override
-    protected void switchStateUI() {
-        super.switchStateUI();
+    protected void switchStateUI(int f_plan_work_order_state) {
+        super.switchStateUI(f_plan_work_order_state);
         binding.tvWorkNodesTitle.setText("巡更点处理");
         binding.panelHandleForm.setVisibility(View.GONE);
-        binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        }else {
+            binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        }
         binding.btnSubmit.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.VISIBLE);
         binding.llGrid.setVisibility(View.GONE);

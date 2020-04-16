@@ -8,14 +8,11 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.einyun.app.base.BaseViewModel;
-import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
-import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
-import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -24,21 +21,18 @@ import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.GetNodeIdModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
-import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
-import com.einyun.app.pms.mine.model.IsGrabModel;
 import com.einyun.app.pms.mine.model.MsgModel;
 import com.einyun.app.pms.mine.model.RequestPageBean;
 import com.einyun.app.pms.mine.model.SignSetModule;
 import com.einyun.app.pms.mine.repository.DataSourceFactory;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 
-import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
-
 public class SignSetViewModel extends BasePageListViewModel<MsgModel> {
     FeedBackRepository repository=new FeedBackRepository();
+    public MsgRepository msgRep=new MsgRepository();
     public WorkOrderService workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
     public ResourceWorkOrderService service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
     private MutableLiveData<Boolean> approval=new MutableLiveData<>();
@@ -267,4 +261,7 @@ public class SignSetViewModel extends BasePageListViewModel<MsgModel> {
         });
         return liveData2;
     }
+
+
+
 }

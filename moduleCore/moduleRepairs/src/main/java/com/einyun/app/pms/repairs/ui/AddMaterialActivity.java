@@ -66,7 +66,8 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(binding.addMaterialPrice.getText())){
+                if (TextUtils.isEmpty(binding.addMaterialAmount.getText())||TextUtils.isEmpty(binding.addMaterialPrice.getText().toString())){
+                    binding.addMaterialTotalPrice.setText("");
                 }else {
                     binding.addMaterialTotalPrice.setText(Float.parseFloat(binding.addMaterialAmount.getText().toString())*Float.parseFloat(binding.addMaterialPrice.getText().toString())+"");
                 }
@@ -86,7 +87,8 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(binding.addMaterialAmount.getText())){
+                if (TextUtils.isEmpty(binding.addMaterialAmount.getText())||TextUtils.isEmpty(binding.addMaterialPrice.getText().toString())){
+                    binding.addMaterialTotalPrice.setText("");
                 }else {
                     binding.addMaterialTotalPrice.setText(Float.parseFloat(binding.addMaterialAmount.getText().toString())*Float.parseFloat(binding.addMaterialPrice.getText().toString())+"");
                 }

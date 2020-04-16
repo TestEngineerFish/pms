@@ -25,6 +25,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.approval.BR;
 import com.einyun.app.pms.approval.R;
@@ -194,12 +195,18 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         adapter.setOnItemClick(this);
 //        loadPagingData(viewModel.getData(1,10,"",blockName,"","",""),tabId);
         loadPagingData(viewModel.getData(1,10,"","","","",""),tabId);
-        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY, String.class).observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                        binding.empty.getRoot().setVisibility(View.VISIBLE);
-                    }
-                });
+//        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY,Boolean.class).observe(this, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if (aBoolean) {
+//                    binding.empty.getRoot().setVisibility(View.VISIBLE);
+//                }else {
+//                    binding.empty.getRoot().setVisibility(View.GONE);
+//
+//                }
+//            }
+//        });
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.APPROVAL_EMPTY+tabId,this);
     }
 
     private String  getTypeValue(String auditType ,String auditSubType) {

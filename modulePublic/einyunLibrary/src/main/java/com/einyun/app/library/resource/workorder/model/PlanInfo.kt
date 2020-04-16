@@ -66,6 +66,7 @@ class Sub_jhgdzyb {
     var F_RES_TYPENAME: String? = null
     var is_forced: Int? = 0
     var is_suc: Int? = 0
+    var scan_result: Int? = -1
 
 }
 

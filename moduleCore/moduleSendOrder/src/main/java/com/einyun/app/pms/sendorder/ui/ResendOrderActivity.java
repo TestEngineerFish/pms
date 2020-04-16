@@ -104,6 +104,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
             } else {
                 resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
                 if (!StringUtil.isNullStr(reSendKey)) {
+                    resendOrderRequest.setMessageType("inner,app_push");
                     viewModel.resendOrder(resendOrderRequest).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
