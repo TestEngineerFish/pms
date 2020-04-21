@@ -112,6 +112,8 @@ public class RouterUtils {
 
     //收费
     public static final String ACTIVITY_TOLL = "/toll/TollActivity";
+    public static final String ACTIVITY_TOLL_BUILD = "/toll/TollBuildActivity";
+    public static final String ACTIVITY_TOLL_UNIT = "/toll/TollUnitActivity";
     public static final String ACTIVITY_LACK_DETAIL = "/lack/LackDetailActivity";
     public static final String ACTIVITY_PAYMENT_ADVANCE = "/payment/PaymentAdvanceActivity";
     public static final String ACTIVITY_LACK_LIST = "/lack/LackListActivity";

@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="toll"
+            type="com.einyun.app.pms.toll.model.TollModel" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.toll.ui.TollBuildActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="123.5dp">
+
+            <include
+                android:id="@+id/head_bar"
+                layout="@layout/include_layout_activity_head" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="38.5dp"
+                android:layout_marginTop="46dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="38.5dp"
+                    android:onClick="@{()->callBack.onPlotClick()}">
+
+                    <ImageView
+                        android:layout_width="@dimen/px_40"
+                        android:layout_height="@dimen/px_40"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/iv_divide_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_divide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/tv_approval_installment"
+                        android:textColor="@color/greyTextColor"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_triangle_divide"
+                        android:layout_width="8.8dp"
+                        android:layout_height="5.55dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/iv_approval_sel_type" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_fee_years"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="●"
+                        android:textColor="@color/toll_red_text__color"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_13"
+                        android:text="往年欠费"
+                        android:textSize="@dimen/font_size11" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_31"
+                        android:text="●"
+                        android:textColor="@color/toll_yellow_text__color"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_13"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:text="当年欠费"
+                        android:textSize="@dimen/font_size11" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_60"
+                android:layout_alignParentBottom="true">
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_60"
+                    android:background="@drawable/shape_white_big_radius_bg"
+                    android:onClick="@{()->callBack.onBuildSort()}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:gravity="center_vertical"
+                        android:text="楼栋" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_20"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_6"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_build_up"
+                            android:layout_width="@dimen/px_14"
+                            android:layout_height="@dimen/px_8"
+                            android:src="@drawable/iv_sort_grey_up" />
+
+                        <ImageView
+                            android:id="@+id/iv_build_down"
+                            android:layout_width="@dimen/px_14"
+                            android:layout_height="@dimen/px_8"
+                            android:layout_marginTop="@dimen/px_4"
+                            android:src="@drawable/iv_sort_grey_down" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_14"
+                    android:background="@drawable/shape_white_big_radius_bg"
+                    android:onClick="@{()->callBack.onFeeSort()}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:gravity="center_vertical"
+                        android:text="欠费" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_20"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/px_6"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_fee_up"
+                            android:layout_width="@dimen/px_14"
+                            android:layout_height="@dimen/px_8"
+                            android:src="@drawable/iv_sort_grey_up" />
+
+                        <ImageView
+                            android:id="@+id/iv_fee_down"
+                            android:layout_width="@dimen/px_14"
+                            android:layout_height="@dimen/px_8"
+                            android:layout_marginTop="@dimen/px_4"
+                            android:src="@drawable/iv_sort_grey_down" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/px_30"
+                android:paddingTop="@dimen/px_16"
+                android:paddingRight="@dimen/px_30"
+                android:paddingBottom="@dimen/px_16"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/px_60"
+                    android:layout_marginBottom="@dimen/px_60"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_white_dim_large"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/px_30"
+                        android:layout_height="@dimen/px_30"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:src="@mipmap/icon_search" />
+
+                    <com.einyun.app.common.ui.widget.BaseEditText
+                        android:id="@+id/et_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/px_20"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入楼栋"
+                        android:imeOptions="actionSearch"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/normal_main_text_icon_color"
+                        android:textColorHint="@color/hint_text_color"
+                        android:textSize="@dimen/font_size14" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:onClick="@{()->callBack.onCancleClick()}"
+                    android:text="@string/cancel"
+                    android:textColor="@color/main_bottom_tab_text_select_color"
+                    android:textSize="@dimen/font_size15" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+<!--        空页面-->
+        <RelativeLayout
+            android:id="@+id/rl_empty"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="@dimen/px_200"
+                    android:layout_height="@dimen/px_200"
+                    android:src="@mipmap/icon_empty"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_20"
+                    android:textSize="@dimen/font_size12"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:text="暂无任何内容"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!--         网格-->
+        <RelativeLayout
+            android:id="@+id/ll_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/out_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_100" />
+            </LinearLayout>
+
+            <RelativeLayout
+
+                android:id="@+id/rl_time"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_100"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_29"
+                    android:gravity="center_vertical"
+                    android:text="上次催缴时间"
+                    android:textColor="@color/blueTextColor"
+                    android:textSize="@dimen/font_size15" />
+
+                <TextView
+                    android:layout_width="@dimen/px_214"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/px_29"
+                    android:background="@drawable/shape_btn_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->callBack.onWorthClick()}"
+                    android:text="一键催缴"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size17" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!--         栋-->
+        <LinearLayout
+            android:id="@+id/ll_build"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_108">
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/px_240"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <ImageView
+                            android:layout_width="@dimen/px_40"
+                            android:layout_height="@dimen/px_40"
+
+                            android:layout_marginLeft="@dimen/px_21"
+                            android:layout_marginTop="@dimen/px_32"
+                            android:src="@drawable/iv_grid" />
+
+                        <TextView
+                            android:id="@+id/tv_grid1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_82"
+                            android:layout_marginTop="@dimen/px_29"
+                            android:onClick="@{()->callBack.onGridClick()}"
+                            android:text="网格>>"
+                            android:textColor="#ff333333"
+                            android:textSize="@dimen/font_size17"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_build1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_29"
+                            android:layout_marginRight="@dimen/px_220"
+                            android:layout_toRightOf="@id/tv_grid1"
+                            android:text="1栋"
+                            android:textColor="@color/blueTextColor"
+                            android:textSize="@dimen/font_size17"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </HorizontalScrollView>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/px_200"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/px_15"
+                        android:layout_marginBottom="@dimen/px_15"
+                        android:background="@color/thin_divider_color" />
+
+                    <TextView
+                        android:id="@+id/tv_unit_toall_users"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginTop="@dimen/px_24"
+                        android:text="总户数："
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_unit_toall_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginBottom="@dimen/px_24"
+                        android:singleLine="true"
+                        android:text="欠费："
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/build_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_20" />
+
+        </LinearLayout>
+        <!--        单元-->
+        <LinearLayout
+            android:id="@+id/ll_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_108">
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_108"
+                    android:layout_marginRight="@dimen/px_240"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/px_220">
+
+                        <ImageView
+                            android:layout_width="@dimen/px_40"
+                            android:layout_height="@dimen/px_40"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/px_21"
+                            android:src="@drawable/iv_grid" />
+
+                        <TextView
+                            android:id="@+id/tv_grid2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/px_16"
+                            android:text="网格>>"
+                            android:textColor="#ff333333"
+                            android:textSize="@dimen/font_size17"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_build2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:onClick="@{()->callBack.onBuildClick()}"
+                            android:text="1栋"
+                            android:textColor="@color/blueTextColor"
+                            android:textSize="@dimen/font_size17"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text=">>"
+                            android:textColor="@color/blackTextColor"
+                            android:textSize="@dimen/font_size17"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_unit2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_toRightOf="@id/tv_grid2"
+                            android:text="1单元"
+                            android:textColor="@color/blueTextColor"
+                            android:textSize="@dimen/font_size17"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/px_200"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/px_15"
+                        android:layout_marginBottom="@dimen/px_15"
+                        android:background="@color/thin_divider_color" />
+
+                    <TextView
+                        android:id="@+id/tv_house_toall_users"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginTop="@dimen/px_24"
+                        android:text="总户数："
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_house_toall_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginBottom="@dimen/px_24"
+                        android:singleLine="true"
+                        android:text="欠费："
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/unit_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_20" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

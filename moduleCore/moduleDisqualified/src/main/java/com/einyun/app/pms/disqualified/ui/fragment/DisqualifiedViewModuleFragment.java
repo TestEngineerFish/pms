@@ -230,48 +230,6 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         super.onResume();
         loadPagingData(viewModel.getRequestBean(1,10,mLine,mState,divideId),getFragmentTag());
     }
-//    private void initCached(ItemDisqualifiedListBinding binding, DisqualifiedItemModel inquiriesItemModule) {
-//        viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
-////            binding.tvIsCached.setText(R.string.text_no_cached);
-////            binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
-////            binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
-//            if (model==null) {
-//                return;
-//            }
-//            String taskId = model.getDoNextParamt().getTaskId();
-//            if (taskId.equals(inquiriesItemModule.getTaskId())) {
-////                binding.tvIsCached.setText(R.string.text_cached);
-////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
-////                binding.ivIsCached.setImageResource(R.drawable.icon_cached);
-//                inquiriesItemModule.cached=true;
-//            }else {
-//                inquiriesItemModule.cached=false;
-////                binding.tvIsCached.setText(R.string.text_no_cached);
-////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
-////                binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
-//            }
-//        });
-//        viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
-////            binding.tvIsCached.setText(R.string.text_no_cached);
-////            binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
-////            binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
-//            if (model==null) {
-//                return;
-//            }
-//            String taskId = model.getDoNextParamt().getTaskId();
-//            if (taskId.equals(inquiriesItemModule.getTaskId())) {
-//                inquiriesItemModule.cached=true;
-////                binding.tvIsCached.setText(R.string.text_cached);
-////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
-////                binding.ivIsCached.setImageResource(R.drawable.icon_cached);
-//            }else {
-//                inquiriesItemModule=false;
-////                binding.tvIsCached.setText(R.string.text_no_cached);
-////                binding.tvIsCached.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
-////                binding.ivIsCached.setImageResource(R.drawable.icon_no_cache);
-//            }
-//        });
-//    }
 
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {

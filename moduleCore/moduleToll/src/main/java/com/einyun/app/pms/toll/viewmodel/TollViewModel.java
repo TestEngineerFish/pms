@@ -46,7 +46,7 @@ public class TollViewModel extends BaseViewModel  {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     public TollRepository repository= new TollRepository();
-    TollRepository repository2= new TollRepository("");
+   public TollRepository repository2= new TollRepository("");
     private MutableLiveData<WorthModel> allWorth=new MutableLiveData<>();
     public LiveData<WorthModel> allWorth(FeeRequset requset){
         showLoading();

@@ -155,7 +155,7 @@ public class SlideShowView extends FrameLayout {
                             //收费
 //                            item.setOnClickListener(v -> readyGo(ApprovalActivity.class));
                             item.setOnClickListener(v ->
-                                    ARouter.getInstance().build(RouterUtils.ACTIVITY_TOLL).navigation());
+                                    ARouter.getInstance().build(RouterUtils.ACTIVITY_TOLL_BUILD).navigation());
                             break;
                         case "gzyl":
                             //工作预览

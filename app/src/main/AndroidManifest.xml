@@ -173,6 +173,8 @@
 
         <!--  收费开始      -->
         <activity android:name=".toll.ui.TollViewModelActivity"/>
+        <activity android:name=".toll.ui.TollBuildActivity"/>
+        <activity android:name=".toll.ui.TollUnitActivity" android:launchMode="singleTask"/>
         <activity android:name=".toll.ui.LackDetailViewModelActivity"/>
         <activity android:name=".toll.ui.PaymentAdvanceActivity" />
         <activity android:name=".toll.ui.LackListActivity"/>

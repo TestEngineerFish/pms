@@ -155,6 +155,11 @@ public class RouteKey {
     public static final String HOUSE_TITLE = "house_title";
     public static final String KEY_ALL_NAME = "ALL_NAME";
     public static final String KEY_CLIENT_NAME = "CLIENT_NAME";
+    public static final String KEY_BUILD_LIST_DATA = "KEY_BUILD_LIST_DATA";
+    public static final String KEY_BUILD_ID = "KEY_BUILD_ID";
+    public static final String KEY_FEE_DIVIDE_ID = "KEY_FEE_DIVIDE_ID";
+    public static final String KEY_FEE_BUILD_NAME = "KEY_FEE_BUILD_NAME";
+    public static final String KEY_FEE_GRID_NAME = "KEY_FEE_GRID_NAME";
     //消息中心
     public static final String KEY_START_TIME = "START_TIME";
     public static final String KEY_END_TIME = "EDN_TIME";

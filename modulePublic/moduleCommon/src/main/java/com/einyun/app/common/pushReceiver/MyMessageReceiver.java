@@ -83,13 +83,19 @@ public class MyMessageReceiver extends MessageReceiver{
                     if ("repair".equals(subType)) {
                         //抢单
                         initVoice(context, R.raw.repair_grap);
-                        ARouter.getInstance()
-                                .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
-                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                .withString(RouteKey.KEY_TASK_ID, contentModel.getTaskId() )
-                                .withString(RouteKey.KEY_CATE_NAME, contentModel.getCateName())
-                                .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
-                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+                                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        .withString(RouteKey.KEY_TASK_ID, contentModel.getTaskId() )
+                                        .withString(RouteKey.KEY_CATE_NAME, contentModel.getCateName())
+                                        .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+                                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                            }
+                        },1000);
+
                     }
                 }
                 //新待处理工单提醒
@@ -173,13 +179,19 @@ public class MyMessageReceiver extends MessageReceiver{
             if ("grab".equals(pushModel.getType())) {
                 if ("repair".equals(pushModel.getSubType())) {
                     //抢单
-                    ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
-                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-                            .withString(RouteKey.KEY_CATE_NAME, pushModel.getContent().getCateName())
-                            .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
-                            .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_REPAIRS_PAGING)
+                                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
+                                    .withString(RouteKey.KEY_CATE_NAME, pushModel.getContent().getCateName())
+                                    .withBoolean(RouteKey.KEY_PUSH_JUMP, true)
+                                    .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                        }
+                    },1000);
+
                 }
             }
             //新待处理工单提醒
