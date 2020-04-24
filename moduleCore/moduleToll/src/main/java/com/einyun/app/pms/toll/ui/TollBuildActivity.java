@@ -891,7 +891,8 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                                             .withString(RouteKey.KEY_FEE_DIVIDE_ID,feeDivideId)
                                             .withString(RouteKey.KEY_FEE_GRID_NAME,gridModel.getGridName())
                                             .withString(RouteKey.KEY_FEE_BUILD_NAME,inquiriesItemModule.getName())
-                                            .navigation();
+                                            .withTransition(R.anim.fade_in,R.anim.fade_in)
+                                            .navigation(TollBuildActivity.this);
                                 });
 //                                buildAdapter.setDataList(mUnitList);
                             });

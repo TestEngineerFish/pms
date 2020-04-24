@@ -119,6 +119,9 @@ public class RouterUtils {
     public static final String ACTIVITY_LACK_LIST = "/lack/LackListActivity";
     public static final String ACTIVITY_FEE = "/fee/FeeActivity";
     public static final String ACTIVITY_FEE_SUC = "/feesuc/FeeSucActivity";
+    public static final String ACTIVITY_ADD_HOUSER = "/feesuc/AddHouserActivity";
+    public static final String ACTIVITY_ADD_WORTH_REMINDER = "/feesuc/AddWorthReminderActivity";
+    public static final String ACTIVITY_SET_SIGN = "/feesuc/SetSignActivity";
 //    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

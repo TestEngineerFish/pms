@@ -120,9 +120,11 @@ public class LackDetailModel {
 
             private String remark;
             private String urgeDate;
+            private int type;
+            private String user;
 
             public String getRemark() {
-                return remark;
+                return remark==null?"":remark;
             }
 
             public void setRemark(String remark) {
@@ -130,11 +132,27 @@ public class LackDetailModel {
             }
 
             public String getUrgeDate() {
-                return urgeDate;
+                return urgeDate==null?"":urgeDate;
             }
 
             public void setUrgeDate(String urgeDate) {
                 this.urgeDate = urgeDate;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public String getUser() {
+                return user==null?"":user;
+            }
+
+            public void setUser(String user) {
+                this.user = user;
             }
         }
     }

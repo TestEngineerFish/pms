@@ -10,14 +10,19 @@ import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.toll.constants.URLS;
+import com.einyun.app.pms.toll.model.AddHouserModel;
+import com.einyun.app.pms.toll.model.AddHouserRequset;
 import com.einyun.app.pms.toll.model.CreateOrderModel;
 import com.einyun.app.pms.toll.model.CreateOrderRequest;
+import com.einyun.app.pms.toll.model.DicRelationModel;
 import com.einyun.app.pms.toll.model.DivideIdModel;
 import com.einyun.app.pms.toll.model.DivideNameModel;
 import com.einyun.app.pms.toll.model.FeeDetailRequset;
 import com.einyun.app.pms.toll.model.FeeModel;
 import com.einyun.app.pms.toll.model.FeeRequset;
 import com.einyun.app.pms.toll.model.FeeSucInfoModel;
+import com.einyun.app.pms.toll.model.GetNameModel;
+import com.einyun.app.pms.toll.model.GetNameRequset;
 import com.einyun.app.pms.toll.model.JumpAdvanceRequset;
 import com.einyun.app.pms.toll.model.JumpRequest;
 import com.einyun.app.pms.toll.model.JumpVerityModel;
@@ -85,7 +90,7 @@ public class TollRepository {
                     if(response.isState()){
                         callBack.call(response.getData());
                     }else{
-//                        callBack.onFaild(new Exception(response));
+                        callBack.onFaild(new Exception());
                     }
                 }, error -> {
                     callBack.onFaild(error);
@@ -223,6 +228,38 @@ public class TollRepository {
     }
     /**
      * get
+     * 查询name
+     */
+    public void getNameFromPhone(GetNameRequset requset, CallBack<GetNameModel> callBack) {
+        serviceApi.getNameFromPhone(requset).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+//                        callBack.onFaild(new Exception(response));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
+     * get
+     * 添加住户
+     */
+    public void AddHouser(AddHouserRequset requset, CallBack<AddHouserModel> callBack) {
+        serviceApi.AddHouser(requset).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+//                    if(response.isState()){
+                        callBack.call(response.getData());
+//                    }else{
+////                        callBack.onFaild(new Exception(response));
+//                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
+     * get
      * 获取欠费详单信息
      */
     public void getLackDetailList(FeeDetailRequset requset, CallBack<TollModel> callBack) {
@@ -299,6 +336,23 @@ public class TollRepository {
     public void getLastWorthTime(String did, CallBack<WorthTimeModel> callBack) {
         String url= URLS.URL_GET_LAST_WORTH_TIME+did;
         serviceApi.getLastWorthTime(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+//                        callBack.onFaild(new Exception(response));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
+     * get
+     * 获取dickey
+     */
+    public void getDicKey(String did, CallBack<DicRelationModel> callBack) {
+        String url= URLS.URL_GET_DICKEY+did;
+        serviceApi.getDicKey(url).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
                     if(response.isState()){
                         callBack.call(response.getData());

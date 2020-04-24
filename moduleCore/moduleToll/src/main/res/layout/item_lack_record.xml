@@ -55,12 +55,28 @@
                 android:layout_marginTop="@dimen/px_3"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tv_worth_type"
                     android:layout_marginRight="@dimen/px_170"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/txt_black_order"
                     android:text="欠款到期"
                     android:textStyle="bold"
+                    android:textSize="@dimen/font_size14" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_13"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_170"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/greyTextColor"
+                    android:text="张三"
                     android:textSize="@dimen/font_size14" />
                 <TextView
                     android:layout_alignParentRight="true"
@@ -72,7 +88,6 @@
                     android:text=""
                     android:textSize="@dimen/font_size14" />
             </RelativeLayout>
-
 
             <LinearLayout
                 android:layout_marginTop="@dimen/px_20"

@@ -173,13 +173,16 @@
 
         <!--  收费开始      -->
         <activity android:name=".toll.ui.TollViewModelActivity"/>
-        <activity android:name=".toll.ui.TollBuildActivity"/>
+        <activity android:name=".toll.ui.TollBuildActivity" android:launchMode="singleTask"/>
         <activity android:name=".toll.ui.TollUnitActivity" android:launchMode="singleTask"/>
         <activity android:name=".toll.ui.LackDetailViewModelActivity"/>
         <activity android:name=".toll.ui.PaymentAdvanceActivity" />
         <activity android:name=".toll.ui.LackListActivity"/>
         <activity android:name=".toll.ui.FeeActivity" android:launchMode="singleTask"/>
         <activity android:name=".toll.ui.FeeSucActivity" android:launchMode="singleTask"/>
+        <activity android:name=".toll.ui.AddHouserActivity" />
+        <activity android:name=".toll.ui.AddWorthReminderActivity" />
+        <activity android:name=".toll.ui.SetSignActivity" />
         <!--  收费结束      -->
 
         <provider

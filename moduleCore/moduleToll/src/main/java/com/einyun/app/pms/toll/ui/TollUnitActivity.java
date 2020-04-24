@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.CallBack;
@@ -110,6 +112,7 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
     private List<BuildModel.GridRangeBean> mFeeBuildList = new ArrayList<>();
     private FeeRequset feeHouseRequset;
     private int feeType;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     protected TollViewModel initViewModel() {
@@ -120,7 +123,25 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
     public int getLayoutId() {
         return R.layout.activity_toll_unit;
     }
+    @Override
+    public void onBackOnClick(View view) {
+        if (binding.llSearch.isShown()) {
+            super.onBackOnClick(view);
+        }else {
+            finishAnim();
+        }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.llSearch.isShown()) {
+//            super.onBackPressed();
+        }else {
+            finishAnim();
+        }
+
+    }
     /**
      * 搜索按钮
      */
@@ -376,7 +397,6 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
 //        unitAdapter.setDataList(mFeeNoList);
         reFreshHouseData(feeHouseRequset);
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
@@ -411,11 +431,26 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                int firstCompletelyVisibleItemPosition = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
+                    if (firstCompletelyVisibleItemPosition==0) {
+                        binding.rlDivide.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.rlDivide.setVisibility(View.GONE);
+                    }
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                Log.e(TAG, "onScrolled: "+dy );
+                int firstCompletelyVisibleItemPosition = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
+                if (Math.abs(dy)>50) {
+                    if (firstCompletelyVisibleItemPosition==0) {
+                        binding.rlDivide.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.rlDivide.setVisibility(View.GONE);
+                    }
+                }
 //                Log.e(TAG, "onScrolled: "+dy );
 //                if (dy>0) {
 //                    binding.rlDivide.setVisibility(View.GONE);
@@ -426,13 +461,6 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
 
             }
         });
-        binding.unitList.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                Log.e(TAG, "onScrolled: int i=="+i+"--i1=="+i1 +"--i2=="+i2 +"--i3=="+i3 );
-            }
-        });
-
     }
     /**
      * 单元筛选 刷新新数据 楼层排序 欠费排序公用
@@ -915,7 +943,34 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
 //        periodizationView.setPeriodListener(this::onPeriodSelectListener);
 //        periodizationView.show(getSupportFragmentManager(), "");
         LiveEventBus.get(LiveDataBusKey.KEY_DIVIDE_CLOSE,Boolean.class).post(true);
-        finish();
+        finishAnim();
+    }
+
+    private void finishAnim() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_TOLL_BUILD)
+                .withTransition(R.anim.fade_in, R.anim.fade_in)
+                .navigation(this, new NavigationCallback() {
+                    @Override
+                    public void onFound(Postcard postcard) {
+
+                    }
+
+                    @Override
+                    public void onLost(Postcard postcard) {
+
+                    }
+
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onInterrupt(Postcard postcard) {
+
+                    }
+                });
     }
 
     //    List<BuildModel.GridRangeBean> mFeeBuildList = new ArrayList<>();
@@ -947,8 +1002,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
         Log.e(TAG, "initData: " + viewModel.isEnglish("d1a234"));
         Log.e(TAG, "initData: " + viewModel.isEnglish("d1a234"));
         Log.e(TAG, "initData: " + viewModel.isEnglish("d1a234"));
-        binding.unitList.setLayoutManager(new GridLayoutManager(TollUnitActivity.this, 3, GridLayoutManager.VERTICAL, false));
-
+        gridLayoutManager = new GridLayoutManager(TollUnitActivity.this, 3, GridLayoutManager.VERTICAL, false);
+        binding.unitList.setLayoutManager(gridLayoutManager);
         if (unitAdapter == null) {
             unitAdapter = new RVBindingAdapter<ItemTollInListBinding, BuildModel.GridRangeBean>(this, com.einyun.app.pms.toll.BR.gridinbean) {
                 //                private static final String TAG = "ApprovalViewModelFragme";
@@ -985,7 +1040,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                                         .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
                                         .withString(RouteKey.NAME, inquiriesItemModule.getName())
                                         .withString(RouteKey.HOUSE_ID, inquiriesItemModule.getId())
-                                        .navigation();
+                                        .withTransition(R.anim.fade_in,R.anim.fade_in)
+                                        .navigation(TollUnitActivity.this);
                                 break;
                             case 3://暂无欠费
                                 ARouter.getInstance()
@@ -996,7 +1052,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                                         .withString(RouteKey.NAME, inquiriesItemModule.getName())
                                         .withString(RouteKey.HOUSE_ID, inquiriesItemModule.getId())
                                         .withString(RouteKey.HOUSE_FEE_ID, inquiriesItemModule.getId())
-                                        .navigation();
+                                        .withTransition(R.anim.fade_in,R.anim.fade_in)
+                                        .navigation(TollUnitActivity.this);
                                 break;
 
 
@@ -1160,6 +1217,7 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
     protected void onDestroy() {
         super.onDestroy();
         new GridModel().setLoadMore(true);
+
     }
 
     @Override
