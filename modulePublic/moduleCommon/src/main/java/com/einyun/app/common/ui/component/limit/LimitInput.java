@@ -67,7 +67,7 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
      * @return String
      */
     public String getString() {
-        return editText.getText().toString();
+        return editText.getText().toString().trim();
     }
 
     public void setText(String text){
@@ -99,9 +99,12 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
             textView.setTextColor(getResources().getColor(R.color.red));
             editText.setSelection(s.toString().length());//设置光标在最后
             ToastUtil.show(context, "请勿超过" + MAX_COUNT + "个字符");
-        } else {
+        }else if (s.toString().length() == MAX_COUNT){
             textView.setText(s.toString().length() + "/" + MAX_COUNT);
-
+            textView.setTextColor(getResources().getColor(R.color.red));
+        }else {
+            textView.setText(s.toString().length() + "/" + MAX_COUNT);
+            textView.setTextColor(getResources().getColor(R.color.normal_main_text_icon_color));
         }
 
         // 恢复监听器

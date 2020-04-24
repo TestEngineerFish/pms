@@ -294,18 +294,41 @@ project.module_operatepercent=":moduleCore:moduleOperatePercent"
 project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
 project.module_disqualified=":moduleCore:moduleDisqualified"
 project.module_orderlist=":moduleCore:moduleOrderList"
+project.module_toll=":moduleCore:moduleToll"
 deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"http://testbms.einyun.com\""
+server.debug = "\"http://uatbms.einyun.com\""
 //测试环境
-server.debug_test = "\"http://120.79.213.146\""
+server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
-server.uat = "\"http://testbms.einyun.com\""
+//server.uat = "\"https://testbms.einyun.com\""
+server.uat = "\"http://uatbms.einyun.com\""
 //正式环境
 server.release = "\"https://bms.einyun.com\""
 deps.server = server
 
+def fee_server =[:]//收费 地址
+//开发调式环境
+fee_server.debug = "\"http://uatbms.einyun.com\""
+//测试环境
+fee_server.debug_test = "\"http://106.75.162.186:10018\""
+//UAT环境
+fee_server.uat = "\"http://uatbms.einyun.com\""
+//正式环境
+fee_server.release = "\"https://fee.einyun.com\""
+deps.fee_server = fee_server
+
+def fee_middle_server =[:]//收费uat含端口10018&&release切换url
+//开发调式环境
+fee_middle_server.debug = "\"/fee-center-api\""
+//测试环境
+fee_middle_server.debug_test = "\"\""
+//UAT环境
+fee_middle_server.uat = "\"/fee-center-api\""
+//正式环境
+fee_middle_server.release = "\"/fee-center-api\""
+deps.fee_middle_server = fee_middle_server
 ext.deps = deps
 

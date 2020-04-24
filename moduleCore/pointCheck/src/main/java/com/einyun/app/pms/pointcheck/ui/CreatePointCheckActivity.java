@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
@@ -31,6 +33,7 @@ import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.Glide4Engine;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.pointcheck.R;
 import com.einyun.app.pms.pointcheck.databinding.ActivityPointCheckCreateBinding;
@@ -40,13 +43,16 @@ import com.einyun.app.pms.pointcheck.model.ProjectResultModel;
 import com.einyun.app.pms.pointcheck.net.request.CreatePointCheckRequest;
 import com.einyun.app.pms.pointcheck.viewmodel.CreateCheckViewModel;
 import com.einyun.app.pms.pointcheck.viewmodel.ViewModelFactory;
+import com.umeng.analytics.MobclickAgent;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -268,11 +274,25 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         viewModel.loadProjects(divideId);
     }
 
+    private static final String TAG = "CreatePointCheckActivit";
     public void onSubmitClick() {
+
         if (!validateForm(true)) {
             return;
         }
         uploadImages();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     /**
@@ -332,6 +352,10 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
                     } else {
                         finish();
                     }
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("user_name",UserUtil.getUserName());
+                    Log.e(TAG, "onSubmitClick: "+UserUtil.getUserName());
+                    MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
                 });
             } else {
                 ToastUtil.show(getApplicationContext(), R.string.upload_pic_failed);

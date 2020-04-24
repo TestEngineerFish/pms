@@ -121,6 +121,9 @@ class ResourceWorkOrderServiceImplProxy : ResourceWorkOrderService {
     override fun planSubmit(request: PatrolSubmitRequest, callBack: CallBack<Boolean>) {
         return instance?.planSubmit(request, callBack)!!
     }
+    override fun checkQrCodeModel(request: String, callBack: CallBack<ForseScanCodeModel>) {
+        return instance?.checkQrCodeModel(request, callBack)!!
+    }
 
     override fun planDoneDetial(request: DoneDetialRequest, callBack: CallBack<PlanInfo>) {
         return instance?.planDoneDetial(request, callBack)!!

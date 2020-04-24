@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/px_10"
                     android:layout_marginBottom="@dimen/px_10"
-                    android:text="@{node.workThings}"
+                    android:text="@{node.workNode}"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size12"
                     android:textStyle="bold" />
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_10"
-                    android:text="@{node.workNode}"
+                    android:text="@{node.workThings}"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size12" />
 
@@ -96,6 +96,7 @@
                     android:background="@drawable/shape_button_corners_blue">
 
                     <ImageView
+                        android:id="@+id/iv_scan"
                         android:layout_width="13.5dp"
                         android:layout_height="13.5dp"
                         android:src="@mipmap/icon_qr_scan"
@@ -104,6 +105,7 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/tv_sign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
@@ -141,6 +143,7 @@
                     android:background="@drawable/shape_frame_corners_blue">
 
                     <ImageView
+                        android:id="@+id/iv_pic"
                         android:layout_width="13.5dp"
                         android:layout_height="13.5dp"
                         android:src="@mipmap/icon_photo"
@@ -149,6 +152,7 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/tv_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"

@@ -276,120 +276,7 @@
                  </LinearLayout>
              </LinearLayout>
          </androidx.cardview.widget.CardView>
-         <!--        回复历史-->
-         <androidx.cardview.widget.CardView
-             android:id="@+id/ll_history"
-             android:visibility="gone"
-             style="@style/cardview_style">
-             <LinearLayout
-                 android:focusable="true"
-                 android:focusableInTouchMode="true"
-                 android:background="@drawable/shape_white_bg"
-                 android:layout_width="match_parent"
-                 android:orientation="vertical"
-                 android:layout_height="wrap_content">
-                 <RelativeLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="44dp">
-                     <TextView
-                         android:textStyle="bold"
-                         android:layout_marginLeft="10dp"
-                         android:gravity="center_vertical"
-                         android:textSize="16sp"
-                         android:textColor="@color/blackTextColor"
-                         android:text="@string/tv_feed_history"
-                         android:layout_width="wrap_content"
-                         android:layout_height="match_parent"/>
-                     <ImageView
-                         android:src="@drawable/iv_pop_line"
-                         android:layout_alignParentBottom="true"
-                         android:layout_marginLeft="10dp"
-                         android:layout_marginRight="10dp"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"/>
-                 </RelativeLayout>
-
-                 <androidx.recyclerview.widget.RecyclerView
-                     android:id="@+id/list_history"
-                     android:layout_marginTop="3dp"
-                     android:dividerHeight="0dp"
-                     android:divider="@null"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"/>
-
-                 <!--             <include layout="@layout/layout_history_load_more" android:id="@+id/rl_load_more"/>-->
-                 <RelativeLayout
-                     android:visibility="gone"
-                     android:id="@+id/rl_load_more"
-                     android:layout_width="match_parent"
-                     android:layout_height="@dimen/px_100">
-                     <View
-                         android:layout_marginLeft="@dimen/px_20"
-                         android:layout_marginRight="@dimen/px_20"
-                         android:background="@color/thin_divider_color"
-                         android:layout_width="match_parent"
-                         android:layout_height="1dp"/>
-                     <TextView
-                         android:id="@+id/tv_more"
-                         android:layout_centerInParent="true"
-                         android:text="@string/tv_load_more"
-                         android:textColor="@color/blueTextColor"
-                         android:gravity="center"
-                         android:textSize="@dimen/font_size14"
-                         android:layout_width="wrap_content"
-                         android:layout_height="match_parent"/>
-                     <TextView
-                         android:background="@drawable/iv_arrow_blue_down"
-                         android:layout_centerVertical="true"
-                         android:layout_toRightOf="@id/tv_more"
-                         android:textColor="@color/blueTextColor"
-                         android:layout_width="@dimen/px_26"
-                         android:layout_height="@dimen/px_16"/>
-                 </RelativeLayout>
-             </LinearLayout>
-         </androidx.cardview.widget.CardView>
-         <!--         回复内容-->
-         <androidx.cardview.widget.CardView
-             android:visibility="gone"
-             android:id="@+id/ll_reply_content"
-             style="@style/cardview_style">
-
-             <LinearLayout
-
-                 android:layout_marginBottom="20dp"
-                 android:background="@drawable/shape_white_bg"
-                 android:layout_width="match_parent"
-                 android:orientation="vertical"
-                 android:layout_height="wrap_content">
-                 <LinearLayout
-                     android:background="@drawable/shape_white_bg"
-                     android:layout_height="35dp"
-                     style="@style/ll_create_order">
-
-                     <TextView style="@style/tv_create_order_red_star" />
-
-                     <TextView
-                         android:textStyle="bold"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="@string/tv_feed_content"
-                         android:textColor="@color/blackTextColor"
-                         android:textSize="@dimen/font_size14" />
-                 </LinearLayout>
-                 <com.einyun.app.common.ui.component.limit.LimitInput
-                     android:id="@+id/limit_input"
-                     android:layout_width="match_parent"
-                     android:layout_height="@dimen/px_182"
-                     android:layout_marginTop="@dimen/px_20"
-                     android:layout_marginLeft="@dimen/px_30"
-                     android:layout_marginRight="@dimen/px_30"
-                     android:layout_marginBottom="@dimen/px_30"
-                     />
-
-             </LinearLayout>
-         </androidx.cardview.widget.CardView>
-<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
-        <!--        强制闭单信息 -->
+         <!--        强制闭单信息 -->
          <androidx.cardview.widget.CardView
              android:id="@+id/forceCloseInfo"
              android:visibility="gone"
@@ -529,7 +416,121 @@
                  </LinearLayout>
              </LinearLayout>
          </androidx.cardview.widget.CardView>
+         <!--        回复历史-->
+         <androidx.cardview.widget.CardView
+             android:id="@+id/ll_history"
+             android:visibility="gone"
+             style="@style/cardview_style">
+             <LinearLayout
+                 android:focusable="true"
+                 android:focusableInTouchMode="true"
+                 android:background="@drawable/shape_white_bg"
+                 android:layout_width="match_parent"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="44dp">
+                     <TextView
+                         android:textStyle="bold"
+                         android:layout_marginLeft="10dp"
+                         android:gravity="center_vertical"
+                         android:textSize="16sp"
+                         android:textColor="@color/blackTextColor"
+                         android:text="@string/tv_feed_history"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"/>
+                     <ImageView
+                         android:src="@drawable/iv_pop_line"
+                         android:layout_alignParentBottom="true"
+                         android:layout_marginLeft="10dp"
+                         android:layout_marginRight="10dp"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"/>
+                 </RelativeLayout>
 
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/list_history"
+                     android:layout_marginTop="3dp"
+                     android:dividerHeight="0dp"
+                     android:divider="@null"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
+
+                 <!--             <include layout="@layout/layout_history_load_more" android:id="@+id/rl_load_more"/>-->
+                 <RelativeLayout
+                     android:visibility="gone"
+                     android:id="@+id/rl_load_more"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_100">
+                     <View
+                         android:layout_marginLeft="@dimen/px_20"
+                         android:layout_marginRight="@dimen/px_20"
+                         android:background="@color/thin_divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"/>
+                     <TextView
+                         android:id="@+id/tv_more"
+                         android:layout_centerInParent="true"
+                         android:text="@string/tv_load_more"
+                         android:textColor="@color/blueTextColor"
+                         android:gravity="center"
+                         android:textSize="@dimen/font_size14"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"/>
+                     <TextView
+                         android:background="@drawable/iv_arrow_blue_down"
+                         android:layout_centerVertical="true"
+                         android:layout_toRightOf="@id/tv_more"
+                         android:textColor="@color/blueTextColor"
+                         android:layout_width="@dimen/px_26"
+                         android:layout_height="@dimen/px_16"/>
+                 </RelativeLayout>
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
+
+<!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
+
+         <!--         回复内容-->
+         <androidx.cardview.widget.CardView
+             android:visibility="gone"
+             android:id="@+id/ll_reply_content"
+             style="@style/cardview_style">
+
+             <LinearLayout
+
+                 android:layout_marginBottom="20dp"
+                 android:background="@drawable/shape_white_bg"
+                 android:layout_width="match_parent"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <LinearLayout
+                     android:background="@drawable/shape_white_bg"
+                     android:layout_height="35dp"
+                     style="@style/ll_create_order">
+
+                     <TextView style="@style/tv_create_order_red_star" />
+
+                     <TextView
+                         android:textStyle="bold"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/tv_feed_content"
+                         android:textColor="@color/blackTextColor"
+                         android:textSize="@dimen/font_size14" />
+                 </LinearLayout>
+                 <com.einyun.app.common.ui.component.limit.LimitInput
+                     android:id="@+id/limit_input"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/px_182"
+                     android:layout_marginTop="@dimen/px_20"
+                     android:layout_marginLeft="@dimen/px_30"
+                     android:layout_marginRight="@dimen/px_30"
+                     android:layout_marginBottom="@dimen/px_30"
+                     />
+
+             </LinearLayout>
+         </androidx.cardview.widget.CardView>
         <!--         评价-->
          <androidx.cardview.widget.CardView
              android:id="@+id/ll_evaluation"

@@ -21,7 +21,12 @@
         <include
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
-        <include android:visibility="gone"  layout="@layout/layout_page_state" android:id="@+id/page_state"/>
+
+        <include
+            android:id="@+id/page_state"
+            layout="@layout/layout_page_state"
+            android:visibility="gone" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -35,14 +40,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/px_160"
-                    >
+                    android:layout_marginBottom="0dp"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/px_80"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/tv_clys"
                             android:layout_width="wrap_content"
@@ -53,14 +58,15 @@
                             android:paddingRight="5dp"
                             android:text="处理用时:"
                             android:textColor="@color/important_red_color" />
+
                         <TextView
                             android:id="@+id/tv_handle_time"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:textColor="@color/important_red_color"
-                            />
+                            android:textColor="@color/important_red_color" />
                     </LinearLayout>
+                    <!--工单信息-->
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -68,9 +74,8 @@
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_30"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="0.5dp"
                         app:cardCornerRadius="@dimen/px_10"
-                        >
+                        app:cardElevation="0.5dp">
 
                         <LinearLayout
                             android:id="@+id/item_order_ln"
@@ -91,9 +96,9 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_order_info"
-                                    android:textStyle="bold"
+                                    android:textColor="@color/txt_black_order"
                                     android:textSize="@dimen/font_size16"
-                                    android:textColor="@color/txt_black_order" />
+                                    android:textStyle="bold" />
 
 
                                 <FrameLayout
@@ -342,14 +347,14 @@
                                     android:text="@{patrol.data.zyxcgd.f_completion_deadline}"
                                     android:textColor="@color/txt_black_order" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/ll_patrol_road_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/px_60"
                                 android:layout_marginLeft="@dimen/px_30"
                                 android:orientation="horizontal"
-                                android:visibility="gone"
-                                >
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="@dimen/px_170"
@@ -365,14 +370,14 @@
                                     android:text="@{patrol.data.zyxcgd.f_patrol_line_name}"
                                     android:textColor="@color/txt_black_order" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/ll_patrol_road_duration"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/px_60"
                                 android:layout_marginLeft="@dimen/px_30"
                                 android:orientation="horizontal"
-                                android:visibility="gone"
-                                >
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="@dimen/px_170"
@@ -385,12 +390,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
-                                    app:duration="@{patrol.data.zyxcgd.f_duration}"
-                                    android:textColor="@color/txt_black_order" />
+                                    android:textColor="@color/txt_black_order"
+                                    app:duration="@{patrol.data.zyxcgd.f_duration}" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
+                    <!--工作节点-->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cd_work_nodes"
                         android:layout_width="match_parent"
@@ -399,8 +404,8 @@
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_30"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="0.5dp"
-                        app:cardCornerRadius="@dimen/px_10">
+                        app:cardCornerRadius="@dimen/px_10"
+                        app:cardElevation="0.5dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -412,36 +417,37 @@
                                 android:layout_height="@dimen/px_90"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp">
+
                                 <TextView
                                     android:id="@+id/tv_work_nodes_title"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_work_nodes"
-                                    android:textStyle="bold"
+                                    android:textColor="@color/txt_black_order"
                                     android:textSize="@dimen/font_size16"
-                                    android:textColor="@color/txt_black_order" />
+                                    android:textStyle="bold" />
+
                                 <LinearLayout
                                     android:id="@+id/item_ordered"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_centerVertical="true"
                                     android:layout_alignParentRight="true"
-                                    >
+                                    android:layout_centerVertical="true"
+                                    android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textColor="@color/txt_black_order"
-                                        android:textStyle="bold"
                                         android:text="@string/text_require"
-                                        />
+                                        android:textColor="@color/txt_black_order"
+                                        android:textStyle="bold" />
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/important_red_color"
-                                        app:ordered="@{patrol.data.zyxcgd.is_sort}"
-                                        />
+                                        app:ordered="@{patrol.data.zyxcgd.is_sort}" />
                                 </LinearLayout>
                             </RelativeLayout>
 
@@ -461,6 +467,7 @@
                                 android:layout_marginRight="@dimen/px_20"
                                 android:layout_marginBottom="@dimen/px_30"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+
                             <RelativeLayout
                                 android:id="@+id/patro_histroy_more"
                                 android:layout_width="match_parent"
@@ -486,7 +493,17 @@
                             </RelativeLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
+                    <!--申请延期信息-->
+                    <include
+                        android:id="@+id/panel_postpone_info"
+                        layout="@layout/layout_apply_late_info"
+                        android:visibility="gone" />
+                    <!--强制闭单信息-->
+                    <include
+                        android:id="@+id/panel_close_info"
+                        layout="@layout/layout_apply_close_info"
+                        android:visibility="gone" />
+                    <!--处理操作-->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/panel_handle_form"
                         android:layout_width="match_parent"
@@ -495,8 +512,8 @@
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_30"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="0dp"
-                        app:cardCornerRadius="@dimen/px_10">
+                        app:cardCornerRadius="@dimen/px_10"
+                        app:cardElevation="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -515,9 +532,9 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:text="@string/text_resolve_result"
-                                    android:textStyle="bold"
+                                    android:textColor="@color/txt_black_order"
                                     android:textSize="@dimen/font_size16"
-                                    android:textColor="@color/txt_black_order" />
+                                    android:textStyle="bold" />
                             </RelativeLayout>
 
                             <ImageView
@@ -557,15 +574,14 @@
                                 android:layout_marginTop="@dimen/px_20"
                                 android:layout_marginRight="@dimen/px_30"
                                 android:layout_marginBottom="@dimen/px_30"
-                                app:hintText="@string/text_alert_handle_content"
-                                />
+                                app:hintText="请输入处理信息" />
 
                             <LinearLayout
                                 android:id="@+id/item_captures"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                >
+                                android:orientation="vertical">
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -590,8 +606,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/px_15"
-                                        android:text="@string/text_pic_max"
-                                        />
+                                        android:text="@string/text_pic_max" />
                                 </LinearLayout>
 
                                 <androidx.recyclerview.widget.RecyclerView
@@ -608,7 +623,11 @@
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                    <include layout="@layout/layout_patrol_handle_result" android:id="@+id/panel_handle_info"/>
+                    <!--处理结果-->
+                    <include
+                        android:id="@+id/panel_handle_info"
+                        layout="@layout/layout_patrol_handle_result" />
+                    <!--   申请延期强制闭单操作                 -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/panel_apply_force_close_and_postpone"
                         android:layout_width="match_parent"
@@ -617,8 +636,8 @@
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_30"
                         app:cardBackgroundColor="@color/white"
-                        app:cardElevation="0.5dp"
-                        app:cardCornerRadius="@dimen/px_10">
+                        app:cardCornerRadius="@dimen/px_10"
+                        app:cardElevation="0.5dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -653,9 +672,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="vertical"
                                 android:onClick="@{()->callBack.onForceClose()}"
-                                >
+                                android:orientation="vertical">
 
                                 <ImageView
                                     android:layout_width="@dimen/px_110"
@@ -670,20 +688,19 @@
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                    <include layout="@layout/layout_apply_close_info" android:id="@+id/panel_close_info" android:visibility="gone"/>
-                    <include layout="@layout/layout_apply_late_info" android:id="@+id/panel_postpone_info" android:visibility="gone"/>
 
+                    <Button
+                        android:id="@+id/btn_submit"
+                        style="@style/submit_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_88"
+                        android:layout_alignParentBottom="true"
+                        android:onClick="@{()->callBack.onSubmitClick()}"
+                        android:text="@string/text_submit"
+                        android:visibility="gone" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
-            <Button
-                android:id="@+id/btn_submit"
-                style="@style/submit_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_88"
-                android:onClick="@{()->callBack.onSubmitClick()}"
-                android:layout_alignParentBottom="true"
-                android:visibility="gone"
-                android:text="@string/text_submit" />
+
         </RelativeLayout>
     </LinearLayout>
 

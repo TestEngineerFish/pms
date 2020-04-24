@@ -90,6 +90,12 @@
                         android:layout_marginLeft="@dimen/px_16"
                         android:textColor="@color/normal_blue_color"
                         android:text="@string/privacy_term" />
+                    <TextView
+                        android:id="@+id/tv_user_agreement"
+                        style="@style/privacy_tv"
+                        android:layout_marginLeft="@dimen/px_16"
+                        android:textColor="@color/normal_blue_color"
+                        android:text="@string/user_agreement" />
                 </LinearLayout>
             </LinearLayout>
         </com.einyun.app.common.ui.widget.MaxHeightScrollView>

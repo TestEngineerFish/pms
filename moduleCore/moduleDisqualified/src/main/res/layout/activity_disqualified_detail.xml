@@ -36,7 +36,7 @@
                              android:layout_width="match_parent"
                              android:layout_height="44dp">
                              <TextView
-                                 android:text="工单信息"
+                                 android:text="@string/tv_unquality_order_info"
                                  style="@style/unquality_order_info_left" />
                              <TextView
                                  app:status_detial="@{model.data.unqualified_model.status}"
@@ -60,7 +60,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="工单编号" />
+                                 android:text="@string/tv_unquality_order_code" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.code}"
                                  style="@style/style_text_approval_right"/>
@@ -69,7 +69,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="创建时间" />
+                                 android:text="@string/tv_unquality_create_time" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.created_time}"
                                  style="@style/style_text_approval_right"/>
@@ -78,7 +78,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="分期" />
+                                 android:text="@string/tv_unquality_divide" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.divide_name}"
                                  style="@style/style_text_approval_right"/>
@@ -87,7 +87,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="检查日期" />
+                                 android:text="@string/tv_unquality_check_date" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.check_date}"
                                  style="@style/style_text_approval_right"/>
@@ -96,7 +96,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="问题描述" />
+                                 android:text="@string/tv_unquality_ques_desc" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.problem_description}"
                                  style="@style/style_text_approval_right"/>
@@ -105,7 +105,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="条线" />
+                                 android:text="@string/tv_unquality_line" />
                              <TextView
                                  android:id="@+id/tv_line"
                                  style="@style/style_text_approval_right"/>
@@ -115,7 +115,7 @@
                              <TextView
                                  android:layout_marginBottom="10dp"
                                  style="@style/style_text_approval_left"
-                                 android:text="严重程度" />
+                                 android:text="@string/tv_unquality_severity" />
                              <TextView
                                  android:id="@+id/tv_severity"
                                  style="@style/style_text_approval_right"/>
@@ -124,7 +124,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="纠正截止日期" />
+                                 android:text="@string/tv_unquality_correct_date" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.correction_date}"
                                  style="@style/style_text_approval_right"/>
@@ -133,7 +133,7 @@
                              style="@style/style_rl_normal">
                              <TextView
                                  style="@style/style_text_approval_left"
-                                 android:text="被检查人" />
+                                 android:text="@string/tv_checked_user" />
                              <TextView
                                  android:text="@{model.data.unqualified_model.checked_user_name}"
                                  style="@style/style_text_approval_right"/>

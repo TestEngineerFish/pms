@@ -102,7 +102,7 @@ String taskID;
         feedBackRequest.setAccount((String) SPUtils.get(this, SPKey.KEY_ACCOUNT,""));
         feedBackRequest.setTaskId(taskID);
         feedBackRequest.setOpinion(option);
-        feedBackRequest.setNotifyType("inner");
+        feedBackRequest.setNotifyType("inner,app_push");
         feedBackRequest.setActionName("commu");
         viewModel.feedBack(feedBackRequest).observe(this,module->{
             Log.e("model", "initData: "+module );

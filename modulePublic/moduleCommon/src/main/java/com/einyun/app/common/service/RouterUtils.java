@@ -85,12 +85,14 @@ public class RouterUtils {
     public static final String ACTIVITY_MINE_SETTING = "/mine/setting";
     public static final String ACTIVITY_USER_INFO = "/mine/userinfo";
     public static final String ACTIVITY_SIGN_SET = "/mine/signset";
+    public static final String ACTIVITY_MESSAGE_CENTER = "/mine/messageCenter";
     public static final String ACTIVITY_USER_HEAD_SHOT = "/mine/userHeadShot";
     public static final String ACTIVITY_ADVICE_FEED_BACK = "/mine/advcieFeedBack";
 
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
     public static final String ACTIVITY_INQUIRIES_DETAIL = "/customerInquiries/InquiriesDetailActivity";
+    public static final String ACTIVITY_INQUIRIES_MSG_DETAIL = "/customerInquiries/InquiriesDetailMsgActivity";
     public static final String ACTIVITY_INQUIRIES_ORDER_DETAIL = "/customerInquiries/InquiriesOrderDetailActivity";
     public static final String ACTIVITY_INQUIRIES_FEEDBACK = "/customerInquiries/FeedBackActivity";
     public static final String ACTIVITY_INQUIRIES_ORDER_LIST = "/customerInquiries/InquiriesOrderList";
@@ -107,6 +109,14 @@ public class RouterUtils {
     public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
     public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
     public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
+
+    //收费
+    public static final String ACTIVITY_TOLL = "/toll/TollActivity";
+    public static final String ACTIVITY_LACK_DETAIL = "/lack/LackDetailActivity";
+    public static final String ACTIVITY_PAYMENT_ADVANCE = "/payment/PaymentAdvanceActivity";
+    public static final String ACTIVITY_LACK_LIST = "/lack/LackListActivity";
+    public static final String ACTIVITY_FEE = "/fee/FeeActivity";
+    public static final String ACTIVITY_FEE_SUC = "/feesuc/FeeSucActivity";
 //    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

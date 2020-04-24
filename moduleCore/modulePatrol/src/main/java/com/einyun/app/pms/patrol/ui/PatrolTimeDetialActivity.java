@@ -17,6 +17,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeWorkNodeBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
@@ -72,14 +73,19 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskNodeId(taskNodeId);
         viewModel.request.setTaskId(taskId);
+        binding.panelHandleInfo.ivDeal.setVisibility(View.GONE);
     }
 
     @Override
-    protected void switchStateUI() {
-        super.switchStateUI();
+    protected void switchStateUI(int f_plan_work_order_state) {
+        super.switchStateUI(f_plan_work_order_state);
         binding.tvWorkNodesTitle.setText("巡更点处理");
         binding.panelHandleForm.setVisibility(View.GONE);
-        binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        }else {
+            binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        }
         binding.btnSubmit.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.VISIBLE);
         binding.llGrid.setVisibility(View.GONE);
@@ -110,15 +116,23 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
                         if(!setUpCapture(binding,model)&&!setUpCapture(binding,model)){
                             onNoneHandle(binding);
                         }
+                        setUpSignIn(binding,model);
                     }
                 }
 
                 protected void onNoneHandle(ItemPatrolTimeWorkNodeBinding binding) {
                     binding.llPhotoComplete.setVisibility(View.GONE);
-                    binding.llCapture.setVisibility(View.GONE);
-                    binding.llSign.setVisibility(View.GONE);
+                    binding.llCapture.setVisibility(View.VISIBLE);
+                    binding.llSign.setVisibility(View.VISIBLE);
+                    binding.llCapture.setEnabled(false);
+                    binding.llSign.setEnabled(false);
+                    binding.llSign.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.llCapture.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.ivPic.setColorFilter(getResources().getColor(R.color.white));
+                    binding.tvPhoto.setTextColor(getResources().getColor(R.color.white));
+
                     binding.llSignComplete.setVisibility(View.GONE);
-                    binding.tvResult.setVisibility(View.VISIBLE);
+                    binding.tvResult.setVisibility(View.GONE);
                     binding.tvResult.setText(R.string.text_un_need_handle);
                     binding.tvResult.setTypeface(null, Typeface.NORMAL);
                     binding.tvResult.setTextSize(12);

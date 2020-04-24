@@ -28,6 +28,7 @@ import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.ResultState;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
@@ -43,6 +44,9 @@ import com.orhanobut.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_WORK_PREVIEW_PATRO;
 
 /**
  * 巡查处理
@@ -81,8 +85,8 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         binding.setCallBack(this);
     }
 
-    protected void switchStateUI() {
-        super.switchStateUI();
+    protected void switchStateUI(int f_plan_work_order_state) {
+        super.switchStateUI(f_plan_work_order_state);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
@@ -295,29 +299,49 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                 tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
                 tipDialog.setTipDialogListener(dialog -> {
                     if(hasException(patrol)){
+                        tipDialog.dismiss();
                         createSendOrder();
                     }else{
                         finish();
                     }
                 });
-                tipDialog.show();
+                tipDialog.showNoCancle();
             }
         });
     }
 
+//    /**
+//     * 是否创建派工单
+//     */
+//    protected void createSendOrder() {
+//        if(alertDialog==null){
+//            alertDialog=new AlertDialog(PatrolHandleActivity.this).builder()
+//                    .setTitle(getString(R.string.text_alert))
+//                    .setMsg(getString(R.string.text_request_create_distribute))
+//                    .setPositiveButton(getString(R.string.ok), v -> {
+//                         //goPaiGongDan(); 跳转至创建派工单
+//                        navigatSendWorkOrder();
+//                        finish();
+//                    }).setNegativeButton(getString(R.string.cancel), v -> {
+//                        finish();
+//                    });
+//            alertDialog.show();
+//            alertDialog.setCancelable(false);
+//        }
+//    }
     /**
      * 是否创建派工单
      */
-    protected void createSendOrder() {
-        if(alertDialog==null){
-            alertDialog=new AlertDialog(PatrolHandleActivity.this).builder()
-                    .setTitle(getString(R.string.text_alert))
-                    .setMsg(getString(R.string.text_request_create_distribute))
-                    .setPositiveButton(getString(R.string.ok), v -> {
-                         //goPaiGongDan(); 跳转至创建派工单
-                        navigatSendWorkOrder();
+    private void createSendOrder() {
+        if (alertDialog == null) {
+            alertDialog = new CreateNewOrderDialog(this).builder()
+                    .setCreateSendOrder(v -> {
+                        navigatSendWorkOrder();//跳转至创建派工单
                         finish();
-                    }).setNegativeButton(getString(R.string.cancel), v -> {
+                    }).setCreateUnOrder(v -> {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                        finish();
+                    }).setCancel(v -> {
                         finish();
                     });
             alertDialog.show();
@@ -326,6 +350,14 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     private void navigatSendWorkOrder(){
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
+                .withString(RouteKey.KEY_ORDER_ID, patrolInfo.getId())
+                .withString(RouteKey.KEY_ORDER_NO, patrolInfo.getData().getZyxcgd().getF_plan_work_order_code())
+                .withString(RouteKey.KEY_LINE, patrolInfo.getData().getZyxcgd().getF_line_name())
+                .withString(RouteKey.KEY_RESOUSE, patrolInfo.getData().getZyxcgd().getF_type_name())
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_WORK_PREVIEW_PATRO)
                 .navigation();
     }
 

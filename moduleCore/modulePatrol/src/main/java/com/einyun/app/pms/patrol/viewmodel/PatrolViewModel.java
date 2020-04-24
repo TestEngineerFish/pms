@@ -31,6 +31,7 @@ import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.convert.PatrolInfoTypeConvert;
+import com.einyun.app.pms.patrol.model.DelayDay;
 import com.einyun.app.pms.patrol.model.SignCheckResult;
 import com.einyun.app.pms.patrol.model.SignInType;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
@@ -297,13 +298,17 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
         repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
             @Override
             public void call(PatrolLocal data) {
-                List<WorkNode> nodes=data.getNodes();
-                for(WorkNode node:nodes){
-                    if(pointId.equals(node.patrol_point_id)){
-                        node.setSign_time(TimeUtil.Now());
-                        node.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
-                        repo.saveLocalData(data);
+                try {
+                    List<WorkNode> nodes=data.getNodes();
+                    for(WorkNode node:nodes){
+                        if(pointId.equals(node.patrol_point_id)){
+                            node.setSign_time(TimeUtil.Now());
+                            node.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
+                            repo.saveLocalData(data);
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -415,5 +420,23 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
             uris.add(uri);
         }
         return uris;
+    }
+
+    private MutableLiveData<DelayDay> delayDay=new MutableLiveData<>();
+    public LiveData<DelayDay> getDealyInfo(String id){
+        showLoading();
+        repo.getDealyInfo(id, new CallBack<DelayDay>() {
+            @Override
+            public void call(DelayDay data) {
+                hideLoading();
+                delayDay.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return delayDay;
     }
 }

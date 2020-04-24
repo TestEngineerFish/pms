@@ -15,9 +15,11 @@ import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.sendorder.R;
@@ -25,6 +27,9 @@ import com.einyun.app.pms.sendorder.databinding.ActivityResendOrderBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
 
 @Route(path = RouterUtils.ACTIVITY_RESEND_ORDER)
 public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResendOrderBinding, SendOrderViewModel> implements View.OnClickListener {
@@ -43,6 +48,9 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
     String projectID;
     @Autowired(name = RouteKey.KEY_CUSTOMER_RESEND_ORDER)
     String reSendKey;
+    @Autowired(name = RouteKey.KEY_CUSTOM_TYPE)
+    String customType;
+
     @Override
     protected SendOrderViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderViewModel.class);
@@ -55,7 +63,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
         ARouter.getInstance().inject(this);
         if (!StringUtil.isNullStr(reSendKey)) {
             setHeadTitle(R.string.text_resend_order);
-        }else {
+        } else {
             setHeadTitle(R.string.text_resend_cus_order);
         }
         resendOrderRequest = new ResendOrderRequest();
@@ -96,6 +104,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
             } else {
                 resendOrderRequest.setOpinion(binding.resendOrderReason.getString());
                 if (!StringUtil.isNullStr(reSendKey)) {
+                    resendOrderRequest.setMessageType("inner,app_push");
                     viewModel.resendOrder(resendOrderRequest).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
@@ -104,7 +113,7 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                             ToastUtil.show(ResendOrderActivity.this, model.getMsg());
                         }
                     });
-                }else {//客服三大类转派工单
+                } else {//客服三大类转派工单
                     viewModel.resendCusOrder(resendOrderRequest).observe(this, model -> {
                         if (model.getCode().equals("0")) {
                             ToastUtil.show(ResendOrderActivity.this, R.string.resend_success);
@@ -112,6 +121,30 @@ public class ResendOrderActivity extends BaseHeadViewModelActivity<ActivityResen
                             this.finish();
                         } else {
                             ToastUtil.show(ResendOrderActivity.this, model.getMsg());
+                        }
+                        if (customType != null) {
+                            if (CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName().equals(customType)) {
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName(), map);
+                            } else if (CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName().equals(customType)) {
+
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName(), map);
+
+                            } else if (CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName().equals(customType)) {
+
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName(), map);
+                            } else if (CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName().equals(customType)) {
+
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(ResendOrderActivity.this, CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName(), map);
+                            }
+
                         }
                     });
                 }

@@ -32,7 +32,17 @@
             </RelativeLayout>
 
             <ImageView style="@style/detail_title_line" />
+            <LinearLayout
+                style="@style/detail_item_ll">
 
+                <TextView
+                    style="@style/detail_item_left_tv"
+                    android:text="是否超时"/>
+
+                <TextView
+                    style="@style/detail_item_right_tv"
+                    app:isOverTime="@{detail.f_OT_STATUS}"/>
+            </LinearLayout>
             <LinearLayout
                 style="@style/detail_item_ll">
 

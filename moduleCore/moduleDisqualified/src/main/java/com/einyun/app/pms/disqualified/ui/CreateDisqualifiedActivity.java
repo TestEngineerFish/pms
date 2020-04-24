@@ -279,10 +279,10 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //            ToastUtil.show(this,"请选择检查日期");
 //            return;
 //        }
-//        if (binding.ltQuestionDesc.getString().isEmpty()) {
-//            ToastUtil.show(this,"请输入问题描述");
-//            return;
-//        }
+        if (binding.ltQuestionDesc.getString().isEmpty()) {
+            ToastUtil.show(this,"请输入问题描述");
+            return;
+        }
 //        if (binding.tvLine.getText().toString().equals("请选择")) {
 //            ToastUtil.show(this,"请选择条线");
 //            return;

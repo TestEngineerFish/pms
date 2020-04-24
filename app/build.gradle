@@ -5,10 +5,10 @@ android {
         applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 202
-        versionName "2.0.2"
+        versionCode 221
+        versionName "2.2.1"
         multiDexEnabled true
-//        flavorDimensions "default"
+        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
         javaCompileOptions {
@@ -84,12 +84,38 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             def createTime = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
-            outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${createTime}.apk"
+//            outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${createTime}.apk"
+            outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${variant.productFlavors[0].name}_${createTime}.apk"
         }
     }
 
     //多渠道打包支持
     productFlavors {
+        //请勿删除，上线提交多渠道开启
+        Tencent {//投放应用宝市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"tencent"]
+        }
+        Baidu {//投放百度应用市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"baidu"]
+        }
+        Oppo {//投放oppo市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"oppo"]
+        }
+        Xiaomi {//投放小米市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"xiaomi"]
+        }
+        Huawei {//投放华为应用市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"huawei"]
+        }
+        QiHu360 {//投放360应用市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"360"]
+        }
+        Alibaba {//投放阿里应用市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"alibaba"]
+        }
+        AnZhi {//投放安智市场
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"anzhi"]
+        }
 //        请勿删除，上线提交多渠道开启
       /*  Tencent {//投放应用宝市场
             manifestPlaceholders=[UMENG_CHANNEL_VALUE:"tencent"]
@@ -144,5 +170,6 @@ dependencies {
     implementation project(deps.project.module_disqualified)
     implementation project(deps.project.module_extra)
     implementation project(deps.project.module_orderlist)
+    implementation project(deps.project.module_toll)
 //    implementation project(deps.project.module_extra)
 }

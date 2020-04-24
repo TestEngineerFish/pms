@@ -7,4 +7,5 @@ class DistributeCheckRequest {
     var fEvaluation:String?=null
     var fCheckDate:String?=null
     var fCheckContent:String?=null
+    var fScore:String?=null
 }

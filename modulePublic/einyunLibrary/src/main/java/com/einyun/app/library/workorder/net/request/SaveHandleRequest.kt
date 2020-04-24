@@ -10,4 +10,7 @@ class SaveHandleRequest {
         this.ID_ = ID_
         this.bizData = bizData
     }
+    constructor() {
+
+    }
 }

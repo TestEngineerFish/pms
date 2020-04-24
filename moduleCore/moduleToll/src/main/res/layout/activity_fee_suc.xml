@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="toll"
+            type="com.einyun.app.pms.toll.model.LackListModel" />
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.toll.ui.FeeSucActivity" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
+
+             <ImageView
+                 android:src="@drawable/iv_fee_suc"
+                 android:layout_marginTop="@dimen/px_48"
+                 android:layout_width="@dimen/px_146"
+                 android:layout_height="@dimen/px_182"
+                 android:text="400.00"
+                 android:layout_gravity="center_horizontal"
+                 android:textColor="#ff132d42"
+                 android:textSize="30sp"
+                 />
+         <TextView
+             android:gravity="center"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="已收款"
+             android:layout_marginTop="@dimen/px_50"
+             android:textColor="#ff132d42"
+             android:textSize="@dimen/font_size23"
+             />
+         <TextView
+             android:id="@+id/tv_house_name"
+             android:gravity="center"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="@dimen/px_28"
+             android:text="张**（长城盛世花园1栋2单元102）"
+             android:textColor="#ff4877ea"
+             android:textSize="15sp"
+             />
+         <View
+             android:layout_width="match_parent"
+             android:layout_margin="@dimen/px_30"
+             android:layout_height="1dp"/>
+         <androidx.recyclerview.widget.RecyclerView
+             android:layout_width="match_parent"
+             android:id="@+id/fee_list"
+             android:layout_height="match_parent"/>
+         </LinearLayout>
+</layout>

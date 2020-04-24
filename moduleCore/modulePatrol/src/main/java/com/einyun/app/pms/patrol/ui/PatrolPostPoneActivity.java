@@ -1,6 +1,7 @@
 package com.einyun.app.pms.patrol.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -43,10 +44,17 @@ public class PatrolPostPoneActivity extends BaseApplyPostPoneActivity<PatrolView
         return new ViewModelProvider(this, new ViewModelFactory()).get(PatrolViewModel.class);
     }
 
+    private static final String TAG = "PatrolPostPoneActivity";
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        getExtDays(binding);
+//        getExtDays(binding);
+        viewModel.getDealyInfo(orderId).observe(this,model->{
+            Log.e(TAG, "initViews: "+model.getCount() );
+            Log.e(TAG, "initViews: "+model.getSum() );
+            binding.applyDate.setText(model.getSum() + "天");
+            binding.applyNum.setText(model.getCount() + "次");
+        });
     }
 
     protected void getExtDays(ActivityApplyLateBinding binding) {

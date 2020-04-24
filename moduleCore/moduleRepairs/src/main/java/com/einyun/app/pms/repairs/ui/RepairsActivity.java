@@ -48,6 +48,8 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
     private String[] mTitles;//tab标题
     public static List<SelectModel> selectModelList = new ArrayList<>();
     private String taskId;
+    @Autowired(name = RouteKey.KEY_PUSH_JUMP)
+    boolean isPushJump;
      ArrayList<RepairsViewModelFragment> fragments;
     public interface GrabListener{
         void onGrabed();
@@ -83,7 +85,11 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
             }
 
         });
-        binding.tabRepairOrder.setupWithViewPager(binding.vpRepair);
+        try {
+            binding.tabRepairOrder.setupWithViewPager(binding.vpRepair);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         binding.tabRepairOrder.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -123,20 +129,40 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
-        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+//        boolean isPushJump = extras.getBoolean(RouteKey.KEY_PUSH_JUMP);
+//        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+        if (!StringUtil.isNullStr(getIntent().getType()) && isPushJump) {
             binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
+//            String string = extras.getString(RouteKey.KEY_CATE_NAME);
+//            if ("".equals(string)) {
+//                string="户内报修类";
+//            }
             binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
             binding.grabFrame.grabClose.setOnClickListener(this);
             binding.grabFrame.grabBtn.setOnClickListener(this);
             taskId = extras.getString(RouteKey.KEY_TASK_ID);
         }
 
+        isPushJump=false;
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        Intent intent2 = getIntent();
+        Bundle extras = intent2.getExtras();
+        Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
+//        boolean isPushJump = extras.getBoolean(RouteKey.KEY_PUSH_JUMP);
+//        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+        if (!StringUtil.isNullStr(getIntent().getType())) {
+            binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
+            binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
+            binding.grabFrame.grabClose.setOnClickListener(this);
+            binding.grabFrame.grabBtn.setOnClickListener(this);
+            taskId = extras.getString(RouteKey.KEY_TASK_ID);
+        }
+        isPushJump=false;
     }
 
     @Override
@@ -159,31 +185,36 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         if (taskId != null) {
             viewModel.grabRepair(taskId).observe(this, status -> {
                 if (status.booleanValue()) {
-                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                            .setMsg(getResources().getString(R.string.text_grab_success)).
-                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    binding.grabFrame.getRoot().setVisibility(View.GONE);
-                                    fragments.get(0).loadPagingData();
-                                    fragments.get(1).loadPagingData();
-                                   /* if (grabListener!=null){
-                                        grabListener.onGrabed();
-                                    }*/
-                                    getIntent().setType("1");
-                                }
-                            }).show();
+//                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                            .setMsg(getResources().getString(R.string.text_grab_success)).
+//                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    binding.grabFrame.getRoot().setVisibility(View.GONE);
+//                                    fragments.get(0).loadPagingData();
+//                                    fragments.get(1).loadPagingData();
+//                                   /* if (grabListener!=null){
+//                                        grabListener.onGrabed();
+//                                    }*/
+//                                    getIntent().setType("1");
+//                                    binding.tabRepairOrder.getTabAt(1).select();
+//                                }
+//                            }).show();
+                    ToastUtil.show(this,"抢单成功");
+                    binding.grabFrame.getRoot().setVisibility(View.GONE);
 
                 } else {
-                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                            .setMsg(getResources().getString(R.string.text_grab_faile)).
-                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    getIntent().setType("1");
-
-                                }
-                            }).show();
+//                    new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                            .setMsg(getResources().getString(R.string.text_grab_faile)).
+//                            setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    getIntent().setType("1");
+//                                    binding.grabFrame.getRoot().setVisibility(View.GONE);
+//                                }
+//                            }).show();
+                    ToastUtil.show(this,"该抢单任务已失效");
+                    binding.grabFrame.getRoot().setVisibility(View.GONE);
                 }
             });
         }

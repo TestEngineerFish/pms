@@ -74,14 +74,15 @@ public class AdviceFeedBackViewModuleActivity extends BaseHeadViewModelActivity<
      * 确认提交
      */
     public void btnConfirm(){
-//        if(typeDefaultPos<0){
-//            ToastUtil.show(this, R.string.tv_select_ques_type);
-//            return;
-//        }
         if (binding.etLimitInput.getString().isEmpty()) {
             ToastUtil.show(this, R.string.tv_write_your_advice);
             return;
         }
+        if(typeDefaultPos<0){
+            ToastUtil.show(this, R.string.tv_select_ques_type);
+            return;
+        }
+
         FeedBackBean feedBackBean = viewModel.getJsonObject(binding.etLimitInput.getString(), account, name, mobile, userId, (typeDefaultPos + 1));
         viewModel.sumitApproval(feedBackBean).observe(this, model -> {
             if (model) {

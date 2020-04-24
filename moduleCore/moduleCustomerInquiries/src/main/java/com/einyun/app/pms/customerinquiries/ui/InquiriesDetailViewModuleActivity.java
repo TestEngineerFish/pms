@@ -281,7 +281,11 @@ public class InquiriesDetailViewModuleActivity extends BaseHeadViewModelActivity
             Log.e("isCanApplyClose", "isCanApplyClose: "+isApplyForseClose );
             if (isApplyForseClose) {
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
-                    binding.llForseClose.setVisibility(View.VISIBLE);
+                    if (binding.llEvaluation.isShown()) {
+                        binding.llForseClose.setVisibility(View.GONE);
+                    }else {
+                        binding.llForseClose.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 OrderDetailInfoModule.ForceCloseInfoBean forceCloseInfo = orderDetailInfoModule.getForceCloseInfo();

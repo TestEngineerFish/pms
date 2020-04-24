@@ -7,8 +7,7 @@
             name="repairs"
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
-    <androidx.cardview.widget.CardView
-        style="@style/cardview_style">
+    <androidx.cardview.widget.CardView style="@style/cardview_style">
     <LinearLayout
         android:id="@+id/repairs_work_order_info"
         android:layout_width="match_parent"
@@ -28,7 +27,7 @@
                     style="@style/tv_create_order_name"
                     android:text="材料费(元)" />
 
-                <EditText
+                <com.einyun.app.common.ui.widget.BaseEditText
                     android:id="@+id/repair_material_price"
                     style="@style/tv_handle_order_select"
                     android:layout_width="wrap_content"
@@ -49,7 +48,7 @@
                     style="@style/tv_create_order_name"
                     android:text="人工费(元)" />
 
-                <EditText
+                <com.einyun.app.common.ui.widget.BaseEditText
                     android:id="@+id/repair_handle_man_money"
                     style="@style/tv_handle_order_select"
                     android:layout_width="wrap_content"
@@ -131,7 +130,7 @@
                     style="@style/tv_create_order_name"
                     android:text="联合处理人" />
 
-                <EditText
+                <com.einyun.app.common.ui.widget.BaseEditText
                     android:id="@+id/repair_handle_together_man"
                     style="@style/tv_handle_order_select"
                     android:layout_marginLeft="@dimen/px_30"

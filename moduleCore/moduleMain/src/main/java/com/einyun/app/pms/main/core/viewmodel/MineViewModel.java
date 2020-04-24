@@ -14,6 +14,7 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
+import com.einyun.app.pms.main.core.model.HasReadModel;
 import com.einyun.app.pms.main.core.model.UCUserDetailsBean;
 import com.einyun.app.pms.main.core.model.UserStarsBean;
 import com.einyun.app.pms.main.core.repository.MainRepository;
@@ -107,5 +108,22 @@ public class MineViewModel extends BaseViewModel implements MineViewModelContrac
             }
         });
         return detialStars;
+    }
+    private MutableLiveData<HasReadModel> hasReadModel=new MutableLiveData<>();
+    public LiveData<HasReadModel> hadRead(){
+        showLoading();
+        repository.hasRead(new CallBack<HasReadModel>() {
+            @Override
+            public void call(HasReadModel data) {
+                hideLoading();
+                hasReadModel.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return hasReadModel;
     }
 }

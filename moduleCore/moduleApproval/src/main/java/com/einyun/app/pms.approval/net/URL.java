@@ -7,5 +7,6 @@ public class URL {
     public static final String URL_GET_APPROVAL_DETAIL_INFO="workOrder/workOrder/workOrderInnerAudit/v1/getAuditHisByAuditId?id=";
     //提交审批
     public static final String URL_CREATE_WORK_PLAN="resource/api/resource/v1/workPlan/approve";
-
+    //
+    public static final String URL_GET_PATROL_TYPE="resource-workorder/res-order/patrol/doneDetail";
 }

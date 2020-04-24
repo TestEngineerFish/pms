@@ -30,7 +30,7 @@
                 android:layout_marginLeft="@dimen/px_30"
                 android:src="@mipmap/icon_search" />
 
-            <EditText
+            <com.einyun.app.common.ui.widget.BaseEditText
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

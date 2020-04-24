@@ -43,6 +43,7 @@ import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
@@ -58,6 +59,7 @@ import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
 
 import org.jetbrains.annotations.NotNull;
+import org.mockito.internal.stubbing.BaseStubbing;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -90,9 +92,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected RVBindingAdapter nodesAdapter;
     protected PatrolLocal patrolLocal;
     protected PatrolInfo patrolInfo;
-    protected AlertDialog alertDialog;
+    protected CreateNewOrderDialog alertDialog;
     protected TipDialog tipDialog;
     protected File imageFile;
+    public int f_plan_work_order_state;
 
     protected void setProInsId(String proInsId) {
         this.proInsId = proInsId;
@@ -119,7 +122,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         setRightOption(R.drawable.histroy);
-        switchStateUI();
+
     }
 
     @Override
@@ -144,7 +147,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     /**
      * UI切换
      */
-    protected void switchStateUI() {
+    protected void switchStateUI(int f_plan_work_order_state) {
         binding.panelHandleForm.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
@@ -194,9 +197,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 }
 
                 protected void onNoneHandle(ItemPatrolWorkNodeBinding binding) {
-                    binding.btnReject.setVisibility(View.GONE);
-                    binding.btnAgree.setVisibility(View.GONE);
-                    binding.tvResult.setVisibility(View.VISIBLE);
+                    binding.btnReject.setVisibility(View.VISIBLE);
+                    binding.btnAgree.setVisibility(View.VISIBLE);
+                    binding.btnAgree.setEnabled(false);
+                    binding.btnReject.setEnabled(false);
+                    binding.tvResult.setVisibility(View.GONE);
                     binding.tvResult.setText(R.string.text_un_need_handle);
                     binding.tvResult.setTypeface(null, Typeface.NORMAL);
                     binding.tvResult.setTextSize(12);
@@ -291,7 +296,17 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        if (orderId.isEmpty()) {
+            orderId=patrol.getData().getZyxcgd().getId_();
+        }
         this.patrolInfo = patrol;
+        f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
+        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        }else {
+            binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        }
+        switchStateUI(f_plan_work_order_state);
         updateElapsedTime(patrol);
         binding.setPatrol(patrol);
         updatePageUIState(PageUIState.FILLDATA.getState());
@@ -431,7 +446,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
                 binding.btnSubmit.setVisibility(View.GONE);
             } else {//已办显示全部信息
-                binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+                if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+                    binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+                }else {
+                    binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+                }
                 binding.cdWorkNodes.setVisibility(View.VISIBLE);
             }
         } else if (state == ApplyState.REJECT.getState()){
@@ -440,6 +459,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
             binding.btnSubmit.setVisibility(View.VISIBLE);
+        }
+        if (listType == ListType.DONE.getType()) {
+            binding.panelHandleForm.setVisibility(View.GONE);
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+            binding.btnSubmit.setVisibility(View.GONE);
         }
     }
 
@@ -514,7 +538,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
         patrolLocal.setImages(images);
         patrolLocal.setNote(binding.limitInput.getString());
-        patrolLocal.setNodes(nodesAdapter.getDataList());
+        List<WorkNode> workNodes = viewModel.loadNodes(patrolInfo);
+        workNodes.add(0,new WorkNode());
+        List<WorkNode> dataList = nodesAdapter.getDataList();
+
+        if (workNodes.size()==dataList.size()) {
+
+            patrolLocal.setNodes(nodesAdapter.getDataList());
+        }else {
+            List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
+            dataList.addAll(workNodes1);
+            patrolLocal.setNodes(dataList);
+        }
+
         viewModel.saveLocal(patrolLocal);
     }
 
@@ -575,7 +611,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             boolean flag = data.getBooleanExtra(DataConstants.KEY_OPTION_RESULT, false);
             if (flag) {
                 viewModel.loadPendingDetial(orderId);
-                finish();
+                finish();//在此处刷新数据
             }
         }
     }
@@ -601,8 +637,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_CLOSE_ID, RouteKey.KEY_PLAN)
-                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
-                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : 1)
+//                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
+                .withInt(RouteKey.KEY_PARAMS, patrolInfo.getDelayExtensionApplicationPost(2) == null ? 0 : patrolInfo.getDelayExtensionApplication().getExtensionDays())
+//                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplicationPost(ApplyType.POSTPONE.getState()) == null ? 0 : 1)
+                .withInt(RouteKey.KEY_PARENT_ID, patrolInfo.getDelayExtensionApplicationPost(2) == null ? 0 : 1)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_OPTION);
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,13 +15,27 @@
         android:layout_marginTop="@dimen/px_20"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/detail_item_left_tv"
-            android:text="@{resource.f_RES_NAME}"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/px_20"
-            android:textColor="#FF132D42"
-            android:textSize="@dimen/font_size15" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:textStyle="bold"
+                android:text="@{resource.f_RES_NAME}"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/px_20"
+                android:textColor="#FF132D42"
+                android:textSize="@dimen/font_size15" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_scan"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:src="@drawable/iv_force_scan"
+                android:layout_width="@dimen/px_116"
+                android:layout_height="@dimen/px_44"/>
+        </RelativeLayout>
+
 
         <LinearLayout style="@style/detail_item_ll">
 
@@ -43,7 +58,19 @@
                 style="@style/detail_item_right_tv"
                 android:text="@{resource.f_WG_NAME}" />
         </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_force_scan"
+            style="@style/detail_item_ll">
 
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="强制扫码" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                app:isScan="@{resource.is_forced()}"/>
+        </LinearLayout>
         <LinearLayout style="@style/detail_item_ll">
 
             <TextView
@@ -52,7 +79,7 @@
 
             <TextView
                 style="@style/detail_item_right_tv"
-                android:text="@{resource.f_RES_TYPE}" />
+                android:text="@{resource.f_RES_TYPENAME}" />
         </LinearLayout>
 
         <LinearLayout style="@style/detail_item_ll">
@@ -73,6 +100,7 @@
                 android:text="空间类型" />
 
             <TextView
+                android:id="@+id/tv_air_type"
                 style="@style/detail_item_right_tv"
                 android:text="@{resource.f_SP_TYPE}" />
         </LinearLayout>
@@ -87,7 +115,19 @@
                 style="@style/detail_item_right_tv"
                 android:text="@{resource.f_RES_LOCATION}" />
         </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_scan_reasult"
+            style="@style/detail_item_ll">
 
+            <TextView
+                style="@style/detail_item_left_tv"
+                android:text="扫码结果" />
+
+            <TextView
+                style="@style/detail_item_right_tv"
+                android:id="@+id/tv_scan_reasult"/>
+        </LinearLayout>
     </LinearLayout>
 
 </layout>

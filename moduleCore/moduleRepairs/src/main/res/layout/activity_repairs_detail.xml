@@ -67,28 +67,33 @@
 
                     <include
                         android:id="@+id/send_order_info"
-                        layout="@layout/layout_send_order_info"
+                        layout="@layout/layout_repairs_send_order_info"
                         android:visibility="gone"
                          />
-                    <include
-                        android:id="@+id/repair_close_info"
-                        layout="@layout/layout_repair_apply_close_info"
-                        android:visibility="gone"/>
+                    <!-- 响应信息                   -->
                     <include
                         android:id="@+id/repair_response_info"
                         layout="@layout/layout_response_info"
                         android:visibility="gone"/>
-                    <include
-                        android:id="@+id/repair_handle_info"
-                        layout="@layout/layout_handle_info"
-                        android:visibility="gone"/>
+                    <!--  申请延期信息-->
                     <include
                         android:id="@+id/repair_late_info"
                         layout="@layout/layout_repair_apply_late_info"
                         android:visibility="gone"/>
+                    <!-- 申请闭单信息                   -->
+                    <include
+                        android:id="@+id/repair_close_info"
+                        layout="@layout/layout_repair_apply_close_info"
+                        android:visibility="gone"/>
+                    <!--    处理信息-->
+                    <include
+                        android:id="@+id/repair_handle_info"
+                        layout="@layout/layout_handle_info"
+                        android:visibility="gone"/>
+
                     <include
                         android:id="@+id/send_order"
-                        layout="@layout/layout_send_order"
+                        layout="@layout/layout_repairs_send_order"
                         android:visibility="gone" />
 
                     <include
@@ -108,10 +113,12 @@
                         android:id="@+id/repair_handle_paid"
                         layout="@layout/layout_handle_paid"
                         android:visibility="gone"/>
+<!--                    处理结果-->
                     <include
                         android:id="@+id/repair_handle_result"
                         layout="@layout/layout_handle_result"
                         android:visibility="gone"/>
+<!--                    处理历史-->
                     <include
                         android:id="@+id/repair_handle_history"
                         layout="@layout/layout_handle_histroy"

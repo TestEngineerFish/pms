@@ -84,6 +84,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        app:evaImg="@{complain.c_is_solve}"
                         android:layout_width="@dimen/px_30"
                         android:layout_height="@dimen/px_30"
                         android:padding="@dimen/px_5" />
@@ -92,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/px_5"
-                        android:text="@{complain.f_handle_result}"
+                        app:evaText="@{complain.c_is_solve}"
                         android:textColor="@color/txt_black_order"
                         android:textSize="@dimen/font_size14"/>
 

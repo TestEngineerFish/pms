@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <EditText
+    <com.einyun.app.common.ui.widget.BaseEditText
         android:id="@+id/et_limit_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -80,4 +80,23 @@ public class ComplainBindAdapter {
         }
 
     }
+    @BindingAdapter("evaText")
+    public static void evaText(TextView view, int value) {
+        if (value==0) {
+            view.setText("未解决");
+        }
+        if (value==1) {
+            view.setText("已解决");
+        }
+    }
+    @BindingAdapter("evaImg")
+    public static void evaImg(ImageView view, int value) {
+        if (value==0) {
+
+            view.setImageResource(R.drawable.iv_un_solve);
+        }
+        if (value==1) {
+            view.setImageResource(R.drawable.iv_solve);
+        }
+    }
 }

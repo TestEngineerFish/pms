@@ -3,6 +3,7 @@ package com.einyun.app.pms.plan.ui.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Plan;
@@ -37,6 +39,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -49,7 +52,9 @@ import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,7 +117,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 public void onFaild(Throwable throwable) {
 
                 }
-            }, BasicDataTypeEnum.RESOURCE, BasicDataTypeEnum.LINE);
+            }, BasicDataTypeEnum.LINE);
 
         });
         binding.panelCondition.search.setVisibility(View.VISIBLE);
@@ -128,7 +133,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     protected void showConditionView(BasicData data) {
         if (selectPopUpView == null) {
             ConditionBuilder builder = new ConditionBuilder();
-            List<SelectModel> conditions = builder.addLines(data.getLines())//条线
+            List<SelectModel> conditions = builder.addOnlyLines(data.getLines())//条线
                     .addItem(SelectPopUpView.SELECT_DATE)//完成截止时间
                     .addItem(SelectPopUpView.SELECT_IS_OVERDUE)//是否超期
                     .mergeLineRes(data.getResources())
@@ -141,6 +146,9 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
 
     private void search() {
         try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(),map);
             DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {
                 searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {
@@ -255,6 +263,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
 //        binding.sendOrderRef.setRefreshing(true);
+        showLoading(getActivity());
         binding.sendOrderRef.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         String fragmentTag = getFragmentTag();
         if (viewModel.getOrgModel() != null) {
@@ -264,9 +273,17 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             viewModel.loadPendingInDB().observe(this, dataBeans -> {
                 if (dataBeans.size() == 0) {
+                    showLoading(getActivity());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoading();
+                        }
+                    },3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
+                    hideLoading();
                 }
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
@@ -278,6 +295,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

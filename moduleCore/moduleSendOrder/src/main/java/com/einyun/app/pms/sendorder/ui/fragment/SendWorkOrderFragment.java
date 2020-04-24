@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
@@ -43,6 +45,7 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PageRquest;
@@ -54,7 +57,9 @@ import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -155,6 +160,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                         public void onClick(View v) {
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName())
                                     .withString(RouteKey.KEY_TASK_ID, distribute.getTaskId())
                                     .withString(RouteKey.KEY_ORDER_ID, distribute.getID_())
                                     .withString(RouteKey.KEY_DIVIDE_ID, distribute.getF_DIVIDE_ID())
@@ -221,12 +227,23 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     }
 
     private void loadPagingData() {
+        showLoading(getActivity());
         viewModel.getRequest().setUserId(userModuleService.getUserId());
         if (listType == ListType.PENDING.getType()) {
+
             viewModel.loadPadingData().observe(this, dataBeans -> {
+//                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
+                    showLoading(getActivity());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoading();
+                        }
+                    },3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
+                    hideLoading();
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
                 adapter.submitList(dataBeans);
@@ -234,11 +251,13 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             });
         } else {
             viewModel.loadDonePagingData().observe(this, dataBeans -> {
+//                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

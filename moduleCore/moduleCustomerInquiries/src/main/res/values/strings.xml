@@ -4,7 +4,7 @@
     <string name="tv_in_process">处理中</string>
     <string name="tv_real_estate">房产</string>
     <string name="tv_asking_people">问询人</string>
-    <string name="tv_work_num">工单号</string>
+    <string name="tv_work_num">工单编号</string>
     <string name="tv_create_time">创建时间</string>
     <string name="tv_turn_order">转单</string>
     <string name="tv_talk">沟通</string>

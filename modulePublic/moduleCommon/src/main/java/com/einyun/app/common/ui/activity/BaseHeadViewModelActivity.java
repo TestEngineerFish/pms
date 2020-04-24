@@ -51,7 +51,9 @@ public abstract class BaseHeadViewModelActivity<V extends ViewDataBinding, VM ex
     protected void setHeadTitle(String headTitle){
         headBinding.tvHeaderTitle.setText(headTitle);
     }
-
+    protected void setIvBackground(int res){
+        headBinding.ivBack.setImageResource(res);
+    }
     protected void setHeadTitle(int resId){
        headBinding.tvHeaderTitle.setText(resId);
     }

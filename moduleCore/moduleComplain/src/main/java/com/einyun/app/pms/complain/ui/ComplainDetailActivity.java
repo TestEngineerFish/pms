@@ -1,6 +1,7 @@
 package com.einyun.app.pms.complain.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -101,7 +102,6 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
-        request.getBizData().setC_is_solve(1);
         binding.submit.setOnClickListener(new ClickProxy(this));
         binding.save.setOnClickListener(new ClickProxy(this));
         binding.layoutApplyLateInfo.sendOrderPostponePicList.addItemDecoration(new SpacesItemDecoration(18));
@@ -144,6 +144,12 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             request.getBizData().setF_pd_assignor_id(model.getId());
         });
         fresh();
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
     }
 
     //false为不可以闭单  true为可以闭单
@@ -181,6 +187,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             return;
         }
         this.detail = repairsDetailModel.getData().getCustomer_complain_model();
+        id=detail.getId_();
         nodeId = repairsDetailModel.getInfo() == null?"":repairsDetailModel.getInfo().getNodeId();
         updatePageUIState(PageUIState.FILLDATA.getState());
         updateElapsedTime();
@@ -620,9 +627,8 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             }
             request.getBizData().setF_handle_result(reasonString);
         } else if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
-            if (request.getBizData().getC_is_solve() == -1) {
-                ToastUtil.show(this, "请先选择处理结果");
-                return;
+            if (request.getBizData().getC_is_solve() == null) {
+                request.getBizData().setC_is_solve(1);
             }
             if (request.getBizData().getC_is_solve() == 0) {
                 if (!StringUtil.isNullStr(binding.complainEvaluate.ltExplain.getString())) {
@@ -638,6 +644,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
         }
         viewModel.complainDetailComplete(request).observe(this, aBoolean -> {
             if (aBoolean) {
+                ToastUtil.show(this, "工单提交成功");
                 finish();
             }
         });
@@ -679,6 +686,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             request.setId(id);
             request.setType(WorkOrder.POSTPONED_COMPLAIN);
             viewModel.isClosed(request, true);
+//            navigatApply(RouterUtils.ACTIVITY_LATE);//强制关闭
         }
         if (v.getId() == R.id.ll_close) {
             if (isCloseClose) {

@@ -88,6 +88,11 @@ interface ResourceWorkOrderServiceApi {
      */
     @POST(URLs.URL_RESOURCE_WORKORDER_PLAN_SUBMIT)
     fun planSubmit(@Body request: PatrolSubmitRequest):Flowable<BaseResponse<Any>>
+    /**
+     * checkQrCodeModel
+     */
+    @GET
+    fun checkQrCodeModel(@Url url: String):Flowable<ForseScanCodeResponse>
 
     /**
      * 2.31派工单-待办列表
@@ -196,12 +201,12 @@ interface ResourceWorkOrderServiceApi {
     /**
      * 转派
      */
-    @POST(URLs.URL_RESEND_ORDER)
+    @POST(URLs.URL_RESEND_ORDER_CUS)
     fun resendOrder(@Body request:ResendOrderRequest):Flowable<ResendOrderResponse>
     /**
      * 三大客服转派
      */
-    @POST(URLs.URL_RESEND_ORDER)
+    @POST(URLs.URL_RESEND_ORDER_CUS)
     fun resendCusOrder(@Body request:ResendOrderRequest):Flowable<ResendOrderResponse>
     /**
      * 申请闭单
