@@ -31,7 +31,19 @@ public class FormatUtil {
         }
         return phone;
     }
+    /**
+     * 判断时间是不是今天
+     * @param date
+     * @return
+     */
+    public static boolean isToday(Date date){
+        Date now = new Date();
+        SimpleDateFormat sim = new SimpleDateFormat("yyyyMMdd");
+        String nowDay = sim.format(now);
+        String day = sim.format(date);
+        return day.equals(nowDay);
 
+    }
     /**
      * 将日期转化为标准格式
      *

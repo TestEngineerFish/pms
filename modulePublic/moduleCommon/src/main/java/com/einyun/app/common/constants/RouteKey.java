@@ -151,6 +151,7 @@ public class RouteKey {
 
     //收费
     public static final String HOUSE_ID = "houseid";
+    public static final String CLIENT_ID = "clientId";
     public static final String HOUSE_FEE_ID = "houseFeeid";
     public static final String HOUSE_TITLE = "house_title";
     public static final String KEY_ALL_NAME = "ALL_NAME";

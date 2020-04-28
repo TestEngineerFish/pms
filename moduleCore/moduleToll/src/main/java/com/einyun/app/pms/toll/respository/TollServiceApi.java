@@ -25,6 +25,8 @@ import com.einyun.app.pms.toll.net.response.DivideIdResponse;
 import com.einyun.app.pms.toll.net.response.FeeDetailResponse;
 import com.einyun.app.pms.toll.net.response.FeeResponse;
 import com.einyun.app.pms.toll.net.response.FeeSucResponse;
+import com.einyun.app.pms.toll.net.response.GetHadSignResponse;
+import com.einyun.app.pms.toll.net.response.GetLogoResponse;
 import com.einyun.app.pms.toll.net.response.GetNameResponse;
 import com.einyun.app.pms.toll.net.response.JumpAdvanceVerityResponse;
 import com.einyun.app.pms.toll.net.response.JumpVerityResponse;
@@ -32,6 +34,7 @@ import com.einyun.app.pms.toll.net.response.LackListResponse;
 import com.einyun.app.pms.toll.net.response.LastWorthTimeResponse;
 import com.einyun.app.pms.toll.net.response.PaymentAdvanceResponse;
 import com.einyun.app.pms.toll.net.response.QueryStateResponse;
+import com.einyun.app.pms.toll.net.response.SetSignResponse;
 import com.einyun.app.pms.toll.net.response.WorthResponse;
 import com.google.gson.JsonObject;
 
@@ -72,6 +75,16 @@ public interface TollServiceApi {
      */
     @POST(URLS.URL_GET_FEE_DETAIL_INFO)
     Flowable<FeeDetailResponse> getFeeDetailInfo(@Body FeeDetailRequset bean);
+    /**
+     * 获取已有标签
+     */
+    @POST(URLS.URL_GET_SIGN)
+    Flowable<GetHadSignResponse> getSign(@Body FeeDetailRequset bean);
+    /**
+     * 打标签
+     */
+    @POST(URLS.URL_SET_SIGN)
+    Flowable<SetSignResponse> setSign(@Body FeeDetailRequset bean);
     /**
      * 获取预交费列表
      */
@@ -147,4 +160,9 @@ public interface TollServiceApi {
      */
     @GET()
     Flowable<DicRelationResponse> getDicKey(@Url String url);
+    /**
+     * 获取logo
+     */
+    @GET()
+    Flowable<GetLogoResponse> getLogo(@Url String url);
 }

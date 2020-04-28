@@ -16,41 +16,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.common.utils.HanziToPinyin;
 import com.einyun.app.pms.toll.BR;
 import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.UnitCheckPopwindowBinding;
 import com.einyun.app.pms.toll.databinding.UnitCheckPopwindowItemBinding;
-import com.einyun.app.pms.toll.model.BuildModel;
+import com.einyun.app.common.model.BuildModel;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class UnitCheckPopWindow extends PopupWindow {
     List<BuildModel.GridRangeBean> mFeeHouseList;
-    private  View view;
+    private View view;
     private Activity context;
     private OnItemClickListener mListener;
     private RVBindingAdapter<UnitCheckPopwindowItemBinding, BuildModel.GridRangeBean> adapter;//外部适配器
-    private int mPosition=-1;
+    private int mPosition = -1;
 
     public UnitCheckPopWindow(Activity context, List<BuildModel.GridRangeBean> mInquiriesTypesModule) {
         super(context);
-        this.mFeeHouseList=mInquiriesTypesModule;
+        this.mFeeHouseList = mInquiriesTypesModule;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.unit_check_popwindow, null);//alt+ctrl+f
         this.context = context;
-        this.mPosition=mPosition;
+        this.mPosition = mPosition;
         initView();
         initPopWindow();
 //        getData(1,10);
-        this.setOnDismissListener(new OnDismissListener(){
+        this.setOnDismissListener(new OnDismissListener() {
 
             @Override
             public void onDismiss() {
 //                reSetdata();
             }
         });
-}
-
+    }
 
 
     private void initView() {
@@ -60,7 +62,9 @@ public class UnitCheckPopWindow extends PopupWindow {
         ImageView iv_close = view.findViewById(R.id.iv_close);
         RecyclerView recyclerview = view.findViewById(R.id.recyclerview);
 
-        iv_close.setOnClickListener(view1 -> {dismiss();});
+        iv_close.setOnClickListener(view1 -> {
+            dismiss();
+        });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +88,7 @@ public class UnitCheckPopWindow extends PopupWindow {
 //                }        else {
 //                    mListener.onData( mInquiriesTypesModule.get(mPosition).getDataName());
 //                }
-                mListener.onData( mFeeHouseList);
+                mListener.onData(mFeeHouseList);
                 dismiss();
             }
         });
@@ -95,19 +99,19 @@ public class UnitCheckPopWindow extends PopupWindow {
             public void onBindItem(UnitCheckPopwindowItemBinding binding, BuildModel.GridRangeBean model, int position) {
 
                 binding.llItem.setOnClickListener(view1 -> {
-                    if (model.getChecked()==0) {
+                    if (model.getChecked() == 0) {
                         model.setChecked(1);
-                    }else {
+                    } else {
                         model.setChecked(0);
                     }
                     adapter.notifyDataSetChanged();
                 });
-                if (model.getChecked()==1) {
+                if (model.getChecked() == 1) {
                     binding.tvContent.setTextColor(context.getResources().getColor(R.color.blueTextColor));
                     binding.tvContent.setBackgroundResource(R.drawable.shape_rect_radius19_blue);
                     binding.ivCheck.setVisibility(View.VISIBLE);
                     model.setChecked(1);
-                }else {
+                } else {
                     binding.ivCheck.setVisibility(View.GONE);
                     binding.tvContent.setTextColor(context.getResources().getColor(R.color.blackTextColor));
                     model.setChecked(0);
@@ -123,6 +127,16 @@ public class UnitCheckPopWindow extends PopupWindow {
             }
 
         };
+        /**
+         * 默认排序
+         */
+        Collections.sort(mFeeHouseList, new Comparator<BuildModel.GridRangeBean>() {
+            @Override
+            public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
+
+                return o1.getName().compareTo(o2.getName());//顺序
+            }
+        });
         adapter.setDataList(mFeeHouseList);
         recyclerview.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
         recyclerview.setAdapter(adapter);
@@ -144,10 +158,10 @@ public class UnitCheckPopWindow extends PopupWindow {
         //设置弹出窗体的背景
         this.setBackgroundDrawable(dw);
         backgroundAlpha(context, 1f);//0.0-1.0
-        setOnDismissListener(new OnDismissListener(){
+        setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
-               backgroundAlpha(context, 1f);
+                backgroundAlpha(context, 1f);
             }
         });
     }

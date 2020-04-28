@@ -35,5 +35,7 @@ public class LiveDataBusKey {
     public static final String  CUSTOMER_FRAGMENT_REFRESH="CUSTOMER_FRAGMENT_REFRESH";
     //房号界面分期点击关闭页面
     public static final String  KEY_DIVIDE_CLOSE="KEY_DIVIDE_CLOSE";
+    //修改展开更多按钮
+    public static final String  KEY_CHANEGE_LOAD_MORE="KEY_CHANEGE_LOAD_MORE";
 
 }

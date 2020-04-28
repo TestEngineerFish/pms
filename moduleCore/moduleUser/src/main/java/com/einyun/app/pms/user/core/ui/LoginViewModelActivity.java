@@ -110,7 +110,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     private void setUserList() {
         viewModel.loadAllUserName().observe(this, list -> {
-            Log.e("list", "" + list.size());
+//            Log.e("list", "" + list.size());
             if (list == null || list.size() == 0) {
                 return;
             }

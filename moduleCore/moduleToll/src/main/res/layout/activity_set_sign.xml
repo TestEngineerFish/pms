@@ -37,12 +37,21 @@
             />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="@dimen/px_10"
-            android:id="@+id/list_new_add"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30"
+            android:id="@+id/list_set_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:numColumns="3"
             android:verticalSpacing="5dp" />
+        <View
+            android:background="@color/thin_divider_color"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -62,7 +71,9 @@
                     />
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_marginTop="@dimen/px_10"
-                        android:id="@+id/list_had_add"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:id="@+id/list_get_sign"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"

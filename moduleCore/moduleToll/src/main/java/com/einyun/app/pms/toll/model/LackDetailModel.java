@@ -51,6 +51,7 @@ public class LackDetailModel {
         private String arrearsMonth;
         private String clientName;
         private String clientPhone;
+        private String clientId;
         private double feeAmount;
         private String houseInnerName;
         private String houseId;
@@ -110,6 +111,14 @@ public class LackDetailModel {
 
         public void setHouseId(String houseId) {
             this.houseId = houseId;
+        }
+
+        public String getClientId() {
+            return clientId==null?"":clientId;
+        }
+
+        public void setClientId(String clientId) {
+            this.clientId = clientId;
         }
 
         public static class UrgeListBean {

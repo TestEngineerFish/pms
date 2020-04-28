@@ -1,6 +1,7 @@
 package com.einyun.app.pms.toll.ui;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
@@ -29,25 +31,30 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
+import com.einyun.app.common.model.BuildModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.utils.ChineseSortUtilUnit;
 import com.einyun.app.common.utils.HanziToPinyin;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.pms.toll.BR;
 import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivityTollBuildBinding;
 import com.einyun.app.pms.toll.databinding.ActivityTollViewModelBinding;
 import com.einyun.app.pms.toll.databinding.ItemTollInListBinding;
 import com.einyun.app.pms.toll.databinding.ItemTollOutListBinding;
-import com.einyun.app.pms.toll.model.BuildModel;
+
 import com.einyun.app.pms.toll.model.DivideNameModel;
 import com.einyun.app.pms.toll.model.FeeModel;
 import com.einyun.app.pms.toll.model.FeeRequset;
+import com.einyun.app.pms.toll.model.WorthModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 import com.google.gson.Gson;
@@ -81,6 +88,7 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
     private BigDecimal mToallFee = new BigDecimal("0");
     private int mToallUsers;
     private AlertDialog alertDialog;
+    private AlertDialog alertDialog2;
     private AlertDialog sendDialog;
     int txDefaultPosSwitchSuqence = 0;
     private String blockName = "";
@@ -121,11 +129,11 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
         if (binding.llGrid.isShown()) {
             super.onBackOnClick(view);
         } else if (binding.llBuild.isShown()) {
-            hiddenAllView();
-            queryData(false);
+//            hiddenAllView();
+//            queryData(false);
         } else if (binding.llUnit.isShown()) {
-            hiddenAllView();
-            queryData(false);
+//            hiddenAllView();
+//            queryData(false);
         }
     }
 
@@ -134,11 +142,11 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
         if (binding.llGrid.isShown()) {
             super.onBackPressed();
         } else if (binding.llBuild.isShown()) {
-            hiddenAllView();
-            queryData(false);
+//            hiddenAllView();
+//            queryData(false);
         } else if (binding.llUnit.isShown()) {
-            hiddenAllView();
-            queryData(false);
+//            hiddenAllView();
+//            queryData(false);
         }
     }
 
@@ -159,8 +167,9 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 //                    binding.llSearch.setVisibility(View.GONE);
                     getAllFeeBuilds(grids);
                     binding.llGrid.setVisibility(View.VISIBLE);
+                    binding.rlTime.setVisibility(View.GONE);
 //                    queryGrid(divideId);
-//                    isSearch=false;
+
                 }
                 return false;
             }
@@ -233,6 +242,8 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
             binding.ivFeeUp.setImageResource(R.drawable.iv_sort_blue_up);
             sortFlag = FEE_UP;
         }
+        binding.llSortFee.setBackgroundResource(R.drawable.shape_rect_radius19_blue);
+        binding.tvFee.setTextColor(getResources().getColor(R.color.blueTextColor));
         adapter.notifyDataSetChanged();
     }
 
@@ -242,6 +253,10 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
         binding.ivFeeUp.setImageResource(R.drawable.iv_sort_grey_up);
         binding.ivBuildDown.setImageResource(R.drawable.iv_sort_grey_down);
         binding.ivBuildUp.setImageResource(R.drawable.iv_sort_grey_up);
+        binding.llSortBuild.setBackgroundResource(R.drawable.shape_white_big_radius_bg);
+        binding.llSortFee.setBackgroundResource(R.drawable.shape_white_big_radius_bg);
+        binding.tvBuild.setTextColor(getResources().getColor(R.color.greyTextColor));
+        binding.tvFee.setTextColor(getResources().getColor(R.color.greyTextColor));
     }
 
     /**
@@ -260,7 +275,8 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
             binding.ivBuildUp.setImageResource(R.drawable.iv_sort_blue_up);
             sortFlag = BUIDL_UP;
         }
-
+        binding.llSortBuild.setBackgroundResource(R.drawable.shape_rect_radius19_blue);
+        binding.tvBuild.setTextColor(getResources().getColor(R.color.blueTextColor));
         adapter.notifyDataSetChanged();
     }
 
@@ -269,10 +285,11 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
      */
 
     public void onCancleClick() {
+        LiveEventBus.get(LiveDataBusKey.KEY_CHANEGE_LOAD_MORE,Boolean.class).post(true);
         binding.llSearch.setVisibility(View.GONE);
         binding.llGrid.setVisibility(View.VISIBLE);
         binding.etSearch.setText("");
-        isSearch = true;
+        isSearch = false;
         getAllFeeBuilds(grids);
     }
 
@@ -342,9 +359,9 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
             public void onChanged(Boolean aBoolean) {
 
 //                hiddenAllView();
-                binding.llUnit.setVisibility(View.VISIBLE);
-                binding.llFeeYears.setVisibility(View.VISIBLE);
-                headBinding.tvRightTitle.setVisibility(View.VISIBLE);
+//                binding.llUnit.setVisibility(View.VISIBLE);
+//                binding.llFeeYears.setVisibility(View.VISIBLE);
+//                headBinding.tvRightTitle.setVisibility(View.VISIBLE);
 //                queryData(true);
                 reFreshHouseData();
             }
@@ -414,10 +431,10 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
      * 切换到单元列表
      */
     public void onBuildClick() {
-        binding.llUnit.setVisibility(View.GONE);
-        binding.llFeeYears.setVisibility(View.GONE);
-        headBinding.tvRightTitle.setVisibility(View.GONE);
-        binding.llBuild.setVisibility(View.VISIBLE);
+//        binding.llUnit.setVisibility(View.GONE);
+//        binding.llFeeYears.setVisibility(View.GONE);
+//        headBinding.tvRightTitle.setVisibility(View.GONE);
+//        binding.llBuild.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -453,47 +470,101 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
         if (!feeDivideId.isEmpty()) {
             FeeRequset feeRequset = new FeeRequset();
             feeRequset.setDivideId(feeDivideId);
-            viewModel.allWorth(feeRequset).observe(this, model -> {
+            viewModel.repository.allWorth(feeRequset, new CallBack<WorthModel>() {
+                @Override
+                public void call(WorthModel data) {
+                    hideLoading();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (data.getCode() == 0) {
+                                if (alertDialog == null) {
+                                    alertDialog = new AlertDialog(TollBuildActivity.this).builder().setTitle(getResources().getString(R.string.tip))
+                                            .setMsg(data.getMsg())
+                                            .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
 
-                if (model.getCode() == 0) {
-                    if (alertDialog == null) {
-                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                                .setMsg(model.getMsg())
-                                .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
+                                                }
+                                            });
+                                    alertDialog.show();
+                                } else {
+                                    if (!alertDialog.isShowing()) {
+                                        alertDialog.show();
                                     }
-                                });
-                        alertDialog.show();
-                    } else {
-                        if (!alertDialog.isShowing()) {
-                            alertDialog.show();
-                        }
-                    }
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("user_name", UserUtil.getUserName());
-                    MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
-                }else if (model.getCode()==500){
-                    if (alertDialog == null) {
-                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                                .setMsg("近期已催缴过，暂时无需催缴")
-                                .setMsgTwo(model.getMsg())
-                                .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
+                                }
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(TollBuildActivity.this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
+                            }else if (data.getCode()==500){
+                                if (alertDialog2 == null) {
+                                    alertDialog2 = new AlertDialog(TollBuildActivity.this).builder().setTitle(getResources().getString(R.string.tip))
+                                            .setMsg("近期已催缴过，暂时无需催缴")
+                                            .setMsgTwo(data.getMsg())
+                                            .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
 
+                                                }
+                                            });
+                                    alertDialog2.show();
+                                } else {
+                                    if (!alertDialog2.isShowing()) {
+                                        alertDialog2.show();
                                     }
-                                });
-                        alertDialog.show();
-                    } else {
-                        if (!alertDialog.isShowing()) {
-                            alertDialog.show();
+                                }
+                            }
+
                         }
-                    }
+                    });
                 }
 
+                @Override
+                public void onFaild(Throwable throwable) {
+                    hideLoading();
+                }
             });
+//            viewModel.allWorth(feeRequset).observe(this, model -> {
+//
+//                if (model.getCode() == 0) {
+//                    if (alertDialog == null) {
+//                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                                .setMsg(model.getMsg())
+//                                .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//
+//                                    }
+//                                });
+//                        alertDialog.show();
+//                    } else {
+//                        if (!alertDialog.isShowing()) {
+//                            alertDialog.show();
+//                        }
+//                    }
+//                    HashMap<String, String> map = new HashMap<>();
+//                    map.put("user_name", UserUtil.getUserName());
+//                    MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
+//                }else if (model.getCode()==500){
+//                    if (alertDialog == null) {
+//                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                                .setMsg("近期已催缴过，暂时无需催缴")
+//                                .setMsgTwo(model.getMsg())
+//                                .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//
+//                                    }
+//                                });
+//                        alertDialog.show();
+//                    } else {
+//                        if (!alertDialog.isShowing()) {
+//                            alertDialog.show();
+//                        }
+//                    }
+//                }
+//
+//            });
         }
     }
 
@@ -511,7 +582,10 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
      */
     public void onPlotClick() {
         //弹出分期view
-        initDivide();
+        if (IsFastClick.isFastDoubleClick()) {
+
+            initDivide();
+        }
     }
 
     private void initDivide() {
@@ -716,7 +790,6 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                         outListBindingbinding.rlUser.setVisibility(View.GONE);
                     } else {
                         outListBindingbinding.rlUser.setVisibility(View.VISIBLE);
-
                     }
 //                    Collections.sort(mFeeBuildList2, new Comparator<BuildModel.GridRangeBean>() {
 //                        @Override
@@ -740,7 +813,7 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                                     return HanziToPinyin.getStr(o1.getName()).compareTo(HanziToPinyin.getStr(o2.getName()));//顺序
 //                                    return o2.getName().compareTo(o1.getName());//顺序
                                 case FEE_DOWN:
-                                    if (Double.parseDouble(o1.getFeeTotal()) - Double.parseDouble(o2.getFeeTotal())>0) {
+                                    if (Double.parseDouble(o2.getFeeTotal()) - Double.parseDouble(o1.getFeeTotal())>0) {
                                         return 1;
                                     }else {
                                         return  -1;
@@ -749,7 +822,7 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 //                                return o1.getFeeTotal().compareTo(o2.getFeeTotal());//顺序
 
                                 case FEE_UP:
-                                    if (Double.parseDouble(o2.getFeeTotal()) - Double.parseDouble(o1.getFeeTotal())>0) {
+                                    if (Double.parseDouble(o1.getFeeTotal()) - Double.parseDouble(o2.getFeeTotal())>0) {
                                         return 1;
                                     }else {
                                         return  -1;
@@ -758,10 +831,13 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 //                                    return o2.getFeeTotal().compareTo(o1.getFeeTotal());//顺序
 
                             }
-
                             return HanziToPinyin.getStr(o1.getName()).compareTo(HanziToPinyin.getStr(o2.getName()));//顺序
                         }
                     });
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        sort(mFeeBuildList2);
+                    }
 
 //                        outListBindingbinding.tvToallUsers.setText("总户数："+mToallUsers);
 //                        outListBindingbinding.tvToallFee.setText("欠费："+mToallFee);
@@ -771,7 +847,13 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                     if (isShowFee == 0) {
                         binding.rlTime.setVisibility(View.GONE);
                     } else {
-                        binding.rlTime.setVisibility(View.VISIBLE);
+                        if (isSearch) {
+
+                            binding.rlTime.setVisibility(View.GONE);
+                        }else {
+                            binding.rlTime.setVisibility(View.VISIBLE);
+
+                        }
 
                     }
 
@@ -926,6 +1008,12 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                         outListBindingbinding.llMore.setVisibility(View.GONE);
                         inAdapter.setDataList(mFeeBuildList2);
                     }
+                    LiveEventBus.get(LiveDataBusKey.KEY_CHANEGE_LOAD_MORE,Boolean.class).observe(TollBuildActivity.this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean aBoolean) {
+                            outListBindingbinding.tvMore.setText("展开全部");
+                        }
+                    });
                     outListBindingbinding.llMore.setOnClickListener(view -> {
 //                        inAdapter.setDataList(mFeeBuildList2);
                         gridModel.setLoadMore(false);
@@ -985,9 +1073,9 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                         mHouseToallUsers = 0;
                         mHouseToallFee = new BigDecimal("0").setScale(0);
                         binding.llBuild.setVisibility(View.GONE);
-                        binding.llUnit.setVisibility(View.VISIBLE);
-                        binding.llFeeYears.setVisibility(View.VISIBLE);
-                        headBinding.tvRightTitle.setVisibility(View.VISIBLE);
+//                        binding.llUnit.setVisibility(View.VISIBLE);
+//                        binding.llFeeYears.setVisibility(View.VISIBLE);
+//                        headBinding.tvRightTitle.setVisibility(View.VISIBLE);
                         for (BuildModel.GridRangeBean gridRangeBean : mHouseList) {
                             if (gridRangeBean.getParentId().equals(inquiriesItemModule.getId())) {
                                 mHouseList2.add(gridRangeBean);
@@ -1077,6 +1165,24 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 //        inAdapter.setOnItemClick(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void sort(List<BuildModel.GridRangeBean> list) {
+
+        switch (sortFlag) {
+            case BUIDL_UP:
+
+                ChineseSortUtilUnit.transferListBuild(list);
+                break;
+            case BUIDL_DOWN:
+                ChineseSortUtilUnit.transferListBuildDown(list);
+                break;
+//                                    return o2.getName().compareTo(o1.getName());//顺序
+        }
+        if (sortFlag.equals("")) {
+            ChineseSortUtilUnit.transferListBuild(list);
+        }
+    }
+
     private List<GridModel> grids = new ArrayList<>();
     private static final String TAG = "TollViewModelActivity";
 
@@ -1098,10 +1204,10 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 
                 if (grids.size() == 0) {
                     binding.rlEmpty.setVisibility(View.VISIBLE);
-                    binding.rlTime.setVisibility(View.GONE);
+//                    binding.rlTime.setVisibility(View.GONE);
                 } else {
                     binding.rlEmpty.setVisibility(View.GONE);
-                    binding.rlTime.setVisibility(View.VISIBLE);
+//                    binding.rlTime.setVisibility(View.VISIBLE);
 
                 }
                 getAllFeeBuilds(grids);
@@ -1124,8 +1230,8 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-
-        hiddenAllView();
+        LiveEventBus.get(LiveDataBusKey.KEY_CHANEGE_LOAD_MORE,Boolean.class).post(true);
+//        hiddenAllView();
         binding.rlTime.setVisibility(View.GONE);
         flag = true;
         mToallUsers = 0;
@@ -1155,11 +1261,22 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
             viewModel.getLastWorthTime(feeDivideId).observe(this, model2 -> {
 
                 if (model2.getData() == null) {
-                    binding.rlTime.setVisibility(View.GONE);
+                    if (isSearch) {
+
+                        binding.rlTime.setVisibility(View.GONE);
+                    }else {
+
+                        binding.rlTime.setVisibility(View.GONE);
+                    }
                 } else {
                     if (grids.size() != 0) {
 
-                        binding.rlTime.setVisibility(View.VISIBLE);
+                        if (isSearch) {
+
+                            binding.rlTime.setVisibility(View.GONE);
+                        }else {
+                            binding.rlTime.setVisibility(View.VISIBLE);
+                        }
                     }
                     String urgeDate = model2.getData().getUrgeDate();
                     String substring = urgeDate.substring(0, 10);
@@ -1191,6 +1308,13 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
     protected void onDestroy() {
         super.onDestroy();
         new GridModel().setLoadMore(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LiveEventBus.get(LiveDataBusKey.KEY_CHANEGE_LOAD_MORE,Boolean.class).post(true);
+        queryData(false);
     }
 
     @Override

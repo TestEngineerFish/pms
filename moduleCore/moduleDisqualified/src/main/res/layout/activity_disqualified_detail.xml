@@ -62,6 +62,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_unquality_order_code" />
                              <TextView
+                                 android:id="@+id/tv_code"
                                  android:text="@{model.data.unqualified_model.code}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -71,6 +72,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_unquality_create_time" />
                              <TextView
+                                 android:id="@+id/tv_create_time"
                                  android:text="@{model.data.unqualified_model.created_time}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -80,6 +82,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_unquality_divide" />
                              <TextView
+                                 android:id="@+id/tv_divide"
                                  android:text="@{model.data.unqualified_model.divide_name}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -89,6 +92,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_unquality_check_date" />
                              <TextView
+                                 android:id="@+id/tv_check_date"
                                  android:text="@{model.data.unqualified_model.check_date}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -98,6 +102,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_unquality_ques_desc" />
                              <TextView
+                                 android:id="@+id/tv_que_desc"
                                  android:text="@{model.data.unqualified_model.problem_description}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -126,6 +131,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_unquality_correct_date" />
                              <TextView
+                                 android:id="@+id/tv_cor_date"
                                  android:text="@{model.data.unqualified_model.correction_date}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
@@ -135,6 +141,7 @@
                                  style="@style/style_text_approval_left"
                                  android:text="@string/tv_checked_user" />
                              <TextView
+                                 android:id="@+id/tv_checked_person"
                                  android:text="@{model.data.unqualified_model.checked_user_name}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>

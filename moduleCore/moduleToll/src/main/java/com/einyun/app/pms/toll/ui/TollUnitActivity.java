@@ -37,6 +37,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.utils.ChineseSortUtilUnit;
 import com.einyun.app.common.utils.HanziToPinyin;
 import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.UserUtil;
@@ -47,7 +48,7 @@ import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivityTollUnitBinding;
 import com.einyun.app.pms.toll.databinding.ItemTollInListBinding;
 import com.einyun.app.pms.toll.databinding.ItemTollOutListBinding;
-import com.einyun.app.pms.toll.model.BuildModel;
+import com.einyun.app.common.model.BuildModel;
 import com.einyun.app.pms.toll.model.DivideNameModel;
 import com.einyun.app.pms.toll.model.FeeModel;
 import com.einyun.app.pms.toll.model.FeeRequset;
@@ -142,6 +143,35 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
         }
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void sort(List<BuildModel.GridRangeBean> list) {
+
+//        switch (sortFlag) {
+//            case BUIDL_UP:
+//
+//                ChineseSortUtilUnit.transferListBuild(list);
+//                break;
+//            case BUIDL_DOWN:
+//                ChineseSortUtilUnit.transferListBuildDown(list);
+//                break;
+////                                    return o2.getName().compareTo(o1.getName());//顺序
+//        }
+        if (sortFlag.equals("")) {
+//            ChineseSortUtilUnit.transferListBuild(list);
+            Collections.sort(list, new Comparator<BuildModel.GridRangeBean>() {
+                @Override
+                public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
+                    if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
+                        return 1;
+                    } else if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) < 0) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+    }
     /**
      * 搜索按钮
      */
@@ -186,6 +216,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
             binding.ivFeeUp.setImageResource(R.drawable.iv_sort_blue_up);
             sortFlag = FEE_UP;
         }
+        binding.llFeeSort.setBackgroundResource(R.drawable.shape_rect_radius19_blue);
+        binding.tvFee.setTextColor(getResources().getColor(R.color.blueTextColor));
 //        unitAdapter.notifyDataSetChanged();
 //        reFreshHouseData(feeHouseRequset);
         ArrayList<String> houseBuilds = new ArrayList<>();
@@ -213,6 +245,10 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
         binding.ivFeeUp.setImageResource(R.drawable.iv_sort_grey_up);
         binding.ivBuildDown.setImageResource(R.drawable.iv_sort_grey_down);
         binding.ivBuildUp.setImageResource(R.drawable.iv_sort_grey_up);
+        binding.llSortBuild.setBackgroundResource(R.drawable.shape_white_big_radius_bg);
+        binding.llFeeSort.setBackgroundResource(R.drawable.shape_white_big_radius_bg);
+        binding.tvBuild.setTextColor(getResources().getColor(R.color.greyTextColor));
+        binding.tvFee.setTextColor(getResources().getColor(R.color.greyTextColor));
         if (!isSort) {
             binding.tvAll.setText("全部");
         }
@@ -235,7 +271,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
             binding.ivBuildUp.setImageResource(R.drawable.iv_sort_blue_up);
             sortFlag = BUIDL_UP;
         }
-
+        binding.llSortBuild.setBackgroundResource(R.drawable.shape_rect_radius19_blue);
+        binding.tvBuild.setTextColor(getResources().getColor(R.color.blueTextColor));
 //        unitAdapter.notifyDataSetChanged();
 //        reFreshHouseData(feeHouseRequset);
         ArrayList<String> houseBuilds = new ArrayList<>();
@@ -286,13 +323,18 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                 mFeeCheckUnitList.addAll(mFeeUnitList);
 
                 name.append(","+gridRangeBean.getName());
+
             }
 
         }
         if (name.length()>0) {
             String substring = name.substring(1, name.length());
             binding.tvAll.setText(substring);
+            binding.tvAll.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.rlUnit.setBackgroundResource(R.drawable.shape_rect_radius19_blue);
         }else {
+            binding.rlUnit.setBackgroundResource(R.drawable.shape_white_big_radius_bg);
+            binding.tvAll.setTextColor(getResources().getColor(R.color.greyTextColor));
             binding.tvAll.setText("全部");
         }
 
@@ -356,6 +398,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
 
     private void initFeeView() {
         initSortView(false);
+        binding.rlUnit.setBackgroundResource(R.drawable.shape_white_big_radius_bg);
+        binding.tvAll.setTextColor(getResources().getColor(R.color.greyTextColor));
         mFeeCheckUnitList.clear();
         binding.tvFee1.setTextColor(getResources().getColor(R.color.blackTextColor));
         binding.ivLine1.setBackgroundColor(getResources().getColor(R.color.white));
@@ -405,7 +449,7 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
         setRightTxt(R.string.tv_change_trun);
         headBinding.tvRightTitle.setVisibility(View.GONE);
         setRightTxtColor(R.color.blueTextColor);
-
+        binding.tvBuildName.setText(mBuildName+("(0户)"));
         setRightOption(R.mipmap.icon_search);
         binding.setCallBack(this);
         divideName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
@@ -484,7 +528,13 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                 BuildModel.GridRangeBean build = new BuildModel.GridRangeBean();
                 build.setFeeAmount(feeListBean.getFeeAmount());
                 build.setType(feeListBean.getType());
-                build.setName(feeListBean.getName());
+                for (BuildModel.GridRangeBean gridRangeBean : mFeeUnitList) {
+                    if (gridRangeBean.getId().equals(feeListBean.getUnitId())) {
+
+                        build.setName(gridRangeBean.getName()+"-"+feeListBean.getName());
+                    }
+                }
+                build.setCode(feeListBean.getName());
                 build.setId(feeListBean.getHouseId());
                 build.setHouseTotal(feeListBean.getHouseTotal());
                 build.setArrearsLevel(feeListBean.getArrearsLevel());
@@ -642,6 +692,20 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
     }
 
     private void sortAccondType(List<BuildModel.GridRangeBean> list) {
+        Collections.sort(list, new Comparator<BuildModel.GridRangeBean>() {
+            @Override
+            public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
+                if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
+                    return 1;
+                } else if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) < 0) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+
+
+        });
         /**
          * 根据外面点击楼栋 欠费排序
          */
@@ -650,18 +714,13 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
             public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
                 switch (sortFlag) {
                     case BUIDL_UP:
-                        return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
+
+
+
+                        return Integer.parseInt(viewModel.getNum(o1.getCode()))-Integer.parseInt(viewModel.getNum(o2.getCode()));//顺序
                     case BUIDL_DOWN:
-                        return HanziToPinyin.getStr(o1.getName()).compareTo(HanziToPinyin.getStr(o2.getName()));//顺序
+                        return Integer.parseInt(viewModel.getNum(o2.getCode()))-Integer.parseInt(viewModel.getNum(o1.getCode()));//顺序
                     case FEE_DOWN:
-                        if (o1.getFeeAmount().subtract(o2.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
-                            return 1;
-                        } else if (o1.getFeeAmount().subtract(o2.getFeeAmount()).compareTo(BigDecimal.ZERO) < 0) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    case FEE_UP:
                         if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
                             return 1;
                         } else if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) < 0) {
@@ -669,10 +728,21 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                         } else {
                             return 0;
                         }
+                    case FEE_UP:
+                        if (o1.getFeeAmount().subtract(o2.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
+                            return 1;
+                        } else if (o1.getFeeAmount().subtract(o2.getFeeAmount()).compareTo(BigDecimal.ZERO) < 0) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
                 }
-                return HanziToPinyin.getStr(o1.getName()).compareTo(HanziToPinyin.getStr(o2.getName()));//顺序
+                return HanziToPinyin.getStr(o1.getCode()).compareTo(HanziToPinyin.getStr(o2.getCode()));//顺序
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sort(list);
+        }
         unitAdapter.setDataList(list);
     }
 
@@ -706,7 +776,13 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                          BuildModel.GridRangeBean build = new BuildModel.GridRangeBean();
                          build.setFeeAmount(feeListBean.getFeeAmount());
                          build.setType(feeListBean.getType());
-                         build.setName(feeListBean.getName());
+                         for (BuildModel.GridRangeBean gridRangeBean : mFeeUnitList) {
+                             if (gridRangeBean.getId().equals(feeListBean.getUnitId())) {
+
+                                 build.setName(gridRangeBean.getName()+"-"+feeListBean.getName());
+                             }
+                         }
+                         build.setCode(feeListBean.getName());
                          build.setId(feeListBean.getHouseId());
                          build.setHouseTotal(feeListBean.getHouseTotal());
                          build.setArrearsLevel(feeListBean.getArrearsLevel());
@@ -773,6 +849,20 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
 //
 //                         }
 //                     });
+                     Collections.sort(mFeeHouseList, new Comparator<BuildModel.GridRangeBean>() {
+                         @Override
+                         public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
+                                     if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
+                                         return 1;
+                                     } else if (o2.getFeeAmount().subtract(o1.getFeeAmount()).compareTo(BigDecimal.ZERO) < 0) {
+                                         return -1;
+                                     } else {
+                                         return 0;
+                                     }
+                             }
+
+
+                     });
                      /**
                       * 根据外面点击楼栋 欠费排序
                       */
@@ -782,9 +872,11 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                          public int compare(BuildModel.GridRangeBean o1, BuildModel.GridRangeBean o2) {
                              switch (sortFlag) {
                                  case BUIDL_UP:
-                                     return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
+                                     return Integer.parseInt(viewModel.getNum(o2.getCode()))-Integer.parseInt(viewModel.getNum(o1.getCode()));
+//                                     return HanziToPinyin.getStr(o2.getCode()).compareTo(HanziToPinyin.getStr(o1.getCode()));//顺序
                                  case BUIDL_DOWN:
-                                     return HanziToPinyin.getStr(o1.getName()).compareTo(HanziToPinyin.getStr(o2.getName()));//顺序
+                                     return Integer.parseInt(viewModel.getNum(o1.getCode()))-Integer.parseInt(viewModel.getNum(o2.getCode()));
+//                                     return HanziToPinyin.getStr(o1.getCode()).compareTo(HanziToPinyin.getStr(o2.getCode()));//顺序
                                  case FEE_DOWN:
                                      if (o1.getFeeAmount().subtract(o2.getFeeAmount()).compareTo(BigDecimal.ZERO) > 0) {
                                          return 1;
@@ -806,19 +898,24 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
 //                                 case FEE_UP:
 //                                     return (int) (Double.parseDouble(String.valueOf(o2.getFeeAmount())) - Double.parseDouble(String.valueOf(o1.getFeeAmount())));
                              }
-                             return HanziToPinyin.getStr(o1.getName()).compareTo(HanziToPinyin.getStr(o2.getName()));//顺序
+                             return HanziToPinyin.getStr(o1.getCode()).compareTo(HanziToPinyin.getStr(o2.getCode()));//顺序
                          }
                      });
-
+                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                         sort(mFeeHouseList);
+                     }
                      if (isSearch) {
                          unitAdapter.setDataList(mFeeHouseList);
                      }else {
 
                          if (feeType==1) {
+                             sortAccondType(mFeePreviousList);
                              unitAdapter.setDataList(mFeePreviousList);
                          }else if (feeType==2){
+                             sortAccondType(mFeeCurrentList);
                              unitAdapter.setDataList(mFeeCurrentList);
                          }else if (feeType==3){
+                             sortAccondType(mFeeNoList);
                              unitAdapter.setDataList(mFeeNoList);
                          }else {
                              unitAdapter.setDataList(mFeeHouseList);
@@ -930,8 +1027,8 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
      * 切换到楼栋列表
      */
     public void onGridClick() {
-        binding.llBuild.setVisibility(View.GONE);
-        binding.llGrid.setVisibility(View.VISIBLE);
+//        binding.llBuild.setVisibility(View.GONE);
+//        binding.llGrid.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -1035,7 +1132,7 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                             case 2://今年欠费
                                 ARouter.getInstance()
                                         .build(RouterUtils.ACTIVITY_LACK_DETAIL)
-                                        .withString(RouteKey.HOUSE_TITLE, binding.tvBuild2.getText().toString() + binding.tvUnit2.getText().toString() + inquiriesItemModule.getName())
+                                        .withString(RouteKey.HOUSE_TITLE, mBuildName+inquiriesItemModule.getName())
                                         .withString(RouteKey.KEY_DIVIDE_ID, mFeeDivideId)
                                         .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
                                         .withString(RouteKey.NAME, inquiriesItemModule.getName())
@@ -1046,7 +1143,7 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                             case 3://暂无欠费
                                 ARouter.getInstance()
                                         .build(RouterUtils.ACTIVITY_PAYMENT_ADVANCE)
-                                        .withString(RouteKey.HOUSE_TITLE, binding.tvBuild2.getText().toString() + binding.tvUnit2.getText().toString() + inquiriesItemModule.getName())
+                                        .withString(RouteKey.HOUSE_TITLE,mBuildName+inquiriesItemModule.getName())
                                         .withString(RouteKey.KEY_DIVIDE_ID, mFeeDivideId)
                                         .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
                                         .withString(RouteKey.NAME, inquiriesItemModule.getName())
@@ -1184,6 +1281,12 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
     }
 
     boolean flag = true;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reFreshHouseData(feeHouseRequset);
+    }
 
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {

@@ -23,8 +23,10 @@ import com.einyun.app.pms.toll.model.FeeDetailRequset;
 import com.einyun.app.pms.toll.model.FeeModel;
 import com.einyun.app.pms.toll.model.FeeRequset;
 import com.einyun.app.pms.toll.model.FeeSucInfoModel;
+import com.einyun.app.pms.toll.model.GetLogoModel;
 import com.einyun.app.pms.toll.model.GetNameModel;
 import com.einyun.app.pms.toll.model.GetNameRequset;
+import com.einyun.app.pms.toll.model.GetSignModel;
 import com.einyun.app.pms.toll.model.JumpAdvanceRequset;
 import com.einyun.app.pms.toll.model.JumpRequest;
 import com.einyun.app.pms.toll.model.JumpVerityModel;
@@ -36,6 +38,7 @@ import com.einyun.app.pms.toll.model.QrCodeRequest;
 import com.einyun.app.pms.toll.model.QueryFeedDetailsInfoRequest;
 import com.einyun.app.pms.toll.model.QueryOrderStateRequest;
 import com.einyun.app.pms.toll.model.QueryStateModel;
+import com.einyun.app.pms.toll.model.SetSignModel;
 import com.einyun.app.pms.toll.model.TollModel;
 import com.einyun.app.pms.toll.model.WorthModel;
 import com.einyun.app.pms.toll.model.WorthTimeModel;
@@ -147,6 +150,50 @@ public class TollViewModel extends BaseViewModel {
             }
         });
         return feeDetailModule;
+    }
+
+    /**
+     * 获取打标签
+     */
+    private MutableLiveData<GetSignModel> getSignModule = new MutableLiveData<>();
+
+    public LiveData<GetSignModel> getSign(FeeDetailRequset requset) {
+        showLoading();
+        repository.getSign(requset, new CallBack<GetSignModel>() {
+            @Override
+            public void call(GetSignModel data) {
+                hideLoading();
+                getSignModule.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return getSignModule;
+    }
+
+    /**
+     * 打标签
+     */
+    private MutableLiveData<SetSignModel> setSignModule = new MutableLiveData<>();
+
+    public LiveData<SetSignModel> setSign(FeeDetailRequset requset) {
+        showLoading();
+        repository.setSign(requset, new CallBack<SetSignModel>() {
+            @Override
+            public void call(SetSignModel data) {
+                hideLoading();
+                setSignModule.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return setSignModule;
     }
 
     /**
@@ -496,6 +543,7 @@ public class TollViewModel extends BaseViewModel {
         });
         return getLastWorthTime;
     }
+
     /**
      * 获取dickey
      */
@@ -517,6 +565,29 @@ public class TollViewModel extends BaseViewModel {
         });
         return getDicKeyModel;
     }
+
+    /**
+     * 获取logo
+     */
+    private MutableLiveData<GetLogoModel> getLogoModel = new MutableLiveData<>();
+
+    public LiveData<GetLogoModel> getLogo(String did) {
+//        showLoading();
+        repository2.getLogo(did, new CallBack<GetLogoModel>() {
+            @Override
+            public void call(GetLogoModel data) {
+                hideLoading();
+                getLogoModel.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return getLogoModel;
+    }
+
     /**
      * 判断字符串是否全为英文
      *
@@ -543,6 +614,7 @@ public class TollViewModel extends BaseViewModel {
         // System.out.println(result1+"--"+result2+"--"+result3				+"--"+result4+"--"+result5+"--"+result6);
     }
 
+
     /**
      * 获取用户Id
      *
@@ -550,5 +622,19 @@ public class TollViewModel extends BaseViewModel {
      */
     public String getUserId() {
         return userModuleService.getUserId();
+    }
+
+    public  String getNum(String str) {
+        str = str.trim();
+        String str2 = "";
+        if (str != null && !"".equals(str)) {
+            for (int i = 0; i < str.length(); i++) {
+                if (str.charAt(i) >= 48 && str.charAt(i) <= 57) {
+                    str2 += str.charAt(i);
+                }
+
+            }
+        }
+        return str2;
     }
 }

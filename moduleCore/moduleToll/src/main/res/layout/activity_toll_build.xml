@@ -116,6 +116,7 @@
                 android:layout_alignParentBottom="true">
 
                 <LinearLayout
+                    android:id="@+id/ll_sort_build"
                     android:layout_marginLeft="@dimen/px_30"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/px_60"
@@ -123,9 +124,11 @@
                     android:onClick="@{()->callBack.onBuildSort()}">
 
                     <TextView
+                        android:id="@+id/tv_build"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/px_30"
+                        android:textColor="@color/greyTextColor"
                         android:gravity="center_vertical"
                         android:text="楼栋" />
 
@@ -154,6 +157,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_sort_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/px_60"
                     android:layout_marginLeft="@dimen/px_14"
@@ -161,6 +165,8 @@
                     android:onClick="@{()->callBack.onFeeSort()}">
 
                     <TextView
+                        android:textColor="@color/greyTextColor"
+                        android:id="@+id/tv_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/px_30"
@@ -193,6 +199,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:focusable="true"
+                android:clickable="true"
                 android:id="@+id/ll_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

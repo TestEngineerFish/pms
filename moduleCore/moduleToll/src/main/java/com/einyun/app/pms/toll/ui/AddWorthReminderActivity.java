@@ -65,7 +65,7 @@ public class AddWorthReminderActivity extends BaseHeadViewModelActivity<Activity
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
-        setHeadTitle(R.string.tv_add_worth_reminder);
+        setHeadTitle(R.string.tv_ad);
     }
 
     @Override
@@ -117,6 +117,7 @@ public class AddWorthReminderActivity extends BaseHeadViewModelActivity<Activity
         choosePayDate();
     }
 
+    private static final String TAG = "AddWorthReminderActivit";
     /**
      * 日期选择
      */
@@ -126,9 +127,18 @@ public class AddWorthReminderActivity extends BaseHeadViewModelActivity<Activity
             @Override
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat dft = new SimpleDateFormat("yyyy/MM/dd");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 binding.tvDate.setText(dft.format(date));
-                formatDate = FormatUtil.dateToStrLong(date);
+                if (FormatUtil.isToday(date)) {
 
+                    formatDate = FormatUtil.dateToStrLong(date);
+                }else {
+                    String format = formatter.format(date);
+
+                    formatDate=format+" 00:00:00";
+                }
+
+                Log.e(TAG, "onTimeSelect: "+formatDate);
 
             }
         }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示

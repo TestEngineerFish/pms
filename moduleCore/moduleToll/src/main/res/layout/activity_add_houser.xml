@@ -68,6 +68,7 @@
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_name"
+                        android:singleLine="true"
                         style="@style/style_toll_add_houser_right_text"
                         android:hint="@string/please_input" />
 
@@ -156,6 +157,7 @@
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_id_num"
+                        android:singleLine="true"
                         android:maxLength="20"
                         android:hint="@string/please_input"
                         style="@style/style_toll_add_houser_right_text" />

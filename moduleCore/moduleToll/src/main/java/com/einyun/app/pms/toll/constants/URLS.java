@@ -45,5 +45,11 @@ public class URLS {
     public static final String URL_GET_ADD_HOUSER =relaseBasesUrl+"/v1/house/bindHouseOwner";
     //添加住户
     public static final String URL_GET_DICKEY =relaseBasesUrl+"/v1/house/getOwnerType/";
+    //获取标签
+    public static final String URL_GET_SIGN=relaseBasesUrl+"/v1/house/getLableByHouse";
+    //打标签
+    public static final String URL_SET_SIGN =relaseBasesUrl+"/v1/house/AddLable";
+    //获取租户logo
+    public static final String URL_GET_TENANT_LOGO ="/datasource/api/saas/v1/tenant/get/";
 
 }

@@ -1,6 +1,7 @@
 package com.einyun.app.pms.toll.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
@@ -29,9 +31,12 @@ import com.einyun.app.pms.toll.databinding.ItemLackRecordBinding;
 import com.einyun.app.pms.toll.model.CreateOrderRequest;
 import com.einyun.app.pms.toll.model.FeeDetailRequset;
 import com.einyun.app.pms.toll.model.FeeRequset;
+import com.einyun.app.pms.toll.model.GetSignModel;
 import com.einyun.app.pms.toll.model.JumpRequest;
+import com.einyun.app.pms.toll.model.JumpVerityModel;
 import com.einyun.app.pms.toll.model.LackDetailModel;
 import com.einyun.app.pms.toll.model.TollModel;
+import com.einyun.app.pms.toll.model.WorthModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModel;
 import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 import com.umeng.analytics.MobclickAgent;
@@ -68,7 +73,10 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
     private String clientPhone = "";
     private String starsPhone = "";
     private AlertDialog alertAddDialog;
-
+    private FeeDetailRequset mRequset;
+//    private AlertDialog alertDialog;
+    private AlertDialog alertDialog2;
+    private AlertDialog sendDialog;
     //    public  static LackDetailViewModelActivity instance;
     @Override
     protected TollViewModel initViewModel() {
@@ -143,7 +151,9 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                         if ("".equals(startName)) {
                             binding.tvWorkNumNoData.setVisibility(View.VISIBLE);
                             binding.tvWorkNum.setVisibility(View.GONE);
+                            binding.tvSignNo.setVisibility(View.GONE);
                         } else {
+                            binding.tvSignNo.setVisibility(View.VISIBLE);
                             binding.tvWorkNumNoData.setVisibility(View.GONE);
                             binding.tvWorkNum.setVisibility(View.VISIBLE);
                             binding.tvWorkNum.setText(startName);
@@ -161,6 +171,50 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                         initHistoryList(data.getUrgeList());
                         String name = binding.tvWorkNum.getText().toString();
                         allName = name + "(" + divideName + title + ")";
+                        mRequset = new FeeDetailRequset();
+                        mRequset.setDivideId(divideId);
+                        mRequset.setClientId(data.getClientId());
+                        viewModel.repository.getSign(mRequset, new CallBack<GetSignModel>() {
+                            @Override
+                            public void call(GetSignModel data) {
+                                hideLoading();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (data == null || data.getData() == null) {
+                                            return;
+                                        }
+                                        List<GetSignModel.DataBean.TagListBean> mTagLists = data.getData().getTagList();
+
+                                        if (mTagLists == null || mTagLists.size() == 0) {
+                                            binding.tvSignNo.setText("打标签");
+                                        } else {
+                                            binding.tvSignNo.setText("查看标签");
+
+                                        }
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                hideLoading();
+                            }
+                        });
+//                        viewModel.getSign(mRequset).observe(LackDetailViewModelActivity.this, model -> {
+//                            if (model==null||model.getData()==null) {
+//                                return;
+//                            }
+//                            List<GetSignModel.DataBean.TagListBean> mTagLists = model.getData().getTagList();
+//
+//                            if (mTagLists == null||mTagLists.size()==0) {
+//                                binding.tvSignNo.setText("打标签");
+//                            }else {
+//                                binding.tvSignNo.setText("查看标签");
+//
+//                            }
+//                        });
                     }
                 });
             }
@@ -252,12 +306,14 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                     String substring2 = s2.substring(0, 5);
 
 //                    bind.tvTime.setText(substring + " " + substring2);
-                    bind.tvTime.setText(urgeDate.substring(0,urgeDate.length()-3));
+                    bind.tvTime.setText(urgeDate.substring(0, urgeDate.length() - 3));
                 }
                 bind.tvName.setText(model.getUser());
                 if (model.getType() == 0) {
                     bind.tvWorthType.setText("系统催缴");
+                    bind.tvContent.setVisibility(View.GONE);
                 } else {
+                    bind.tvContent.setVisibility(View.VISIBLE);
                     bind.tvWorthType.setText("线下催缴");
                 }
 
@@ -304,8 +360,10 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
      */
     public void onAddSignClick() {
         if (!IsFastClick.isFastDoubleClick()) return;
+        if (data == null) return;
         ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN)
                 .withString(RouteKey.HOUSE_ID, houseIdJump)
+                .withString(RouteKey.CLIENT_ID, data.getClientId())
                 .withString(RouteKey.KEY_DIVIDE_ID, divideId)
                 .navigation();
     }
@@ -326,82 +384,238 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
      * 催缴
      */
     public void onRejectClick() {
-        ArrayList<String> builds = new ArrayList<>();
-        builds.add(houseId);
-        FeeRequset feeRequset = new FeeRequset();
-        feeRequset.setDivideId(divideId);
-        feeRequset.setHouseIdS(builds);
-        viewModel.allWorth(feeRequset).observe(this, model -> {
-            if (model.getCode() == 0) {
-                HashMap<String, String> map = new HashMap<>();
-                map.put("user_name", UserUtil.getUserName());
-                MobclickAgent.onEvent(this, CustomEventTypeEnum.SINGLE_WORTH.getTypeName(), map);
-                if (alertDialog == null) {
-                    alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                            .setMsg("催缴消息已发送成功！")
-                            .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    getData();
+
+//        viewModel.allWorth(feeRequset).observe(this, model -> {
+//            if (model.getCode() == 0) {
+//                HashMap<String, String> map = new HashMap<>();
+//                map.put("user_name", UserUtil.getUserName());
+//                MobclickAgent.onEvent(this, CustomEventTypeEnum.SINGLE_WORTH.getTypeName(), map);
+//                if (alertDialog == null) {
+//                    alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                            .setMsg("催缴消息已发送成功！")
+//                            .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    getData();
+//                                }
+//                            });
+//                    alertDialog.show();
+//                } else {
+//                    if (!alertDialog.isShowing()) {
+//                        alertDialog.show();
+//                    }
+//                }
+//
+//            }
+//        });
+        if (sendDialog == null) {
+            sendDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                    .setMsg("确认向业主发送催缴信息通知？")
+                    .setNegativeButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            feeDialog();
+                        }
+                    });
+            sendDialog.show();
+        } else {
+            if (!sendDialog.isShowing()) {
+                sendDialog.show();
+            }
+        }
+    }
+    private void feeDialog() {
+        if (!divideId.isEmpty()) {
+//            FeeRequset feeRequset = new FeeRequset();
+//            feeRequset.setDivideId(feeDivideId);
+            ArrayList<String> builds = new ArrayList<>();
+            builds.add(houseId);
+            FeeRequset feeRequset = new FeeRequset();
+            feeRequset.setDivideId(divideId);
+            feeRequset.setHouseIdS(builds);
+            viewModel.repository.allWorth(feeRequset, new CallBack<WorthModel>() {
+                @Override
+                public void call(WorthModel data) {
+                    hideLoading();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (data.getCode() == 0) {
+                                if (alertDialog == null) {
+                                    alertDialog = new AlertDialog(LackDetailViewModelActivity.this).builder().setTitle(getResources().getString(R.string.tip))
+                                            .setMsg("催缴成功")
+                                            .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    getData();
+                                                }
+                                            });
+                                    alertDialog.show();
+                                } else {
+                                    if (!alertDialog.isShowing()) {
+                                        alertDialog.show();
+                                    }
                                 }
-                            });
-                    alertDialog.show();
-                } else {
-                    if (!alertDialog.isShowing()) {
-                        alertDialog.show();
-                    }
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(LackDetailViewModelActivity.this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
+                            }else if (data.getCode()==500){
+                                if (alertDialog2 == null) {
+                                    alertDialog2 = new AlertDialog(LackDetailViewModelActivity.this).builder().setTitle(getResources().getString(R.string.tip))
+                                            .setMsg("近期已催缴过，暂时无需催缴")
+                                            .setMsgTwo(data.getMsg())
+                                            .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+
+                                                }
+                                            });
+                                    alertDialog2.show();
+                                } else {
+                                    if (!alertDialog2.isShowing()) {
+                                        alertDialog2.show();
+                                    }
+                                }
+                            }
+
+                        }
+                    });
                 }
 
-            }
-        });
+                @Override
+                public void onFaild(Throwable throwable) {
+                    hideLoading();
+                }
+            });
+//            viewModel.allWorth(feeRequset).observe(this, model -> {
+//
+//                if (model.getCode() == 0) {
+//                    if (alertDialog == null) {
+//                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                                .setMsg(model.getMsg())
+//                                .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//
+//                                    }
+//                                });
+//                        alertDialog.show();
+//                    } else {
+//                        if (!alertDialog.isShowing()) {
+//                            alertDialog.show();
+//                        }
+//                    }
+//                    HashMap<String, String> map = new HashMap<>();
+//                    map.put("user_name", UserUtil.getUserName());
+//                    MobclickAgent.onEvent(this, CustomEventTypeEnum.POINT_CHECK.getTypeName(), map);
+//                }else if (model.getCode()==500){
+//                    if (alertDialog == null) {
+//                        alertDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+//                                .setMsg("近期已催缴过，暂时无需催缴")
+//                                .setMsgTwo(model.getMsg())
+//                                .setPositiveButton(getResources().getString(R.string.text_know), new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//
+//                                    }
+//                                });
+//                        alertDialog.show();
+//                    } else {
+//                        if (!alertDialog.isShowing()) {
+//                            alertDialog.show();
+//                        }
+//                    }
+//                }
+//
+//            });
+        }
     }
-
     /**
      * 收费
      */
     public void onPassClick() {
-        if (alertAddDialog == null) {
-            alertAddDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                    .setMsg("当前房产未绑定住户，是否先绑定住户")
-                    .setNegativeButton("继续收费", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (data == null) {
-                                return;
+
+        if (StringUtil.isEmpty(binding.tvWorkNum.getText().toString().trim())) {
+
+            if (alertAddDialog == null) {
+                alertAddDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                        .setMsg("当前房产未绑定住户，是否先绑定住户")
+                        .setNegativeButton("继续收费", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                fee();
                             }
-                            FeeDetailRequset feeDetailRequset = new FeeDetailRequset();
-                            //        feeDetailRequset.setDivideId(divideId);
-                            feeDetailRequset.setHouseId(data.getHouseId());
-                            viewModel.getLackDetailList(feeDetailRequset).observe(LackDetailViewModelActivity.this, model -> {
-
-
-                                if (model.getData() != null) {
-                                    if (model.getData().getPaymentList() != null) {
-                                        paymentLists = model.getData().getPaymentList();
-                                    }
-                                }
-                                checkJumpVerity();
-
-                            });
-                        }
-                    })
-                    .setPositiveButton("添加住户", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ARouter.getInstance().build(RouterUtils.ACTIVITY_ADD_HOUSER)
-                                    .withString(RouteKey.HOUSE_ID, houseId)
-                                    .withString(RouteKey.KEY_DIVIDE_ID, divideId)
-                                    .navigation();
-                        }
-                    });
-            alertAddDialog.show();
-        } else {
-            if (!alertAddDialog.isShowing()) {
+                        })
+                        .setPositiveButton("添加住户", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_ADD_HOUSER)
+                                        .withString(RouteKey.HOUSE_ID, houseId)
+                                        .withString(RouteKey.KEY_DIVIDE_ID, divideId)
+                                        .navigation();
+                            }
+                        });
                 alertAddDialog.show();
+            } else {
+                if (!alertAddDialog.isShowing()) {
+                    alertAddDialog.show();
+                }
             }
+        } else {
+            fee();
         }
 
 
+    }
+
+    private void fee() {
+        if (data == null) {
+            return;
+        }
+        FeeDetailRequset feeDetailRequset = new FeeDetailRequset();
+        //        feeDetailRequset.setDivideId(divideId);
+        feeDetailRequset.setHouseId(data.getHouseId());
+        viewModel.repository.getLackDetailList(feeDetailRequset, new CallBack<TollModel>() {
+            @Override
+            public void call(TollModel data) {
+                hideLoading();
+//                lackDetailListModel.postValue(data);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (data.getData() != null) {
+                            if (data.getData().getPaymentList() != null) {
+                                paymentLists = data.getData().getPaymentList();
+                            }
+                        }
+                        checkJumpVerity();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+//        viewModel.getLackDetailList(feeDetailRequset).observe(LackDetailViewModelActivity.this, model -> {
+//
+//
+//            if (model.getData() != null) {
+//                if (model.getData().getPaymentList() != null) {
+//                    paymentLists = model.getData().getPaymentList();
+//                }
+//            }
+//            checkJumpVerity();
+//
+//        });
     }
 
     private void checkJumpVerity() {
@@ -420,56 +634,118 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
             ToastUtil.show(this, "请选择收费项");
             return;
         }
-        viewModel.jumpVerify(jumpRequest).observe(this, model -> {
 
-
-//            ToastUtil.show(LackDetailViewModelActivity.this,""+model.isData());
-            if (!model.isData()) {//可以生成订单
-                paymentDetailsBeans.clear();
-                CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-                createOrderRequest.setDivideId(divideId);
-                createOrderRequest.setHouseId(data.getHouseId());
-                createOrderRequest.setHouseName(houseName);
-                createOrderRequest.setUserId(viewModel.getUserId());
-                createOrderRequest.setPayOrderType("pty-101");
-                createOrderRequest.setPayAmount(data.getFeeAmount());
+        viewModel.repository.jumpVerify(jumpRequest, new CallBack<JumpVerityModel>() {
+            @Override
+            public void call(JumpVerityModel datas) {
+                hideLoading();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!datas.isData()) {//可以生成订单
+                            paymentDetailsBeans.clear();
+                            CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+                            createOrderRequest.setDivideId(divideId);
+                            createOrderRequest.setHouseId(data.getHouseId());
+                            createOrderRequest.setHouseName(houseName);
+                            createOrderRequest.setUserId(viewModel.getUserId());
+                            createOrderRequest.setPayOrderType("pty-101");
+                            createOrderRequest.setPayAmount(data.getFeeAmount());
 //                createOrderRequest.setPayAmount(0.01);
-                for (TollModel.DataBean.PaymentList paymentList : paymentLists) {
-                    for (TollModel.DataBean.PaymentList.ListBean listBean : paymentList.getList()) {
+                            for (TollModel.DataBean.PaymentList paymentList : paymentLists) {
+                                for (TollModel.DataBean.PaymentList.ListBean listBean : paymentList.getList()) {
 //                        if (listBean.isCheckChirld()) {
-                        CreateOrderRequest.PaymentDetailsBean paymentDetailsBean = new CreateOrderRequest.PaymentDetailsBean();
-                        paymentDetailsBean.setChargeAmount(listBean.getTotalReceivableAmount());
+                                    CreateOrderRequest.PaymentDetailsBean paymentDetailsBean = new CreateOrderRequest.PaymentDetailsBean();
+                                    paymentDetailsBean.setChargeAmount(listBean.getTotalReceivableAmount());
 //                            paymentDetailsBean.setChargeAmount(new BigDecimal("0.01"));
-                        paymentDetailsBean.setChargeReceivableId(listBean.getReceivableId());
-                        paymentDetailsBean.setChargeTypeCode(paymentList.getChargeTypeCode());
-                        paymentDetailsBeans.add(paymentDetailsBean);
+                                    paymentDetailsBean.setChargeReceivableId(listBean.getReceivableId());
+                                    paymentDetailsBean.setChargeTypeCode(paymentList.getChargeTypeCode());
+                                    paymentDetailsBeans.add(paymentDetailsBean);
 //                        }
 
+                                }
+                            }
+                            createOrderRequest.setPaymentDetails(paymentDetailsBeans);
+
+
+                            viewModel.createOrder(createOrderRequest).observe(LackDetailViewModelActivity.this, createModel -> {
+
+                                if (createModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
+                                    ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
+                                            .withInt(RouteKey.KEY_ORDER_ID, createModel.getData())
+                                            .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+                                            .withString(RouteKey.HOUSE_TITLE, title)
+                                            .withString(RouteKey.KEY_ALL_NAME, allName)
+                                            .withString(RouteKey.KEY_CLIENT_NAME, startName)
+                                            .withString("MONEY", data.getFeeAmount() + "")
+                                            .navigation();
+                                    HashMap<String, String> map = new HashMap<>();
+                                    map.put("user_name", UserUtil.getUserName());
+                                    MobclickAgent.onEvent(LackDetailViewModelActivity.this, CustomEventTypeEnum.FEE_DETAIL.getTypeName(), map);
+                                }
+
+                            });
+                        }
                     }
-                }
-                createOrderRequest.setPaymentDetails(paymentDetailsBeans);
-
-
-                viewModel.createOrder(createOrderRequest).observe(this, createModel -> {
-
-                    if (createModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
-                                .withInt(RouteKey.KEY_ORDER_ID, createModel.getData())
-                                .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
-                                .withString(RouteKey.HOUSE_TITLE, title)
-                                .withString(RouteKey.KEY_ALL_NAME, allName)
-                                .withString(RouteKey.KEY_CLIENT_NAME, startName)
-                                .withString("MONEY", data.getFeeAmount() + "")
-                                .navigation();
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("user_name", UserUtil.getUserName());
-                        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL.getTypeName(), map);
-                    }
-
                 });
+
             }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
         });
+//        viewModel.jumpVerify(jumpRequest).observe(this, model -> {
+//
+//
+////            ToastUtil.show(LackDetailViewModelActivity.this,""+model.isData());
+//            if (!model.isData()) {//可以生成订单
+//                paymentDetailsBeans.clear();
+//                CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+//                createOrderRequest.setDivideId(divideId);
+//                createOrderRequest.setHouseId(data.getHouseId());
+//                createOrderRequest.setHouseName(houseName);
+//                createOrderRequest.setUserId(viewModel.getUserId());
+//                createOrderRequest.setPayOrderType("pty-101");
+//                createOrderRequest.setPayAmount(data.getFeeAmount());
+////                createOrderRequest.setPayAmount(0.01);
+//                for (TollModel.DataBean.PaymentList paymentList : paymentLists) {
+//                    for (TollModel.DataBean.PaymentList.ListBean listBean : paymentList.getList()) {
+////                        if (listBean.isCheckChirld()) {
+//                        CreateOrderRequest.PaymentDetailsBean paymentDetailsBean = new CreateOrderRequest.PaymentDetailsBean();
+//                        paymentDetailsBean.setChargeAmount(listBean.getTotalReceivableAmount());
+////                            paymentDetailsBean.setChargeAmount(new BigDecimal("0.01"));
+//                        paymentDetailsBean.setChargeReceivableId(listBean.getReceivableId());
+//                        paymentDetailsBean.setChargeTypeCode(paymentList.getChargeTypeCode());
+//                        paymentDetailsBeans.add(paymentDetailsBean);
+////                        }
+//
+//                    }
+//                }
+//                createOrderRequest.setPaymentDetails(paymentDetailsBeans);
+//
+//
+//                viewModel.createOrder(createOrderRequest).observe(this, createModel -> {
+//
+//                    if (createModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
+//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
+//                                .withInt(RouteKey.KEY_ORDER_ID, createModel.getData())
+//                                .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+//                                .withString(RouteKey.HOUSE_TITLE, title)
+//                                .withString(RouteKey.KEY_ALL_NAME, allName)
+//                                .withString(RouteKey.KEY_CLIENT_NAME, startName)
+//                                .withString("MONEY", data.getFeeAmount() + "")
+//                                .navigation();
+//                        HashMap<String, String> map = new HashMap<>();
+//                        map.put("user_name", UserUtil.getUserName());
+//                        MobclickAgent.onEvent(this, CustomEventTypeEnum.FEE_DETAIL.getTypeName(), map);
+//                    }
+//
+//                });
+//            }
+//
+//        });
     }
 
     /**

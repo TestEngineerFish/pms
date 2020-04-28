@@ -90,7 +90,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
-                            android:text="@string/tv_approval_installment"
+                            android:text=""
                             android:textColor="@color/blueTextColor"
                             android:textSize="13sp" />
 
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
-                        android:text="13户"
+                        android:text="0户"
                         android:textColor="@color/blackTextColor" />
 
                     <ImageView
@@ -172,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
-                        android:text="13户"
+                        android:text="0户"
                         android:textColor="@color/blackTextColor" />
 
                     <ImageView
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
-                        android:text="13户"
+                        android:text="0户"
                         android:textColor="@color/blackTextColor" />
 
                     <ImageView
@@ -261,6 +261,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_sort_build"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/px_60"
                     android:layout_marginLeft="@dimen/px_30"
@@ -268,6 +269,7 @@
                     android:onClick="@{()->callBack.onBuildSort()}">
 
                     <TextView
+                        android:id="@+id/tv_build"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/px_30"
@@ -307,6 +309,7 @@
                     android:onClick="@{()->callBack.onFeeSort()}">
 
                     <TextView
+                        android:id="@+id/tv_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/px_30"
@@ -340,6 +343,8 @@
         </LinearLayout>
         <!--搜索框-->
         <LinearLayout
+            android:focusable="true"
+            android:clickable="true"
             android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
