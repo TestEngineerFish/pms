@@ -92,7 +92,7 @@ public class GetSignModel {
             }
 
             public String getTagValue() {
-                return tagValue;
+                return tagValue==null?"":tagValue;
             }
 
             public void setTagValue(String tagValue) {

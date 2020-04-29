@@ -132,7 +132,7 @@ public class AddHouserActivity extends BaseHeadViewModelActivity<ActivityAddHous
                     getNameRequset.setDivideId(divideId);
                     viewModel.getNameFromPhone(getNameRequset).observe(AddHouserActivity.this,model->{
                         if (model!=null&&model.getData()!=null) {
-                            binding.etName.setText(model.getData().getName());
+                            binding.etName.setText(model.getData().getName().trim());
                             binding.etName.setFocusableInTouchMode(false);
                         }else {
                             binding.etName.setText("");
@@ -191,18 +191,18 @@ public class AddHouserActivity extends BaseHeadViewModelActivity<ActivityAddHous
      */
     public void onPassClick() {
         if (IsFastClick.isFastDoubleClick()) {
-            if (!CheckUtil.getInstance(this).isMatch(binding.etPhone.getText().toString(), CheckUtil.REG_PHONE)) {
+            if (!CheckUtil.getInstance(this).isMatch(binding.etPhone.getText().toString().trim(), CheckUtil.REG_PHONE)) {
                 ToastUtil.show(this, "请输入正确的手机号");
                 return;
             }
-            if (StringUtil.isEmpty(binding.etName.toString())) {
+            if (StringUtil.isEmpty(binding.etName.toString().trim())) {
                 ToastUtil.show(this, "请输入姓名");
                 return;
             }
             if (binding.tvType.getText().toString().equals("居民身份证")) {
-                String s = binding.etIdNum.getText().toString();
+                String s = binding.etIdNum.getText().toString().trim();
                 if (!StringUtil.isEmpty(s)) {
-                    if (!CheckUtil.getInstance(this).isMatch(binding.etIdNum.getText().toString(), CheckUtil.REG_IDNO)) {
+                    if (!CheckUtil.getInstance(this).isMatch(binding.etIdNum.getText().toString().trim(), CheckUtil.REG_IDNO)) {
                         ToastUtil.show(this, "请输入正确的身份证号码");
                         return;
                     }

@@ -28,6 +28,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.pms.toll.R;
@@ -62,7 +63,8 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
     private RVBindingAdapter<SignItemBinding, GetSignModel.DataBean.TagListBean> adapterSetSign;
     private FeeDetailRequset mRequset;
     private List<GetSignModel.DataBean.TagListBean> tagList;
-    private List<GetSignModel.DataBean.TagListBean> mTagLists=new ArrayList<>();
+    private List<GetSignModel.DataBean.TagListBean> mTagLists = new ArrayList<>();
+    private AlertDialog alertAddDialog;
 
     @Override
     protected TollViewModel initViewModel() {
@@ -82,6 +84,7 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
     }
 
     private static final String TAG = "SetSignActivity";
+
     @Override
     protected void initData() {
         super.initData();
@@ -94,7 +97,7 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
         mRequset.setDivideId(divideId);
         mRequset.setClientId(clientId);
         viewModel.getSign(mRequset).observe(this, model -> {
-            if (model==null||model.getData()==null) {
+            if (model == null || model.getData() == null) {
                 return;
             }
             mTagLists = model.getData().getTagList();
@@ -115,7 +118,7 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
                 if (position == tagList.size() - 1) {
                     binding.etContent.setVisibility(View.VISIBLE);
                     binding.tvContent.setVisibility(View.GONE);
-                    if (position==4) {
+                    if (position == 4) {
                         binding.llItem.setVisibility(View.GONE);
                         binding.etContent.setVisibility(View.GONE);
                         binding.tvContent.setVisibility(View.VISIBLE);
@@ -149,11 +152,11 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
                                 }
                                 if (!StringUtil.isEmpty(textView.getText().toString().trim())) {
                                     model.setTagValue(textView.getText().toString());
-                                    if (tagList.size()<5) {
+                                    if (tagList.size() < 5) {
                                     }
-                                    if (tagList.size()<5) {
+                                    if (tagList.size() < 5) {
                                         tagList.add(tagList.size(), new GetSignModel.DataBean.TagListBean());
-                                        if (mTagLists!=null) {
+                                        if (mTagLists != null) {
                                             for (GetSignModel.DataBean.TagListBean mTagList : mTagLists) {
                                                 if (mTagList.getTagValue().equals(textView.getText().toString())) {
                                                     model.setChecked(1);
@@ -162,12 +165,12 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
                                             }
                                         }
                                         adapterSetSign.setDataList(tagList);
-                                        Log.e(TAG, "onEditorAction: "+textView.getText().toString() );
+                                        Log.e(TAG, "onEditorAction: " + textView.getText().toString());
 
-                                    }else if (tagList.size()==4){
+                                    } else if (tagList.size() == 4) {
                                         adapterSetSign.setDataList(tagList);
                                     }
-                                    if (mTagLists!=null) {
+                                    if (mTagLists != null) {
                                         adapterGetSign.setDataList(mTagLists);
                                     }
                                 }
@@ -175,6 +178,93 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
                             }
                             return false;
                         }
+                    });
+                    binding.etContent.setOnKeyListener(new View.OnKeyListener() {
+
+                        @Override
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            if (keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN) {
+                                String content = binding.etContent.getText().toString().trim();
+                                if (content.length() == 0) {
+                                    Log.e(TAG, "onKey: 输入为空了");
+                                    if (tagList.size() > 1) {
+
+                                        tagList.remove(tagList.size() - 2);
+                                        if (mTagLists != null) {
+                                            for (GetSignModel.DataBean.TagListBean mTagList : mTagLists) {
+                                                for (GetSignModel.DataBean.TagListBean listBean : tagList) {
+
+                                                    if (mTagList.getTagValue().equals(listBean.getTagValue())) {
+                                                        listBean.setChecked(1);
+                                                        mTagList.setChecked(1);
+                                                    } else {
+                                                        listBean.setChecked(0);
+                                                        mTagList.setChecked(0);
+                                                    }
+                                                }
+                                            }
+
+                                            adapterSetSign.setDataList(tagList);
+                                            adapterGetSign.setDataList(mTagLists);
+                                        }
+
+
+                                    }
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    });
+                    binding.tvContent.setOnClickListener(view1 -> {
+
+                        mPosition=position;
+                        if (alertAddDialog == null) {
+                            alertAddDialog = new AlertDialog(SetSignActivity.this).builder().setTitle(getResources().getString(R.string.tip))
+                                    .setMsg("确定删除该标签?")
+                                    .setNegativeButton("取消", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                        }
+                                    })
+                                    .setPositiveButton("确定", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+//                                            if (tagList.size() == 5) {
+//                                                tagList.remove(tagList.size() - 1);
+//                                                tagList.remove(mPosition);
+//                                            } else {
+//                                                tagList.remove(mPosition);
+//                                            }
+//                                            adapterSetSign.setDataList(tagList);
+                                            tagList.remove(mPosition);
+                                            if (mTagLists!=null) {
+                                                for (GetSignModel.DataBean.TagListBean mTagList : mTagLists) {
+                                                    for (GetSignModel.DataBean.TagListBean listBean : tagList) {
+
+                                                        if (mTagList.getTagValue().equals(listBean.getTagValue())) {
+                                                            listBean.setChecked(1);
+                                                            mTagList.setChecked(1);
+                                                        }else {
+                                                            listBean.setChecked(0);
+                                                            mTagList.setChecked(0);
+                                                        }
+                                                    }
+                                                }
+                                                adapterGetSign.setDataList(mTagLists);
+                                            }
+                                            adapterSetSign.notifyDataSetChanged();
+                                        }
+                                    });
+                            alertAddDialog.show();
+                        } else {
+                            if (!alertAddDialog.isShowing()) {
+                                alertAddDialog.show();
+                            }
+                        }
+//                    adapterSetSign.notifyDataSetChanged();
                     });
                 } else {
                     binding.etContent.setVisibility(View.GONE);
@@ -242,28 +332,29 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
         binding.listGetSign.setAdapter(adapterGetSign);
     }
 
+    int mPosition;
     /**
      * 提交按钮
      */
     public void onPassClick() {
 //        if (IsFastClick.isFastDoubleClick()) {
 
-            lables.clear();
-            if (tagList.size()!=0) {
-                if (StringUtil.isEmpty(tagList.get(0).getTagValue())) {
+        lables.clear();
+        if (tagList.size() != 0) {
+            if (StringUtil.isEmpty(tagList.get(0).getTagValue())) {
 
-                    ToastUtil.show(this,"请输入标签");
-                    return;
-                }
+                ToastUtil.show(this, "请输入标签");
+                return;
             }
-            for (GetSignModel.DataBean.TagListBean tagListBean : tagList) {
-                if (tagListBean.getTagValue()!=null) {
+        }
+        for (GetSignModel.DataBean.TagListBean tagListBean : tagList) {
+            if (tagListBean.getTagValue() != null) {
 
-                    lables.add(tagListBean.getTagValue());
-                }
+                lables.add(tagListBean.getTagValue());
             }
+        }
 
-        if (mTagLists!=null) {
+        if (mTagLists != null) {
             for (GetSignModel.DataBean.TagListBean mTagList : mTagLists) {
                 if (mTagList.getTagValue() != null) {
 
@@ -273,20 +364,20 @@ public class SetSignActivity extends BaseHeadViewModelActivity<ActivitySetSignBi
                 }
             }
         }
-            FeeDetailRequset mRequset = new FeeDetailRequset();
-            mRequset.setDivideId(divideId);
-            mRequset.setClientId(clientId);
-            mRequset.setLables(lables);
-            viewModel.setSign(mRequset).observe(this, model -> {
+        FeeDetailRequset mRequset = new FeeDetailRequset();
+        mRequset.setDivideId(divideId);
+        mRequset.setClientId(clientId);
+        mRequset.setLables(lables);
+        viewModel.setSign(mRequset).observe(this, model -> {
 
-                if (model.getCode()==0) {
-                    getData();
-                }else {
-                    ToastUtil.show(SetSignActivity.this,model.getMsg());
-                }
+            if (model.getCode() == 0) {
+                getData();
+            } else {
+                ToastUtil.show(SetSignActivity.this, model.getMsg());
+            }
 
 
-            });
+        });
 //        }
     }
 

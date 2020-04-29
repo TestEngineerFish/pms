@@ -141,6 +141,8 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                             } else {
                                 startName = firstName + "***";
                             }
+                        }else if (clientName.length()==1){
+                            startName =clientName;
                         }
                         if (clientPhone != null) {
                             String substring = clientPhone.substring(0, 3);
@@ -361,7 +363,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
     public void onAddSignClick() {
         if (!IsFastClick.isFastDoubleClick()) return;
         if (data == null) return;
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN)
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN2)
                 .withString(RouteKey.HOUSE_ID, houseIdJump)
                 .withString(RouteKey.CLIENT_ID, data.getClientId())
                 .withString(RouteKey.KEY_DIVIDE_ID, divideId)

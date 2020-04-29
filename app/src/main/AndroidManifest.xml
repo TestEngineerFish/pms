@@ -183,6 +183,7 @@
         <activity android:name=".toll.ui.AddHouserActivity" />
         <activity android:name=".toll.ui.AddWorthReminderActivity" />
         <activity android:name=".toll.ui.SetSignActivity" />
+        <activity android:name=".toll.ui.SetSign2Activity" />
         <!--  收费结束      -->
 
         <provider

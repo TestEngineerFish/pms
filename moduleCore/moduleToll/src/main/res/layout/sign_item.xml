@@ -3,7 +3,7 @@
         <data>
                 <variable
                     name="sign"
-                    type="com.einyun.app.pms.toll.model.GetSignModel" />
+                    type="com.einyun.app.pms.toll.model.GetSignModel.DataBean.TagListBean" />
         </data>
       <RelativeLayout
           android:id="@+id/ll_item"
