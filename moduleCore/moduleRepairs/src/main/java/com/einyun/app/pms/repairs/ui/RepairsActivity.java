@@ -48,6 +48,8 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
     private String[] mTitles;//tab标题
     public static List<SelectModel> selectModelList = new ArrayList<>();
     private String taskId;
+    @Autowired(name = RouteKey.KEY_PUSH_JUMP)
+    boolean isPushJump;
      ArrayList<RepairsViewModelFragment> fragments;
     public interface GrabListener{
         void onGrabed();
@@ -127,20 +129,40 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
-        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+//        boolean isPushJump = extras.getBoolean(RouteKey.KEY_PUSH_JUMP);
+//        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+        if (!StringUtil.isNullStr(getIntent().getType()) && isPushJump) {
             binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
+//            String string = extras.getString(RouteKey.KEY_CATE_NAME);
+//            if ("".equals(string)) {
+//                string="户内报修类";
+//            }
             binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
             binding.grabFrame.grabClose.setOnClickListener(this);
             binding.grabFrame.grabBtn.setOnClickListener(this);
             taskId = extras.getString(RouteKey.KEY_TASK_ID);
         }
 
+        isPushJump=false;
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        Intent intent2 = getIntent();
+        Bundle extras = intent2.getExtras();
+        Log.e("extras", "pushJump  is " + extras.getBoolean(RouteKey.KEY_PUSH_JUMP) + ",taskId = " + extras.getString(RouteKey.KEY_TASK_ID) + ",cateName = " + extras.getString(RouteKey.KEY_CATE_NAME));
+//        boolean isPushJump = extras.getBoolean(RouteKey.KEY_PUSH_JUMP);
+//        if (!StringUtil.isNullStr(getIntent().getType()) && extras.getBoolean(RouteKey.KEY_PUSH_JUMP)) {
+        if (!StringUtil.isNullStr(getIntent().getType())) {
+            binding.grabFrame.getRoot().setVisibility(View.VISIBLE);
+            binding.grabFrame.grabKind.setText(extras.getString(RouteKey.KEY_CATE_NAME));
+            binding.grabFrame.grabClose.setOnClickListener(this);
+            binding.grabFrame.grabBtn.setOnClickListener(this);
+            taskId = extras.getString(RouteKey.KEY_TASK_ID);
+        }
+        isPushJump=false;
     }
 
     @Override

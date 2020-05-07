@@ -32,8 +32,8 @@ import com.einyun.app.library.workorder.net.request.SaveHandleRequest;
 import java.util.List;
 
 public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
-    private ResourceWorkOrderService resourceWorkOrderService;
-    private WorkOrderService workOrderService;
+    public ResourceWorkOrderService resourceWorkOrderService;
+    public WorkOrderService workOrderService;
     private DictService dictService;
     public RepairDetailViewModel() {
         workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);

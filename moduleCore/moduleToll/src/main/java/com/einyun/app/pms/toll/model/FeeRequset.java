@@ -15,6 +15,9 @@ public class FeeRequset {
      */
 
     private String divideId;
+    private int operateType;
+    private String operateRemark;
+    private String operateTime;
     private int type;
 
 
@@ -63,5 +66,29 @@ public class FeeRequset {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(int operateType) {
+        this.operateType = operateType;
+    }
+
+    public String getOperateRemark() {
+        return operateRemark;
+    }
+
+    public void setOperateRemark(String operateRemark) {
+        this.operateRemark = operateRemark;
+    }
+
+    public String getOperateTime() {
+        return operateTime;
+    }
+
+    public void setOperateTime(String operateTime) {
+        this.operateTime = operateTime;
     }
 }

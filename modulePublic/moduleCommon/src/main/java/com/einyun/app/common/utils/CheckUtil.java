@@ -44,10 +44,10 @@ public class CheckUtil {
      * 结算账号正则
      */
     public static final String REG_CLEAR_ACCOUNT = "^\\d{19,22}$";
-//    /**
-//     * 身份证号正则
-//     */
-//    public static final String REG_IDNO = "^\\d{8,18}|[0-9x]{8,18}|[0-9X]{8,18}?$";
+    /**
+     * 身份证号正则
+     */
+    public static final String REG_IDNO = "^\\d{8,18}|[0-9x]{8,18}|[0-9X]{8,18}?$";
     /**
      * 军官证正则
      */

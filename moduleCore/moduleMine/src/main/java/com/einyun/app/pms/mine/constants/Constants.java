@@ -4,8 +4,8 @@ package com.einyun.app.pms.mine.constants;
 import com.einyun.app.common.BuildConfig;
 
 public class Constants {
-    public static final String PRIVACY_DETAIL_URL = BuildConfig.BASE_URL + "/h5-mobile/web/appPolicy";
-    public static final String USER_AGREEMENT_DETAIL_URL = BuildConfig.BASE_URL+ "/h5/pop.html";
+    public static final String PRIVACY_DETAIL_URL = "https://bms.einyun.com"+ "/h5-mobile/web/appPolicy";
+    public static final String USER_AGREEMENT_DETAIL_URL = "https://bms.einyun.com"+ "/h5/pop.html";
     public static final String SP_KEY_TENANT_CODE = "KEY_TENANT_CODE";
     public static final String SIGN_NAME_EDIT = "SIGN_NAME_EDIT";
     public static final String SIGN_USER_ID = "SIGN_USER_ID";

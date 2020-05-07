@@ -36,6 +36,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
+import com.einyun.app.common.utils.ChinaeseToEnglish;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -239,8 +240,15 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
                 @Override
                 public void onBindItem(ItemBlockChooseBinding binding, OrgModel model, int pos) {
                     if (model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
-                        binding.ivRightselect.setVisibility(View.VISIBLE);
+//                        binding.ivRightselect.setVisibility(View.VISIBLE);
                     }
+                    String s = ChinaeseToEnglish.getLetter(model.getName());
+                    if (s.length()>0) {
+                        String substring = s.substring(0, 1).toUpperCase();
+                        binding.tvLetter.setText(substring);
+                    }else {
+                    }
+                    binding.tvItemname.setText(model.getName());
                 }
 
                 @Override

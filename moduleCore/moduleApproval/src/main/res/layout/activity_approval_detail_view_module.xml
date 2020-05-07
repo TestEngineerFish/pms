@@ -428,6 +428,7 @@
                     <com.einyun.app.common.ui.component.limit.LimitInput
                         android:id="@+id/limit_input"
                         android:layout_width="match_parent"
+                        app:hintText="请输入审批意见"
                         android:layout_height="@dimen/px_182"
                         android:layout_marginTop="@dimen/px_20"
                         android:layout_marginLeft="@dimen/px_30"

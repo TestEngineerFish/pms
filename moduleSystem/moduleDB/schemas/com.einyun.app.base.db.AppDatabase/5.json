@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "f185af279aaa65221be347fcc6d109e9",
+    "identityHash": "203a2e09cbba74bdcaec178d1cc5fc9a",
     "entities": [
       {
         "tableName": "users",
@@ -920,7 +920,7 @@
       },
       {
         "tableName": "quality_request",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `taskId` TEXT NOT NULL, `verification_situation` TEXT, `verification_enclosure` TEXT, `verification_date` TEXT, `is_pass` INTEGER NOT NULL, `feedback_enclosure` TEXT, `reason` TEXT, `corrective_action` TEXT, `feedback_date` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `taskId` TEXT NOT NULL, `verification_situation` TEXT, `verification_enclosure` TEXT, `verification_date` TEXT, `is_pass` INTEGER NOT NULL, `feedback_enclosure` TEXT, `reason` TEXT, `corrective_action` TEXT, `feedback_date` TEXT, `order_info_state` TEXT, `order_info_code` TEXT, `order_info_create_time` TEXT, `order_info_divide` TEXT, `order_info_check_date` TEXT, `order_info_qus_desc` TEXT, `order_info_line` TEXT, `order_info_serv` TEXT, `order_info_ver_date` TEXT, `order_info_checked_person` TEXT, `order_info_enclosure` TEXT, `fed_info_date` TEXT, `fed_info_reason` TEXT, `fed_info_cor_action` TEXT, `fed_info_del_time` TEXT, `fed_info_enclosure` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -979,6 +979,102 @@
           {
             "fieldPath": "feedback_date",
             "columnName": "feedback_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_state",
+            "columnName": "order_info_state",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_code",
+            "columnName": "order_info_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_create_time",
+            "columnName": "order_info_create_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_divide",
+            "columnName": "order_info_divide",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_check_date",
+            "columnName": "order_info_check_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_qus_desc",
+            "columnName": "order_info_qus_desc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_line",
+            "columnName": "order_info_line",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_serv",
+            "columnName": "order_info_serv",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_ver_date",
+            "columnName": "order_info_ver_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_checked_person",
+            "columnName": "order_info_checked_person",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "order_info_enclosure",
+            "columnName": "order_info_enclosure",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fed_info_date",
+            "columnName": "fed_info_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fed_info_reason",
+            "columnName": "fed_info_reason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fed_info_cor_action",
+            "columnName": "fed_info_cor_action",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fed_info_del_time",
+            "columnName": "fed_info_del_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fed_info_enclosure",
+            "columnName": "fed_info_enclosure",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -1046,7 +1142,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f185af279aaa65221be347fcc6d109e9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '203a2e09cbba74bdcaec178d1cc5fc9a')"
     ]
   }
 }

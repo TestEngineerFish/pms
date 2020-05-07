@@ -8,6 +8,8 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrderPage;
 import com.einyun.app.library.resource.workorder.model.OrderListPage;
@@ -70,6 +72,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                     if (callback instanceof LoadInitialCallback) {
                         LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
                         loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+                        LiveDataBusUtils.postLiveBusData(LiveDataBusKey.POST_PLAN_SEARCH+tag,data.getTotal());
                     } else if (callback instanceof LoadRangeCallback) {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());

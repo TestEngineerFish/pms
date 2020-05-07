@@ -117,6 +117,11 @@ dependencies {
     implementation 'com.aliyun.ams:huawei-push:2.6.3.305'
     implementation 'com.aliyun.ams:huawei-push-base:2.6.3.305'
     implementation ('com.google.firebase:firebase-messaging:17.6.0')
+    implementation 'com.github.promeg:tinypinyin:2.0.3' // TinyPinyin核心包，约80KB
+
+    implementation 'com.github.promeg:tinypinyin-lexicons-android-cncity:2.0.3'
+// 可选，适用于Android的中国地区词典
+    implementation 'com.github.promeg:tinypinyin-lexicons-java-cncity:2.0.3' // 可选，适用于Java的中国地区词典
     //高亮显示指引
 //    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
 }

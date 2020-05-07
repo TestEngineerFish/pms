@@ -3,4 +3,7 @@
     <string name="tv_toll_assant">收费助理</string>
     <string name="tv_lack_detail">收费详情</string>
     <string name="tv_change_trun">切换排序</string>
+    <string name="tv_add_houser">添加住户</string>
+    <string name="tv_add_worth_reminder">打标签</string>
+    <string name="tv_ad">添加催缴说明</string>
 </resources>

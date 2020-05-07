@@ -4,10 +4,10 @@
 
     <application>
         <activity android:name=".ui.HistroyActivity"></activity>
-        <activity android:name=".ui.ApplyForceCloseActivity" />
-        <activity android:name=".ui.ApplyLateActivity" />
+        <activity android:name=".ui.ApplyForceCloseActivity" android:launchMode="singleTask"/>
+        <activity android:name=".ui.ApplyLateActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.SelectPeopleActivity" />
-        <activity android:name=".ui.SendOrderDetailActivity"
+        <activity android:name=".ui.SendOrderDetailActivity" android:launchMode="singleTask"
             ></activity>
         <activity android:name=".ui.ResendOrderActivity" />
     </application>

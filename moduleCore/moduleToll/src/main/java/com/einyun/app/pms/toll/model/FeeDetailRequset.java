@@ -31,6 +31,22 @@ public class FeeDetailRequset {
      */
 
     private String divideId;
+    private String clientId;
     private String houseId;
+    private List<String> lables;
+    public String getClientId() {
+        return clientId;
+    }
 
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public List<String> getLables() {
+        return lables;
+    }
+
+    public void setLables(List<String> lables) {
+        this.lables = lables;
+    }
 }

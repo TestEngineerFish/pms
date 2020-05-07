@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -68,8 +70,9 @@ public class UserHeadShotViewModuleActivity extends BaseHeadViewModelActivity<Ac
         String imageUrl= HttpUrlUtil.getImageServerUrl(getUserByccountBean.getPhoto());
         Glide.with(this)
                 .load(imageUrl)
-//                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .centerCrop()
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .placeholder(R.drawable.iv_default_head_shot)
+//                .centerCrop()
                 .into(binding.ivHead);
     }
 

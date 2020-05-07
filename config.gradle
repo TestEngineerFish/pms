@@ -299,9 +299,9 @@ deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"http://uatbms.einyun.com\""
+server.debug = "\"https://bms.einyun.com\""
 //测试环境
-server.debug_test = "\"http://120.79.213.146\""
+server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
 //server.uat = "\"https://testbms.einyun.com\""
 server.uat = "\"http://uatbms.einyun.com\""
@@ -315,7 +315,7 @@ fee_server.debug = "\"https://fee.einyun.com\""
 //测试环境
 fee_server.debug_test = "\"http://106.75.162.186:10018\""
 //UAT环境
-fee_server.uat = "\"http://106.75.162.186:10018\""
+fee_server.uat = "\"http://uatbms.einyun.com\""
 //正式环境
 fee_server.release = "\"https://fee.einyun.com\""
 deps.fee_server = fee_server
@@ -326,7 +326,7 @@ fee_middle_server.debug = "\"/fee-center-api\""
 //测试环境
 fee_middle_server.debug_test = "\"\""
 //UAT环境
-fee_middle_server.uat = "\"\""
+fee_middle_server.uat = "\"/fee-center-api\""
 //正式环境
 fee_middle_server.release = "\"/fee-center-api\""
 deps.fee_middle_server = fee_middle_server

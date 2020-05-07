@@ -24,6 +24,8 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:maxLength="15"
+                    android:singleLine="true"
                     android:id="@+id/period_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

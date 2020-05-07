@@ -43,6 +43,19 @@ public class DisqualifiedDbRepository extends CommonRepository {
             feedBackRequest.getBizData().setFeedback_date(request.getFeedback_date());
             feedBackRequest.getBizData().setFeedback_enclosure(request.getFeedback_enclosure());
             feedBackRequest.getDoNextParamt().setTaskId(request.getTaskId());
+
+            //缓存工单基本信息
+            feedBackRequest.getBizData().setOrder_info_state(request.getOrder_info_state());
+            feedBackRequest.getBizData().setOrder_info_code(request.getOrder_info_code());
+            feedBackRequest.getBizData().setOrder_info_create_time(request.getOrder_info_create_time());
+            feedBackRequest.getBizData().setOrder_info_divide(request.getOrder_info_divide());
+            feedBackRequest.getBizData().setOrder_info_check_date(request.getOrder_info_check_date());
+            feedBackRequest.getBizData().setOrder_info_qus_desc(request.getOrder_info_qus_desc());
+            feedBackRequest.getBizData().setOrder_info_line(request.getOrder_info_line());
+            feedBackRequest.getBizData().setOrder_info_serv(request.getOrder_info_serv());
+            feedBackRequest.getBizData().setOrder_info_ver_date(request.getOrder_info_ver_date());
+            feedBackRequest.getBizData().setOrder_info_checked_person(request.getOrder_info_checked_person());
+            feedBackRequest.getBizData().setOrder_info_enclosure(request.getOrder_info_enclosure());
             list.postValue(feedBackRequest);
         });
         return list;
@@ -66,6 +79,20 @@ public class DisqualifiedDbRepository extends CommonRepository {
             qualityRequest.setFeedback_enclosure(request.getBizData().getFeedback_enclosure());
             qualityRequest.setReason(request.getBizData().getReason());
             qualityRequest.setTaskId(request.getDoNextParamt().getTaskId());
+
+            //缓存工单基本信息
+            qualityRequest.setOrder_info_state(request.getBizData().getOrder_info_state());
+            qualityRequest.setOrder_info_code(request.getBizData().getOrder_info_code());
+            qualityRequest.setOrder_info_create_time(request.getBizData().getOrder_info_create_time());
+            qualityRequest.setOrder_info_divide(request.getBizData().getOrder_info_divide());
+            qualityRequest.setOrder_info_check_date(request.getBizData().getOrder_info_check_date());
+            qualityRequest.setOrder_info_qus_desc(request.getBizData().getOrder_info_qus_desc());
+            qualityRequest.setOrder_info_line(request.getBizData().getOrder_info_line());
+            qualityRequest.setOrder_info_serv(request.getBizData().getOrder_info_serv());
+            qualityRequest.setOrder_info_ver_date(request.getBizData().getOrder_info_ver_date());
+            qualityRequest.setOrder_info_checked_person(request.getBizData().getOrder_info_checked_person());
+            qualityRequest.setOrder_info_enclosure(request.getBizData().getOrder_info_enclosure());
+
             db.qualityRequestDao().insert(qualityRequest);
         });
     }
@@ -84,6 +111,24 @@ public class DisqualifiedDbRepository extends CommonRepository {
             feedBackRequest.getBizData().setVerification_enclosure(request.getVerification_enclosure());
             feedBackRequest.getBizData().setVerification_situation(request.getVerification_situation());
             feedBackRequest.getDoNextParamt().setTaskId(request.getTaskId());
+            //缓存工单基本信息
+            feedBackRequest.getBizData().setOrder_info_state(request.getOrder_info_state());
+            feedBackRequest.getBizData().setOrder_info_code(request.getOrder_info_code());
+            feedBackRequest.getBizData().setOrder_info_create_time(request.getOrder_info_create_time());
+            feedBackRequest.getBizData().setOrder_info_divide(request.getOrder_info_divide());
+            feedBackRequest.getBizData().setOrder_info_check_date(request.getOrder_info_check_date());
+            feedBackRequest.getBizData().setOrder_info_qus_desc(request.getOrder_info_qus_desc());
+            feedBackRequest.getBizData().setOrder_info_line(request.getOrder_info_line());
+            feedBackRequest.getBizData().setOrder_info_serv(request.getOrder_info_serv());
+            feedBackRequest.getBizData().setOrder_info_ver_date(request.getOrder_info_ver_date());
+            feedBackRequest.getBizData().setOrder_info_checked_person(request.getOrder_info_checked_person());
+            feedBackRequest.getBizData().setOrder_info_enclosure(request.getOrder_info_enclosure());
+            //反馈信息
+            feedBackRequest.getBizData().setFed_info_date(request.getFed_info_date());
+            feedBackRequest.getBizData().setFed_info_reason(request.getFed_info_reason());
+            feedBackRequest.getBizData().setFed_info_cor_action(request.getFed_info_cor_action());
+            feedBackRequest.getBizData().setFed_info_del_time(request.getFed_info_del_time());
+            feedBackRequest.getBizData().setFed_info_enclosure(request.getFed_info_enclosure());
             list.postValue(feedBackRequest);
         });
         return list;
@@ -107,6 +152,25 @@ public class DisqualifiedDbRepository extends CommonRepository {
             qualityRequest.setVerification_situation(request.getBizData().getVerification_situation());
             qualityRequest.setIs_pass(request.getBizData().getIs_pass());
             qualityRequest.setTaskId(request.getDoNextParamt().getTaskId());
+            //缓存工单基本信息
+            qualityRequest.setOrder_info_state(request.getBizData().getOrder_info_state());
+            qualityRequest.setOrder_info_code(request.getBizData().getOrder_info_code());
+            qualityRequest.setOrder_info_create_time(request.getBizData().getOrder_info_create_time());
+            qualityRequest.setOrder_info_divide(request.getBizData().getOrder_info_divide());
+            qualityRequest.setOrder_info_check_date(request.getBizData().getOrder_info_check_date());
+            qualityRequest.setOrder_info_qus_desc(request.getBizData().getOrder_info_qus_desc());
+            qualityRequest.setOrder_info_line(request.getBizData().getOrder_info_line());
+            qualityRequest.setOrder_info_serv(request.getBizData().getOrder_info_serv());
+            qualityRequest.setOrder_info_ver_date(request.getBizData().getOrder_info_ver_date());
+            qualityRequest.setOrder_info_checked_person(request.getBizData().getOrder_info_checked_person());
+            qualityRequest.setOrder_info_enclosure(request.getBizData().getOrder_info_enclosure());
+            //反馈信息
+            qualityRequest.setFed_info_date(request.getBizData().getFed_info_date());
+            qualityRequest.setFed_info_reason(request.getBizData().getFed_info_reason());
+            qualityRequest.setFed_info_cor_action(request.getBizData().getFed_info_cor_action());
+            qualityRequest.setFed_info_del_time(request.getBizData().getFed_info_del_time());
+            qualityRequest.setFed_info_enclosure(request.getBizData().getFed_info_enclosure());
+
             db.qualityRequestDao().insert(qualityRequest);
         });
     }

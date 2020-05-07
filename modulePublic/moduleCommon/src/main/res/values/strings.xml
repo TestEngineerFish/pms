@@ -137,6 +137,8 @@
     <string name="text_alert">提示</string>
     <string name="text_applying">审批中</string>
     <string name="text_applying_wait">审批中,请等待</string>
+    <string name="text_applying_postponed">该工单已申请延期操作，请耐心等待审批</string>
+    <string name="text_applying_force_close">该工单已申请闭单操作，请耐心等待审批</string>
     <string name="text_state_pass">通过</string>
     <string name="text_state_reject">驳回</string>
     <string name="text_work_order_apply">验收</string>
@@ -176,7 +178,7 @@
     <string name="tv_in_process">处理中</string>
     <string name="tv_real_estate">房产</string>
     <string name="tv_asking_people">问询人</string>
-    <string name="tv_work_num">工单号</string>
+    <string name="tv_work_num">工单编号</string>
     <string name="tv_create_time">创建时间</string>
     <string name="tv_turn_order">转单</string>
     <string name="tv_talk">沟通</string>

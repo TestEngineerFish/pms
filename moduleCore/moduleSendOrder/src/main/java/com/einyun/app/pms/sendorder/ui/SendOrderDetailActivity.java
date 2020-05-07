@@ -152,17 +152,11 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         .navigation();
             }
         });
-        isClosedRequest = new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
-        //判断是否有闭单申请，有只显示详情
-        viewModel.isClosed(isClosedRequest).observe(this, model -> {
-            Log.d("Test", model.isClosed() + "");
-            if (model.isClosed() == false) {
-                showIfHasClosed();
-            }
-            if (binding.forceCloseInfo.getRoot().isShown()) {
-                binding.orderForm.getRoot().setVisibility(View.GONE);
-                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
-                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
+
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
             }
         });
     }
@@ -234,6 +228,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         detialModel = distributeWorkOrder;
+        orderId=detialModel.getData().getInfo().getID();
         binding.setWorkOrder(distributeWorkOrder);
         updatePageUIState(PageUIState.FILLDATA.getState());
         binding.orderInfo.setWorkOrder(distributeWorkOrder);
@@ -255,17 +250,33 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             type.append("-"+info.getEnvirmentType3Name());
         }
         binding.orderInfo.orderType.setText(type);
+        isClosedRequest = new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
+        //判断是否有闭单申请，有只显示详情
+        viewModel.isClosed(isClosedRequest).observe(this, model -> {
+            Log.d("Test", model.isClosed() + "");
+            if (model.isClosed() == false) {
+                showIfHasClosed();
+            }
+//            if (binding.forceCloseInfo.getRoot().isShown()) {
+//                binding.orderForm.getRoot().setVisibility(View.GONE);
+//                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
+//                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
+//            }
+        });
     }
 
     protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
 
+    private static final String TAG = "SendOrderDetailActivity";
     private void updateElapsedTime() {
         if (StringUtil.isNullStr(detialModel.getData().getInfo().getCreateTime())) {
             createTime = detialModel.getData().getInfo().getCreateTime();
             if (detialModel.getData().getInfo().getStatus().equals(String.valueOf(OrderState.CLOSED.getState()))) {
                 if (StringUtil.isNullStr(detialModel.getData().getInfo().getActFinishTime()))
+                    Log.e(TAG, "updateElapsedTime: "+createTime );
+                    Log.e(TAG, "getActFinishTim e: "+detialModel.getData().getInfo().getActFinishTime() );
                     binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime, detialModel.getData().getInfo().getActFinishTime()));
             } else {
                 binding.tvHandleTime.setText(TimeUtil.getTimeExpend(createTime));
@@ -329,7 +340,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 showTakeOrder();
             } else if ((state == OrderState.HANDING.getState())) {//处理-提交
                 if (binding.forceCloseInfo.getRoot().isShown()) {
-
+                    showSubmit();
                 }else {
 
                     showSubmit();
@@ -405,6 +416,8 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             }
             if (!TextUtils.isEmpty(detialModel.getData().getInfo().getScore())) {
                 binding.checkAndAcceptInfo.ratingBar.setStar(Float.valueOf(detialModel.getData().getInfo().getScore()));
+            }else {
+                binding.checkAndAcceptInfo.ratingBar.setStar(Float.valueOf(0));
             }
         }
 

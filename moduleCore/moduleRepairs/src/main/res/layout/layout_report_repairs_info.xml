@@ -183,6 +183,7 @@
             <TextView
                 android:id="@+id/repair_asses_txt"
                 style="@style/work_order_detail_txt_right"
+                android:text="一般"
                 android:layout_width="wrap_content"
                 android:layout_marginBottom="@dimen/px_0"
                 android:visibility="gone"

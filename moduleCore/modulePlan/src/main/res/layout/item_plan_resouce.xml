@@ -125,7 +125,6 @@
                 android:text="扫码结果" />
 
             <TextView
-                app:scanReasult="@{resource.is_suc()}"
                 style="@style/detail_item_right_tv"
                 android:id="@+id/tv_scan_reasult"/>
         </LinearLayout>

@@ -55,10 +55,10 @@
                 android:layout_height="@dimen/px_40"
                 android:visibility="gone"
                 android:layout_marginLeft="@dimen/px_75"
-                android:background="@drawable/shape_frame_corners_gray"
+                android:background="@drawable/shape_green_bg"
                 android:padding="@dimen/px_5"
                 android:text="@string/text_state_passed"
-                android:textColor="@color/normal_main_text_icon_color"
+                android:textColor="@color/white"
                 android:textSize="@dimen/font_size12" />
             <Button
                 android:id="@+id/btn_reject"
@@ -68,8 +68,8 @@
                 android:layout_marginLeft="@dimen/px_40"
                 android:padding="@dimen/px_5"
                 android:textSize="@dimen/font_size12"
-                android:background="@drawable/shape_frame_corners_gray"
-                android:textColor="@color/normal_main_text_icon_color"
+                android:background="@drawable/shape_red_bg"
+                android:textColor="@color/white"
                 android:text="@string/text_reject"
                 />
         </LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+        <data>
+                <variable
+                    name="check"
+                    type="com.einyun.app.common.model.BuildModel.GridRangeBean" />
+        </data>
+      <RelativeLayout
+          android:id="@+id/ll_item"
+          android:layout_marginTop="@dimen/px_15"
+          android:layout_marginBottom="@dimen/px_15"
+          android:layout_width="100dp"
+          android:orientation="vertical"
+          android:layout_height="33dp">
+
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/tv_content"
+            android:text="sss"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:textSize="@dimen/font_size14" />
+          <ImageView
+              android:id="@+id/iv_check"
+              android:layout_marginRight="15dp"
+              android:layout_centerVertical="true"
+              android:layout_alignParentRight="true"
+              android:src="@drawable/iv_checked"
+              android:layout_width="13dp"
+              android:layout_height="10dp"/>
+      </RelativeLayout>
+</layout>

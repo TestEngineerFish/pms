@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,10 +19,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
+import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.pms.main.core.ui.fragment.MineViewModelFragment;
 import com.einyun.app.pms.main.core.ui.fragment.WorkBenchViewModelFragment;
 import com.einyun.app.pms.main.core.viewmodel.HomeTabViewModel;
@@ -64,6 +71,37 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         fragmentManager = getSupportFragmentManager();
         HomeTabViewModelActivityPermissionsDispatcher.permissionsWithPermissionCheck(this);
         showFragment(0, null);
+    }
+
+    /**
+     * 检查通知权限
+     */
+    private void showNotificationView() {
+        boolean isNotifity = (boolean)SPUtils.get(this, SPKey.SP_KEY_NOTIFICATION, false);
+        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+        // areNotificationsEnabled方法的有效性官方只最低支持到API 19，低于19的仍可调用此方法不过只会返回true，即默认为用户已经开启了通知。
+        boolean isOpened = manager.areNotificationsEnabled();
+        if (!isNotifity) {//没有提示过权限框 弹出框
+            if (!isOpened) {
+                //弹框
+                new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                        .setMsg("是否打开通知权限?")
+                        .setNegativeButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_NOTIFICATION, true);
+                            }
+                        })
+                        .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_NOTIFICATION, true);
+
+                                viewModel.setNotify(HomeTabViewModelActivity.this);
+                            }
+                        }).show();
+            }
+        }
     }
 
     @Override
@@ -171,6 +209,7 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         HomeTabViewModelActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+        showNotificationView();
     }
 
 

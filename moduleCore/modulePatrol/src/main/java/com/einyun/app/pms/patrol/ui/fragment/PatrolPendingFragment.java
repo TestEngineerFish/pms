@@ -1,6 +1,7 @@
 package com.einyun.app.pms.patrol.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -139,12 +140,22 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
     }
 
     protected void loadData() {
+
         viewModel.loadPendingData().observe(getActivity(), patrols -> {
             if (patrols.size() == 0) {
                 updatePageUIState(PageUIState.EMPTY.getState());
+                showLoading(getActivity());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideLoading();
+                    }
+                },3500);
             } else {
                 updatePageUIState(PageUIState.FILLDATA.getState());
+                hideLoading();
             }
+
             adapter.submitList(patrols);
             adapter.notifyDataSetChanged();
         });

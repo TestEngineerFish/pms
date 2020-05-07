@@ -82,6 +82,7 @@ public class ApprovalViewModuleActivity extends BaseHeadViewModelActivity<Activi
                 fragments.add(ApprovalViewModelFragment.newInstance(bundle));
             }
         }
+        binding.viewPager.setOffscreenPageLimit(3);
         binding.viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public ApprovalViewModelFragment getItem(int i) {

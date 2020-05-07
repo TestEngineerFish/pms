@@ -20,6 +20,7 @@ public class RouteKey {
     public static final String KEY_WEB_TITLE="webUrlTitle";
     public static final String KEY_PARAMS="params";
     public static final String KEY_TASK_ID="taskId";
+    public static final String KEY_IS_ORDER_LIST="KEY_IS_ORDER_LIST";
     public static final String KEY_TAB_ID="tabId";
     public static final String KEY_APPROVAL_USER_STATE="userState";
     public static final String KEY_CATE_NAME="cateName";
@@ -150,10 +151,16 @@ public class RouteKey {
 
     //收费
     public static final String HOUSE_ID = "houseid";
+    public static final String CLIENT_ID = "clientId";
     public static final String HOUSE_FEE_ID = "houseFeeid";
     public static final String HOUSE_TITLE = "house_title";
     public static final String KEY_ALL_NAME = "ALL_NAME";
     public static final String KEY_CLIENT_NAME = "CLIENT_NAME";
+    public static final String KEY_BUILD_LIST_DATA = "KEY_BUILD_LIST_DATA";
+    public static final String KEY_BUILD_ID = "KEY_BUILD_ID";
+    public static final String KEY_FEE_DIVIDE_ID = "KEY_FEE_DIVIDE_ID";
+    public static final String KEY_FEE_BUILD_NAME = "KEY_FEE_BUILD_NAME";
+    public static final String KEY_FEE_GRID_NAME = "KEY_FEE_GRID_NAME";
     //消息中心
     public static final String KEY_START_TIME = "START_TIME";
     public static final String KEY_END_TIME = "EDN_TIME";

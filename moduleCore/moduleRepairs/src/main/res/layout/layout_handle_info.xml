@@ -10,7 +10,9 @@
             type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
     </data>
 
-    <androidx.cardview.widget.CardView style="@style/cardview_style">
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="0dp"
+        style="@style/cardview_style">
 
         <LinearLayout
             android:id="@+id/panel_work_order_info"
