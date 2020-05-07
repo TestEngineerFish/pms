@@ -19,6 +19,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.databinding.ActivityX5WebViewBinding;
 import com.einyun.app.common.model.SerializableMap;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.utils.StatusBarcompUtils;
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
@@ -72,8 +73,11 @@ public class X5WebViewActivity extends BaseHeadViewModelActivity<ActivityX5WebVi
         super.initViews(savedInstanceState);
         if (webTitle != null){
             setHeadTitle(webTitle);
+            setTxtColor(getResources().getColor(R.color.white));
         }
-        binding.headBar.mainHeaderBar.setBackground(getResources().getDrawable(R.color.main_color));
+        setIvBackground(R.drawable.iv_back);
+        StatusBarcompUtils.compatpicture(this);
+        binding.headBar.mainHeaderBar.setBackground(getResources().getDrawable(R.color.hint_foreground_material_light));
 
         // 清除网页访问留下的缓存
         // 由于内核缓存是全局的因此这个方法不仅仅针对webView而是针对整个应用程序

@@ -95,6 +95,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected CreateNewOrderDialog alertDialog;
     protected TipDialog tipDialog;
     protected File imageFile;
+    public int f_plan_work_order_state;
 
     protected void setProInsId(String proInsId) {
         this.proInsId = proInsId;
@@ -121,7 +122,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         setRightOption(R.drawable.histroy);
-        switchStateUI();
+
     }
 
     @Override
@@ -146,7 +147,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     /**
      * UI切换
      */
-    protected void switchStateUI() {
+    protected void switchStateUI(int f_plan_work_order_state) {
         binding.panelHandleForm.setVisibility(View.GONE);
         binding.itemOrdered.setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
@@ -295,7 +296,17 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        if (orderId.isEmpty()) {
+            orderId=patrol.getData().getZyxcgd().getId_();
+        }
         this.patrolInfo = patrol;
+        f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
+        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        }else {
+            binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        }
+        switchStateUI(f_plan_work_order_state);
         updateElapsedTime(patrol);
         binding.setPatrol(patrol);
         updatePageUIState(PageUIState.FILLDATA.getState());
@@ -435,7 +446,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
                 binding.btnSubmit.setVisibility(View.GONE);
             } else {//已办显示全部信息
-                binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+                if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+                    binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+                }else {
+                    binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+                }
                 binding.cdWorkNodes.setVisibility(View.VISIBLE);
             }
         } else if (state == ApplyState.REJECT.getState()){
@@ -596,7 +611,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             boolean flag = data.getBooleanExtra(DataConstants.KEY_OPTION_RESULT, false);
             if (flag) {
                 viewModel.loadPendingDetial(orderId);
-                finish();
+                finish();//在此处刷新数据
             }
         }
     }

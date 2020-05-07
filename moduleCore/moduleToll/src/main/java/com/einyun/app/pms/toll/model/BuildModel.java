@@ -1,9 +1,10 @@
 package com.einyun.app.pms.toll.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class BuildModel {
+public class BuildModel implements Serializable{
 
 
     private List<GridRangeBean> gridRange;
@@ -16,7 +17,7 @@ public class BuildModel {
         this.gridRange = gridRange;
     }
 
-    public static class GridRangeBean {
+    public static class GridRangeBean implements Serializable {
         /**
          * checked : 0
          * code : 08-01

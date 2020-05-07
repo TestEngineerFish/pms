@@ -8,9 +8,12 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.pms.disqualified.model.DisqualifiedItemModel;
 import com.einyun.app.pms.disqualified.model.DisqualifiedListModel;
 import com.einyun.app.pms.disqualified.net.request.DisqualifiedListRequest;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 
 /**
@@ -46,6 +49,9 @@ public class ItemDataSource extends BaseDataSource<DisqualifiedItemModel> {
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
                     loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
                     Log.e("tag"+data.getRows().size(), "call: " );
+
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.DISQUALITY_EMPTY+tag,data.getTotal());
+
                 }else if(callback instanceof LoadRangeCallback){
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
                     loadInitialCallback.onResult(data.getRows());

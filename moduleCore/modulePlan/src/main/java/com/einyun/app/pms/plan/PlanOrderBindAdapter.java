@@ -38,7 +38,30 @@ public class PlanOrderBindAdapter {
         }
 
     }
+    /**
+     * xiangqing状态
+     *
+     * @param view
+     * @param value
+     */
+    @BindingAdapter("status_detail")
+    public static void status_detail(TextView view, String value) {
+        if (!StringUtil.isNullStr(value)) {
+            return;
+        }
+        int state = Integer.parseInt(value);
+        if (state == OrderState.NEW.getState()) {
+            view.setText(R.string.text_state_new);
+        } else if (state == OrderState.HANDING.getState()) {
+            view.setText(R.string.text_state_processing);
+        } else if (state == OrderState.APPLY.getState()) {
+            view.setText(R.string.text_apply);
+        } else if (state == OrderState.CLOSED.getState()) {
+            view.setText(R.string.text_finished);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
+        }
 
+    }
     /**
      * 派工单详情显示状态
      *
@@ -152,6 +175,22 @@ public class PlanOrderBindAdapter {
      * @param view
      * @param state
      */
+    @BindingAdapter("isOverTime")
+    public static void isOverTime(TextView view, int state) {
+        if (state == 0) {
+            view.setText("否");
+//            view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
+        } else if (state == 1) {
+            view.setText("是");
+//            view.setTextColor(view.getContext().getResources().getColor(R.color.redTextColor));
+        }
+    }
+    /**
+     * 是否强制扫码
+     *
+     * @param view
+     * @param state
+     */
     @BindingAdapter("scanReasult")
     public static void scan_reasult(TextView view, int state) {
         if (state == 2) {
@@ -160,7 +199,7 @@ public class PlanOrderBindAdapter {
         } else if (state == 1) {
             view.setText("成功");
             view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
-        }else if (state == 0) {
+        }else  {
             view.setText("");
             view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
         }

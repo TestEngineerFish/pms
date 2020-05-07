@@ -1,6 +1,7 @@
 package com.einyun.app.pms.toll.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -16,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -29,6 +31,7 @@ import com.einyun.app.pms.toll.databinding.ActivityTollViewModelBinding;
 import com.einyun.app.pms.toll.databinding.ItemLackInListBinding;
 import com.einyun.app.pms.toll.databinding.ItemLackOutListBinding;
 import com.einyun.app.pms.toll.databinding.ItemPaymentAdvanceListBinding;
+import com.einyun.app.pms.toll.model.CreateOrderModel;
 import com.einyun.app.pms.toll.model.CreateOrderRequest;
 import com.einyun.app.pms.toll.model.FeeDetailRequset;
 import com.einyun.app.pms.toll.model.JumpAdvanceModel;
@@ -101,6 +104,19 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
          * 付款成功关闭页面
          */
         FeeSucFinish();
+        viewModel.repository.getFeeDivideId(houseFeeId,"3/", new CallBack<String>() {
+            @Override
+            public void call(String data) {
+                hideLoading();
+                houseFeeId=data;
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+
     }
 
     private void FeeSucFinish() {
@@ -148,14 +164,19 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
             }
             JSONObject jsondata = JSON.parseObject(data);
 
-            for (String feeItemId : feeItemIds) {
+            try {
+                for (String feeItemId : feeItemIds) {
+                    if (jsondata.containsKey(feeItemId)) {
+                        boolean token = jsondata.getBoolean(feeItemId);
+                        if (!token) {
+                            ToastUtil.show(PaymentAdvanceActivity.this, "你有欠费");
 
-                boolean token = jsondata.getBoolean(feeItemId);
-                if (!token) {
-                    ToastUtil.show(PaymentAdvanceActivity.this, "你有欠费");
-
-                    return;
+                            return;
+                        }
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             paymentDetailsBeans.clear();
             CreateOrderRequest createOrderRequest = new CreateOrderRequest();
@@ -180,21 +201,48 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
             }
             createOrderRequest.setPaymentDetails(paymentDetailsBeans);
 //            ToastUtil.show(PaymentAdvanceActivity.this,"没有欠费");
-            viewModel.createOrder(createOrderRequest).observe(this, orderModel -> {
-                if (orderModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
 
-                    Log.e(TAG, "checkJumpVerity: " + orderModel.getData());
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
-                            .withInt(RouteKey.KEY_ORDER_ID, orderModel.getData())
-                            .withString("MONEY", binding.tvToallMoney.getText().toString())
-                            .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
-                            .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
-                            .withString(RouteKey.KEY_CLIENT_NAME, allName)
-                            .withString(RouteKey.HOUSE_TITLE, title)
-                            .navigation();
+            viewModel.repository.createOrder(createOrderRequest, new CallBack<CreateOrderModel>() {
+                @Override
+                public void call(CreateOrderModel data) {
+                    hideLoading();
+                    if (data.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
+
+                        Log.e(TAG, "checkJumpVerity: " + data.getData());
+                        Log.e(TAG, "checkJumpVerity:money====  " + binding.tvToallMoney.getText().toString());
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
+                                .withInt(RouteKey.KEY_ORDER_ID, data.getData())
+                                .withString("MONEY", binding.tvToallMoney.getText().toString())
+                                .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+                                .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
+                                .withString(RouteKey.KEY_CLIENT_NAME, allName)
+                                .withString(RouteKey.HOUSE_TITLE, title)
+                                .navigation();
 //                    finish();
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    hideLoading();
                 }
             });
+//            viewModel.createOrder(createOrderRequest).observe(this, orderModel -> {
+//                if (orderModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
+//
+//                    Log.e(TAG, "checkJumpVerity: " + orderModel.getData());
+//                    Log.e(TAG, "checkJumpVerity:money====  " + binding.tvToallMoney.getText().toString());
+//                    ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
+//                            .withInt(RouteKey.KEY_ORDER_ID, orderModel.getData())
+//                            .withString("MONEY", binding.tvToallMoney.getText().toString())
+//                            .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+//                            .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
+//                            .withString(RouteKey.KEY_CLIENT_NAME, allName)
+//                            .withString(RouteKey.HOUSE_TITLE, title)
+//                            .navigation();
+////                    finish();
+//                }
+//            });
 
 
         });
@@ -239,7 +287,13 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
                     binding.rlEmpty.setVisibility(View.GONE);
                 }
                 adapter.setDataList(mData);
-                initToallMoney2();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        initToallMoney2(mData);
+                    }
+                },1000);
             }
 
         });
@@ -384,14 +438,14 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
         binding.tvToallMoney.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");
     }
 
-    private void initToallMoney2() {
+    private void initToallMoney2(List<PaymentAdvanceModel2.DataBean.DataListBean> mData) {
         BigDecimal bigDecimal = new BigDecimal("0.00");
         for (PaymentAdvanceModel2.DataBean.DataListBean datum : mData) {
-            if (datum.isCheck()) {
+//            if (datum.isCheck()) {
 //                                    bigDecimal= bigDecimal.add(new BigDecimal(listBinding.tvAdvanceMoney.getText().toString()));
 //                bigDecimal= bigDecimal.add(datum.getUnitPrice());
                 bigDecimal = bigDecimal.add(datum.getUnitPrice().multiply(new BigDecimal(datum.getMonths())));
-            }
+//            }
         }
         binding.tvToallMoney.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");
     }

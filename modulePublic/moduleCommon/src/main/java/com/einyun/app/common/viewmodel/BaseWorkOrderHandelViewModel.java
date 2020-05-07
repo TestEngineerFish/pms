@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.model.IsClosedState;
+import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -20,7 +21,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
      protected MutableLiveData<Boolean> postponeLiveData=new MutableLiveData<>();
      public MutableLiveData<IsClosedState> isClosedLiveData=new MutableLiveData<>();
 
-     protected ResourceWorkOrderService workOrderService= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+     public ResourceWorkOrderService workOrderService= ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
 
      protected String workOrderType;
 
@@ -115,7 +116,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
           return isClosedLiveData;
      }
 
-     MsgRepository repository=new MsgRepository();
+    public MsgRepository repository=new MsgRepository();
      /**
       * 单个消息从未读到已读
       */
@@ -134,5 +135,26 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
                }
           });
           return singleReadModel;
+     }
+
+     /*
+      * 获取审批详情页 基本信息数据
+      * */
+     private MutableLiveData<UrlxcgdGetInstBOModule> approvalBasicInfo=new MutableLiveData<>();
+     public LiveData<UrlxcgdGetInstBOModule> queryApprovalBasicInfo(String id){
+          showLoading();
+          repository.getApprovalBasicInfo(id, new CallBack<UrlxcgdGetInstBOModule>() {
+               @Override
+               public void call(UrlxcgdGetInstBOModule data) {
+                    hideLoading();
+                    approvalBasicInfo.postValue(data);
+               }
+
+               @Override
+               public void onFaild(Throwable throwable) {
+                    hideLoading();
+               }
+          });
+          return approvalBasicInfo;
      }
 }

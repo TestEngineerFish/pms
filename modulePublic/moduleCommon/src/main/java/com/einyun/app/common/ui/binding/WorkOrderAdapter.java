@@ -154,10 +154,12 @@ public class WorkOrderAdapter {
             view.setText(R.string.text_state_new);
         } else if (state == OrderState.HANDING.getState()) {
             view.setText(R.string.text_state_processing);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
         } else if (state == OrderState.APPLY.getState()) {
             view.setText(R.string.text_approval_wait);
         } else if (state == OrderState.CLOSED.getState()) {
-            view.setText(R.string.text_state_closed);
+            view.setText(R.string.text_finished);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
         }
 
     }

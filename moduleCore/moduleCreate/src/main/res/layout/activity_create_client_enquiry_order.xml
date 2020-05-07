@@ -84,7 +84,7 @@
                         style="@style/tv_create_order_name"
                         android:text="联系电话" />
 
-                    <EditText
+                    <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/phone"
                         style="@style/et_create_order_right"
                         android:contentDescription="联系电话"
@@ -101,7 +101,7 @@
                         style="@style/tv_create_order_name"
                         android:text="问询人" />
 
-                    <EditText
+                    <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/user_name"
                         style="@style/et_create_order_right" />
                 </LinearLayout>

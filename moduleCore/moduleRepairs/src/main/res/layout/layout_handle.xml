@@ -83,7 +83,7 @@
                     android:tag="1"
                     android:button="@null"
                     android:background="@drawable/if_paid_radio_btn"
-                    android:checked="true"
+                    android:checked="false"
                   />
                  <TextView
                      android:layout_width="wrap_content"
@@ -95,6 +95,7 @@
                 <RadioButton
                     android:id="@+id/rb_no"
                     android:layout_width="@dimen/px_26"
+                    android:checked="true"
                     android:layout_height="@dimen/px_26"
                     android:layout_marginLeft="@dimen/px_20"
                     android:layout_gravity="center_vertical"
@@ -126,7 +127,7 @@
                 android:text="维修工时"
                 android:textStyle="normal"
                 android:textColor="@color/blackTextColor"/>
-            <EditText
+            <com.einyun.app.common.ui.widget.BaseEditText
                 android:id="@+id/repair_work_hours"
                 android:layout_width="@dimen/px_200"
                 android:layout_height="match_parent"

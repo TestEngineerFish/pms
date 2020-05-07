@@ -280,6 +280,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             }
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
             binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
+            if (tabId==2) {
+                binding.cdLimit.setVisibility(View.GONE);
+            }
         } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_PASS)) {//通过
 
             binding.listview.setVisibility(View.VISIBLE);//显示审批信息列表
@@ -416,7 +419,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 
         if (tabId==2) {//我发起的tab 不能操作
             binding.llPass.setVisibility(View.GONE);
-            binding.cdLimit.setVisibility(View.GONE);
+//            binding.cdLimit.setVisibility(View.GONE);
         }
     }
 

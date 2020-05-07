@@ -7,6 +7,8 @@
     </data>
 
     <RelativeLayout
+        android:focusable="true"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -42,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/px_12"
-                    android:text="工程维修类"
+                    android:text="户内报修类"
                     android:layout_gravity="center_horizontal"
                     android:textSize="@dimen/font_size18"
                     android:textColor="@color/txt_black_order" />

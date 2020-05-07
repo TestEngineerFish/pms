@@ -77,6 +77,9 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
      */
     public List<WorkNode> loadNodes(PatrolInfo patrolInfo) {
         List<WorkNode> nodes;
+        if (patrolInfo==null) {
+            return new ArrayList<>();
+        }
         nodes = Observable
                 .fromIterable(patrolInfo.getData().getZyxcgd().getSub_inspection_work_order_flow_node())
                 .map(index -> new WorkNode(
@@ -298,13 +301,17 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
         repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
             @Override
             public void call(PatrolLocal data) {
-                List<WorkNode> nodes=data.getNodes();
-                for(WorkNode node:nodes){
-                    if(pointId.equals(node.patrol_point_id)){
-                        node.setSign_time(TimeUtil.Now());
-                        node.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
-                        repo.saveLocalData(data);
+                try {
+                    List<WorkNode> nodes=data.getNodes();
+                    for(WorkNode node:nodes){
+                        if(pointId.equals(node.patrol_point_id)){
+                            node.setSign_time(TimeUtil.Now());
+                            node.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
+                            repo.saveLocalData(data);
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 

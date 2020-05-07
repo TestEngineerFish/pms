@@ -2,6 +2,7 @@ package com.einyun.app.common.repository;
 
 
 import com.einyun.app.base.http.BaseResponse;
+import com.einyun.app.common.viewmodel.GetApprovalBasicInfoResponse;
 
 
 import io.reactivex.Flowable;
@@ -28,5 +29,10 @@ public interface MsgServiceApi {
      */
     @GET()
     Flowable<BaseResponse> singleRead(@Url String url);
+    /**
+     * 获取审批详情
+     */
+    @GET()
+    Flowable<GetApprovalBasicInfoResponse> getApprovalBasicInfo(@Url String url);
 
 }

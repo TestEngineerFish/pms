@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -23,6 +25,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.approval.BR;
 import com.einyun.app.pms.approval.R;
@@ -192,6 +195,18 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         adapter.setOnItemClick(this);
 //        loadPagingData(viewModel.getData(1,10,"",blockName,"","",""),tabId);
         loadPagingData(viewModel.getData(1,10,"","","","",""),tabId);
+//        LiveEventBus.get(LiveDataBusKey.APPROVAL_EMPTY,Boolean.class).observe(this, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if (aBoolean) {
+//                    binding.empty.getRoot().setVisibility(View.VISIBLE);
+//                }else {
+//                    binding.empty.getRoot().setVisibility(View.GONE);
+//
+//                }
+//            }
+//        });
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.APPROVAL_EMPTY+tabId,this);
     }
 
     private String  getTypeValue(String auditType ,String auditSubType) {
@@ -261,9 +276,12 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         return typeValue;
     }
 
+    private static final String TAG = "ApprovalViewModelFragme";
     private void loadPagingData(ApprovalBean approvalBean,int tabId){
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPadingData(approvalBean,tabId).observe(this, dataBeans -> adapter.submitList(dataBeans));
+        viewModel.loadPadingData(approvalBean,tabId).observe(this, dataBeans ->{
+            adapter.submitList(dataBeans);
+        });
 
     }
     /*

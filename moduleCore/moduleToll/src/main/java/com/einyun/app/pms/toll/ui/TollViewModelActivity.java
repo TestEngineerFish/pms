@@ -47,7 +47,7 @@ import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivityTollViewModelBinding;
 import com.einyun.app.pms.toll.databinding.ItemTollInListBinding;
 import com.einyun.app.pms.toll.databinding.ItemTollOutListBinding;
-import com.einyun.app.pms.toll.model.BuildModel;
+import com.einyun.app.common.model.BuildModel;
 import com.einyun.app.pms.toll.model.DealBuildModel;
 import com.einyun.app.pms.toll.model.DivideNameModel;
 import com.einyun.app.pms.toll.model.FeeModel;

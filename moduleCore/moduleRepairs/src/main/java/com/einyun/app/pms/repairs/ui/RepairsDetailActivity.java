@@ -25,15 +25,18 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.BottomPickerModel;
+import com.einyun.app.common.model.IsClosedState;
 import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.WorkOrderType;
@@ -49,6 +52,7 @@ import com.einyun.app.common.ui.widget.SwipeItemLayout;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.SpacesItemDecoration;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
@@ -107,6 +111,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     static final String HANDLE_NO_PAID = "0";//无偿
     RepairsDetailModel.DataBean.CustomerRepairModelBean customerRepair;
     private IsClosedRequest isClosedRequest;
+
+
     @Override
     protected RepairDetailViewModel initViewModel() {
         return new ViewModelProvider(this, new ViewModelFactory()).get(RepairDetailViewModel.class);
@@ -204,6 +210,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
             getNodeIdRequest.setDefkey("customer_repair_flow");
             getNodeIdRequest.setId(repairsDetail.getData().getCustomer_repair_model().getId_());
+            orderId=repairsDetail.getData().getCustomer_repair_model().getId_();
             viewModel.getNodeId(getNodeIdRequest).observe(this,nodeIdModel->{
                 if (nodeIdModel==null) {
                     return;
@@ -247,7 +254,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             dictAscriptLsit = dictDataModels;
             setAscription();
         });
-
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -640,12 +652,32 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     .navigation();
         }
         if (v.getId() == R.id.repair_apply_late) {
-            ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, orderId)
-                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-                    .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_REPAIRS)
-                    .withString(RouteKey.KEY_DIVIDE_ID, customerRepair.getBx_dk_id())
-                    .withString(RouteKey.KEY_DIVIDE_NAME, customerRepair.getBx_dk())
-                    .navigation();
+            IsClosedRequest request = new IsClosedRequest();
+            request.setId(orderId);
+            request.setType(WorkOrder.POSTPONED_REPAIR);
+//            viewModel.isClosed(request, true);
+            viewModel.resourceWorkOrderService.isClosed(request, new CallBack<Boolean>() {
+                @Override
+                public void call(Boolean data) {
+                    if (data) {
+//                            if (model.getType().equals(WorkOrder.POSTPONED_REPAIR)) {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_LATE).withString(RouteKey.KEY_ORDER_ID, orderId)
+                                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                                .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_CUSTOMER_REPAIRS)
+                                .withString(RouteKey.KEY_DIVIDE_ID, customerRepair.getBx_dk_id())
+                                .withString(RouteKey.KEY_DIVIDE_NAME, customerRepair.getBx_dk())
+                                .navigation();
+//                            }
+                    }else {
+                        ToastUtil.show(RepairsDetailActivity.this,"该工单已申请延期操作，请耐心等待审批");
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
         }
 
     }
@@ -723,7 +755,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (TextUtils.isEmpty(binding.sendOrder.repairSendReason.getString())) {
             } else {
                 detialModel.getData().getCustomer_repair_model().setHandle_result(binding.sendOrder.repairSendReason.getString());
-                return;
+//                return;
             }
             String s = binding.repairsInfo.repairReportArea.getText().toString();
             if (s!=null&&s.equals("户内")) {
@@ -772,9 +804,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (TextUtils.isEmpty(binding.repairHandleResult.repairHandleReason.getString())) {
             ToastUtil.show(this, R.string.text_please_enter_reason);
         } else {
+            SaveHandleRequest saveHandleRequest = new SaveHandleRequest(orderId,new RepairsDetailModel.DataBean.CustomerRepairModelBean());
+
+//            this.saveHandleRequest.getBizData().setHandle_result(binding.repairHandleResult.repairHandleReason.getString());
+            saveHandleRequest.setID_(orderId);
             saveHandleRequest.getBizData().setHandle_result(binding.repairHandleResult.repairHandleReason.getString());
             viewModel.saveHandler(saveHandleRequest).observe(this, status -> {
                 if (status) {
+                    RepairsDetailModel.HandleListBean handleListBean = new RepairsDetailModel.HandleListBean();
+                    handleListBean.setHandle_time(System.currentTimeMillis());
                     new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
                             .setMsg(getResources().getString(R.string.text_save_success)).
                             setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
@@ -782,14 +820,17 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                                 public void onClick(View view) {
                                     viewModel.refreshUI();
                                     binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
-                                    RepairsDetailModel.HandleListBean handleListBean = new RepairsDetailModel.HandleListBean();
+
                                     handleListBean.setHandle_result(binding.repairHandleResult.repairHandleReason.getString());
+
+                                    handleListBean.setHandle_user(detialModel.getData().getCustomer_repair_model().getHandle_user());
                                     if (detialModel.getHandleList() == null) {
                                         List<RepairsDetailModel.HandleListBean> handleListBeanList = new ArrayList<>();
                                         detialModel.setHandleList(handleListBeanList);
                                     }
                                     detialModel.getHandleList().add(0, handleListBean);
                                     handleAdapter.setDataList(detialModel.getHandleList());
+
                                 }
                             }).show();
                 }
@@ -879,6 +920,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
+            binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             return;
         }
         //超时派单

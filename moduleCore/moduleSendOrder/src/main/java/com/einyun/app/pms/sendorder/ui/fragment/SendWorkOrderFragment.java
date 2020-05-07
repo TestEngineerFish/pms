@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -226,12 +227,23 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     }
 
     private void loadPagingData() {
+        showLoading(getActivity());
         viewModel.getRequest().setUserId(userModuleService.getUserId());
         if (listType == ListType.PENDING.getType()) {
+
             viewModel.loadPadingData().observe(this, dataBeans -> {
+//                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
+                    showLoading(getActivity());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoading();
+                        }
+                    },3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
+                    hideLoading();
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
                 adapter.submitList(dataBeans);
@@ -239,11 +251,13 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             });
         } else {
             viewModel.loadDonePagingData().observe(this, dataBeans -> {
+//                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
                 }
+                hideLoading();
                 adapter.submitList(dataBeans);
                 adapter.notifyDataSetChanged();
             });

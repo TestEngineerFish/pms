@@ -68,10 +68,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_little_blue"
+                    android:background="@drawable/shape_little_blue2"
                     android:gravity="center"
                     android:text="重置"
-                    android:alpha="80"
                     android:textColor="@color/blueTextColor"
                     android:textSize="@dimen/font_size15" />
 

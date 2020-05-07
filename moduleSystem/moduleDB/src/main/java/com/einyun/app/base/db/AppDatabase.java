@@ -7,6 +7,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.einyun.app.base.db.converter.BasicDataTypeConvert;
 import com.einyun.app.base.db.converter.BizDataBeanTypeConvert;
@@ -48,7 +50,7 @@ import com.einyun.app.base.db.entity.User;
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
         PatrolInfo.class, PatrolLocal.class, Distribute.class, CheckPoint.class,
         Plan.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
-}, version = 5)
+}, version = 6)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,
@@ -87,12 +89,14 @@ public abstract class AppDatabase extends RoomDatabase {
         if (sInstance == null) {
             synchronized (AppDatabase.class) {
                 if (sInstance == null) {
-                    sInstance = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+                    sInstance = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
+                            .fallbackToDestructiveMigration()//数据库版本改变 清空数据 不然覆盖安装crash
+                            .allowMainThreadQueries()
+                            .build();
                 }
             }
         }
         return sInstance;
     }
-
 
 }

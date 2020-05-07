@@ -19,7 +19,7 @@
          <include layout="@layout/include_layout_activity_head" android:id="@+id/head_bar"/>
          <RelativeLayout
              android:id="@+id/rl_empty"
-             android:visibility="visible"
+             android:visibility="gone"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 

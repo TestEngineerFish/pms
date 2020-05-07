@@ -39,5 +39,17 @@ public class URLS {
     public static final String URL_GET_DEFAUFT_DIVIDE_NAME ="/user-center/api/usercenter/v1/ucOrg/userList/";
     //获取上次催缴时间
     public static final String URL_GET_LAST_WORTH_TIME =relaseBasesUrl+"/payment/getOverduePaymentByDivideId/";
+    //根据手机号获取姓名
+    public static final String URL_GET_NAME_FROM_PHONE =relaseBasesUrl+"/v1/client/getClientByPhone";
+    //添加住户
+    public static final String URL_GET_ADD_HOUSER =relaseBasesUrl+"/v1/house/bindHouseOwner";
+    //添加住户
+    public static final String URL_GET_DICKEY =relaseBasesUrl+"/v1/house/getOwnerType/";
+    //获取标签
+    public static final String URL_GET_SIGN=relaseBasesUrl+"/v1/house/getLableByHouse";
+    //打标签
+    public static final String URL_SET_SIGN =relaseBasesUrl+"/v1/house/AddLable";
+    //获取租户logo
+    public static final String URL_GET_TENANT_LOGO ="/datasource/api/saas/v1/tenant/get/";
 
 }

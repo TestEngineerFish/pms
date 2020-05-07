@@ -24,4 +24,9 @@ public class HttpUrlUtil {
         Logger.d("imageUrl->"+imageUrl);
         return imageUrl;
     }
+    public static String getImageLogoUrl(String path){
+        String imageUrl=EinyunHttpService.getInstance().getBaseUrl() + File.separator+path;
+        Logger.d("imageUrl->"+imageUrl);
+        return imageUrl;
+    }
 }

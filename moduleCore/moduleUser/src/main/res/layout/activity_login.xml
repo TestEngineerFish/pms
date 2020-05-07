@@ -44,7 +44,7 @@
                         style="@style/login_input_ll_img"
                         app:srcCompat="@mipmap/img_login_code" />
 
-                    <EditText
+                    <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_org_code"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入企业编码" />
@@ -71,7 +71,7 @@
                         android:layout_toLeftOf="@id/et_user"
                         app:srcCompat="@mipmap/img_login_user" />
 
-                    <EditText
+                    <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_user"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入用户名"
@@ -120,7 +120,7 @@
                         style="@style/login_input_ll_img"
                         app:srcCompat="@mipmap/img_login_password" />
 
-                    <EditText
+                    <com.einyun.app.common.ui.widget.NoMenuEditText
                         android:id="@+id/et_password"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入密码"

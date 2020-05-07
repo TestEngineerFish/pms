@@ -116,6 +116,9 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
+                if (operateCaptureData==null) {
+                    return;
+                }
                 binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate() == null ? 0 : operateCaptureData.getTodayIncomeRate()) + "%");
                 binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate() == null ? 0 : operateCaptureData.getTodayArrearsRate()) + "%");
                 //涨幅 下跌

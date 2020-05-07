@@ -131,6 +131,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     @Override
     public void onResume() {
         super.onResume();
+        showLoading(getActivity());
         loadPagingData();
     }
 
@@ -171,6 +172,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
+            hideLoading();
         });
     }
 

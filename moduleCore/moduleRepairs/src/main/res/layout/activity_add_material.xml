@@ -31,7 +31,7 @@
                 android:layout_marginLeft="@dimen/px_30"
                 android:textColor="@color/blackTextColor" />
 
-            <EditText
+            <com.einyun.app.common.ui.widget.BaseEditText
                 android:id="@+id/add_material_name"
                 android:layout_width="@dimen/px_200"
                 android:layout_height="match_parent"
@@ -60,7 +60,7 @@
                 android:textColor="@color/blackTextColor"
                 android:layout_marginLeft="@dimen/px_30"/>
 
-            <EditText
+            <com.einyun.app.common.ui.widget.BaseEditText
                 android:id="@+id/add_material_price"
                 android:layout_width="@dimen/px_200"
                 android:layout_height="match_parent"
@@ -91,7 +91,7 @@
                 android:textColor="@color/blackTextColor"
                 android:layout_marginLeft="@dimen/px_30"/>
 
-            <EditText
+            <com.einyun.app.common.ui.widget.BaseEditText
                 android:id="@+id/add_material_amount"
                 android:layout_width="@dimen/px_200"
                 android:layout_height="match_parent"

@@ -112,11 +112,17 @@ public class RouterUtils {
 
     //收费
     public static final String ACTIVITY_TOLL = "/toll/TollActivity";
+    public static final String ACTIVITY_TOLL_BUILD = "/toll/TollBuildActivity";
+    public static final String ACTIVITY_TOLL_UNIT = "/toll/TollUnitActivity";
     public static final String ACTIVITY_LACK_DETAIL = "/lack/LackDetailActivity";
     public static final String ACTIVITY_PAYMENT_ADVANCE = "/payment/PaymentAdvanceActivity";
     public static final String ACTIVITY_LACK_LIST = "/lack/LackListActivity";
     public static final String ACTIVITY_FEE = "/fee/FeeActivity";
     public static final String ACTIVITY_FEE_SUC = "/feesuc/FeeSucActivity";
+    public static final String ACTIVITY_ADD_HOUSER = "/feesuc/AddHouserActivity";
+    public static final String ACTIVITY_ADD_WORTH_REMINDER = "/feesuc/AddWorthReminderActivity";
+    public static final String ACTIVITY_SET_SIGN = "/feesuc/SetSignActivity";
+    public static final String ACTIVITY_SET_SIGN2 = "/feesuc/SetSignActivity2";
 //    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

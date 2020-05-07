@@ -20,10 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_148">
             <ImageView
+                android:id="@+id/iv_item"
                 android:layout_marginTop="@dimen/px_32"
                 android:layout_marginLeft="@dimen/px_21"
 
-                android:background="@drawable/iv_park_fee"
+                android:src="@drawable/iv_property_fee"
                 android:layout_width="@dimen/px_40"
                 android:layout_height="@dimen/px_40"/>
 
@@ -39,15 +40,19 @@
                 android:textSize="@dimen/font_size17"
                 />
             <TextView
+                android:paddingLeft="@dimen/px_20"
+                android:paddingRight="@dimen/px_20"
+                android:paddingTop="@dimen/px_4"
+                android:paddingBottom="@dimen/px_4"
+                android:background="@drawable/shape_rect_blue"
                 android:id="@+id/tv_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="地下车位 F1-26"
-                android:textStyle="bold"
                 android:layout_marginTop="@dimen/px_29"
                 android:layout_marginLeft="@dimen/px_268"
                 android:textColor="@color/blueTextColor"
-                android:textSize="@dimen/font_size17"
+                android:textSize="@dimen/font_size14"
                 />
             <LinearLayout
                 android:layout_marginTop="@dimen/px_83"
@@ -108,7 +113,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_more"
-            android:text="展开更多>"
+            android:text="展开 >"
             android:gravity="center"
             android:textColor="@color/blueTextColor"
             android:background="@color/toll_blue_bg__color"

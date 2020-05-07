@@ -39,6 +39,7 @@
                 android:textSize="@dimen/font_size17"
                 />
             <RelativeLayout
+                android:id="@+id/rl_user"
                 android:layout_alignParentRight="true"
                 android:layout_width="@dimen/px_200"
                 android:layout_height="match_parent">
@@ -87,7 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_90">
             <TextView
-                android:text="展示全部>"
+                android:id="@+id/tv_more"
+                android:text="展开全部"
                 android:gravity="center"
                 android:layout_centerInParent="true"
                 android:textColor="@color/blueTextColor"
