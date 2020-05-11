@@ -41,8 +41,10 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
         }
         lock.lock();
         Logger.d("qrCode->" + qrId + ":" + result);
+        String allCode=result;
+        String subCode = result.substring(2, allCode.length());
         //比对二维码是否一致，判断是否签到成功
-        if (qrId.equals(result)) {
+        if (qrId.equals(subCode)) {
             scanResult = true;
             showSuccess();
             stopCameraPreview();

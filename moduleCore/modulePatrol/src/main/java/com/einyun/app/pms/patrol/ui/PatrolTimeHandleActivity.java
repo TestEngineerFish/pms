@@ -282,6 +282,10 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
         } else if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER && resultCode == RESULT_OK) {
             String pointId = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
+            if (pointId.length()<3) {
+                return;
+            }
+            String subCode = pointId.substring(2, pointId.length());
             boolean sacnResult = data.getBooleanExtra(DataConstants.KEY_QR_SCAN_RESULT, false);
             if (sacnResult) {
                 signInSuccess(pointId);

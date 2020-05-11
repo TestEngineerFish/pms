@@ -154,4 +154,9 @@ public class RepairBindingAdapter {
             return;
         }
     }
+    //申请延期天数
+    @BindingAdapter("extDay")
+    public static void extDay(TextView view, String value) {
+        view.setText(value+"天");
+    }
 }

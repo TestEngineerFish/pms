@@ -1,197 +1,19 @@
-package com.einyun.app.pms.main.core.viewmodel;
+package com.einyun.app.pms.main.core.model;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
-
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.einyun.app.base.BaseViewModel;
-import com.einyun.app.base.event.CallBack;
-import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
-import com.einyun.app.common.application.ThrowableParser;
-import com.einyun.app.common.service.RouterUtils;
-import com.einyun.app.common.service.user.IUserModuleService;
-import com.einyun.app.library.core.api.DashBoardService;
-import com.einyun.app.library.core.api.ServiceManager;
-import com.einyun.app.library.core.api.UCService;
-import com.einyun.app.library.core.api.UserCenterService;
-import com.einyun.app.library.uc.user.model.UserInfoModel;
-import com.einyun.app.pms.main.core.model.HasReadModel;
-import com.einyun.app.pms.main.core.model.LineListModel;
-import com.einyun.app.pms.main.core.model.ScanPatrolModel;
-import com.einyun.app.pms.main.core.model.ScanRequest;
-import com.einyun.app.pms.main.core.model.ScanResItemModel;
-import com.einyun.app.pms.main.core.model.ScanResModel;
-import com.einyun.app.pms.main.core.model.UCUserDetailsBean;
-import com.einyun.app.pms.main.core.model.UserStarsBean;
-import com.einyun.app.pms.main.core.repository.DataSourceFactory;
-import com.einyun.app.pms.main.core.repository.MainRepository;
-import com.einyun.app.pms.main.core.viewmodel.contract.MineViewModelContract;
 import com.google.gson.Gson;
 
-import java.util.List;
+public class ScanRequest2 {
 
-import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_PATROL_BASIC;
-import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_RES_BASIC;
+    private String resId;
 
 
-public class MineViewModel extends BasePageListViewModel<ScanResItemModel> implements MineViewModelContract {
-    UserCenterService userCenterService;
-    UCService ucService;
-    @Autowired(name = RouterUtils.SERVICE_USER)
-    IUserModuleService userModuleService;
-
-    public MineViewModel() {
-//        mUsersRepo = new UserRepository();
-        userCenterService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_USER_CENTER);
-        ucService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_UC);
-    }
-    @Override
-    public LiveData<String> getWorkState() {
-        return userCenterService.getWorkStatus(getUserId(), new CallBack<String>() {
-            @Override
-            public void call(String data) {
-
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
-            }
-        });
+    public String getResId() {
+        return resId;
     }
 
-    @Override
-    public LiveData<String> updateWorkState(String status) {
-        return userCenterService.updateWorkStatus(getUserId(), userModuleService.getUserName(), status, new CallBack<String>() {
-            @Override
-            public void call(String data) {
-
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
-            }
-        });
-    }
-
-    @Override
-    public LiveData<UserInfoModel> getUserInfoByUserId() {
-        return ucService.userById(getUserId(), new CallBack<UserInfoModel>() {
-            @Override
-            public void call(UserInfoModel data) {
-
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
-            }
-        });
-    }
-
-    /**
-     * 获取用户Id
-     *
-     * @return
-     */
-    @Override
-    public String getUserId() {
-        return userModuleService.getUserId();
-    }
-
-    /**
-     * 获取用户星级
-     *
-     * **/
-    MainRepository repository=new MainRepository();
-    private MutableLiveData<UCUserDetailsBean> detialStars=new MutableLiveData<>();
-    public LiveData<UCUserDetailsBean> getStars(UserStarsBean bean){
-        showLoading();
-        repository.queryStars(bean, new CallBack<UCUserDetailsBean>() {
-            @Override
-            public void call(UCUserDetailsBean data) {
-                hideLoading();
-                detialStars.postValue(data);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                hideLoading();
-            }
-        });
-        return detialStars;
-    }
-    private MutableLiveData<HasReadModel> hasReadModel=new MutableLiveData<>();
-    public LiveData<HasReadModel> hadRead(){
-        showLoading();
-        repository.hasRead(new CallBack<HasReadModel>() {
-            @Override
-            public void call(HasReadModel data) {
-                hideLoading();
-                hasReadModel.postValue(data);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                hideLoading();
-            }
-        });
-        return hasReadModel;
-    }
-    private MutableLiveData<ScanResModel> getResModel=new MutableLiveData<>();
-    public LiveData<ScanResModel> getRes(String id){
-        showLoading();
-        repository.getRes(URL_GET_RES_BASIC+"/"+id,new CallBack<ScanResModel>() {
-            @Override
-            public void call(ScanResModel data) {
-                hideLoading();
-                getResModel.postValue(data);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                hideLoading();
-            }
-        });
-        return getResModel;
-    }
-
-    private MutableLiveData<ScanPatrolModel> getPatrolModel=new MutableLiveData<>();
-    public LiveData<ScanPatrolModel> getPatrol(String id){
-        showLoading();
-        repository.getPatrol(URL_GET_PATROL_BASIC+"/"+id,new CallBack<ScanPatrolModel>() {
-            @Override
-            public void call(ScanPatrolModel data) {
-                hideLoading();
-                getPatrolModel.postValue(data);
-            }
-
-            @Override
-            public void onFaild(Throwable throwable) {
-                hideLoading();
-            }
-        });
-        return getPatrolModel;
-    }
-
-    /**
-     * 获取Paging LiveData
-     * @return LiveData
-     */
-    public LiveData<PagedList<ScanResItemModel>> loadPadingData(ScanRequest requestBean, String tag,String type){
-
-        pageList = new LivePagedListBuilder(new DataSourceFactory(requestBean,tag,type), config)
-//                .setBoundaryCallback(null)
-//                .setFetchExecutor(null)
-                .build();
-
-        return pageList;
-    }
-    public List<LineListModel.DataBean> getLineList(){
-        List<LineListModel.DataBean> data = new Gson().fromJson("{\n" +
+    public void setResId(String resId) {
+        this.resId = resId;
+        LineListModel lineListModel = new Gson().fromJson("{\n" +
                 "    \"msg\": \"SUCCESS\",\n" +
                 "    \"code\": 0,\n" +
                 "    \"data\": [\n" +
@@ -1446,8 +1268,7 @@ public class MineViewModel extends BasePageListViewModel<ScanResItemModel> imple
                 "    ],\n" +
                 "    \"state\": true,\n" +
                 "    \"request_id\": \"xxx\"\n" +
-                "}", LineListModel.class).getData();
-
-        return data;
+                "}", LineListModel.class);
     }
+
 }

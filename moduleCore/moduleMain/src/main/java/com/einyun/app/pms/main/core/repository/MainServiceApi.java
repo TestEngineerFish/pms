@@ -2,8 +2,13 @@ package com.einyun.app.pms.main.core.repository;
 
 
 import com.einyun.app.base.http.BaseResponse;
+import com.einyun.app.pms.main.core.model.ScanRequest;
+import com.einyun.app.pms.main.core.model.ScanResModel;
 import com.einyun.app.pms.main.core.model.UserStarsBean;
 import com.einyun.app.pms.main.core.respone.HasReadResponse;
+import com.einyun.app.pms.main.core.respone.ScanListResponse;
+import com.einyun.app.pms.main.core.respone.ScanPatrolResponse;
+import com.einyun.app.pms.main.core.respone.ScanResResponse;
 import com.einyun.app.pms.main.core.respone.UserStarsResponse;
 
 
@@ -40,5 +45,25 @@ public interface MainServiceApi {
      */
     @GET(URLS.URL_GET_HAS_READ)
     Flowable<HasReadResponse> hasRead();
-
+    /**
+     * 资源信息
+     * @param
+     * @return
+     */
+    @GET()
+    Flowable<ScanResResponse> getRes(@Url String url);
+    /**
+     * 巡更点信息
+     * @param
+     * @return
+     */
+    @GET()
+    Flowable<ScanPatrolResponse> getPatrol(@Url String url);
+    /**
+     * 资源工单列表
+     * @param request
+     * @return
+     */
+    @POST
+    Flowable<ScanListResponse> getDisqualifiedList(@Url String url, @Body ScanRequest request);
 }

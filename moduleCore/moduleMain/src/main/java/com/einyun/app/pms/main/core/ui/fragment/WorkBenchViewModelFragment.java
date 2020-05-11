@@ -467,7 +467,31 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 String blockCode = data.getStringExtra(DataConstants.KEY_BLOCK_CODE);
                 Logger.d(blockId + ":" + blockName + ":" + blockCode);
             } else if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
-                ToastUtil.show(getActivity(), data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
+//                ToastUtil.show(getActivity(), data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
+                String code = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
+                if (code.length()<3) {
+                    return;
+                }
+                String scanCode = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT).substring(2, code.length());
+                if (code.startsWith("30")) {
+                    ARouter.getInstance()
+                            .build(RouterUtils.ACTIVITY_SCAN_RES)
+                            .withString(RouteKey.KEY_RES_ID,scanCode)
+                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
+                            .withString(RouteKey.KEY_TYPE,"30")
+                            .navigation();
+                }else if (code.startsWith("31")){
+                    ARouter.getInstance()
+                            .build(RouterUtils.ACTIVITY_SCAN_RES)
+                            .withString(RouteKey.KEY_RES_ID, scanCode)
+                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
+                            .withString(RouteKey.KEY_TYPE,"31")
+                            .navigation();
+                }else {
+                    ToastUtil.show(getActivity(), "未识别正确二维码");
+                }
+
+
             }
         }
     }

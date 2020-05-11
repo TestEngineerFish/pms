@@ -164,4 +164,11 @@ public class RouteKey {
     //消息中心
     public static final String KEY_START_TIME = "START_TIME";
     public static final String KEY_END_TIME = "EDN_TIME";
+    //扫码处理
+    public static final String FRAGMENT_SCAN_WAIT_DEAL = "FRAGMENT_SCAN_WAIT_DEAL";
+    public static final String FRAGMENT_SCAN_HISTORY = "FRAGMENT_SCAN_HISTORY";
+    public static final String FRAGMENT_SCAN_BASIC = "FRAGMENT_SCAN_BASIC";
+    public static final String KEY_RES_ID = "KEY_RES_ID";
+    public static final String KEY_PATROL_ID = "KEY_PATROL_ID";
+    public static final String KEY_TYPE = "KEY_TYPE";
 }

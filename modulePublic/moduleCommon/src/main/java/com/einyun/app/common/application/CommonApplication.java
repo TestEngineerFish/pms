@@ -64,7 +64,7 @@ public class CommonApplication extends BasicApplication {
         }
 
         preinitX5WebCore();
-        initSkin();
+//        initSkin();
         if (IsFastClick.isDebugVersion(this)) {
 //            LeakCanary.install(this);
         }

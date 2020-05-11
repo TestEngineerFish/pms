@@ -105,7 +105,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 List<ApprovalDetailInfoBean.RowsBean> rows = model2.getRows();
                 if (rows!=null) {
                     ApprovalDetailInfoBean.RowsBean rowsBean = new ApprovalDetailInfoBean.RowsBean();
-                    rowsBean.setAuditor(getString(R.string.tv_me));
+                    rowsBean.setAuditor(urlxcgdGetInstBOModule.getData().getWorkorder_audit_model().getApply_user());
                     rowsBean.setApprovalRole(getString(R.string.tv_for_apply));
                     rowsBean.setComment("");
                     rowsBean.setAudit_date(TimeUtil.getTimeMillis(model.getData().getWorkorder_audit_model().getApply_date()));

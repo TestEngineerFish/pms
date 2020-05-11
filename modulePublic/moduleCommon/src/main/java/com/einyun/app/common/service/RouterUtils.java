@@ -30,6 +30,7 @@ public class RouterUtils {
     public static final String ACTIVITY_ORDER_LIST="/orderList/OrderListActivity";
     public static final String ACTIVITY_ORDER_LIST_ALL="/orderList/OrderListAllActivity";
     public static final String ACTIVITY_ORDER_CONDITION_PANDECT="/main/OrderConditionPandectActivity";
+    public static final String ACTIVITY_SCAN_RES="/main/ScanResourceActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";

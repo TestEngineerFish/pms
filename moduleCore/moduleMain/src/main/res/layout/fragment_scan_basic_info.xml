@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="scanResModel"
+            type="com.einyun.app.pms.main.core.model.ScanResModel" />
+        <variable
+            name="scanPatrolModel"
+            type="com.einyun.app.pms.main.core.model.ScanPatrolModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginBottom="@dimen/px_120"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg_color"
+        android:orientation="vertical">
+        <!--         巡查基本信息-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_patrol"
+            style="@style/cardview_style">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="基本内容"
+                        android:textColor="@color/blackTextColor"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/iv_pop_line" />
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+
+                        style="@style/style_text_approval_left"
+                        android:text="分期" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanPatrolModel.massName}" />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="项目" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanPatrolModel.projectName}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="巡更点名称" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanPatrolModel.patrolPointName}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="巡更点编码"
+
+                        />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanPatrolModel.patrolPointCode}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="条线"
+
+                        />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        app:line="@{scanPatrolModel.line}"/>
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="签到方式" />
+
+                    <TextView style="@style/style_text_approval_right"
+                        app:signType="@{scanPatrolModel.signType}"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="强制拍照"
+
+                        />
+
+                    <TextView style="@style/style_text_approval_right"
+                        app:isPhoto="@{scanPatrolModel.isPhoto}"
+                        />
+                </RelativeLayout>
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="备注"
+
+                        />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanPatrolModel.remark}"
+                        />
+                </RelativeLayout>
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="检查标准图片"
+
+                        />
+
+                    <TextView style="@style/style_text_approval_right" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:background="@drawable/shape_white_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_pic_order_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_30"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--         基本信息-->
+        <androidx.cardview.widget.CardView style="@style/cardview_style"
+            android:id="@+id/cv_res_basic_info"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="基本内容"
+                        android:textColor="@color/blackTextColor"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/iv_pop_line" />
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+
+                        style="@style/style_text_approval_left"
+                        android:text="分期" />
+
+                    <TextView
+                        android:id="@+id/tv_approval_num"
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.massifName}" />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="资源编码" />
+
+                    <TextView
+                        android:id="@+id/tv_approval_type"
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.resourceCode}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="资源名称" />
+
+                    <TextView
+                        android:id="@+id/tv_intallment"
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.resourceName}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="类别"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_apply_person"
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.resourceType}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="系统"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_apply_time"
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.systemName}" />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="子系统" />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.subsystemName}"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="系统分类"
+
+                        />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.resourceClassificationValue}"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <!--         基础属性-->
+        <androidx.cardview.widget.CardView style="@style/cardview_style"
+            android:id="@+id/cv_res_basic_property"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="基本属性"
+                        android:textColor="@color/blackTextColor"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/iv_pop_line" />
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+
+                        style="@style/style_text_approval_left"
+                        android:text="品牌" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.basicBrand}" />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="规格型号" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.basicSpecificationType}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="数量" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text=""
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="重要度" />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.basicImportanceDegree}"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="备注"
+
+                        />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.basicRemark}"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <!--         空间属性-->
+        <androidx.cardview.widget.CardView style="@style/cardview_style"
+            android:id="@+id/cv_res_space_property"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:text="空间属性"
+                        android:textColor="@color/blackTextColor"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/iv_pop_line" />
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+
+                        style="@style/style_text_approval_left"
+                        android:text="位置类型" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.resourceLocationTypeValue}"  />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="楼栋号" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.buildingNumber}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="单元号" />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.buildingUnitNumber}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="楼层"
+
+                        />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.buildingFloor}"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="空间类型"
+
+                        />
+
+                    <TextView
+                        style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.spaceTypeValue}" />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="空间" />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.spaceNameValue}"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="具体位置"
+
+                        />
+
+                    <TextView style="@style/style_text_approval_right"
+                        android:text="@{scanResModel.specificLocation}"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

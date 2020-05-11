@@ -299,7 +299,7 @@ deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"https://bms.einyun.com\""
+server.debug = "\"https://testbms.einyun.com\""
 //测试环境
 server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
@@ -311,7 +311,7 @@ deps.server = server
 
 def fee_server =[:]//收费 地址
 //开发调式环境
-fee_server.debug = "\"https://fee.einyun.com\""
+fee_server.debug = "\"http://106.75.162.186:10018\""
 //测试环境
 fee_server.debug_test = "\"http://106.75.162.186:10018\""
 //UAT环境
@@ -322,7 +322,7 @@ deps.fee_server = fee_server
 
 def fee_middle_server =[:]//收费uat含端口10018&&release切换url
 //开发调式环境
-fee_middle_server.debug = "\"/fee-center-api\""
+fee_middle_server.debug = "\"\""
 //测试环境
 fee_middle_server.debug_test = "\"\""
 //UAT环境

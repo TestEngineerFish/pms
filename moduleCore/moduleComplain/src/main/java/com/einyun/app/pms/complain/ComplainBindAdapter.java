@@ -99,4 +99,9 @@ public class ComplainBindAdapter {
             view.setImageResource(R.drawable.iv_solve);
         }
     }
+    //申请延期天数
+    @BindingAdapter("extDay")
+    public static void extDay(TextView view, String value) {
+            view.setText(value+"天");
+    }
 }

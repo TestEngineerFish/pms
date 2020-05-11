@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.main.core.ui.fragment.ScanResourceFragment" />
+    </data>
+     <LinearLayout
+         android:background="@color/activity_bg_color"
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <LinearLayout
+             android:onClick="@{()->callBack.onTimeClick()}"
+             android:layout_width="wrap_content"
+             android:layout_height="38.5dp">
+             <TextView
+                 android:id="@+id/tv_divide"
+                 android:textSize="13sp"
+                 android:layout_marginLeft="25dp"
+                 android:layout_gravity="center_vertical"
+                 android:text="是否超期"
+                 android:textColor="@color/greyTextColor"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"/>
+             <ImageView
+                 android:id="@+id/iv_triangle_divide"
+                 android:src="@drawable/iv_approval_sel_type"
+                 android:layout_marginLeft="7dp"
+                 android:layout_marginRight="5dp"
+                 android:layout_gravity="center_vertical"
+                 android:layout_width="8.8dp"
+                 android:layout_height="5.55dp"/>
+
+         </LinearLayout>
+         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+             android:id="@+id/swipe_refresh"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/inquiries_list"
+                     android:layout_marginBottom="@dimen/px_20"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"/>
+             </LinearLayout>
+
+
+         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+     </LinearLayout>
+</layout>
