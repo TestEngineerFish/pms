@@ -109,7 +109,9 @@ public class RouterUtils {
     public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
     public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
     public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
-
+    /**************************公告************************************/
+    public static final String ACTIVITY_NOTICE_LIST = "/notice/NoticeListActivity";
+    public static final String ACTIVITY_NOTICE_DETAIL = "/notice/NoticeDetailActivity";
     //收费
     public static final String ACTIVITY_TOLL = "/toll/TollActivity";
     public static final String ACTIVITY_TOLL_BUILD = "/toll/TollBuildActivity";

@@ -1,5 +1,7 @@
 package com.einyun.app.common.constants;
 
+import com.einyun.app.common.BuildConfig;
+
 /**
  * @ProjectName: android-framework
  * @Package: com.einyun.app.common.constants
@@ -34,4 +36,6 @@ public class DataConstants {
     public static final String WORK_ORDER_LIST_TYPE_CREATE = "WORK_ORDER_LIST_TYPE_CREATE";
     public static final String KEY_POSITION="position";
     public static final String KEY_IAMGES="mImages";
+
+    public static final String NOTICE_DETAIL_URL = BuildConfig.BASE_URL + "/h5/pmc/#/communityDetail?id=";//隐私协议
 }

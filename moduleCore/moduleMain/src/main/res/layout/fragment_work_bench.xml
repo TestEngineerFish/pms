@@ -21,6 +21,7 @@
             name="numAdapter"
             type="android.widget.BaseAdapter" />
     </data>
+
     <com.einyun.app.common.ui.widget.CustomSwipeToRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
@@ -29,7 +30,9 @@
         <com.einyun.app.common.ui.component.AbScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <LinearLayout
                 android:id="@+id/home"
                 style="@style/gallery_layout_style">
@@ -40,6 +43,57 @@
                     android:id="@+id/item_work_bench_first"
                     layout="@layout/item_work_bench_pending"
                     app:callBack="@{callBack}" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginLeft="@dimen/px_0"
+                    android:layout_marginRight="@dimen/px_0"
+                    android:layout_marginBottom="@dimen/px_40"
+                    style="@style/cardview_style">
+
+                    <LinearLayout
+                        android:layout_marginLeft="@dimen/px_20"
+                        android:layout_marginRight="@dimen/px_20"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:layout_marginBottom="@dimen/px_30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="32dp"
+                            android:layout_height="23dp"
+                            android:text="公告"
+                            android:textColor="#fffa6400"
+                            android:textSize="16sp"
+                            android:onClick="@{()->callBack.goToNotice()}"/>
+
+                        <View
+                            android:background="#BEC3D2"
+                            android:layout_width="@dimen/px_2"
+                            android:layout_marginLeft="@dimen/px_20"
+                            android:layout_height="@dimen/px_40"/>
+
+                        <com.stx.xmarqueeview.XMarqueeView
+                            android:id="@+id/mv_community_notice"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/px_16"
+                            android:layout_weight="1"
+                            app:isFlippingLessCount="true"
+                            app:isSetAnimDuration="true"
+                            app:isSingleLine="true"
+                            app:marquee_count="1" />
+
+                        <ImageView
+                            android:id="@+id/iv_notice"
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_marginLeft="@dimen/px_32"
+                            android:src="@mipmap/icon_arrow_right"
+                            android:onClick="@{()->callBack.goToNotice()}"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <!-- 工单处理情况总览 -->
                 <include
@@ -54,6 +108,15 @@
                     app:callBack="@{callBack}" />
 
             </LinearLayout>
+<!--                <com.einyun.app.common.ui.widget.NoticeSelectView-->
+<!--                    android:id="@+id/notice_view"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:focusable="true"-->
+<!--                    android:focusableInTouchMode="true"-->
+<!--                    android:clickable="true"/>-->
+            </RelativeLayout>
         </com.einyun.app.common.ui.component.AbScrollView>
     </com.einyun.app.common.ui.widget.CustomSwipeToRefresh>
 </layout>

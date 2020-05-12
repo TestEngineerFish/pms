@@ -139,12 +139,12 @@ dependencies {
     implementation project(deps.project.module_orderpreview)
     implementation project(deps.project.module_operatepercent)
     implementation project(deps.project.module_plan)
-    implementation project(deps.project.module_plan)
     implementation project(deps.project.module_customerinquiries)
     implementation project(deps.project.module_complain)
     implementation project(deps.project.module_disqualified)
     implementation project(deps.project.module_extra)
     implementation project(deps.project.module_orderlist)
     implementation project(deps.project.module_toll)
+    implementation project(deps.project.module_notice)
 //    implementation project(deps.project.module_extra)
 }

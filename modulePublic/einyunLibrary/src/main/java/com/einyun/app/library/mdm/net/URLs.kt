@@ -26,5 +26,17 @@ class URLs {
 
         //获取网格信息
         const val URL_MDM_GRID_INFO="/$DOMAIN/api/mdm/v1/newGridBasicInfo/list"
+
+        //公告列表
+        const val URL_NOTICE_LIST = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/listForCApp"
+        //公告详情
+        const val URL_NOTICE_DETAIL = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/get/"
+        //点赞
+        const val URL_NOTICE_UPDATE_LIKE_BAD = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/updateByMemberId"
+        //新增阅读量
+        const val URL_NOTICE_ADD_READING = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/addReading"
+        //查询点赞差评状态
+        const val URL_NOTICE_QUERY_UP_DOWN = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/queryThumbUpDownByCondition"
+
     }
 }

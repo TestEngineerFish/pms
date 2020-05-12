@@ -5,7 +5,7 @@ include ':app',
         ':moduleCore:moduleExtra',
         ':moduleCore:moduleMine',':moduleCore:modulePatrol',":moduleCore:pointCheck",":moduleCore:moduleSendOrder",
         ':moduleCore:moduleApproval',':moduleCore:modulePlan',":moduleCore:moduleCreate",":moduleCore:moduleOrderPreview",":moduleCore:moduleOperatePercent",
-
+        ':moduleCore:moduleNotice',
         ':modulePublic',':modulePublic:moduleCommon',
         ':modulePublic:einyunLibrary',
         ':moduleSystem',':moduleSystem:moduleDB',':moduleCore:moduleCustomerInquiries',':moduleCore:moduleOrderList'

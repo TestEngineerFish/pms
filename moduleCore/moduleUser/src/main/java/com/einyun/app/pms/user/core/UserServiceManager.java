@@ -4,12 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.einyun.app.base.BasicApplication;
-import com.einyun.app.base.db.AppDatabase;
-import com.einyun.app.base.db.entity.User;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.library.uc.user.model.UserModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -32,6 +31,7 @@ public class UserServiceManager {
     private String token;
     private String userId;
     private Context mContext;
+    private List<String> divideCodes = new ArrayList<>();
 
     private UserServiceManager() {
         mContext = BasicApplication.getInstance();
@@ -52,7 +52,13 @@ public class UserServiceManager {
         return currentUserModel;
     }
 
+    public void saveDivideCodes(List<String> divideCodes) {
+        this.divideCodes = divideCodes;
+    }
 
+    public List<String> getDivideCodes() {
+        return this.divideCodes;
+    }
     public void saveUserModel(@Nonnull UserModel model) {
         if (model != null) {
             currentUserModel = model;

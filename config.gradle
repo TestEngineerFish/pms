@@ -295,11 +295,12 @@ project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
 project.module_disqualified=":moduleCore:moduleDisqualified"
 project.module_orderlist=":moduleCore:moduleOrderList"
 project.module_toll=":moduleCore:moduleToll"
+project.module_notice=":moduleCore:moduleNotice"
 deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"https://bms.einyun.com\""
+server.debug = "\"https://testbms.einyun.com\""
 //测试环境
 server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
