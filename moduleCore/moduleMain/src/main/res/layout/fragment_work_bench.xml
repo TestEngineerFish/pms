@@ -51,7 +51,6 @@
                     style="@style/cardview_style">
 
                     <LinearLayout
-                        android:layout_marginLeft="@dimen/px_20"
                         android:layout_marginRight="@dimen/px_20"
                         android:layout_marginTop="@dimen/px_30"
                         android:layout_marginBottom="@dimen/px_30"
@@ -61,11 +60,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="32dp"
-                            android:layout_height="23dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="公告"
                             android:textColor="#fffa6400"
                             android:textSize="16sp"
+                            android:paddingLeft="@dimen/px_20"
                             android:onClick="@{()->callBack.goToNotice()}"/>
 
                         <View

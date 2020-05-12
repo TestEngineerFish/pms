@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="notice"
             type="com.einyun.app.library.mdm.model.NoticeModel" />
@@ -62,52 +63,73 @@
                 android:textSize="@dimen/font_size20"
                 android:textStyle="bold" />
         </LinearLayout>
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/activity_bg_color"
             android:layout_marginLeft="@dimen/px_30"
             android:layout_marginRight="@dimen/px_30"
-            android:orientation="vertical">
+            android:background="@color/activity_bg_color">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_8"
+                android:background="@drawable/notice_list_bg"
+                android:orientation="vertical">
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px_8"
-                    android:background="@drawable/notice_list_bg"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginTop="@dimen/px_35"
+                    android:layout_marginRight="@dimen/px_145"
+                    android:text="@{notice.title}"
+                    android:textColor="@color/title_text_icon_color"
+                    android:textSize="@dimen/font_size17"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_20"
-                        android:layout_marginTop="@dimen/px_35"
-                        android:layout_marginRight="@dimen/px_145"
-                        android:textColor="@color/title_text_icon_color"
-                        android:textSize="@dimen/font_size17"
-                        android:text="@{notice.title}"
-                        android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/px_28"
+                    android:layout_marginBottom="@dimen/px_40"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/px_20"
-                        android:layout_marginTop="@dimen/px_50"
-                        android:textSize="@dimen/font_size14"
+                        android:layout_weight="1"
+                        android:text="@{notice.releaseTime}"
                         android:textColor="@color/normal_main_text_icon_color"
-                        android:layout_marginBottom="@dimen/px_40"
-                        android:text="@{notice.releaseTime}"/>
+                        android:textSize="@dimen/font_size14" />
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/px_136"
+                        android:layout_height="@dimen/px_48"
+                        android:layout_marginRight="@dimen/px_20">
+
+                        <ImageView
+                            noteState="@{notice.type}"
+                            android:layout_width="@dimen/px_136"
+                            android:layout_height="@dimen/px_48" />
+
+                        <TextView
+                            noteStateTxt="@{notice.type}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textColor="#ffffffff"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
                 </LinearLayout>
-                <ImageView
-                    android:layout_width="@dimen/px_95"
-                    android:layout_height="@dimen/px_115"
-                    android:scaleType="fitXY"
-                    noteState="@{notice.type}"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/px_20"/>
-            </RelativeLayout>
-        </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
     </LinearLayout>
 </layout>

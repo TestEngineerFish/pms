@@ -28,7 +28,7 @@ class URLs {
         const val URL_MDM_GRID_INFO="/$DOMAIN/api/mdm/v1/newGridBasicInfo/list"
 
         //公告列表
-        const val URL_NOTICE_LIST = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/listForCApp"
+        const val URL_NOTICE_LIST = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/listForBApp"
         //公告详情
         const val URL_NOTICE_DETAIL = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/get/"
         //点赞
