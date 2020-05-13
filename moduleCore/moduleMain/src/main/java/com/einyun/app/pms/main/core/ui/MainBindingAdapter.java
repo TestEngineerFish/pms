@@ -94,6 +94,18 @@ public class MainBindingAdapter {
         }
 
     }
+
+    @BindingAdapter("num")
+    public static void num(TextView textView, int  value) {
+
+        if (value==0) {
+            textView.setText("");
+        }else {
+            textView.setText(value+"");
+        }
+
+
+    }
     /**
      * 列表状态
      *

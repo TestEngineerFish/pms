@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.constants.URLS;
+import com.einyun.app.common.model.DisqualifiedDetailModel;
 import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -155,4 +156,22 @@ public class MsgRepository {
                     callBack.onFaild(error);
                 });
     }
+    /**
+     * get
+     * 获取待跟进详情信息
+     */
+    public void getTODODetailInfo(String taskId, CallBack<DisqualifiedDetailModel> callBack) {
+        String url = URLS.URL_GET_TO_FOLLOW_UP_DETAIL+taskId+"&reqParams=";
+        serviceApi.getTODODetailInfo(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if(response.isState()){
+                        callBack.call(response.getData());
+                    }else{
+                        callBack.onFaild(new Exception(response.getCode()));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+
 }

@@ -13,12 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.util.SPUtils;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.R;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.databinding.ActivityScannerBinding;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -30,14 +33,49 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 @Route(path = RouterUtils.ACTIVITY_SCANNER)
 public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBinding, BaseViewModel> {
     protected boolean mFlash;
-
+    @Autowired(name = RouteKey.KEY_HOME_ENTER)
+    public String mHomeEnter;
     protected ZXingScannerView.ResultHandler mResultHandler = new ZXingScannerView.ResultHandler() {
         @Override
         public void handleResult(Result result) {
             resumeCameraPreview();
             Logger.d("扫码内容->"+ result.getText());
             Logger.d("扫码格式"+ result.getBarcodeFormat().toString());
-            onScanResult(result.getText());
+            if (mHomeEnter==null) {
+                onScanResult(result.getText());
+            }else {
+                String code = result.getText();
+                if (code.length()<3) {
+                    return;
+                }
+                String scanCode = result.getText().substring(2, code.length());
+                if (code.startsWith("30")) {
+                    ARouter.getInstance()
+                            .build(RouterUtils.ACTIVITY_SCAN_RES)
+                            .withString(RouteKey.KEY_RES_ID,scanCode)
+                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
+                            .withString(RouteKey.KEY_TYPE,"30")
+                            .navigation();
+                }else if (code.startsWith("31")){
+                    ARouter.getInstance()
+                            .build(RouterUtils.ACTIVITY_SCAN_RES)
+                            .withString(RouteKey.KEY_RES_ID, scanCode)
+                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
+                            .withString(RouteKey.KEY_TYPE,"31")
+                            .navigation();
+                }else {
+                    ToastUtil.show(ScannerActivity.this, "未识别的二维码");
+                    binding.scannerView.setResultHandler(mResultHandler);
+                    binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+                }
+//                if (code.startsWith("30")||code.startsWith("31")) {
+//                    onScanResult(result.getText());
+//                }else {
+//                    ToastUtil.show(ScannerActivity.this, "未识别的二维码");
+//                    binding.scannerView.setResultHandler(mResultHandler);
+//                    binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+//                }
+            }
         }
     };
 

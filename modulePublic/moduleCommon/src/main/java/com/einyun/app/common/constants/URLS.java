@@ -7,5 +7,6 @@ public class URLS {
 //    public static final String URL_GET_APPROVAL_BASIC_INFO="bpm-runtime/runtime/instance/v1/getInstBO?proInstId=";
     public static final String URL_GET_APPROVAL_BASIC_INFO="/bpm-runtime/runtime/task/v1/taskDetailMini?taskId=";
 
-
+    //待跟进详情
+    public static final String URL_GET_TO_FOLLOW_UP_DETAIL ="/bpm-runtime/runtime/task/v1/taskDetailMini?taskId=";
 }

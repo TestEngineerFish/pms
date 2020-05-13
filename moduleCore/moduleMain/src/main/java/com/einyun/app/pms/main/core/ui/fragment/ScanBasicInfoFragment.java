@@ -74,17 +74,36 @@ public class ScanBasicInfoFragment extends BaseViewModelFragment<FragmentScanBas
          * */
         viewModel.getRes(activity.resId).observe(this, model -> {
 
+            switch (model.getResourceType()) {
+                case "engineering_resources"://工程类
+                    binding.llProject.setVisibility(View.VISIBLE);
+
+                    binding.rlProChildType.setVisibility(View.GONE);
+                    break;
+                case "order_resources"://秩序类
+                    binding.llProject.setVisibility(View.VISIBLE);
+
+                    binding.rlProBuild.setVisibility(View.GONE);
+                    binding.rlProFloor.setVisibility(View.GONE);
+                    binding.rlProUnit.setVisibility(View.GONE);
+                    binding.rlProImportant.setVisibility(View.GONE);
+                    binding.rlProMaior.setVisibility(View.GONE);
+                    binding.rlProSpace.setVisibility(View.GONE);
+                    binding.rlProSystem.setVisibility(View.GONE);
+                    binding.rlProSystemType.setVisibility(View.GONE);
+                    binding.rlProChildSystem.setVisibility(View.GONE);
+                    break;
+                case "environmental_resources"://环境类
+                    binding.llEnvironment.setVisibility(View.VISIBLE);
+
+                    break;
+            }
             binding.setScanResModel(model);
-//            List<LineListModel.DataBean> lineList = viewModel.getLineList();
-
-
             Log.e(TAG, "getResBasic: ");
         });
     }
     private void getPatrolBasic() {
-        binding.cvResBasicInfo.setVisibility(View.GONE);
-        binding.cvResBasicProperty.setVisibility(View.GONE);
-        binding.cvResSpaceProperty.setVisibility(View.GONE);
+        binding.llProject.setVisibility(View.GONE);
 
         /**
          * 获取巡更点基本信息

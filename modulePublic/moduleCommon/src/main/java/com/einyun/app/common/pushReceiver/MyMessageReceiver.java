@@ -29,6 +29,7 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ContentModel;
+import com.einyun.app.common.model.DisqualifiedDetailModel;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PushResultModel;
 import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
@@ -226,6 +227,15 @@ public class MyMessageReceiver extends MessageReceiver{
 
 
                     break;
+                case "bpmnApprovalEnd"://强制关闭
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
+                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
+                            .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
+                            .withInt(RouteKey.KEY_TAB_ID, 1)
+//                        .withString(RouteKey.KEY_APPROVAL_USER_STATE,data.getUserAuditStatus())
+                            .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+                    break;
                 case "end"://强制关闭
                 case "copyto"://抄送
                 case "commuFeedBack"://反馈
@@ -247,80 +257,30 @@ public class MyMessageReceiver extends MessageReceiver{
                                             .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     break;
                                 case "dispatch"://派工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, "")
-//                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkSendOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
                                     break;
                                 case "plan"://计划工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, "")
-//                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkPlanOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
                                     break;
                                 case "inspection"://巡查工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.KEY_TASK_ID, "")
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkPatrolTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
                                     break;
                                 case "patrol"://巡更工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.KEY_TASK_ID,"")
-//                                .withString(RouteKey.KEY_ORDER_ID,"")
-//                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                                .withString(RouteKey.KEY_PRO_INS_ID,pushModel.getContent().getInstId())
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkPatrol2TaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
                                     break;
                                 case "complain"://投诉工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, "")
-//                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkComTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
                                     break;
                                 case "enquiry"://问询消息
-//                        ARouter.getInstance()
-//                                .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.FRAGMENT_TAG, FRAGMENT_TRANSFERRED_TO)
-//                                .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
                                     break;
                                 case "repair"://报修消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
-//                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     checkRepairTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+
+                                    break;
+
+                                case "unqualified"://不合格单
+                                    checkQualityTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
 
                                     break;
                             }
@@ -330,102 +290,6 @@ public class MyMessageReceiver extends MessageReceiver{
 
                     break;
             }
-//            if ("end".equals(pushModel.getType())||"copyto".equals(pushModel.getType())||"commuFeedBack".equals(pushModel.getType())) {
-//                initCopyAndEnd(pushModel);
-//            }else if ("reminder".equals(pushModel.getType())){
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        switch (pushModel.getSubType()) {
-//                            case "audit"://审批消息
-//                                ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
-//                                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                        .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-//                                        .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-//                                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                break;
-//                            case "dispatch"://派工单消息
-////                        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.KEY_ORDER_ID, "")
-////                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                                .withString(RouteKey.KEY_TASK_ID, "")
-////                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-////                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkSendOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//                                break;
-//                            case "plan"://计划工单消息
-////                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.KEY_ORDER_ID, "")
-////                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                                .withString(RouteKey.KEY_TASK_ID, "")
-////                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-////                                .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkPlanOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//                                break;
-//                            case "inspection"://巡查工单消息
-////                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.KEY_TASK_ID, "")
-////                                .withString(RouteKey.KEY_ORDER_ID, "")
-////                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-////                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkPatrolTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//                                break;
-//                            case "patrol"://巡更工单消息
-////                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.KEY_TASK_ID,"")
-////                                .withString(RouteKey.KEY_ORDER_ID,"")
-////                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-////                                .withString(RouteKey.KEY_TASK_NODE_ID,"")
-////                                .withString(RouteKey.KEY_PRO_INS_ID,pushModel.getContent().getInstId())
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkPatrol2TaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//                                break;
-//                            case "complain"://投诉工单消息
-////                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.KEY_ORDER_ID, "")
-////                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                                .withString(RouteKey.KEY_TASK_ID, "")
-////                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-////                                .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkComTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//                                break;
-//                            case "enquiry"://问询消息
-////                        ARouter.getInstance()
-////                                .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.FRAGMENT_TAG, FRAGMENT_TRANSFERRED_TO)
-////                                .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-////                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//                                break;
-//                            case "repair"://报修消息
-////                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-////                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-////                                .withString(RouteKey.KEY_ORDER_ID, "")
-////                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                                .withString(RouteKey.KEY_TASK_ID, pushModel.getContent().getTaskId())
-////                                .withString(RouteKey.KEY_PRO_INS_ID, pushModel.getContent().getInstId())
-////                                .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
-////                                .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//                                checkRepairTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
-//
-//                                break;
-//                        }
-//                    }
-//                },1000);
-//
-//            }
             repository.singleRead(pushModel.getMsgId(), new CallBack<Boolean>() {
                 @Override
                 public void call(Boolean aBoolean) {
@@ -444,7 +308,11 @@ public class MyMessageReceiver extends MessageReceiver{
     }
 
     private void showMsg() {
-
+        if (Looper.myLooper()==null) {
+            Looper.prepare();
+        }
+        Toast.makeText(CommonApplication.getInstance(),"该任务已处理完成",Toast.LENGTH_SHORT).show();
+        Looper.loop();
     }
 
     private void initCopyAndEnd(PushResultModel pushModel) {
@@ -529,30 +397,40 @@ public class MyMessageReceiver extends MessageReceiver{
                 break;
         }
     }
+    /**
+     * 不合格单提前判断任务是否失效
+     */
+    public void checkQualityTaskId(String proInsId, String taskId) {
+        /**
+         * 获取详情信息
+         */
+        repository.getTODODetailInfo(taskId, new CallBack<DisqualifiedDetailModel>() {
+            @Override
+            public void call(DisqualifiedDetailModel data) {
 
+                if (data == null) {
+                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                    return;
+                }
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        .withString(RouteKey.KEY_TASK_ID, taskId)
+                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                        .withString(RouteKey.KEY_ID, data.getData().getUnqualified_model().getId_())
+                        .withString(RouteKey.FRAGMENT_TAG, RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW)
+                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                showMsg();
+            }
+        });
+    }
     /**
      * 问询提前判断任务是否失效
      */
     public  void checkTaskId(String proInsId,String taskId,String type){
-//        repository.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-//            if (repairsDetail==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-////            ARouter.getInstance()
-////                    .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
-////                    .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TO_FOLLOW_UP)
-////                    .withString(RouteKey.KEY_TASK_ID,taskId)
-////                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-////                    .navigation();
-//            ARouter.getInstance()
-//                    .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
-//                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TO_FOLLOW_UP)
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//        });
         repository.workOrderService.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId, new CallBack<RepairsDetailModel>() {
             @Override
             public void call(RepairsDetailModel data) {
@@ -600,29 +478,6 @@ public class MyMessageReceiver extends MessageReceiver{
      * 投诉提前判断任务是否失效
      */
     public  void checkComTaskId(String proInsId,String taskId,String type){
-//        repository.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-//            Log.e(TAG, "checkComTaskId: "+repairsDetail );
-//            if (repairsDetail==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-////            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-////                    .withString(RouteKey.KEY_ORDER_ID, "")
-////                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                    .withString(RouteKey.KEY_TASK_ID, taskId)
-////                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-////                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-////                    .navigation();
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-//                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                    .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//        });
-
         repository.workOrderService.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId, new CallBack<RepairsDetailModel>() {
             @Override
             public void call(RepairsDetailModel data) {
@@ -651,14 +506,6 @@ public class MyMessageReceiver extends MessageReceiver{
                                 .navigation();
                         break;
                 }
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-//                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                        .withString(RouteKey.KEY_ORDER_ID, "")
-//                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                        .withString(RouteKey.KEY_TASK_ID, taskId)
-//                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                        .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
             }
 
             @Override
@@ -677,22 +524,6 @@ public class MyMessageReceiver extends MessageReceiver{
      * 报修提前判断任务是否失效
      */
     public  void checkRepairTaskId(String proInsId,String taskId,String type){
-//        repository.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-//            Log.e(TAG, "checkComTaskId: "+repairsDetail );
-//            if (repairsDetail==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-////            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-////                    .withString(RouteKey.KEY_ORDER_ID, "")
-////                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                    .withString(RouteKey.KEY_TASK_ID, taskId)
-////                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-////                    .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-////                    .navigation();
-//
-//
-//        });
         repository.workOrderService.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId, new CallBack<RepairsDetailModel>() {
             @Override
             public void call(RepairsDetailModel data) {
@@ -721,14 +552,6 @@ public class MyMessageReceiver extends MessageReceiver{
                                 .navigation();
                         break;
                 }
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-//                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                        .withString(RouteKey.KEY_ORDER_ID, "")
-//                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                        .withString(RouteKey.KEY_TASK_ID, taskId)
-//                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                        .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
             }
 
             @Override
@@ -824,29 +647,6 @@ public class MyMessageReceiver extends MessageReceiver{
      * 计划工单提前判断任务是否失效
      */
     public  void checkPlanOrderTaskId(String proInsId,String taskId,String type){
-//        repository.loadDetail(proInsId,taskId).observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-////            ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-////                    .withString(RouteKey.KEY_ORDER_ID, "")
-////                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-////                    .withString(RouteKey.KEY_TASK_ID, taskId)
-////                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//////                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
-////                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)
-////                    .navigation();
-//
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)
-//                    .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//        });
         repository.service.planOrderDetail(taskId, new CallBack<PlanInfo>() {
             @Override
             public void call(PlanInfo data) {
@@ -874,14 +674,6 @@ public class MyMessageReceiver extends MessageReceiver{
                                 .navigation();
                         break;
                 }
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                        .withString(RouteKey.KEY_ORDER_ID, "")
-//                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                        .withString(RouteKey.KEY_TASK_ID, taskId)
-//                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                        .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)
-//                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
             }
 
             @Override
@@ -902,28 +694,6 @@ public class MyMessageReceiver extends MessageReceiver{
         repository.request.setTaskId(taskId);
         repository.request.setTaskNodeId("UserTask1");
 
-//        repository.loadPendingDetial().observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-////            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
-////                    .withString(RouteKey.KEY_TASK_ID,taskId)
-////                    .withString(RouteKey.KEY_ORDER_ID,"")
-////                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-////                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
-////                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-////                    .navigation();
-//
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-//                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//        });
         repository.service.patrolPendingDetial(repository.request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
             @Override
             public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
@@ -951,14 +721,6 @@ public class MyMessageReceiver extends MessageReceiver{
                                 .navigation();
                         break;
                 }
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-//                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                        .withString(RouteKey.KEY_TASK_ID, taskId)
-//                        .withString(RouteKey.KEY_ORDER_ID, "")
-//                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
             }
 
             @Override
@@ -978,29 +740,6 @@ public class MyMessageReceiver extends MessageReceiver{
         repository.request.setProInsId(proInsId);
         repository.request.setTaskId(taskId);
         repository.request.setTaskNodeId("UserTask1");
-
-//        repository.loadPendingDetial().observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-////            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-////                    .withString(RouteKey.KEY_TASK_ID,taskId)
-////                    .withString(RouteKey.KEY_ORDER_ID,"")
-////                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-////                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
-////                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-////                    .navigation();
-//
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-//                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    .withString(RouteKey.KEY_TASK_ID,taskId)
-//                    .withString(RouteKey.KEY_ORDER_ID,"")
-//                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-//                    .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
-//        });
         repository.service.patrolPendingDetial(repository.request, new CallBack<com.einyun.app.library.resource.workorder.model.PatrolInfo>() {
             @Override
             public void call(com.einyun.app.library.resource.workorder.model.PatrolInfo data) {
@@ -1028,14 +767,6 @@ public class MyMessageReceiver extends MessageReceiver{
                                 .navigation();
                         break;
                 }
-//                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-//                        .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                        .withString(RouteKey.KEY_TASK_ID,taskId)
-//                        .withString(RouteKey.KEY_ORDER_ID,"")
-//                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                        .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                        .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-//                        .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
             }
 
             @Override

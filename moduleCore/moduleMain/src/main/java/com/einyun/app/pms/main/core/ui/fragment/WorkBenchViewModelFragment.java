@@ -301,22 +301,40 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                     });
         }
         List<String> functionList = new ArrayList<>();
-        functionList.add("dj");
+
+        //点检
+//        if (userMenu.indexOf("dj") != -1) {
+            functionList.add("dj");
+//        }
 
         //审批
-        if (userMenu.indexOf("sprk") != -1) {
+//        if (userMenu.indexOf("sprk") != -1) {
             functionList.add("sp");
-        }
+//        }
         //收费
-        functionList.add("sf");
+//        if (userMenu.indexOf("sfzl") != -1) {
+            functionList.add("sfzl");
+//        }
         //创建工单
-        functionList.add("cjgd");
+
+//        if (userMenu.indexOf("cjgd") != -1) {
+            functionList.add("cjgd");
+//        }
+        //工单列表
         if (userMenu.indexOf("gdlbck") != -1) {
             functionList.add("gdlb");
         }
+        //工作预览
+//        if (userMenu.indexOf("gzyl") != -1) {
+            functionList.add("gzyl");
+//        }
+        //扫码处理
+        if (userMenu.indexOf("smcl") != -1) {
+            functionList.add("smcl");
+        }else {
+            functionList.add("smcl");
 
-        functionList.add("gzyl");
-        functionList.add("smcl");
+        }
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
         binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
     }
@@ -414,6 +432,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     public void scanner() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_SCANNER)
+                .withString(RouteKey.KEY_HOME_ENTER,RouteKey.KEY_HOME_ENTER)
                 .navigation(getActivity(), RouterUtils.ACTIVITY_REQUEST_SCANNER);
     }
 
@@ -468,28 +487,28 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 Logger.d(blockId + ":" + blockName + ":" + blockCode);
             } else if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
 //                ToastUtil.show(getActivity(), data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
-                String code = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
-                if (code.length()<3) {
-                    return;
-                }
-                String scanCode = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT).substring(2, code.length());
-                if (code.startsWith("30")) {
-                    ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_SCAN_RES)
-                            .withString(RouteKey.KEY_RES_ID,scanCode)
-                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
-                            .withString(RouteKey.KEY_TYPE,"30")
-                            .navigation();
-                }else if (code.startsWith("31")){
-                    ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_SCAN_RES)
-                            .withString(RouteKey.KEY_RES_ID, scanCode)
-                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
-                            .withString(RouteKey.KEY_TYPE,"31")
-                            .navigation();
-                }else {
-                    ToastUtil.show(getActivity(), "未识别正确二维码");
-                }
+//                String code = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
+//                if (code.length()<3) {
+//                    return;
+//                }
+//                String scanCode = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT).substring(2, code.length());
+//                if (code.startsWith("30")) {
+//                    ARouter.getInstance()
+//                            .build(RouterUtils.ACTIVITY_SCAN_RES)
+//                            .withString(RouteKey.KEY_RES_ID,scanCode)
+//                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
+//                            .withString(RouteKey.KEY_TYPE,"30")
+//                            .navigation();
+//                }else if (code.startsWith("31")){
+//                    ARouter.getInstance()
+//                            .build(RouterUtils.ACTIVITY_SCAN_RES)
+//                            .withString(RouteKey.KEY_RES_ID, scanCode)
+//                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
+//                            .withString(RouteKey.KEY_TYPE,"31")
+//                            .navigation();
+//                }else {
+//                    ToastUtil.show(getActivity(), "未识别的二维码");
+//                }
 
 
             }

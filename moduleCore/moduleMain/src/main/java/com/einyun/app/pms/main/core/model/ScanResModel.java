@@ -1,6 +1,6 @@
 package com.einyun.app.pms.main.core.model;
 
-public class ScanResModel   {
+public class ScanResModel {
 
     /**
      * tenant_id : 55614223698362369
@@ -44,46 +44,59 @@ public class ScanResModel   {
      */
 
     private String tenant_id;
-    private String resourceClassification;
-    private String resourceSequentialCode;
-    private String spaceType;
-    private String resourceClassificationPath;
-    private String resourceLocationTypeValue;
-    private String resourceProfessionalValue;
+    private String resourceClassification="";
+    private String resourceSequentialCode="";
+    private String spaceType="";
+    private String resourceClassificationPath="";
+    private String resourceClassificationPathValue="";
+    private String resourceLocationTypeValue="";
+    private String resourceProfessionalValue="";
     private boolean enabledFlag;
-    private String massifName;
-    private String categoryName;
-    private String spaceName;
-    private String resourceProfessional;
-    private String basicSpecificationType;
-    private String massifId;
-    private String resourceCode;
+    private String massifName="";
+    private String categoryName="";
+    private String spaceName="";
+    private String resourceProfessional="";
+    private String basicSpecificationType="";
+    private String massifId="";
+    private String resourceCode="";
     private boolean isDeleted;
-    private String systemName;
-    private String basicImportanceDegree;
+    private String systemName="";
+    private String basicImportanceDegree="";
     private long updationDate;
-    private String resourceClassificationValue;
-    private String id;
-    private String basicBrand;
-    private String resourceLocationType;
+    private String resourceClassificationValue="";
+    private String id="";
+    private String basicBrand="";
+    private String resourceLocationType="";
     private long rowTime;
-    private String systemId;
-    private String subsystemId;
-    private String updatedBy;
+    private String systemId="";
+    private String subsystemId="";
+    private String updatedBy="";
     private long rowVersion;
-    private String spaceNameValue;
-    private String resourceName;
-    private String specificLocation;
+    private String spaceNameValue="";
+    private String resourceName="";
+    private String specificLocation="";
     private long creationDate;
-    private String createdBy;
-    private String basicRemark;
-    private String subsystemName;
-    private String categoryId;
-    private String resourceType;
-    private String spaceTypeValue;
-    private String buildingFloor;
-    private String buildingUnitNumber;
-    private String buildingNumber;
+    private String createdBy="";
+    private String basicRemark="";
+    private String subsystemName="";
+    private String categoryId="";
+    private String resourceType="";
+    private String spaceTypeValue="";
+    private String buildingFloor="";
+    private String buildingUnitNumber="";
+    private String buildingNumber="";
+    private int basicNumber;
+    private int line;
+    private String latin="";
+    private String branch="";
+    private String genus="";
+    private String placeOfOrigin="";
+    private String habit="";
+    private String basicMeasurementUnit="";
+    private String basicHeightRange="";
+    private String basicDbh="";
+    private String basicCanopyDiameter="";
+    private String basicType="";
 
     public String getTenant_id() {
         return tenant_id;
@@ -411,5 +424,109 @@ public class ScanResModel   {
 
     public void setBuildingNumber(String buildingNumber) {
         this.buildingNumber = buildingNumber;
+    }
+
+    public int getBasicNumber() {
+        return basicNumber;
+    }
+
+    public void setBasicNumber(int basicNumber) {
+        this.basicNumber = basicNumber;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
+
+    public String getResourceClassificationPathValue() {
+        return resourceClassificationPathValue;
+    }
+
+    public void setResourceClassificationPathValue(String resourceClassificationPathValue) {
+        this.resourceClassificationPathValue = resourceClassificationPathValue;
+    }
+
+    public String getLatin() {
+        return latin;
+    }
+
+    public void setLatin(String latin) {
+        this.latin = latin;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getGenus() {
+        return genus;
+    }
+
+    public void setGenus(String genus) {
+        this.genus = genus;
+    }
+
+    public String getPlaceOfOrigin() {
+        return placeOfOrigin;
+    }
+
+    public void setPlaceOfOrigin(String placeOfOrigin) {
+        this.placeOfOrigin = placeOfOrigin;
+    }
+
+    public String getHabit() {
+        return habit;
+    }
+
+    public void setHabit(String habit) {
+        this.habit = habit;
+    }
+
+    public String getBasicMeasurementUnit() {
+        return basicMeasurementUnit;
+    }
+
+    public void setBasicMeasurementUnit(String basicMeasurementUnit) {
+        this.basicMeasurementUnit = basicMeasurementUnit;
+    }
+
+    public String getBasicHeightRange() {
+        return basicHeightRange;
+    }
+
+    public void setBasicHeightRange(String basicHeightRange) {
+        this.basicHeightRange = basicHeightRange;
+    }
+
+    public String getBasicDbh() {
+        return basicDbh;
+    }
+
+    public void setBasicDbh(String basicDbh) {
+        this.basicDbh = basicDbh;
+    }
+
+    public String getBasicCanopyDiameter() {
+        return basicCanopyDiameter;
+    }
+
+    public void setBasicCanopyDiameter(String basicCanopyDiameter) {
+        this.basicCanopyDiameter = basicCanopyDiameter;
+    }
+
+    public String getBasicType() {
+        return basicType;
+    }
+
+    public void setBasicType(String basicType) {
+        this.basicType = basicType;
     }
 }

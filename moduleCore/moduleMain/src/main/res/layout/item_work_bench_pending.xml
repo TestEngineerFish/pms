@@ -43,7 +43,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="@{()->callBack.scanner()}"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:src="@mipmap/img_qrcode_scan" />
         </RelativeLayout>
 

@@ -70,7 +70,6 @@ public class ScanResourceActivity extends BaseHeadViewModelActivity<ActivityScan
                 setHeadTitle(R.string.patrol_info);
                 break;
         }
-        setHeadTitle(R.string.resource_info);
         mTitles = getResources().getStringArray(R.array.scan_res_list);
         ArrayList<Fragment> fragments = new ArrayList<>();
         String fragmentTags[] = new String[]{FRAGMENT_SCAN_WAIT_DEAL, FRAGMENT_SCAN_HISTORY,

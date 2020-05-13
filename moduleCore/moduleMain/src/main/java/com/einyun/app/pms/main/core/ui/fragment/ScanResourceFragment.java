@@ -28,6 +28,7 @@ import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
@@ -116,21 +117,41 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
 
     private void isOverTime() {
         List<String> txStrList = new ArrayList<>();
-        txStrList.add("是");
-        txStrList.add("否");
+        txStrList.add("超期");
+        txStrList.add("未超期");
+        txStrList.add("重置");
         BottomPicker.buildBottomPicker(activity, txStrList, txDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
                 txDefaultPos = position;
                 if (position == 0) {
                     mOverTime = "1";
-                } else {
+                    initOverTimeShow("超期",false);
+                } else if (position == 1) {
                     mOverTime = "0";
+                    initOverTimeShow("未超期",false);
+                } else if (position == 2) {
+                    mOverTime = null;
+
+                    initOverTimeShow("是否超期",true);
                 }
                 initRequest();
             }
         });
     }
+
+    private void initOverTimeShow(String value,boolean isAll) {
+        if (isAll) {
+            binding.tvOverTime.setTextColor(getResources().getColor(R.color.greyTextColor));
+            binding.ivOverTime.setImageResource(R.drawable.iv_sort_grey_down);
+
+        }else {
+            binding.tvOverTime.setTextColor(getResources().getColor(R.color.blueTextColor));
+            binding.ivOverTime.setImageResource(R.drawable.iv_sort_blue_down);
+        }
+        binding.tvOverTime.setText(value);
+    }
+
 
     @Override
     protected void setUpView() {
@@ -159,7 +180,12 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
                     binding.tvCreateTime.setText(TimeUtil.getAllTime(model.getCreateDate()));
                     binding.tvOrderNo.setText(model.getOrderNo());
                     binding.tvTitle.setText(model.getOrderTitle());
+                    if (model.getOrderOverTime()==1) {
+                        binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.itemSendWorkLfImg.setVisibility(View.GONE);
 
+                    }
                 }
 
                 @Override
@@ -171,6 +197,7 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
         binding.inquiriesList.setAdapter(adapter);
         adapter.setOnItemClick(this);
         activity = (ScanResourceActivity) getActivity();
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(), LiveDataBusKey.SCAN_EMPTY + getFragmentTag(), this);
     }
 
     @Override
@@ -179,7 +206,7 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
         initRequest();
     }
 
-    String mOverTime = "0";
+    String mOverTime = null;
 
     private void initRequest() {
         ScanRequest scanRequest = new ScanRequest();
@@ -230,7 +257,7 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
                                 .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)
                                 .navigation();
                         break;
-                    case "send_order":
+                    case "dispatch_order":
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
                                 .withString(RouteKey.KEY_ORDER_ID, "")
                                 .withString(RouteKey.KEY_TASK_NODE_ID, "")
@@ -258,17 +285,17 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
                                 .withString(RouteKey.KEY_ORDER_ID, data.getId())
                                 .withString(RouteKey.KEY_TASK_NODE_ID, "")
-                                .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                                .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID_())
+                                .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                                .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID_())
                                 .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
                                 .navigation();
                         break;
-                    case "send_order":
+                    case "dispatch_order":
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
                                 .withString(RouteKey.KEY_ORDER_ID, "")
                                 .withString(RouteKey.KEY_TASK_NODE_ID, "")
                                 .withString(RouteKey.KEY_TASK_ID, "")
-                                .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID_())
+                                .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID_())
                                 .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
                                 .navigation();
                         break;

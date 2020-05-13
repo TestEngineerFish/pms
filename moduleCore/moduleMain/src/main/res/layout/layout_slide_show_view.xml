@@ -31,7 +31,7 @@
         <LinearLayout
             android:id="@+id/ll_toll"
             style="@style/ll_slide_show_view"
-            android:tag="sf">
+            android:tag="sfzl">
 
             <ImageView
                 style="@style/iv_slide_show_view"

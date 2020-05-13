@@ -134,7 +134,7 @@ public class SlideShowView extends FrameLayout {
                             item.setOnClickListener(v -> {
                                 HashMap<String, String> map = new HashMap<>();
                                 map.put("user_name", UserUtil.getUserName());
-                                MobclickAgent.onEvent(mContext,CustomEventTypeEnum.ORDER_LIST.getTypeName(),map);
+                                MobclickAgent.onEvent(mContext, CustomEventTypeEnum.ORDER_LIST.getTypeName(), map);
                                 ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_LIST).navigation();
                             });
                             break;
@@ -151,7 +151,7 @@ public class SlideShowView extends FrameLayout {
                             item.setOnClickListener(v ->
                                     ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL).navigation());
                             break;
-                        case "sf":
+                        case "sfzl":
                             //收费
 //                            item.setOnClickListener(v -> readyGo(ApprovalActivity.class));
                             item.setOnClickListener(v ->
@@ -161,8 +161,8 @@ public class SlideShowView extends FrameLayout {
                             //工作预览
                             item.setOnClickListener(v -> {
                                 HashMap<String, String> map2 = new HashMap<>();
-                                map2.put("user_name",UserUtil.getUserName());
-                                MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName(),map2);
+                                map2.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(mContext, CustomEventTypeEnum.PREVIEW_WORK.getTypeName(), map2);
                                 ARouter.getInstance().build(RouterUtils.ACTIVITY_ORDER_PREVIEW).navigation();
                             });
                             break;
@@ -170,11 +170,12 @@ public class SlideShowView extends FrameLayout {
                             //扫码处理
                             item.setOnClickListener(v -> {
                                 HashMap<String, String> map3 = new HashMap<>();
-                                map3.put("user_name",UserUtil.getUserName());
-                                MobclickAgent.onEvent(mContext,CustomEventTypeEnum.SWEEP_CODE.getTypeName(),map3);
+                                map3.put("user_name", UserUtil.getUserName());
+                                MobclickAgent.onEvent(mContext, CustomEventTypeEnum.SWEEP_CODE.getTypeName(), map3);
                                 ARouter.getInstance()
-                                    .build(RouterUtils.ACTIVITY_SCANNER)
-                                    .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER);
+                                        .build(RouterUtils.ACTIVITY_SCANNER)
+                                        .withString(RouteKey.KEY_HOME_ENTER, RouteKey.KEY_HOME_ENTER)
+                                        .navigation(activity, RouterUtils.ACTIVITY_REQUEST_SCANNER);
                             });
                             break;
                     }
