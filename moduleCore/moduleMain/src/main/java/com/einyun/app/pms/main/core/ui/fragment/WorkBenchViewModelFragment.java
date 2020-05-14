@@ -37,6 +37,7 @@ import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.mdm.model.NoticeModel;
+import com.einyun.app.library.mdm.model.SystemNoticeModel;
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
@@ -214,7 +215,30 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             });
         }
         getMainNote();
+        showSystemNotice();
     }
+
+    public void showSystemNotice() {
+        viewModel.getSystemNotice().observe(this, data -> {
+            String systemNotice = (String) SPUtils.get(getActivity(), "systemNotice", "");
+            boolean contains = systemNotice.contains(data.getId());
+            if (contains) {
+                binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
+            } else {
+                binding.itemWorkBenchFirst.llSystemNotice.setVisibility(VISIBLE);
+                binding.itemWorkBenchFirst.tvSystemNotice.setText(data.getTitle());
+                binding.itemWorkBenchFirst.tvSystemNotice.setOnClickListener(v -> {
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_SYSTEM_NOTICE_DETAIL)
+                            .withString(RouteKey.KEY_ID,data.getId()).navigation();
+                });
+                binding.itemWorkBenchFirst.ivSystemNoticeClose.setOnClickListener(v -> {
+                    SPUtils.put(getActivity(), "systemNotice", systemNotice + "_" + data.getId());
+                    binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
+                });
+            }
+        });
+    }
+
     /**
      * 获取首页社区公告
      */

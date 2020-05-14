@@ -37,6 +37,8 @@ class URLs {
         const val URL_NOTICE_ADD_READING = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/addReading"
         //查询点赞差评状态
         const val URL_NOTICE_QUERY_UP_DOWN = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/queryThumbUpDownByCondition"
+        const val URL_SYSTEM_NOTICE = "/noticeAndActivite/api/noticeAndActivity/v1/platformNotification/queryListForCAPP"
+        const val URL_GET_SYSTEM_NOTICE_DETAIL = "/noticeAndActivite/api/noticeAndActivity/v1/platformNotification/get/"
 
     }
 }

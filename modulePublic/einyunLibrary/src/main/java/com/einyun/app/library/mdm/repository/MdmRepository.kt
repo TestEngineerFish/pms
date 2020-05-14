@@ -12,6 +12,7 @@ import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.mdm.model.GridModel
 import com.einyun.app.library.mdm.model.NoticeModel
+import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.MdmServiceApi
 import com.einyun.app.library.mdm.net.URLs
 import com.einyun.app.library.mdm.net.request.AddReadingRequest
@@ -21,6 +22,38 @@ import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
 import com.einyun.app.library.mdm.net.response.NoticeListPageResult
 
 class MdmRepository : MdmService {
+    override fun getSystemNotice(callBack: CallBack<SystemNoticeModel>) {
+        serviceApi?.getSystemNotice(Any())
+            ?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState) {
+                    if (it.data.rows != null && it.data.rows.size != 0) {
+                        callBack.call(it.data.rows.get(0))
+                    } else {
+                        callBack.call(null)
+                    }
+                } else {
+                    callBack.call(null)
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+    }
+
+    override fun getSystemNoticeDetail(id: String, callBack: CallBack<SystemNoticeModel>) {
+        serviceApi?.getSystemNoticeDetail(URLs.URL_GET_SYSTEM_NOTICE_DETAIL + id)
+            ?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState) {
+                    callBack.call(it.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+    }
+
     override fun getNoticeList(
         getNoticeListPageRequest: NoticeListPageRequest,
         callBack: CallBack<NoticeListPageResult>
@@ -31,7 +64,8 @@ class MdmRepository : MdmService {
                 callBack.call(it.data)
             }, {
                 callBack.onFaild(it)
-            })    }
+            })
+    }
 
     override fun getNoticeTop(
         getNoticeListPageRequest: NoticeListPageRequest,

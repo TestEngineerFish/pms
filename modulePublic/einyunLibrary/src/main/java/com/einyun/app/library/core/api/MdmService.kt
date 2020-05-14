@@ -4,6 +4,7 @@ import com.einyun.app.base.event.CallBack
 import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.library.mdm.model.GridModel
 import com.einyun.app.library.mdm.model.NoticeModel
+import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.request.AddReadingRequest
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest
 import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
@@ -23,4 +24,8 @@ interface MdmService :EinyunService{
         getNoticeListPageRequest: NoticeListPageRequest,
         callBack: CallBack<NoticeListPageResult>
     )
+
+    fun getSystemNotice(callBack: CallBack<SystemNoticeModel>)
+
+    fun getSystemNoticeDetail(id: String, callBack: CallBack<SystemNoticeModel>)
 }

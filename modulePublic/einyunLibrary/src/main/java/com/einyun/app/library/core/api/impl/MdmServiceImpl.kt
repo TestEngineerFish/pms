@@ -6,12 +6,21 @@ import com.einyun.app.library.core.api.MdmService
 import com.einyun.app.library.core.api.proxy.MdmServiceImplProxy
 import com.einyun.app.library.mdm.model.GridModel
 import com.einyun.app.library.mdm.model.NoticeModel
+import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.request.AddReadingRequest
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest
 import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
 import com.einyun.app.library.mdm.net.response.NoticeListPageResult
 
 class MdmServiceImpl : MdmService {
+    override fun getSystemNotice(callBack: CallBack<SystemNoticeModel>) {
+        proxy.getSystemNotice(callBack)
+    }
+
+    override fun getSystemNoticeDetail(id: String, callBack: CallBack<SystemNoticeModel>) {
+        proxy.getSystemNoticeDetail(id, callBack)
+    }
+
     override fun getNoticeTop(
         getNoticeListPageRequest: NoticeListPageRequest,
         callBack: CallBack<NoticeListPageResult>

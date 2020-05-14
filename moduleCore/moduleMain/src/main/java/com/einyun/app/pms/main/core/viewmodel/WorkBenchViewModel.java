@@ -19,6 +19,7 @@ import com.einyun.app.library.dashboard.model.WorkOrderData;
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest;
 import com.einyun.app.library.dashboard.net.response.WorkOrderResponse;
 import com.einyun.app.library.mdm.model.NoticeModel;
+import com.einyun.app.library.mdm.model.SystemNoticeModel;
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest;
 import com.einyun.app.library.mdm.net.response.NoticeListPageResult;
 import com.einyun.app.library.resource.workorder.model.WaitCount;
@@ -224,6 +225,40 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
                 ThrowableParser.onFailed(throwable);
             }
         });
+    }
+
+    public LiveData<SystemNoticeModel> getSystemNotice() {
+        MutableLiveData<SystemNoticeModel> liveData = new MutableLiveData();
+        mdmService.getSystemNotice(new CallBack<SystemNoticeModel>() {
+            @Override
+            public void call(SystemNoticeModel data) {
+                liveData.postValue(data);
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(null);
+            }
+        });
+        return liveData;
+    }
+
+    public LiveData<SystemNoticeModel> getSystemNoticeDetail(String id) {
+        MutableLiveData<SystemNoticeModel> liveData = new MutableLiveData();
+        mdmService.getSystemNoticeDetail(id, new CallBack<SystemNoticeModel>() {
+            @Override
+            public void call(SystemNoticeModel data) {
+                liveData.postValue(data);
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(null);
+            }
+        });
+        return liveData;
     }
 
 }

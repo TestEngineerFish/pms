@@ -1,8 +1,10 @@
 package com.einyun.app.library.mdm.net
 
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.base.paging.bean.Query
 import com.einyun.app.library.mdm.model.NoticeModel
+import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.request.AddReadingRequest
 import com.einyun.app.library.mdm.net.request.QueryUpDownRequest
 import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
@@ -38,9 +40,15 @@ interface MdmServiceApi {
     @POST(URLs.URL_NOTICE_UPDATE_LIKE_BAD)
     fun updateNoticeLikeBad(@Body request: UpdateNoticeLikeBadRequest): Flowable<BaseResponse<BaseResponse<Any>>>
 
-   @POST(URLs.URL_NOTICE_ADD_READING)
+    @POST(URLs.URL_NOTICE_ADD_READING)
     fun addReadingNotice(@Body request: AddReadingRequest): Flowable<BaseResponse<Any>>
 
     @POST(URLs.URL_NOTICE_QUERY_UP_DOWN)
     fun queryUpDown(@Body request: QueryUpDownRequest): Flowable<BaseResponse<Int>>
+
+    @POST(URLs.URL_SYSTEM_NOTICE)
+    fun getSystemNotice(@Body request: Any): Flowable<BaseResponse<PageResult<SystemNoticeModel>>>
+
+    @GET
+    fun getSystemNoticeDetail(@Url url: String): Flowable<BaseResponse<SystemNoticeModel>>
 }

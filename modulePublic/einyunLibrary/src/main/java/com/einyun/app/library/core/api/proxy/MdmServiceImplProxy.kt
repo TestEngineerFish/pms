@@ -5,6 +5,7 @@ import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.library.core.api.MdmService
 import com.einyun.app.library.mdm.model.GridModel
 import com.einyun.app.library.mdm.model.NoticeModel
+import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.request.AddReadingRequest
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest
 import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
@@ -12,6 +13,14 @@ import com.einyun.app.library.mdm.net.response.NoticeListPageResult
 import com.einyun.app.library.mdm.repository.MdmRepository
 
 class MdmServiceImplProxy : MdmService {
+    override fun getSystemNotice(callBack: CallBack<SystemNoticeModel>) {
+        repo.getSystemNotice(callBack)
+    }
+
+    override fun getSystemNoticeDetail(id: String, callBack: CallBack<SystemNoticeModel>) {
+        repo.getSystemNoticeDetail(id, callBack)
+    }
+
     override fun getNoticeTop(
         getNoticeListPageRequest: NoticeListPageRequest,
         callBack: CallBack<NoticeListPageResult>

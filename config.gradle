@@ -305,7 +305,7 @@ server.debug = "\"https://testbms.einyun.com\""
 server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
 //server.uat = "\"https://testbms.einyun.com\""
-server.uat = "\"http://uatbms.einyun.com\""
+server.uat = "\"https://testbms.einyun.com\""
 //正式环境
 server.release = "\"https://bms.einyun.com\""
 deps.server = server

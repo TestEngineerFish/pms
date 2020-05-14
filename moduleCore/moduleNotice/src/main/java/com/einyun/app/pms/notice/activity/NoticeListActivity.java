@@ -237,7 +237,7 @@ public class NoticeListActivity extends BaseHeadViewModelActivity<ActivityNotice
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_NOTICE_DETAIL)
                 .withString(RouteKey.KEY_ID, data.getId())
-                .withString(RouteKey.KEY_WEB_TITLE, "社区公告")
+                .withString(RouteKey.KEY_WEB_TITLE, "公告详情")
                 .navigation();
     }
 }

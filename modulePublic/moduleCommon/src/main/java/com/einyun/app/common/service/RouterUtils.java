@@ -21,6 +21,7 @@ public class RouterUtils {
     /**********************Activity*********************************/
     public static final String ACTIVITY_USER_SPLASH="/user/SplashActivity";
     public static final String ACTIVITY_MAIN_HOME="/main/Home";
+    public static final String ACTIVITY_SYSTEM_NOTICE_DETAIL = "/main/SystemNoticeDetailActivity";
     public static final String ACTIVITY_USER_LOGIN="/user/LoginActivity";
     public static final String ACTIVITY_REPAIRS_PAGING="/repairs/RepairsActivity";
     public static final String ACTIVITY_HEALTH_WORK="/health/HealthActivity";
