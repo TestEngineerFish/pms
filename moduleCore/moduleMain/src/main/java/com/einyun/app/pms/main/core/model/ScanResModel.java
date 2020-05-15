@@ -96,8 +96,11 @@ public class ScanResModel {
     private String basicHeightRange="";
     private String basicDbh="";
     private String basicCanopyDiameter="";
+    private String basicCanopyDiameterValue="";
     private String basicType="";
-
+    private String basicMeasurementUnitValue="";
+    private String basicHeightRangeValue="";
+    private String basicDbhValue="";
     public String getTenant_id() {
         return tenant_id;
     }
@@ -528,5 +531,37 @@ public class ScanResModel {
 
     public void setBasicType(String basicType) {
         this.basicType = basicType;
+    }
+
+    public String getBasicMeasurementUnitValue() {
+        return basicMeasurementUnitValue;
+    }
+
+    public void setBasicMeasurementUnitValue(String basicMeasurementUnitValue) {
+        this.basicMeasurementUnitValue = basicMeasurementUnitValue;
+    }
+
+    public String getBasicHeightRangeValue() {
+        return basicHeightRangeValue;
+    }
+
+    public void setBasicHeightRangeValue(String basicHeightRangeValue) {
+        this.basicHeightRangeValue = basicHeightRangeValue;
+    }
+
+    public String getBasicDbhValue() {
+        return basicDbhValue;
+    }
+
+    public void setBasicDbhValue(String basicDbhValue) {
+        this.basicDbhValue = basicDbhValue;
+    }
+
+    public String getBasicCanopyDiameterValue() {
+        return basicCanopyDiameterValue;
+    }
+
+    public void setBasicCanopyDiameterValue(String basicCanopyDiameterValue) {
+        this.basicCanopyDiameterValue = basicCanopyDiameterValue;
     }
 }

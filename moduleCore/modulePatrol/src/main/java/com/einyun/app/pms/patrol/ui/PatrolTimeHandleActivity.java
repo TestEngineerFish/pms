@@ -3,6 +3,7 @@ package com.einyun.app.pms.patrol.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -274,6 +275,17 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_SCANNER);
     }
 
+
+    @Override
+    protected void initData() {
+        super.initData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewModel.loadLocalUserData(orderId);
+            }
+        },500);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

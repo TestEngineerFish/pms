@@ -90,7 +90,7 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
 
             @Override
             public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
+//                ThrowableParser.onFailed(throwable);
             }
         });
     }

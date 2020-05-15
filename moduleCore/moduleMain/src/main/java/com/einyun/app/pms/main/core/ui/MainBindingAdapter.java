@@ -103,9 +103,24 @@ public class MainBindingAdapter {
         }else {
             textView.setText(value+"");
         }
+    }
+    @BindingAdapter("enviroment_type")
+    public static void enviroment_type(TextView textView, String  value) {
 
+        if (value==null) {
+            return;
+        }
+        switch (value) {
+            case "482896"://绿化
+                textView.setText("绿化");
+                break;
+            case "482904"://保洁
+                textView.setText("保洁");
+                break;
+        }
 
     }
+
     /**
      * 列表状态
      *

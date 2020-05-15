@@ -331,7 +331,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="" />
+                                android:text="@{scanResModel.subsystemName}" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/rl_pro_system_type"
@@ -659,7 +659,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.resourceClassification}"
+                                android:text="@{scanResModel.resourceClassificationValue}"
 
                                 />
                         </RelativeLayout>
@@ -673,7 +673,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.resourceClassificationPath}"
+                                app:enviroment_type="@{scanResModel.resourceClassificationPath}"
 
                                 />
                         </RelativeLayout>
@@ -784,7 +784,7 @@
                                 android:text="计量单位" />
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.basicMeasurementUnit}" />
+                                android:text="@{scanResModel.basicMeasurementUnitValue}" />
                         </RelativeLayout>
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
                         <TextView
@@ -792,7 +792,7 @@
                             android:text="H高度(cm)" />
                         <TextView
                             style="@style/style_text_approval_right"
-                            android:text="@{scanResModel.basicHeightRange}" />
+                            android:text="@{scanResModel.basicHeightRangeValue}" />
                     </RelativeLayout>
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
                             <TextView
@@ -800,7 +800,7 @@
                                 android:text="φ胸径(cm)" />
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.basicDbh}" />
+                                android:text="@{scanResModel.basicDbhValue}" />
                         </RelativeLayout>
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
                             <TextView
@@ -808,7 +808,7 @@
                                 android:text="P蓬径(cm)" />
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.basicCanopyDiameter}" />
+                                android:text="@{scanResModel.basicCanopyDiameterValue}" />
                         </RelativeLayout>
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
                             <TextView
