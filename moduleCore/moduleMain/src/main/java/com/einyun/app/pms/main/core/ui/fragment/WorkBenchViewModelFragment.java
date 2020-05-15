@@ -2,9 +2,11 @@ package com.einyun.app.pms.main.core.ui.fragment;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -228,7 +230,19 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
             } else {
                 binding.itemWorkBenchFirst.llSystemNotice.setVisibility(VISIBLE);
-                binding.itemWorkBenchFirst.tvSystemNotice.setText("[系统通知]" + data.getTitle());
+                if (StringUtil.isNullStr(data.getType())) {
+                    switch (data.getType()){
+                        case "system_upgrade":
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[系统升级]" + data.getTitle());
+                            break;
+                        case "advertisement":
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[广告]" + data.getTitle());
+                            break;
+                        case "new_product":
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[新产品]" + data.getTitle());
+                            break;
+                    }
+                }
                 binding.itemWorkBenchFirst.tvSystemNotice.setFocusable(true);
                 binding.itemWorkBenchFirst.tvSystemNotice.setFocusableInTouchMode(true);
                 binding.itemWorkBenchFirst.tvSystemNotice.requestFocus();
@@ -270,11 +284,19 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 }
             });
             if (noticeModels != null && noticeModels.size() != 0) {
-                if (noticeModels.size() <= 5) {
-                    marqueeFactory.setData(noticeModels);
-                } else {
-                    marqueeFactory.setData(noticeModels.subList(0, 5));
-                }
+                marqueeFactory.setData(null);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //要延时的程序
+                        if (noticeModels.size() <= 5) {
+                            marqueeFactory.setData(noticeModels);
+                        } else {
+                            marqueeFactory.setData(noticeModels.subList(0, 5));
+                        }
+                    }
+                },1000);
+
             } else {
                 noticeModels = new ArrayList<>();
                 noticeModels.add(new NoticeModel("暂无公告"));

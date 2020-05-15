@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Route(path = RouterUtils.ACTIVITY_NOTICE_LIST)
 public class NoticeListActivity extends BaseHeadViewModelActivity<ActivityNoticeListBinding, NoticeViewModel> implements ItemClickListener<NoticeModel>, PeriodizationView.OnPeriodSelectListener {
@@ -80,17 +82,18 @@ public class NoticeListActivity extends BaseHeadViewModelActivity<ActivityNotice
                         binding.outDate.setVisibility(View.VISIBLE);
                     }
                 }
+                binding.tvTitle.setText(model.getTitle());
                 binding.dateTxt.setText(model.getReleaseTime().substring(8, 10));
                 if (getCurrentYear().equals(model.getReleaseTime().substring(0, 4))) {
                     binding.yearTxt.setVisibility(View.GONE);
                 } else {
-                    if (modelLast != null){
-                        if (model.getReleaseTime().substring(0, 4).equals(modelLast.getReleaseTime().substring(0, 4))){
+                    if (modelLast != null) {
+                        if (model.getReleaseTime().substring(0, 4).equals(modelLast.getReleaseTime().substring(0, 4))) {
                             binding.yearTxt.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             binding.yearTxt.setVisibility(View.VISIBLE);
                         }
-                    }else{
+                    } else {
                         binding.yearTxt.setVisibility(View.VISIBLE);
                     }
                 }

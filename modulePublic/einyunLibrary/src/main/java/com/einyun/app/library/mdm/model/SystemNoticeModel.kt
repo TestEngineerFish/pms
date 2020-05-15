@@ -5,4 +5,5 @@ class SystemNoticeModel {
     var title: String? = ""
     var content: String? = ""
     var releaseTime: String? = null
+    var type: String? = null
 }
