@@ -84,7 +84,15 @@ public class NoticeListActivity extends BaseHeadViewModelActivity<ActivityNotice
                 if (getCurrentYear().equals(model.getReleaseTime().substring(0, 4))) {
                     binding.yearTxt.setVisibility(View.GONE);
                 } else {
-                    binding.yearTxt.setVisibility(View.VISIBLE);
+                    if (modelLast != null){
+                        if (model.getReleaseTime().substring(0, 4).equals(modelLast.getReleaseTime().substring(0, 4))){
+                            binding.yearTxt.setVisibility(View.GONE);
+                        }else{
+                            binding.yearTxt.setVisibility(View.VISIBLE);
+                        }
+                    }else{
+                        binding.yearTxt.setVisibility(View.VISIBLE);
+                    }
                 }
                 binding.yearTxt.setText(model.getReleaseTime().substring(0, 4) + "年");
                 binding.monthTxt.setText(model.getReleaseTime().substring(5, 7) + "月");
@@ -118,6 +126,7 @@ public class NoticeListActivity extends BaseHeadViewModelActivity<ActivityNotice
     }
 
     TimePickerView pvTime;
+
     public void selectTime() {
         if (pvTime == null) {
             //时间选择器

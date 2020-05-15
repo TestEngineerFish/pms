@@ -50,6 +50,7 @@ android {
             minifyEnabled false
             versionNameSuffix "-dev"
             manifestPlaceholders=[APP_NAME:app_name]
+            signingConfig signingConfigs.release
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
@@ -124,9 +125,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // Support libraries
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(deps.project.module_user)
     implementation project(deps.project.module_main)
     implementation project(deps.project.module_repairs)
@@ -146,5 +145,4 @@ dependencies {
     implementation project(deps.project.module_orderlist)
     implementation project(deps.project.module_toll)
     implementation project(deps.project.module_notice)
-//    implementation project(deps.project.module_extra)
 }

@@ -218,22 +218,28 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         showSystemNotice();
     }
 
+    private boolean isShowSystemNotice = true;
+
     public void showSystemNotice() {
         viewModel.getSystemNotice().observe(this, data -> {
-            String systemNotice = (String) SPUtils.get(getActivity(), "systemNotice", "");
-            boolean contains = systemNotice.contains(data.getId());
-            if (contains) {
+//            String systemNotice = (String) SPUtils.get(getActivity(), "systemNotice", "");
+//            boolean contains = systemNotice.contains(data.getId());
+            if (data == null || !isShowSystemNotice) {
                 binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
             } else {
                 binding.itemWorkBenchFirst.llSystemNotice.setVisibility(VISIBLE);
-                binding.itemWorkBenchFirst.tvSystemNotice.setText(data.getTitle());
+                binding.itemWorkBenchFirst.tvSystemNotice.setText("[系统通知]" + data.getTitle());
+                binding.itemWorkBenchFirst.tvSystemNotice.setFocusable(true);
+                binding.itemWorkBenchFirst.tvSystemNotice.setFocusableInTouchMode(true);
+                binding.itemWorkBenchFirst.tvSystemNotice.requestFocus();
                 binding.itemWorkBenchFirst.tvSystemNotice.setOnClickListener(v -> {
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_SYSTEM_NOTICE_DETAIL)
                             .withString(RouteKey.KEY_ID,data.getId()).navigation();
                 });
                 binding.itemWorkBenchFirst.ivSystemNoticeClose.setOnClickListener(v -> {
-                    SPUtils.put(getActivity(), "systemNotice", systemNotice + "_" + data.getId());
+//                    SPUtils.put(getActivity(), "systemNotice", systemNotice + "_" + data.getId());
                     binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
+                    this.isShowSystemNotice = false;
                 });
             }
         });

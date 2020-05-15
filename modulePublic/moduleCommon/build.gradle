@@ -131,12 +131,12 @@ dependencies {
     // 可选，适用于Java的中国地区词典
 
     //高亮显示指引
-
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
-    implementation files('src/main/libs/umeng-share-wechat-simplify-6.9.8.jar')
-    implementation files('src/main/libs/common-utils-lib-1.0.0.jar')
-    implementation files('src/main/libs/SecurityEnvSDK-release-1.1.0.jar')
-    implementation files('src/main/libs/umeng-share-core-6.9.8.jar')
-    implementation files('src/main/libs/umeng-share-sina-simplify-6.9.8.jar')
-    implementation files('src/main/libs/umeng-shareboard-widget-6.9.8.jar')
+    api files('src/main/libs/umeng-share-wechat-simplify-6.9.8.jar')
+    api files('src/main/libs/common-utils-lib-1.0.0.jar')
+    api files('src/main/libs/SecurityEnvSDK-release-1.1.0.jar')
+    api files('src/main/libs/umeng-share-core-6.9.8.jar')
+    api files('src/main/libs/umeng-share-sina-simplify-6.9.8.jar')
+    api files('src/main/libs/umeng-shareboard-widget-6.9.8.jar')
 }

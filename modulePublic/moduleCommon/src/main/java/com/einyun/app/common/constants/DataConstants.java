@@ -38,4 +38,6 @@ public class DataConstants {
     public static final String KEY_IAMGES="mImages";
 
     public static final String NOTICE_DETAIL_URL = BuildConfig.BASE_URL + "/h5/pmc/#/communityDetail?id=";//隐私协议
+    public static final String WECHAT_APPID = "wxc5e060007fedcd88";
+    public static final String WECHAT_APP_SECRET = "472407c1c23b93ec9bc32fbdebc14e0d";
 }

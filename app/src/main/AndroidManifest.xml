@@ -93,6 +93,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity" android:launchMode="singleTask"/>
         <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity" android:launchMode="singleTask"/>
         <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity" android:launchMode="singleTask"/>
