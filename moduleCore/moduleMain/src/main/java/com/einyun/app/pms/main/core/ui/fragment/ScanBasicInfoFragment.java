@@ -67,6 +67,7 @@ public class ScanBasicInfoFragment extends BaseViewModelFragment<FragmentScanBas
         super.init();
 
     }
+
     private void getResBasic() {
         binding.cvPatrol.setVisibility(View.GONE);
         /**
@@ -94,7 +95,16 @@ public class ScanBasicInfoFragment extends BaseViewModelFragment<FragmentScanBas
                     binding.rlProChildSystem.setVisibility(View.GONE);
                     break;
                 case "environmental_resources"://环境类
+
                     binding.llEnvironment.setVisibility(View.VISIBLE);
+                    switch (model.getResourceClassificationPath()) {
+                        case "482896"://绿化
+                            binding.llGreen.setVisibility(View.VISIBLE);
+                            break;
+                        case "482904"://保洁
+                            binding.llClean.setVisibility(View.VISIBLE);
+                            break;
+                    }
 
                     break;
             }
@@ -102,8 +112,10 @@ public class ScanBasicInfoFragment extends BaseViewModelFragment<FragmentScanBas
             Log.e(TAG, "getResBasic: ");
         });
     }
+
     private void getPatrolBasic() {
         binding.llProject.setVisibility(View.GONE);
+        binding.cvPatrol.setVisibility(View.VISIBLE);
 
         /**
          * 获取巡更点基本信息
@@ -112,12 +124,13 @@ public class ScanBasicInfoFragment extends BaseViewModelFragment<FragmentScanBas
 
             binding.setScanPatrolModel(model);
             //获取数据展示图片暂时注释
-        PicUrlModelConvert convert = new PicUrlModelConvert();
-        List<PicUrlModel> modelList = convert.stringToSomeObjectList(model.getPicExampleUrl());
-        photoOrderInfoAdapter.updateList(modelList);
+            PicUrlModelConvert convert = new PicUrlModelConvert();
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(model.getPicExampleUrl());
+            photoOrderInfoAdapter.updateList(modelList);
             Log.e(TAG, "getResBasic: ");
         });
     }
+
     protected String getFragmentTag() {
         return getArguments().getString(RouteKey.KEY_FRAGEMNT_TAG);
     }

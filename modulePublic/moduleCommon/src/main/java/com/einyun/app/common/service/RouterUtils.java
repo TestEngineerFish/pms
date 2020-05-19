@@ -124,6 +124,7 @@ public class RouterUtils {
     public static final String ACTIVITY_ADD_WORTH_REMINDER = "/feesuc/AddWorthReminderActivity";
     public static final String ACTIVITY_SET_SIGN = "/feesuc/SetSignActivity";
     public static final String ACTIVITY_SET_SIGN2 = "/feesuc/SetSignActivity2";
+    public static final String ACTIVITY_SET_SIGN3 = "/feesuc/SetSignActivity3";
 //    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

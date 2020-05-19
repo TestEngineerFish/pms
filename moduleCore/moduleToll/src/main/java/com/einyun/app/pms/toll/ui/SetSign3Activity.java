@@ -2,11 +2,9 @@ package com.einyun.app.pms.toll.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,20 +24,16 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.CallBack;
-import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.StringUtil;
-import com.einyun.app.base.util.TimeUtil;
-import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.BaseEditText;
 import com.einyun.app.common.utils.IsFastClick;
-import com.einyun.app.pms.toll.BR;
 import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivitySetSign2Binding;
-import com.einyun.app.pms.toll.databinding.ActivitySetSignBinding;
+import com.einyun.app.pms.toll.databinding.ActivitySetSign3Binding;
 import com.einyun.app.pms.toll.databinding.SignItemBinding;
 import com.einyun.app.pms.toll.model.FeeDetailRequset;
 import com.einyun.app.pms.toll.model.GetSignModel;
@@ -50,9 +43,11 @@ import com.einyun.app.pms.toll.viewmodel.TollViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-@Route(path = RouterUtils.ACTIVITY_SET_SIGN2)
-public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2Binding, TollViewModel> {
+@Route(path = RouterUtils.ACTIVITY_SET_SIGN3)
+public class SetSign3Activity extends BaseHeadViewModelActivity<ActivitySetSign3Binding, TollViewModel> {
     @Autowired(name = RouteKey.HOUSE_ID)
     String houseId;
     @Autowired(name = RouteKey.KEY_DIVIDE_ID)
@@ -66,6 +61,7 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
     private List<GetSignModel.DataBean.TagListBean> mTagLists = new ArrayList<>();
     boolean isEmpty = true;
     private AlertDialog alertAddDialog;
+    private String firstEnter = "";
 
     @Override
     protected TollViewModel initViewModel() {
@@ -74,7 +70,7 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_set_sign2;
+        return R.layout.activity_set_sign3;
     }
 
     @Override
@@ -148,7 +144,7 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
                 if (convertView != null && convertView instanceof ViewGroup) {
                     hodler = (ViewHodle) convertView.getTag();
                 } else {
-                    convertView = View.inflate(SetSign2Activity.this, R.layout.sign_item, null);
+                    convertView = View.inflate(SetSign3Activity.this, R.layout.sign_item, null);
                     hodler = new ViewHodle();
                     hodler.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
                     hodler.etContent = (BaseEditText) convertView.findViewById(R.id.et_content);
@@ -174,6 +170,8 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
                 hodler.model = model;
                 Log.e("model", model.getTagValue());
                 hodler.etContent.addTextChangedListener(new TextWatcher() {
+
+
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -182,24 +180,42 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 //                        model.setTagValue(charSequence.toString().trim());
+                        firstEnter = hodler.etContent.getText().toString().trim();
                     }
 
                     @Override
                     public void afterTextChanged(Editable editable) {
 //                        model.setTagValue(editable.toString().trim());
+                        firstEnter = hodler.etContent.getText().toString().trim();
                     }
                 });
+                if (position == tagList.size() - 1) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hodler.etContent.setFocusable(true);
+                            hodler.etContent.requestFocus();
+                        }
+                    },200);
+
+//                    InputMethodManager imm = (InputMethodManager) SetSign3Activity.this
+//                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+                }
                 hodler.etContent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                         //判断是否是“完成”键
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
-//                            //隐藏软键盘
-//                            InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                            if (imm.isActive()) {
-//                                imm.hideSoftInputFromWindow(
-//                                        textView.getApplicationWindowToken(), 0);
-//                            }
+                            if (position>=3) {
+
+                            //隐藏软键盘
+                            InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            if (imm.isActive()) {
+                                imm.hideSoftInputFromWindow(
+                                        textView.getApplicationWindowToken(), 0);
+                            }
+                            }
                             if (!StringUtil.isEmpty(textView.getText().toString().trim())) {
                                 model.setTagValue(textView.getText().toString());
                                 if (tagList.size() < 5) {
@@ -288,7 +304,7 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long l) {
                 mPosition = position;
                 if (alertAddDialog == null) {
-                    alertAddDialog = new AlertDialog(SetSign2Activity.this).builder().setTitle(getResources().getString(R.string.tip))
+                    alertAddDialog = new AlertDialog(SetSign3Activity.this).builder().setTitle(getResources().getString(R.string.tip))
                             .setMsg("确定删除该标签?")
                             .setNegativeButton("取消", new View.OnClickListener() {
                                 @Override
@@ -383,7 +399,7 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
 
             lables.clear();
             if (tagList.size() != 0) {
-                if (StringUtil.isEmpty(tagList.get(0).getTagValue())) {
+                if (StringUtil.isEmpty(tagList.get(0).getTagValue()) && firstEnter.isEmpty() && tagList.size() == 1) {
 
 //                ToastUtil.show(this, "请确认输入标签");
                     Toast.makeText(this, "请确认输入标签", Toast.LENGTH_SHORT).show();
@@ -397,6 +413,17 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
                         if (!lables.contains(tagListBean.getTagValue())) {
                             lables.add(tagListBean.getTagValue());
                         }
+                    } else {
+                        if (!lables.contains(firstEnter)) {
+                            lables.add(firstEnter);
+
+                        }
+                    }
+                } else {
+
+                    if (!lables.contains(firstEnter)) {
+                        lables.add(firstEnter);
+
                     }
                 }
             }
@@ -428,7 +455,7 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
                                 getData();
                             } else {
 //                ToastUtil.show(SetSign2Activity.this, model.getMsg());
-                                Toast.makeText(SetSign2Activity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SetSign3Activity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

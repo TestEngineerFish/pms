@@ -252,6 +252,7 @@
 
                                 />
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:id="@+id/rl_pro_maior"
                             style="@style/style_rl_scan_basic_info">
@@ -266,6 +267,7 @@
 
                                 />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
 
                             <TextView
@@ -321,6 +323,7 @@
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.subsystemName}" />
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:id="@+id/rl_pro_child_type"
                             style="@style/style_rl_scan_basic_info">
@@ -333,6 +336,7 @@
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.subsystemName}" />
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:id="@+id/rl_pro_system_type"
                             style="@style/style_rl_scan_basic_info">
@@ -578,12 +582,12 @@
             </LinearLayout>
             <!--      环境资源类 -->
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/ll_environment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/activity_bg_color"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <!--         基本信息-->
                 <androidx.cardview.widget.CardView style="@style/cardview_style">
@@ -626,6 +630,7 @@
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.massifName}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
 
                             <TextView
@@ -651,6 +656,7 @@
 
                                 />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
 
                             <TextView
@@ -663,6 +669,7 @@
 
                                 />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
 
                             <TextView
@@ -679,18 +686,14 @@
                         </RelativeLayout>
 
 
-
-
-
-
-
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <!--         基础属性-->
                 <androidx.cardview.widget.CardView style="@style/cardview_style">
-
+                    <!--绿化-->
                     <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_green"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_white_bg"
@@ -737,7 +740,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.branch}"/>
+                                android:text="@{scanResModel.branch}" />
                         </RelativeLayout>
 
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
@@ -748,7 +751,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.genus}"/>
+                                android:text="@{scanResModel.genus}" />
                         </RelativeLayout>
 
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
@@ -763,65 +766,139 @@
                         </RelativeLayout>
 
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="习性" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.habit}"/>
+                                android:text="@{scanResModel.habit}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="数量" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
                                 app:num="@{scanResModel.basicNumber}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="计量单位" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.basicMeasurementUnitValue}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
-                        <TextView
-                            style="@style/style_text_approval_left"
-                            android:text="H高度(cm)" />
-                        <TextView
-                            style="@style/style_text_approval_right"
-                            android:text="@{scanResModel.basicHeightRangeValue}" />
-                    </RelativeLayout>
+
+                            <TextView
+                                style="@style/style_text_approval_left"
+                                android:text="H高度(cm)" />
+
+                            <TextView
+                                style="@style/style_text_approval_right"
+                                android:text="@{scanResModel.basicHeightRangeValue}" />
+                        </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="φ胸径(cm)" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.basicDbhValue}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="P蓬径(cm)" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.basicCanopyDiameterValue}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="位置" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.specificLocation}"/>
+                                android:text="@{scanResModel.specificLocation}" />
                         </RelativeLayout>
+
                         <RelativeLayout style="@style/style_rl_scan_basic_info">
+
                             <TextView
                                 style="@style/style_text_approval_left"
                                 android:text="备注" />
+
+                            <TextView
+                                style="@style/style_text_approval_right"
+                                android:text="@{scanResModel.basicRemark}" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <!--                    保洁-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_clean"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_white_bg"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:text="基础属性"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/iv_pop_line" />
+                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                            <TextView
+                                style="@style/style_text_approval_left"
+                                android:text="位置" />
+
+                            <TextView
+                                style="@style/style_text_approval_right"
+                                android:text="@{scanResModel.specificLocation}" />
+                        </RelativeLayout>
+
+                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+                            <TextView
+                                style="@style/style_text_approval_left"
+                                android:text="备注" />
+
                             <TextView
                                 style="@style/style_text_approval_right"
                                 android:text="@{scanResModel.basicRemark}" />

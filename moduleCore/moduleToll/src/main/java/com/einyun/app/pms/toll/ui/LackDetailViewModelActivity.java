@@ -365,7 +365,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
     public void onAddSignClick() {
         if (!IsFastClick.isFastDoubleClick()) return;
         if (data == null) return;
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN2)
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN3)
                 .withString(RouteKey.HOUSE_ID, houseIdJump)
                 .withString(RouteKey.CLIENT_ID, data.getClientId())
                 .withString(RouteKey.KEY_DIVIDE_ID, divideId)

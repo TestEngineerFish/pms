@@ -395,7 +395,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             }
             //获取数据展示图片暂时注释
             PicUrlModelConvert convert = new PicUrlModelConvert();
-            List<PicUrlModel> modelList = convert.stringToSomeObjectList(approvalFormdata.getApplyFiles());
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(approvalFormdata.getAttachment());
             photoOrderInfoAdapter.updateList(modelList);
 
             switch (subType) {//客服三类 强制闭单 申请延期 隐藏条线 派工单类型 工单负责人 创建时间工单截止时间
