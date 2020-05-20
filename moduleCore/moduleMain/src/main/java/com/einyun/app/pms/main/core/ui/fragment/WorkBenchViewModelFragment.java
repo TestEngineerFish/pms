@@ -239,7 +239,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                             binding.itemWorkBenchFirst.tvSystemNotice.setText("[广告]" + data.getTitle());
                             break;
                         case "new_product":
-                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[新产品]" + data.getTitle());
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[产品]" + data.getTitle());
                             break;
                     }
                 }

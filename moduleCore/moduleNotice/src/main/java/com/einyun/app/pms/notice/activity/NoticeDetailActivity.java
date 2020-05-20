@@ -64,6 +64,7 @@ public class NoticeDetailActivity extends BaseHeadViewModelActivity<ActivityNoti
     private WebSettings webSettings;// WebSettings对象
     NoticeModel model = new NoticeModel();
     Integer upDownState = 0;
+
     @Override
     protected NoticeViewModel initViewModel() {
         return viewModel = new ViewModelProvider(this, new ViewModelFactory()).get(NoticeViewModel.class);
@@ -107,29 +108,29 @@ public class NoticeDetailActivity extends BaseHeadViewModelActivity<ActivityNoti
             binding.tvGoodEvaultion.setText(String.valueOf(noticeModel.getThumbsUpNumber()));
             binding.tvBadEvaultion.setText(String.valueOf(noticeModel.getThumbsDownNumber()));
         });
-        viewModel.queryUpDown(id).observe(this,s -> {
-            if (upDownState == null){
+        viewModel.queryUpDown(id).observe(this, s -> {
+            if (upDownState == null) {
                 return;
             }
             upDownState = s;
-            if (upDownState ==1){
+            if (upDownState == 1) {
                 binding.ivGoodEvaultion.setImageResource(R.mipmap.icon_click_good_evaultion);
                 binding.ivBadEvaultion.setImageResource(R.mipmap.icon_bad_evaultion);
-            }else if (upDownState ==2){
+            } else if (upDownState == 2) {
                 binding.ivGoodEvaultion.setImageResource(R.mipmap.icon_good_evaultion);
                 binding.ivBadEvaultion.setImageResource(R.mipmap.icon_click_bad_evaultion);
             }
         });
-        viewModel.addReading(id);
+        viewModel.addReading(this, id);
         binding.llGoodEvaultion.setOnClickListener(v -> {
-            if (upDownState == 1){
+            if (upDownState == 1) {
                 return;
             }
             upDownState = 1;
             viewModel.updateNoticeLikeBad(id, "1");
         });
         binding.llBadEvaultion.setOnClickListener(v -> {
-            if (upDownState == 2){
+            if (upDownState == 2) {
                 return;
             }
             upDownState = 2;

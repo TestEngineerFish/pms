@@ -1,5 +1,6 @@
 package com.einyun.app.pms.notice.viewmodel;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -20,11 +21,9 @@ import com.einyun.app.library.mdm.net.request.AddReadingRequest;
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest;
 import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest;
 import com.einyun.app.library.mdm.repository.MdmRepository;
+import com.einyun.app.pms.notice.model.GetUserByccountModel;
 import com.einyun.app.pms.notice.repository.DataSourceFactory;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
 
 public class NoticeViewModel extends BasePageListViewModel<NoticeListModel> {
     MdmRepository mdmRepository;
@@ -34,12 +33,32 @@ public class NoticeViewModel extends BasePageListViewModel<NoticeListModel> {
     public MutableLiveData<Integer> noticeStateLiveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
+    NoticeRepository repository=new NoticeRepository();
 
     public NoticeViewModel() {
         this.mdmRepository = new MdmRepository();
         this.mdmService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_MDM);
         mdmService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_MDM);
     }
+
+    public LiveData<GetUserByccountModel> getUserByccountBeanLiveData(String id){
+        MutableLiveData<GetUserByccountModel> detial=new MutableLiveData<>();
+        showLoading();
+        repository.queryUserInfo(id, new CallBack<GetUserByccountModel>() {
+            @Override
+            public void call(GetUserByccountModel data) {
+                hideLoading();
+                detial.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return detial;
+    }
+
 
     /**
      * 获取Paging LiveData
@@ -54,21 +73,24 @@ public class NoticeViewModel extends BasePageListViewModel<NoticeListModel> {
 
     Gson gson = new Gson();
 
-    public void addReading(String id) {
-        AddReadingRequest request = new AddReadingRequest();
-        request.setCommunityAnnouncementId(id);
-        request.setFullname(userModuleService.getUserName());
-        request.setMemberId(userModuleService.getUserId());
-        request.setNickName(userModuleService.getUserId());
-        mdmService.addReading(request, new CallBack<Object>() {
-            @Override
-            public void call(Object data) {
-            }
+    public void addReading(LifecycleOwner owner, String id) {
+        getUserByccountBeanLiveData(userModuleService.getAccount()).observe(owner,getUserByccountBean -> {
+            AddReadingRequest request = new AddReadingRequest();
+            request.setCommunityAnnouncementId(id);
+            request.setFullname(userModuleService.getRealName());
+            request.setMemberId(userModuleService.getUserId());
+            request.setNickName(userModuleService.getUserName());
+            request.setPhone(getUserByccountBean.getMobile());
+            mdmService.addReading(request, new CallBack<Object>() {
+                @Override
+                public void call(Object data) {
+                }
 
-            @Override
-            public void onFaild(Throwable throwable) {
-                ThrowableParser.onFailed(throwable);
-            }
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
         });
     }
 

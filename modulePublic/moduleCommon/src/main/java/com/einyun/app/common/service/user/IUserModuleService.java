@@ -13,7 +13,11 @@ import java.util.List;
  * */
 public interface IUserModuleService extends IBaseModuleService {
     public String getUserId();
+
+    String getAccount();
+
     public String getUserName();
+    public String getRealName();
     public void saveDivideCodes(List<String> divideCodes);
     public List<String> getDivideCodes();
 }
