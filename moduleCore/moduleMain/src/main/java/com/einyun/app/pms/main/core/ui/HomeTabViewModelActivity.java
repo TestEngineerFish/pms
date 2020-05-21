@@ -2,9 +2,15 @@ package com.einyun.app.pms.main.core.ui;
 
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -53,6 +59,7 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     MineViewModelFragment mMineFragment;//我的
     private FragmentManager fragmentManager;
     private static int currentFragment = 0;
+    private BroadcastReceiver mReceiver;
 
     @Override
     protected HomeTabViewModel initViewModel() {
@@ -71,13 +78,53 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
         fragmentManager = getSupportFragmentManager();
         HomeTabViewModelActivityPermissionsDispatcher.permissionsWithPermissionCheck(this);
         showFragment(0, null);
+        initUninstallPush();
     }
+
+    /**
+     * 监听用户卸载 关闭推送通道
+     */
+    private static final String TAG = "HomeTabViewModelActivit";
+    private void initUninstallPush() {
+
+
+        mReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                PackageManager pm = context.getPackageManager();
+                Log.e(TAG, "onReceive: "+"卸载成功");
+                if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_ADDED)) {
+                    String packageName = intent.getData().getSchemeSpecificPart();
+//            Toast.makeText(context, "安装成功" + packageName, Toast.LENGTH_LONG).show();
+
+                    Log.e(TAG, "onReceive: "+"安装成功");
+                } else if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_REPLACED)) {
+                    String packageName = intent.getData().getSchemeSpecificPart();
+
+//            Toast.makeText(context, "替换成功" + packageName, Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "onReceive: "+"替换成功");
+                } else if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_REMOVED)) {
+                    String packageName = intent.getData().getSchemeSpecificPart();
+                    CommonApplication.getInstance().unbindAccount();
+//            Toast.makeText(context, "卸载成功" + packageName, Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "onReceive: "+"卸载成功");
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        filter.addDataScheme("package");
+        registerReceiver(mReceiver, filter);
+    }
+
 
     /**
      * 检查通知权限
      */
     private void showNotificationView() {
-        boolean isNotifity = (boolean)SPUtils.get(this, SPKey.SP_KEY_NOTIFICATION, false);
+        boolean isNotifity = (boolean) SPUtils.get(this, SPKey.SP_KEY_NOTIFICATION, false);
         NotificationManagerCompat manager = NotificationManagerCompat.from(this);
         // areNotificationsEnabled方法的有效性官方只最低支持到API 19，低于19的仍可调用此方法不过只会返回true，即默认为用户已经开启了通知。
         boolean isOpened = manager.areNotificationsEnabled();
@@ -216,6 +263,10 @@ public class HomeTabViewModelActivity extends BaseSkinViewModelActivity<Activity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mReceiver != null) {
+
+            unregisterReceiver(mReceiver);
+        }
     }
 
     @Override

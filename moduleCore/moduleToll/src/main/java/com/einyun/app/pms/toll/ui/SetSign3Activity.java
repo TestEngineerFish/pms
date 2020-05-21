@@ -196,7 +196,7 @@ public class SetSign3Activity extends BaseHeadViewModelActivity<ActivitySetSign3
                             hodler.etContent.setFocusable(true);
                             hodler.etContent.requestFocus();
                         }
-                    },200);
+                    },300);
 
 //                    InputMethodManager imm = (InputMethodManager) SetSign3Activity.this
 //                            .getSystemService(Context.INPUT_METHOD_SERVICE);

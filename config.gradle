@@ -311,9 +311,9 @@ deps.server = server
 
 def fee_server =[:]//收费 地址
 //开发调式环境
-fee_server.debug = "\"http://106.75.162.186:10018\""
+fee_server.debug = "\"https://testbms.einyun.com\""
 //测试环境
-fee_server.debug_test = "\"http://106.75.162.186:10018\""
+fee_server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
 fee_server.uat = "\"http://uatbms.einyun.com\""
 //正式环境
@@ -322,9 +322,9 @@ deps.fee_server = fee_server
 
 def fee_middle_server =[:]//收费uat含端口10018&&release切换url
 //开发调式环境
-fee_middle_server.debug = "\"\""
+fee_middle_server.debug = "\"/fee-center-api\""
 //测试环境
-fee_middle_server.debug_test = "\"\""
+fee_middle_server.debug_test = "\"/fee-center-api\""
 //UAT环境
 fee_middle_server.uat = "\"/fee-center-api\""
 //正式环境
