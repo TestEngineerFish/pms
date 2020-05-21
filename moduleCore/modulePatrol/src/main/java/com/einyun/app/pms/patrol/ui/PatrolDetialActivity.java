@@ -543,6 +543,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 保存本地数据
      */
     protected void saveLocalUserData() {
+        if (mPatrolInfo==null) {
+
+            return;
+
+        }
         if (mPatrolInfo.getExtensionApplication() != null) {
 
             return;

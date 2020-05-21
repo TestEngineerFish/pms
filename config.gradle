@@ -299,7 +299,7 @@ deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"https://testbms.einyun.com\""
+server.debug = "\"http://uatbms.einyun.com\""
 //测试环境
 server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
@@ -311,7 +311,7 @@ deps.server = server
 
 def fee_server =[:]//收费 地址
 //开发调式环境
-fee_server.debug = "\"https://testbms.einyun.com\""
+fee_server.debug = "\"http://uatbms.einyun.com\""
 //测试环境
 fee_server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
