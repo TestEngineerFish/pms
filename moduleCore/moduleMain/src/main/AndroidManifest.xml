@@ -5,6 +5,7 @@
     <application>
         <activity android:name=".core.ui.HomeTabViewModelActivity" />
         <activity android:name=".core.ui.ScanResourceActivity" />
+        <activity android:name=".core.ui.SystemNoticeDetailActivity"/>
     </application>
 
 </manifest>

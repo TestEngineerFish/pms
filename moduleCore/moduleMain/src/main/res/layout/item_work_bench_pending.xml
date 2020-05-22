@@ -24,7 +24,9 @@
 
         <RelativeLayout
             style="@style/base_style"
-            android:layout_marginTop="@dimen/px_64">
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_64"
+            android:layout_marginRight="@dimen/px_30">
 
             <TextView
                 android:id="@+id/tv_work_order_pending"
@@ -43,16 +45,60 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="@{()->callBack.scanner()}"
-                android:visibility="gone"
-                android:src="@mipmap/img_qrcode_scan" />
+                android:src="@mipmap/img_qrcode_scan"
+                android:visibility="invisible" />
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_system_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_28"
+            android:background="#F7E5DB"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/px_26"
+            android:paddingBottom="@dimen/px_26"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/px_36"
+                android:layout_height="@dimen/px_36"
+                android:layout_marginLeft="@dimen/px_30"
+                android:src="@mipmap/icon_system_notice_tip" />
+
+            <TextView
+                android:id="@+id/tv_system_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_16"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="#fffa6400"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_system_notice_close"
+                android:layout_width="@dimen/px_22"
+                android:layout_height="@dimen/px_22"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_34"
+                android:src="@mipmap/icon_system_notice_cha" />
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/ll_work_order_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_30"
             android:layout_marginTop="@dimen/px_40"
+            android:layout_marginRight="@dimen/px_30"
             android:background="@mipmap/img_pending_worktable_bg">
 
             <ImageView
@@ -66,20 +112,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:text="物业工单"
                     android:layout_marginTop="@dimen/px_30"
+                    android:text="物业工单"
                     android:textColor="#FFFFFFFF"
-                    android:textSize="@dimen/font_size14"
-                    />
+                    android:textSize="@dimen/font_size14" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_160"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <RelativeLayout
                         style="@style/base_style"
                         android:layout_width="0dp"
@@ -101,6 +149,7 @@
                                 android:text="不合格单" />
 
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/iv_waring_disqualified"
                             style="@style/iv_light_waring"
@@ -175,8 +224,7 @@
 
                         <LinearLayout
                             android:id="@+id/ll_work_baoxiu"
-                            style="@style/ll_work_table_pending"
-                            >
+                            style="@style/ll_work_table_pending">
 
                             <TextView
                                 android:id="@+id/tv_work_table_patrol_num"
@@ -200,14 +248,15 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
                     android:text="客服工单"
                     android:textColor="#FFFFFFFF"
-                    android:textSize="@dimen/font_size14"
-                    />
+                    android:textSize="@dimen/font_size14" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
@@ -234,11 +283,12 @@
                                 android:text="@string/tv_client_complain" />
 
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/iv_waring_complain"
                             style="@style/iv_light_waring"
-                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_paigongdan"
+                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_toRightOf="@id/ll_work_paigongdan" />
                     </RelativeLayout>
 
@@ -262,11 +312,12 @@
                                 android:text="@string/tv_client_repairs" />
 
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/iv_waring_enq"
                             style="@style/iv_light_waring"
-                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_jiahuaagongdan"
+                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_toRightOf="@id/ll_work_jiahuaagongdan" />
                     </RelativeLayout>
 
@@ -290,18 +341,19 @@
                                 android:text="@string/tv_client_enquiry" />
 
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/iv_waring_repairs"
                             style="@style/iv_light_waring"
-                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_alignBottom="@id/ll_work_xunchagongdan"
+                            android:layout_marginBottom="@dimen/px_30"
                             android:layout_toRightOf="@id/ll_work_xunchagongdan" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         style="@style/base_style"
                         android:layout_width="0dp"
-                        android:layout_weight="1">
-                    </RelativeLayout>
+                        android:layout_weight="1"></RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -309,7 +361,9 @@
         <com.einyun.app.pms.main.core.ui.widget.SlideShowView
             android:id="@+id/ssv_common_fun"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_280" />
+            android:layout_height="@dimen/px_280"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30" />
     </LinearLayout>
 
 </layout>

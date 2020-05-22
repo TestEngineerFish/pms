@@ -1,11 +1,14 @@
 package com.einyun.app.pms.main.core.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.databinding.LayoutListPageStateBinding;
 import com.einyun.app.library.core.api.DashBoardService;
+import com.einyun.app.library.core.api.MdmService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UserCenterService;
@@ -15,6 +18,10 @@ import com.einyun.app.library.dashboard.model.UserMenuData;
 import com.einyun.app.library.dashboard.model.WorkOrderData;
 import com.einyun.app.library.dashboard.net.request.WorkOrderRequest;
 import com.einyun.app.library.dashboard.net.response.WorkOrderResponse;
+import com.einyun.app.library.mdm.model.NoticeModel;
+import com.einyun.app.library.mdm.model.SystemNoticeModel;
+import com.einyun.app.library.mdm.net.request.NoticeListPageRequest;
+import com.einyun.app.library.mdm.net.response.NoticeListPageResult;
 import com.einyun.app.library.resource.workorder.model.WaitCount;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -31,10 +38,11 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
     WorkOrderService workOrderService;
     UserCenterService userCenterService;
     ResourceWorkOrderService resourceWorkOrderService;
-
+    private MdmService mdmService;
     public WorkBenchViewModel() {
 //        mUsersRepo = new UserRepository();
         mService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DASHBOARD);
+        mdmService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_MDM);
         workOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_WORK_ORDER);
         userCenterService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_USER_CENTER);
         resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
@@ -60,6 +68,51 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
             }
         });
     }
+
+//    /**
+//     * 获取Paging LiveData
+//     *
+//     * @return LiveData
+//     */
+//    public LiveData<List<NoticeModel>> getNotices(NoticeListPageRequest noticeListPageRequest, LayoutListPageStateBinding pageState) {
+//        MutableLiveData<List<NoticeModel>> liveData = new MutableLiveData();
+//        mdmService.getNoticeTop(noticeListPageRequest, new CallBack<NoticeListPageResult>() {
+//            @Override
+//            public void call(NoticeListPageResult data) {
+//                liveData.postValue(data.getRows());
+//
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//                liveData.postValue(null);
+//            }
+//        });
+//        return liveData;
+//    }
+
+    /**
+     * 获取Paging LiveData
+     *
+     * @return LiveData
+     */
+    public LiveData<List<NoticeModel>> getNotices(NoticeListPageRequest noticeListPageRequest, LayoutListPageStateBinding pageState) {
+        MutableLiveData<List<NoticeModel>> liveData = new MutableLiveData();
+        mdmService.getNoticeTop(noticeListPageRequest, new CallBack<NoticeListPageResult>() {
+            @Override
+            public void call(NoticeListPageResult data) {
+                liveData.postValue(data.getRows());
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(null);
+            }
+        });
+        return liveData;
+    }
+
 
     public LiveData<WorkOrderData> workOrderData(String orgId,String year,String month,String userId) {
         WorkOrderRequest request = new WorkOrderRequest();
@@ -172,6 +225,40 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
                 ThrowableParser.onFailed(throwable);
             }
         });
+    }
+
+    public LiveData<SystemNoticeModel> getSystemNotice() {
+        MutableLiveData<SystemNoticeModel> liveData = new MutableLiveData();
+        mdmService.getSystemNotice(new CallBack<SystemNoticeModel>() {
+            @Override
+            public void call(SystemNoticeModel data) {
+                liveData.postValue(data);
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(null);
+            }
+        });
+        return liveData;
+    }
+
+    public LiveData<SystemNoticeModel> getSystemNoticeDetail(String id) {
+        MutableLiveData<SystemNoticeModel> liveData = new MutableLiveData();
+        mdmService.getSystemNoticeDetail(id, new CallBack<SystemNoticeModel>() {
+            @Override
+            public void call(SystemNoticeModel data) {
+                liveData.postValue(data);
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(null);
+            }
+        });
+        return liveData;
     }
 
 }

@@ -283,4 +283,7 @@
     <string name="preview_enginer">工程</string>
     <string name="preview_service">客服</string>
     <string name="preview_environment">环境</string>
+
+    <!--公告模块-->
+    <string name="txt_notice">公告</string>
 </resources>

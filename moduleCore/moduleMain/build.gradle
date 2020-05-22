@@ -56,4 +56,5 @@ dependencies {
         exclude group: 'com.android.support'
     }
     annotationProcessor deps.arouter_compiler
+    implementation 'com.github.xiaohaibin:XMarqueeView:2.0.6'
 }

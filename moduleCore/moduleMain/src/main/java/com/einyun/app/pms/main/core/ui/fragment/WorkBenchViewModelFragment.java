@@ -1,8 +1,12 @@
 package com.einyun.app.pms.main.core.ui.fragment;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,11 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -27,12 +34,18 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
+import com.einyun.app.common.utils.FormatUtil;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.dashboard.model.WorkOrder;
+import com.einyun.app.library.mdm.model.NoticeModel;
+import com.einyun.app.library.mdm.model.SystemNoticeModel;
+import com.einyun.app.library.mdm.net.request.NoticeListPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.Constants;
+import com.einyun.app.pms.main.core.ui.adapter.HomeCommunityNoticeAdapter;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
@@ -45,9 +58,11 @@ import com.umeng.analytics.MobclickAgent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.view.View.VISIBLE;
 import static androidx.appcompat.app.AppCompatActivity.RESULT_OK;
 
 /**
@@ -57,7 +72,8 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     public static WorkBenchViewModelFragment newInstance() {
         return new WorkBenchViewModelFragment();
     }
-
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
     RVBindingAdapter<ItemWorkTablePendingNumBinding, String> adapter;
     //所有的项目CODE集合（disabked == 1）  运营收缴率使用
     ArrayList<String> projectCode = new ArrayList<>();
@@ -66,7 +82,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     NumberFormat formatDouble = new DecimalFormat("#.##");
     DecimalFormat formatInt = new DecimalFormat("#,###");
     boolean firstFresh = false;
-
+    HomeCommunityNoticeAdapter marqueeFactory;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_work_bench;
@@ -90,14 +106,31 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
                 SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, new Gson().toJson(orgModels));
                 handleStagingData(orgModels);
+                userModuleService.saveDivideCodes(divideCode);
                 firstFresh = true;
+                StringBuilder builder = new StringBuilder();
+                for (String divide:divideCode){
+                    builder.append(",").append(divide);
+                }
+                if (builder.length() > 1){
+                    divides = builder.substring(1);
+                }
                 freshData();
             });
         });
+        initWheel();
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
             freshData();
         });
+    }
+
+    private String divides;
+
+    private void initWheel(){
+        //社区广告
+        marqueeFactory = new HomeCommunityNoticeAdapter(getActivity());
+        binding.mvCommunityNotice.setAdapter(marqueeFactory);
     }
 
     @Override
@@ -183,27 +216,94 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 binding.itemWorkBenchFirst.tvWorkTablePatrolNum.setText("" + waitCount.getInspectionOrderCount());
             });
         }
+        getMainNote();
+        showSystemNotice();
     }
 
-//    private void calculateOperateUpDown(TextView tv, TextView tvNum, Double todayRise) {
-//        if (todayRise == null){
-//            tvNum.setText("0%");
-//            return;
-//        }
-//        String todayNum = formatDouble.format(todayRise);
-//        if (todayRise < 0) {
-//            tv.setText(getResources().getString(R.string.down));
-//            tvNum.setTextColor(getResources().getColor(R.color.tv_down_color));
-//            tvNum.setText(todayNum + "%");
-//        } else if (todayRise > 0) {
-//            tv.setText(getResources().getString(R.string.up));
-//            tvNum.setTextColor(getResources().getColor(R.color.tv_up_color));
-//            tvNum.setText(todayNum + "%");
-//        } else {
-//            todayNum = "0";
-//            tvNum.setText(todayNum + "%");
-//        }
-//    }
+    private boolean isShowSystemNotice = true;
+
+    public void showSystemNotice() {
+        viewModel.getSystemNotice().observe(this, data -> {
+//            String systemNotice = (String) SPUtils.get(getActivity(), "systemNotice", "");
+//            boolean contains = systemNotice.contains(data.getId());
+            if (data == null || !isShowSystemNotice) {
+                binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
+            } else {
+                binding.itemWorkBenchFirst.llSystemNotice.setVisibility(VISIBLE);
+                if (StringUtil.isNullStr(data.getType())) {
+                    switch (data.getType()){
+                        case "system_upgrade":
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[系统升级]" + data.getTitle());
+                            break;
+                        case "advertisement":
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[广告]" + data.getTitle());
+                            break;
+                        case "new_product":
+                            binding.itemWorkBenchFirst.tvSystemNotice.setText("[产品]" + data.getTitle());
+                            break;
+                    }
+                }
+                binding.itemWorkBenchFirst.tvSystemNotice.setFocusable(true);
+                binding.itemWorkBenchFirst.tvSystemNotice.setFocusableInTouchMode(true);
+                binding.itemWorkBenchFirst.tvSystemNotice.requestFocus();
+                binding.itemWorkBenchFirst.tvSystemNotice.setOnClickListener(v -> {
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_SYSTEM_NOTICE_DETAIL)
+                            .withString(RouteKey.KEY_ID,data.getId()).navigation();
+                });
+                binding.itemWorkBenchFirst.ivSystemNoticeClose.setOnClickListener(v -> {
+//                    SPUtils.put(getActivity(), "systemNotice", systemNotice + "_" + data.getId());
+                    binding.itemWorkBenchFirst.llSystemNotice.setVisibility(View.GONE);
+                    this.isShowSystemNotice = false;
+                });
+            }
+        });
+    }
+
+    /**
+     * 获取首页社区公告
+     */
+    List<NoticeModel> noticeModels = new ArrayList<>();
+    private void getMainNote() {
+
+        NoticeListPageRequest noticeListPageRequest = new NoticeListPageRequest();
+        noticeListPageRequest.setOrg_id(divides);
+        viewModel.getNotices(noticeListPageRequest, null).observe(this, dataBeans -> {
+            noticeModels = dataBeans;
+            marqueeFactory.setOnItemClickListener(new HomeCommunityNoticeAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    if (StringUtil.isNullStr(noticeModels.get(position).getId())) {
+                        if (IsFastClick.isFastDoubleClick()) {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_NOTICE_DETAIL)
+                                    .withString(RouteKey.KEY_ID, noticeModels.get(position).getId())
+                                    .withString(RouteKey.KEY_WEB_TITLE, "社区公告")
+                                    .navigation();
+                        }
+                    }
+                }
+            });
+            if (noticeModels != null && noticeModels.size() != 0) {
+                marqueeFactory.setData(null);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //要延时的程序
+                        if (noticeModels.size() <= 5) {
+                            marqueeFactory.setData(noticeModels);
+                        } else {
+                            marqueeFactory.setData(noticeModels.subList(0, 5));
+                        }
+                    }
+                },1000);
+
+            } else {
+                noticeModels = new ArrayList<>();
+                noticeModels.add(new NoticeModel("暂无公告"));
+                marqueeFactory.setData(noticeModels);
+            }
+        });
+    }
 
     @Override
     protected WorkBenchViewModel initViewModel() {
@@ -426,9 +526,6 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         adapter.setDataList(nums);
     }
 
-    @Autowired(name = RouterUtils.SERVICE_USER)
-    IUserModuleService userModuleService;
-
     public void scanner() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_SCANNER)
@@ -513,5 +610,9 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
             }
         }
+    }
+
+    public void goToNotice(){
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_NOTICE_LIST).navigation();
     }
 }
