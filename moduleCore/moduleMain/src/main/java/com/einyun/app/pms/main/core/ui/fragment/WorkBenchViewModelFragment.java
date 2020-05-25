@@ -172,6 +172,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 } else {
                     binding.itemWorkBenchSecond.tvWorkOrderProcess.setText("0%");
                     binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText("0%");
+                    return;
                 }
 
                 //总单总数
