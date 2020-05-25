@@ -451,6 +451,8 @@ public class SetSign3Activity extends BaseHeadViewModelActivity<ActivitySetSign3
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            //如果遇到不显示问题  可以将mPosition置为0
+//                            mPosition=0;
                             if (data.getCode() == 0) {
                                 getData();
                             } else {

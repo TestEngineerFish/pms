@@ -295,6 +295,7 @@ project.module_customerinquiries=":moduleCore:moduleCustomerInquiries"
 project.module_disqualified=":moduleCore:moduleDisqualified"
 project.module_orderlist=":moduleCore:moduleOrderList"
 project.module_toll=":moduleCore:moduleToll"
+project.module_notice=":moduleCore:moduleNotice"
 deps.project = project
 
 def server =[:]
