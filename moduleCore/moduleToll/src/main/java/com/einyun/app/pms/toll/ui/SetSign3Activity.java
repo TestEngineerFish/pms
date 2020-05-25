@@ -448,6 +448,7 @@ public class SetSign3Activity extends BaseHeadViewModelActivity<ActivitySetSign3
                 public void call(SetSignModel data) {
                     hideLoading();
 //                    setSignModule.postValue(data);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
