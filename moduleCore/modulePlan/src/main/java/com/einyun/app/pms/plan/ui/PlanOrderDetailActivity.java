@@ -180,7 +180,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     isCloseClose = isClosedState.isClosed();
                 }
             } else {
-                if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PLAN)) {
+                if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PLAN)) {//TODO 强制闭单申请中 要隐藏 派单 模块
                     isCloseClose = isClosedState.isClosed();
                     binding.cvResultEdit.setVisibility(View.GONE);
                     binding.cvOperate.setVisibility(View.GONE);
