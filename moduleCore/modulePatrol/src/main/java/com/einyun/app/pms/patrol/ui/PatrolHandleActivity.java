@@ -85,7 +85,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         binding.setCallBack(this);
     }
 
-    protected void switchStateUI(int f_plan_work_order_state) {
+    protected void switchStateUI(int f_plan_work_order_state) {//TODO 根据f_plan_work_order_state判断当前状态 显示隐藏处理布局，显示隐藏接单跟派单
         super.switchStateUI(f_plan_work_order_state);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
@@ -365,7 +365,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     /**
      * 提交
      */
-    public void onSubmitClick() {
+    public void onSubmitClick() {//TODO 根据 f_plan_work_order_state 判断是接单 派单 调相应接口
         if (!validateFormData()) {
             return;
         }

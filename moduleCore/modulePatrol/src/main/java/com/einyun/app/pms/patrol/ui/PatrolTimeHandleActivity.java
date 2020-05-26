@@ -76,7 +76,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     }
 
     @Override
-    protected void switchStateUI(int f_plan_work_order_state) {
+    protected void switchStateUI(int f_plan_work_order_state) {//TODO 根据f_plan_work_order_state判断当前状态 显示隐藏处理布局，显示隐藏接单跟派单
         super.switchStateUI(f_plan_work_order_state);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);

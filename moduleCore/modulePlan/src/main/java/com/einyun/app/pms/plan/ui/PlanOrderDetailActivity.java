@@ -235,7 +235,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         agree(binding, model);
                         //选中不通过
                         reject(binding, model);
-                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {
+                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {//接单模式在并上一个接单的状态
                             if (!TextUtils.isEmpty(model.result)) {
                                 //成功
                                 if ("1".equals(nodes.get(position).getResult())) {
@@ -253,7 +253,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 binding.btnReject.setEnabled(false);
                                 binding.btnAgree.setEnabled(false);
                             }
-                        } else {
+                        } else {//接单后 这里还要设置 enable
                             if (!TextUtils.isEmpty(model.result)) {
                                 if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onReject(binding);
@@ -262,6 +262,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 }
                             }
                         }
+
+
                     }
                 }
 
@@ -545,7 +547,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(zyjhgd.getF_FILES());
                 adapter.updateList(modelList);
             }
-        }
+        }//添加 f_status 接单跟派单 显示不同布局
     }
 
     /**
@@ -786,7 +788,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     /**
      * 提交
      */
-    public void onSubmitClick() {
+    public void onSubmitClick() {//根据 f_status 判断调用不同接口
         isSubmit=true;
         if (!validateFormData()) {
             return;
