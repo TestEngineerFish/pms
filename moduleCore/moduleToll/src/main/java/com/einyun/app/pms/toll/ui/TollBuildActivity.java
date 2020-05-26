@@ -1266,7 +1266,14 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                         binding.rlTime.setVisibility(View.GONE);
                     }else {
 
-                        binding.rlTime.setVisibility(View.VISIBLE);
+                        if (isShowFee==0) {
+
+                            binding.rlTime.setVisibility(View.GONE);
+                        }else {
+                            binding.rlTime.setVisibility(View.VISIBLE);
+
+                        }
+                        binding.tvTime.setText("上次催缴时间：");
                     }
                 } else {
                     if (grids.size() != 0) {

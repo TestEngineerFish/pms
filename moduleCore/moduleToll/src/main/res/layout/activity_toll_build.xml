@@ -312,7 +312,7 @@
 
             <RelativeLayout
 
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/rl_time"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_100"
