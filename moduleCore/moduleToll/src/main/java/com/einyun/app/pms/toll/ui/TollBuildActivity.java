@@ -318,7 +318,7 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
 
             }
         });
-        binding.rlTime.setVisibility(View.GONE);
+//        binding.rlTime.setVisibility(View.GONE);
         divideName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
         divideId = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
         if (!divideName.isEmpty()) {
@@ -1266,7 +1266,7 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
                         binding.rlTime.setVisibility(View.GONE);
                     }else {
 
-                        binding.rlTime.setVisibility(View.GONE);
+                        binding.rlTime.setVisibility(View.VISIBLE);
                     }
                 } else {
                     if (grids.size() != 0) {
