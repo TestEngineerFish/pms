@@ -720,7 +720,9 @@
                             android:layout_marginRight="10dp"
                             android:src="@drawable/iv_pop_line" />
 
-                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+                        <RelativeLayout
+                            android:id="@+id/rl_latin"
+                            style="@style/style_rl_scan_basic_info">
 
                             <TextView
 
@@ -732,7 +734,9 @@
                                 android:text="@{scanResModel.latin}" />
                         </RelativeLayout>
 
-                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+                        <RelativeLayout
+                            android:id="@+id/rl_branch"
+                            style="@style/style_rl_scan_basic_info">
 
                             <TextView
                                 style="@style/style_text_approval_left"
@@ -743,7 +747,9 @@
                                 android:text="@{scanResModel.branch}" />
                         </RelativeLayout>
 
-                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+                        <RelativeLayout
+                            android:id="@+id/rl_genus"
+                            style="@style/style_rl_scan_basic_info">
 
                             <TextView
                                 style="@style/style_text_approval_left"
@@ -754,7 +760,9 @@
                                 android:text="@{scanResModel.genus}" />
                         </RelativeLayout>
 
-                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+                        <RelativeLayout
+                            android:id="@+id/rl_place_of_origin"
+                            style="@style/style_rl_scan_basic_info">
 
                             <TextView
                                 style="@style/style_text_approval_left"
@@ -765,7 +773,9 @@
                                 android:text="@{scanResModel.placeOfOrigin}" />
                         </RelativeLayout>
 
-                        <RelativeLayout style="@style/style_rl_scan_basic_info">
+                        <RelativeLayout
+                            android:id="@+id/rl_habit"
+                            style="@style/style_rl_scan_basic_info">
 
                             <TextView
                                 style="@style/style_text_approval_left"
