@@ -55,6 +55,30 @@
                 </LinearLayout>
                 <View style="@style/base_underline" />
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_old"
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.onOldCodeClick()}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="原工单号" />
+
+                    <TextView
+                        android:id="@+id/tv_old_code"
+                        android:singleLine="false"
+                        android:layout_height="match_parent"
+                        style="@style/tv_create_order_select_single"
+                        android:text=""/>
+
+                    <ImageView
+                        android:visibility="visible"
+                        style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
                     android:onClick="@{()->callBack.pleaseSelect(type.CHECK_DATE)}"
                     style="@style/ll_create_order">
 
@@ -93,30 +117,6 @@
                         app:hintText="请输入问题描述"
                         app:maxNumber="300" />
                 </LinearLayout>
-                <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/ll_old"
-                    style="@style/ll_create_order"
-                    android:onClick="@{()->callBack.onOldCodeClick()}">
-
-                    <TextView style="@style/tv_create_order_red_star" />
-
-                    <TextView
-                        style="@style/tv_create_order_name"
-                        android:text="原工单号" />
-
-                    <TextView
-                        android:id="@+id/tv_old_code"
-                        android:singleLine="false"
-                        android:layout_height="match_parent"
-                        style="@style/tv_create_order_select_single"
-                        android:text=""/>
-
-                    <ImageView
-                        android:visibility="visible"
-                        style="@style/tv_create_order_right_arrow" />
-                </LinearLayout>
-                <View style="@style/base_underline" />
                 <LinearLayout
                     android:onClick="@{()->callBack.pleaseSelect(type.LINE)}"
                     android:layout_marginTop="@dimen/px_20"
