@@ -53,7 +53,10 @@
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
-                <View style="@style/base_underline" />
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/v_line"
+                    style="@style/base_underline" />
                 <LinearLayout
                     android:visibility="gone"
                     android:id="@+id/ll_old"

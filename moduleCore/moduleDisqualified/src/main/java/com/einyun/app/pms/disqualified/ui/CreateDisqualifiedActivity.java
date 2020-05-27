@@ -148,6 +148,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         }
         if (StringUtil.isNullStr(orderNo)){
             binding.llOld.setVisibility(View.VISIBLE);
+            binding.vLine.setVisibility(View.VISIBLE);
             binding.tvOldCode.setText(orderNo);
 
         }
