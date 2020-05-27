@@ -99,6 +99,29 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         return liveData;
     }
     /**
+     * 指派
+     * @return
+     */
+    public LiveData<Boolean> assignOrder(PatrolSubmitRequest request){
+        MutableLiveData<Boolean> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_ASSIGNE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
      * checkQrCode
      * @return
      */

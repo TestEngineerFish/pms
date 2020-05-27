@@ -53,7 +53,8 @@ public class MsgRepository {
     }
     /**
      * 接单
-     * @param id
+     * @param url
+     * @param request
      * @param callBack
      * @return
      */

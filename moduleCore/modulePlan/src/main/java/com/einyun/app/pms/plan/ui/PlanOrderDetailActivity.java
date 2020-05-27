@@ -700,23 +700,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         if (planInfo == null) {
             return;
         }
-        if ("5".equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
-            planInfo.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
-            Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
-            String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
-            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
-            viewModel.receiceOrder(request).observe(this,model->{
-
-            });
-
-        }else if ("6".equals(planInfo.getData().getZyjhgd().getF_STATUS())){
-
-        }else {
             viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
                 wrapFormData(planInfo, picUrls);
                 acceptForm(planInfo);
             });
-        }
+
     }
 
 
@@ -829,12 +817,26 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 提交
      */
     public void onSubmitClick() {//根据 f_status 判断调用不同接口
-        isSubmit=true;
-        if (!validateFormData()) {
-            return;
+        if ("5".equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
+            planInfo.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
+            planInfo.getData().getZyjhgd().setF_STATUS("2");
+            Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
+            String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
+            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+            viewModel.receiceOrder(request).observe(this,model->{
+
+            });
+
+        }else if ("6".equals(planInfo.getData().getZyjhgd().getF_STATUS())){
+
+        }else {
+            isSubmit=true;
+            if (!validateFormData()) {
+                return;
+            }
+            if (validateForceScan()) return;
+            uploadImages(planInfo);
         }
-        if (validateForceScan()) return;
-        uploadImages(planInfo);
     }
 
     private boolean validateForceScan() {
