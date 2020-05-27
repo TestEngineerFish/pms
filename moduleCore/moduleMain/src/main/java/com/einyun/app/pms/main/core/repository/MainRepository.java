@@ -92,6 +92,24 @@ public class MainRepository {
                 });
     }
     /**
+     * 获取环境分类
+     */
+    public void getClassPath(String url,CallBack<ScanResModel> callBack) {
+//        MutableLiveData<UCUserDetailsBean> liveData = new MutableLiveData<>();
+        serviceApi.getRes(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    if (response.isState()) {
+                        Log.e("response", "queryStars: " + response);
+                        callBack.call(response.getData());
+//                    liveData.postValue(response.getValue());
+                    } else {
+                        callBack.onFaild(new Exception(response.getCode()+""));
+                    }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
      * 获取巡更点基本信息
      */
     public void getPatrol(String url,CallBack<ScanPatrolModel> callBack) {

@@ -53,6 +53,13 @@ public interface MainServiceApi {
     @GET()
     Flowable<ScanResResponse> getRes(@Url String url);
     /**
+     * 获取环境分类
+     * @param
+     * @return
+     */
+    @GET()
+    Flowable<ScanResResponse> getClassPath(@Url String url);
+    /**
      * 巡更点信息
      * @param
      * @return
