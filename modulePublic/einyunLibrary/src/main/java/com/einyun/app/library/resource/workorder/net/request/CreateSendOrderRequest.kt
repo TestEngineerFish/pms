@@ -19,6 +19,7 @@ import com.google.gson.annotations.SerializedName
 class CreateSendOrderRequest {
     var id: String? = null
     var orderNo: String? = null
+    var F_ORIGINAL_CODE: String? = null
     @SerializedName("F_DIVIDE_ID")
     var divideId: String? = null
     @SerializedName("F_DIVIDE_CODE")

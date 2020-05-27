@@ -86,6 +86,18 @@
                 style="@style/work_order_detail_txt_right"
                 android:text="@{workOrder.data.info.txName}" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_originalCode"
+            style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="原工单号" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.originalCode}" />
+        </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
 

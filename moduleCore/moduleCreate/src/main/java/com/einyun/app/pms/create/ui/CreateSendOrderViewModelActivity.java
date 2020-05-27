@@ -508,7 +508,8 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             request.setId(id);
         }
         if (StringUtil.isNullStr(orderNo)){
-            request.setOrderNo(orderNo);
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_CODE(orderNo);
         }
         return request;
     }

@@ -51,17 +51,19 @@
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp">
             <TextView
                 style="@style/style_text_approval_left"
-                android:text="@string/tv_create_time"/>
+                android:text="创建时间："/>
             <TextView
                 android:text="@{model.bizData.check_date}"
                 android:id="@+id/tv_create_time"
+                android:layout_marginLeft="@dimen/px_5"
+                android:textColor="@color/greyTextColor"
                 style="@style/style_text_approval_right"/>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>
