@@ -547,7 +547,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(zyjhgd.getF_FILES());
                 adapter.updateList(modelList);
             }
-        }//添加 f_status 接单跟派单 显示不同布局
+        }else if (String.valueOf(OrderState.PENDING.getState()).equals(zyjhgd.getF_STATUS())){//添加 f_status 接单中
+            binding.btnSubmit.setText("接单");
+            binding.cvResultEdit.setVisibility(View.GONE);
+            binding.cvOperate.setVisibility(View.GONE);
+
+        }else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(zyjhgd.getF_STATUS())){//添加 f_status 派单 显示不同布局
+            binding.cvResultEdit.setVisibility(View.GONE);
+            binding.cvOperate.setVisibility(View.GONE);
+            binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+        }
     }
 
     /**

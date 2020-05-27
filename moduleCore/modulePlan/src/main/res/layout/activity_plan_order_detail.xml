@@ -368,6 +368,11 @@
                 <include
                     android:id="@+id/item_close_order_info"
                     layout="@layout/item_close_order_info" />
+                <!--               派单-->
+                <include
+                    android:id="@+id/send_order"
+                    layout="@layout/layout_plan_send_order"
+                    android:visibility="gone" />
                 <!--                处理结果-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_result_edit"
