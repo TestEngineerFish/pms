@@ -15,6 +15,8 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.URLS;
+import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
@@ -45,10 +47,10 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     ResourceWorkOrderService service;
-
+    public MsgRepository repository;
     public PlanOrderDetailViewModel(){
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
-
+        repository=new MsgRepository();
     }
     PlanOrderRepository repository2= new PlanOrderRepository("");
     /**
@@ -59,6 +61,29 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         MutableLiveData<Boolean> liveData=new MutableLiveData();
         showLoading();
         service.planSubmit(request, new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 接单
+     * @return
+     */
+    public LiveData<Boolean> receiceOrder(PatrolSubmitRequest request){
+        MutableLiveData<Boolean> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_RECEIVE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
                 hideLoading();

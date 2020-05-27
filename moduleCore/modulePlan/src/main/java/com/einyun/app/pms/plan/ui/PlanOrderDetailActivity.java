@@ -76,6 +76,7 @@ import com.einyun.app.library.resource.workorder.model.Zyjhgd;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
@@ -147,7 +148,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     public int getLayoutId() {
         return R.layout.activity_plan_order_detail;
     }
-
+    /**
+     * 选择指派人
+     */
+    private void selectPeple() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                .withString(RouteKey.KEY_DIVIDE_ID, planInfo.getData().getZyjhgd().getF_DIVIDE_ID())
+                .withString(RouteKey.KEY_PROJECT_ID, planInfo.getData().getZyjhgd().getF_PROJECT_ID())
+                .navigation();
+    }
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
@@ -157,6 +167,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
 
+        binding.sendOrder.repairSelectPeople.setOnClickListener(view -> {
+            selectPeple();
+        });
         if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
@@ -198,7 +211,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 finish();
             }
         });
-
+        //选择人员
+        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
+            binding.sendOrder.repairSelectedPepple.setText(model.getFullname());
+            planInfo.getData().getZyjhgd().setF_PROCESS_NAME(model.getFullname());
+            planInfo.getData().getZyjhgd().setF_PROCESS_ID(model.getId());
+        });
         viewModel.getLastWorthTime("ldzd").observe(this,model->{
 
             mPlanResLines = model;
@@ -682,10 +700,23 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         if (planInfo == null) {
             return;
         }
-        viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
-            wrapFormData(planInfo, picUrls);
-            acceptForm(planInfo);
-        });
+        if ("5".equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
+            planInfo.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
+            Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
+            String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
+            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+            viewModel.receiceOrder(request).observe(this,model->{
+
+            });
+
+        }else if ("6".equals(planInfo.getData().getZyjhgd().getF_STATUS())){
+
+        }else {
+            viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
+                wrapFormData(planInfo, picUrls);
+                acceptForm(planInfo);
+            });
+        }
     }
 
 
