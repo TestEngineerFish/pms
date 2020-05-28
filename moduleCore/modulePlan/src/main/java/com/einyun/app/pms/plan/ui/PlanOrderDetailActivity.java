@@ -820,7 +820,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 提交
      */
     public void onSubmitClick() {//根据 f_status 判断调用不同接口
-        if ("5".equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
+        if (String.valueOf(OrderState.PENDING.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
 //            planInfo.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
             planInfo.getData().getZyjhgd().setF_STATUS("2");
             planInfo.getData().getZyjhgd().setF_OWNER_NAME(viewModel.getUserName());
@@ -837,7 +837,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 }
             });
 
-        }else if ("6".equals(planInfo.getData().getZyjhgd().getF_STATUS())){
+        }else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())){
             planInfo.getData().getZyjhgd().setF_STATUS("2");
             Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
