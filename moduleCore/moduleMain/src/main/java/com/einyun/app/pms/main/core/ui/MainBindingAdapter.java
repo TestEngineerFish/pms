@@ -110,14 +110,15 @@ public class MainBindingAdapter {
         if (value==null) {
             return;
         }
-        switch (value) {
-            case "482896"://绿化
-                textView.setText("绿化");
-                break;
-            case "482904"://保洁
-                textView.setText("保洁");
-                break;
-        }
+        textView.setText(value);
+//        switch (value) {
+//            case "482896"://绿化
+//                textView.setText("绿化");
+//                break;
+//            case "482904"://保洁
+//                textView.setText("保洁");
+//                break;
+//        }
 
     }
 

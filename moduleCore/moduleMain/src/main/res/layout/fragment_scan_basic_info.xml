@@ -680,7 +680,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                app:enviroment_type="@{scanResModel.resourceClassificationPath}"
+                                app:enviroment_type="@{scanResModel.resourceClassificationPathValue}"
 
                                 />
                         </RelativeLayout>
