@@ -53,6 +53,15 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         repository=new MsgRepository();
     }
     PlanOrderRepository repository2= new PlanOrderRepository("");
+
+    public String getUserName(){
+
+        return userModuleService.getRealName();
+    }
+    public String getUserID(){
+
+        return userModuleService.getUserId();
+    }
     /**
      * 提交
      * @return

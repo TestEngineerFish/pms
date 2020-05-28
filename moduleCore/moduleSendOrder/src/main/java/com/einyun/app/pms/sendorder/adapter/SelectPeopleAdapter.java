@@ -97,7 +97,9 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
         View view=LayoutInflater.from(mcontext).inflate(R.layout.item_select_people_child,null);
         childBinding=DataBindingUtil.bind(view);
         if (groupPosition==0){
-            childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition).getName());
+            if (orgnizationModelList!=null&&orgnizationModelList.getValue()!=null) {
+                childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition).getName());
+            }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,7 +111,9 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                 }
             });
         }else {
-            childBinding.itemSelectChildTxt.setText(jobList.getValue().get(childPosition).getName());
+            if (jobList!=null&&jobList.getValue()!=null) {
+                childBinding.itemSelectChildTxt.setText(jobList.getValue().get(childPosition).getName());
+            }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

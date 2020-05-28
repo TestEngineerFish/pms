@@ -216,6 +216,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             binding.sendOrder.repairSelectedPepple.setText(model.getFullname());
             planInfo.getData().getZyjhgd().setF_PROCESS_NAME(model.getFullname());
             planInfo.getData().getZyjhgd().setF_PROCESS_ID(model.getId());
+            planInfo.getData().getZyjhgd().setF_OWNER_NAME(model.getFullname());
+            planInfo.getData().getZyjhgd().setF_OWNER_ID(model.getId());
         });
         viewModel.getLastWorthTime("ldzd").observe(this,model->{
 
@@ -253,7 +255,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         agree(binding, model);
                         //选中不通过
                         reject(binding, model);
-                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose) {//接单模式在并上一个接单的状态
+                        String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
+                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose||"5".equals(f_status)||"6".equals(f_status)) {//接单模式在并上一个接单的状态
                             if (!TextUtils.isEmpty(model.result)) {
                                 //成功
                                 if ("1".equals(nodes.get(position).getResult())) {
@@ -818,17 +821,33 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      */
     public void onSubmitClick() {//根据 f_status 判断调用不同接口
         if ("5".equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
-            planInfo.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
+//            planInfo.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
             planInfo.getData().getZyjhgd().setF_STATUS("2");
+            planInfo.getData().getZyjhgd().setF_OWNER_NAME(viewModel.getUserName());
+            planInfo.getData().getZyjhgd().setF_OWNER_ID(viewModel.getUserID());
+            planInfo.getData().getZyjhgd().setF_PROCESS_NAME(viewModel.getUserName());
+            planInfo.getData().getZyjhgd().setF_PROCESS_ID(viewModel.getUserID());
             Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
             viewModel.receiceOrder(request).observe(this,model->{
 
+                if (model) {
+                    finish();
+                }
             });
 
         }else if ("6".equals(planInfo.getData().getZyjhgd().getF_STATUS())){
+            planInfo.getData().getZyjhgd().setF_STATUS("2");
+            Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
+            String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
+            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+            viewModel.assignOrder(request).observe(this,model->{
 
+                if (model) {
+                    finish();
+                }
+            });
         }else {
             isSubmit=true;
             if (!validateFormData()) {
