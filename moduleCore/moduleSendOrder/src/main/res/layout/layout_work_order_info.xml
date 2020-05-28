@@ -92,7 +92,7 @@
 
             <TextView
                 style="@style/work_order_detail_left_txt"
-                android:text="原工单号" />
+                android:text="原工单编号" />
 
             <TextView
                 style="@style/work_order_detail_txt_right"

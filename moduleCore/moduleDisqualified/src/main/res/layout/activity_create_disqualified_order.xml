@@ -67,7 +67,7 @@
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="原工单号" />
+                        android:text="原工单编号" />
 
                     <TextView
                         android:id="@+id/tv_old_code"
