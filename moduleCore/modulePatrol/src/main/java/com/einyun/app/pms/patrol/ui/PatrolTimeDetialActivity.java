@@ -81,7 +81,7 @@ public class PatrolTimeDetialActivity extends PatrolHandleActivity{
         super.switchStateUI(f_plan_work_order_state);
         binding.tvWorkNodesTitle.setText("巡更点处理");
         binding.panelHandleForm.setVisibility(View.GONE);
-        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()||f_plan_work_order_state==OrderState.PENDING.getState()||f_plan_work_order_state==OrderState.OVER_DUE.getState()) {
             binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         }else {
             binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);

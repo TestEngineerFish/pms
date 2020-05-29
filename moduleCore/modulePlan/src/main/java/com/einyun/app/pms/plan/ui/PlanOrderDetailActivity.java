@@ -576,7 +576,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(zyjhgd.getF_STATUS())){//添加 f_status 派单 显示不同布局
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
-            binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            if (!FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
+                binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -839,6 +841,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
         }else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())){
             planInfo.getData().getZyjhgd().setF_STATUS("2");
+            planInfo.getData().getZyjhgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
             Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());

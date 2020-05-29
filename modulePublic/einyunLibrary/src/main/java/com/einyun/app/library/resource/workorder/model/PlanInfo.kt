@@ -121,6 +121,7 @@ class Zyjhgd {
 
     var tenant_id: String? = null
     var F_OWNER_NAME: String? = null
+    var F_SEND_REMARK : String? = null
     var F_DEADLINE_TIME: String? = null
     var F_WP_ID: String? = null
     var F_OT_STATUS: Int = 0

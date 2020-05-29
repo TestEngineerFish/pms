@@ -326,7 +326,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         this.patrolInfo = patrol;
         f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
         if (f_plan_work_order_state==6) {
-            binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            if (listType != ListType.DONE.getType()) {
+                binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            }
         }else if (f_plan_work_order_state==5){
             binding.btnSubmit.setText("接单");
             binding.sendOrder.getRoot().setVisibility(View.GONE);
@@ -337,6 +339,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         } else if (f_plan_work_order_state == OrderState.CLOSED.getState()){
             binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        }else {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         }
         switchStateUI(f_plan_work_order_state);
         updateElapsedTime(patrol);
@@ -483,7 +487,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
                 binding.btnSubmit.setVisibility(View.GONE);
             } else {//已办显示全部信息
-                if (f_plan_work_order_state == OrderState.HANDING.getState() || f_plan_work_order_state == OrderState.APPLY.getState() || f_plan_work_order_state == OrderState.NEW.getState()) {
+                if (f_plan_work_order_state == OrderState.HANDING.getState() || f_plan_work_order_state == OrderState.APPLY.getState() || f_plan_work_order_state == OrderState.NEW.getState()|| f_plan_work_order_state == OrderState.PENDING.getState() || f_plan_work_order_state == OrderState.OVER_DUE.getState()) {
                     binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
                 } else {
                     binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);

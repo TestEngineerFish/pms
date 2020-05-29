@@ -475,6 +475,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
         } else if (f_plan_work_order_state == 6) {
             Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
+            patrolInfo.getData().getZyxcgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
             String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
             viewModel.assignOrder(request).observe(this,model->{

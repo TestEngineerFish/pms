@@ -94,6 +94,14 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
+        if (f_plan_work_order_state==5) {
+            binding.btnSubmit.setText("接单");
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+            binding.panelHandleForm.setVisibility(View.GONE);
+        }else if (f_plan_work_order_state==6){
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+            binding.panelHandleForm.setVisibility(View.GONE);
+        }
     }
 
     protected void initRequest() {
@@ -129,6 +137,19 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                             } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                 onAgree(binding);
                             }
+                        }
+                        if (f_plan_work_order_state==5||f_plan_work_order_state==6) {
+                            binding.btnReject.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setEnabled(false);
+                            binding.btnReject.setEnabled(false);
+//                            binding.tvResult.setVisibility(View.GONE);
+                        }else {
+                            binding.btnReject.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setEnabled(true);
+                            binding.btnReject.setEnabled(true);
+//                            binding.tvResult.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -390,7 +411,16 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
             });
 
         } else if (f_plan_work_order_state == 6) {
+            Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
+            patrolInfo.getData().getZyxcgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
+            String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
+            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
+            viewModel.assignOrder(request).observe(this,model->{
 
+                if (model) {
+                    finish();
+                }
+            });
         } else {
 
             if (!validateFormData()) {
