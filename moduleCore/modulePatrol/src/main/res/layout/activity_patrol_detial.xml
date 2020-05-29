@@ -301,7 +301,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
-                                    android:text="@{patrol.data.zyxcgd.f_principal_name}"
+                                    android:text="@{patrol.data.zyxcgd.F_processing_person_name}"
                                     android:textColor="@color/txt_black_order" />
                             </LinearLayout>
 
