@@ -263,7 +263,7 @@
 
                             <TextView
                                 style="@style/style_text_approval_right"
-                                android:text="@{scanResModel.resourceProfessional}"
+                                android:text="@{scanResModel.resourceProfessionalValue}"
 
                                 />
                         </RelativeLayout>
