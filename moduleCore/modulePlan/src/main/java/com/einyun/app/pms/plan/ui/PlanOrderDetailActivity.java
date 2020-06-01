@@ -135,9 +135,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private File imageFile;
 
     private int mClickPosition;
-    boolean isSubmit=true;
+    boolean isSubmit = true;
     private List<WorkOrderTypeModel> lines;
-    private List<PlanOrderResLineModel> mPlanResLines=new ArrayList<>();
+    private List<PlanOrderResLineModel> mPlanResLines = new ArrayList<>();
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -148,6 +148,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     public int getLayoutId() {
         return R.layout.activity_plan_order_detail;
     }
+
     /**
      * 选择指派人
      */
@@ -158,6 +159,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 .withString(RouteKey.KEY_PROJECT_ID, planInfo.getData().getZyjhgd().getF_PROJECT_ID())
                 .navigation();
     }
+
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
@@ -219,7 +221,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             planInfo.getData().getZyjhgd().setF_OWNER_NAME(model.getFullname());
             planInfo.getData().getZyjhgd().setF_OWNER_ID(model.getId());
         });
-        viewModel.getLastWorthTime("ldzd").observe(this,model->{
+        viewModel.getLastWorthTime("ldzd").observe(this, model -> {
 
             mPlanResLines = model;
         });
@@ -256,7 +258,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         //选中不通过
                         reject(binding, model);
                         String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
-                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose||"5".equals(f_status)||"6".equals(f_status)) {//接单模式在并上一个接单的状态
+                        if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose || "5".equals(f_status) || "6".equals(f_status)) {//接单模式在并上一个接单的状态
                             if (!TextUtils.isEmpty(model.result)) {
                                 //成功
                                 if ("1".equals(nodes.get(position).getResult())) {
@@ -353,53 +355,64 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             resourceAdapter = new RVBindingAdapter<ItemPlanResouceBinding, Sub_jhgdzyb>(this, BR.resource) {
                 @Override
                 public void onBindItem(ItemPlanResouceBinding binding, Sub_jhgdzyb model, int position) {
-                    switch (fragmentTag) {
-                        case FRAGMENT_PLAN_OWRKORDER_PENDING://待跟进
-                            binding.llForceScan.setVisibility(View.VISIBLE);
-                            if (model.is_forced()==0) {//  0 不强制
-                                binding.ivScan.setVisibility(View.GONE);
-                                binding.llScanReasult.setVisibility(View.GONE);
-                            }else {//1 强制扫码
-                                binding.ivScan.setVisibility(View.VISIBLE);
-                                binding.llScanReasult.setVisibility(View.VISIBLE);
-                            }
-                            break;
-                        case FRAGMENT_PLAN_OWRKORDER_DONE:
-                            binding.llForceScan.setVisibility(View.VISIBLE);
-                            if (model.is_forced()==0) {//  0 不强制
-                                binding.llScanReasult.setVisibility(View.GONE);
-                            }else {//1 强制扫码
+                    String f_status1 = planInfo.getData().getZyjhgd().getF_STATUS();
+                    if (f_status1.equals("5") || f_status1.equals("6")) {
+                        binding.llForceScan.setVisibility(View.VISIBLE);
+                        if (model.is_forced() == 0) {//  0 不强制
+                            binding.llScanReasult.setVisibility(View.GONE);
+                        } else {//1 强制扫码
 
-                                binding.llScanReasult.setVisibility(View.VISIBLE);
-                            }
-                            break;
+                            binding.llScanReasult.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        switch (fragmentTag) {
+                            case FRAGMENT_PLAN_OWRKORDER_PENDING://待跟进
+                                binding.llForceScan.setVisibility(View.VISIBLE);
+                                if (model.is_forced() == 0) {//  0 不强制
+                                    binding.ivScan.setVisibility(View.GONE);
+                                    binding.llScanReasult.setVisibility(View.GONE);
+                                } else {//1 强制扫码
+                                    binding.ivScan.setVisibility(View.VISIBLE);
+                                    binding.llScanReasult.setVisibility(View.VISIBLE);
+                                }
+                                break;
+                            case FRAGMENT_PLAN_OWRKORDER_DONE:
+                                binding.llForceScan.setVisibility(View.VISIBLE);
+                                if (model.is_forced() == 0) {//  0 不强制
+                                    binding.llScanReasult.setVisibility(View.GONE);
+                                } else {//1 强制扫码
+
+                                    binding.llScanReasult.setVisibility(View.VISIBLE);
+                                }
+                                break;
+                        }
                     }
                     ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
                     if (extForceClose == null) {
                         String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
-                        Log.e(TAG, "onBindItem: f_status=="+f_status);
+                        Log.e(TAG, "onBindItem: f_status==" + f_status);
                         if ("4".equals(f_status)) {
 
                             binding.tvScanReasult.setText("成功");
 
-                        }else {
-                            if (model.is_suc()==1) {
+                        } else {
+                            if (model.is_suc() == 1) {
 
                                 binding.tvScanReasult.setText("成功");
-                            }else if (model.is_suc()==2){
+                            } else if (model.is_suc() == 2) {
                                 binding.tvScanReasult.setText("失败");
-                            }else {
+                            } else {
                                 binding.tvScanReasult.setText("");
 
                             }
                         }
-                    }else {
-                        if (model.is_suc()==1) {
+                    } else {
+                        if (model.is_suc() == 1) {
 
                             binding.tvScanReasult.setText("成功");
-                        }else if (model.is_suc()==2){
+                        } else if (model.is_suc() == 2) {
                             binding.tvScanReasult.setText("失败");
-                        }else {
+                        } else {
                             binding.tvScanReasult.setText("");
 
                         }
@@ -417,12 +430,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         if (key.equals(f_sp_type)) {
 
                             binding.tvAirType.setText(line.getName());
-                            Log.e(TAG, "onBindItem: 空间分类"+line.getName() );
+                            Log.e(TAG, "onBindItem: 空间分类" + line.getName());
                         }
 
                     }
                     binding.ivScan.setOnClickListener(view -> {
-                        mClickPosition=position;
+                        mClickPosition = position;
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_SCANNER)
                                 .navigation(PlanOrderDetailActivity.this, RouterUtils.ACTIVITY_REQUEST_SCANNER);
@@ -438,6 +451,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         binding.rvResource.setAdapter(resourceAdapter);
         requestData();
     }
+
     private void requestData() {
 
         //加载数据
@@ -453,12 +467,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             } else {
                 binding.cdWorkResouce.setVisibility(View.GONE);
             }
-            Log.e(TAG, "requestData: id=="+id );
-            if (id==null) {
+            Log.e(TAG, "requestData: id==" + id);
+            if (id == null) {
 //                id=planInfo.getData().getZyjhgd().getId_();
-                id=planInfo.getData().getZyjhgd().getId_();
+                id = planInfo.getData().getZyjhgd().getId_();
             }
-            Log.e(TAG, "requestData: id=="+id );
+            Log.e(TAG, "requestData: id==" + id);
             IsClosedRequest request = new IsClosedRequest();
             request.setId(id);
             request.setType(WorkOrder.FORCE_CLOSE_PLAN);
@@ -568,12 +582,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 List<PicUrlModel> modelList = convert.stringToSomeObjectList(zyjhgd.getF_FILES());
                 adapter.updateList(modelList);
             }
-        }else if (String.valueOf(OrderState.PENDING.getState()).equals(zyjhgd.getF_STATUS())){//添加 f_status 接单中
+        } else if (String.valueOf(OrderState.PENDING.getState()).equals(zyjhgd.getF_STATUS())) {//添加 f_status 接单中
             binding.btnSubmit.setText("接单");
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
 
-        }else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(zyjhgd.getF_STATUS())){//添加 f_status 派单 显示不同布局
+        } else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(zyjhgd.getF_STATUS())) {//添加 f_status 派单 显示不同布局
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
             if (!FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
@@ -705,10 +719,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         if (planInfo == null) {
             return;
         }
-            viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
-                wrapFormData(planInfo, picUrls);
-                acceptForm(planInfo);
-            });
+        viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
+            wrapFormData(planInfo, picUrls);
+            acceptForm(planInfo);
+        });
 
     }
 
@@ -765,7 +779,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     createSendOrder();
 //                    ToastUtil.show(PlanOrderDetailActivity.this,"工单处理成功");
                 } else {
-                    ToastUtil.show(PlanOrderDetailActivity.this,"工单提交成功");
+                    ToastUtil.show(PlanOrderDetailActivity.this, "工单提交成功");
                     finish();
                 }
 
@@ -832,27 +846,27 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
-            viewModel.receiceOrder(request).observe(this,model->{
+            viewModel.receiceOrder(request).observe(this, model -> {
 
                 if (model) {
                     finish();
                 }
             });
 
-        }else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())){
+        } else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
             planInfo.getData().getZyjhgd().setF_STATUS("2");
             planInfo.getData().getZyjhgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
             Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
-            viewModel.assignOrder(request).observe(this,model->{
+            viewModel.assignOrder(request).observe(this, model -> {
 
                 if (model) {
                     finish();
                 }
             });
-        }else {
-            isSubmit=true;
+        } else {
+            isSubmit = true;
             if (!validateFormData()) {
                 return;
             }
@@ -863,12 +877,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
     private boolean validateForceScan() {
         List<Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
-        if (sub_jhgdzyb!=null&&sub_jhgdzyb.size()>0) {
+        if (sub_jhgdzyb != null && sub_jhgdzyb.size() > 0) {
 
             for (Sub_jhgdzyb dzyb : sub_jhgdzyb) {
-                if (dzyb.is_forced()==1) {//强制扫码下 有 失败的 不准提交
-                    if (dzyb.is_suc()!=1) {//0 失败
-                        isSubmit=false;
+                if (dzyb.is_forced() == 1) {//强制扫码下 有 失败的 不准提交
+                    if (dzyb.is_suc() != 1) {//0 失败
+                        isSubmit = false;
 
                     }
                 }
@@ -929,15 +943,15 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //                f_RES_CODE
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
                 String subCode = stringExtra.substring(2, stringExtra.length());
-                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE+"/"+subCode).observe(this, aBoolean -> {
+                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE + "/" + subCode).observe(this, aBoolean -> {
 
-                    Log.e(TAG, "onActivityResult: "+aBoolean );
+                    Log.e(TAG, "onActivityResult: " + aBoolean);
                     if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
-                      }else {
+                    } else {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(2);
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
@@ -950,9 +964,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //                ToastUtil.show(PlanOrderDetailActivity.this, data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
             }
         }
-        }
+    }
 
     private static final String TAG = "PlanOrderDetailActivity";
+
     @Override
     public void onRightOptionClick(View view) {
         super.onRightOptionClick(view);
