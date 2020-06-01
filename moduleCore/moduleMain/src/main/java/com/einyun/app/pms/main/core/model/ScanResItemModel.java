@@ -42,6 +42,7 @@ public class ScanResItemModel implements Serializable {
     private String taskNodeId;
     private String id;
     private String orderTitle;
+    private String planName;
     private long deadline;
     private String workflowId;
     private String PROC_INST_ID_;
@@ -221,5 +222,13 @@ public class ScanResItemModel implements Serializable {
 
     public void setPROC_INST_ID_(String PROC_INST_ID_) {
         this.PROC_INST_ID_ = PROC_INST_ID_;
+    }
+
+    public String getPlanName() {
+        return planName==null?"":planName;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
     }
 }

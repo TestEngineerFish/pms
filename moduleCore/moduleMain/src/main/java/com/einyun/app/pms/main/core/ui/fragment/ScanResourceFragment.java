@@ -179,7 +179,7 @@ public class ScanResourceFragment extends BaseViewModelFragment<FragmentScanResB
 
                     binding.tvCreateTime.setText(TimeUtil.getAllTime(model.getCreateDate()));
                     binding.tvOrderNo.setText(model.getOrderNo());
-                    binding.tvTitle.setText(model.getOrderTitle());
+                    binding.tvTitle.setText(model.getPlanName());
                     if (model.getOrderOverTime()==1) {
                         binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
                     }else {
