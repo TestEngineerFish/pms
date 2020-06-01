@@ -738,7 +738,8 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
      */
     public String LimitText(String s) {
         if (s.length() > 10) {
-            return s.substring(0, 10) + "...";
+//            return s.substring(0, 10) + "...";
+            return s;
         } else {
             return s;
         }
