@@ -36,6 +36,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.mdm.model.DivideGrid;
@@ -233,7 +234,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 binding.sendOrderRef.setRefreshing(false);
             }
         });
-
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.ORDER_LIST_EMPTY,this);
         RecyclerView mRecyclerView = binding.orderListRec;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);

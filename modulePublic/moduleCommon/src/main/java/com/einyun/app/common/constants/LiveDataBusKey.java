@@ -10,6 +10,8 @@ public class LiveDataBusKey {
     public static final String MINE_FRESH = "MINE_FRESH";
     //审批空页面显示
     public static final String APPROVAL_EMPTY = "APPROVAL_EMPTY";
+    //工单列表空页面显示
+    public static final String ORDER_LIST_EMPTY = "ORDER_LIST_EMPTY";
     //审批空页面显示
     public static final String SCAN_EMPTY = "SCAN_EMPTY";
     //消息空页面显示

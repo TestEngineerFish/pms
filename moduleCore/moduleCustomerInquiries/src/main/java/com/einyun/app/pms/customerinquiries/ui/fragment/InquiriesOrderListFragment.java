@@ -21,6 +21,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -121,6 +122,7 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
                         Log.e("onChanged", "onChanged: "+aBoolean);
                     }
                 });
+        LiveDataBusUtils.getLiveBusData( binding.empty.getRoot(),LiveDataBusKey.INQUIRIES_EMPTY+getFragmentTag(),this);
 //        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
 //        divideId = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
 //        if (!blockName.isEmpty()) {

@@ -21,6 +21,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.IsFastClick;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
@@ -114,6 +115,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
                         Log.e("onChanged", "onChanged: "+aBoolean);
                     }
                 });
+        LiveDataBusUtils.getLiveBusData( binding.empty.getRoot(),LiveDataBusKey.DISQUALITY_EMPTY+getFragmentTag(),this);
 //        blockName = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");
 //        divideId = (String) SPUtils.get(CommonApplication.getInstance(), SPKey.KEY_BLOCK_ID, "");
 //        if (!blockName.isEmpty()) {
