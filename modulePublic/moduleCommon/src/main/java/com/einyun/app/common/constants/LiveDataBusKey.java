@@ -16,6 +16,12 @@ public class LiveDataBusKey {
     public static final String MSGCENTER_EMPTY = "MSGCENTER_EMPTY";
     //不合格单空页面显示
     public static final String DISQUALITY_EMPTY = "DISQUALITY_EMPTY";
+    //投诉空页面显示
+    public static final String COMPLAIN_EMPTY = "COMPLAIN_EMPTY";
+    //报修空页面显示
+    public static final String REPAIR_EMPTY = "REPAIR_EMPTY";
+    //问询空页面显示
+    public static final String INQUIRIES_EMPTY = "INQUIRIES_EMPTY";
     //不合格工单列表空页面显示
     public static final String DISQUALITY_ORDER_LIST_EMPTY = "DISQUALITY_ORDER_LIST_EMPTY";
     //巡查工单列表空页面显示
