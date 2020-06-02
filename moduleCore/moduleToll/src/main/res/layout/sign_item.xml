@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+        <data>
+                <variable
+                    name="sign"
+                    type="com.einyun.app.pms.toll.model.GetSignModel.DataBean.TagListBean" />
+        </data>
+      <RelativeLayout
+          android:id="@+id/ll_item"
+          android:layout_marginTop="@dimen/px_15"
+          android:layout_marginBottom="@dimen/px_15"
+          android:layout_width="100dp"
+          android:orientation="vertical"
+          android:layout_height="33dp">
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/tv_content"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:textSize="@dimen/font_size14" />
+          <com.einyun.app.common.ui.widget.BaseEditText
+              android:visibility="gone"
+              android:maxLength="5"
+              android:background="@drawable/shape_rect_radius5_grey"
+              android:gravity="center"
+              android:singleLine="true"
+              android:imeOptions="actionDone"
+              android:layout_gravity="center"
+              android:id="@+id/et_content"
+              android:hint="请输入标签"
+              android:layout_width="match_parent"
+              android:layout_height="33dp"
+              android:textSize="@dimen/font_size14" />
+      </RelativeLayout>
+</layout>

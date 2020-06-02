@@ -717,11 +717,11 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 customerRepair.setResponse_result(binding.repariResponse.repairResponseReason.getString());
             }
             if (binding.repariResponse.rgs.getCheckedRadioButtonId() == R.id.rb_normal) {
-                customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
-                customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
+                customerRepair.setWork_ascription("工程维修");
+                customerRepair.setWork_ascription_code("Engineering_Maintenance");
             } else {
-                customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
-                customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
+                customerRepair.setWork_ascription("地块维保");
+                customerRepair.setWork_ascription_code("Massif_Maintenance");
             }
 
         }
@@ -1239,8 +1239,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
      * 设置工单归属数据
      */
     private void setAscription() {
-        binding.repariResponse.rbNormal.setText(dictAscriptLsit.get(0).getName());
-        binding.repariResponse.rbGeneral.setText(dictAscriptLsit.get(1).getName());
+        binding.repariResponse.rbNormal.setText("工程维修");
+        binding.repariResponse.rbGeneral.setText("地块维保");
     }
 
     /**

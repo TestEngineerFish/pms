@@ -81,6 +81,17 @@
                                  <TextView
                                      android:id="@+id/tv_work_num"
                                      style="@style/style_text_approval_right" />
+                                 <TextView
+                                     android:onClick="@{()->callBack.onAddHouserClick()}"
+                                     android:visibility="gone"
+                                     android:text="添加住户"
+                                     android:gravity="center"
+                                     android:layout_width="@dimen/px_140"
+                                     android:layout_height="21dp"
+                                     android:textColor="@color/blueTextColor"
+                                     android:background="@drawable/shape_rect_radius5_blue"
+                                     android:id="@+id/tv_work_num_no_data"
+                                     style="@style/style_text_approval_right" />
                              </RelativeLayout>
                              <RelativeLayout
                                  style="@style/style_rl_normal">
@@ -91,6 +102,28 @@
                                  <TextView
                                      android:id="@+id/tv_phone"
                                      style="@style/style_text_approval_right"/>
+                             </RelativeLayout>
+                             <RelativeLayout
+
+                                 style="@style/style_rl_normal">
+
+                                 <TextView
+
+                                     style="@style/style_text_approval_left"
+                                     android:text="标签" />
+                                 <TextView
+                                     android:id="@+id/tv_sign"
+                                     style="@style/style_text_approval_right" />
+                                 <TextView
+                                     android:onClick="@{()->callBack.onAddSignClick()}"
+                                     android:text="打标签"
+                                     android:gravity="center"
+                                     android:layout_width="@dimen/px_140"
+                                     android:layout_height="21dp"
+                                     android:textColor="@color/blueTextColor"
+                                     android:background="@drawable/shape_rect_radius5_blue"
+                                     android:id="@+id/tv_sign_no"
+                                     style="@style/style_text_approval_right" />
                              </RelativeLayout>
                              <RelativeLayout
                                  style="@style/style_rl_normal">
@@ -168,6 +201,19 @@
                                      android:text="催缴记录"
                                      android:layout_width="wrap_content"
                                      android:layout_height="match_parent"/>
+                                 <TextView
+                                     android:id="@+id/tv_worth"
+                                     android:onClick="@{()->callBack.onRejectClick()}"
+                                     android:layout_alignParentRight="true"
+                                     android:textStyle="bold"
+                                     android:layout_marginRight="10dp"
+                                     android:gravity="center_vertical"
+                                     android:textSize="16sp"
+                                     android:textColor="@color/blueTextColor"
+                                     android:text="催缴"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="match_parent"/>
+
                                  <ImageView
                                      android:src="@drawable/iv_pop_line"
                                      android:layout_alignParentBottom="true"
@@ -216,9 +262,9 @@
                      android:layout_width="match_parent"
                      android:layout_height="65dp">
                      <TextView
-                         android:onClick="@{()->callBack.onRejectClick()}"
+                         android:onClick="@{()->callBack.onAddFeeExplainClick()}"
                          android:layout_marginLeft="20dp"
-                         android:text="催缴"
+                         android:text="添加催缴说明"
                          android:background="@drawable/shape_iv_unpass"
                          android:layout_width="0dp"
                          android:textColor="@color/blueTextColor"

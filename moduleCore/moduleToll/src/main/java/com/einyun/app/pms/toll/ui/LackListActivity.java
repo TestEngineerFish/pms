@@ -14,6 +14,8 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -21,6 +23,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.GridModel;
 import com.einyun.app.pms.toll.BR;
@@ -78,7 +81,9 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
     private ArrayList<PaymentDetailsBean>  paymentDetailsBeans = new ArrayList<>();;
     private List<PaymentList.ListBean> inListDatas=new ArrayList<>();
     private List<PaymentList.ListBean> inListThreeDatas=new ArrayList<>();
-//    public  static LackListActivity instance;
+    private AlertDialog alertAddDialog;
+
+    //    public  static LackListActivity instance;
     @Override
     protected TollViewModel initViewModel() {
         return new ViewModelProvider(this, new TollViewModelFactory()).get(TollViewModel.class);
@@ -113,20 +118,66 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
  */
 
     public  void onSubmitClick(){
+        if (StringUtil.isEmpty(clientName)) {
 
-        feeLists.clear();
-        for (PaymentList paymentList : paymentLists) {
-            for (PaymentList.ListBean listBean : paymentList.getList()) {
-                if (listBean.isCheckChirld()) {
-                    feeLists.add(new JumpRequest.FeeListBean(listBean.getReceivableId()));
+            if (alertAddDialog == null) {
+                alertAddDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                        .setMsg("当前房产未绑定住户，是否先绑定住户")
+                        .setNegativeButton("继续收费", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                feeLists.clear();
+                                for (PaymentList paymentList : paymentLists) {
+                                    for (PaymentList.ListBean listBean : paymentList.getList()) {
+                                        if (listBean.isCheckChirld()) {
+                                            feeLists.add(new JumpRequest.FeeListBean(listBean.getReceivableId()));
+                                        }
+
+                                    }
+                                }
+                                checkJumpVerity();
+                            }
+                        })
+                        .setPositiveButton("添加住户", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_ADD_HOUSER)
+                                        .withString(RouteKey.HOUSE_ID, houseId)
+                                        .withString(RouteKey.KEY_DIVIDE_ID, divideId)
+                                        .navigation();
+                            }
+                        });
+                alertAddDialog.show();
+            } else {
+                if (!alertAddDialog.isShowing()) {
+                    alertAddDialog.show();
                 }
-
             }
+        } else {
+            feeLists.clear();
+            for (PaymentList paymentList : paymentLists) {
+                for (PaymentList.ListBean listBean : paymentList.getList()) {
+                    if (listBean.isCheckChirld()) {
+                        feeLists.add(new JumpRequest.FeeListBean(listBean.getReceivableId()));
+                    }
+
+                }
+            }
+            checkJumpVerity();
         }
-        checkJumpVerity();
+
+//        feeLists.clear();
+//        for (PaymentList paymentList : paymentLists) {
+//            for (PaymentList.ListBean listBean : paymentList.getList()) {
+//                if (listBean.isCheckChirld()) {
+//                    feeLists.add(new JumpRequest.FeeListBean(listBean.getReceivableId()));
+//                }
+//
+//            }
+//        }
+//        checkJumpVerity();
 
     }
-
     private void checkJumpVerity() {
         JumpRequest jumpRequest = new JumpRequest();
         jumpRequest.setDivideId(divideId);
@@ -189,6 +240,8 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
                     }
 
                 });
+            }else {
+                ToastUtil.show(LackListActivity.this,"请缴费之前月份的钱款");
             }
 
         });
@@ -378,18 +431,31 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
                                 }
                                 inAdapter.setDataList(inListThreeDatas);
                             }else {
-                                outListBinding.tvMore.setVisibility(View.GONE);
-                                inAdapter.setDataList(itemParentModel.getList());
+                                if (outListBinding.tvMore.getText().toString().equals("展开 >")) {
+
+                                    inAdapter.setDataList(itemParentModel.getList().subList(0,3));
+                                }else if (outListBinding.tvMore.getText().toString().equals("收起 >")){
+                                    inAdapter.setDataList(itemParentModel.getList());
+                                }
+//                                outListBinding.tvMore.setVisibility(View.GONE);
+//                                inAdapter.setDataList(itemParentModel.getList());
                             }
                         }else {
                             outListBinding.tvMore.setVisibility(View.GONE);
                             inAdapter.setDataList(itemParentModel.getList());
                         }
                         outListBinding.tvMore.setOnClickListener(view -> {
-                            inAdapter.setDataList(itemParentModel.getList());
+//                            inAdapter.setDataList(itemParentModel.getList());
                             itemParentModel.setLoreMore(false);
+                            if (outListBinding.tvMore.getText().toString().equals("展开 >")) {
+                                outListBinding.tvMore.setText("收起 >");
+//                            inAdapter.setDataList(mFeeBuildListSixData);
+                            }else if (outListBinding.tvMore.getText().toString().equals("收起 >")){
+//                            inAdapter.setDataList(mFeeBuildList2);
+                                outListBinding.tvMore.setText("展开 >");
+                            }
                             adapter.notifyDataSetChanged();
-                            outListBinding.tvMore.setVisibility(View.GONE);
+//                            outListBinding.tvMore.setVisibility(View.GONE);
                         });
                     }
 

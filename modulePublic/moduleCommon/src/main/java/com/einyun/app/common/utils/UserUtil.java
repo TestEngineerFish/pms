@@ -8,4 +8,7 @@ public class UserUtil {
     public  static String getUserName(){
         return  (String) SPUtils.get(BasicApplication.getInstance(), Constants.SP_KEY_USER_NAME, "");
     }
+    public  static String getUserId(){
+        return  (String) SPUtils.get(BasicApplication.getInstance(), Constants.SP_KEY_USER_ID, "");
+    }
 }

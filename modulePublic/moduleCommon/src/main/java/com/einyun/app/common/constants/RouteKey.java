@@ -151,11 +151,25 @@ public class RouteKey {
 
     //收费
     public static final String HOUSE_ID = "houseid";
+    public static final String CLIENT_ID = "clientId";
     public static final String HOUSE_FEE_ID = "houseFeeid";
     public static final String HOUSE_TITLE = "house_title";
     public static final String KEY_ALL_NAME = "ALL_NAME";
     public static final String KEY_CLIENT_NAME = "CLIENT_NAME";
+    public static final String KEY_BUILD_LIST_DATA = "KEY_BUILD_LIST_DATA";
+    public static final String KEY_BUILD_ID = "KEY_BUILD_ID";
+    public static final String KEY_FEE_DIVIDE_ID = "KEY_FEE_DIVIDE_ID";
+    public static final String KEY_FEE_BUILD_NAME = "KEY_FEE_BUILD_NAME";
+    public static final String KEY_FEE_GRID_NAME = "KEY_FEE_GRID_NAME";
     //消息中心
     public static final String KEY_START_TIME = "START_TIME";
     public static final String KEY_END_TIME = "EDN_TIME";
+    //扫码处理
+    public static final String FRAGMENT_SCAN_WAIT_DEAL = "FRAGMENT_SCAN_WAIT_DEAL";
+    public static final String FRAGMENT_SCAN_HISTORY = "FRAGMENT_SCAN_HISTORY";
+    public static final String FRAGMENT_SCAN_BASIC = "FRAGMENT_SCAN_BASIC";
+    public static final String KEY_RES_ID = "KEY_RES_ID";
+    public static final String KEY_PATROL_ID = "KEY_PATROL_ID";
+    public static final String KEY_TYPE = "KEY_TYPE";
+    public static final String KEY_HOME_ENTER = "KEY_HOME_ENTER";
 }

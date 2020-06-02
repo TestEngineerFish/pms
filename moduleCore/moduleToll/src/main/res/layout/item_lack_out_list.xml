@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_more"
-            android:text="展开更多>"
+            android:text="展开 >"
             android:gravity="center"
             android:textColor="@color/blueTextColor"
             android:background="@color/toll_blue_bg__color"

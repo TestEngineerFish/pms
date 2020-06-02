@@ -42,7 +42,7 @@
 
                     <ImageView
                         style="@style/login_input_ll_img"
-                        app:srcCompat="@mipmap/img_login_code" />
+                        android:src="@mipmap/img_login_code" />
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_org_code"
@@ -69,7 +69,7 @@
                     <ImageView
                         style="@style/login_input_ll_img"
                         android:layout_toLeftOf="@id/et_user"
-                        app:srcCompat="@mipmap/img_login_user" />
+                        android:src="@mipmap/img_login_user" />
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_user"
@@ -118,7 +118,7 @@
 
                     <ImageView
                         style="@style/login_input_ll_img"
-                        app:srcCompat="@mipmap/img_login_password" />
+                        android:src="@mipmap/img_login_password" />
 
                     <com.einyun.app.common.ui.widget.NoMenuEditText
                         android:id="@+id/et_password"

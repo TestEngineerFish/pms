@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_130">
+            android:layout_height="@dimen/px_80">
             <CheckBox
                 android:id="@+id/cb_in_check"
                 android:layout_marginLeft="@dimen/px_29"
@@ -48,6 +48,7 @@
                 android:textSize="13sp"
                 />
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_cycle_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

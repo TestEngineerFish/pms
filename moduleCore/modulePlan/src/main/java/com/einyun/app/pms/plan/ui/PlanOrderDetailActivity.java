@@ -862,7 +862,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
 //                f_RES_CODE
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
-                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE+"/"+stringExtra).observe(this, aBoolean -> {
+                String subCode = stringExtra.substring(2, stringExtra.length());
+                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE+"/"+subCode).observe(this, aBoolean -> {
 
                     Log.e(TAG, "onActivityResult: "+aBoolean );
                     if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {

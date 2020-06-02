@@ -3,6 +3,7 @@ package com.einyun.app.pms.patrol.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -276,12 +277,27 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
 
     @Override
+    protected void initData() {
+        super.initData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewModel.loadLocalUserData(orderId);
+            }
+        },500);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_SIGN_IN) {
 
         } else if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER && resultCode == RESULT_OK) {
             String pointId = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
+            if (pointId.length()<3) {
+                return;
+            }
+            String subCode = pointId.substring(2, pointId.length());
             boolean sacnResult = data.getBooleanExtra(DataConstants.KEY_QR_SCAN_RESULT, false);
             if (sacnResult) {
                 signInSuccess(pointId);

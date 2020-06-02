@@ -123,6 +123,14 @@ public class PropertyListViewModuleActivity extends BaseHeadViewModelActivity<Ac
     protected void onResume() {
         super.onResume();
         viewModel.loadAllCreateRequest().observe(this,model->{
+
+            if (model.size()==0) {
+
+                binding.empty.getRoot().setVisibility(View.VISIBLE);
+            }else {
+                binding.empty.getRoot().setVisibility(View.GONE);
+
+            }
                 adapter.submitList(model);
         });
     }

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.einyun.app.library.resource.workorder.net.request.CreateSendOrderRequest" />
+
+        <variable
+            name="callBack"
+            type="com.einyun.app.pms.toll.ui.AddWorthReminderActivity" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <View style="@style/base_underline" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    style="@style/ll_create_order_toll"
+                    android:layout_marginTop="@dimen/px_2"
+                    android:onClick="@{()->callBack.onChioceDateClick()}">
+
+                    <TextView
+                        style="@style/style_toll_add_houser_red_star"
+                        android:text="*" />
+
+                    <TextView
+                        style="@style/style_toll_add_houser_left_text"
+                        android:text="催缴日期" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        style="@style/style_toll_add_houser_right_text" />
+
+                    <ImageView
+                        style="@style/style_toll_add_houser_right_arrow"
+                        android:src="@mipmap/icon_arrow_right" />
+                </RelativeLayout>
+
+                <View style="@style/base_underline" />
+
+                <RelativeLayout style="@style/ll_create_order_toll">
+
+                    <TextView
+                        style="@style/style_toll_add_houser_red_star"
+                        android:text="*" />
+
+                    <TextView
+                        style="@style/style_toll_add_houser_left_text"
+                        android:text="催缴情况说明" />
+                </RelativeLayout>
+                <LinearLayout
+                    style="@style/ll_create_order"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/px_30">
+
+                    <com.einyun.app.common.ui.component.limit.LimitInput
+                        android:id="@+id/et_limit_input"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:hintText="请输入催缴情况说明原因"
+                        app:maxNumber="300" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_pass"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_60"
+                    android:layout_marginRight="@dimen/px_60"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_btn_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->callBack.onPassClick()}"
+                    android:text="@string/text_commit"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

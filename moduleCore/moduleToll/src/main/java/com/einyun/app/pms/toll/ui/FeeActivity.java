@@ -3,6 +3,7 @@ package com.einyun.app.pms.toll.ui;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +20,8 @@ import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
+import com.einyun.app.common.utils.HttpUrlUtil;
 import com.einyun.app.common.utils.StatusBarcompUtils;
 import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivityFeeBinding;
@@ -36,6 +39,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.einyun.app.pms.toll.constants.URLS.URL_GET_FEE_QR_CODE;
+import static com.einyun.app.pms.toll.constants.URLS.URL_GET_TENANT_LOGO;
 
 
 @Route(path = RouterUtils.ACTIVITY_FEE)
@@ -86,6 +90,18 @@ public class FeeActivity extends BaseHeadViewModelActivity<ActivityFeeBinding, T
                 .addHeader("tenant-id",key_tenant_id)
                 .build());
         Glide.with(this).load(url).into(binding.ivQrCode);
+
+        viewModel.getLogo(key_tenant_id).observe(this,model->{
+            if (model!=null) {
+
+
+                if (!TextUtils.isEmpty(model.getLogo())) {
+                    //使用使用Glide进行加载图片进行加载图片
+                    Glide.with(FeeActivity.this).load(HttpUrlUtil.getImageLogoUrl(model.getLogo())).into(binding.ivLogo);
+                }
+            }
+        });
+
     }
 
 

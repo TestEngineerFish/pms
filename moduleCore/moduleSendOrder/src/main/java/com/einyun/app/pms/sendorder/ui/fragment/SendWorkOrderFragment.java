@@ -234,7 +234,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             viewModel.loadPadingData().observe(this, dataBeans -> {
 //                showLoading(getActivity());
                 if (dataBeans.size() == 0) {
-                    showLoading(getActivity());
+//                    showLoading(getActivity());
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

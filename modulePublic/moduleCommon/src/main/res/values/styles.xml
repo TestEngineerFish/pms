@@ -116,6 +116,16 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
     </style>
+    <style name="ll_create_order_toll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px_100</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/px_3</item>
+        <item name="android:paddingRight">@dimen/px_30</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
     <style name="ll_handle_imgs">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -389,5 +399,46 @@
         <item name="cardBackgroundColor">@color/white</item>
         <item name="cardElevation">@dimen/px_1</item>
         <item name="cardCornerRadius">@dimen/px_10</item>
+    </style>
+    <style name="style_rl_scan_basic_info">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="style_toll_add_houser_red_star">
+        <item name="android:layout_marginLeft">@dimen/px_30</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/redTextColor</item>
+        <item name="android:textSize">@dimen/font_size18</item>
+    </style>
+
+    <style name="style_toll_add_houser_left_text">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/px_45</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">130dp</item>
+        <item name="android:textSize">@dimen/font_size16</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+    </style>
+
+    <style name="style_toll_add_houser_right_text">
+        <item name="android:background">@null</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_size15</item>
+        <item name="android:textColor">@color/blackTextColor</item>
+        <item name="android:layout_width">@dimen/px_360</item>
+        <item name="android:layout_marginRight">@dimen/px_20</item>
+        <item name="android:layout_marginLeft">@dimen/px_250</item>
+    </style>
+
+    <style name="style_toll_add_houser_right_arrow">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">@dimen/px_25</item>
+        <item name="android:layout_height">@dimen/px_25</item>
     </style>
 </resources>

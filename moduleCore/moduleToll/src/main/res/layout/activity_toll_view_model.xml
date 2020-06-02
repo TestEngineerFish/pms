@@ -84,7 +84,7 @@
          <!--         网格-->
          <RelativeLayout
              android:id="@+id/ll_grid"
-             android:visibility="visible"
+             android:visibility="gone"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
@@ -134,7 +134,7 @@
          <!--         栋-->
          <LinearLayout
              android:id="@+id/ll_build"
-             android:visibility="gone"
+             android:visibility="visible"
              android:background="@color/white"
              android:layout_width="match_parent"
              android:orientation="vertical"

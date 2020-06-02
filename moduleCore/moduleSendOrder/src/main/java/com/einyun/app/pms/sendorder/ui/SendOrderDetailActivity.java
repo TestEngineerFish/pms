@@ -152,19 +152,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         .navigation();
             }
         });
-        isClosedRequest = new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
-        //判断是否有闭单申请，有只显示详情
-        viewModel.isClosed(isClosedRequest).observe(this, model -> {
-            Log.d("Test", model.isClosed() + "");
-            if (model.isClosed() == false) {
-                showIfHasClosed();
-            }
-//            if (binding.forceCloseInfo.getRoot().isShown()) {
-//                binding.orderForm.getRoot().setVisibility(View.GONE);
-//                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
-//                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
-//            }
-        });
+
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -262,6 +250,19 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             type.append("-"+info.getEnvirmentType3Name());
         }
         binding.orderInfo.orderType.setText(type);
+        isClosedRequest = new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_ALLOCATE);
+        //判断是否有闭单申请，有只显示详情
+        viewModel.isClosed(isClosedRequest).observe(this, model -> {
+            Log.d("Test", model.isClosed() + "");
+            if (model.isClosed() == false) {
+                showIfHasClosed();
+            }
+//            if (binding.forceCloseInfo.getRoot().isShown()) {
+//                binding.orderForm.getRoot().setVisibility(View.GONE);
+//                binding.applyForceCloseAndPostpone.getRoot().setVisibility(View.GONE);
+//                binding.sendOrderDetailSubmit.setVisibility(View.GONE);
+//            }
+        });
     }
 
     protected void updatePageUIState(int state) {

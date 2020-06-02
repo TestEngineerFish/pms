@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HanziToPinyin {
     private static final String TAG = "HanziToPinyin";
@@ -16,6 +18,19 @@ public class HanziToPinyin {
     private static final Collator COLLATOR;
     private static HanziToPinyin sInstance;
     private final boolean mHasChinaCollator;
+
+
+    private static String REGEX_CHINESE = "[\u4e00-\u9fa5]";// 中文正则
+
+
+    public static String getStr(String str) {
+
+        // 去除中文
+        Pattern pat = Pattern.compile(REGEX_CHINESE);
+        Matcher mat = pat.matcher(str);
+//        System.out.println(mat.replaceAll(""));
+        return mat.replaceAll("");
+    }
 
     protected HanziToPinyin(boolean var1) {
         this.mHasChinaCollator = var1;

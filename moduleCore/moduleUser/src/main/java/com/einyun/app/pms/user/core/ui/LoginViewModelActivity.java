@@ -110,7 +110,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      */
     private void setUserList() {
         viewModel.loadAllUserName().observe(this, list -> {
-            Log.e("list", "" + list.size());
+//            Log.e("list", "" + list.size());
             if (list == null || list.size() == 0) {
                 return;
             }
@@ -242,17 +242,17 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         if (!IsFastClick.isFastDoubleClick()) {
             return;
         }
-        viewModel.getTenantId(binding.etOrgCode.getText().toString(), false).observe(this,
+        viewModel.getTenantId(binding.etOrgCode.getText().toString().trim(), false).observe(this,
                 tenantModel -> {
 //                    ToastUtil.show(this, "tentantId" + tenantModel.getId());
                     UserModel model = binding.getUserModel();
                     //判断用户名是否为空
-                    if (!StringUtil.isNullStr(binding.etOrgCode.getText().toString())) {
+                    if (!StringUtil.isNullStr(binding.etOrgCode.getText().toString().trim())) {
                         ToastUtil.show(this, "请输入企业编码");
                         return;
                     }
                     //判断用户名是否为空
-                    if (!StringUtil.isNullStr(binding.etUser.getText().toString())) {
+                    if (!StringUtil.isNullStr(binding.etUser.getText().toString().trim())) {
                         ToastUtil.show(this, R.string.login_username_null_tip);
                         return;
                     }
@@ -261,7 +261,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                         ToastUtil.show(this, R.string.login_password_null_tip);
                         return;
                     }
-                    viewModel.login(binding.etUser.getText().toString(), model.getPassword(), true)
+                    viewModel.login(binding.etUser.getText().toString().trim(), model.getPassword(), true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
                                         CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));

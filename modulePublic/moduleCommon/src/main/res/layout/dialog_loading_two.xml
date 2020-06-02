@@ -7,9 +7,9 @@
 
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/px_300"
         android:background="@color/container"
-        android:layout_marginBottom="@dimen/px_300"
+        android:layout_marginTop="@dimen/px_0"
+        android:layout_marginBottom="@dimen/px_0"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >

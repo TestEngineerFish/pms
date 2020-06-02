@@ -51,6 +51,7 @@ public class LackDetailModel {
         private String arrearsMonth;
         private String clientName;
         private String clientPhone;
+        private String clientId;
         private double feeAmount;
         private String houseInnerName;
         private String houseId;
@@ -112,6 +113,14 @@ public class LackDetailModel {
             this.houseId = houseId;
         }
 
+        public String getClientId() {
+            return clientId==null?"":clientId;
+        }
+
+        public void setClientId(String clientId) {
+            this.clientId = clientId;
+        }
+
         public static class UrgeListBean {
             /**
              * remark : 尊敬的20-01-01-20-01-202业主您好，您的物业相关费用有欠费，欠费总额1289.6400元，烦请您尽快缴纳相关费用，感谢您的支持
@@ -120,9 +129,11 @@ public class LackDetailModel {
 
             private String remark;
             private String urgeDate;
+            private int type;
+            private String user;
 
             public String getRemark() {
-                return remark;
+                return remark==null?"":remark;
             }
 
             public void setRemark(String remark) {
@@ -130,11 +141,27 @@ public class LackDetailModel {
             }
 
             public String getUrgeDate() {
-                return urgeDate;
+                return urgeDate==null?"":urgeDate;
             }
 
             public void setUrgeDate(String urgeDate) {
                 this.urgeDate = urgeDate;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public String getUser() {
+                return user==null?"":user;
+            }
+
+            public void setUser(String user) {
+                this.user = user;
             }
         }
     }

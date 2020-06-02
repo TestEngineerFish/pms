@@ -52,7 +52,7 @@
                         android:id="@+id/iv_work_bench"
                         android:layout_width="@dimen/px_40"
                         android:layout_height="@dimen/px_40"
-                        app:srcCompat="@drawable/select_tab_work" />
+                        android:src="@drawable/select_tab_work" />
 
                     <TextView
                         android:id="@+id/tv_work_bench"
@@ -81,7 +81,7 @@
                         android:id="@+id/iv_mine"
                         android:layout_width="@dimen/px_40"
                         android:layout_height="@dimen/px_40"
-                        app:srcCompat="@drawable/select_tab_mine" />
+                        android:src="@drawable/select_tab_mine" />
 
                     <TextView
                         android:id="@+id/tv_mine"

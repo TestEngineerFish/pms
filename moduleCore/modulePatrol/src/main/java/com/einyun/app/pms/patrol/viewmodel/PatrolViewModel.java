@@ -77,6 +77,9 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
      */
     public List<WorkNode> loadNodes(PatrolInfo patrolInfo) {
         List<WorkNode> nodes;
+        if (patrolInfo==null) {
+            return new ArrayList<>();
+        }
         nodes = Observable
                 .fromIterable(patrolInfo.getData().getZyxcgd().getSub_inspection_work_order_flow_node())
                 .map(index -> new WorkNode(

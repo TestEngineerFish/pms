@@ -31,6 +31,7 @@ import com.einyun.app.pms.toll.databinding.ActivityTollViewModelBinding;
 import com.einyun.app.pms.toll.databinding.ItemLackInListBinding;
 import com.einyun.app.pms.toll.databinding.ItemLackOutListBinding;
 import com.einyun.app.pms.toll.databinding.ItemPaymentAdvanceListBinding;
+import com.einyun.app.pms.toll.model.CreateOrderModel;
 import com.einyun.app.pms.toll.model.CreateOrderRequest;
 import com.einyun.app.pms.toll.model.FeeDetailRequset;
 import com.einyun.app.pms.toll.model.JumpAdvanceModel;
@@ -200,21 +201,48 @@ public class PaymentAdvanceActivity extends BaseHeadViewModelActivity<ActivityPa
             }
             createOrderRequest.setPaymentDetails(paymentDetailsBeans);
 //            ToastUtil.show(PaymentAdvanceActivity.this,"没有欠费");
-            viewModel.createOrder(createOrderRequest).observe(this, orderModel -> {
-                if (orderModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
 
-                    Log.e(TAG, "checkJumpVerity: " + orderModel.getData());
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
-                            .withInt(RouteKey.KEY_ORDER_ID, orderModel.getData())
-                            .withString("MONEY", binding.tvToallMoney.getText().toString())
-                            .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
-                            .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
-                            .withString(RouteKey.KEY_CLIENT_NAME, allName)
-                            .withString(RouteKey.HOUSE_TITLE, title)
-                            .navigation();
+            viewModel.repository.createOrder(createOrderRequest, new CallBack<CreateOrderModel>() {
+                @Override
+                public void call(CreateOrderModel data) {
+                    hideLoading();
+                    if (data.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
+
+                        Log.e(TAG, "checkJumpVerity: " + data.getData());
+                        Log.e(TAG, "checkJumpVerity:money====  " + binding.tvToallMoney.getText().toString());
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
+                                .withInt(RouteKey.KEY_ORDER_ID, data.getData())
+                                .withString("MONEY", binding.tvToallMoney.getText().toString())
+                                .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+                                .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
+                                .withString(RouteKey.KEY_CLIENT_NAME, allName)
+                                .withString(RouteKey.HOUSE_TITLE, title)
+                                .navigation();
 //                    finish();
+                    }
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    hideLoading();
                 }
             });
+//            viewModel.createOrder(createOrderRequest).observe(this, orderModel -> {
+//                if (orderModel.getData() != 0) {//创建订单成功  跳转二维码界面生成二维码
+//
+//                    Log.e(TAG, "checkJumpVerity: " + orderModel.getData());
+//                    Log.e(TAG, "checkJumpVerity:money====  " + binding.tvToallMoney.getText().toString());
+//                    ARouter.getInstance().build(RouterUtils.ACTIVITY_FEE)
+//                            .withInt(RouteKey.KEY_ORDER_ID, orderModel.getData())
+//                            .withString("MONEY", binding.tvToallMoney.getText().toString())
+//                            .withString(RouteKey.KEY_DIVIDE_NAME, divideName)
+//                            .withString(RouteKey.KEY_ALL_NAME, binding.tvName.getText().toString())
+//                            .withString(RouteKey.KEY_CLIENT_NAME, allName)
+//                            .withString(RouteKey.HOUSE_TITLE, title)
+//                            .navigation();
+////                    finish();
+//                }
+//            });
 
 
         });

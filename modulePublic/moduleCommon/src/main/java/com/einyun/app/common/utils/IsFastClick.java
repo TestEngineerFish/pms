@@ -9,7 +9,7 @@ public class IsFastClick {
     public static boolean isFastDoubleClick(){
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if (timeD >= 0 && timeD <= 1000) {
+        if (timeD >= 0 && timeD <= 2000) {
             return false;
         } else {
             lastClickTime = time;

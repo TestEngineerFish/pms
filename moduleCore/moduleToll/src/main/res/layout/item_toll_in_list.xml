@@ -6,7 +6,7 @@
 
         <variable
             name="gridinbean"
-            type="com.einyun.app.pms.toll.model.BuildModel.GridRangeBean" />
+            type="com.einyun.app.common.model.BuildModel.GridRangeBean" />
     </data>
 
     <RelativeLayout
