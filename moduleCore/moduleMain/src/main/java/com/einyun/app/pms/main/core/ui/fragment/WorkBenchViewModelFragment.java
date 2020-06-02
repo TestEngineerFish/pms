@@ -402,7 +402,13 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                     });
         }
         List<String> functionList = new ArrayList<>();
+        //扫码处理
+        if (userMenu.indexOf("smcl") != -1) {
+            functionList.add("smcl");
+        }else {
+            functionList.add("smcl");
 
+        }
         //点检
         if (userMenu.indexOf("dj") != -1) {
             functionList.add("dj");
@@ -429,13 +435,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 //        if (userMenu.indexOf("gzyl") != -1) {
             functionList.add("gzyl");
 //        }
-        //扫码处理
-        if (userMenu.indexOf("smcl") != -1) {
-            functionList.add("smcl");
-        }else {
-            functionList.add("smcl");
 
-        }
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
         binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
     }

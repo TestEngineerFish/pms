@@ -111,7 +111,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
-        setHeadTitle(R.string.tv_disqualified_order);
+        setHeadTitle(R.string.tv_create_disqualified_order);
         selectPng();
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
 

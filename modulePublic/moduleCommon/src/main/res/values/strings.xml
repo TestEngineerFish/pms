@@ -259,6 +259,7 @@
     <string name="title_unwell">不合格单</string>
 
     <!-- 不合格单开始-->
+    <string name="tv_create_disqualified_order">创建-不合格单</string>
     <string name="tv_disqualified_order">不合格单</string>
     <string name="tv_cached">已缓存</string>
     <string name="tv_cache">缓存</string>
