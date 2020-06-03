@@ -10,6 +10,11 @@
             name="callBack"
             type="com.einyun.app.pms.customerinquiries.ui.FeedBackViewModuleActivity" />
     </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
      <LinearLayout
          android:background="@color/activity_bg_color"
          android:orientation="vertical"
@@ -52,14 +57,13 @@
                      style="@style/style_text_feedback_right" />
              </RelativeLayout>
              <RelativeLayout
+                 android:minHeight="@dimen/px_100"
+                 android:layout_height="wrap_content"
                  style="@style/style_rl_feedback">
                  <TextView
-
                      android:text="@string/tv_communicate_content"
                      style="@style/style_text_feedback_left" />
                  <TextView
-                     android:maxLines="3"
-                     android:ellipsize="end"
                      android:text="@{module.taskCommu.opinion}"
                      android:id="@+id/tv_communication_content"
                      style="@style/style_text_feedback_right" />
@@ -106,4 +110,5 @@
                  style="@style/submit_btn"/>
          </LinearLayout>
      </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
