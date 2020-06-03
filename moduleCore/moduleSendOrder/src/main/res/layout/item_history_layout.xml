@@ -141,6 +141,8 @@
                     android:text="意见：" />
 
                 <TextView
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
