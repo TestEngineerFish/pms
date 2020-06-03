@@ -58,6 +58,8 @@
                      android:text="@string/tv_communicate_content"
                      style="@style/style_text_feedback_left" />
                  <TextView
+                     android:maxLines="3"
+                     android:ellipsize="end"
                      android:text="@{module.taskCommu.opinion}"
                      android:id="@+id/tv_communication_content"
                      style="@style/style_text_feedback_right" />
