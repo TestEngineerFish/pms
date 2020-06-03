@@ -757,7 +757,19 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     .setCreateSendOrder(v -> {
                         goPaiGongDan(); //跳转至创建派工单
                     }).setCreateUnOrder(v -> {
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
+                                .withString(RouteKey.CODE, planInfo.getData().getZyjhgd().getF_ORDER_NO())
+
+                                .withString(RouteKey.KEY_ORDER_ID, id)
+                                .withString(RouteKey.KEY_ORDER_NO, planInfo.getData().getZyjhgd().getF_ORDER_NO())
+                                .withString(RouteKey.KEY_LINE, planInfo.getData().getZyjhgd().getF_TX_NAME())
+                                .withString(RouteKey.KEY_RESOUSE, planInfo.getData().getZyjhgd().getF_RES_NAME())
+//                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                                .withString(RouteKey.KEY_TASK_ID, taskId)
+                                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                                .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
+                                .navigation();
                         finish();
                     }).setCancel(v -> {
                         finish();
@@ -862,7 +874,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
 //                f_RES_CODE
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
-                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE+"/"+stringExtra).observe(this, aBoolean -> {
+                String subCode = stringExtra.substring(2, stringExtra.length());
+                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE+"/"+subCode).observe(this, aBoolean -> {
 
                     Log.e(TAG, "onActivityResult: "+aBoolean );
                     if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {

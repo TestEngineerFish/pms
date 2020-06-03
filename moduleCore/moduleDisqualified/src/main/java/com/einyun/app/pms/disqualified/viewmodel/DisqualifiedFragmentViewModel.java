@@ -342,7 +342,7 @@ public class DisqualifiedFragmentViewModel extends BasePageListViewModel<Disqual
         return userModuleService.getUserId();
     }
     public String getUserName() {
-        return userModuleService.getUserName();
+        return userModuleService.getRealName();
     }
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;

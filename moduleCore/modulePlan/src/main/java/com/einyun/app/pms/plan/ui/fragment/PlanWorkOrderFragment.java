@@ -178,7 +178,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                         return R.layout.item_search_work_plan;
                     }
                 });
-                searchFragment.setHint("请搜索工单编号或计划名称");
+                searchFragment.setHint("请输入工单编号或计划名称");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (CloneNotSupportedException e) {
@@ -205,12 +205,14 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onResume() {
         super.onResume();
+//        loadPagingData();
         if (isfresh){
             loadPagingData();
             isfresh = false;
         }else{
             viewModel.refresh();
         }
+        viewModel.refresh(getFragmentTag());
     }
 
     @Override
@@ -273,7 +275,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             viewModel.loadPendingInDB().observe(this, dataBeans -> {
                 if (dataBeans.size() == 0) {
-                    showLoading(getActivity());
+//                    showLoading(getActivity());
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

@@ -275,7 +275,10 @@ public class ApprovalFormdata {
     }
 
     public String getAttachment() {
-        return attachment;
+        if (attachment==null||attachment.isEmpty()) {
+            attachment=applyFiles;
+        }
+        return attachment==null?"":attachment;
     }
 
     public List<ApprovalAttachment> getShownAttachment() {

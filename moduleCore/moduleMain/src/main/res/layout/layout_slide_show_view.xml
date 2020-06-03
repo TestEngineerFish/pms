@@ -21,7 +21,7 @@
 
             <ImageView
                 style="@style/iv_slide_show_view"
-                app:srcCompat="@mipmap/img_point_check" />
+                android:src="@mipmap/img_point_check" />
 
             <TextView
                 style="@style/tv_slide_show_view"
@@ -31,11 +31,11 @@
         <LinearLayout
             android:id="@+id/ll_toll"
             style="@style/ll_slide_show_view"
-            android:tag="sf">
+            android:tag="sfzl">
 
             <ImageView
                 style="@style/iv_slide_show_view"
-                app:srcCompat="@mipmap/img_fee" />
+                android:src="@mipmap/img_fee" />
 
             <TextView
                 style="@style/tv_slide_show_view"
@@ -49,7 +49,7 @@
 
             <ImageView
                 style="@style/iv_slide_show_view"
-                app:srcCompat="@mipmap/img_work_list" />
+                android:src="@mipmap/img_work_list" />
 
             <TextView
                 style="@style/tv_slide_show_view"
@@ -64,7 +64,7 @@
 
             <ImageView
                 style="@style/iv_slide_show_view"
-                app:srcCompat="@mipmap/img_create_work" />
+                android:src="@mipmap/img_create_work" />
 
             <TextView
                 style="@style/tv_slide_show_view"
@@ -89,7 +89,7 @@
 
                     <ImageView
                         style="@style/iv_slide_show_view"
-                        app:srcCompat="@mipmap/img_approve" />
+                        android:src="@mipmap/img_approve" />
 
                     <TextView
                         style="@style/tv_slide_show_view"
@@ -110,7 +110,7 @@
 
             <ImageView
                 style="@style/iv_slide_show_view"
-                app:srcCompat="@mipmap/img_work_preview" />
+                android:src="@mipmap/img_work_preview" />
 
             <TextView
                 style="@style/tv_slide_show_view"
@@ -125,7 +125,7 @@
 
             <ImageView
                 style="@style/iv_slide_show_view"
-                app:srcCompat="@mipmap/img_scan" />
+                android:src="@mipmap/img_scan" />
 
             <TextView
                 style="@style/tv_slide_show_view"

@@ -3,6 +3,7 @@ package com.einyun.app.pms.patrol.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
@@ -57,6 +59,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType = ListType.PENDING.getType();
+    private AlertDialog dialog;
 
     @Override
     protected PatrolViewModel initViewModel() {
@@ -220,7 +223,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             if (ordered > 0) {
                 if (frontWorkNode !=null) {//前面没有拍照项
                     if (frontWorkNode.is_photo > 0 && !viewModel.hasCapture(frontWorkNode)) {
-                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
+//                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
+                        initDialog();
                         return;
                     }
                 }
@@ -228,7 +232,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             if (ordered > 0) {
                 if (frontWorkNode != null) {//前面没有签到项
                     if (SignInType.QR.equals(frontWorkNode.sign_type) && !viewModel.hasSignIn(frontWorkNode)) {
-                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+//                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+                        initDialog();
                         return;
                     }
                 }
@@ -240,6 +245,23 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 .withString(RouteKey.KEY_ORDER_ID, orderId)
                 .withBundle(RouteKey.KEY_PARAMS, bundle)
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_SIGN_IN);
+    }
+
+    private void initDialog() {
+        if (dialog == null) {
+            dialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                    .setMsg("请按顺序巡更！")
+                    .setPositiveButton("我知道了", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+                    });
+            dialog.show();
+        } else {
+            if (!dialog.isShowing()) {
+                dialog.show();
+            }
+        }
     }
 
     /**
@@ -256,15 +278,18 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         if (ordered > 0) {
             if (frontWorkNode != null) {//第一个忽略
                 if (SignInType.QR.equals(frontWorkNode.sign_type) && !viewModel.hasSignIn(frontWorkNode)) {
-                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+//                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_sign_in);
+                    initDialog();
                     return;
+
                 }
             }
         }
         if (ordered > 0) {
             if (frontWorkNode != null) {//第一个忽略
                 if (frontWorkNode.is_photo > 0 && !viewModel.hasCapture(frontWorkNode)) {
-                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
+//                    ToastUtil.show(CommonApplication.getInstance(), R.string.text_need_order_capture);
+                    initDialog();
                     return;
                 }
             }
@@ -276,12 +301,27 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
 
     @Override
+    protected void initData() {
+        super.initData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewModel.loadLocalUserData(orderId);
+            }
+        },500);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_SIGN_IN) {
 
         } else if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER && resultCode == RESULT_OK) {
             String pointId = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);
+            if (pointId.length()<3) {
+                return;
+            }
+            String subCode = pointId.substring(2, pointId.length());
             boolean sacnResult = data.getBooleanExtra(DataConstants.KEY_QR_SCAN_RESULT, false);
             if (sacnResult) {
                 signInSuccess(pointId);

@@ -11,8 +11,8 @@ public class OrderPreviewRequest extends PageRquest {
     private String typeRe = "";
 
     public OrderPreviewRequest() {
-        querys.add(new query());
-        sorters.add(new sorter());
+//        querys.add(new query());
+//        sorters.add(new sorter());
     }
 
     public void addTiaoXian(boolean isReset,String txId) {

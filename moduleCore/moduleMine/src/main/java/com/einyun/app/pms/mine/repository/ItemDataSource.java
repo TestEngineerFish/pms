@@ -47,7 +47,7 @@ public class ItemDataSource extends BaseDataSource<MsgModel> {
             public void call(MsgListModel data) {
                 if(callback instanceof LoadInitialCallback){
                     LoadInitialCallback loadInitialCallback= (LoadInitialCallback) callback;
-                    loadInitialCallback.onResult(data.getRows(),0, (int) data.getTotal());
+                    loadInitialCallback.onResult(data.getRows(),0, (int) data.getRows().size());
                     Log.e("tag"+data.getRows().size(), "call:data.getTotal() " +data.getTotal());
                         LiveDataBusUtils.postLiveBusData(LiveDataBusKey.MSGCENTER_EMPTY,data.getTotal());
                 }else if(callback instanceof LoadRangeCallback){

@@ -154,11 +154,13 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
                             binding.tvWorkNumNoData.setVisibility(View.VISIBLE);
                             binding.tvWorkNum.setVisibility(View.GONE);
                             binding.tvSignNo.setVisibility(View.GONE);
+                            binding.tvWorth.setVisibility(View.GONE);
                         } else {
                             binding.tvSignNo.setVisibility(View.VISIBLE);
                             binding.tvWorkNumNoData.setVisibility(View.GONE);
                             binding.tvWorkNum.setVisibility(View.VISIBLE);
                             binding.tvWorkNum.setText(startName);
+                            binding.tvWorth.setVisibility(View.VISIBLE);
                         }
                         binding.tvPhone.setText(starsPhone);
                         binding.tvStartMonth.setText(data.getArrearsMonth());
@@ -363,7 +365,7 @@ public class LackDetailViewModelActivity extends BaseHeadViewModelActivity<Activ
     public void onAddSignClick() {
         if (!IsFastClick.isFastDoubleClick()) return;
         if (data == null) return;
-        ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN2)
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_SET_SIGN3)
                 .withString(RouteKey.HOUSE_ID, houseIdJump)
                 .withString(RouteKey.CLIENT_ID, data.getClientId())
                 .withString(RouteKey.KEY_DIVIDE_ID, divideId)

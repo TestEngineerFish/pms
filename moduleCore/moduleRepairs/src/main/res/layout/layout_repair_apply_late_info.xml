@@ -74,7 +74,8 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.delayInfo.delayTime}" />
+                app:extDay="@{repairs.delayInfo.delayTime}"
+                />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln"

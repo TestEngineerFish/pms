@@ -38,6 +38,10 @@ open class EinyunHttpService protected constructor() : HttpService() {
         }
     }
 
+    open fun getTenantId(): String? {
+        return headMap.get(HTTPS_HEAD_TENANT_ID_KEY)
+    }
+
     open fun init() {
         //添加自定义请求头
         addHeader(HTTPS_HEAD_API_RESPONSE_HANDLE, "true")

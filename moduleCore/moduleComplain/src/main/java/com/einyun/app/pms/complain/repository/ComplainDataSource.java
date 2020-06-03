@@ -6,6 +6,8 @@ import androidx.paging.PositionalDataSource;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.workorder.model.ComplainPage;
 import com.einyun.app.library.workorder.model.RepairGrabPage;
@@ -59,6 +61,7 @@ public class ComplainDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.COMPLAIN_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -79,6 +82,7 @@ public class ComplainDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.COMPLAIN_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -99,6 +103,7 @@ public class ComplainDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.COMPLAIN_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -115,10 +120,12 @@ public class ComplainDataSource extends BaseDataSource<DictDataModel> {
                     if (callback instanceof PositionalDataSource.LoadInitialCallback) {
                         LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
                         loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+
                     } else if (callback instanceof PositionalDataSource.LoadRangeCallback) {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.COMPLAIN_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -135,10 +142,12 @@ public class ComplainDataSource extends BaseDataSource<DictDataModel> {
                     if (callback instanceof PositionalDataSource.LoadInitialCallback) {
                         LoadInitialCallback loadInitialCallback = (LoadInitialCallback) callback;
                         loadInitialCallback.onResult(data.getRows(), 0, (int) data.getTotal());
+
                     } else if (callback instanceof PositionalDataSource.LoadRangeCallback) {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.COMPLAIN_EMPTY+tag,data.getTotal());
                 }
 
                 @Override

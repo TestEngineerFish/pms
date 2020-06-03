@@ -233,6 +233,7 @@
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+<!--            延期 闭单申请信息-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/ll_delay_close_info"
                 android:visibility="gone"
@@ -370,6 +371,55 @@
                             />
                         <TextView
                             android:id="@+id/tv_close_apply_reason"
+                            style="@style/style_text_approval_right" />
+                    </RelativeLayout>
+                    <RelativeLayout style="@style/style_rl_scan_basic_info">
+
+
+                        <TextView
+                            style="@style/style_text_approval_left"
+                            android:text="图片"
+
+                            />
+
+                        <TextView style="@style/style_text_approval_right" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_white_bg"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_pic_order_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/px_30"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/rl_reason1"
+                        style="@style/style_rl_normal">
+                        <TextView
+                            style="@style/style_text_approval_left"
+                            android:text="申请无效"
+                            />
+                        <TextView
+                            android:id="@+id/tv_apply_no_work"
+                            style="@style/style_text_approval_right" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/rl_reason2"
+                        style="@style/style_rl_normal">
+                        <TextView
+                            style="@style/style_text_approval_left"
+                            android:text="无效原因"
+                            />
+                        <TextView
+                            android:id="@+id/tv_apply_no_work_reason"
                             style="@style/style_text_approval_right" />
                     </RelativeLayout>
                 </LinearLayout>

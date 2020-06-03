@@ -5,8 +5,8 @@ android {
         applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 222
-        versionName "2.2.2"
+        versionCode 223
+        versionName "2.2.3"
         multiDexEnabled true
         flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -50,6 +50,7 @@ android {
             minifyEnabled false
             versionNameSuffix "-dev"
             manifestPlaceholders=[APP_NAME:app_name]
+            signingConfig signingConfigs.release
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
@@ -124,9 +125,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // Support libraries
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(deps.project.module_user)
     implementation project(deps.project.module_main)
     implementation project(deps.project.module_repairs)
@@ -139,12 +138,11 @@ dependencies {
     implementation project(deps.project.module_orderpreview)
     implementation project(deps.project.module_operatepercent)
     implementation project(deps.project.module_plan)
-    implementation project(deps.project.module_plan)
     implementation project(deps.project.module_customerinquiries)
     implementation project(deps.project.module_complain)
     implementation project(deps.project.module_disqualified)
     implementation project(deps.project.module_extra)
     implementation project(deps.project.module_orderlist)
     implementation project(deps.project.module_toll)
-//    implementation project(deps.project.module_extra)
+    implementation project(deps.project.module_notice)
 }

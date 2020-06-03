@@ -104,24 +104,39 @@ dependencies {
     }
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor deps.arouter_compiler
-    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-//    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指 native
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+
+    //    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指 native
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-//    implementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    implementation ('com.aliyun.ams:alicloud-android-push:3.1.6@aar') {
+
+    //    implementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation('com.aliyun.ams:alicloud-android-push:3.1.6@aar') {
         transitive true
     }
     implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.9@aar'
-
     implementation 'com.aliyun.ams:meizu-push:3.8.3-fix'
     implementation 'com.aliyun.ams:huawei-push:2.6.3.305'
     implementation 'com.aliyun.ams:huawei-push-base:2.6.3.305'
-    implementation ('com.google.firebase:firebase-messaging:17.6.0')
-    implementation 'com.github.promeg:tinypinyin:2.0.3' // TinyPinyin核心包，约80KB
+    implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
 
+    // TinyPinyin核心包，约80KB
     implementation 'com.github.promeg:tinypinyin-lexicons-android-cncity:2.0.3'
-// 可选，适用于Android的中国地区词典
-    implementation 'com.github.promeg:tinypinyin-lexicons-java-cncity:2.0.3' // 可选，适用于Java的中国地区词典
+
+    // 可选，适用于Android的中国地区词典
+    implementation 'com.github.promeg:tinypinyin-lexicons-java-cncity:2.0.3'
+
+    // 可选，适用于Java的中国地区词典
+
     //高亮显示指引
-//    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+    api files('src/main/libs/umeng-share-wechat-simplify-6.9.8.jar')
+    api files('src/main/libs/common-utils-lib-1.0.0.jar')
+    api files('src/main/libs/SecurityEnvSDK-release-1.1.0.jar')
+    api files('src/main/libs/umeng-share-core-6.9.8.jar')
+    api files('src/main/libs/umeng-share-sina-simplify-6.9.8.jar')
+    api files('src/main/libs/umeng-shareboard-widget-6.9.8.jar')
 }

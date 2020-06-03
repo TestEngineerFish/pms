@@ -120,7 +120,11 @@ public class PointCheckListActivity extends BaseHeadViewModelActivity<ActivityPo
 
     private void loadPagingData(){
         //初始化数据，LiveData自动感知，刷新页面
-        viewModel.loadPagingData().observe(this, dataBeans -> adapter.submitList(dataBeans));
+        viewModel.loadPagingData().observe(this, dataBeans -> {
+            if (dataBeans.size()==0) {
+                binding.empty.getRoot().setVisibility(View.VISIBLE);
+            }
+            adapter.submitList(dataBeans);});
     }
 
 

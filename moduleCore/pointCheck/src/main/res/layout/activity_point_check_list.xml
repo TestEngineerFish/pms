@@ -22,42 +22,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
+                <include layout="@layout/layout_empty" android:id="@+id/empty" android:visibility="gone"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/check_point_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     />
-
-                <LinearLayout
-                    android:id="@+id/ll_empty"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="80dp"
-                        android:layout_marginRight="80dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@mipmap/icon_list_empty" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:gravity="center"
-                        android:text="@string/text_no_data"
-                        android:textColor="#cccccc"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>

@@ -350,6 +350,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             copy.setDivideId(request.getDivideId());
             copy.setDivideCode(request.getDivideCode());
             copy.setDivideName(request.getDivideName());
+            copy.setProjectName(request.getProjectName());
             request = copy;
             resourceTypeBean = null;
             binding.tvResource.setText("请选择");
@@ -465,7 +466,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
      */
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
-        if (!orgModel.getId().equals(request.getDivideId())) {
+//        if (!orgModel.getId().equals(request.getDivideId())) {
             clearRequest(SelectType.AGING);
             request.setDivideId(orgModel.getId());
             request.setDivideCode(orgModel.getCode());
@@ -476,7 +477,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
 
                 request.setProjectName(split[split.length-2]);
             }
-        }
+//        }
     }
 
     /**
@@ -508,7 +509,8 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             request.setId(id);
         }
         if (StringUtil.isNullStr(orderNo)){
-            request.setOrderNo(orderNo);
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_CODE(orderNo);
         }
         return request;
     }

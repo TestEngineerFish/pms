@@ -2,6 +2,7 @@ package com.einyun.app.common.repository;
 
 
 import com.einyun.app.base.http.BaseResponse;
+import com.einyun.app.common.viewmodel.DisqualifiedDetailResponse;
 import com.einyun.app.common.viewmodel.GetApprovalBasicInfoResponse;
 
 
@@ -34,5 +35,11 @@ public interface MsgServiceApi {
      */
     @GET()
     Flowable<GetApprovalBasicInfoResponse> getApprovalBasicInfo(@Url String url);
-
+    /**
+     * 获取待跟进详情基本信息
+     * @param
+     * @return
+     */
+    @GET
+    Flowable<DisqualifiedDetailResponse> getTODODetailInfo(@Url String url);
 }

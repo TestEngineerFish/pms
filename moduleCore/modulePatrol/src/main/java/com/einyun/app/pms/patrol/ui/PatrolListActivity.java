@@ -115,5 +115,11 @@ public class PatrolListActivity extends BaseHeadViewModelActivity<ActivityPatrol
         }
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hideLoading();
+    }
 }
 
