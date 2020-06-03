@@ -296,6 +296,11 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                         } else {
                             marqueeFactory.setData(noticeModels.subList(0, 5));
                         }
+                        if (noticeModels != null && noticeModels.size() == 1) {
+                            binding.mvCommunityNotice.stopFlipping();
+                        } else {
+                            binding.mvCommunityNotice.startFlipping();
+                        }
                     }
                 },1000);
 
@@ -303,6 +308,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 noticeModels = new ArrayList<>();
                 noticeModels.add(new NoticeModel("暂无公告"));
                 marqueeFactory.setData(noticeModels);
+                binding.mvCommunityNotice.stopFlipping();
             }
         });
     }
