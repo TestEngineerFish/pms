@@ -108,7 +108,7 @@ public class FeeSucActivity extends BaseHeadViewModelActivity<ActivityFeeSucBind
                 @Override
                 public void onBindItem(ItemFeeSucRecordBinding listBinding, FeeSucInfoModel.DataBean.DeatilBean.ListBean item, int position) {
 
-                    listBinding.tvFeeItemName.setText(item.getChargeDesc());
+                    listBinding.tvFeeItemName.setText(item.getCostTypeName());
                     listBinding.tvMoney.setText(item.getChargeAmount().setScale(2) + "");
                     if (item.getChargeCostDate() != null) {
                         if (item.getChargeCostDate().length() >= 6) {
