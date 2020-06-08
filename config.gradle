@@ -300,7 +300,7 @@ deps.project = project
 
 def server =[:]
 //开发调式环境
-server.debug = "\"http://172.16.0.123\""
+server.debug = "\"http://uatbms.einyun.com\""
 //测试环境
 server.debug_test = "\"https://testbms.einyun.com\""
 //UAT环境
