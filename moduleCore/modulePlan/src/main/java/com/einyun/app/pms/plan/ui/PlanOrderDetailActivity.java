@@ -836,6 +836,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 .withString(RouteKey.KEY_RESOUSE, planInfo.getData().getZyjhgd().getF_RES_NAME())
 //                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .withString(RouteKey.F_ORIGINAL_TYPE, "1")
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
                 .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)

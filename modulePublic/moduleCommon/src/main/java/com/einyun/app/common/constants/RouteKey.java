@@ -32,6 +32,7 @@ public class RouteKey {
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
     public static final String KEY_FRAGEMNT_TAG="fragmentTag";
     public static final String KEY_ORDER_ID="orderId";
+    public static final String F_ORIGINAL_TYPE="F_ORIGINAL_TYPE";
     public static final String KEY_ORDER_NO="orderNo";
     public static final String KEY_LINE="orderLine";
     public static final String KEY_RESOUSE="orderResouse";

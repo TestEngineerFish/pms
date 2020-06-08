@@ -65,6 +65,8 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
     String taskNodeId;
+    @Autowired(name = RouteKey.F_ORIGINAL_TYPE)
+    String mORIGINAL_TYPE;
     @Autowired(name = RouteKey.KEY_LINE)
     String lineName;
     @Autowired(name = RouteKey.KEY_RESOUSE)
@@ -508,9 +510,21 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         if (StringUtil.isNullStr(id)){
             request.setId(id);
         }
-        if (StringUtil.isNullStr(orderNo)){
+        if (StringUtil.isNullStr(orderNo)){//原工单号
 //            request.setOrderNo(orderNo);
             request.setF_ORIGINAL_CODE(orderNo);
+        }
+        if (StringUtil.isNullStr(id)){//原工单ID
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_ID(id);
+        }
+        if (StringUtil.isNullStr(mORIGINAL_TYPE)){//原工单类型
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_TYPE(mORIGINAL_TYPE);
+        }
+        if (StringUtil.isNullStr(proInsId)){//原工单流程ID
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_PROLNSTLD(proInsId);
         }
         return request;
     }
