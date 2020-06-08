@@ -60,7 +60,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/important_red_color" />
                 </LinearLayout>
-
+                <!--工单信息-->
                 <androidx.cardview.widget.CardView style="@style/cardview_style">
 
                     <LinearLayout
@@ -368,6 +368,11 @@
                 <include
                     android:id="@+id/item_close_order_info"
                     layout="@layout/item_close_order_info" />
+                <!--               派单-->
+                <include
+                    android:id="@+id/send_order"
+                    layout="@layout/layout_plan_send_order"
+                    android:visibility="gone" />
                 <!--                处理结果-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_result_edit"
@@ -460,12 +465,12 @@
                         </androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
+                <!--处理结果信息-->
                 <include
                     android:id="@+id/item_already_result"
                     layout="@layout/item_already_result" />
 
-
+                <!--强制闭单 和延期-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_operate"
                     style="@style/cardview_style">

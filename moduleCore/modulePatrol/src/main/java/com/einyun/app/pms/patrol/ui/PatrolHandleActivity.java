@@ -3,11 +3,13 @@ package com.einyun.app.pms.patrol.ui;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,6 +18,7 @@ import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.util.Base64Util;
+import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
@@ -64,13 +67,13 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
-    int listType= ListType.PENDING.getType();
+    int listType = ListType.PENDING.getType();
 
-    protected void setListType(int listType){
+    protected void setListType(int listType) {
         super.setListType(listType);
     }
 
-    protected void setOrderId(String orderId){
+    protected void setOrderId(String orderId) {
         super.setOrderId(orderId);
     }
 
@@ -85,12 +88,20 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         binding.setCallBack(this);
     }
 
-    protected void switchStateUI(int f_plan_work_order_state) {
+    protected void switchStateUI(int f_plan_work_order_state) {//TODO 根据f_plan_work_order_state判断当前状态 显示隐藏处理布局，显示隐藏接单跟派单
         super.switchStateUI(f_plan_work_order_state);
         binding.btnSubmit.setVisibility(View.VISIBLE);
         binding.panelHandleForm.setVisibility(View.VISIBLE);
         binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
+        if (f_plan_work_order_state==5) {
+            binding.btnSubmit.setText("接单");
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+            binding.panelHandleForm.setVisibility(View.GONE);
+        }else if (f_plan_work_order_state==6){
+            binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
+            binding.panelHandleForm.setVisibility(View.GONE);
+        }
     }
 
     protected void initRequest() {
@@ -126,6 +137,19 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                             } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                 onAgree(binding);
                             }
+                        }
+                        if (f_plan_work_order_state==5||f_plan_work_order_state==6) {
+                            binding.btnReject.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setEnabled(false);
+                            binding.btnReject.setEnabled(false);
+//                            binding.tvResult.setVisibility(View.GONE);
+                        }else {
+                            binding.btnReject.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setVisibility(View.VISIBLE);
+                            binding.btnAgree.setEnabled(true);
+                            binding.btnReject.setEnabled(true);
+//                            binding.tvResult.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -205,13 +229,14 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     /**
      * 校验必填参数
+     *
      * @return
      */
-    private boolean validateFormData(){
+    private boolean validateFormData() {
         List<WorkNode> data = getWorkNodes();
-        for (int i=0;i<data.size();i++) {
+        for (int i = 0; i < data.size(); i++) {
             if (TextUtils.isEmpty(data.get(i).result)) {
-                ToastUtil.show(this,String.format(getResources().getString(R.string.text_alert_handle_node), data.get(i).number));
+                ToastUtil.show(this, String.format(getResources().getString(R.string.text_alert_handle_node), data.get(i).number));
                 return false;
             }
         }
@@ -221,7 +246,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
             return false;
         }
 
-        if(photoSelectAdapter.getSelectedPhotos().size()<=0){
+        if (photoSelectAdapter.getSelectedPhotos().size() <= 0) {
             ToastUtil.show(this, R.string.text_alert_photo_empty);
             return false;
         }
@@ -231,24 +256,26 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     /**
      * 获取节点处理信息
+     *
      * @return
      */
     @NotNull
     protected List<WorkNode> getWorkNodes() {
-        List<WorkNode> all=nodesAdapter.getDataList();
-        return all.subList(1,all.size());
+        List<WorkNode> all = nodesAdapter.getDataList();
+        return all.subList(1, all.size());
     }
 
     /**
      * 上传图片
+     *
      * @param patrol
      */
-    private void uploadImages(PatrolInfo patrol){
-        if(patrol==null){
+    private void uploadImages(PatrolInfo patrol) {
+        if (patrol == null) {
             return;
         }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
-            if(picUrls==null){
+            if (picUrls == null) {
                 ToastUtil.show(CommonApplication.getInstance(), R.string.text_alert_local_cached);
                 return;
             }
@@ -259,6 +286,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 
     /**
      * 包装表单数据
+     *
      * @param patrol
      * @param picUrls
      * @return
@@ -272,36 +300,36 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     }
 
     private boolean hasException(PatrolInfo patrol) {
-        int index=0; //异常节点选项
-        for(SubInspectionWorkOrderFlowNode node:patrol.getData().getZyxcgd().getSub_inspection_work_order_flow_node()){
-            for(WorkNode workNode:getWorkNodes()){
-                if(node.getF_WK_ID().equals(workNode.number)){
+        int index = 0; //异常节点选项
+        for (SubInspectionWorkOrderFlowNode node : patrol.getData().getZyxcgd().getSub_inspection_work_order_flow_node()) {
+            for (WorkNode workNode : getWorkNodes()) {
+                if (node.getF_WK_ID().equals(workNode.number)) {
                     node.setF_WK_RESULT(workNode.getResult());
-                    if(workNode.result.equals("0")) index++;
+                    if (workNode.result.equals("0")) index++;
                 }
             }
         }
-        return index>0;
+        return index > 0;
     }
 
-    private void acceptForm(PatrolInfo patrol){
+    private void acceptForm(PatrolInfo patrol) {
         hasException(patrol);
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
         patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
         patrol.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
         patrol.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
 //        Logger.d("data->"+new Gson().toJson(patrol));
-        String base64=Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
-        PatrolSubmitRequest request=new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE,base64,patrol.getData().getZyxcgd().getId_());
+        String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
+        PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyxcgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
-            if(aBoolean){
+            if (aBoolean) {
                 viewModel.finishTask(orderId);
-                tipDialog=new TipDialog(this,getString(R.string.text_handle_success));
+                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
                 tipDialog.setTipDialogListener(dialog -> {
-                    if(hasException(patrol)){
+                    if (hasException(patrol)) {
                         tipDialog.dismiss();
                         createSendOrder();
-                    }else{
+                    } else {
                         finish();
                     }
                 });
@@ -329,6 +357,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 //            alertDialog.setCancelable(false);
 //        }
 //    }
+
     /**
      * 是否创建派工单
      */
@@ -358,7 +387,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         }
     }
 
-    private void navigatSendWorkOrder(){
+    private void navigatSendWorkOrder() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
                 .withString(RouteKey.KEY_ORDER_ID, patrolInfo.getId())
                 .withString(RouteKey.KEY_ORDER_NO, patrolInfo.getData().getZyxcgd().getF_plan_work_order_code())
@@ -375,26 +404,53 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     /**
      * 提交
      */
-    public void onSubmitClick() {
-        if (!validateFormData()) {
-            return;
+    public void onSubmitClick() {//TODO 根据 f_plan_work_order_state 判断是接单 派单 调相应接口
+
+        if (f_plan_work_order_state == 5) {
+            patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
+            patrolInfo.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
+            patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
+            Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
+            String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
+            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
+            viewModel.receiceOrder(request).observe(this,model->{
+
+                if (model) {
+                    finish();
+                }
+            });
+
+        } else if (f_plan_work_order_state == 6) {
+            Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
+            patrolInfo.getData().getZyxcgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
+            String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
+            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
+            viewModel.assignOrder(request).observe(this,model->{
+
+                if (model) {
+                    finish();
+                }
+            });
+        } else {
+
+            if (!validateFormData()) {
+                return;
+            }
+            uploadImages(patrolInfo);
         }
-        uploadImages(patrolInfo);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         saveLocalUserData();
-        if(tipDialog!=null){
+        if (tipDialog != null) {
             tipDialog.dismiss();
         }
-        if(alertDialog!=null){
+        if (alertDialog != null) {
             alertDialog.dismiss();
         }
     }
-
-
 
 
 }

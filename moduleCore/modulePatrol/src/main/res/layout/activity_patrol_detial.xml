@@ -108,6 +108,7 @@
                                     android:layout_centerVertical="true">
 
                                     <TextView
+                                        android:textSize="@dimen/font_size16"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -502,6 +503,11 @@
                     <include
                         android:id="@+id/panel_close_info"
                         layout="@layout/layout_apply_close_info"
+                        android:visibility="gone" />
+                    <!--               派单-->
+                    <include
+                        android:id="@+id/send_order"
+                        layout="@layout/layout_patrol_send_order"
                         android:visibility="gone" />
                     <!--处理操作-->
                     <androidx.cardview.widget.CardView

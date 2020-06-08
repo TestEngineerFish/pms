@@ -17,6 +17,7 @@ import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 
 import java.net.URL;
@@ -42,6 +43,24 @@ public class MsgRepository {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
         String url= URLS.URL_GET_SINGLE_READ+id;
         serviceApi.singleRead(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response.isState());
+                    callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    /**
+     * 接单
+     * @param url
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<Boolean> receiveOrder(String url,PatrolSubmitRequest request, CallBack<Boolean> callBack) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        serviceApi.receiveOrder(url,request).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
                     liveData.postValue(response.isState());
                     callBack.call(response.isState());
