@@ -133,6 +133,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
             patrolInfo.getData().getZyxcgd().setF_principal_id(model.getId());
             patrolInfo.getData().getZyxcgd().setF_principal_name(model.getFullname());
+
+            if (patrolLocal!=null) {
+                patrolLocal.setDesignatePerson(model.getFullname());
+            }
+
         });
         binding.sendOrder.repairSelectPeople.setOnClickListener(view -> {
             selectPeple();
@@ -393,6 +398,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 }
                 photoSelectAdapter.setSelectedPhotos(uris);
             }
+            if (local.getDesignatePerson()!=null) {//被指派人
+                binding.sendOrder.repairSelectedPepple.setText(local.getDesignatePerson());
+            }
+            if (local.getRemark()!=null) {//指派备注
+                binding.sendOrder.repairSendReason.setText(local.getRemark());
+            }
             if (!TextUtils.isEmpty(local.getNote())) {
                 binding.limitInput.setText(local.getNote());
             }
@@ -609,6 +620,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             patrolLocal.setNodes(dataList);
         }
 
+        patrolLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());
+        patrolLocal.setRemark(binding.sendOrder.repairSendReason.getString());
         viewModel.saveLocal(patrolLocal);
     }
 
