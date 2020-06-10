@@ -871,7 +871,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairHandleResult.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
                 binding.repairUseMaterial.getRoot().setVisibility(View.VISIBLE);
-                binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
+//                binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
                 binding.handleSaveSubmit.setVisibility(View.VISIBLE);
             }
             ifApplyClose();
