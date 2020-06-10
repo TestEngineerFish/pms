@@ -27,6 +27,7 @@ import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
@@ -137,6 +138,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 //            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
 //            binding.tvDivide.setText(blockName);
 //        }
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.INQUIRIES_EMPTY+getFragmentTag(),this);
     }
 
     @Override

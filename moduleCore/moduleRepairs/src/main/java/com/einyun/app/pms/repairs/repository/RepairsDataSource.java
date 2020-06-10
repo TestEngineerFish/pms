@@ -8,6 +8,8 @@ import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.workorder.model.RepairsPage;
 import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
@@ -56,6 +58,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.REPAIR_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -76,6 +79,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.REPAIR_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -96,6 +100,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.REPAIR_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -116,6 +121,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.REPAIR_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -136,6 +142,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.REPAIR_EMPTY+tag,data.getTotal());
                 }
 
                 @Override
@@ -156,6 +163,7 @@ public class RepairsDataSource extends BaseDataSource<DictDataModel> {
                             LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                             loadInitialCallback.onResult(data.getRows());
                         }
+                        LiveDataBusUtils.postLiveBusData(LiveDataBusKey.REPAIR_EMPTY+tag,data.getTotal());
                     }
 
                     @Override

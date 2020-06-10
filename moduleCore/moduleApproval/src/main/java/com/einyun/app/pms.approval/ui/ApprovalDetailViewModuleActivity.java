@@ -439,7 +439,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvCloseOrderResponer.setText(approvalFormdata.getProcName());//工单负责人
             binding.tvCloseCreateTime.setText(approvalFormdata.getCreationTime());//工单创建时间
             binding.tvCloseEndTime.setText(approvalFormdata.getDeadlineTime());//工单截止时间
-            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays());//延期天数
+            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays()+"天");//延期天数
             binding.tvCloseApplyReason.setText(approvalFormdata.getApplicationDescription());//申请原因
 
 

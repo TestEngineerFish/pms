@@ -97,13 +97,49 @@ public class ScanBasicInfoFragment extends BaseViewModelFragment<FragmentScanBas
                 case "environmental_resources"://环境类
 
                     binding.llEnvironment.setVisibility(View.VISIBLE);
-                    switch (model.getResourceClassificationPath()) {
-                        case "482896"://绿化
+                    switch (model.getResourceClassificationPathValue()) {
+                        case "绿化"://绿化
                             binding.llGreen.setVisibility(View.VISIBLE);
+                            if (model.getLatin().isEmpty()) {
+                                binding.rlLatin.setVisibility(View.GONE);
+                            }
+                            if (model.getBranch().isEmpty()) {
+                                binding.rlBranch.setVisibility(View.GONE);
+                            }
+                            if (model.getGenus().isEmpty()) {
+                                binding.rlGenus.setVisibility(View.GONE);
+                            }
+                            if (model.getPlaceOfOrigin().isEmpty()) {
+                                binding.rlPlaceOfOrigin.setVisibility(View.GONE);
+                            }
+                            if (model.getHabit().isEmpty()) {
+                                binding.rlHabit.setVisibility(View.GONE);
+                            }
+
                             break;
-                        case "482904"://保洁
+                        case "保洁"://保洁
                             binding.llClean.setVisibility(View.VISIBLE);
                             break;
+
+                            default:
+//                                if (model.getLatin().isEmpty()) {
+//                                    binding.rlLatin.setVisibility(View.GONE);
+//                                }
+//                                if (model.getBranch().isEmpty()) {
+//                                    binding.rlBranch.setVisibility(View.GONE);
+//                                }
+//                                if (model.getGenus().isEmpty()) {
+//                                    binding.rlGenus.setVisibility(View.GONE);
+//                                }
+//                                if (model.getPlaceOfOrigin().isEmpty()) {
+//                                    binding.rlPlaceOfOrigin.setVisibility(View.GONE);
+//                                }
+//                                if (model.getHabit().isEmpty()) {
+//                                    binding.rlHabit.setVisibility(View.GONE);
+//                                }
+//                                binding.llGreen.setVisibility(View.VISIBLE);
+
+                                break;
                     }
 
                     break;

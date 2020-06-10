@@ -4,7 +4,7 @@
     <string name="title_point_check_detial">点检详情</string>
     <string name="title_sign_check_detial">巡更工单</string>
     <string name="title_point_check_list">点检记录</string>
-    <string name="alert_choose_massif">请选择地块</string>
+    <string name="alert_choose_massif">请选择分期</string>
     <string name="alert_choose_project">请选择点检事项</string>
     <string name="alert_choose_pic">请上传图片</string>
 

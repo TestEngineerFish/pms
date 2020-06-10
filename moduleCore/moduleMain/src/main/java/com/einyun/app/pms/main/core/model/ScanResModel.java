@@ -454,7 +454,7 @@ public class ScanResModel {
     }
 
     public String getLatin() {
-        return latin;
+        return latin==null?"":latin;
     }
 
     public void setLatin(String latin) {
@@ -462,7 +462,7 @@ public class ScanResModel {
     }
 
     public String getBranch() {
-        return branch;
+        return branch==null?"":branch;
     }
 
     public void setBranch(String branch) {
@@ -470,7 +470,7 @@ public class ScanResModel {
     }
 
     public String getGenus() {
-        return genus;
+        return genus==null?"":genus;
     }
 
     public void setGenus(String genus) {
@@ -478,7 +478,7 @@ public class ScanResModel {
     }
 
     public String getPlaceOfOrigin() {
-        return placeOfOrigin;
+        return placeOfOrigin==null?"":placeOfOrigin;
     }
 
     public void setPlaceOfOrigin(String placeOfOrigin) {
@@ -486,7 +486,7 @@ public class ScanResModel {
     }
 
     public String getHabit() {
-        return habit;
+        return habit==null?"":habit;
     }
 
     public void setHabit(String habit) {

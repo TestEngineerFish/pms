@@ -80,6 +80,7 @@ public class DisqualifiedDetailModel {
             private String checked_user_id;
             private String checked_user_name;
             private String code;
+            private String parent_code;
             private String correction_date;
             private String created_time;
             private String divide_id;
@@ -351,6 +352,14 @@ public class DisqualifiedDetailModel {
 
             public void setTenant_id(String tenant_id) {
                 this.tenant_id = tenant_id;
+            }
+
+            public String getParent_code() {
+                return parent_code==null?"":parent_code;
+            }
+
+            public void setParent_code(String parent_code) {
+                this.parent_code = parent_code;
             }
 
             public static class InitDataBean {

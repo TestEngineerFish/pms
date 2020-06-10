@@ -37,7 +37,7 @@
         android:layout_width="@dimen/px_32"
         android:layout_height="@dimen/px_32"
         android:layout_gravity="right"
-        app:srcCompat="@mipmap/icon_photo_delete"
+        android:src="@mipmap/icon_photo_delete"
         android:visibility="gone" />
 
 </FrameLayout>

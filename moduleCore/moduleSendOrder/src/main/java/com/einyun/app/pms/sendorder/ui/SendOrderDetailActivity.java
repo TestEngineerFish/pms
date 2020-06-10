@@ -228,6 +228,9 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         detialModel = distributeWorkOrder;
+        if (detialModel.getData().getInfo().getOriginalCode()==null||detialModel.getData().getInfo().getOriginalCode().isEmpty()) {
+            binding.orderInfo.llOriginalCode.setVisibility(View.GONE);
+        }
         orderId=detialModel.getData().getInfo().getID();
         binding.setWorkOrder(distributeWorkOrder);
         updatePageUIState(PageUIState.FILLDATA.getState());

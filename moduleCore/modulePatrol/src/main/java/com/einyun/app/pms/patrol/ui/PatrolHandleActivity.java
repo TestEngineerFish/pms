@@ -339,7 +339,17 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                         navigatSendWorkOrder();//跳转至创建派工单
                         finish();
                     }).setCreateUnOrder(v -> {
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE).navigation();
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
+                                .withString(RouteKey.CODE, patrolInfo.getData().getZyxcgd().getF_plan_work_order_code())
+                                .withString(RouteKey.KEY_ORDER_ID, patrolInfo.getId())
+                                .withString(RouteKey.KEY_ORDER_NO, patrolInfo.getData().getZyxcgd().getF_plan_work_order_code())
+                                .withString(RouteKey.KEY_LINE, patrolInfo.getData().getZyxcgd().getF_line_name())
+                                .withString(RouteKey.KEY_RESOUSE, patrolInfo.getData().getZyxcgd().getF_type_name())
+                                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                                .withString(RouteKey.KEY_TASK_ID, taskId)
+                                .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                                .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_WORK_PREVIEW_PATRO)
+                                .navigation();
                         finish();
                     }).setCancel(v -> {
                         finish();

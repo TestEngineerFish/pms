@@ -161,6 +161,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
         //工单处理情况总览
         if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
+            setWorkTablePendingNum("0".toCharArray());
             viewModel.workOrderData("",userModuleService.getUserId()).observe(this, workOrderData -> {
                 if (workOrderData.getRate() != null) {
                     //工单完成率
@@ -172,6 +173,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 } else {
                     binding.itemWorkBenchSecond.tvWorkOrderProcess.setText("0%");
                     binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText("0%");
+                    return;
                 }
 
                 //总单总数
@@ -407,7 +409,13 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                     });
         }
         List<String> functionList = new ArrayList<>();
+        //扫码处理
+        if (userMenu.indexOf("smcl") != -1) {
+            functionList.add("smcl");
+        }else {
+            functionList.add("smcl");
 
+        }
         //点检
         if (userMenu.indexOf("dj") != -1) {
             functionList.add("dj");
@@ -434,13 +442,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 //        if (userMenu.indexOf("gzyl") != -1) {
             functionList.add("gzyl");
 //        }
-        //扫码处理
-        if (userMenu.indexOf("smcl") != -1) {
-            functionList.add("smcl");
-        }else {
-            functionList.add("smcl");
 
-        }
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
         binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
     }

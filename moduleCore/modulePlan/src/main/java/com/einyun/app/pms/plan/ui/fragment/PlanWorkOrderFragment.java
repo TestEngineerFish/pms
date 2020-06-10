@@ -205,12 +205,14 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onResume() {
         super.onResume();
+//        loadPagingData();
         if (isfresh){
             loadPagingData();
             isfresh = false;
         }else{
             viewModel.refresh();
         }
+        viewModel.refresh(getFragmentTag());
     }
 
     @Override

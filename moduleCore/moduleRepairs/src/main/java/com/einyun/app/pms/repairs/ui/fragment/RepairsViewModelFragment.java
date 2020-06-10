@@ -33,6 +33,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.utils.SpacesItemDecoration;
@@ -291,6 +292,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         binding.repairsList.setAdapter(adapter);
         adapter.setOnItemClick(this);
         loadPagingData();
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.REPAIR_EMPTY+getFragmentTag(),this);
     }
 
 

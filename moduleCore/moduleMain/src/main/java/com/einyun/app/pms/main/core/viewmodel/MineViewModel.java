@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_ENVIROMENT_TYPE;
 import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_PATROL_BASIC;
 import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_RES_BASIC;
 
@@ -157,6 +158,24 @@ public class MineViewModel extends BasePageListViewModel<ScanResItemModel> imple
             }
         });
         return getResModel;
+    }
+
+    private MutableLiveData<ScanResModel> getClassPathModel=new MutableLiveData<>();
+    public LiveData<ScanResModel> getClassPath(){
+        showLoading();
+        repository.getClassPath(URL_GET_ENVIROMENT_TYPE,new CallBack<ScanResModel>() {
+            @Override
+            public void call(ScanResModel data) {
+                hideLoading();
+                getClassPathModel.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return getClassPathModel;
     }
 
     private MutableLiveData<ScanPatrolModel> getPatrolModel=new MutableLiveData<>();

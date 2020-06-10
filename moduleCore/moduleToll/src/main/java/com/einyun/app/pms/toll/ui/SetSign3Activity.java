@@ -62,6 +62,7 @@ public class SetSign3Activity extends BaseHeadViewModelActivity<ActivitySetSign3
     boolean isEmpty = true;
     private AlertDialog alertAddDialog;
     private String firstEnter = "";
+    private String firstEnter2 = "";
 
     @Override
     protected TollViewModel initViewModel() {
@@ -180,13 +181,17 @@ public class SetSign3Activity extends BaseHeadViewModelActivity<ActivitySetSign3
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 //                        model.setTagValue(charSequence.toString().trim());
-                        firstEnter = hodler.etContent.getText().toString().trim();
+//                        firstEnter = hodler.etContent.getText().toString().trim();
+
                     }
 
                     @Override
                     public void afterTextChanged(Editable editable) {
 //                        model.setTagValue(editable.toString().trim());
-                        firstEnter = hodler.etContent.getText().toString().trim();
+//                        firstEnter = hodler.etContent.getText().toString().trim();
+                        if (!hodler.etContent.getText().toString().trim().isEmpty()) {
+                            firstEnter = hodler.etContent.getText().toString().trim();
+                        }
                     }
                 });
                 if (position == tagList.size() - 1) {
