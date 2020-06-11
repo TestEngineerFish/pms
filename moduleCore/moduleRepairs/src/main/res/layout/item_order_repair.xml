@@ -33,6 +33,7 @@
             android:layout_marginRight="10dp">
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/item_repair_subject"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,7 +43,7 @@
                 android:singleLine="true"
                 android:text="@{repair.bx_area+@string/text_padding+repair.bx_cate_lv1+@string/text_padding+repair.bx_cate_lv2+@string/text_padding+repair.bx_cate_lv3}"
                 android:textColor="@color/blackTextColor"
-                android:textSize="@dimen/px_30" />
+                android:textSize="@dimen/font_size16" />
 
             <RelativeLayout
                 android:layout_width="@dimen/px_136"

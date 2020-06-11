@@ -44,6 +44,7 @@
                     app:isComingTimeout="@{patrol.is_coming_timeout}" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/tv_order_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -53,7 +54,7 @@
                     android:layout_marginLeft="@dimen/px_20"
                     android:layout_toRightOf="@id/iv_has_warn"
                     android:textColor="@color/blackTextColor"
-                    android:textSize="@dimen/px_32"
+                    android:textSize="@dimen/font_size16"
                     android:text="@{patrol.f_inspection_work_plan_name}" />
 
 
