@@ -282,6 +282,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.rvNodes.setAdapter(nodesAdapter);
     }
 
+    private static final String TAG = "PatrolDetialActivity";
     protected void loadData() {
         if (listType == ListType.PENDING.getType()) {
             viewModel.loadPendingDetial(orderId).observe(this, patrolInfo -> {
@@ -615,9 +616,13 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
 
             patrolLocal.setNodes(nodesAdapter.getDataList());
         } else {
-            List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
-            dataList.addAll(workNodes1);
-            patrolLocal.setNodes(dataList);
+            try {
+                List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
+                dataList.addAll(workNodes1);
+                patrolLocal.setNodes(dataList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         patrolLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());

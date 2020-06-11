@@ -71,6 +71,8 @@
                 android:textColor="@color/blackTextColor"/>
 
             <TextView
+                android:text=""
+                android:hint="@string/please_select"
                 android:id="@+id/repair_selected_pepple"
                 style="@style/tv_create_order_select"
                  />

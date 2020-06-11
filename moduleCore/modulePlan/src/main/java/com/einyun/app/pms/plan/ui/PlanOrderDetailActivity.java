@@ -867,17 +867,22 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             });
 
         } else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
-            planInfo.getData().getZyjhgd().setF_STATUS("2");
-            planInfo.getData().getZyjhgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
-            Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
-            String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
-            PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
-            viewModel.assignOrder(request).observe(this, model -> {
+            String trim = binding.sendOrder.repairSelectedPepple.getText().toString().trim();
+            if (!trim.isEmpty()) {
+                planInfo.getData().getZyjhgd().setF_STATUS("2");
+                planInfo.getData().getZyjhgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
+                Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
+                String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
+                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+                viewModel.assignOrder(request).observe(this, model -> {
 
-                if (model) {
-                    finish();
-                }
-            });
+                    if (model) {
+                        finish();
+                    }
+                });
+            }else {
+                ToastUtil.show(PlanOrderDetailActivity.this,"请选择指派人");
+            }
         } else {
             isSubmit = true;
             if (!validateFormData()) {

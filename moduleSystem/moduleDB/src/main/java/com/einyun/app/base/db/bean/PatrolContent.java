@@ -57,6 +57,7 @@ public class PatrolContent{
     private List<SubInspectionWorkOrderFlowNode> sub_inspection_work_order_flow_node;
     private int is_sort;
     private String F_patrol_line_name;
+    private String F_patrol_line_id;
     private int  F_duration;
 
     public int getIs_sort() {
@@ -450,5 +451,13 @@ public class PatrolContent{
 
     public void setF_SEND_REMARK(String f_SEND_REMARK) {
         F_SEND_REMARK = f_SEND_REMARK;
+    }
+
+    public String getF_patrol_line_id() {
+        return F_patrol_line_id;
+    }
+
+    public void setF_patrol_line_id(String f_patrol_line_id) {
+        F_patrol_line_id = f_patrol_line_id;
     }
 }
