@@ -146,6 +146,10 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                             binding.btnAgree.setVisibility(View.VISIBLE);
                             binding.btnAgree.setEnabled(false);
                             binding.btnReject.setEnabled(false);
+                            binding.btnAgree.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                            binding.btnReject.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                            binding.btnAgree.setTextColor(getResources().getColor(R.color.white));
+                            binding.btnReject.setTextColor(getResources().getColor(R.color.white));
 //                            binding.tvResult.setVisibility(View.GONE);
                         }else {
                             binding.btnReject.setVisibility(View.VISIBLE);

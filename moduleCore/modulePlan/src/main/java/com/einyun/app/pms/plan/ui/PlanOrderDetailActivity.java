@@ -275,6 +275,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 binding.btnAgree.setVisibility(View.VISIBLE);
                                 binding.btnReject.setEnabled(false);
                                 binding.btnAgree.setEnabled(false);
+                                binding.btnAgree.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                                binding.btnReject.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                                binding.btnAgree.setTextColor(getResources().getColor(R.color.white));
+                                binding.btnReject.setTextColor(getResources().getColor(R.color.white));
                             }
                         } else {//接单后 这里还要设置 enable
                             if (!TextUtils.isEmpty(model.result)) {

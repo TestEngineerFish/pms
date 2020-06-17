@@ -229,6 +229,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                     binding.btnAgree.setVisibility(View.VISIBLE);
                     binding.btnAgree.setEnabled(false);
                     binding.btnReject.setEnabled(false);
+                    binding.btnAgree.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.btnReject.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.btnAgree.setTextColor(getResources().getColor(R.color.white));
+                    binding.btnReject.setTextColor(getResources().getColor(R.color.white));
                     binding.tvResult.setVisibility(View.GONE);
                     binding.tvResult.setText(R.string.text_un_need_handle);
                     binding.tvResult.setTypeface(null, Typeface.NORMAL);

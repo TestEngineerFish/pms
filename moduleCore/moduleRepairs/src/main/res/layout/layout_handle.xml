@@ -124,7 +124,7 @@
                 style="@style/tv_create_order_name"
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
-                android:text="维修工时"
+                android:text="维修工时(h)"
                 android:textStyle="normal"
                 android:textColor="@color/blackTextColor"/>
             <com.einyun.app.common.ui.widget.BaseEditText
@@ -138,6 +138,13 @@
                 android:inputType="number"
                 android:textSize="@dimen/font_size14"
                 android:hint="请输入"/>
+            <TextView
+                style="@style/tv_create_order_name"
+                android:layout_width="wrap_content"
+                android:layout_weight="0"
+                android:text="小时"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor"/>
         </LinearLayout>
 
     </LinearLayout>
