@@ -93,8 +93,11 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
             binding.panelHandleForm.setVisibility(View.GONE);
         }else if (f_plan_work_order_state==6){
+            binding.btnSubmit.setText("派单");
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
             binding.panelHandleForm.setVisibility(View.GONE);
+        }else {
+            binding.btnSubmit.setText("提交");
         }
 
     }
@@ -181,17 +184,22 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                             binding.llSign.setVisibility(View.GONE);
                             binding.llSignComplete.setVisibility(View.GONE);
                         } else {
-                            binding.llPhotoComplete.setVisibility(View.GONE);
-                            binding.llCapture.setVisibility(View.VISIBLE);
-                            binding.llSign.setVisibility(View.VISIBLE);
-                            binding.llCapture.setEnabled(true);
-                            binding.llSign.setEnabled(true);
-                            binding.llSign.setBackgroundResource(R.drawable.shape_button_corners_blue);
-                            binding.llCapture.setBackgroundResource(R.drawable.shape_frame_corners_blue);
-                            binding.ivPic.setColorFilter(getResources().getColor(R.color.blueTextColor));
-                            binding.tvPhoto.setTextColor(getResources().getColor(R.color.blueTextColor));
+                            if (SignCheckResult.SIGN_IN_SUCCESS == model.sign_result) {//是否已签到，已签到
+                                binding.llSign.setVisibility(View.GONE);
+                                binding.llSignComplete.setVisibility(View.VISIBLE);
+                            } else {//未签到
+                                binding.llPhotoComplete.setVisibility(View.GONE);
+                                binding.llCapture.setVisibility(View.VISIBLE);
+                                binding.llSign.setVisibility(View.VISIBLE);
+                                binding.llCapture.setEnabled(true);
+                                binding.llSign.setEnabled(true);
+                                binding.llSign.setBackgroundResource(R.drawable.shape_button_corners_blue);
+                                binding.llCapture.setBackgroundResource(R.drawable.shape_frame_corners_blue);
+                                binding.ivPic.setColorFilter(getResources().getColor(R.color.blueTextColor));
+                                binding.tvPhoto.setTextColor(getResources().getColor(R.color.blueTextColor));
 
-                            binding.llSignComplete.setVisibility(View.GONE);
+                                binding.llSignComplete.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }
@@ -476,7 +484,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         patrolInfo.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());//处理时间
         patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());//关闭状态
         patrolInfo.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());//处理人
-        patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());//处理人姓名
+        patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getRealName());//处理人姓名
         patrolInfo.getData().getZyxcgd().setF_processing_instructions(binding.limitInput.getString());//处理意见
     }
 
@@ -486,14 +494,17 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         if (f_plan_work_order_state == 5) {
             patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
             patrolInfo.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
-            patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
+            patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getRealName());
             Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
             viewModel.receiceOrder(request).observe(this,model->{
 
-                if (model) {
-                    finish();
+                if (model.isState()) {
+                    initSendDialog("接单成功");
+                }else {
+                    patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.PENDING.getState());
+                    ToastUtil.show(PatrolTimeHandleActivity.this,model.getMsg());
                 }
             });
 
@@ -506,8 +517,11 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
                 viewModel.assignOrder(request).observe(this,model->{
 
-                    if (model) {
-                        finish();
+                    if (model.isState()) {
+                       initSendDialog("派单成功");
+                    }else {
+                        patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.OVER_DUE.getState());
+                        ToastUtil.show(PatrolTimeHandleActivity.this,model.getMsg());
                     }
                 });
             }else {

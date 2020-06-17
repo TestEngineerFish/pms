@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.constants.URLS;
 import com.einyun.app.common.model.DisqualifiedDetailModel;
@@ -58,12 +59,12 @@ public class MsgRepository {
      * @param callBack
      * @return
      */
-    public LiveData<Boolean> receiveOrder(String url,PatrolSubmitRequest request, CallBack<Boolean> callBack) {
-        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+    public LiveData<BaseResponse> receiveOrder(String url, PatrolSubmitRequest request, CallBack<BaseResponse> callBack) {
+        MutableLiveData<BaseResponse> liveData = new MutableLiveData<>();
         serviceApi.receiveOrder(url,request).compose(RxSchedulers.inIoMain())
                 .subscribe(response -> {
-                    liveData.postValue(response.isState());
-                    callBack.call(response.isState());
+                    liveData.postValue(response);
+                    callBack.call(response);
                 }, error -> {
                     callBack.onFaild(error);
                 });

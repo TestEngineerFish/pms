@@ -11,6 +11,7 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
@@ -88,13 +89,13 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      * 接单
      * @return
      */
-    public LiveData<Boolean> receiceOrder(PatrolSubmitRequest request){
-        MutableLiveData<Boolean> liveData=new MutableLiveData();
+    public LiveData<BaseResponse> receiceOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
         showLoading();
         String url= URLS.URL_GET_RECEIVE_ORDER;
-        repository.receiveOrder(url,request, new CallBack<Boolean>() {
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
             @Override
-            public void call(Boolean data) {
+            public void call(BaseResponse data) {
                 hideLoading();
                 liveData.postValue(data);
             }
@@ -111,13 +112,13 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      * 指派
      * @return
      */
-    public LiveData<Boolean> assignOrder(PatrolSubmitRequest request){
-        MutableLiveData<Boolean> liveData=new MutableLiveData();
+    public LiveData<BaseResponse> assignOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
         showLoading();
         String url= URLS.URL_GET_ASSIGNE_ORDER;
-        repository.receiveOrder(url,request, new CallBack<Boolean>() {
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
             @Override
-            public void call(Boolean data) {
+            public void call(BaseResponse data) {
                 hideLoading();
                 liveData.postValue(data);
             }

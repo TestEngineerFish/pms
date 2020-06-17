@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FF132D42"
-                app:setUserName="@{user}"
+                android:text="@{user.fullname}"
                 android:textSize="@dimen/font_size16" />
 
             <TextView
@@ -41,7 +41,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="@{user.mobile}"
-                android:textColor="#FF132D42"
+                android:textColor="@color/greyTextColor"
                 android:textSize="@dimen/font_size13" />
         </LinearLayout>
         <LinearLayout

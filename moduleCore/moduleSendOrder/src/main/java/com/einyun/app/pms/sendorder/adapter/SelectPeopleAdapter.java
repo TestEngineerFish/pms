@@ -98,7 +98,9 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
         childBinding=DataBindingUtil.bind(view);
         if (groupPosition==0){
             if (orgnizationModelList!=null&&orgnizationModelList.getValue()!=null) {
-                childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition).getName());
+                if (orgnizationModelList.getValue().size()==2) {
+                    childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition+1).getName());
+                }
             }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,8 +109,12 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                         ArrayList<String> list = new ArrayList<>();
                         list.add(orgnizationModelList.getValue().get(childPosition).getId());
                         list.add(orgnizationModelList.getValue().get(childPosition).getParentId());
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list)
-                                .navigation();
+                        if (orgnizationModelList.getValue().size() == 2) {
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
+                                    .withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list)
+                                    .withString(RouteKey.KEY_DIVIDE_NAME, orgnizationModelList.getValue().get(childPosition + 1).getName())
+                                    .navigation();
+                        }
                     }
                 }
             });

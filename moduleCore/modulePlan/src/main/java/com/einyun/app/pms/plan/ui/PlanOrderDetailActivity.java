@@ -588,11 +588,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             binding.cvOperate.setVisibility(View.GONE);
 
         } else if (String.valueOf(OrderState.OVER_DUE.getState()).equals(zyjhgd.getF_STATUS())) {//添加 f_status 派单 显示不同布局
+            binding.btnSubmit.setText("派单");
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
             if (!FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag)) {
                 binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
             }
+        }else {
+            binding.btnSubmit.setText("提交");
         }
     }
 
@@ -861,8 +864,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
             viewModel.receiceOrder(request).observe(this, model -> {
 
-                if (model) {
-                    finish();
+                if (model.isState()) {
+                    initDialog("接单成功");
+                }else {
+                    planInfo.getData().getZyjhgd().setF_STATUS("5");
+                    ToastUtil.show(PlanOrderDetailActivity.this,model.getMsg());
                 }
             });
 
@@ -876,8 +882,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
                 viewModel.assignOrder(request).observe(this, model -> {
 
-                    if (model) {
-                        finish();
+                    if (model.isState()) {
+                        initDialog("派单成功");
+                    }else {
+                        planInfo.getData().getZyjhgd().setF_STATUS("6");
+                        ToastUtil.show(PlanOrderDetailActivity.this,model.getMsg());
                     }
                 });
             }else {
@@ -920,7 +929,24 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }
         return false;
     }
-
+    AlertDialog dialog;
+    private void initDialog(String content) {
+        if (dialog == null) {
+            dialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                    .setMsg(content)
+                    .setPositiveButton("我知道了", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+            dialog.show();
+        } else {
+            if (!dialog.isShowing()) {
+                dialog.show();
+            }
+        }
+    }
     @Override
     protected void onStop() {
         super.onStop();

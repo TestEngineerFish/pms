@@ -99,8 +99,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
             binding.panelHandleForm.setVisibility(View.GONE);
         }else if (f_plan_work_order_state==6){
+            binding.btnSubmit.setText("派单");
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
             binding.panelHandleForm.setVisibility(View.GONE);
+        }else {
+            binding.btnSubmit.setText("提交");
         }
     }
 
@@ -317,7 +320,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         patrol.getData().getZyxcgd().setF_actual_completion_time(TimeUtil.Now());
         patrol.getData().getZyxcgd().setF_plan_work_order_state(OrderState.CLOSED.getState());
         patrol.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
-        patrol.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
+        patrol.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getRealName());
 //        Logger.d("data->"+new Gson().toJson(patrol));
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyxcgd().getId_());
@@ -410,14 +413,17 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         if (f_plan_work_order_state == 5) {
             patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
             patrolInfo.getData().getZyxcgd().setF_principal_id(viewModel.getUserService().getUserId());
-            patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getUserName());
+            patrolInfo.getData().getZyxcgd().setF_principal_name(viewModel.getUserService().getRealName());
             Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
             viewModel.receiceOrder(request).observe(this,model->{
 
-                if (model) {
-                    finish();
+                if (model.isState()) {
+                    initSendDialog("接单成功");
+                }else {
+                    patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.PENDING.getState());
+                    ToastUtil.show(PatrolHandleActivity.this,model.getMsg());
                 }
             });
 
@@ -430,8 +436,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                 PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
                 viewModel.assignOrder(request).observe(this,model->{
 
-                    if (model) {
-                        finish();
+                    if (model.isState()) {
+                        initSendDialog("派单成功");
+                    }else {
+                        patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.OVER_DUE.getState());
+                        ToastUtil.show(PatrolHandleActivity.this,model.getMsg());
                     }
                 });
             }else {
@@ -443,6 +452,24 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                 return;
             }
             uploadImages(patrolInfo);
+        }
+    }
+    AlertDialog sendDialog;
+    public void initSendDialog(String content) {
+        if (sendDialog == null) {
+            sendDialog = new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
+                    .setMsg(content)
+                    .setPositiveButton("我知道了", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+            sendDialog.show();
+        } else {
+            if (!sendDialog.isShowing()) {
+                sendDialog.show();
+            }
         }
     }
 

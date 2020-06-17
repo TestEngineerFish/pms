@@ -335,10 +335,12 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             if (listType != ListType.DONE.getType()) {
                 binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
             }
+            binding.btnSubmit.setText("派单");
         }else if (f_plan_work_order_state==5){
             binding.btnSubmit.setText("接单");
             binding.sendOrder.getRoot().setVisibility(View.GONE);
         }else {
+            binding.btnSubmit.setText("提交");
             binding.sendOrder.getRoot().setVisibility(View.GONE);
         }
         if (f_plan_work_order_state == OrderState.HANDING.getState() || f_plan_work_order_state == OrderState.APPLY.getState() || f_plan_work_order_state == OrderState.NEW.getState()) {
