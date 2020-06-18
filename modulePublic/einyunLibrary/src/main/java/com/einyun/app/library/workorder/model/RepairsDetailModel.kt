@@ -370,6 +370,7 @@ class RepairsDetailModel {
                     var name: String? = null
                     var matkl: String? = null
                     var matnr: String? = null
+                    var MEINS: String? = null
                 }
             }
         }

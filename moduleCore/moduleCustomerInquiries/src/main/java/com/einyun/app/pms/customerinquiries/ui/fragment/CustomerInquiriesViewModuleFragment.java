@@ -313,13 +313,19 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      */
     @Override
     public void onItemClicked(View veiw, InquiriesItemModule data) {
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
-                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
-                .withSerializable(Constants.INQUIRIES_BEAN,data)
-                .navigation();
+//        ARouter.getInstance()
+//                .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
+//                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
+//                .withSerializable(Constants.INQUIRIES_BEAN,data)
+//                .navigation();
         String taskId = data.getTaskId();
         String proInsId = data.getProInsId();
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
+                .withString(RouteKey.FRAGMENT_TAG, getFragmentTag())
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .navigation();
         Log.e(TAG, "onItemClicked: "+"taskId  "+taskId);
     }
 

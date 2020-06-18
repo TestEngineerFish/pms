@@ -116,7 +116,7 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                 }
                 materialModel.setQuantity(binding.addMaterialAmount.getText().toString());
                 materialModel.setPrice(binding.addMaterialPrice.getText().toString());
-                materialModel.setMatkl(binding.addMaterialUnit.getText().toString());
+                materialModel.setMEINS(binding.addMaterialUnit.getText().toString());
                 materialModel.setName(binding.addMaterialName.getText().toString());
                 materialModel.setTotal_price(binding.addMaterialTotalPrice.getText().toString());
                 LiveEventBus.get(LiveDataBusKey.POST_REPAIR_ADD_MATERIAL).post(materialModel);

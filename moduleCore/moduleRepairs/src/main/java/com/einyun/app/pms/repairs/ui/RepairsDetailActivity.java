@@ -521,6 +521,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //添加材料
         if (detialModel.getData().getCustomer_repair_model().getSub_repair_materials() != null) {
             materialAdapter.setDataList(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
+            List<RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean> sub_repair_materials = detialModel.getData().getCustomer_repair_model().getSub_repair_materials();
         } else {
 //            binding.repairUseMaterial.getRoot().setVisibility(View.GONE);
         }
