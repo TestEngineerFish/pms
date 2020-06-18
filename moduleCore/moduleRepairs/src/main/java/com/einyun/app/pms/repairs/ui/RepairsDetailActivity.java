@@ -771,6 +771,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 ToastUtil.show(this, R.string.txt_plese_select_people);
                 return;
             }
+            customerRepair.setPd_remark(binding.sendOrder.repairSendReason.getString());
         }
         if (nodeId.equals(RouteKey.REPAIR_STATUS_HANDLE)) {
             //上传图片后异步提交
