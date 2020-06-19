@@ -175,11 +175,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
             map.put("user_name", UserUtil.getUserName());
             MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName(),map);
             ARouter.getInstance()
-                    .build(RouterUtils.ACTIVITY_ADVICE_FEED_BACK)
-                    .withString(RouteKey.ACCOUNT,userInfoModel1.getAccount())
-                    .withString(RouteKey.NAME,userInfoModel1.getFullname())
-                    .withString(RouteKey.PHONE,userInfoModel1.getMobile())
-                    .withString(RouteKey.ID,userInfoModel1.getId())
+                    .build(RouterUtils.ACTIVITY_FEED)
                     .navigation();
         }
 

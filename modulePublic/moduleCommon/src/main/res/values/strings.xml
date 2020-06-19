@@ -287,4 +287,8 @@
 
     <!--公告模块-->
     <string name="txt_notice">公告</string>
+    <string name="txt_feed_back">意见反馈</string>
+    <string name="txt_add_feed">新增</string>
+    <string name="txt_sub_feed">提交反馈</string>
+    <string name="txt_feed_list">历史反馈</string>
 </resources>

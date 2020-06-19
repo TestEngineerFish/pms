@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+<variable
+    name="handleFeed"
+    type="com.einyun.app.pms.mine.model.FeedBackModel" />
+    </data>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/cardview_style">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/px_50"
+                android:layout_height="@dimen/px_50"
+                android:src="@drawable/touxiang"
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginBottom="@dimen/px_25"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textSize="@dimen/font_size16"
+                android:textColor="@color/black_13"
+                android:layout_marginTop="@dimen/px_26"
+                android:layout_marginLeft="@dimen/px_27" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020-06-04 10:17"
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/black_9d"
+                android:layout_marginTop="@dimen/px_26"
+                android:layout_marginLeft="@dimen/px_17" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:src="@drawable/pd_view"
+            android:layout_marginLeft="@dimen/px_20"
+            android:layout_marginRight="@dimen/px_20" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="您好！您之前反馈的问题，因无法准确判断您的问题及需求，因此"
+            android:textSize="@dimen/font_size14"
+            android:textColor="@color/black_13"
+            android:layout_marginTop="@dimen/px_30"
+            android:layout_marginLeft="@dimen/px_77"
+            android:layout_marginRight="@dimen/px_30"
+            android:layout_marginBottom="@dimen/px_48" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+</layout>

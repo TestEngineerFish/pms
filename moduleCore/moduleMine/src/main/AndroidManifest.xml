@@ -2,5 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.einyun.app.pms.mine">
 
+    <application>
+        <activity android:name=".ui.FeedBackSucActivity"></activity>
+        <activity android:name=".ui.FeedBackDetailActivity" />
+        <activity android:name=".ui.FeedBackActivity" />
+        <activity android:name=".ui.FeedBackListActivity" />
+    </application>
 
 </manifest>

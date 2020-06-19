@@ -172,4 +172,6 @@ public class RouteKey {
     public static final String KEY_PATROL_ID = "KEY_PATROL_ID";
     public static final String KEY_TYPE = "KEY_TYPE";
     public static final String KEY_HOME_ENTER = "KEY_HOME_ENTER";
+    public static final String KEY_FEED_ID = "KEY_FEED_ID";
+
 }
