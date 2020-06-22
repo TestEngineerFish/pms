@@ -318,12 +318,12 @@
                 </androidx.cardview.widget.CardView>
                 <!--         派单信息-->
                 <include
-                    android:id="@+id/send_order_info"
+                    android:id="@+id/layout_send_order_info"
                     layout="@layout/layout_inquiries_send_order_info"
                     android:visibility="gone" />
                 <!-- 响应信息                   -->
                 <include
-                    android:id="@+id/repair_response_info"
+                    android:id="@+id/layout_inquiries_response_info"
                     layout="@layout/layout_inquiries_response_info"
                     android:visibility="gone" />
                 <!--        强制闭单信息 -->
@@ -544,7 +544,7 @@
                 </androidx.cardview.widget.CardView>
                 <!--                派单-->
                 <include
-                    android:id="@+id/send_order"
+                    android:id="@+id/layout_send_order"
                     layout="@layout/layout_inquiries_send_order"
                     android:visibility="gone" />
                 <!-- 首次沟通 -->
@@ -858,10 +858,11 @@
                     android:visibility="gone">
 
                     <TextView
+                        android:id="@+id/tv_save"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="7.5dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/shape_iv_unpass"
                         android:gravity="center"
@@ -874,7 +875,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="7.5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/select_btn_bg"

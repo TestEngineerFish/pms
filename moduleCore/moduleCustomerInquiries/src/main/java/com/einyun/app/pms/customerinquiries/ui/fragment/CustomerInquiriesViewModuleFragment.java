@@ -150,6 +150,14 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                 @Override
                 public void onBindItem(ItemInquiriesListBinding binding, InquiriesItemModule inquiriesItemModule) {
                     switch (inquiriesItemModule.getTaskNodeId()) {
+                        case Constants.INQUIRIES_STATE_SEND:
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_send));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_send);
+                            break;
+                        case Constants.INQUIRIES_STATE_RESPONSE:
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_response));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_response);
+                            break;
                         case Constants.INQUIRIES_STATE_DEALING:
                             binding.tvApprovalState.setText(getString(R.string.tv_dealing));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_processing);
