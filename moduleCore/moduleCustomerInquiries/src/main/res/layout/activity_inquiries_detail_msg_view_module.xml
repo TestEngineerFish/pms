@@ -552,13 +552,6 @@
                     android:id="@+id/layout_inquiries_response"
                     layout="@layout/layout_inquiries_response"
                     android:visibility="gone" />
-<!--                &lt;!&ndash;                响应&ndash;&gt;-->
-<!--                <include-->
-<!--                    android:id="@+id/repari_response"-->
-<!--                    layout="@layout/layout_inquiries_response"-->
-<!--                    android:visibility="gone"/>-->
-                <!--         <include layout="@layout/layout_apply_close_info" android:id="@+id/force_close_info" android:visibility="gone"/>-->
-
                 <!--         回复内容-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/ll_reply_content"
@@ -826,7 +819,180 @@
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+                <!--         外呼评价-->
+                <androidx.cardview.widget.CardView android:visibility="gone" style="@style/cardview_style">
 
+                    <LinearLayout
+                        android:id="@+id/ll_evaluation_close_call"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_white_bg"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/px_90">
+
+                            <TextView
+                                style="@style/tv_create_order_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="@dimen/px_20"
+                                android:gravity="center_vertical"
+                                android:text="@string/tv_evaluation"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/px_32" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/pd_view" />
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="外呼结果"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:id="@+id/tv_evaluation_call_result"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="是否真实响应"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:id="@+id/tv_evaluation_call_response"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="评价人"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:id="@+id/tv_evaluation_option_person"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_evaluation_time"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:id="@+id/tv_evaluation_time_call"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_deal_result"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <RadioGroup
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:layout_width="@dimen/px_30"
+                                    android:layout_height="@dimen/px_30"
+                                    android:layout_marginLeft="@dimen/px_75"
+                                    android:background="@drawable/select_inquiries_solve"
+                                    android:button="@null"
+                                    android:checked="true"
+                                    android:padding="@dimen/px_5" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/px_5"
+                                    android:text="@string/tv_had_solve"
+                                    android:textColor="@color/blackTextColor" />
+
+                            </RadioGroup>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="评价说明"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:id="@+id/tv_evaluation_option"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
                 <!--         强制关闭-->
                 <androidx.cardview.widget.CardView
                     style="@style/cardview_style"
