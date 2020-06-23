@@ -373,6 +373,8 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             } else {//强制关闭正在审批中  能操作的都隐藏掉 评价  提交 回复
                 binding.llForseClose.setVisibility(View.GONE);
 
+                binding.layoutSendOrder.getRoot().setVisibility(View.GONE);
+                binding.layoutInquiriesResponse.getRoot().setVisibility(View.GONE);
                 binding.llEvaluation.setVisibility(View.GONE);
                 binding.llReplyContent.setVisibility(View.GONE);
                 binding.llPass.setVisibility(View.GONE);
@@ -408,6 +410,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                         ToastUtil.show(this, "请选择指派人");
                         return;
                     }
+                    mDealRequest.getBizData().setPd_remake(binding.layoutSendOrder.repairSendReason.getString());
                     break;
                 case RouteKey.LIST_STATUS_RESPONSE://待响应
                     String reasonString = binding.layoutInquiriesResponse.ltResponseReason.getString();

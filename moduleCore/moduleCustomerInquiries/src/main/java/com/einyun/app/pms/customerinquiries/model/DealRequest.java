@@ -38,6 +38,7 @@ public class DealRequest {
         private String assign_grab_user;
         private String assign_grab_user_id;
         private String response_result;
+        private String pd_remake;
 
         public String getHandle_cont() {
             return handle_cont;
@@ -69,6 +70,14 @@ public class DealRequest {
 
         public void setResponse_result(String response_result) {
             this.response_result = response_result;
+        }
+
+        public String getPd_remake() {
+            return pd_remake;
+        }
+
+        public void setPd_remake(String pd_remake) {
+            this.pd_remake = pd_remake;
         }
     }
 
