@@ -54,7 +54,8 @@
                     android:singleLine="true"
                     android:text="@{workOrder.f_DESC}"
                     android:textColor="@color/blackTextColor"
-                    android:textSize="@dimen/px_32" />
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
                 <RelativeLayout
                     android:layout_width="@dimen/px_136"

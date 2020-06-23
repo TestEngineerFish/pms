@@ -11,10 +11,13 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.URLS;
+import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
@@ -45,12 +48,21 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     ResourceWorkOrderService service;
-
+    public MsgRepository repository;
     public PlanOrderDetailViewModel(){
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
-
+        repository=new MsgRepository();
     }
     PlanOrderRepository repository2= new PlanOrderRepository("");
+
+    public String getUserName(){
+
+        return userModuleService.getRealName();
+    }
+    public String getUserID(){
+
+        return userModuleService.getUserId();
+    }
     /**
      * 提交
      * @return
@@ -61,6 +73,52 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         service.planSubmit(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 接单
+     * @return
+     */
+    public LiveData<BaseResponse> receiceOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_RECEIVE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 指派
+     * @return
+     */
+    public LiveData<BaseResponse> assignOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_ASSIGNE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
                 hideLoading();
                 liveData.postValue(data);
             }

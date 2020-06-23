@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -74,6 +75,8 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
             setRightOption(R.mipmap.img_qrcode_scan);
         }else{
             binding.headBar.ivRightOption.setVisibility(View.GONE);
+            binding.llPatrolSigninResult.setVisibility(View.VISIBLE);
+            binding.llPatrolSigninTime.setVisibility(View.VISIBLE);
         }
     }
 
@@ -126,6 +129,7 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
             boolean sacnResult = data.getBooleanExtra(DataConstants.KEY_QR_SCAN_RESULT, false);
             if (sacnResult) {
                 workNode.setSign_result(SignCheckResult.SIGN_IN_SUCCESS);
+                workNode.setSign_time(TimeUtil.getAllTime(System.currentTimeMillis()));
                 binding.setNode(workNode);
                 initScan();
                 signInSuccess(pointId);

@@ -272,7 +272,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
         map.put("user_name", UserUtil.getUserName());
         MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PATOL_ORDER_SEARCH.getTypeName(),map);
         if (searchFragment == null) {
-            searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<Patrol>() {
+            searchFragment = new PageSearchFragment<>(getActivity(), com.einyun.app.pms.patrol.BR.patrolWorkOrder, new PageSearchListener<ItemWorkPatrolBinding,Patrol>() {
                 @Override
                 public LiveData<PagedList<Patrol>> search(String search) {
                     return viewModel.search(search);
@@ -282,7 +282,10 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                 public void onItemClick(Patrol model) {
                     onItemClicked(null, model);
                 }
+                @Override
+                public void onItem(ItemWorkPatrolBinding binding,Patrol model) {
 
+                }
                 @Override
                 public int getLayoutId() {
                     return R.layout.item_work_patrol;

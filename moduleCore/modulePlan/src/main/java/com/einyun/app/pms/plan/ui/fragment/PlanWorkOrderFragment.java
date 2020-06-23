@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -148,10 +149,10 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         try {
             HashMap<String, String> map = new HashMap<>();
             map.put("user_name", UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(),map);
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(), map);
             DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {
-                searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {
+                searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<ItemSearchWorkPlanBinding,PlanWorkOrder>() {
                     @Override
                     public LiveData<PagedList<PlanWorkOrder>> search(String search) {
                         request.setSearchValue(search);
@@ -171,6 +172,19 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                                 .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
                                 .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
                                 .navigation();
+                    }
+                    @Override
+                    public void onItem(ItemSearchWorkPlanBinding binding,PlanWorkOrder model) {
+
+                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                            if (model.getF_OT_STATUS() == 1) {
+                                binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                            }
+                        } else {
+                            binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
@@ -206,10 +220,10 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     public void onResume() {
         super.onResume();
 //        loadPagingData();
-        if (isfresh){
+        if (isfresh) {
             loadPagingData();
             isfresh = false;
-        }else{
+        } else {
             viewModel.refresh();
         }
         viewModel.refresh(getFragmentTag());
@@ -249,6 +263,15 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 @Override
                 public void onBindItem(ItemWorkPlanBinding binding, Plan distributeWorkOrder) {
 
+                    if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                        if (distributeWorkOrder.getF_OT_STATUS() == 1) {
+                            binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                        }
+                    } else {
+                        binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -281,7 +304,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                         public void run() {
                             hideLoading();
                         }
-                    },3500);
+                    }, 3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());

@@ -264,7 +264,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
         try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {
-                searchFragment = new PageSearchFragment<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), BR.model, new PageSearchListener<DisqualifiedItemModel>() {
+                searchFragment = new PageSearchFragment<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), BR.model, new PageSearchListener<ItemDisqualifiedListBinding,DisqualifiedItemModel>() {
                     @Override
                     public LiveData<PagedList<DisqualifiedItemModel>> search(String search) {
 //                        request.setSearchValue(search);
@@ -287,6 +287,10 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                                 .navigation();
                     }
 
+                    @Override
+                    public void onItem(ItemDisqualifiedListBinding binding,DisqualifiedItemModel model) {
+
+                    }
                     @Override
                     public int getLayoutId() {
                         return R.layout.item_disqualified_list;

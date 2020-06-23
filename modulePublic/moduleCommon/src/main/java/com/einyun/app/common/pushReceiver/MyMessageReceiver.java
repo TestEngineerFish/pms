@@ -377,7 +377,7 @@ public class MyMessageReceiver extends MessageReceiver{
                 break;
             case "enquiry"://问询消息
                 ARouter.getInstance()
-                        .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                        .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                         .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         .withString(RouteKey.FRAGMENT_TAG, FRAGMENT_TRANSFERRED_TO)
                         .withString(RouteKey.KEY_TASK_ID, "")

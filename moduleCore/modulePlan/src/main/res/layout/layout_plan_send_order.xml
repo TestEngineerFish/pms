@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
+    <LinearLayout
+        android:id="@+id/repairs_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/repair_send_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="派单"
+                android:textColor="@color/txt_black_order"
+                android:layout_marginLeft="@dimen/px_20"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_size16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/txt_blue_color"
+                android:textSize="@dimen/px_30"
+                />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+
+        <LinearLayout
+            android:id="@+id/repair_select_people"
+            style="@style/ll_create_order"
+            android:paddingLeft="@dimen/px_0"
+          >
+
+            <TextView style="@style/tv_create_order_red_star"
+                android:layout_marginLeft="@dimen/px_20"/>
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="指派人"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor"/>
+
+            <TextView
+                android:text=""
+                android:hint="@string/please_select"
+                android:id="@+id/repair_selected_pepple"
+                style="@style/tv_create_order_select"
+                 />
+
+            <ImageView style="@style/tv_create_order_right_arrow" />
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/blackTextColor"
+                android:layout_marginBottom="@dimen/px_20"
+                android:text="派单备注" />
+            <com.einyun.app.common.ui.component.limit.LimitInput
+                android:id="@+id/repair_send_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_30"
+                android:layout_marginLeft="@dimen/px_20"
+                android:paddingRight="@dimen/px_20"
+                app:hintText="请输入备注内容"
+                app:maxNumber="300" />
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -41,6 +41,8 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
     ArrayList<String> orgIdList;
     @Autowired(name = RouteKey.KEY_ROLE_ID_LIST)
     ArrayList<String> roleIdList;
+    @Autowired(name = RouteKey.KEY_DIVIDE_NAME)
+    String divideName;
     RVBindingAdapter<ItemResendOrderChoosePersonBinding, GetMappingByUserIdsResponse> adapter;
     public List<GetMappingByUserIdsResponse> users = new ArrayList<>();
 
@@ -57,6 +59,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
+        binding.tvDivideName.setText(divideName);
         setHeadTitle(R.string.select_person);
         setRightOption(R.mipmap.icon_search);
         RecyclerView mRecyclerView = binding.rvChooseDisposePerson;

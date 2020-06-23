@@ -174,6 +174,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
             } else {
                 uri = Uri.fromFile(imageFile);
             }
+            showLoading();
             Observable.just(imageFile).subscribeOn(Schedulers.io())
                     .subscribe(file -> {
                         BitmapUtil.AddTimeWatermark(file);
@@ -182,6 +183,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                                 photoSelectAdapter.addPhotos(Arrays.asList(uri));
                                 cacheCaptures();
                             }
+                            hideLoading();
                         });
                     });
         }
