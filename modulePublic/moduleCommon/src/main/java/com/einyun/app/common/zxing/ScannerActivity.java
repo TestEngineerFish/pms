@@ -39,31 +39,31 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
         @Override
         public void handleResult(Result result) {
             resumeCameraPreview();
-            Logger.d("扫码内容->"+ result.getText());
-            Logger.d("扫码格式"+ result.getBarcodeFormat().toString());
-            if (mHomeEnter==null) {
+            Logger.d("扫码内容->" + result.getText());
+            Logger.d("扫码格式" + result.getBarcodeFormat().toString());
+            if (mHomeEnter == null) {
                 onScanResult(result.getText());
-            }else {
+            } else {
                 String code = result.getText();
-                if (code.length()<3) {
+                if (code.length() < 3) {
                     return;
                 }
-                String scanCode = result.getText().substring(2, code.length());
-                if (code.startsWith("30")) {
+                if (code.startsWith("30") || code.startsWith("11") || code.startsWith("12")
+                        || code.startsWith("21") || code.startsWith("22") || code.startsWith("23")) {
                     ARouter.getInstance()
                             .build(RouterUtils.ACTIVITY_SCAN_RES)
-                            .withString(RouteKey.KEY_RES_ID,scanCode)
-                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
-                            .withString(RouteKey.KEY_TYPE,"30")
+                            .withString(RouteKey.KEY_RES_ID, code)
+                            .withString(RouteKey.KEY_PATROL_ID, code)
+                            .withString(RouteKey.KEY_TYPE, "30")
                             .navigation();
-                }else if (code.startsWith("31")){
+                } else if (code.startsWith("31")) {
                     ARouter.getInstance()
                             .build(RouterUtils.ACTIVITY_SCAN_RES)
-                            .withString(RouteKey.KEY_RES_ID, scanCode)
-                            .withString(RouteKey.KEY_PATROL_ID, scanCode)
-                            .withString(RouteKey.KEY_TYPE,"31")
+                            .withString(RouteKey.KEY_RES_ID, code)
+                            .withString(RouteKey.KEY_PATROL_ID, code)
+                            .withString(RouteKey.KEY_TYPE, "31")
                             .navigation();
-                }else {
+                } else {
                     ToastUtil.show(ScannerActivity.this, "未识别的二维码");
                     binding.scannerView.setResultHandler(mResultHandler);
                     binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
@@ -79,15 +79,15 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
         }
     };
 
-    protected void resumeCameraPreview(){
+    protected void resumeCameraPreview() {
         binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
     }
 
-    protected void stopCameraPreview(){
+    protected void stopCameraPreview() {
         binding.scannerView.stopCameraPreview();
     }
 
-   protected void onScanResult(String result){
+    protected void onScanResult(String result) {
         Intent intent = new Intent();
         intent.putExtra(DataConstants.KEY_SCANNER_CONTENT, result);
         setResult(RESULT_OK, intent);
