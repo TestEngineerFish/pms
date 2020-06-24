@@ -41,74 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pd_view" />
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="外呼结果"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"/>
-
-
-            </LinearLayout>
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="是否真实响应"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"/>
-
-
-            </LinearLayout>
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="评价人"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"/>
-
-
-            </LinearLayout>
-
             <LinearLayout
                 style="@style/ll_create_order"
                 android:paddingLeft="0dp">
@@ -133,7 +65,6 @@
 
             <LinearLayout
                 style="@style/ll_create_order"
-                android:layout_height="wrap_content"
                 android:paddingLeft="0dp">
 
 
@@ -169,7 +100,6 @@
             </LinearLayout>
             <LinearLayout
                 style="@style/ll_create_order"
-                android:layout_height="wrap_content"
                 android:paddingLeft="0dp">
 
 
@@ -299,6 +229,73 @@
                     android:text="@{complain.service_quality_content}"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访结果"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:text="@{complain.return_visit_result}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访人"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:text="@{complain.return_visit_user}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访时间"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:text="@{complain.return_visit_time}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14"/>
+
+
             </LinearLayout>
         </LinearLayout>
 

@@ -322,6 +322,7 @@ class RepairsDetailModel {
             var bx_cate_lv2_id: String? = null
             var pd_time: String? = null
             var response_time: String? = null
+            var return_visit_time: String? = null
             var response_user: String? = null
             var assign_grab_user_id: String? = null
             var fclose_apply_time: String? = null

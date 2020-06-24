@@ -820,7 +820,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <!--         外呼评价-->
-                <androidx.cardview.widget.CardView android:visibility="gone" style="@style/cardview_style">
+                <androidx.cardview.widget.CardView android:visibility="visible" style="@style/cardview_style">
 
                     <LinearLayout
                         android:id="@+id/ll_evaluation_close_call"
@@ -853,66 +853,6 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:src="@drawable/pd_view" />
-                        <LinearLayout
-                            style="@style/ll_create_order"
-                            android:background="@drawable/shape_white_bg">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="外呼结果"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-
-                            <TextView
-                                android:id="@+id/tv_evaluation_call_result"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_75"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-
-                        </LinearLayout>
-                        <LinearLayout
-                            style="@style/ll_create_order"
-                            android:background="@drawable/shape_white_bg">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="是否真实响应"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-
-                            <TextView
-                                android:id="@+id/tv_evaluation_call_response"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_75"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-
-                        </LinearLayout>
-                        <LinearLayout
-                            style="@style/ll_create_order"
-                            android:background="@drawable/shape_white_bg">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="评价人"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-
-                            <TextView
-                                android:id="@+id/tv_evaluation_option_person"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/px_75"
-                                android:textColor="@color/blackTextColor"
-                                android:textSize="@dimen/font_size14" />
-
-                        </LinearLayout>
                         <LinearLayout
                             style="@style/ll_create_order"
                             android:background="@drawable/shape_white_bg">
@@ -984,6 +924,72 @@
 
                             <TextView
                                 android:id="@+id/tv_evaluation_option"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="回访结果"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="@dimen/px_75"
+                                app:isSolve="@{module.data.customer_enquiry_model.return_visit_result}"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_25"
+                                app:isSolve="@{module.data.customer_enquiry_model.return_visit_result}"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="回访人"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:text="@{module.data.customer_enquiry_model.return_visit_user}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_75"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ll_create_order"
+                            android:background="@drawable/shape_white_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="回访时间"
+                                android:textColor="@color/blackTextColor"
+                                android:textSize="@dimen/font_size14" />
+
+                            <TextView
+                                android:text="@{module.data.customer_enquiry_model.return_visit_time}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/px_75"

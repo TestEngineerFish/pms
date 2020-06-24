@@ -74,6 +74,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
     private InquiriesDetailModule.DataBean.CustomerEnquiryModelBean detail;
     private boolean isSendOrder;
     private boolean isResponse;
+    private boolean isCall;
     private String state;
     private DealRequest mDealRequest;
 
@@ -96,11 +97,12 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
         setRightTxt(R.string.tv_history);
         setRightTxtColor(R.color.blueTextColor);
         initRadioGroup();
+        mDealRequest = new DealRequest();
         //选择人员
         LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
             binding.layoutSendOrder.repairSelectedPepple.setText(model.getFullname());
-            mDealRequest.getBizData().setAssign_grab_user(model.getFullname());
-            mDealRequest.getBizData().setAssign_grab_user_id(model.getId());
+            mDealRequest.getBizData().setPd_assignor(model.getFullname());
+            mDealRequest.getBizData().setPd_assignor_id(model.getId());
         });
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
             @Override
@@ -108,8 +110,23 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 finish();
             }
         });
+        binding.layoutSendOrder.repairSelectPeople.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPeple();
+            }
+        });
     }
-
+    /**
+     * 选择指派人
+     */
+    private void selectPeple() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                .withString(RouteKey.KEY_DIVIDE_ID, detail.getWx_dk_id())
+                .withString(RouteKey.KEY_PROJECT_ID, detail.getU_project_id())
+                .navigation();
+    }
     private void initState(String state) {
         switch (state) {
             case RouteKey.LIST_STATUS_SEND_ORDER://待派单
@@ -174,6 +191,9 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 if (isResponse) {
                     binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
                 }
+                if (isCall) {
+                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }
                 binding.tvDealState.setText("已完成");
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
 //                binding.llHistory.setVisibility(View.VISIBLE);
@@ -218,23 +238,32 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
 //            Log.e(TAG, "onResume:proInsId--"+inquiriesItemModule.proInsId+"--taskId--"+inquiriesItemModule.taskId);
             orderDetailInfoModule = module;
             int c_is_solve = orderDetailInfoModule.getData().getCustomer_repair_model().getC_is_solve();
-
-            if (c_is_solve == 1) {//1 已解决  0 未解决
-                binding.llEvaluationClose.setVisibility(View.VISIBLE);
-                String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
-                binding.tvEvaluationTime.setText(return_time);
-            }
-
             if (module.getData().getCustomer_repair_model().getPd_time() != null) {
                 isSendOrder = true;
             } else {
                 isSendOrder = false;
             }
-            if (module.getData().getCustomer_repair_model().getPd_time() != null) {
+            if (module.getData().getCustomer_repair_model().getResponse_time() != null) {
                 isResponse = true;
             } else {
                 isResponse = false;
             }
+            if (module.getData().getCustomer_repair_model().getReturn_visit_time() != null) {
+                isCall = true;
+            } else {
+                isCall = false;
+            }
+            if (c_is_solve == 1) {//1 已解决  0 未解决
+                if (isCall) {
+                    binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
+                }else {
+                    binding.llEvaluationClose.setVisibility(View.VISIBLE);
+                }
+                String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
+                binding.tvEvaluationTime.setText(return_time);
+            }
+
+
             state = module.getData().getCustomer_repair_model().getState();
             initState(state);
             initHistoryList(orderDetailInfoModule);
@@ -319,6 +348,8 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             runnable.run();
         }
         binding.setModule(inquiriesDetailModule);
+        binding.layoutSendOrderInfo.setRepairs(inquiriesDetailModule);
+        binding.layoutInquiriesResponseInfo.setRepairs(inquiriesDetailModule);
         PicUrlModelConvert convert = new PicUrlModelConvert();
         List<PicUrlModel> modelList = convert.stringToSomeObjectList(inquiriesDetailModule.getData().getCustomer_enquiry_model().getWx_attachment());
         photoListInfoAdapter.updateList(modelList);
@@ -401,16 +432,14 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
      */
     public void onPassClick() {
         if (IsFastClick.isFastDoubleClick()) {
-            mDealRequest = new DealRequest();
-
             switch (state) {
                 case RouteKey.LIST_STATUS_SEND_ORDER://待派单
                     //判断指派人
-                    if (!StringUtil.isNullStr(mDealRequest.getBizData().getAssign_grab_user())) {
+                    if (!StringUtil.isNullStr(mDealRequest.getBizData().getPd_assignor())) {
                         ToastUtil.show(this, "请选择指派人");
                         return;
                     }
-                    mDealRequest.getBizData().setPd_remake(binding.layoutSendOrder.repairSendReason.getString());
+                    mDealRequest.getBizData().setPd_remark(binding.layoutSendOrder.repairSendReason.getString());
                     break;
                 case RouteKey.LIST_STATUS_RESPONSE://待响应
                     String reasonString = binding.layoutInquiriesResponse.ltResponseReason.getString();
@@ -434,10 +463,10 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             viewModel.deal(mDealRequest).observe(this, module -> {
                 if (module) {
                     LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-                    ToastUtil.show(this, getString(R.string.tv_feedback_suc));
+                    ToastUtil.show(this, "提交成功");
                     finish();
                 } else {
-                    ToastUtil.show(this, getString(R.string.tv_feedback_fail));
+                    ToastUtil.show(this, "提交失败");
 
                 }
             });

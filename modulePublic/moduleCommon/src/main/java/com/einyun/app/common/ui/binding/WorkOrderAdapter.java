@@ -243,7 +243,7 @@ public class WorkOrderAdapter {
             view.setImageResource(R.mipmap.icon_state_handling);
         } else if (value.equals(RouteKey.LIST_STATUS_EVALUATE)) {
             view.setImageResource(R.mipmap.icon_state_wait_evaluate);
-        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)) {
+        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)||value.equals(RouteKey.LIST_STATUS_SEND_ORDER2)) {
             view.setImageResource(R.mipmap.icon_state_wait_send);
         } else if (value.equals(RouteKey.LIST_STATUS_WAIT_GRAB)) {
             view.setImageResource(R.mipmap.icon_state_wait_grab);
@@ -260,7 +260,7 @@ public class WorkOrderAdapter {
             view.setText(R.string.text_wait_response);
         } else if (value.equals(RouteKey.LIST_STATUS_EVALUATE)) {
             view.setText(R.string.text_wait_evaluate);
-        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)) {
+        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)||value.equals(RouteKey.LIST_STATUS_SEND_ORDER2)) {
             view.setText(R.string.text_wait_send);
         } else if (value.equals(RouteKey.LIST_STATUS_WAIT_GRAB)) {
             view.setText(R.string.text_wait_grab);

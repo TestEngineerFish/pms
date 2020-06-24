@@ -375,6 +375,7 @@ public class OrderDetailInfoModule {
                 private String pd_time;
                 private String response_time;
                 private String response_user;
+                private String return_visit_time;
                 private String assign_grab_user_id;
                 private String fclose_apply_time;
                 private int fclose_is_applying;
@@ -1437,6 +1438,14 @@ public class OrderDetailInfoModule {
 
                 public void setSub_repair_materials(List<?> sub_repair_materials) {
                     this.sub_repair_materials = sub_repair_materials;
+                }
+
+                public String getReturn_visit_time() {
+                    return return_visit_time;
+                }
+
+                public void setReturn_visit_time(String return_visit_time) {
+                    this.return_visit_time = return_visit_time;
                 }
 
                 public static class InitDataBean {

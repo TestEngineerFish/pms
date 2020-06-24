@@ -192,6 +192,8 @@ class CustomerComplainModelBean {
     var F_ts_way_id: String? = null
     var close_remark: Any? = null
     var return_visit_result: Any? = null
+    var return_visit_user: Any? = null
+    var return_visit_time: Any? = null
     var F_ts_unit_id: String? = null
     var fclose_is_applying: Int = 0
     var F_fclose_applyer: Any? = null

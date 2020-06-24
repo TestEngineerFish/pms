@@ -26,6 +26,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
@@ -111,6 +112,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     static final String HANDLE_NO_PAID = "0";//无偿
     RepairsDetailModel.DataBean.CustomerRepairModelBean customerRepair;
     private IsClosedRequest isClosedRequest;
+    private String return_visit_time;
 
 
     @Override
@@ -207,6 +209,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (repairsDetail == null) {
                 return;
             }
+            return_visit_time = repairsDetail.getData().getCustomer_repair_model().getReturn_visit_time();
             GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
             getNodeIdRequest.setDefkey("customer_repair_flow");
             getNodeIdRequest.setId(repairsDetail.getData().getCustomer_repair_model().getId_());
@@ -574,12 +577,16 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //评价状态评分
         if (customerRepair.getReturn_score() != null) {
             binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
+            binding.repairCallEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
         } else {
             binding.repairEvaluateInfo.getRoot().setVisibility(View.GONE);
+            binding.repairCallEvaluateInfo.getRoot().setVisibility(View.GONE);
         }
         if (customerRepair.getService_quality_score() != null) {
             binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
+            binding.repairCallEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
             binding.repairEvaluateInfo.qualityStar.setClickable(false);
+            binding.repairCallEvaluateInfo.qualityStar.setClickable(false);
         }
         //设置性质评估
         if (customerRepair.getBx_property_ass_id() != null) {
@@ -924,7 +931,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
-            binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+
+            if (!StringUtil.isNullStr(return_visit_time)) {
+
+                binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            }else {
+                binding.repairCallEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+
+            }
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             return;
@@ -1236,6 +1250,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairHandleHistory.setRepairs(repairsOrderDetail);
         binding.repairUseMaterial.setRepairs(repairsOrderDetail);
         binding.repairEvaluateInfo.setRepairs(repairsOrderDetail);
+        binding.repairCallEvaluateInfo.setRepairs(repairsOrderDetail);
         binding.repairCloseInfo.setRepairs(repairsOrderDetail);
         binding.repairLateInfo.setRepairs(repairsOrderDetail);
     }

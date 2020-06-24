@@ -132,7 +132,8 @@ public class RouteKey {
     public static final String KEY_MODEL_DATA = "KEY_MODEL_DATA";
     public static final String CODE = "CODE";
     //工单列表-客服三大工单状态
-    public static final String LIST_STATUS_SEND_ORDER = "for_comfirm";
+    public static final String LIST_STATUS_SEND_ORDER = "for_confirm";
+    public static final String LIST_STATUS_SEND_ORDER2 = "for_comfirm";
     public static final String LIST_STATUS_RESPONSE = "for_response";
     public static final String LIST_STATUS_HANDLE = "dealing";
     public static final String LIST_STATUS_EVALUATE= "return_visit";
