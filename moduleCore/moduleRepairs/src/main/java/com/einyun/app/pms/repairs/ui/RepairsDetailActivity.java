@@ -210,6 +210,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (repairsDetail == null) {
                 return;
             }
+            detialModel=repairsDetail;
             return_visit_time = repairsDetail.getData().getCustomer_repair_model().getReturn_visit_time();
             return_time = repairsDetail.getData().getCustomer_repair_model().getReturn_time();
             GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
@@ -861,7 +862,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (status.equals(RouteKey.REPAIR_STATUS_RESPONSE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repariResponse.getRoot().setVisibility(View.VISIBLE);
@@ -875,8 +878,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //处理状态
         if (status.equals(RouteKey.REPAIR_STATUS_HANDLE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getResponse_time())) {
+                binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
@@ -894,8 +901,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //待评价状态
         if (status.equals(RouteKey.REPAIR_STATUS_EVALUATE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getResponse_time())) {
+                binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
@@ -932,8 +943,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //已关闭
         if (status.equals("")) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getResponse_time())) {
+                binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
 
