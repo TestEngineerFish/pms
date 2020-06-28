@@ -115,7 +115,6 @@ public class FeedBackActivity extends BaseHeadViewModelActivity<ActivityFeedBack
                 String josnString = uploadManager.toJosnString(data);
                 request.setFeedbackId(userModuleService.getUserId());
                 request.setSource(1);
-                request.setFeedbackPhone(userModuleService.getAccount());
                 request.setFeedbackAccount(userModuleService.getAccount());
                 request.setAttachment(josnString);
                 request.setTitle(binding.ltQuestionTitle.getString());
