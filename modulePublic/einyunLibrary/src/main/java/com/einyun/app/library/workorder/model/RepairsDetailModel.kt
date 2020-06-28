@@ -207,7 +207,7 @@ class RepairsDetailModel {
             var response_result: String? = null
             var return_user: Any? = null
             var handle_man_hour: Any? = ""
-            var return_time: Any? = null
+            var return_time: String? = null
             var service_unit_fee: Any? = null
             var bx_cate_lv3_id: String? = null
             var fault_desc: Any? = null
@@ -323,6 +323,7 @@ class RepairsDetailModel {
             var pd_time: String? = null
             var response_time: String? = null
             var return_visit_time: String? = null
+            var return_visit_user: String? = null
             var response_user: String? = null
             var assign_grab_user_id: String? = null
             var fclose_apply_time: String? = null

@@ -129,15 +129,9 @@
                     layout="@layout/layout_handle_histroy"
                     android:visibility="gone" />
 
-                <include
-                    android:id="@+id/repair_evaluate"
-                    layout="@layout/layout_repair_evaluate"
-                    android:visibility="gone" />
 
-                <include
-                    android:id="@+id/repair_close_postpone"
-                    layout="@layout/layout_apply_close_postpone"
-                    android:visibility="gone" />
+
+
 
                 <include
                     android:id="@+id/repair_evaluate_info"
@@ -146,9 +140,16 @@
                 <!--                    呼叫中心评价-->
                 <include
                     android:id="@+id/repair_call_evaluate_info"
-                    layout="@layout/layout_already_repair_evaluate"
+                    layout="@layout/layout_already_repair_evaluate_call"
                     android:visibility="gone" />
-
+                <include
+                    android:id="@+id/repair_evaluate"
+                    layout="@layout/layout_repair_evaluate"
+                    android:visibility="gone" />
+                <include
+                    android:id="@+id/repair_close_postpone"
+                    layout="@layout/layout_apply_close_postpone"
+                    android:visibility="gone" />
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_40" />

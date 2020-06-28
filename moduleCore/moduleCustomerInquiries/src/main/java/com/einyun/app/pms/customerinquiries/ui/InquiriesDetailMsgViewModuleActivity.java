@@ -117,6 +117,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             }
         });
     }
+
     /**
      * 选择指派人
      */
@@ -127,6 +128,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 .withString(RouteKey.KEY_PROJECT_ID, detail.getU_project_id())
                 .navigation();
     }
+
     private void initState(String state) {
         switch (state) {
             case RouteKey.LIST_STATUS_SEND_ORDER://待派单
@@ -181,6 +183,9 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 if (isResponse) {
                     binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
                 }
+                if (isCall) {
+                    binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
+                }
                 binding.tvDealState.setText(getString(R.string.tv_for_respone));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
                 break;
@@ -191,8 +196,11 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 if (isResponse) {
                     binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
                 }
+//                if (isCall) {
+//                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
+//                }
                 if (isCall) {
-                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                    binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
                 }
                 binding.tvDealState.setText("已完成");
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
@@ -253,12 +261,12 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             } else {
                 isCall = false;
             }
+
             if (c_is_solve == 1) {//1 已解决  0 未解决
-                if (isCall) {
-                    binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
-                }else {
+                if (module.getData().getCustomer_repair_model().getReturn_time() != null) {
                     binding.llEvaluationClose.setVisibility(View.VISIBLE);
                 }
+
                 String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
                 binding.tvEvaluationTime.setText(return_time);
             }
