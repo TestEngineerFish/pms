@@ -110,8 +110,13 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                     ToastUtil.show(AddMaterialActivity.this,"请输入数量");
                     return;
                 }
+                if (TextUtils.isEmpty(binding.addMaterialUnit.getText())){
+                    ToastUtil.show(AddMaterialActivity.this,"请输入计量单位");
+                    return;
+                }
                 materialModel.setQuantity(binding.addMaterialAmount.getText().toString());
                 materialModel.setPrice(binding.addMaterialPrice.getText().toString());
+                materialModel.setMEINS(binding.addMaterialUnit.getText().toString());
                 materialModel.setName(binding.addMaterialName.getText().toString());
                 materialModel.setTotal_price(binding.addMaterialTotalPrice.getText().toString());
                 LiveEventBus.get(LiveDataBusKey.POST_REPAIR_ADD_MATERIAL).post(materialModel);

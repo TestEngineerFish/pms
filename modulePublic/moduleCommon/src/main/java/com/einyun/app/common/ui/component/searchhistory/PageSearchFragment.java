@@ -51,14 +51,14 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
     //    private SearchHistoryRepository repository;
 //    private List<String> histories;
 //    private int type;
-    private PageSearchListener<M> listener;
+    private PageSearchListener<D,M> listener;
     private Context context;
     private int br_id;
     private PagedList<M> list;
     RVPageListAdapter<D, M> adapter;
     String hint;
 
-    public PageSearchFragment(Context context, int br_id, PageSearchListener<M> listener) {
+    public PageSearchFragment(Context context, int br_id, PageSearchListener<D,M> listener) {
         this.context = context;
         this.listener = listener;
         this.br_id = br_id;
@@ -117,7 +117,7 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
             adapter = new RVPageListAdapter<D, M>(context, br_id, mDiffCallback) {
                 @Override
                 public void onBindItem(D binding, M model) {
-
+                    listener.onItem(binding,model);
                 }
 
                 @Override

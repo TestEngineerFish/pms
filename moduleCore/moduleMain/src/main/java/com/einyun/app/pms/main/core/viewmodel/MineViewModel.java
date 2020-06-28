@@ -34,7 +34,6 @@ import java.util.List;
 
 import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_ENVIROMENT_TYPE;
 import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_PATROL_BASIC;
-import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_RES_BASIC;
 
 
 public class MineViewModel extends BasePageListViewModel<ScanResItemModel> implements MineViewModelContract {
@@ -145,7 +144,7 @@ public class MineViewModel extends BasePageListViewModel<ScanResItemModel> imple
     private MutableLiveData<ScanResModel> getResModel=new MutableLiveData<>();
     public LiveData<ScanResModel> getRes(String id){
         showLoading();
-        repository.getRes(URL_GET_RES_BASIC+"/"+id,new CallBack<ScanResModel>() {
+        repository.getRes(URL_GET_PATROL_BASIC+"/"+id,new CallBack<ScanResModel>() {
             @Override
             public void call(ScanResModel data) {
                 hideLoading();

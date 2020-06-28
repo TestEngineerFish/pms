@@ -4,6 +4,7 @@ package com.einyun.app.common.repository;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.common.viewmodel.DisqualifiedDetailResponse;
 import com.einyun.app.common.viewmodel.GetApprovalBasicInfoResponse;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 
 
 import io.reactivex.Flowable;
@@ -30,6 +31,11 @@ public interface MsgServiceApi {
      */
     @GET()
     Flowable<BaseResponse> singleRead(@Url String url);
+    /**
+     * 接单
+     */
+    @POST()
+    Flowable<BaseResponse> receiveOrder(@Url String url,@Body PatrolSubmitRequest request);
     /**
      * 获取审批详情
      */

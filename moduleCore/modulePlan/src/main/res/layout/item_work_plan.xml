@@ -48,7 +48,8 @@
                     android:singleLine="true"
                     android:text="@{planWorkOrder.F_WP_NAME}"
                     android:textColor="@color/blackTextColor"
-                    android:textSize="@dimen/px_32" />
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
                 <RelativeLayout
                     android:layout_width="@dimen/px_136"

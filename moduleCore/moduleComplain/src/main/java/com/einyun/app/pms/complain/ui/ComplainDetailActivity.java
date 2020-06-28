@@ -121,6 +121,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                     this.isCloseClose = isClosedState.isClosed();
                     binding.complainEvaluate.getRoot().setVisibility(View.GONE);
                     binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
+                    binding.sendOrder.getRoot().setVisibility(View.GONE);
                     binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
                     binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);
                     binding.save.setVisibility(View.GONE);

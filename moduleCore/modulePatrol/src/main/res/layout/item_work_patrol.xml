@@ -43,6 +43,7 @@
                     />
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/px_20"
@@ -52,7 +53,7 @@
                     android:singleLine="true"
                     android:text="@{patrolWorkOrder.f_inspection_work_plan_name}"
                     android:textColor="@color/blackTextColor"
-                    android:textSize="@dimen/px_32" />
+                    android:textSize="@dimen/font_size16" />
 
                 <RelativeLayout
                     android:layout_width="@dimen/px_136"

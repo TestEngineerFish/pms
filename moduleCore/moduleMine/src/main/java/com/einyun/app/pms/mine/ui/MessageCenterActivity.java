@@ -347,7 +347,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 break;
             case "enquiry"://问询消息
                 ARouter.getInstance()
-                        .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                        .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                         .withString(RouteKey.FRAGMENT_TAG, FRAGMENT_TRANSFERRED_TO)
                         .withString(RouteKey.KEY_TASK_ID, "")
                         .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
@@ -675,7 +675,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 //                    case "commuFeedBack"://反馈
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
                                     .withString(RouteKey.KEY_TASK_ID, taskId)
-                                    .withString(RouteKey.KEY_ORDER_ID, "")
+                                    .withString(RouteKey.KEY_ORDER_ID, data.getData().getInfo().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
                                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
@@ -724,7 +724,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 //                    case "commuFeedBack"://反馈
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
                                     .withString(RouteKey.KEY_TASK_ID, taskId)
-                                    .withString(RouteKey.KEY_ORDER_ID, "")
+                                    .withString(RouteKey.KEY_ORDER_ID, data.getData().getInfo().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
                                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)

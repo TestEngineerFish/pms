@@ -202,7 +202,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                     break;
                 case ApprovalDataKey.FORCE_CLOSE_ENQUIRY://问询
                     ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                            .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                             .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TRANSFERRED_TO)
                             .withString(RouteKey.KEY_TASK_ID,"")
                             .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())

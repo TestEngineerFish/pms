@@ -35,6 +35,10 @@ public class DealRequest {
          */
 
         private String handle_cont;
+        private String assign_grab_user;
+        private String assign_grab_user_id;
+        private String response_result;
+        private String pd_remake;
 
         public String getHandle_cont() {
             return handle_cont;
@@ -42,6 +46,38 @@ public class DealRequest {
 
         public void setHandle_cont(String handle_cont) {
             this.handle_cont = handle_cont;
+        }
+
+        public String getAssign_grab_user() {
+            return assign_grab_user;
+        }
+
+        public void setAssign_grab_user(String assign_grab_user) {
+            this.assign_grab_user = assign_grab_user;
+        }
+
+        public String getAssign_grab_user_id() {
+            return assign_grab_user_id;
+        }
+
+        public void setAssign_grab_user_id(String assign_grab_user_id) {
+            this.assign_grab_user_id = assign_grab_user_id;
+        }
+
+        public String getResponse_result() {
+            return response_result;
+        }
+
+        public void setResponse_result(String response_result) {
+            this.response_result = response_result;
+        }
+
+        public String getPd_remake() {
+            return pd_remake;
+        }
+
+        public void setPd_remake(String pd_remake) {
+            this.pd_remake = pd_remake;
         }
     }
 

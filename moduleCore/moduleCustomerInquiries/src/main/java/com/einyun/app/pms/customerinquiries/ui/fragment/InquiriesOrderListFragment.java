@@ -272,7 +272,7 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
     @Override
     public void onItemClicked(View veiw, InquiriesItemModule data) {
         ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                 .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                 .withString(RouteKey.KEY_ORDER_ID,data.getID_())

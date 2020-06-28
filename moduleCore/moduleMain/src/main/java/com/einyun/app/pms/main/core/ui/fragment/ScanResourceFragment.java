@@ -30,7 +30,6 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.UserUtil;
-import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.model.ScanRequest;

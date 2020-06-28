@@ -180,6 +180,7 @@ public class SettingViewModuleActivity extends BaseHeadViewModelActivity<Activit
                 .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        CommonApplication.getInstance().unbindAccount();
                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "");
                         SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_CHOOSE_CACHE, "");
                         SPUtils.put(CommonApplication.getInstance(), SPKey.KEY_BLOCK_NAME, "");

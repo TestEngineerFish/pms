@@ -23,8 +23,6 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAI
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SCAN_HISTORY;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SCAN_WAIT_DEAL;
 import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_PATROL_HISTORY;
-import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_PATROL_WAIT;
-import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_RES_HISTORY;
 import static com.einyun.app.pms.main.core.repository.URLS.URL_GET_RES_WAIT;
 
 
@@ -128,29 +126,14 @@ public class MainRepository {
                 });
     }
 
-    public void pageQuery(ScanRequest request, String tag, String type, CallBack<ScanListModel> callback) {
+    public void pageQuery(ScanRequest request, String tag, CallBack<ScanListModel> callback) {
         String url = "";
         switch (tag) {
             case FRAGMENT_SCAN_WAIT_DEAL:
-                switch (type) {
-                    case "30"://30开头 资源类
-
-                        url=URL_GET_RES_WAIT;
-                        break;
-                    case "31"://31 开头 巡更点
-                        url=URL_GET_PATROL_WAIT;
-                        break;
-                }
+                url=URL_GET_RES_WAIT;
                 break;
             case FRAGMENT_SCAN_HISTORY:
-                switch (type) {
-                    case "30"://30开头 资源类
-                        url=URL_GET_RES_HISTORY;
-                        break;
-                    case "31"://31 开头 巡更点
-                        url=URL_GET_PATROL_HISTORY;
-                        break;
-                }
+                url=URL_GET_PATROL_HISTORY;
                 break;
         }
         serviceApi.getDisqualifiedList(url, request).compose(RxSchedulers.inIoMain())

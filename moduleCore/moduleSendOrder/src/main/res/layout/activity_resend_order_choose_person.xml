@@ -10,6 +10,13 @@
             android:id="@id/head_bar"
             layout="@layout/include_layout_activity_head" />
 
+        <TextView
+            android:textColor="@color/greyTextColor"
+            android:id="@+id/tv_divide_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px_30"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_80"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_choose_dispose_person"
             android:layout_width="match_parent"

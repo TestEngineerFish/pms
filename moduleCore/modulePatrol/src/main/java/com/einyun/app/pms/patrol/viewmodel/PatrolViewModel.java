@@ -12,8 +12,10 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.URLS;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.ListType;
@@ -68,7 +70,52 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         request=new PatrolDetialRequest();
     }
+    /**
+     * 接单
+     * @return
+     */
+    public LiveData<BaseResponse> receiceOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_PRATROL_RECEIVE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 指派
+     * @return
+     */
+    public LiveData<BaseResponse> assignOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_PATROL_ASSIGNE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
     /**
      * 工作节点
      *
