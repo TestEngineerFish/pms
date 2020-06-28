@@ -31,12 +31,10 @@ public class ItemDataSource extends BaseDataSource<ScanResItemModel> {
 
     private ScanRequest requestBean;
      String tag;
-     String type;
     public ItemDataSource(ScanRequest requestBean, String tag,String type) {
         super();
         this.requestBean = requestBean;
         this.tag=tag;
-        this.type=type;
     }
 
     @Override
@@ -46,7 +44,7 @@ public class ItemDataSource extends BaseDataSource<ScanResItemModel> {
         requestBean.setPage(pageBean.getPage());
         requestBean.setPageSize(pageBean.getPageSize());
 
-        repository.pageQuery(requestBean,tag,type, new CallBack<ScanListModel>() {
+        repository.pageQuery(requestBean,tag, new CallBack<ScanListModel>() {
             @Override
             public void call(ScanListModel data) {
                 if(callback instanceof LoadInitialCallback){

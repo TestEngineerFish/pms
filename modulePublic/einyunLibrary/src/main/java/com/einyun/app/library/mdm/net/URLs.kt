@@ -39,6 +39,11 @@ class URLs {
         const val URL_NOTICE_QUERY_UP_DOWN = "/noticeAndActivite/api/Announcement/v1/communityAnnouncement/queryThumbUpDownByCondition"
         const val URL_SYSTEM_NOTICE = "/noticeAndActivite/api/noticeAndActivity/v1/platformNotification/queryListForBAPP"
         const val URL_GET_SYSTEM_NOTICE_DETAIL = "/noticeAndActivite/api/noticeAndActivity/v1/platformNotification/get/"
-
+        //新增意见反馈
+        const val URL_FEED_BACK = "/appcenter/api/appcenter/v1/feedback/addForApp"
+        //意见反馈列表
+        const val URL_FEED_BACK_LIST = "/appcenter/api/appcenter/v1/feedback/listForApp"
+        //意见反馈详情
+        const val URL_FEED_BACK_DETAIL = "/appcenter/api/appcenter/v1/feedback/getForApp/"
     }
 }

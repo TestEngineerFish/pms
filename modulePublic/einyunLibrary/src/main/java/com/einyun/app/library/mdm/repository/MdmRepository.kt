@@ -2,6 +2,7 @@ package com.einyun.app.library.mdm.repository
 
 import android.text.TextUtils
 import com.einyun.app.base.event.CallBack
+import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.http.RxSchedulers
 import com.einyun.app.base.paging.bean.PageBean
 import com.einyun.app.base.paging.bean.PageResult
@@ -10,18 +11,56 @@ import com.einyun.app.base.paging.bean.QueryBuilder
 import com.einyun.app.library.core.api.MdmService
 import com.einyun.app.library.core.net.EinyunHttpException
 import com.einyun.app.library.core.net.EinyunHttpService
+import com.einyun.app.library.mdm.model.FeedBackListModel
 import com.einyun.app.library.mdm.model.GridModel
 import com.einyun.app.library.mdm.model.NoticeModel
 import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.MdmServiceApi
 import com.einyun.app.library.mdm.net.URLs
-import com.einyun.app.library.mdm.net.request.AddReadingRequest
-import com.einyun.app.library.mdm.net.request.NoticeListPageRequest
-import com.einyun.app.library.mdm.net.request.QueryUpDownRequest
-import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
+import com.einyun.app.library.mdm.net.request.*
 import com.einyun.app.library.mdm.net.response.NoticeListPageResult
 
 class MdmRepository : MdmService {
+    override fun getFeedBackDetail(feedId: String, callBack: CallBack<FeedBackListModel>) {
+        serviceApi?.getFeedBackDetail(URLs.URL_FEED_BACK_DETAIL+feedId)
+            ?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })    }
+
+    override fun getFeedBackList(
+        userId: String,
+        callBack: CallBack<List<FeedBackListModel>>
+    ) {
+        var queryBuilder = queryFeedBuilder(
+            userId
+        )
+        serviceApi?.getFeedBackList(queryBuilder.build())
+            ?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data.rows)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })     }
+
+    override fun addFeedBack(request: FeedBackAddRequest, callBack: CallBack<Any>) {
+        serviceApi?.addFeedBack(request)
+            ?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, { error -> callBack.onFaild(error) })
+    }
+
     override fun getSystemNotice(callBack: CallBack<SystemNoticeModel>) {
         serviceApi?.getSystemNotice(Any())
             ?.compose(RxSchedulers.inIoMain())
@@ -129,6 +168,17 @@ class MdmRepository : MdmService {
                 Query.RELATION_AND
             )
         }
+        return builder
+    }
+    private fun queryFeedBuilder(
+        userId: String
+    ): QueryBuilder {
+        var builder = QueryBuilder()
+
+        builder.addQueryItem(
+            "feedback_id", userId, "IN",
+            Query.RELATION_AND
+        )
         return builder
     }
 
