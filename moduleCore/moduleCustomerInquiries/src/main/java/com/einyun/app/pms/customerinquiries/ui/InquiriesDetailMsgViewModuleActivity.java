@@ -387,7 +387,11 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                     if (binding.llEvaluation.isShown()) {
                         binding.llForseClose.setVisibility(View.GONE);
                     } else {
-                        binding.llForseClose.setVisibility(View.VISIBLE);
+                        if (RouteKey.LIST_STATUS_SEND_ORDER.equals(state)) {
+                            binding.llForseClose.setVisibility(View.GONE);
+                        }else {
+                            binding.llForseClose.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 

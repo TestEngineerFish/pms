@@ -142,12 +142,12 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
                 public void onBindItem(ItemInquiriesListBinding binding, InquiriesItemModule inquiriesItemModule) {
                     switch (inquiriesItemModule.state) {
                         case RouteKey.LIST_STATUS_SEND_ORDER:
-                            binding.tvApprovalState.setText(getString(R.string.tv_dealing));
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_send));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_grab);
                             break;
 
                         case RouteKey.LIST_STATUS_RESPONSE:
-                            binding.tvApprovalState.setText(getString(R.string.tv_for_respone));
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_response));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_response);
                             break;
                         case RouteKey.LIST_STATUS_HANDLE:

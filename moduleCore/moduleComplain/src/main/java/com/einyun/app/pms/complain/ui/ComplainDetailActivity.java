@@ -274,7 +274,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
-                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
+//                binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
                 binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
                 binding.sendOrderInfo.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainDeadline.getRoot().setVisibility(View.GONE);

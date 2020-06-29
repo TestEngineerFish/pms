@@ -963,7 +963,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             return;
         }
         //超时派单
-        if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)) {
+        if (status.equals(RouteKey.REPAIR_STATUS_SEND_ORDER_LATE)||status.equals(RouteKey.REPAIR_STATUS_WAIT_GRAB)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrder.repairSendTxt.setText(R.string.text_late_send_order);
