@@ -201,8 +201,6 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 }
                 binding.tvDealState.setText("已完成");
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
-//                binding.llHistory.setVisibility(View.VISIBLE);
-//                binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 break;
         }
     }
