@@ -35,6 +35,11 @@ public class UserServiceImpl implements IUserModuleService {
     }
 
     @Override
+    public String getPhone() {
+        return UserServiceManager.getInstance().getCurrentUserModel().getPhone();
+    }
+
+    @Override
     public String getUserName() {
         return UserServiceManager.getInstance().getCurrentUserModel().getAccount();
     }

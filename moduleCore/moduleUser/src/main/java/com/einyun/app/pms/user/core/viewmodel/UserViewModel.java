@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
@@ -16,9 +17,13 @@ import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
+import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.uc.user.model.TenantModel;
 import com.einyun.app.library.uc.user.model.UpdateAppModel;
+import com.einyun.app.library.uc.user.model.UserInfoModel;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.pms.mine.model.GetUserByccountBean;
+import com.einyun.app.pms.mine.repository.FeedBackRepository;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
 import com.einyun.app.pms.user.core.ui.widget.PrivacyTermView;
@@ -38,7 +43,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
     private UserRepository mUsersRepo;
     private UCService mUCService;
     private LiveData<UserModel> mUserModel;
-
+    FeedBackRepository repository=new FeedBackRepository();
     public UserViewModel() {
         mUsersRepo = new UserRepository();
         mUCService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_UC);
@@ -179,5 +184,23 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
             }
         });
+    }
+
+    public LiveData<GetUserByccountBean> getUserByccountBeanLiveData(String id){
+        showLoading();
+        MutableLiveData<GetUserByccountBean> userBean=new MutableLiveData<>();
+        repository.queryUserInfo(id, new CallBack<GetUserByccountBean>() {
+            @Override
+            public void call(GetUserByccountBean data) {
+                hideLoading();
+                userBean.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+            }
+        });
+        return userBean;
     }
 }

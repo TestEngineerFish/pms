@@ -57,4 +57,5 @@ dependencies {
     annotationProcessor deps.arouter_compiler
     api deps.permission_dispatcher
     annotationProcessor deps.permission_dispatcher_processor
+    compile project(path: ':moduleCore:moduleMine')
 }
