@@ -26,6 +26,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
@@ -111,6 +112,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
     static final String HANDLE_NO_PAID = "0";//无偿
     RepairsDetailModel.DataBean.CustomerRepairModelBean customerRepair;
     private IsClosedRequest isClosedRequest;
+    private String return_visit_time;
+    private String return_time;
 
 
     @Override
@@ -207,6 +210,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (repairsDetail == null) {
                 return;
             }
+            detialModel=repairsDetail;
+            return_visit_time = repairsDetail.getData().getCustomer_repair_model().getReturn_visit_time();
+            return_time = repairsDetail.getData().getCustomer_repair_model().getReturn_time();
             GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
             getNodeIdRequest.setDefkey("customer_repair_flow");
             getNodeIdRequest.setId(repairsDetail.getData().getCustomer_repair_model().getId_());
@@ -574,12 +580,16 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //评价状态评分
         if (customerRepair.getReturn_score() != null) {
             binding.repairEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
+//            binding.repairCallEvaluateInfo.attitudeStar.setStar(Float.parseFloat(customerRepair.getReturn_score()));
         } else {
             binding.repairEvaluateInfo.getRoot().setVisibility(View.GONE);
+//            binding.repairCallEvaluateInfo.getRoot().setVisibility(View.GONE);
         }
         if (customerRepair.getService_quality_score() != null) {
             binding.repairEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
+//            binding.repairCallEvaluateInfo.qualityStar.setStar(Float.parseFloat(customerRepair.getService_quality_score()));
             binding.repairEvaluateInfo.qualityStar.setClickable(false);
+//            binding.repairCallEvaluateInfo.qualityStar.setClickable(false);
         }
         //设置性质评估
         if (customerRepair.getBx_property_ass_id() != null) {
@@ -852,7 +862,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         if (status.equals(RouteKey.REPAIR_STATUS_RESPONSE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repariResponse.getRoot().setVisibility(View.VISIBLE);
@@ -866,8 +878,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //处理状态
         if (status.equals(RouteKey.REPAIR_STATUS_HANDLE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getResponse_time())) {
+                binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
@@ -885,12 +901,19 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //待评价状态
         if (status.equals(RouteKey.REPAIR_STATUS_EVALUATE)) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getResponse_time())) {
+                binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(return_visit_time)) {
+                binding.repairCallEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             if (!listTtype.equals(RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_WAIT_FEED) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME) && !listTtype.equals(RouteKey.FRAGMENT_REPAIR_COPY_ME)) {
                 binding.repairEvaluate.getRoot().setVisibility(View.VISIBLE);
                 binding.repairDetailSubmit.setVisibility(View.VISIBLE);
@@ -920,11 +943,21 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         //已关闭
         if (status.equals("")) {
             binding.orderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
-            binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getPd_time())) {
+                binding.sendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(detialModel.getData().getCustomer_repair_model().getResponse_time())) {
+                binding.repairResponseInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairHandleInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairHandleHistory.getRoot().setVisibility(View.VISIBLE);
-            binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+
+            if (StringUtil.isNullStr(return_visit_time)) {
+                binding.repairCallEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            }
+            if (StringUtil.isNullStr(return_time)) {
+                binding.repairEvaluateInfo.getRoot().setVisibility(View.VISIBLE);
+            }
             binding.repairsInfo.getRoot().setVisibility(View.VISIBLE);
             binding.repairsInfo.repairAssesTxt.setVisibility(View.VISIBLE);
             return;
@@ -961,6 +994,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairHandleResult.getRoot().setVisibility(View.GONE);
                 binding.repairsInfo.repairReportAppointChange.setVisibility(View.GONE);
                 binding.repairHandle.getRoot().setVisibility(View.GONE);
+                binding.sendOrder.getRoot().setVisibility(View.GONE);
+                binding.repariResponse.getRoot().setVisibility(View.GONE);
+
+
             }
         });
 
@@ -1236,6 +1273,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairHandleHistory.setRepairs(repairsOrderDetail);
         binding.repairUseMaterial.setRepairs(repairsOrderDetail);
         binding.repairEvaluateInfo.setRepairs(repairsOrderDetail);
+        binding.repairCallEvaluateInfo.setRepairs(repairsOrderDetail);
         binding.repairCloseInfo.setRepairs(repairsOrderDetail);
         binding.repairLateInfo.setRepairs(repairsOrderDetail);
     }

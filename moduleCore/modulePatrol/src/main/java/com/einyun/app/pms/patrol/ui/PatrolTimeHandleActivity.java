@@ -514,7 +514,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             if (!"请选择".equals(s)) {
                 patrolInfo.getData().getZyxcgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
                 String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
-                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
+                String f_send_remark = binding.sendOrder.repairSendReason.getString();
+                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId,f_send_remark, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
                 viewModel.assignOrder(request).observe(this,model->{
 
                     if (model.isState()) {

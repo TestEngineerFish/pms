@@ -31,7 +31,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:gravity="center_vertical"
-                    android:text="@string/tv_evaluation"
+                    android:text="回访"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/font_size16" />
 
@@ -41,21 +41,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pd_view" />
-
             <LinearLayout
                 style="@style/ll_create_order"
-                android:layout_height="wrap_content"
                 android:paddingLeft="0dp">
 
 
                 <TextView
                     android:layout_width="@dimen/px_176"
                     android:layout_height="24dp"
-                    android:text="外呼结果"
+                    android:text="回访结果"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size14" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:text="@{complain.return_visit_result}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访人"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:text="@{complain.return_visit_user}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
@@ -66,18 +87,18 @@
             </LinearLayout>
             <LinearLayout
                 style="@style/ll_create_order"
-                android:layout_height="wrap_content"
                 android:paddingLeft="0dp">
 
 
                 <TextView
                     android:layout_width="@dimen/px_176"
                     android:layout_height="24dp"
-                    android:text="是否真实响应"
+                    android:text="回访时间"
                     android:textColor="@color/normal_main_text_icon_color"
                     android:textSize="@dimen/font_size14" />
 
                 <TextView
+                    android:text="@{complain.return_visit_time}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/px_5"
@@ -85,220 +106,6 @@
                     android:textSize="@dimen/font_size14"/>
 
 
-            </LinearLayout>
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="评价人"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:paddingLeft="0dp">
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="评价时间"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:id="@+id/complain_evaluate_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"
-                    android:text="@{complain.f_return_time}"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="@string/tv_deal_result"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        app:evaImg="@{complain.c_is_solve}"
-                        android:layout_width="@dimen/px_30"
-                        android:layout_height="@dimen/px_30"
-                        android:padding="@dimen/px_5" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/px_5"
-                        app:evaText="@{complain.c_is_solve}"
-                        android:textColor="@color/txt_black_order"
-                        android:textSize="@dimen/font_size14"/>
-
-                </RadioGroup>
-
-            </LinearLayout>
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="评价说明"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/px_5"
-                        app:evaText="@{complain.c_is_solve}"
-                        android:textColor="@color/txt_black_order"
-                        android:textSize="@dimen/font_size14"/>
-
-
-
-            </LinearLayout>
-            <View
-                style="@style/base_underline"
-                android:layout_marginTop="@dimen/px_20" />
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:paddingLeft="0dp">
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="24dp"
-                    android:text="服务态度"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <com.einyun.app.common.ui.component.rating.RatingBar
-                    android:id="@+id/rb_attr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:clickable="false"
-                    app:starEmpty="@mipmap/rating_uncheck"
-                    app:starFill="@mipmap/rating_check"
-                    app:starHalf="@mipmap/rating_uncheck"
-                    app:starImageSize="@dimen/px_26"
-                    app:starPadding="@dimen/px_12"
-                    app:starStep="5"
-                    app:stepSize="Full" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="不满意原因"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14"
-                    android:text="@{complain.service_attitude_content}"/>
-
-            </LinearLayout>
-
-            <View
-                style="@style/base_underline"
-                android:layout_marginTop="@dimen/px_20" />
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:paddingLeft="0dp">
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="wrap_content"
-                    android:text="服务质量"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <com.einyun.app.common.ui.component.rating.RatingBar
-                    android:id="@+id/rb_quality"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    app:starEmpty="@mipmap/rating_uncheck"
-                    app:starFill="@mipmap/rating_check"
-                    app:starHalf="@mipmap/rating_uncheck"
-                    app:starImageSize="@dimen/px_26"
-                    app:starPadding="@dimen/px_12"
-                    app:starStep="5"
-                    app:stepSize="Full" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/ll_create_order"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/px_30"
-                android:paddingLeft="0dp">
-
-
-                <TextView
-                    android:layout_width="@dimen/px_176"
-                    android:layout_height="wrap_content"
-                    android:text="不满意原因"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:textSize="@dimen/font_size14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/px_5"
-                    android:text="@{complain.service_quality_content}"
-                    android:textColor="@color/txt_black_order"
-                    android:textSize="@dimen/font_size14" />
             </LinearLayout>
         </LinearLayout>
 

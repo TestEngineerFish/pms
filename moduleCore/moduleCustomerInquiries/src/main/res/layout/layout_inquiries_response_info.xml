@@ -7,7 +7,7 @@
 
         <variable
             name="repairs"
-            type="com.einyun.app.library.workorder.model.RepairsDetailModel" />
+            type="com.einyun.app.pms.customerinquiries.model.InquiriesDetailModule" />
     </data>
     <androidx.cardview.widget.CardView
         style="@style/cardview_style"
@@ -51,7 +51,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.response_user}" />
+                android:text="@{repairs.data.customer_enquiry_model.response_user}" />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln">
@@ -62,7 +62,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.response_time}" />
+                android:text="@{repairs.data.customer_enquiry_model.response_time}" />
         </LinearLayout>
 
         <LinearLayout style="@style/work_order_detail_ln"
@@ -74,7 +74,7 @@
 
             <TextView
                 style="@style/work_order_detail_txt_right"
-                android:text="@{repairs.data.customer_repair_model.response_result}" />
+                android:text="@{repairs.data.customer_enquiry_model.response_result}" />
         </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>

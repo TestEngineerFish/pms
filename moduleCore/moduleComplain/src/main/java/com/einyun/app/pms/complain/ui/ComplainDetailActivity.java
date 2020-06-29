@@ -271,6 +271,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             if (ComplainNodeIdState.Confirm.getState().equals(nodeId)) {
                 binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
@@ -296,6 +297,7 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             } else if (ComplainNodeIdState.Response.getState().equals(nodeId)) {
                 binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.GONE);
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
                 binding.layoutComplainResponse.getRoot().setVisibility(View.VISIBLE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.VISIBLE);
@@ -325,8 +327,9 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 }
                 if (StringUtil.isNullStr(detail.getF_return_time())){
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
-                }else{
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                }
+                if (StringUtil.isNullStr(detail.getReturn_visit_time())){
+                    binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.VISIBLE);
                 }
                 showOrHide();
                 binding.complainEvaluate.getRoot().setVisibility(View.GONE);
@@ -358,8 +361,11 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
                 }else{
                     binding.layoutResponseInfo.getRoot().setVisibility(View.GONE);
                 }
-                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                if (StringUtil.isNullStr(detail.getReturn_visit_time())){
+                    binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.VISIBLE);
+                }
                 binding.complainEvaluate.getRoot().setVisibility(View.VISIBLE);
+                binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
                 showOrHide();
                 binding.layoutComplainResponse.getRoot().setVisibility(View.GONE);
                 binding.layoutApplyCloseBtn.getRoot().setVisibility(View.GONE);
@@ -402,8 +408,14 @@ public class ComplainDetailActivity extends BaseHeadViewModelActivity<ActivityCo
             if (value.equals(ComplainOrderState.CLOSED.getState())) {
                 if (StringUtil.isNullStr(detail.getF_return_time())){
                     binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.VISIBLE);
-                }else{
-                    binding.layoutAlreadyComplainEvaluate.getRoot().setVisibility(View.GONE);
+                }
+                if (StringUtil.isNullStr(detail.getReturn_visit_time())){
+                    binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.VISIBLE);
+                }
+            }
+            if (value.equals(ComplainOrderState.RETURN_VISIT.getState())) {
+                if (StringUtil.isNullStr(detail.getReturn_visit_time())){
+                    binding.layoutAlreadyComplainEvaluateCall.getRoot().setVisibility(View.VISIBLE);
                 }
             }
             if (value.equals(ComplainOrderState.ADD.getState()) || value.equals(ComplainOrderState.RESPONSE.getState())) {

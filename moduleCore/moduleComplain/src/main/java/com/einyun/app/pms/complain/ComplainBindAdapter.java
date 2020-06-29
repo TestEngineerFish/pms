@@ -70,7 +70,7 @@ public class ComplainBindAdapter {
             return;
         }
         if (value.equals(ComplainOrderState.ADD.getState())) {
-            view.setText("新生成");
+            view.setText("待派单");
         } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
             view.setText("已关闭");
         }  else if (value.equals(ComplainOrderState.Confirm.getState())) {

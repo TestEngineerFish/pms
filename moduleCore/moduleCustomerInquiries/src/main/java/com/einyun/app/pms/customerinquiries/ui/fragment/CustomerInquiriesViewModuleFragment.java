@@ -152,7 +152,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     switch (inquiriesItemModule.getTaskNodeId()) {
                         case Constants.INQUIRIES_STATE_SEND:
                             binding.tvApprovalState.setText(getString(R.string.text_wait_send));
-                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_send);
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_grab);
                             break;
                         case Constants.INQUIRIES_STATE_RESPONSE:
                             binding.tvApprovalState.setText(getString(R.string.text_wait_response));

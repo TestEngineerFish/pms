@@ -770,7 +770,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         patrol.getData().getZyjhgd().setF_ACT_FINISH_TIME(getTime());
         Log.e("传参  patrol  为", JsonUtil.toJson(patrol));
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
-        PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
+        PatrolSubmitRequest request = new PatrolSubmitRequest(taskId,PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
 //                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
@@ -883,7 +883,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 planInfo.getData().getZyjhgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
                 Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
                 String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
-                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+                String f_send_remark = binding.sendOrder.repairSendReason.getString();
+                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId,f_send_remark, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
                 viewModel.assignOrder(request).observe(this, model -> {
 
                     if (model.isState()) {
