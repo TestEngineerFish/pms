@@ -196,9 +196,6 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 if (isResponse) {
                     binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
                 }
-//                if (isCall) {
-//                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
-//                }
                 if (isCall) {
                     binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
                 }
