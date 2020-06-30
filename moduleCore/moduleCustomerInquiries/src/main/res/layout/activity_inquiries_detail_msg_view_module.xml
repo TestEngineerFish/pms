@@ -739,7 +739,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/px_75"
-                                app:isSolve="@{module.data.customer_enquiry_model.return_visit_result}"
+                                android:text="@{module.data.customer_enquiry_model.return_visit_result}"
                                 android:textColor="@color/blackTextColor"
                                 android:textSize="@dimen/font_size14" />
 
