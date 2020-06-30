@@ -135,7 +135,7 @@
                 android:layout_marginLeft="@dimen/px_100"
                 android:gravity="center_vertical"
                 android:textColorHint="@color/edit_hint_color"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="@dimen/font_size14"
                 android:hint="请输入"/>
             <TextView

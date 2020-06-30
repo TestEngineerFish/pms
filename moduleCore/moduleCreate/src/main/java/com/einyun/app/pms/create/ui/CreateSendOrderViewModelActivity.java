@@ -391,7 +391,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         }
         if (selectType == SelectType.RESOURCE) {
             if (resourceTypeBean == null) {
-                ToastUtil.show(this, "请先选择资源分类");
+                ToastUtil.show(this, "暂无资源");
                 return false;
             }
         }
