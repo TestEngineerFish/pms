@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -107,14 +108,11 @@ public class FeedBackActivity extends BaseHeadViewModelActivity<ActivityFeedBack
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-               /* viewModel.insertProblem(binding.ltQuestionDesc.getString(), data).observe(this, o -> {
-                    ToastUtil.show(CommonApplication.getInstance(), TipsEnum.SUBMIT_SUCCESS.getMsg());
-                    finish();
-                });*/
                 ImageUploadManager uploadManager = new ImageUploadManager();
                 String josnString = uploadManager.toJosnString(data);
                 request.setFeedbackId(userModuleService.getUserId());
                 request.setSource(1);
+                request.setFeedbackPhone(userModuleService.getPhone());
                 request.setFeedbackAccount(userModuleService.getAccount());
                 request.setAttachment(josnString);
                 request.setTitle(binding.ltQuestionTitle.getString());

@@ -15,7 +15,7 @@ public interface IUserModuleService extends IBaseModuleService {
     public String getUserId();
 
     String getAccount();
-
+    public String getPhone();
     public String getUserName();
     public String getRealName();
     public void saveDivideCodes(List<String> divideCodes);

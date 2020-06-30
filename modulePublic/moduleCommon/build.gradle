@@ -40,6 +40,7 @@ android {
             buildConfigField("String", "BASE_URL", deps.server.debug_test)
             buildConfigField("String", "BASE_FEE_URL", deps.fee_server.debug_test)
             buildConfigField("String", "FEE_MID_URL", deps.fee_middle_server.debug_test)
+            minifyEnabled true   //开启混淆
         }
         uat {
             buildConfigField("String", "BASE_URL", deps.server.uat)

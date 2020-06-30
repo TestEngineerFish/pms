@@ -16,9 +16,13 @@ import android.widget.ListPopupWindow;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
@@ -28,11 +32,14 @@ import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
+import com.einyun.app.common.utils.HttpUrlUtil;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
+import com.einyun.app.pms.user.core.UserServiceManager;
 import com.einyun.app.pms.user.core.ui.adapter.UserListPopupAdapter;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
@@ -264,6 +271,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
                     viewModel.login(binding.etUser.getText().toString().trim(), model.getPassword(), true)
                             .observe(LoginViewModelActivity.this,
                                     user -> {
+                                        getPersonInfo(user.getAccount());
                                         CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
                                         SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                                         SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
@@ -310,5 +318,21 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+    }
+
+    @Autowired(name = RouterUtils.SERVICE_USER)
+    IUserModuleService userModuleService;
+
+    /**
+     * 获取个人信息
+     */
+    private void getPersonInfo(String account) {
+        viewModel.getUserByccountBeanLiveData(account).observe(this, model -> {
+            if (model != null) {
+                if (model.getMobile() != null) {
+                    UserServiceManager.getInstance().getCurrentUserModel().setPhone(model.getMobile());
+                }
+            }
+        });
     }
 }

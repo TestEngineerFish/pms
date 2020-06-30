@@ -16,6 +16,7 @@ class UserModel {
     var token: String? = null
     var username: String? = null
     var account: String? = null
+    var phone: String? = null
     var userId: String? = null
     var password: String? = null
 
@@ -26,11 +27,35 @@ class UserModel {
         this.account = account
     }
 
-    constructor(token: String, userId: String, account: String, username: String, password: String) {
+    constructor(
+        token: String,
+        userId: String,
+        account: String,
+        username: String,
+        password: String
+    ) {
         this.token = token
         this.userId = userId
         this.username = username
         this.account = account
         this.password = password
     }
+
+    constructor(
+        token: String?,
+        username: String?,
+        account: String?,
+        phone: String?,
+        userId: String?,
+        password: String?
+    ) {
+        this.token = token
+        this.username = username
+        this.account = account
+        this.phone = phone
+        this.userId = userId
+        this.password = password
+    }
+
+
 }
