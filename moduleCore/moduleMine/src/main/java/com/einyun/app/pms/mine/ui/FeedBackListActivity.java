@@ -3,6 +3,7 @@ package com.einyun.app.pms.mine.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -79,7 +80,7 @@ public class FeedBackListActivity extends BaseHeadViewModelActivity<ActivityFeed
     protected void initListener() {
         super.initListener();
         adapter.setOnItemClick(this);
-        binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
+        binding.swipeRefresh.setColorSchemeColors(getColorPrimary1());
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -118,4 +119,14 @@ public class FeedBackListActivity extends BaseHeadViewModelActivity<ActivityFeed
         });
     }
 
+
+    /**
+     * 获取主题颜色
+     * @return
+     */
+    public int getColorPrimary1(){
+        TypedValue typedValue = new  TypedValue();
+        this.getTheme().resolveAttribute(com.einyun.app.base.R.attr.colorPrimary, typedValue, true);
+        return typedValue.data;
+    }
 }
