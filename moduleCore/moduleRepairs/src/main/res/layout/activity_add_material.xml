@@ -67,7 +67,7 @@
                 android:background="@null"
                 android:layout_marginLeft="@dimen/px_100"
                 android:gravity="center_vertical"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textColorHint="@color/edit_hint_color"
                 android:hint="请输入" />
         </LinearLayout>
