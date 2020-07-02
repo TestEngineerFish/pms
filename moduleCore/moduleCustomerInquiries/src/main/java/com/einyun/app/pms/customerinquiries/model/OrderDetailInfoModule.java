@@ -305,7 +305,7 @@ public class OrderDetailInfoModule {
                 private Object return_unsatisfy_do;
                 private String return_score;
                 private Object return_threshold;
-                private Object return_visit_result;
+                private String return_visit_result;
                 private Object staff_fee;
                 private int c_is_solve;
                 private String handle_time;
@@ -337,7 +337,7 @@ public class OrderDetailInfoModule {
                 private Object joint_processor;
                 private String u_project_id;
                 private String receive_time;
-                private Object close_time;
+                private String close_time;
                 private Object grid_name;
                 private String unit_name;
                 private Object return_way_id;
@@ -368,7 +368,7 @@ public class OrderDetailInfoModule {
                 private String bx_content;
                 private String u_city_area_id;
                 private Object handle_timeout;
-                private Object bx_attachment;
+                private String bx_attachment;
                 private String bx_appoint_time_period_id;
                 private Object close_remark;
                 private String bx_cate_lv2_id;
@@ -383,6 +383,9 @@ public class OrderDetailInfoModule {
                 private Object handle_attach;
                 private InitDataBean initData;
                 private List<?> sub_repair_materials;
+                private String pd_assignor;//
+                private String return_visit_user;//回访人
+
 
                 public String getBx_appoint_time_period() {
                     return bx_appoint_time_period;
@@ -824,11 +827,11 @@ public class OrderDetailInfoModule {
                     this.return_threshold = return_threshold;
                 }
 
-                public Object getReturn_visit_result() {
+                public String getReturn_visit_result() {
                     return return_visit_result;
                 }
 
-                public void setReturn_visit_result(Object return_visit_result) {
+                public void setReturn_visit_result(String return_visit_result) {
                     this.return_visit_result = return_visit_result;
                 }
 
@@ -1080,11 +1083,11 @@ public class OrderDetailInfoModule {
                     this.receive_time = receive_time;
                 }
 
-                public Object getClose_time() {
+                public String getClose_time() {
                     return close_time;
                 }
 
-                public void setClose_time(Object close_time) {
+                public void setClose_time(String close_time) {
                     this.close_time = close_time;
                 }
 
@@ -1328,11 +1331,11 @@ public class OrderDetailInfoModule {
                     this.handle_timeout = handle_timeout;
                 }
 
-                public Object getBx_attachment() {
+                public String getBx_attachment() {
                     return bx_attachment;
                 }
 
-                public void setBx_attachment(Object bx_attachment) {
+                public void setBx_attachment(String bx_attachment) {
                     this.bx_attachment = bx_attachment;
                 }
 
@@ -1446,6 +1449,22 @@ public class OrderDetailInfoModule {
 
                 public void setReturn_visit_time(String return_visit_time) {
                     this.return_visit_time = return_visit_time;
+                }
+
+                public String getPd_assignor() {
+                    return pd_assignor;
+                }
+
+                public void setPd_assignor(String pd_assignor) {
+                    this.pd_assignor = pd_assignor;
+                }
+
+                public String getReturn_visit_user() {
+                    return return_visit_user;
+                }
+
+                public void setReturn_visit_user(String return_visit_user) {
+                    this.return_visit_user = return_visit_user;
                 }
 
                 public static class InitDataBean {

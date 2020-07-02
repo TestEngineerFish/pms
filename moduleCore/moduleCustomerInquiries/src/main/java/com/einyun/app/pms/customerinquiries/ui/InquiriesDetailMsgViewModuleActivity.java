@@ -196,16 +196,11 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 if (isResponse) {
                     binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
                 }
-//                if (isCall) {
-//                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
-//                }
                 if (isCall) {
                     binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
                 }
                 binding.tvDealState.setText("已完成");
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
-//                binding.llHistory.setVisibility(View.VISIBLE);
-//                binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -392,7 +387,11 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                     if (binding.llEvaluation.isShown()) {
                         binding.llForseClose.setVisibility(View.GONE);
                     } else {
-                        binding.llForseClose.setVisibility(View.VISIBLE);
+                        if (RouteKey.LIST_STATUS_SEND_ORDER.equals(state)) {
+                            binding.llForseClose.setVisibility(View.GONE);
+                        }else {
+                            binding.llForseClose.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 

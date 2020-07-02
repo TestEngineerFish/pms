@@ -263,7 +263,7 @@ public class InquiriesDetailModule {
             private Object close_remark;
             private Object return_score;
             private Object return_threshold;
-            private int return_visit_result;
+            private String return_visit_result;
             private Object fclose_apply_time;
             private int fclose_is_applying;
             private int c_is_solve;
@@ -885,11 +885,11 @@ public class InquiriesDetailModule {
                 this.return_threshold = return_threshold;
             }
 
-            public int getReturn_visit_result() {
+            public String getReturn_visit_result() {
                 return return_visit_result;
             }
 
-            public void setReturn_visit_result(int return_visit_result) {
+            public void setReturn_visit_result(String return_visit_result) {
                 this.return_visit_result = return_visit_result;
             }
 
