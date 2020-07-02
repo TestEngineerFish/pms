@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -379,6 +381,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 }
             }
         });
+
+        //设置报修工时只展式一位小数
+        viewModel.setEditPoint(binding.repairHandle.repairWorkHours,1);
         //申请强制闭单后关闭详情页面
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
 
