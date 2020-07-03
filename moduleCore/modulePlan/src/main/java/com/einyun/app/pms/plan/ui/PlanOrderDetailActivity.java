@@ -376,7 +376,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                     binding.ivScan.setVisibility(View.GONE);
                                     binding.llScanReasult.setVisibility(View.GONE);
                                 } else {//1 强制扫码
-                                    binding.ivScan.setVisibility(View.VISIBLE);
+                                    if (isCloseClose) {
+
+                                        binding.ivScan.setVisibility(View.VISIBLE);
+                                    }
                                     binding.llScanReasult.setVisibility(View.VISIBLE);
                                 }
                                 break;
@@ -872,6 +875,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             planInfo.getData().getZyjhgd().setF_PROCESS_NAME(viewModel.getUserName());
             planInfo.getData().getZyjhgd().setF_PROCESS_ID(viewModel.getUserID());
             Log.e("传参  patrol  为", JsonUtil.toJson(planInfo));
+            Log.e(TAG, "onSubmitClick: "+planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(0).getScan_result() );
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
             viewModel.receiceOrder(request).observe(this, model -> {

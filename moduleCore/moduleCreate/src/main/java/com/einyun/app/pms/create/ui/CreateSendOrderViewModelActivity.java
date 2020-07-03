@@ -124,6 +124,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         viewModel.getTypesListByKey(Constants.RESOURCE_TYPE).observe(this, dictDataModels -> {
             lineDictDataModelList = dictDataModels;
         });
+
         selectPng();
         if (StringUtil.isNullStr(orderNo)) {
             binding.llOld.setVisibility(View.VISIBLE);
@@ -143,6 +144,24 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             Log.e("tag", "initViews: " + projectName);
             request.setProjectName(projectName);
             binding.setBean(request);
+        }
+        if (request.getDivideId()!=null&&request.getTxCode()!=null) {
+            viewModel.getResourceInfos(request).observe(this, resourceTypeBeans -> {
+                if (resourceTypeBeans.size() == 0) {
+                    ToastUtil.show(this, "暂无资源分类");
+                    return;
+                }
+                List<String> resourceTypeList = new ArrayList<>();
+                for (ResourceTypeBean bean : resourceTypeBeans) {
+                    resourceTypeList.add(bean.getName());
+                }
+                for (int i = 0; i < resourceTypeList.size(); i++) {
+                    if (resourceTypeList.get(i).equals(resouseName)) {
+                        rsDefaultPos = i;
+                        resourceTypeBean = resourceTypeBeans.get(i);
+                    }
+                }
+            });
         }
     }
 
@@ -321,7 +340,8 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     request.setEnvType3Code(model.get(2).getKey());
                     request.setEnvType3Name(model.get(2).getName());
                 }
-                binding.setBean(request);
+                binding.tvOrderType.setText(request.getTypeName() + (!StringUtil.isNullStr(request.getEnvType2Name()) ? "" : "-" + request.getEnvType2Name()) + (!StringUtil.isNullStr(request.getEnvType3Name()) ? "" : "-" + request.getEnvType3Name()));
+//                binding.setBean(request);
             }
         });
         selectWorkOrderTypeView.show(getSupportFragmentManager(), "");
@@ -393,14 +413,14 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         }
         if (SelectType.WORKY_TYPE == type) {
             request.setType("");
-            request.setResName("");
+            request.setResName(request.getResName());
             request.setTypeName("");
             request.setEnvType2Code("");
             request.setEnvType2Name("");
             request.setEnvType3Code("");
             request.setEnvType3Name("");
-            binding.tvResource.setText("请选择");
-            binding.tvRes.setText("请选择");
+//            binding.tvResource.setText("请选择");
+//            binding.tvRes.setText("请选择");
         }
         if (SelectType.RESOURCE_TYPE == type) {
             request.setResId("");
