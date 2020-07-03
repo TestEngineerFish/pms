@@ -400,24 +400,24 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             binding.tvScanReasult.setText("成功");
 
                         } else {
-                            if (model.is_suc() == 1) {
+                            if ("1".equals(model.getScan_result())) {
 
                                 binding.tvScanReasult.setText("成功");
-                            } else if (model.is_suc() == 2) {
+                            } else if ("2".equals(model.getScan_result())){
                                 binding.tvScanReasult.setText("失败");
-                            } else {
-                                binding.tvScanReasult.setText("");
+                            }else {
+                                binding.tvScanReasult.setText("未扫码");
 
                             }
                         }
                     } else {
-                        if (model.is_suc() == 1) {
+                        if ("1".equals(model.getScan_result())) {
 
                             binding.tvScanReasult.setText("成功");
-                        } else if (model.is_suc() == 2) {
+                        } else if ("2".equals(model.getScan_result())){
                             binding.tvScanReasult.setText("失败");
                         } else {
-                            binding.tvScanReasult.setText("");
+                            binding.tvScanReasult.setText("未扫码");
 
                         }
                     }
@@ -840,6 +840,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 .withString(RouteKey.KEY_ORDER_ID, id)
                 .withString(RouteKey.KEY_ORDER_NO, planInfo.getData().getZyjhgd().getF_ORDER_NO())
                 .withString(RouteKey.KEY_LINE, planInfo.getData().getZyjhgd().getF_TX_NAME())
+
+                .withString(RouteKey.KEY_LINE_ID, planInfo.getData().getZyjhgd().getF_TIT_ID())
+                .withString(RouteKey.KEY_LINE_CODE, planInfo.getData().getZyjhgd().getF_TX_CODE())
+                .withString(RouteKey.KEY_PROJECT, planInfo.getData().getZyjhgd().getF_PROJECT_NAME())
+                .withString(RouteKey.KEY_DIVIDE_NAME, planInfo.getData().getZyjhgd().getF_DIVIDE_NAME())
+                .withString(RouteKey.KEY_DIVIDE_ID, planInfo.getData().getZyjhgd().getF_DIVIDE_ID())
+                .withString(RouteKey.KEY_RESOUSE_ID, planInfo.getData().getZyjhgd().getF_RES_ID())
+
                 .withString(RouteKey.KEY_RESOUSE, planInfo.getData().getZyjhgd().getF_RES_NAME())
 //                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
@@ -998,10 +1006,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                     } else {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(2);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("2");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                         ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");

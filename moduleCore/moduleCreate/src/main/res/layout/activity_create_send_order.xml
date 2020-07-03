@@ -107,6 +107,7 @@
 
                     <TextView
                         android:id="@+id/tv_resource"
+                        app:setSelectTxt="@{bean.resName}"
                         style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
@@ -124,8 +125,7 @@
 
                     <TextView
                         android:id="@+id/tv_res"
-                        style="@style/tv_create_order_select_single"
-                        app:setSelectTxt="@{bean.resName}" />
+                        style="@style/tv_create_order_select_single" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>

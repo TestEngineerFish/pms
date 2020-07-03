@@ -64,9 +64,10 @@ class Sub_jhgdzyb {
     var F_RES_LOCATION: String? = null
     var F_RES_TYPE: String? = null
     var F_RES_TYPENAME: String? = null
+    //    var scan_result: Int? = 0
+    var scan_result: String? =""
     var is_forced: Int? = 0
     var is_suc: Int? = 0
-//    var scan_result: Int? = -1
 
 }
 

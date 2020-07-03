@@ -219,14 +219,15 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onResume() {
         super.onResume();
-//        loadPagingData();
+
         if (isfresh) {
             loadPagingData();
             isfresh = false;
         } else {
-            viewModel.refresh();
+//            viewModel.refresh();
+            viewModel.refresh(getFragmentTag());
+//            loadPagingData();
         }
-        viewModel.refresh(getFragmentTag());
     }
 
     @Override
@@ -247,7 +248,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 binding.sendOrderRef.setRefreshing(false);
             }
         });
-
+        loadPagingData();
         //切换筛选条件
         viewModel.getLiveEvent().observe(getActivity(), status -> {
             if (status.isRefresShown()) {

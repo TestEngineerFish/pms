@@ -38,7 +38,7 @@ class CreateSendOrderRequest {
     @SerializedName("F_TX_NAME")
     var txName: String? = null
     @SerializedName("F_TX_CODE")
-    var txCode: String? = null
+    var txCode: String? = ""
     @SerializedName("F_RES_ID")
     var resId: String? = null
     @SerializedName("F_RES_NAME")
