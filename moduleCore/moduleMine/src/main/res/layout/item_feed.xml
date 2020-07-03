@@ -45,6 +45,8 @@
                         android:layout_marginLeft="@dimen/px_36"
                         android:layout_marginTop="@dimen/px_28"
                         android:text="@{feed.title}"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:textColor="@color/black_13"
                         android:textSize="@dimen/font_size14" />
                 </LinearLayout>

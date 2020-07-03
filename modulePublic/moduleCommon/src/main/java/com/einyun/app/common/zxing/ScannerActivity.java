@@ -20,13 +20,17 @@ import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.R;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.databinding.ActivityScannerBinding;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
+import com.google.gson.JsonObject;
 import com.google.zxing.Result;
 import com.orhanobut.logger.Logger;
+
+import org.json.JSONObject;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -48,36 +52,46 @@ public class ScannerActivity extends BaseSkinViewModelActivity<ActivityScannerBi
                 if (code.length() < 3) {
                     return;
                 }
-                if (code.startsWith("30") || code.startsWith("11") || code.startsWith("12")
-                        || code.startsWith("21") || code.startsWith("22") || code.startsWith("23")) {
-                    ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_SCAN_RES)
-                            .withString(RouteKey.KEY_RES_ID, code)
-                            .withString(RouteKey.KEY_PATROL_ID, code)
-                            .withString(RouteKey.KEY_TYPE, "30")
-                            .navigation();
-                } else if (code.startsWith("31")) {
-                    ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_SCAN_RES)
-                            .withString(RouteKey.KEY_RES_ID, code)
-                            .withString(RouteKey.KEY_PATROL_ID, code)
-                            .withString(RouteKey.KEY_TYPE, "31")
-                            .navigation();
+                if (code.contains("{")) {
+                    String[] split = code.split("BarCode=");
+                    if (split.length < 2) {
+                        ToastUtil.show(CommonApplication.getInstance(),"非法的二维码");
+                        return;
+                    }
+                    String s = split[1];
+                    if (s.contains("&")) {
+                        s = s.split("&")[0];
+                    }
+                    handleCode(s);
                 } else {
-                    ToastUtil.show(ScannerActivity.this, "未识别的二维码");
-                    binding.scannerView.setResultHandler(mResultHandler);
-                    binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+                    handleCode(code);
                 }
-//                if (code.startsWith("30")||code.startsWith("31")) {
-//                    onScanResult(result.getText());
-//                }else {
-//                    ToastUtil.show(ScannerActivity.this, "未识别的二维码");
-//                    binding.scannerView.setResultHandler(mResultHandler);
-//                    binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
-//                }
             }
         }
     };
+
+    private void handleCode(String code) {
+        if (code.startsWith("30") || code.startsWith("11") || code.startsWith("12")
+                || code.startsWith("21") || code.startsWith("22") || code.startsWith("23")) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_SCAN_RES)
+                    .withString(RouteKey.KEY_RES_ID, code)
+                    .withString(RouteKey.KEY_PATROL_ID, code)
+                    .withString(RouteKey.KEY_TYPE, "30")
+                    .navigation();
+        } else if (code.startsWith("31")) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_SCAN_RES)
+                    .withString(RouteKey.KEY_RES_ID, code)
+                    .withString(RouteKey.KEY_PATROL_ID, code)
+                    .withString(RouteKey.KEY_TYPE, "31")
+                    .navigation();
+        } else {
+            ToastUtil.show(ScannerActivity.this, "未识别的二维码");
+            binding.scannerView.setResultHandler(mResultHandler);
+            binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码
+        }
+    }
 
     protected void resumeCameraPreview() {
         binding.scannerView.resumeCameraPreview(mResultHandler); //重新进入扫描二维码

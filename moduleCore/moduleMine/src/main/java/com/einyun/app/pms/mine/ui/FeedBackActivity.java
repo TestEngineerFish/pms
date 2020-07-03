@@ -119,6 +119,7 @@ public class FeedBackActivity extends BaseHeadViewModelActivity<ActivityFeedBack
                 request.setContent(binding.ltQuestionDesc.getString());
                 request.setFeedbackName(userModuleService.getUserName());
                 viewModel.addFeedBack(request).observe(this, o -> {
+                    clearContent();
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_FEED_SUCCESS).navigation();
                 });
             } else {
@@ -203,5 +204,16 @@ public class FeedBackActivity extends BaseHeadViewModelActivity<ActivityFeedBack
     public void onRightOptionClick(View view) {
         super.onRightOptionClick(view);
         ARouter.getInstance().build(RouterUtils.ACTIVITY_FEED_LIST).navigation();
+    }
+
+    /**
+     * 清空已输入内容
+     * */
+    private void clearContent(){
+        binding.ltQuestionTitle.setText("");
+        binding.ltQuestionDesc.setText("");
+        binding.selectImgsRec.removeAllViews();
+        photoSelectAdapter.getSelectedPhotos().clear();
+        photoSelectAdapter.notifyDataSetChanged();
     }
 }
