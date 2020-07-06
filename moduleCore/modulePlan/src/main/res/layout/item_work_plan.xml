@@ -127,7 +127,18 @@
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
             </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="缓存"
+                android:textColor="@color/stress_text_btn_icon_color"
+                android:textSize="@dimen/font_size15"
+                android:layout_weight="1"/>
+        </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>
