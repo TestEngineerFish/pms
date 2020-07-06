@@ -31,9 +31,14 @@ import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
+import com.einyun.app.pms.plan.convert.PlanInfoTypeConvert;
 import com.einyun.app.pms.plan.model.PlanOrderResLineModel;
 import com.einyun.app.pms.plan.repository.PlanOrderRepository;
 import com.einyun.app.pms.plan.repository.PlanOrderServiceApi;
+import com.einyun.app.pms.plan.repository.PlanRepository;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,9 +54,12 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
     IUserModuleService userModuleService;
     ResourceWorkOrderService service;
     public MsgRepository repository;
+    public  PlanRepository planRepository;
+
     public PlanOrderDetailViewModel(){
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
         repository=new MsgRepository();
+        planRepository = new PlanRepository();
     }
     PlanOrderRepository repository2= new PlanOrderRepository("");
 
@@ -243,5 +251,38 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 
         return liveData;
     }
-
+    /**
+     * 缓存详情
+     * @param data
+     * @param orderId
+     * @return
+     */
+    @NotNull
+    protected com.einyun.app.base.db.entity.PlanInfo saveCache(PlanInfo data, String orderId) {
+        String jsonStr = new Gson().toJson(data);
+        PlanInfoTypeConvert convert = new PlanInfoTypeConvert();
+        com.einyun.app.base.db.entity.PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);
+        patrolInfo.setUserId(userModuleService.getUserId());
+        patrolInfo.setId(orderId);
+//        patrolInfo.setTaskId(request.getTaskId());
+//        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
+//            @Override
+//            public void call(PatrolLocal data) {
+//                if (data == null) {
+//                    PatrolLocal patrolLocal = new PatrolLocal();
+//                    patrolLocal.setOrderId(orderId);
+//                    patrolLocal.setUserId(userModuleService.getUserId());
+//                    repo.saveLocalData(patrolLocal);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//
+//            }
+//        });
+//        repo.updatePatrolCached(orderId, userModuleService.getUserId());
+//        repo.insertPatrolInfo(patrolInfo);
+        return patrolInfo;
+    }
 }

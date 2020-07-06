@@ -13,13 +13,23 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.einyun.app.base.db.converter.BasicDataTypeConvert;
 import com.einyun.app.base.db.converter.BizDataBeanTypeConvert;
 import com.einyun.app.base.db.converter.ButtonTypeConvert;
+import com.einyun.app.base.db.converter.ButtonTypePlanConvert;
 import com.einyun.app.base.db.converter.DataBeanTypeConvert;
 import com.einyun.app.base.db.converter.DateConverter;
 import com.einyun.app.base.db.converter.DelayExtensionApplicationBeanConvert;
 import com.einyun.app.base.db.converter.ExtensionApplicationBeanConvert;
+import com.einyun.app.base.db.converter.ExtensionApplicationPlanBeanConvert;
 import com.einyun.app.base.db.converter.InitDataTypeConvert;
 import com.einyun.app.base.db.converter.InspectionTypeConvert;
 import com.einyun.app.base.db.converter.PatrolContentConvert;
+import com.einyun.app.base.db.converter.PlanDataSubJhgdgzjdbConvert;
+import com.einyun.app.base.db.converter.PlanDataSubJhgdzybConvert;
+import com.einyun.app.base.db.converter.PlanDataTypeConvert;
+import com.einyun.app.base.db.converter.PlanInitDataConvert;
+import com.einyun.app.base.db.converter.PlanInitDataJhgdgzjdbConvert;
+import com.einyun.app.base.db.converter.PlanInitDataJhgdwlbConvert;
+import com.einyun.app.base.db.converter.PlanInitDatajhgdzybConvert;
+import com.einyun.app.base.db.converter.PlanZyjhgdConvert;
 import com.einyun.app.base.db.converter.StartFlowParamBeanTypeConvert;
 import com.einyun.app.base.db.converter.StringTypeConvert;
 import com.einyun.app.base.db.converter.SubInspectionTypeConvert;
@@ -55,6 +65,14 @@ import com.einyun.app.base.db.entity.User;
         Plan.class, PlanInfo.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
 }, version = 7)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
+
+        ButtonTypePlanConvert.class, ExtensionApplicationPlanBeanConvert.class,
+        PlanDataSubJhgdzybConvert.class, PlanDataSubJhgdgzjdbConvert.class,
+        PlanInitDataConvert.class,PlanDataTypeConvert.class, PlanInitDatajhgdzybConvert.class,
+        PlanInitDataJhgdgzjdbConvert.class, PlanInitDataJhgdwlbConvert.class,
+        PlanZyjhgdConvert.class,
+
+
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,
         InspectionTypeConvert.class, PatrolContentConvert.class,
