@@ -406,7 +406,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             if ("1".equals(model.getScan_result())) {
 
                                 binding.tvScanReasult.setText("成功");
-                            } else if ("2".equals(model.getScan_result())){
+                            } else if ("0".equals(model.getScan_result())){
                                 binding.tvScanReasult.setText("失败");
                             }else {
                                 binding.tvScanReasult.setText("未扫码");
@@ -417,7 +417,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         if ("1".equals(model.getScan_result())) {
 
                             binding.tvScanReasult.setText("成功");
-                        } else if ("2".equals(model.getScan_result())){
+                        } else if ("0".equals(model.getScan_result())){
                             binding.tvScanReasult.setText("失败");
                         } else {
                             binding.tvScanReasult.setText("未扫码");
@@ -1014,8 +1014,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                     } else {
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(2);
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("2");
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(0);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                         ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");

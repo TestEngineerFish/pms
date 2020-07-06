@@ -140,15 +140,13 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             request.setDivideCode(divideId);
             request.setDivideId(divideId);
             request.setDivideName(divideName);
-            binding.setBean(request);
-            Log.e("tag", "initViews: " + projectName);
             request.setProjectName(projectName);
             binding.setBean(request);
         }
         if (request.getDivideId()!=null&&request.getTxCode()!=null) {
             viewModel.getResourceInfos(request).observe(this, resourceTypeBeans -> {
                 if (resourceTypeBeans.size() == 0) {
-                    ToastUtil.show(this, "暂无资源分类");
+//                    ToastUtil.show(this, "暂无资源分类");
                     return;
                 }
                 List<String> resourceTypeList = new ArrayList<>();
