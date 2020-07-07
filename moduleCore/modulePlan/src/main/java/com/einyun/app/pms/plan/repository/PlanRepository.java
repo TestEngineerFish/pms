@@ -44,8 +44,8 @@ public class PlanRepository extends DatabaseRepo<Plan> {
     /**
      * 计划工单详情加载
      */
-    public void loadPlanInfo(String orderId,String userId) {
-        infoDao.load(orderId,userId);
+    public PlanInfo loadPlanInfo(String orderId,String userId) {
+       return infoDao.load(orderId,userId);
     }
     /**
      * 计划工单详情缓存删除

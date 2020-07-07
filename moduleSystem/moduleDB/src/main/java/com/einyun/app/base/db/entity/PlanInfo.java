@@ -17,6 +17,7 @@ import com.einyun.app.base.db.converter.PlanInitDataJhgdwlbConvert;
 import com.einyun.app.base.db.converter.PlanInitDatajhgdzybConvert;
 import com.einyun.app.base.db.converter.PlanZyjhgdConvert;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity(tableName = "plan_info", primaryKeys = {"id", "userId"})
@@ -48,7 +49,7 @@ public class PlanInfo {
     @TypeConverters(ExtensionApplicationPlanBeanConvert.class)
     public List<ExtensionApplication> extensionApplication;
 
-    private ExtensionApplication getExt(int applyType) {
+    public ExtensionApplication getExt(int applyType) {
         if (extensionApplication == null || extensionApplication.size() == 0) {
             return null;
         }
@@ -963,6 +964,7 @@ public class PlanInfo {
                 private String id_;
                 private String F_REMARK;
                 private int is_forced;
+                private int is_suc;
                 private String F_WG_NAME;
                 private String F_RES_NAME;
                 private String F_RES_COUNT;
@@ -1102,11 +1104,19 @@ public class PlanInfo {
                 public void setF_RES_TYPE(String F_RES_TYPE) {
                     this.F_RES_TYPE = F_RES_TYPE;
                 }
+
+                public int getIs_suc() {
+                    return is_suc;
+                }
+
+                public void setIs_suc(int is_suc) {
+                    this.is_suc = is_suc;
+                }
             }
         }
     }
 
-    public static class ExtensionApplication {
+    public static class ExtensionApplication implements Serializable {
         /**
          * id : 85132517090264070
          * poId : 80305289529661446

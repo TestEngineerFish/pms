@@ -27,7 +27,7 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.ForseScanCodeModel;
-import com.einyun.app.library.resource.workorder.model.PlanInfo;
+import com.einyun.app.base.db.entity.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
@@ -49,7 +49,7 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_D
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
 public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
-    MutableLiveData<PlanInfo> liveData = new MutableLiveData<>();
+    MutableLiveData<com.einyun.app.base.db.entity.PlanInfo> liveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     ResourceWorkOrderService service;
@@ -216,15 +216,15 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      *
      * @return
      */
-    public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag) {
+    public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag,String orderId) {
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
             DoneDetialRequest request = new DoneDetialRequest();
             request.setProInsId(proInsId);
             request.setTaskNodeId(taskNodeId);
-            service.planDoneDetial(request, new CallBack<PlanInfo>() {
+            service.planDoneDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PlanInfo>() {
                 @Override
-                public void call(PlanInfo data) {
-                    liveData.postValue(data);
+                public void call(com.einyun.app.library.resource.workorder.model.PlanInfo data) {
+//                    liveData.postValue(data);
                 }
 
                 @Override
@@ -234,10 +234,15 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
                 }
             });
         } else {
-            service.planOrderDetail(taskId, new CallBack<PlanInfo>() {
+            PlanInfo planInfo = planRepository.loadPlanInfo(orderId, userModuleService.getUserId());
+            if (planInfo != null) {
+                liveData.postValue(planInfo);
+            }
+            service.planOrderDetail(taskId, new CallBack<com.einyun.app.library.resource.workorder.model.PlanInfo>() {
                 @Override
-                public void call(PlanInfo data) {
-                    liveData.postValue(data);
+                public void call(com.einyun.app.library.resource.workorder.model.PlanInfo data) {
+                    com.einyun.app.base.db.entity.PlanInfo planInfo = saveCache(data, orderId);
+                    liveData.postValue(planInfo);
                     hideLoading();
                 }
 
@@ -258,12 +263,13 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      * @return
      */
     @NotNull
-    protected com.einyun.app.base.db.entity.PlanInfo saveCache(PlanInfo data, String orderId) {
+    protected PlanInfo saveCache(com.einyun.app.library.resource.workorder.model.PlanInfo data, String orderId) {
         String jsonStr = new Gson().toJson(data);
         PlanInfoTypeConvert convert = new PlanInfoTypeConvert();
-        com.einyun.app.base.db.entity.PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);
+        PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);
         patrolInfo.setUserId(userModuleService.getUserId());
         patrolInfo.setId(orderId);
+        planRepository.insertPlanInfo(patrolInfo);
 //        patrolInfo.setTaskId(request.getTaskId());
 //        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
 //            @Override

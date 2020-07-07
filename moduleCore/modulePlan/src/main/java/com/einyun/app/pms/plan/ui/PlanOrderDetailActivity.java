@@ -66,13 +66,13 @@ import com.einyun.app.common.utils.Glide4Engine;
 
 import com.einyun.app.library.portal.dictdata.net.URLS;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
-import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
+
 import com.einyun.app.library.resource.workorder.model.OrderState;
-import com.einyun.app.library.resource.workorder.model.PlanInfo;
-import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
-import com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb;
+//import com.einyun.app.library.resource.workorder.model.PlanInfo;
+import com.einyun.app.base.db.entity.PlanInfo;
+
+
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
-import com.einyun.app.library.resource.workorder.model.Zyjhgd;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.upload.model.PicUrl;
@@ -96,6 +96,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,7 +113,7 @@ import static com.einyun.app.library.resource.workorder.net.URLs.URL_RESOURCE_WO
 @Route(path = RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
 public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityPlanOrderDetailBinding, PlanOrderDetailViewModel> {
     RVBindingAdapter<ItemPlanWorkNodeBinding, WorkNode> nodesAdapter;
-    RVBindingAdapter<ItemPlanResouceBinding, Sub_jhgdzyb> resourceAdapter;
+    RVBindingAdapter<ItemPlanResouceBinding, PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> resourceAdapter;
     //    RVBindingAdapter<ItemPlanMaterialBinding, WorkNode> materialAdapter;
     @Autowired
     IUserModuleService userModuleService;
@@ -187,7 +188,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     ARouter.getInstance()
                             .build(RouterUtils.ACTIVITY_LATE)
                             .withString(RouteKey.KEY_ORDER_ID, id)
-                            .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, planInfo.getExtensionApplication())
+                            .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, (Serializable) planInfo.getExtensionApplication())
                             .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                             .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_PLAN)
                             .navigation();
@@ -356,13 +357,13 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
         //资源适配
         if (resourceAdapter == null) {
-            resourceAdapter = new RVBindingAdapter<ItemPlanResouceBinding, Sub_jhgdzyb>(this, BR.resource) {
+            resourceAdapter = new RVBindingAdapter<ItemPlanResouceBinding, PlanInfo.Data.Zyjhgd.Sub_jhgdzyb>(this, BR.resource) {
                 @Override
-                public void onBindItem(ItemPlanResouceBinding binding, Sub_jhgdzyb model, int position) {
+                public void onBindItem(ItemPlanResouceBinding binding, PlanInfo.Data.Zyjhgd.Sub_jhgdzyb model, int position) {
                     String f_status1 = planInfo.getData().getZyjhgd().getF_STATUS();
                     if (f_status1.equals("5") || f_status1.equals("6")) {
                         binding.llForceScan.setVisibility(View.VISIBLE);
-                        if (model.is_forced() == 0) {//  0 不强制
+                        if (model.getIs_forced() == 0) {//  0 不强制
                             binding.llScanReasult.setVisibility(View.GONE);
                         } else {//1 强制扫码
 
@@ -372,7 +373,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         switch (fragmentTag) {
                             case FRAGMENT_PLAN_OWRKORDER_PENDING://待跟进
                                 binding.llForceScan.setVisibility(View.VISIBLE);
-                                if (model.is_forced() == 0) {//  0 不强制
+                                if (model.getIs_forced()  == 0) {//  0 不强制
                                     binding.ivScan.setVisibility(View.GONE);
                                     binding.llScanReasult.setVisibility(View.GONE);
                                 } else {//1 强制扫码
@@ -385,7 +386,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 break;
                             case FRAGMENT_PLAN_OWRKORDER_DONE:
                                 binding.llForceScan.setVisibility(View.VISIBLE);
-                                if (model.is_forced() == 0) {//  0 不强制
+                                if (model.getIs_forced()  == 0) {//  0 不强制
                                     binding.llScanReasult.setVisibility(View.GONE);
                                 } else {//1 强制扫码
 
@@ -394,7 +395,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 break;
                         }
                     }
-                    ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
+                    PlanInfo.ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
                     if (extForceClose == null) {
                         String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
                         Log.e(TAG, "onBindItem: f_status==" + f_status);
@@ -462,7 +463,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private void requestData() {
 
         //加载数据
-        viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag).observe(this, planInfo -> {
+        viewModel.loadDetail(proInsId, taskId, taskNodeId, fragmentTag,id).observe(this, planInfo -> {
             if (planInfo == null || planInfo.getData() == null) {
                 return;
             }
@@ -544,7 +545,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
     List<WorkNode> nodes = new ArrayList<>();
 
-    private void updateUI(PlanInfo planInfo) {
+    private void updateUI(com.einyun.app.base.db.entity.PlanInfo planInfo) {
         if (planInfo == null) {
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
@@ -610,10 +611,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 显示申请延期信息
      */
     private void showPostpone() {
-        ExtensionApplication extPostpone = planInfo.getExt(ApplyType.POSTPONE.getState());
+        PlanInfo.ExtensionApplication extPostpone = planInfo.getExt(ApplyType.POSTPONE.getState());
         if (extPostpone != null) {
             binding.itemApplyLateInfo.cv.setVisibility(View.VISIBLE);
-            binding.itemApplyLateInfo.setExt(extPostpone);
+//            binding.itemApplyLateInfo.setExt(extPostpone);
             if (extPostpone.getApplyFiles() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.itemApplyLateInfo.imgList.setLayoutManager(new LinearLayoutManager(
@@ -634,10 +635,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 显示强制闭单信息
      */
     private void showForceClose() {
-        ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
+        PlanInfo.ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
         if (extForceClose != null) {
             binding.itemCloseOrderInfo.cv.setVisibility(View.VISIBLE);
-            binding.itemCloseOrderInfo.setExt(extForceClose);
+//            binding.itemCloseOrderInfo.setExt(extForceClose);
             if (extForceClose.getApplyFiles() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.itemCloseOrderInfo.imgList.setLayoutManager(new LinearLayoutManager(
@@ -755,7 +756,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
     private boolean hasException() {
         int index = 0; //异常节点选项
-        for (Sub_jhgdgzjdb node : planInfo.getData().getZyjhgd().getSub_jhgdgzjdb()) {
+        for (PlanInfo.Data.Zyjhgd.Sub_jhgdgzjdb node : planInfo.getData().getZyjhgd().getSub_jhgdgzjdb()) {
             for (WorkNode workNode : getWorkNodes()) {
                 if (node.getF_WK_ID().equals(workNode.number)) {
                     node.setF_WK_RESULT(workNode.getResult());
@@ -920,12 +921,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     private boolean validateForceScan() {
-        List<Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
+        List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
         if (sub_jhgdzyb != null && sub_jhgdzyb.size() > 0) {
 
-            for (Sub_jhgdzyb dzyb : sub_jhgdzyb) {
-                if (dzyb.is_forced() == 1) {//强制扫码下 有 失败的 不准提交
-                    if (dzyb.is_suc() != 1) {//0 失败
+            for (PlanInfo.Data.Zyjhgd.Sub_jhgdzyb dzyb : sub_jhgdzyb) {
+                if (dzyb.getIs_forced() == 1) {//强制扫码下 有 失败的 不准提交
+                    if (dzyb.getIs_suc() != 1) {//0 失败
                         isSubmit = false;
 
                     }
@@ -1009,12 +1010,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     Log.e(TAG, "onActivityResult: " + aBoolean);
                     if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                     } else {
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(0);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
