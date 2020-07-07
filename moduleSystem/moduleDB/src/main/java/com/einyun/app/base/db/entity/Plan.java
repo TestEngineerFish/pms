@@ -23,10 +23,20 @@ public class Plan {
     private String F_STATUS;
     private int F_EXT_STATUS;
     private int F_OT_STATUS;
+    private String F_DIVIDE_ID;
+    private String F_project_id;
     @NonNull
     private String userId;
     @NonNull
     private int listType;
+
+    public String getF_project_id() {
+        return F_project_id;
+    }
+
+    public void setF_project_id(String f_project_id) {
+        F_project_id = f_project_id;
+    }
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -184,5 +194,13 @@ public class Plan {
 
     public void setListType( @NonNull int listType) {
         this.listType = listType;
+    }
+
+    public String getF_DIVIDE_ID() {
+        return F_DIVIDE_ID;
+    }
+
+    public void setF_DIVIDE_ID(String f_DIVIDE_ID) {
+        F_DIVIDE_ID = f_DIVIDE_ID;
     }
 }

@@ -50,7 +50,7 @@ import com.einyun.app.base.db.entity.User;
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
         PatrolInfo.class, PatrolLocal.class, Distribute.class, CheckPoint.class,
         Plan.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
-}, version = 7)
+}, version = 8)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
         DataBeanTypeConvert.class, DelayExtensionApplicationBeanConvert.class,
         ExtensionApplicationBeanConvert.class, InitDataTypeConvert.class,

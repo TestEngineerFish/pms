@@ -265,12 +265,28 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 public void onBindItem(ItemWorkPlanBinding binding, Plan distributeWorkOrder) {
 
                     if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                        binding.waitHandleLayout.setVisibility(View.VISIBLE);
                         if (distributeWorkOrder.getF_OT_STATUS() == 1) {
                             binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
                         } else {
                             binding.itemSendWorkLfImg.setVisibility(View.GONE);
                         }
+                        binding.turnOrder.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_TASK_ID, distributeWorkOrder.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, distributeWorkOrder.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, distributeWorkOrder.getF_DIVIDE_ID())
+                                        .withString(RouteKey.KEY_PROJECT_ID, distributeWorkOrder.getF_project_id())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                                        .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                        .navigation();
+                            }
+                        });
                     } else {
+                        binding.waitHandleLayout.setVisibility(View.GONE);
                         binding.itemSendWorkLfImg.setVisibility(View.GONE);
                     }
                 }
@@ -367,6 +383,8 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                 .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
                 .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                .withString(RouteKey.KEY_DIVIDE_ID, data.getF_DIVIDE_ID())
+                .withString(RouteKey.KEY_PROJECT_ID, data.getF_project_id())
                 .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
                 .navigation();
     }
