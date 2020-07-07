@@ -133,7 +133,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         for (RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean model:materialsBeans){
             totalPrice=Float.parseFloat(model.getTotal_price())+totalPrice;
         }
-        binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+"");
+        binding.repairHandlePaid.repairMaterialPrice.setText(totalPrice+"");
+        if (!TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText().toString())){
+            binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString())+"");
+        }else {
+            binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+"");
+        }
     }
 
     @Override
