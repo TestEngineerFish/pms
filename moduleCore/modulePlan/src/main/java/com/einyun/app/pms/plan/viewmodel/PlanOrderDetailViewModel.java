@@ -218,19 +218,25 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      */
     public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag,String orderId) {
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
+            PlanInfo planInfo = planRepository.loadPlanInfo(orderId, userModuleService.getUserId());
+            if (planInfo != null) {
+                liveData.postValue(planInfo);
+            }
             DoneDetialRequest request = new DoneDetialRequest();
             request.setProInsId(proInsId);
             request.setTaskNodeId(taskNodeId);
             service.planDoneDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PlanInfo>() {
                 @Override
                 public void call(com.einyun.app.library.resource.workorder.model.PlanInfo data) {
-//                    liveData.postValue(data);
+                    PlanInfo planInfo = saveCache(data, orderId);
+                    liveData.postValue(planInfo);
+                    hideLoading();
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
                     ThrowableParser.onFailed(throwable);
-                    liveData.postValue(null);
+//                    liveData.postValue(null);
                 }
             });
         } else {
@@ -241,14 +247,14 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
             service.planOrderDetail(taskId, new CallBack<com.einyun.app.library.resource.workorder.model.PlanInfo>() {
                 @Override
                 public void call(com.einyun.app.library.resource.workorder.model.PlanInfo data) {
-                    com.einyun.app.base.db.entity.PlanInfo planInfo = saveCache(data, orderId);
+                    PlanInfo planInfo = saveCache(data, orderId);
                     liveData.postValue(planInfo);
                     hideLoading();
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    liveData.postValue(null);
+//                    liveData.postValue(null);
                     ThrowableParser.onFailed(throwable);
                 }
             });
@@ -263,7 +269,42 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      * @return
      */
     @NotNull
-    protected PlanInfo saveCache(com.einyun.app.library.resource.workorder.model.PlanInfo data, String orderId) {
+    public PlanInfo saveCache(com.einyun.app.library.resource.workorder.model.PlanInfo data, String orderId) {
+        String jsonStr = new Gson().toJson(data);
+        PlanInfoTypeConvert convert = new PlanInfoTypeConvert();
+        PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);
+        patrolInfo.setUserId(userModuleService.getUserId());
+        patrolInfo.setId(orderId);
+        planRepository.insertPlanInfo(patrolInfo);
+//        patrolInfo.setTaskId(request.getTaskId());
+//        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
+//            @Override
+//            public void call(PatrolLocal data) {
+//                if (data == null) {
+//                    PatrolLocal patrolLocal = new PatrolLocal();
+//                    patrolLocal.setOrderId(orderId);
+//                    patrolLocal.setUserId(userModuleService.getUserId());
+//                    repo.saveLocalData(patrolLocal);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//
+//            }
+//        });
+//        repo.updatePatrolCached(orderId, userModuleService.getUserId());
+//        repo.insertPatrolInfo(patrolInfo);
+        return patrolInfo;
+    }
+    /**
+     * 缓存操作
+     * @param data
+     * @param orderId
+     * @return
+     */
+    @NotNull
+    public PlanInfo saveCache(PlanInfo data, String orderId) {
         String jsonStr = new Gson().toJson(data);
         PlanInfoTypeConvert convert = new PlanInfoTypeConvert();
         PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);

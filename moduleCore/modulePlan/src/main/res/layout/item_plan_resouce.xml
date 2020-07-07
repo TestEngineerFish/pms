@@ -6,7 +6,7 @@
 
         <variable
             name="resource"
-            type="com.einyun.app.library.resource.workorder.model.Sub_jhgdzyb" />
+            type="com.einyun.app.base.db.entity.PlanInfo.Data.Zyjhgd.Sub_jhgdzyb" />
     </data>
 
     <LinearLayout
@@ -70,7 +70,7 @@
 
             <TextView
                 style="@style/detail_item_right_tv"
-                app:isScan="@{resource.is_forced()}"/>
+                app:isScan="@{resource.getIs_forced()}"/>
         </LinearLayout>
         <LinearLayout style="@style/detail_item_ll">
 

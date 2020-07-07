@@ -255,9 +255,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         //处理节点
                         tableItem(binding, position);
                         //选中通过
-                        agree(binding, model);
+                        agree(binding, model,position);
                         //选中不通过
-                        reject(binding, model);
+                        reject(binding, model,position);
                         String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
                         if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose || "5".equals(f_status) || "6".equals(f_status)) {//接单模式在并上一个接单的状态
                             if (!TextUtils.isEmpty(model.result)) {
@@ -310,15 +310,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 }
 
                 //不通过
-                protected void reject(ItemPlanWorkNodeBinding binding, WorkNode model) {
+                protected void reject(ItemPlanWorkNodeBinding binding, WorkNode model,int position) {
                     binding.btnReject.setOnClickListener(v -> {
                         onReject(binding);
                         model.setResult(ResultState.RESULT_FAILD);
+                        saveLocalData(ResultState.RESULT_FAILD,position);
                     });
                 }
 
                 //通过
-                protected void agree(ItemPlanWorkNodeBinding binding, WorkNode model) {
+                protected void agree(ItemPlanWorkNodeBinding binding, WorkNode model,int position) {
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
                         model.setResult(ResultState.RESULT_SUCCESS);
@@ -460,6 +461,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         requestData();
     }
 
+    private void saveLocalData(String result,int position) {
+        planInfo.getData().getZyjhgd().getSub_jhgdgzjdb().get(position-1).setF_WK_CONTENT(result);
+        viewModel.saveCache(planInfo,id);
+    }
+
     private void requestData() {
 
         //加载数据
@@ -572,7 +578,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 展示处理信息
      */
     private void showResult() {
-        Zyjhgd zyjhgd = planInfo.getData().getZyjhgd();
+        PlanInfo.Data.Zyjhgd zyjhgd = planInfo.getData().getZyjhgd();
         if (String.valueOf(OrderState.CLOSED.getState()).equals(planInfo.getData().getZyjhgd().getF_STATUS())) {
             binding.cvResultEdit.setVisibility(View.GONE);
             binding.cvOperate.setVisibility(View.GONE);
@@ -614,7 +620,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         PlanInfo.ExtensionApplication extPostpone = planInfo.getExt(ApplyType.POSTPONE.getState());
         if (extPostpone != null) {
             binding.itemApplyLateInfo.cv.setVisibility(View.VISIBLE);
-//            binding.itemApplyLateInfo.setExt(extPostpone);
+            binding.itemApplyLateInfo.setExt(extPostpone);
             if (extPostpone.getApplyFiles() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.itemApplyLateInfo.imgList.setLayoutManager(new LinearLayoutManager(
@@ -638,7 +644,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         PlanInfo.ExtensionApplication extForceClose = planInfo.getExt(ApplyType.FORCECLOSE.getState());
         if (extForceClose != null) {
             binding.itemCloseOrderInfo.cv.setVisibility(View.VISIBLE);
-//            binding.itemCloseOrderInfo.setExt(extForceClose);
+            binding.itemCloseOrderInfo.setExt(extForceClose);
             if (extForceClose.getApplyFiles() != null) {
                 PhotoListAdapter adapter = new PhotoListAdapter(this);
                 binding.itemCloseOrderInfo.imgList.setLayoutManager(new LinearLayoutManager(
@@ -1013,11 +1019,13 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+//                        viewModel.saveCache(planInfo,id);
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                     } else {
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
                         planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
                         resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+//                        viewModel.saveCache(planInfo,id);
 //                        resourceAdapter.notifyItemChanged(mClickPosition);
                         ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
                     }

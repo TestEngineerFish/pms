@@ -6,7 +6,7 @@
 
         <variable
             name="detail"
-            type="com.einyun.app.library.resource.workorder.model.Zyjhgd" />
+            type="com.einyun.app.base.db.entity.PlanInfo.Data.Zyjhgd" />
 
         <variable
             name="callBack"
