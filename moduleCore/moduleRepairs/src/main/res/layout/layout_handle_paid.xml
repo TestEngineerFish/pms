@@ -27,12 +27,12 @@
                     style="@style/tv_create_order_name"
                     android:text="材料费(元)" />
 
-                <com.einyun.app.common.ui.widget.BaseEditText
+                <TextView
                     android:id="@+id/repair_material_price"
                     style="@style/tv_handle_order_select"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:hint="请输入"
+                    android:hint="--"
                     android:inputType="number" />
 
             </LinearLayout>
