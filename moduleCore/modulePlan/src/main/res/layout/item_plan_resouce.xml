@@ -24,7 +24,7 @@
                 android:text="@{resource.f_RES_NAME}"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="@dimen/px_20"
-                android:layout_marginRight="@dimen/px_120"
+                android:layout_marginRight="@dimen/px_150"
                 android:textColor="#FF132D42"
                 android:textSize="@dimen/font_size15" />
             <ImageView
