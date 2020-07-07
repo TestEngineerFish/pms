@@ -118,7 +118,20 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
                 @Override
                 public void onBindItem(ItemPatrolListBinding binding, Patrol model) {
-
+                    binding.turnOrder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, model.getF_massif_id())
+                                    .withString(RouteKey.KEY_PROJECT_ID, model.getF_project_id())
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                                    .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                    .navigation();
+                        }
+                    });
                 }
 
                 @Override
@@ -341,6 +354,8 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                     .withInt(RouteKey.KEY_LIST_TYPE, listType)
                     .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                    .withString(RouteKey.KEY_DIVIDE_ID, data.getF_massif_id())
+                    .withString(RouteKey.KEY_PROJECT_ID, data.getF_project_id())
                     .navigation();
         } else {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
@@ -348,6 +363,8 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                     .withString(RouteKey.KEY_ORDER_ID, data.getID_())
                     .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                    .withString(RouteKey.KEY_DIVIDE_ID, data.getF_massif_id())
+                    .withString(RouteKey.KEY_PROJECT_ID, data.getF_project_id())
                     .navigation();
         }
     }

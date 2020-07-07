@@ -38,6 +38,6 @@ class PatrolWorkOrder {
     var ownerId: String? = null
     var F_patrol_line_id:String?=null
     var is_coming_timeout:Int=0
-     var  F_DIVIDE_ID:String?=null
+     var  F_project_id:String?=null
      var F_massif_id:String?=null
 }

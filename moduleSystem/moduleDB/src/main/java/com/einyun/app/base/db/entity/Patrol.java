@@ -49,7 +49,7 @@ public class Patrol {
     private String ownerId;
     private String F_patrol_line_id;
     private int is_coming_timeout;
-    private String F_DIVIDE_ID;
+    private String F_project_id;
     private String F_massif_id;
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -62,12 +62,12 @@ public class Patrol {
         F_massif_id = f_massif_id;
     }
 
-    public String getF_DIVIDE_ID() {
-        return F_DIVIDE_ID;
+    public String getF_project_id() {
+        return F_project_id;
     }
 
-    public void setF_DIVIDE_ID(String f_DIVIDE_ID) {
-        F_DIVIDE_ID = f_DIVIDE_ID;
+    public void setF_project_id(String f_project_id) {
+        F_project_id = f_project_id;
     }
 
     public int getIs_coming_timeout() {
