@@ -284,7 +284,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             if (!TextUtils.isEmpty(model.result)) {
                                 if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onReject(binding);
-                                } else if (ResultState.RESULT_FAILD.equals(model.result)) {
+                                } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                     onAgree(binding);
                                 }
                             }
