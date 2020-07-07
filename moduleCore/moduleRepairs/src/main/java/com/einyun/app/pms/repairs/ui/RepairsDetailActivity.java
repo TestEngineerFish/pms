@@ -128,6 +128,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         return R.layout.activity_repairs_detail;
     }
 
+    private void getTotalMaterialPrice(List<RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean> materialsBeans){
+        Float totalPrice=0.0f;
+        for (RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean model:materialsBeans){
+            totalPrice=Float.parseFloat(model.getTotal_price())+totalPrice;
+        }
+        binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+"");
+    }
+
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
@@ -147,6 +155,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (detialModel != null) {
                 detialModel.getData().getCustomer_repair_model().getSub_repair_materials().add(model);
                 materialAdapter.setDataList(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
+                getTotalMaterialPrice(detialModel.getData().getCustomer_repair_model().getSub_repair_materials());
             }
         });
         materialAdapter = new RVBindingAdapter<ItemHandleBinding, RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean>(this, com.einyun.app.pms.repairs.BR.material) {
