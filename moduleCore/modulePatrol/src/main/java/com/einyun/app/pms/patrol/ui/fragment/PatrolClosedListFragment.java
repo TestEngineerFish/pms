@@ -122,6 +122,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
 
                 @Override
                 public void onBindItem(ItemPatrolListBinding binding, Patrol model) {
+                 binding.
                     binding.itemCache.setVisibility(View.GONE);
                 }
 
