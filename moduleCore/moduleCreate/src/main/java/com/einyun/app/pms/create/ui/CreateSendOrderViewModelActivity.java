@@ -137,7 +137,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             request.setResId(resouseId);
             request.setTxId(lineId);
             request.setTxCode(lineCode);
-            request.setDivideCode(divideId);
+//            request.setDivideCode(divideId);
             request.setDivideId(divideId);
             request.setDivideName(divideName);
             request.setProjectName(projectName);
