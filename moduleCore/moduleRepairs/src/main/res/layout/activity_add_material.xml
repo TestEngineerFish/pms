@@ -55,7 +55,7 @@
                 style="@style/tv_create_order_name"
                 android:layout_width="@dimen/px_130"
                 android:layout_weight="0"
-                android:text="单价"
+                android:text="单价(元)"
                 android:textStyle="normal"
                 android:textColor="@color/blackTextColor"
                 android:layout_marginLeft="@dimen/px_30"/>
