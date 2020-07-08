@@ -29,10 +29,11 @@ public class PlanInfo {
      * extensionApplication : [{"id":"85132517090264070","poId":"80305289529661446","applyType":2,"extensionDays":null,"applicationDescription":"331米","applicationState":3,"creationDate":"2020-07-06 15:50:36","type":1,"createdBy":"66929494354558982","approveId":"66929494354558982","approveName":"张溧阳","createdName":"张溧阳","applyFiles":"[{\"success\":true,\"fileId\":\"85132516016522246\",\"name\":\"1594021838206\",\"path\":\"55614223698362369\\/zly\\/2020\\/7\\/85132516016522246.\",\"size\":3091232}]","auditDate":"2020-07-06 15:51:01"},{"id":"85132476288073734","poId":"80305289529661446","applyType":1,"extensionDays":1,"applicationDescription":"你周五","applicationState":1,"creationDate":"2020-07-06 15:49:58","type":1,"createdBy":"66929494354558982","approveId":null,"approveName":null,"createdName":"张溧阳","applyFiles":"[{\"success\":true,\"fileId\":\"85132475214331910\",\"name\":\"1594021800781\",\"path\":\"55614223698362369\\/zly\\/2020\\/7\\/85132475214331910.\",\"size\":361753}]","auditDate":null}]
      */
     @NonNull
-    public   String id;
+    public String id;
     @NonNull
-   public String userId;
-  public    String taskId;
+    public String userId;
+    public String taskId;
+    public boolean closed;
     @TypeConverters(ButtonTypePlanConvert.class)
     public List<Buttons> buttons;
     @TypeConverters(PlanDataTypeConvert.class)
@@ -102,6 +103,14 @@ public class PlanInfo {
 
     public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    public boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 
     public static class Data {

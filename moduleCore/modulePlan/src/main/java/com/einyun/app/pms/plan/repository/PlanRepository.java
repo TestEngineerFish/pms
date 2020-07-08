@@ -10,6 +10,7 @@ import com.einyun.app.base.db.dao.PlanDao;
 import com.einyun.app.base.db.dao.PlanInfoDao;
 import com.einyun.app.base.db.entity.Plan;
 import com.einyun.app.base.db.entity.PlanInfo;
+import com.einyun.app.base.db.entity.PlanLocal;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.repository.DatabaseRepo;
 import com.einyun.app.library.core.net.EinyunHttpService;
@@ -53,7 +54,24 @@ public class PlanRepository extends DatabaseRepo<Plan> {
     public void deletePlanInfo(String orderId,String userId) {
         infoDao.deletePlanInfo(orderId,userId);
     }
-
+    /**
+     * 计划工单本地输入插入
+     */
+    public void insertPlanLocal(PlanLocal rows) {
+        infoDao.insertPlanLocal(rows);
+    }
+    /**
+     * 计划工单本地输入加载
+     */
+    public PlanLocal loadPlanLocal(String orderId,String userId) {
+        return infoDao.loadPlanLocal(orderId,userId);
+    }
+    /**
+     * 计划工单详情本地输入shanchu
+     */
+    public void deletePlanLocal(String orderId,String userId) {
+        infoDao.deletePlanLocal(orderId,userId);
+    }
     @Override
     public DataSource.Factory<Integer, Plan> queryAll(@NonNull String userId,int listType) {
         return dao.queryAll(userId,listType);

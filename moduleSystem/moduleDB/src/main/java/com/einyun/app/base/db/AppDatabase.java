@@ -7,8 +7,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.einyun.app.base.db.converter.BasicDataTypeConvert;
 import com.einyun.app.base.db.converter.BizDataBeanTypeConvert;
@@ -55,6 +53,7 @@ import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.db.entity.Plan;
 
 import com.einyun.app.base.db.entity.PlanInfo;
+import com.einyun.app.base.db.entity.PlanLocal;
 import com.einyun.app.base.db.entity.QualityRequest;
 import com.einyun.app.base.db.entity.SearchHistory;
 import com.einyun.app.base.db.entity.User;
@@ -62,7 +61,7 @@ import com.einyun.app.base.db.entity.User;
 
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
         PatrolInfo.class, PatrolLocal.class, Distribute.class, CheckPoint.class,
-        Plan.class, PlanInfo.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
+        Plan.class, PlanInfo.class, PlanLocal.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
 }, version = 7)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
 
