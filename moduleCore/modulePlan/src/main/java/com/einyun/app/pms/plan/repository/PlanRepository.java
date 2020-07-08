@@ -8,9 +8,11 @@ import com.einyun.app.base.db.dao.PatrolDao;
 import com.einyun.app.base.db.dao.PatrolInfoDao;
 import com.einyun.app.base.db.dao.PlanDao;
 import com.einyun.app.base.db.dao.PlanInfoDao;
+import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.db.entity.Plan;
 import com.einyun.app.base.db.entity.PlanInfo;
 import com.einyun.app.base.db.entity.PlanLocal;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.repository.DatabaseRepo;
 import com.einyun.app.library.core.net.EinyunHttpService;
@@ -63,8 +65,12 @@ public class PlanRepository extends DatabaseRepo<Plan> {
     /**
      * 计划工单本地输入加载
      */
-    public PlanLocal loadPlanLocal(String orderId,String userId) {
-        return infoDao.loadPlanLocal(orderId,userId);
+    public void loadPlanLocal(String orderId, String userId, CallBack<PlanLocal> callBack) {
+        db.runInTransaction(() -> {
+            PlanLocal local = infoDao.loadPlanLocal(orderId,userId);
+            callBack.call(local);
+        });
+//        return infoDao.loadPlanLocal(orderId,userId);
     }
     /**
      * 计划工单详情本地输入shanchu

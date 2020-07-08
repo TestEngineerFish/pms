@@ -31,6 +31,7 @@ import com.einyun.app.base.db.bean.SubInspectionWorkOrderFlowNode;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.db.entity.PlanLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.Base64Util;
 import com.einyun.app.base.util.BitmapUtil;
@@ -139,6 +140,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     boolean isSubmit = true;
     private List<WorkOrderTypeModel> lines;
     private List<PlanOrderResLineModel> mPlanResLines = new ArrayList<>();
+    private PlanLocal planLocal;
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -226,11 +228,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //                    }
                 } else {
 //                    if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PLAN)) {//TODO 强制闭单申请中 要隐藏 派单 模块
-                        isCloseClose = planInfo.getClosed();
-                        binding.cvResultEdit.setVisibility(View.GONE);
-                        binding.cvOperate.setVisibility(View.GONE);
-                        binding.btnSubmit.setVisibility(View.GONE);
-                        nodesAdapter.notifyDataSetChanged();
+                    isCloseClose = planInfo.getClosed();
+                    binding.cvResultEdit.setVisibility(View.GONE);
+                    binding.cvOperate.setVisibility(View.GONE);
+                    binding.btnSubmit.setVisibility(View.GONE);
+                    nodesAdapter.notifyDataSetChanged();
 //                    } else {
 //                        ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
 //                    }
@@ -317,7 +319,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             if (!TextUtils.isEmpty(model.result)) {
                                 if (ResultState.RESULT_FAILD.equals(model.result)) {
                                     onReject(binding);
-                                } else if (ResultState.RESULT_FAILD.equals(model.result)) {
+                                } else if (ResultState.RESULT_SUCCESS.equals(model.result)) {
                                     onAgree(binding);
                                 }
                             }
@@ -346,7 +348,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     binding.btnReject.setOnClickListener(v -> {
                         onReject(binding);
                         model.setResult(ResultState.RESULT_FAILD);
-                        saveLocalData(ResultState.RESULT_FAILD, position);
+                        saveLocalData();
                     });
                 }
 
@@ -355,6 +357,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     binding.btnAgree.setOnClickListener((View v) -> {
                         onAgree(binding);
                         model.setResult(ResultState.RESULT_SUCCESS);
+                        saveLocalData();
                     });
                 }
 
@@ -493,9 +496,79 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         requestData();
     }
 
-    private void saveLocalData(String result, int position) {
-        planInfo.getData().getZyjhgd().getSub_jhgdgzjdb().get(position - 1).setF_WK_CONTENT(result);
-        viewModel.saveCache(planInfo, id);
+    /**
+     * 保存本地数据
+     */
+    protected void saveLocalData() {
+        if (planInfo == null) {
+
+            return;
+
+        }
+//        if (planInfo.getExtensionApplication() != null) {
+//
+//            return;
+//        }
+        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
+        List<String> images = new ArrayList<>();
+        for (Uri uri : uris) {
+            images.add(uri.toString());
+        }
+        if (planLocal == null) {
+            planLocal = new PlanLocal();
+            planLocal.setOrderId(id);
+        }
+        planLocal.setImages(images);
+        planLocal.setNote(binding.limitInput.getString());
+        List<WorkNode> workNodes = viewModel.loadNodes(planInfo);
+        workNodes.add(0, new WorkNode());
+        List<WorkNode> dataList = nodesAdapter.getDataList();
+
+        if (workNodes.size() == dataList.size()) {
+
+            planLocal.setNodes(nodesAdapter.getDataList());
+        } else {
+            try {
+                List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
+                dataList.addAll(workNodes1);
+                planLocal.setNodes(dataList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        planLocal.setResources(resourceAdapter.getDataList());
+
+        planLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());
+        planLocal.setRemark(binding.sendOrder.repairSendReason.getString());
+        viewModel.saveLocal(planLocal);
+    }
+
+    protected void updateLocalData(PlanLocal local) {
+        if (local != null) {
+            if (local.getImages() != null && local.getImages().size() > 0) {
+                List<Uri> uris = new ArrayList<>();
+                for (String imgeUrl : local.getImages()) {
+                    Uri uri = Uri.parse(imgeUrl);
+                    uris.add(uri);
+                }
+                photoSelectAdapter.setSelectedPhotos(uris);
+            }
+            if (local.getDesignatePerson() != null) {//被指派人
+                binding.sendOrder.repairSelectedPepple.setText(local.getDesignatePerson());
+            }
+            if (local.getRemark() != null) {//指派备注
+                binding.sendOrder.repairSendReason.setText(local.getRemark());
+            }
+            if (!TextUtils.isEmpty(local.getNote())) {
+                binding.limitInput.setText(local.getNote());
+            }
+            if (local.getNodes() != null) {
+                nodesAdapter.setDataList(local.getNodes());
+            }
+            if (local.getResources() != null) {
+                resourceAdapter.setDataList(local.getResources());
+            }
+        }
     }
 
     private void requestData() {
@@ -523,6 +596,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             request.setId(id);
             request.setType(WorkOrder.FORCE_CLOSE_PLAN);
             viewModel.isClosed(request);
+            viewModel.loadLocalUserData(id).observe(this, local -> {
+                planLocal = local;
+                updateLocalData(local);
+            });
         });
     }
 
@@ -959,7 +1036,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     }
 
     private boolean validateForceScan() {
-        List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
+        List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb =resourceAdapter.getDataList();
         if (sub_jhgdzyb != null && sub_jhgdzyb.size() > 0) {
 
             for (PlanInfo.Data.Zyjhgd.Sub_jhgdzyb dzyb : sub_jhgdzyb) {
@@ -1115,5 +1192,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
+        saveLocalData();
     }
 }

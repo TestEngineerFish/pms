@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.db.entity.PlanLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
@@ -331,5 +332,35 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 //        repo.updatePatrolCached(orderId, userModuleService.getUserId());
 //        repo.insertPatrolInfo(patrolInfo);
         return patrolInfo;
+    }
+    /**
+     * 获取用户本地输入数据
+     *
+     * @param orderId
+     * @return
+     */
+    protected MutableLiveData<PlanLocal> localData=new MutableLiveData<>();
+    public LiveData<PlanLocal> loadLocalUserData(String orderId) {
+        planRepository.loadPlanLocal(orderId,userModuleService.getUserId(), new CallBack<PlanLocal>() {
+            @Override
+            public void call(PlanLocal data) {
+                localData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+        return localData;
+    }
+    /**
+     * 保存本地用户输入数据
+     *
+     * @param local
+     */
+    public void saveLocal(PlanLocal local) {
+        local.setUserId(userModuleService.getUserId());
+        planRepository.insertPlanLocal(local);
     }
 }
