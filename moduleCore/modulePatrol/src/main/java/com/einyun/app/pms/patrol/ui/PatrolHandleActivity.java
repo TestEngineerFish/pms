@@ -408,7 +408,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                 //带分期过去
                 .withString(RouteKey.KEY_LINE_ID, patrolInfo.getData().getZyxcgd().getF_line_id())
                 .withString(RouteKey.KEY_LINE_CODE, patrolInfo.getData().getZyxcgd().getF_line_code())
-                .withString(RouteKey.KEY_PROJECT, patrolInfo.getData().getZyxcgd().getF_line_name())
+                .withString(RouteKey.KEY_PROJECT, patrolInfo.getData().getZyxcgd().getF_project_name())
                 .withString(RouteKey.KEY_DIVIDE_NAME, patrolInfo.getData().getZyxcgd().getF_massif_name())
                 .withString(RouteKey.KEY_DIVIDE_ID, patrolInfo.getData().getZyxcgd().getF_massif_id())
                 .withString(RouteKey.KEY_RESOUSE_ID, patrolInfo.getData().getZyxcgd().getREF_ID_())
