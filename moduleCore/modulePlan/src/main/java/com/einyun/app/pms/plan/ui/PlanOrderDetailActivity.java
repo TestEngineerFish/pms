@@ -824,6 +824,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                                 .withString(RouteKey.KEY_LINE, planInfo.getData().getZyjhgd().getF_TX_NAME())
                                 .withString(RouteKey.KEY_RESOUSE, planInfo.getData().getZyjhgd().getF_RES_NAME())
 //                .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+
+                                .withString(RouteKey.KEY_LINE_ID, planInfo.getData().getZyjhgd().getF_TIT_ID())
+                                .withString(RouteKey.KEY_LINE_CODE, planInfo.getData().getZyjhgd().getF_TX_CODE())
+                                .withString(RouteKey.KEY_PROJECT, planInfo.getData().getZyjhgd().getF_PROJECT_NAME())
+                                .withString(RouteKey.KEY_DIVIDE_NAME, planInfo.getData().getZyjhgd().getF_DIVIDE_NAME())
+                                .withString(RouteKey.KEY_DIVIDE_ID, planInfo.getData().getZyjhgd().getF_DIVIDE_ID())
+                                .withString(RouteKey.KEY_RESOUSE_ID, planInfo.getData().getZyjhgd().getF_RES_ID())
+
                                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                                 .withString(RouteKey.KEY_TASK_ID, taskId)
                                 .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
@@ -836,7 +844,6 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             alertDialog.show();
         }
     }
-
     private void goPaiGongDan() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)

@@ -96,7 +96,19 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
     String taskNodeId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
 
+    String mDivideId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_NAME)
+    String divideName;
+    @Autowired(name = RouteKey.KEY_PROJECT)
+    String projectName;
+    @Autowired(name = RouteKey.KEY_LINE_ID)
+    String lineId;
+    @Autowired(name = RouteKey.KEY_LINE_CODE)
+    String lineCode;
+    @Autowired(name = RouteKey.KEY_LINE)
+    String lineName;
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
         return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
@@ -147,6 +159,13 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             createDbData(mDbRequest);
         }
         if (StringUtil.isNullStr(orderNo)){
+            divideId=mDivideId;
+            dimCode=lineId;
+            mRequest.getBizData().setDivide_id(divideId);
+            mRequest.getBizData().setDivide_name(divideName);
+            mRequest.getBizData().setLine(lineCode);
+            binding.tvDivide.setText(divideName);
+            binding.tvLine.setText(lineName);
             binding.llOld.setVisibility(View.VISIBLE);
             binding.vLine.setVisibility(View.VISIBLE);
             binding.tvOldCode.setText(orderNo);
