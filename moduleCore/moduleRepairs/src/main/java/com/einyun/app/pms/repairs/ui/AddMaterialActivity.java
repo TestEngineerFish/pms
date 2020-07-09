@@ -24,6 +24,8 @@ import com.einyun.app.pms.repairs.viewmodel.RepairDetailViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
+import java.math.BigDecimal;
+
 @Route(path = RouterUtils.ACTIVITY_CUSTOMER_ADD_MATERIAL)
 public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMaterialBinding, RepairDetailViewModel> {
    RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean materialModel;
@@ -69,7 +71,10 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                 if (TextUtils.isEmpty(binding.addMaterialAmount.getText())||TextUtils.isEmpty(binding.addMaterialPrice.getText().toString())){
                     binding.addMaterialTotalPrice.setText("");
                 }else {
-                    binding.addMaterialTotalPrice.setText(Float.parseFloat(binding.addMaterialAmount.getText().toString())*Float.parseFloat(binding.addMaterialPrice.getText().toString())+"");
+                    BigDecimal bigDecimal = new BigDecimal(binding.addMaterialAmount.getText().toString());
+                    BigDecimal bigDecimal2 = new BigDecimal(binding.addMaterialPrice.getText().toString());
+                    binding.addMaterialTotalPrice.setText(bigDecimal.multiply(bigDecimal2)+"");
+//                    binding.addMaterialTotalPrice.setText(Double.parseDouble(binding.addMaterialAmount.getText().toString())*Double.parseDouble(binding.addMaterialPrice.getText().toString())+"");
                 }
 
             }
@@ -90,7 +95,10 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                 if (TextUtils.isEmpty(binding.addMaterialAmount.getText())||TextUtils.isEmpty(binding.addMaterialPrice.getText().toString())){
                     binding.addMaterialTotalPrice.setText("");
                 }else {
-                    binding.addMaterialTotalPrice.setText(Float.parseFloat(binding.addMaterialAmount.getText().toString())*Float.parseFloat(binding.addMaterialPrice.getText().toString())+"");
+
+                    BigDecimal bigDecimal = new BigDecimal(binding.addMaterialAmount.getText().toString());
+                    BigDecimal bigDecimal2 = new BigDecimal(binding.addMaterialPrice.getText().toString());
+                    binding.addMaterialTotalPrice.setText(bigDecimal.multiply(bigDecimal2)+"");
                 }
 
             }
