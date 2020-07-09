@@ -133,7 +133,12 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         for (RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean model:materialsBeans){
             totalPrice=Float.parseFloat(model.getTotal_price())+totalPrice;
         }
-        binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+"");
+        binding.repairHandlePaid.repairMaterialPrice.setText(totalPrice+"");
+        if (!TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText().toString())){
+            binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString())+"");
+        }else {
+            binding.repairHandlePaid.repairHandleTotalMoney.setText(totalPrice+"");
+        }
     }
 
     @Override
@@ -436,7 +441,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(binding.repairHandlePaid.repairMaterialPrice.getText())) {
-                } else {
+                } else if (TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText())) {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())+ "");
+                } else
+                 {
                     binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) + Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
                 }
 
@@ -1109,6 +1117,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
             } else {
                 customerRepair.setHandle_is_paid(HANDLE_NO_PAID);
+                customerRepair.setMaterial_cost(binding.repairHandlePaid.repairMaterialPrice.getText().toString().trim());
+                customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
+                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
+                customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
             }
 
         }
