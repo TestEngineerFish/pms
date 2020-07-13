@@ -47,6 +47,7 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.PageUIState;
@@ -130,6 +131,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
     String taskNodeId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+    String divideId;
+    @Autowired(name = RouteKey.KEY_PROJECT_ID)
+    String projectId;
     @Autowired(name = RouteKey.KEY_IS_ORDER_LIST)
     boolean isOrderList;
 
@@ -797,6 +802,22 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         } else {
             ToastUtil.show(CommonApplication.getInstance(), R.string.text_applying_wait);
         }
+    }
+
+
+    /**
+     *转单
+     */
+    public void resendOrder() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_ORDER_ID, id)
+                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
+                .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                .navigation();
     }
 
     /**

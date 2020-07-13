@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="patrol"
             type="com.einyun.app.base.db.entity.Patrol" />
@@ -11,16 +12,15 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/px_20"
         android:layout_marginLeft="@dimen/px_20"
         android:layout_marginRight="@dimen/px_20"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="@dimen/px_10"
-        android:focusable="true"
+        android:layout_marginBottom="@dimen/px_20"
         android:clickable="true"
-        android:foreground = "?attr/selectableItemBackgroundBorderless"
-        >
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/px_10"
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:id="@+id/item_order_ln"
@@ -44,26 +44,25 @@
                     app:isComingTimeout="@{patrol.is_coming_timeout}" />
 
                 <TextView
-                    android:textStyle="bold"
                     android:id="@+id/tv_order_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_20"
                     android:layout_marginRight="@dimen/px_150"
+                    android:layout_toRightOf="@id/iv_has_warn"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:layout_marginLeft="@dimen/px_20"
-                    android:layout_toRightOf="@id/iv_has_warn"
+                    android:text="@{patrol.f_inspection_work_plan_name}"
                     android:textColor="@color/blackTextColor"
                     android:textSize="@dimen/font_size16"
-                    android:text="@{patrol.f_inspection_work_plan_name}" />
+                    android:textStyle="bold" />
 
 
                 <FrameLayout
                     android:layout_width="@dimen/px_136"
                     android:layout_height="@dimen/px_48"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    >
+                    android:layout_centerVertical="true">
 
                     <ImageView
                         android:id="@+id/iv_right_option"
@@ -92,25 +91,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/px_60"
                 android:layout_marginLeft="@dimen/px_30"
+                android:minWidth="@dimen/px_60"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="@dimen/px_150"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:text="@string/text_order_num" />
+                    android:text="@string/text_order_num"
+                    android:textColor="@color/normal_main_text_icon_color" />
 
                 <TextView
                     android:id="@+id/tv_order_no"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/txt_black_order"
                     android:text="@{patrol.f_plan_work_order_code}"
-                     />
+                    android:textColor="@color/txt_black_order" />
             </LinearLayout>
 
             <LinearLayout
@@ -123,8 +121,8 @@
                     android:layout_width="@dimen/px_150"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:text="@string/text_create_time" />
+                    android:text="@string/text_create_time"
+                    android:textColor="@color/normal_main_text_icon_color" />
 
                 <TextView
                     android:id="@+id/tv_create_time"
@@ -132,47 +130,77 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/txt_black_order"
-                    app:time="@{patrol.F_creation_date}"
-                    />
+                    app:time="@{patrol.F_creation_date}" />
             </LinearLayout>
 
-            <View
+            <LinearLayout
+                android:id="@+id/handle_layout"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/thin_divider_color" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/item_cache"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_80"
-                android:layout_marginLeft="@dimen/px_30"
-                android:layout_marginRight="@dimen/px_30"
-                android:visibility="visible"
-                >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:background="@color/thin_divider_color" />
 
-                <ImageView
-                    android:id="@+id/iv_is_cached"
-                    android:layout_marginRight="@dimen/px_14"
-                    android:layout_width="@dimen/px_30"
-                    android:layout_height="@dimen/px_30"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    app:isCached="@{patrol.cached}"
-                    >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                </ImageView>
-                <TextView
-                    android:id="@+id/tv_is_cached"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/iv_is_cached"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    app:isCached="@{patrol.cached}" />
+                    <RelativeLayout
+                        android:id="@+id/item_cache"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_80"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:layout_weight="1"
+                        android:visibility="visible">
 
-            </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/iv_is_cached"
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/px_14"
+                            android:gravity="center"
+                            app:isCached="@{patrol.cached}">
+
+                        </ImageView>
+
+                        <TextView
+                            android:id="@+id/tv_is_cached"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/iv_is_cached"
+                            android:gravity="center"
+                            app:isCached="@{patrol.cached}" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="@dimen/px_2"
+                        android:layout_height="match_parent"
+                        android:background="@color/thin_divider_color" />
+
+                    <TextView
+                        android:id="@+id/turn_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/px_20"
+                        android:paddingBottom="@dimen/px_20"
+                        android:text="转单"
+                        android:textColor="@color/stress_text_btn_icon_color"
+                        android:textSize="@dimen/font_size15" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

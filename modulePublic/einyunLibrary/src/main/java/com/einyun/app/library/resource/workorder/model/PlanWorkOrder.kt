@@ -30,4 +30,6 @@ class PlanWorkOrder {
      var F_STATUS: String? = null
      var F_EXT_STATUS: Int = 0
      var F_OT_STATUS: Int = 0
+     var F_DIVIDE_ID:String?=null
+     var F_project_id:String?=null
 }
