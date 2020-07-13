@@ -135,10 +135,12 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                 public void onClick(View v) {
                     if (orgnizationModelList != null && orgnizationModelList.getValue() != null) {
                         ArrayList<String> list1 = new ArrayList<>();
-                        list1.add(orgnizationModelList.getValue().get(0).getParentId());
+                        list1.add(orgnizationModelList.getValue().get(orgnizationModelList.getValue().size()-1).getId());
                         ArrayList<String> list2 = new ArrayList<>();
                         list2.add(jobList.getValue().get(childPosition).getId());
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list1)
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
+                                .withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list1)
                                 .withStringArrayList(RouteKey.KEY_ROLE_ID_LIST, list2).navigation();
                     }
                 }
