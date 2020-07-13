@@ -38,7 +38,7 @@ import java.util.Map;
  * 巡查工单已办列表
  */
 public class PatrolClosedListFragment extends PatrolPendingFragment implements ItemClickListener<Patrol> {
-    protected int listType= ListType.DONE.getType();
+    protected int listType = ListType.DONE.getType();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
@@ -65,9 +65,9 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
     protected void loadData() {
         showLoading(getActivity());
         viewModel.loadCloseData().observe(getActivity(), patrols -> {
-            if(patrols.size()==0){
+            if (patrols.size() == 0) {
                 updatePageUIState(PageUIState.EMPTY.getState());
-            }else{
+            } else {
                 updatePageUIState(PageUIState.FILLDATA.getState());
                 hideLoading();
             }
@@ -91,7 +91,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
         /**
          * 刷新列表
          */
-        LiveEventBus.get(LiveDataBusKey.POST_PATROL_CLOSED_REFRESH,Boolean.class).observe(this, flag -> {
+        LiveEventBus.get(LiveDataBusKey.POST_PATROL_CLOSED_REFRESH, Boolean.class).observe(this, flag -> {
             viewModel.refreshClosedList();
         });
     }
@@ -112,16 +112,17 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
         if (selected.size() > 0) {
             binding.panelCondition.selectSelected.setTextColor(getResources().getColor(R.color.blueConditionColor));
         }
-        wrapCondition(selected,viewModel.requestDone);
+        wrapCondition(selected, viewModel.requestDone);
         viewModel.onCondition();
     }
 
     protected void initAdapter() {
-        if(adapter==null){
-            adapter=new RVPageListAdapter<ItemPatrolListBinding, Patrol>(getContext(), com.einyun.app.pms.patrol.BR.patrol,mDiffCallback) {
+        if (adapter == null) {
+            adapter = new RVPageListAdapter<ItemPatrolListBinding, Patrol>(getContext(), com.einyun.app.pms.patrol.BR.patrol, mDiffCallback) {
 
                 @Override
                 public void onBindItem(ItemPatrolListBinding binding, Patrol model) {
+                    binding.handleLayout.setVisibility(View.GONE);
                     binding.itemCache.setVisibility(View.GONE);
                 }
 
@@ -136,21 +137,21 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
 
     @Override
     public void onItemClicked(View veiw, Patrol data) {
-        if(!TextUtils.isEmpty(data.getF_patrol_line_id())){
+        if (!TextUtils.isEmpty(data.getF_patrol_line_id())) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
-                    .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                    .withString(RouteKey.KEY_ORDER_ID,data.getID_())
-                    .withInt(RouteKey.KEY_LIST_TYPE,listType)
-                    .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
-                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                    .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                    .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                    .withInt(RouteKey.KEY_LIST_TYPE, listType)
+                    .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                    .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                     .navigation();
-        }else{
+        } else {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-                    .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
-                    .withString(RouteKey.KEY_ORDER_ID,data.getID_())
-                    .withInt(RouteKey.KEY_LIST_TYPE,listType)
-                    .withString(RouteKey.KEY_TASK_NODE_ID,data.getTaskNodeId())
-                    .withString(RouteKey.KEY_PRO_INS_ID,data.getProInsId())
+                    .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
+                    .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                    .withInt(RouteKey.KEY_LIST_TYPE, listType)
+                    .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                    .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                     .navigation();
         }
 

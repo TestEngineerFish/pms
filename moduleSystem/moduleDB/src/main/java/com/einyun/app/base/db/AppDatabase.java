@@ -62,7 +62,7 @@ import com.einyun.app.base.db.entity.User;
 @Database(entities = {User.class, Patrol.class, SearchHistory.class,
         PatrolInfo.class, PatrolLocal.class, Distribute.class, CheckPoint.class,
         Plan.class, PlanInfo.class, PlanLocal.class, BasicDataDb.class, QualityRequest.class, CreateUnQualityRequest.class
-}, version = 8)
+}, version = 9)
 @TypeConverters({DateConverter.class, StringTypeConvert.class, ButtonTypeConvert.class,
 
         ButtonTypePlanConvert.class, ExtensionApplicationPlanBeanConvert.class,
