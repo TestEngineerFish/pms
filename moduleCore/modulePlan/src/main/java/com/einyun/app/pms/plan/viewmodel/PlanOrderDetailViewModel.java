@@ -294,7 +294,7 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 //
 //            }
 //        });
-//        repo.updatePatrolCached(orderId, userModuleService.getUserId());
+        planRepository.updatePlanCached(orderId, userModuleService.getUserId());
 //        repo.insertPatrolInfo(patrolInfo);
         return patrolInfo;
     }
@@ -329,7 +329,6 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 //
 //            }
 //        });
-//        repo.updatePatrolCached(orderId, userModuleService.getUserId());
 //        repo.insertPatrolInfo(patrolInfo);
         return patrolInfo;
     }

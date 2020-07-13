@@ -78,6 +78,14 @@ public class PlanRepository extends DatabaseRepo<Plan> {
     public void deletePlanLocal(String orderId,String userId) {
         infoDao.deletePlanLocal(orderId,userId);
     }
+    /**
+     * 更新缓存状态为已缓存
+     *
+     * @param orderId
+     */
+    public void updatePlanCached(String orderId,String userId) {
+        dao.updateCachedState(orderId,userId);
+    }
     @Override
     public DataSource.Factory<Integer, Plan> queryAll(@NonNull String userId,int listType) {
         return dao.queryAll(userId,listType);
