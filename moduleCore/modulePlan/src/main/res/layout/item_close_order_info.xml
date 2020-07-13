@@ -6,7 +6,7 @@
 
         <variable
             name="ext"
-            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+            type="com.einyun.app.base.db.entity.PlanInfo.ExtensionApplication" />
     </data>
 
     <androidx.cardview.widget.CardView

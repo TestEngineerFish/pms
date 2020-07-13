@@ -23,6 +23,7 @@ public class Plan {
     private String F_STATUS;
     private int F_EXT_STATUS;
     private int F_OT_STATUS;
+    private boolean isCached;
     @NonNull
     private String userId;
     @NonNull
@@ -184,5 +185,13 @@ public class Plan {
 
     public void setListType( @NonNull int listType) {
         this.listType = listType;
+    }
+
+    public boolean isCached() {
+        return isCached;
+    }
+
+    public void setCached(boolean cached) {
+        isCached = cached;
     }
 }
