@@ -64,9 +64,10 @@ class Sub_jhgdzyb {
     var F_RES_LOCATION: String? = null
     var F_RES_TYPE: String? = null
     var F_RES_TYPENAME: String? = null
+    //    var scan_result: Int? = 0
+    var scan_result: String? =""
     var is_forced: Int? = 0
     var is_suc: Int? = 0
-    var scan_result: Int? = -1
 
 }
 
@@ -121,6 +122,7 @@ class Zyjhgd {
 
     var tenant_id: String? = null
     var F_OWNER_NAME: String? = null
+    var F_SEND_REMARK : String? = null
     var F_DEADLINE_TIME: String? = null
     var F_WP_ID: String? = null
     var F_OT_STATUS: Int = 0

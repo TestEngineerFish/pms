@@ -20,4 +20,6 @@ public interface PlanDao {
     @Query("select * from plans where userId=:userId and listType=:listType ORDER BY id asc") //ORDER BY F_PROC_DATE,createTime DESC
     DataSource.Factory<Integer, Plan> queryAll(String userId, int listType);
 
+    @Query("update plans set isCached=1 where ID_=:orderId and userId=:userId")
+    void updateCachedState(String orderId,String userId);
 }

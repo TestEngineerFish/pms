@@ -46,6 +46,8 @@ public class ComplainBindAdapter {
         }
         if (value.equals(ComplainOrderState.ADD.getState())) {
             view.setImageResource(R.mipmap.icon_new);
+        }  else if (value.equals(ComplainOrderState.Confirm.getState())) {
+            view.setImageResource(R.mipmap.icon_new);
         } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
             view.setImageResource(R.mipmap.icon_state_closed);
         } else if (value.equals(ComplainOrderState.DEALING.getState())) {
@@ -68,9 +70,11 @@ public class ComplainBindAdapter {
             return;
         }
         if (value.equals(ComplainOrderState.ADD.getState())) {
-            view.setText("新生成");
+            view.setText("待派单");
         } else if (value.equals(ComplainOrderState.CLOSED.getState())) {
             view.setText("已关闭");
+        }  else if (value.equals(ComplainOrderState.Confirm.getState())) {
+            view.setText("待派单");
         } else if (value.equals(ComplainOrderState.DEALING.getState())) {
             view.setText("处理中");
         } else if (value.equals(ComplainOrderState.RESPONSE.getState())) {

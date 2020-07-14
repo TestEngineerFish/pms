@@ -14,6 +14,8 @@ import java.util.List;
 @Entity(tableName = "patrol_local",primaryKeys = {"orderId","userId"})
 public class PatrolLocal {
     private String note;
+    private String designatePerson;
+    private String remark;
     @NonNull
     private String userId;
     @NonNull
@@ -65,5 +67,21 @@ public class PatrolLocal {
 
     public void setOrderId(@NonNull String orderId) {
         this.orderId = orderId;
+    }
+
+    public String getDesignatePerson() {
+        return designatePerson;
+    }
+
+    public void setDesignatePerson(String designatePerson) {
+        this.designatePerson = designatePerson;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

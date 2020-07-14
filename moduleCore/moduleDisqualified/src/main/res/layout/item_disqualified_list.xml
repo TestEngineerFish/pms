@@ -13,6 +13,8 @@
         android:layout_marginBottom="@dimen/px_20"
         style="@style/cardview_style"
         android:focusable="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:clickable="true"
         android:foreground = "?attr/selectableItemBackground"
         >

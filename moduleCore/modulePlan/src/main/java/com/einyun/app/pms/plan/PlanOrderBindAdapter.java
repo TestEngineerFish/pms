@@ -35,6 +35,10 @@ public class PlanOrderBindAdapter {
             view.setText(R.string.text_apply);
         } else if (state == OrderState.CLOSED.getState()) {
             view.setText(R.string.text_state_closed);
+        } else if (state == OrderState.PENDING.getState()) {
+            view.setText(R.string.text_state_wait_receive);
+        } else if (state == OrderState.OVER_DUE.getState()) {
+            view.setText(R.string.text_state_wait_send);
         }
 
     }
@@ -59,6 +63,10 @@ public class PlanOrderBindAdapter {
         } else if (state == OrderState.CLOSED.getState()) {
             view.setText(R.string.text_finished);
             view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
+        }else if (state == OrderState.PENDING.getState()) {
+            view.setText(R.string.text_state_wait_receive);
+        } else if (state == OrderState.OVER_DUE.getState()) {
+            view.setText(R.string.text_state_wait_send);
         }
 
     }
@@ -142,6 +150,10 @@ public class PlanOrderBindAdapter {
             view.setImageResource(R.mipmap.icon_work_order_apply);
         } else if (state == OrderState.CLOSED.getState()) {
             view.setImageResource(R.mipmap.icon_state_closed);
+        }else if (state == OrderState.PENDING.getState()) {
+            view.setImageResource(R.mipmap.icon_new);
+        } else if (state == OrderState.OVER_DUE.getState()) {
+            view.setImageResource(R.mipmap.icon_new);
         }
     }
 

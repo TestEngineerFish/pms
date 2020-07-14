@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.constants.URLS;
 import com.einyun.app.common.model.DisqualifiedDetailModel;
@@ -17,6 +18,7 @@ import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.library.resource.workorder.net.request.PatrolDetialRequest;
+import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 
 import java.net.URL;
@@ -45,6 +47,24 @@ public class MsgRepository {
                 .subscribe(response -> {
                     liveData.postValue(response.isState());
                     callBack.call(response.isState());
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+        return liveData;
+    }
+    /**
+     * 接单
+     * @param url
+     * @param request
+     * @param callBack
+     * @return
+     */
+    public LiveData<BaseResponse> receiveOrder(String url, PatrolSubmitRequest request, CallBack<BaseResponse> callBack) {
+        MutableLiveData<BaseResponse> liveData = new MutableLiveData<>();
+        serviceApi.receiveOrder(url,request).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                    liveData.postValue(response);
+                    callBack.call(response);
                 }, error -> {
                     callBack.onFaild(error);
                 });

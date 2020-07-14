@@ -141,6 +141,15 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
                 @Override
                 public void onBindItem(ItemInquiriesListBinding binding, InquiriesItemModule inquiriesItemModule) {
                     switch (inquiriesItemModule.state) {
+                        case RouteKey.LIST_STATUS_SEND_ORDER:
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_send));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_grab);
+                            break;
+
+                        case RouteKey.LIST_STATUS_RESPONSE:
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_response));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_response);
+                            break;
                         case RouteKey.LIST_STATUS_HANDLE:
                             binding.tvApprovalState.setText(getString(R.string.tv_dealing));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_processing);
@@ -272,7 +281,7 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
     @Override
     public void onItemClicked(View veiw, InquiriesItemModule data) {
         ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                 .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
                 .withString(RouteKey.KEY_TASK_ID,data.getTaskId())
                 .withString(RouteKey.KEY_ORDER_ID,data.getID_())

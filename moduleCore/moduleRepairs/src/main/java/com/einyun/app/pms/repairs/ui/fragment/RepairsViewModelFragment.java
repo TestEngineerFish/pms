@@ -154,6 +154,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     }
 
     @Override
+
     protected void setUpView() {
         binding.swipeRefresh.setColorSchemeColors(getColorPrimary());
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -65,16 +66,31 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
     String taskNodeId;
+    @Autowired(name = RouteKey.F_ORIGINAL_TYPE)
+    String mORIGINAL_TYPE;
     @Autowired(name = RouteKey.KEY_LINE)
     String lineName;
     @Autowired(name = RouteKey.KEY_RESOUSE)
     String resouseName;
+    @Autowired(name = RouteKey.KEY_LINE_ID)
+    String lineId;
+    @Autowired(name = RouteKey.KEY_LINE_CODE)
+    String lineCode;
+    @Autowired(name = RouteKey.KEY_RESOUSE_ID)
+    String resouseId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+    String divideId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_NAME)
+    String divideName;
+    @Autowired(name = RouteKey.KEY_PROJECT)
+    String projectName;
     private final int MAX_PHOTO_SIZE = 4;
     PhotoSelectAdapter photoSelectAdapter;
     private CreateSendOrderRequest request;
     private List<DictDataModel> dictDataModelList = new ArrayList<>();
     private List<DictDataModel> dictDataModelWorkTypeList = new ArrayList<>();
     private List<DictDataModel> lineDictDataModelList = new ArrayList<>();
+
     @Override
     protected CreateViewModel initViewModel() {
         return new ViewModelProvider(this, new CreateViewModelFactory()).get(CreateViewModel.class);
@@ -98,21 +114,52 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     dictDataModelList.add(model);
                 }
             }
+            for (int i = 0; i < dictDataModelList.size(); i++) {
+                if (dictDataModelList.get(i).getName().equals(lineName)) {
+                    txDefaultPos = i;
+                }
+            }
             dictDataModelWorkTypeList = dictDataModels;
         });
         viewModel.getTypesListByKey(Constants.RESOURCE_TYPE).observe(this, dictDataModels -> {
             lineDictDataModelList = dictDataModels;
         });
+
         selectPng();
-        if (StringUtil.isNullStr(orderNo)){
+        if (StringUtil.isNullStr(orderNo)) {
             binding.llOld.setVisibility(View.VISIBLE);
             binding.llLine.setVisibility(View.VISIBLE);
             binding.tvOldCode.setText(orderNo);
             binding.tvLine.setText(lineName);
-            binding.tvRes.setText(resouseName);
+            binding.tvResource.setText(resouseName);
             request.setResName(resouseName);
             request.setTxName(lineName);
+            request.setResId(resouseId);
+            request.setTxId(lineId);
+            request.setTxCode(lineCode);
+//            request.setDivideCode(divideId);
+            request.setDivideId(divideId);
+            request.setDivideName(divideName);
+            request.setProjectName(projectName);
             binding.setBean(request);
+        }
+        if (request.getDivideId()!=null&&request.getTxCode()!=null) {
+            viewModel.getResourceInfos(request).observe(this, resourceTypeBeans -> {
+                if (resourceTypeBeans.size() == 0) {
+//                    ToastUtil.show(this, "暂无资源分类");
+                    return;
+                }
+                List<String> resourceTypeList = new ArrayList<>();
+                for (ResourceTypeBean bean : resourceTypeBeans) {
+                    resourceTypeList.add(bean.getName());
+                }
+                for (int i = 0; i < resourceTypeList.size(); i++) {
+                    if (resourceTypeList.get(i).equals(resouseName)) {
+                        rsDefaultPos = i;
+                        resourceTypeBean = resourceTypeBeans.get(i);
+                    }
+                }
+            });
         }
     }
 
@@ -137,7 +184,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
                     .capture(true)
                     .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE-photoSelectAdapter.getSelectedPhotos().size())
+                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
                     //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f)
@@ -179,8 +226,9 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                 break;
         }
     }
+
     //点击原工单号 跳转至计划工单详情界面
-    public void onOldCodeClick(){
+    public void onOldCodeClick() {
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
                     .withString(RouteKey.KEY_ORDER_ID, id)
@@ -189,7 +237,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
                     .withString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTag)
                     .navigation();
-        }else {
+        } else {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                     .withString(RouteKey.KEY_ORDER_ID, id)
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
@@ -199,6 +247,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     .navigation();
         }
     }
+
     private void chooseDisposePerson() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).
                 withString(RouteKey.KEY_ORG_ID, request.getDivideId()).
@@ -230,9 +279,10 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     if (childBean.getResourceName().equals(resourceList.get(position))) {
                         request.setResId(childBean.getId());
                         request.setResName(childBean.getResourceName());
+                        binding.tvRes.setText(childBean.getResourceName());
                     }
                 }
-                binding.setBean(request);
+//                binding.setBean(request);
             }
         });
     }
@@ -288,7 +338,8 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
                     request.setEnvType3Code(model.get(2).getKey());
                     request.setEnvType3Name(model.get(2).getName());
                 }
-                binding.setBean(request);
+                binding.tvOrderType.setText(request.getTypeName() + (!StringUtil.isNullStr(request.getEnvType2Name()) ? "" : "-" + request.getEnvType2Name()) + (!StringUtil.isNullStr(request.getEnvType3Name()) ? "" : "-" + request.getEnvType3Name()));
+//                binding.setBean(request);
             }
         });
         selectWorkOrderTypeView.show(getSupportFragmentManager(), "");
@@ -306,7 +357,9 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         }
         List<String> txStrList = new ArrayList<>();
         for (DictDataModel data : dictDataModelList) {
-            txStrList.add(data.getName());
+            if (!txStrList.contains(data.getName())) {
+                txStrList.add(data.getName());
+            }
         }
         BottomPicker.buildBottomPicker(this, txStrList, txDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
@@ -354,18 +407,24 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             request = copy;
             resourceTypeBean = null;
             binding.tvResource.setText("请选择");
+            binding.tvRes.setText("请选择");
         }
         if (SelectType.WORKY_TYPE == type) {
             request.setType("");
+            request.setResName(request.getResName());
             request.setTypeName("");
             request.setEnvType2Code("");
             request.setEnvType2Name("");
             request.setEnvType3Code("");
             request.setEnvType3Name("");
+//            binding.tvResource.setText("请选择");
+//            binding.tvRes.setText("请选择");
         }
         if (SelectType.RESOURCE_TYPE == type) {
             request.setResId("");
             request.setResName("");
+            binding.tvResource.setText("请选择");
+            binding.tvRes.setText("请选择");
         }
     }
 
@@ -389,7 +448,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         }
         if (selectType == SelectType.RESOURCE) {
             if (resourceTypeBean == null) {
-                ToastUtil.show(this, "请先选择资源分类");
+                ToastUtil.show(this, "暂无资源");
                 return false;
             }
         }
@@ -448,13 +507,13 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
      */
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        if (R.id.rb_normal == i){
+        if (R.id.rb_normal == i) {
             request.setOtLevel("1");
         }
-        if (R.id.rb_general == i){
+        if (R.id.rb_general == i) {
             request.setOtLevel("2");
         }
-        if (R.id.rb_warning == i){
+        if (R.id.rb_warning == i) {
             request.setOtLevel("3");
         }
     }
@@ -467,16 +526,16 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
 //        if (!orgModel.getId().equals(request.getDivideId())) {
-            clearRequest(SelectType.AGING);
-            request.setDivideId(orgModel.getId());
-            request.setDivideCode(orgModel.getCode());
-            request.setDivideName(orgModel.getName());
-            binding.setBean(request);
-            String[] split = orgModel.getPathName().split("/");
-            if (split.length>1) {
+        clearRequest(SelectType.AGING);
+        request.setDivideId(orgModel.getId());
+        request.setDivideCode(orgModel.getCode());
+        request.setDivideName(orgModel.getName());
+        binding.setBean(request);
+        String[] split = orgModel.getPathName().split("/");
+        if (split.length > 1) {
 
-                request.setProjectName(split[split.length-2]);
-            }
+            request.setProjectName(split[split.length - 2]);
+        }
 //        }
     }
 
@@ -505,12 +564,24 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     private CreateSendOrderRequest buidRequest() {
         request.setDesc(binding.ltQuestionDesc.getString());
         request.setLocation(binding.ltLocationInfo.getString());
-        if (StringUtil.isNullStr(id)){
+        if (StringUtil.isNullStr(id)) {
             request.setId(id);
         }
-        if (StringUtil.isNullStr(orderNo)){
+        if (StringUtil.isNullStr(orderNo)) {//原工单号
 //            request.setOrderNo(orderNo);
             request.setF_ORIGINAL_CODE(orderNo);
+        }
+        if (StringUtil.isNullStr(id)) {//原工单ID
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_ID(id);
+        }
+        if (StringUtil.isNullStr(mORIGINAL_TYPE)) {//原工单类型
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_TYPE(mORIGINAL_TYPE);
+        }
+        if (StringUtil.isNullStr(proInsId)) {//原工单流程ID
+//            request.setOrderNo(orderNo);
+            request.setF_ORIGINAL_PROLNSTLD(proInsId);
         }
         return request;
     }

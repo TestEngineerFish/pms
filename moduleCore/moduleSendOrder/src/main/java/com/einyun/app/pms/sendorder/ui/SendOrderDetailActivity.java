@@ -368,16 +368,16 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
      * 显示验收
      */
     private void showApply() {
-        if (isNeedCheckAccept()) {//如果验收人是自己，显示验收
+//        if (isNeedCheckAccept()) {//如果验收人是自己，显示验收
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);
             binding.sendOrderDetailSubmit.setVisibility(View.VISIBLE);
             binding.checkAndAccept.getRoot().setVisibility(View.VISIBLE);//显示验收
             binding.checkAndAccept.ratingBar.setStar(5f);
             binding.orderHandle.getRoot().setVisibility(View.VISIBLE);//显示处理信息
             binding.sendOrderDetailSubmit.setText(com.einyun.app.common.R.string.text_work_order_apply);
-        } else {
-            binding.sendOrderDetailSubmit.setVisibility(View.GONE);//如果是自己的单子待验收，显示详情
-        }
+//        } else {
+//            binding.sendOrderDetailSubmit.setVisibility(View.GONE);//如果是自己的单子待验收，显示详情
+//        }
     }
 
     /**

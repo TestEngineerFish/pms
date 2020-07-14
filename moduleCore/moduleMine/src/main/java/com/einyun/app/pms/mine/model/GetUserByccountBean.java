@@ -32,7 +32,7 @@ public class GetUserByccountBean implements Serializable {
     public String account;
     public String fullname;
     private String email;
-    private String mobile;
+    private String mobile="";
     private String address;
     private String sex;
     private String photo;

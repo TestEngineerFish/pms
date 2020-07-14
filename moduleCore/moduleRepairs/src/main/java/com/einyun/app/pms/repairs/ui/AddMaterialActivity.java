@@ -24,6 +24,8 @@ import com.einyun.app.pms.repairs.viewmodel.RepairDetailViewModel;
 import com.einyun.app.pms.repairs.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
+import java.math.BigDecimal;
+
 @Route(path = RouterUtils.ACTIVITY_CUSTOMER_ADD_MATERIAL)
 public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMaterialBinding, RepairDetailViewModel> {
    RepairsDetailModel.DataBean.CustomerRepairModelBean.InitDataBean.RepairMaterialsBean materialModel;
@@ -69,7 +71,10 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                 if (TextUtils.isEmpty(binding.addMaterialAmount.getText())||TextUtils.isEmpty(binding.addMaterialPrice.getText().toString())){
                     binding.addMaterialTotalPrice.setText("");
                 }else {
-                    binding.addMaterialTotalPrice.setText(Float.parseFloat(binding.addMaterialAmount.getText().toString())*Float.parseFloat(binding.addMaterialPrice.getText().toString())+"");
+                    BigDecimal bigDecimal = new BigDecimal(binding.addMaterialAmount.getText().toString());
+                    BigDecimal bigDecimal2 = new BigDecimal(binding.addMaterialPrice.getText().toString());
+                    binding.addMaterialTotalPrice.setText(bigDecimal.multiply(bigDecimal2)+"");
+//                    binding.addMaterialTotalPrice.setText(Double.parseDouble(binding.addMaterialAmount.getText().toString())*Double.parseDouble(binding.addMaterialPrice.getText().toString())+"");
                 }
 
             }
@@ -90,7 +95,10 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                 if (TextUtils.isEmpty(binding.addMaterialAmount.getText())||TextUtils.isEmpty(binding.addMaterialPrice.getText().toString())){
                     binding.addMaterialTotalPrice.setText("");
                 }else {
-                    binding.addMaterialTotalPrice.setText(Float.parseFloat(binding.addMaterialAmount.getText().toString())*Float.parseFloat(binding.addMaterialPrice.getText().toString())+"");
+
+                    BigDecimal bigDecimal = new BigDecimal(binding.addMaterialAmount.getText().toString());
+                    BigDecimal bigDecimal2 = new BigDecimal(binding.addMaterialPrice.getText().toString());
+                    binding.addMaterialTotalPrice.setText(bigDecimal.multiply(bigDecimal2)+"");
                 }
 
             }
@@ -110,8 +118,13 @@ public class AddMaterialActivity extends BaseHeadViewModelActivity<ActivityAddMa
                     ToastUtil.show(AddMaterialActivity.this,"请输入数量");
                     return;
                 }
+                if (TextUtils.isEmpty(binding.addMaterialUnit.getText())){
+                    ToastUtil.show(AddMaterialActivity.this,"请输入计量单位");
+                    return;
+                }
                 materialModel.setQuantity(binding.addMaterialAmount.getText().toString());
                 materialModel.setPrice(binding.addMaterialPrice.getText().toString());
+                materialModel.setMEINS(binding.addMaterialUnit.getText().toString());
                 materialModel.setName(binding.addMaterialName.getText().toString());
                 materialModel.setTotal_price(binding.addMaterialTotalPrice.getText().toString());
                 LiveEventBus.get(LiveDataBusKey.POST_REPAIR_ADD_MATERIAL).post(materialModel);

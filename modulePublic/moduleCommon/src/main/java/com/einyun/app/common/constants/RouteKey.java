@@ -32,9 +32,13 @@ public class RouteKey {
     public static final String KEY_MAP_SERIALIZABLE="serializable_map";
     public static final String KEY_FRAGEMNT_TAG="fragmentTag";
     public static final String KEY_ORDER_ID="orderId";
+    public static final String F_ORIGINAL_TYPE="F_ORIGINAL_TYPE";
     public static final String KEY_ORDER_NO="orderNo";
     public static final String KEY_LINE="orderLine";
+    public static final String KEY_LINE_ID="orderLineId";
+    public static final String KEY_LINE_CODE="orderLineCode";
     public static final String KEY_RESOUSE="orderResouse";
+    public static final String KEY_RESOUSE_ID="orderResouseId";
     public static final String KEY_LIST_TYPE="listType";
     public static final String KEY_CUSTOM_TYPE="KEY_CUSTOM_TYPE";
     public static final String FRAGMENT_SEND_OWRKORDER_PENDING="SEND_WORKORDER_PENDING";
@@ -54,8 +58,10 @@ public class RouteKey {
     public static final String KEY_TIAO_XIAN_ID="tiaoXianId";
     public static final String KEY_PARENT_ID="parentId";
     public static final String KEY_DIVIDE_ID="divideId";
+    public static final String KEY_DIVIDE_CODE="divideCode";
     public static final String KEY_DIVIDE_NAME="divideName";
     public static final String KEY_PROJECT_ID="projectId";
+    public static final String KEY_PROJECT="project";
     public static final String KEY_LATER_ID="KEY_LATER_ID";
     public static final String KEY_CLOSE_ID="KEY_CLOSE_ID";
     public static final String KEY_PATROL_TIME_WORKNODE ="workNode";
@@ -131,7 +137,8 @@ public class RouteKey {
     public static final String KEY_MODEL_DATA = "KEY_MODEL_DATA";
     public static final String CODE = "CODE";
     //工单列表-客服三大工单状态
-    public static final String LIST_STATUS_SEND_ORDER = "for_comfirm";
+    public static final String LIST_STATUS_SEND_ORDER = "for_confirm";
+    public static final String LIST_STATUS_SEND_ORDER2 = "for_comfirm";
     public static final String LIST_STATUS_RESPONSE = "for_response";
     public static final String LIST_STATUS_HANDLE = "dealing";
     public static final String LIST_STATUS_EVALUATE= "return_visit";
@@ -172,4 +179,6 @@ public class RouteKey {
     public static final String KEY_PATROL_ID = "KEY_PATROL_ID";
     public static final String KEY_TYPE = "KEY_TYPE";
     public static final String KEY_HOME_ENTER = "KEY_HOME_ENTER";
+    public static final String KEY_FEED_ID = "KEY_FEED_ID";
+
 }

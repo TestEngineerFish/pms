@@ -16,6 +16,7 @@ import com.alibaba.sdk.android.push.register.MeizuRegister;
 import com.alibaba.sdk.android.push.register.MiPushRegister;
 import com.alibaba.sdk.android.push.register.OppoRegister;
 import com.alibaba.sdk.android.push.register.VivoRegister;
+import com.einyun.app.base.ApplicationCrashHandler;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.constants.DataConstants;
@@ -23,6 +24,7 @@ import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.utils.AppActiveStatusHelper;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.MsgUtils;
+import com.einyun.app.common.utils.whitecrash.CrashWhiteListManager;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
@@ -82,7 +84,11 @@ public class CommonApplication extends BasicApplication {
         if (IsFastClick.isDebugVersion(this)) {
 //            LeakCanary.install(this);
         }
-        CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
+
+        if (!com.einyun.app.base.BuildConfig.DEBUG) {
+            CrashWhiteListManager.start();
+            CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
+        }
         initCloudChannel(this);
         initUmeng();
         initAppStatus();

@@ -49,8 +49,26 @@ public class Patrol {
     private String ownerId;
     private String F_patrol_line_id;
     private int is_coming_timeout;
+    private String F_project_id;
+    private String F_massif_id;
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+    public String getF_massif_id() {
+        return F_massif_id;
+    }
+
+    public void setF_massif_id(String f_massif_id) {
+        F_massif_id = f_massif_id;
+    }
+
+    public String getF_project_id() {
+        return F_project_id;
+    }
+
+    public void setF_project_id(String f_project_id) {
+        F_project_id = f_project_id;
+    }
 
     public int getIs_coming_timeout() {
         return is_coming_timeout;

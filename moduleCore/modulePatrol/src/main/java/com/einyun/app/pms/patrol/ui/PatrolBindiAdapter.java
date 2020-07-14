@@ -64,6 +64,10 @@ public class PatrolBindiAdapter {
             view.setText(R.string.text_state_processing);
         }else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_state_closed);
+        }else if(value==OrderState.PENDING.getState()){
+            view.setText(R.string.text_state_wait_receive);
+        }else if(value==OrderState.OVER_DUE.getState()){
+            view.setText(R.string.text_state_wait_send);
         }
     }
 
@@ -78,6 +82,12 @@ public class PatrolBindiAdapter {
         }else if(value==OrderState.CLOSED.getState()){
             view.setText(R.string.text_finished);
             view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
+        }else if(value==OrderState.PENDING.getState()){//待接单
+            view.setText(R.string.text_state_wait_receive);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blueTextColor));
+        }else if(value==OrderState.OVER_DUE.getState()){//待派单
+            view.setText(R.string.text_state_wait_send);
+            view.setTextColor(view.getContext().getResources().getColor(R.color.blueTextColor));
         }
     }
 
@@ -90,6 +100,10 @@ public class PatrolBindiAdapter {
             view.setImageResource(R.mipmap.icon_processing);
         }else if(value==OrderState.CLOSED.getState()){
             view.setImageResource(R.mipmap.icon_state_closed);
+        }else if(value==OrderState.PENDING.getState()){//接单
+            view.setImageResource(R.mipmap.icon_new);
+        }else if(value==OrderState.OVER_DUE.getState()){//待派单
+            view.setImageResource(R.mipmap.icon_new);
         }
     }
 

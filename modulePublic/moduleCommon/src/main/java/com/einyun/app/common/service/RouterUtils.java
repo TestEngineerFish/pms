@@ -90,6 +90,10 @@ public class RouterUtils {
     public static final String ACTIVITY_MESSAGE_CENTER = "/mine/messageCenter";
     public static final String ACTIVITY_USER_HEAD_SHOT = "/mine/userHeadShot";
     public static final String ACTIVITY_ADVICE_FEED_BACK = "/mine/advcieFeedBack";
+    public static final String ACTIVITY_FEED_LIST = "/mine/FeedBackListActivity";
+    public static final String ACTIVITY_FEED_DETAIL = "/mine/FeedBackDetailActivity";
+    public static final String ACTIVITY_FEED_SUCCESS = "/mine/FeedBackSuccessActivity";
+    public static final String ACTIVITY_FEED = "/mine/FeedBackActivity";
 
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";

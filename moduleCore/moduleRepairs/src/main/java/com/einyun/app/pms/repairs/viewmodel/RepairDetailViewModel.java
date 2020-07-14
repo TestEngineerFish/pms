@@ -1,7 +1,10 @@
 package com.einyun.app.pms.repairs.viewmodel;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -62,6 +65,27 @@ public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
             }
         });
         return liveData;
+    }
+
+    /**
+     * 展示输入框后几位小数
+     * @param editPoint
+     * @param num 小数点后位数
+     */
+    public void setEditPoint(EditText editPoint,int num){
+        editPoint.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                String lastInputContent = dest.toString();
+                if (lastInputContent.contains(".")) {
+                    int index = lastInputContent.indexOf(".");
+                    if(dend - index >= num + 1){
+                        return "";
+                    }
+                }
+                return null;
+            }
+        }});
     }
 
     /**

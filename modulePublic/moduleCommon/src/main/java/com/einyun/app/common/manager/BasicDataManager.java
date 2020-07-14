@@ -203,6 +203,26 @@ public class BasicDataManager {
                 }
             });
         } else {
+            dictService.getByTypeKey(typeKey, new CallBack<List<DictDataModel>>() {
+                @Override
+                public void call(List<DictDataModel> data) {
+                    basicData.getDictDataModelMap().put(typeKey, data);
+//                    if (basicDataDb == null || !StringUtil.isNullStr(String.valueOf(basicDataDb.getBasicData()))) {
+                        ActivityUtil.getLastActivty().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                callBack.call(data);
+                            }
+                        });
+//                    }
+                    repository.insertData("typeKey" + typeKey, data);
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+                    ThrowableParser.onFailed(throwable);
+                }
+            });
             if (callBack != null) {
                 callBack.call(dictDataModel);
             }

@@ -20,6 +20,9 @@ class CreateSendOrderRequest {
     var id: String? = null
     var orderNo: String? = null
     var F_ORIGINAL_CODE: String? = null
+    var F_ORIGINAL_ID: String? = null
+    var F_ORIGINAL_TYPE: String? = null
+    var F_ORIGINAL_PROLNSTLD: String? = null
     @SerializedName("F_DIVIDE_ID")
     var divideId: String? = null
     @SerializedName("F_DIVIDE_CODE")
@@ -35,7 +38,7 @@ class CreateSendOrderRequest {
     @SerializedName("F_TX_NAME")
     var txName: String? = null
     @SerializedName("F_TX_CODE")
-    var txCode: String? = null
+    var txCode: String? = ""
     @SerializedName("F_RES_ID")
     var resId: String? = null
     @SerializedName("F_RES_NAME")

@@ -191,8 +191,17 @@ public class InquiriesDetailModule {
             private String wx_recorder_id;
             private String handle_cont;
             private Object grid_id;
-            private Object return_time;
-            private Object return_result;
+            private String return_time;
+            private String return_result;//评价说明
+            private String return_visit_user;//回访人
+            private String return_visit_time;//回访时间
+            private String pd_assignor;//
+            private String pd_time;//
+            private String pd_remark;//
+            private String pd_user;//
+            private String response_user;
+            private String response_time;
+            private String response_result;
             private String line_name;
             private Object service_quality_content;
             private String state;
@@ -254,7 +263,7 @@ public class InquiriesDetailModule {
             private Object close_remark;
             private Object return_score;
             private Object return_threshold;
-            private Object return_visit_result;
+            private String return_visit_result;
             private Object fclose_apply_time;
             private int fclose_is_applying;
             private int c_is_solve;
@@ -372,19 +381,19 @@ public class InquiriesDetailModule {
                 this.grid_id = grid_id;
             }
 
-            public Object getReturn_time() {
+            public String getReturn_time() {
                 return return_time;
             }
 
-            public void setReturn_time(Object return_time) {
+            public void setReturn_time(String return_time) {
                 this.return_time = return_time;
             }
 
-            public Object getReturn_result() {
+            public String getReturn_result() {
                 return return_result;
             }
 
-            public void setReturn_result(Object return_result) {
+            public void setReturn_result(String return_result) {
                 this.return_result = return_result;
             }
 
@@ -876,11 +885,11 @@ public class InquiriesDetailModule {
                 this.return_threshold = return_threshold;
             }
 
-            public Object getReturn_visit_result() {
+            public String getReturn_visit_result() {
                 return return_visit_result;
             }
 
-            public void setReturn_visit_result(Object return_visit_result) {
+            public void setReturn_visit_result(String return_visit_result) {
                 this.return_visit_result = return_visit_result;
             }
 
@@ -914,6 +923,78 @@ public class InquiriesDetailModule {
 
             public void setInitData(InitDataBean initData) {
                 this.initData = initData;
+            }
+
+            public String getReturn_visit_user() {
+                return return_visit_user;
+            }
+
+            public void setReturn_visit_user(String return_visit_user) {
+                this.return_visit_user = return_visit_user;
+            }
+
+            public String getReturn_visit_time() {
+                return return_visit_time;
+            }
+
+            public void setReturn_visit_time(String return_visit_time) {
+                this.return_visit_time = return_visit_time;
+            }
+
+            public String getPd_assignor() {
+                return pd_assignor;
+            }
+
+            public void setPd_assignor(String pd_assignor) {
+                this.pd_assignor = pd_assignor;
+            }
+
+            public String getPd_time() {
+                return pd_time;
+            }
+
+            public void setPd_time(String pd_time) {
+                this.pd_time = pd_time;
+            }
+
+            public String getPd_remark() {
+                return pd_remark;
+            }
+
+            public void setPd_remark(String pd_remark) {
+                this.pd_remark = pd_remark;
+            }
+
+            public String getPd_user() {
+                return pd_user;
+            }
+
+            public void setPd_user(String pd_user) {
+                this.pd_user = pd_user;
+            }
+
+            public String getResponse_user() {
+                return response_user;
+            }
+
+            public void setResponse_user(String response_user) {
+                this.response_user = response_user;
+            }
+
+            public String getResponse_time() {
+                return response_time;
+            }
+
+            public void setResponse_time(String response_time) {
+                this.response_time = response_time;
+            }
+
+            public String getResponse_result() {
+                return response_result;
+            }
+
+            public void setResponse_result(String response_result) {
+                this.response_result = response_result;
             }
 
             public static class InitDataBean {

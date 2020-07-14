@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable
+            name="complain"
+            type="com.einyun.app.library.workorder.model.CustomerComplainModelBean" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90">
+
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:text="回访"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size16" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pd_view" />
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访结果"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:text="@{complain.return_visit_result}"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访人"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:text="@{complain.return_visit_user}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/ll_create_order"
+                android:paddingLeft="0dp">
+
+
+                <TextView
+                    android:layout_width="@dimen/px_176"
+                    android:layout_height="24dp"
+                    android:text="回访时间"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:text="@{complain.return_visit_time}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/px_5"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size14"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

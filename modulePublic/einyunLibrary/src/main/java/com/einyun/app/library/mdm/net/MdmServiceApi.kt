@@ -3,9 +3,11 @@ package com.einyun.app.library.mdm.net
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.library.mdm.model.FeedBackListModel
 import com.einyun.app.library.mdm.model.NoticeModel
 import com.einyun.app.library.mdm.model.SystemNoticeModel
 import com.einyun.app.library.mdm.net.request.AddReadingRequest
+import com.einyun.app.library.mdm.net.request.FeedBackAddRequest
 import com.einyun.app.library.mdm.net.request.QueryUpDownRequest
 import com.einyun.app.library.mdm.net.request.UpdateNoticeLikeBadRequest
 import com.einyun.app.library.mdm.net.response.GridResponse
@@ -51,4 +53,13 @@ interface MdmServiceApi {
 
     @GET
     fun getSystemNoticeDetail(@Url url: String): Flowable<BaseResponse<SystemNoticeModel>>
+
+    @POST(URLs.URL_FEED_BACK)
+    fun addFeedBack(@Body request: FeedBackAddRequest):Flowable<BaseResponse<Any>>
+
+    @POST(URLs.URL_FEED_BACK_LIST)
+    fun getFeedBackList(@Body request: Query):Flowable<BaseResponse<PageResult<FeedBackListModel>>>
+
+    @GET
+    fun getFeedBackDetail(@Url url: String): Flowable<BaseResponse<FeedBackListModel>>
 }

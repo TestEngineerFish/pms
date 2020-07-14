@@ -408,7 +408,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (value.equals(RouteKey.LIST_STATUS_EVALUATE)) {
             textView.setText(com.einyun.app.common.R.string.text_wait_evaluate);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_wait_evaluate);
-        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)) {
+        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)||value.equals(RouteKey.LIST_STATUS_SEND_ORDER2)) {
             textView.setText(com.einyun.app.common.R.string.text_wait_send);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_wait_send);
         } else if (value.equals(RouteKey.LIST_STATUS_WAIT_GRAB)) {
@@ -434,6 +434,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (valueInt == OrderState.CLOSED.getState()) {
             textView.setText(com.einyun.app.common.R.string.text_state_closed);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_closed);
+        } else if (valueInt == OrderState.PENDING.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_receive);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
+        } else if (valueInt == OrderState.OVER_DUE.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_send);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
         }
     }
 
@@ -453,6 +459,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (value == OrderState.CLOSED.getState()) {
             textView.setText(com.einyun.app.common.R.string.text_state_closed);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_closed);
+        } else if (value == OrderState.PENDING.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_receive);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
+        } else if (value == OrderState.OVER_DUE.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_send);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
         }
     }
 

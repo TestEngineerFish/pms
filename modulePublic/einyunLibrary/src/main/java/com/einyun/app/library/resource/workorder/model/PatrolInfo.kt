@@ -78,6 +78,7 @@ class PatrolContent{
 
      var is_sort: Int = 0
      var F_patrol_line_name: String? = null
+     var F_patrol_line_id: String? = null
      var F_duration: Int = 0
 }
 

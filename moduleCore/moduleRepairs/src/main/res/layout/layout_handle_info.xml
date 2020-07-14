@@ -70,7 +70,7 @@
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:text="维修工时" />
+                    android:text="维修工时(h)" />
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
@@ -107,6 +107,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -115,6 +116,7 @@
                     android:textColor="@color/material_txt_color" />
 
                 <TextView
+                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -123,19 +125,29 @@
                     android:textColor="@color/material_txt_color" />
 
                 <TextView
+                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="数量"
                     android:textColor="@color/material_txt_color" />
-
                 <TextView
+                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="总价"
+                    android:text="计量单位"
+                    android:textColor="@color/material_txt_color" />
+
+                <TextView
+                    android:textSize="@dimen/font_size13"
+                    android:layout_width="@dimen/px_70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="总价(元)"
                     android:textColor="@color/material_txt_color" />
             </LinearLayout>
 
