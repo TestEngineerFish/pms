@@ -1025,6 +1025,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             viewModel.receiceOrder(request).observe(this, model -> {
 
                 if (model.isState()) {
+                    viewModel.saveCache(planInfo, id);
                     initDialog("接单成功");
                 } else {
                     planInfo.getData().getZyjhgd().setF_STATUS("5");
@@ -1044,6 +1045,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 viewModel.assignOrder(request).observe(this, model -> {
 
                     if (model.isState()) {
+                        viewModel.saveCache(planInfo, id);
                         initDialog("派单成功");
                     } else {
                         planInfo.getData().getZyjhgd().setF_STATUS("6");

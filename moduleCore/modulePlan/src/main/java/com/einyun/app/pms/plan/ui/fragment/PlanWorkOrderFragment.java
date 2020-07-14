@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -18,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.db.entity.PlanInfo;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -50,6 +53,7 @@ import com.einyun.app.pms.plan.databinding.FragmentPlanWorkOrderBinding;
 import com.einyun.app.pms.plan.databinding.ItemSearchWorkPlanBinding;
 import com.einyun.app.pms.plan.databinding.ItemWorkPlanBinding;
 import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
+import com.einyun.app.pms.plan.viewmodel.PlanOrderDetailViewModel;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
@@ -80,6 +84,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     IUserModuleService userModuleService;
     PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder> searchFragment;
     protected SelectPopUpView selectPopUpView;
+    private PlanOrderDetailViewModel planOrderDetailViewModel;
 
     public static PlanWorkOrderFragment newInstance(Bundle bundle) {
         PlanWorkOrderFragment fragment = new PlanWorkOrderFragment();
@@ -258,6 +263,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         RecyclerView mRecyclerView = binding.workSendList;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        planOrderDetailViewModel = new PlanOrderDetailViewModel();
         if (adapter == null) {
             adapter = new RVPageListAdapter<ItemWorkPlanBinding, Plan>(getActivity(), BR.planWorkOrder, mDiffCallback) {
 
@@ -285,6 +291,12 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                                         .navigation();
                             }
                         });
+                        PlanInfo planInfo = planOrderDetailViewModel.planRepository.loadPlanInfo(distributeWorkOrder.getID_(), planOrderDetailViewModel.getUserID());
+                        if (planInfo!=null) {
+                            isCached(binding.tvIsCached,binding.ivIsCached,true);
+                        }else {
+                            isCached(binding.tvIsCached,binding.ivIsCached,false);
+                        }
                     } else {
                         binding.waitHandleLayout.setVisibility(View.GONE);
                         binding.itemSendWorkLfImg.setVisibility(View.GONE);
@@ -301,7 +313,17 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
     }
-
+    public static void isCached(TextView textView,ImageView imageView, boolean value){
+        if(value){
+            imageView.setImageResource(R.drawable.icon_cached);
+            textView.setText("已缓存");
+            textView.setTextColor(textView.getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+        }else{
+            imageView.setImageResource(R.drawable.icon_no_cache);
+            textView.setText("未缓存");
+            textView.setTextColor(textView.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+        }
+    }
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
 //        binding.sendOrderRef.setRefreshing(true);

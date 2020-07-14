@@ -37,6 +37,7 @@ import com.einyun.app.common.service.LoginNavigationCallbackImpl;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.library.core.net.EinyunHttpException;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
@@ -54,6 +55,9 @@ import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.einyun.app.pms.mine.viewmodule.SignSetViewModel;
 import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
@@ -227,7 +231,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                     @Override
                     public void onFaild(Throwable throwable) {
                         Log.e(TAG, "onFaild: ");
-                        showMsg();
+                        showMsg(throwable);
                         hideLoading();
                     }
                 });
@@ -418,7 +422,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -470,7 +474,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -515,7 +519,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -548,7 +552,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
             @Override
             public void onFaild(Throwable throwable) {
-                showMsg();
+                showMsg(throwable);
             }
         });
     }
@@ -591,19 +595,44 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
 
     }
 
-    private void showMsg() {
-        if (Looper.myLooper() == null) {
-            Looper.prepare();
+    private void showMsg(Throwable throwable) {
+        if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+            //连接错误
+            if (Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            ToastUtil.show(CommonApplication.getInstance(), com.einyun.app.common.R.string.toast_error_net);
+            Looper.loop();
+        }else if(throwable instanceof EinyunHttpException){
+            //API业务错误
+            EinyunHttpException exception= (EinyunHttpException) throwable;
+            if (exception.getResponse().getCode().equals("34516")){
+                if (Looper.myLooper() == null) {
+                    Looper.prepare();
+                }
+                Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            } else {
+                if (Looper.myLooper() == null) {
+                    Looper.prepare();
+                }
+                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                Looper.loop();
+            }
+        }else {
+            if (Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
+            Looper.loop();
         }
-        Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
-        Looper.loop();
     }
 
     /**
@@ -645,8 +674,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 @Override
                 public void onFaild(Throwable throwable) {
-
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -694,7 +722,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
 
                 }
             });
@@ -741,7 +769,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
