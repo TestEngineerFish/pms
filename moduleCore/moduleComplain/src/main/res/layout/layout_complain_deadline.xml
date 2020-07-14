@@ -19,13 +19,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <LinearLayout style="@style/ll_create_order"
+                android:paddingLeft="@dimen/px_20">
+                <TextView
+                    android:visibility="invisible"
+                    style="@style/tv_create_order_red_star" />
+                <TextView
+                    style="@style/tv_create_order_name"
+                    android:text="处理"
+                    android:textColor="@color/txt_black_order"
+                    android:textSize="@dimen/font_size16"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/iv_pop_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
             <LinearLayout style="@style/ll_create_order"
                 android:paddingLeft="@dimen/px_20">
                 <TextView style="@style/tv_create_order_red_star" />
                 <TextView
                     style="@style/tv_create_order_name"
-                    android:text="处理"
+                    android:text="处理结果"
                     android:textColor="@color/txt_black_order"
                     android:textSize="@dimen/font_size16"
                     android:textStyle="bold" />
@@ -41,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px_30"
-                    app:hintText="请输入文字原因"
+                    app:hintText="请输入文字内容"
                     app:maxNumber="300" />
             </LinearLayout>
 

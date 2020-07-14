@@ -2,6 +2,8 @@ package com.einyun.app.common.service.user;
 
 import com.einyun.app.common.service.IBaseModuleService;
 
+import java.util.List;
+
 /**
  * Description:IUserModuleService
  *  用户模块对外暴露接口
@@ -11,5 +13,11 @@ import com.einyun.app.common.service.IBaseModuleService;
  * */
 public interface IUserModuleService extends IBaseModuleService {
     public String getUserId();
+
+    String getAccount();
+    public String getPhone();
     public String getUserName();
+    public String getRealName();
+    public void saveDivideCodes(List<String> divideCodes);
+    public List<String> getDivideCodes();
 }

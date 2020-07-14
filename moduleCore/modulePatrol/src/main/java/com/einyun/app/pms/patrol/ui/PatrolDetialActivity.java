@@ -30,8 +30,10 @@ import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.DataConstants;
+import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PageUIState;
 import com.einyun.app.common.model.PicUrlModel;
@@ -51,12 +53,14 @@ import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.convert.ExtensionApplicationConvert;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolDetialBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolWorkNodeBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolViewModel;
 import com.einyun.app.pms.patrol.viewmodel.ViewModelFactory;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import org.jetbrains.annotations.NotNull;
 import org.mockito.internal.stubbing.BaseStubbing;
@@ -82,7 +86,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected String taskNodeId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     protected String proInsId;
-
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+    String divideId;
+    @Autowired(name = RouteKey.KEY_PROJECT_ID)
+    String projectId;
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     protected int listType = ListType.PENDING.getType();
     protected PhotoSelectAdapter photoSelectAdapter;
@@ -96,6 +103,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected TipDialog tipDialog;
     protected File imageFile;
     public int f_plan_work_order_state;
+    private boolean isFirstClick;//点击过一次后 一直显示所有数据
+    private PatrolInfo mPatrolInfo;
 
     protected void setProInsId(String proInsId) {
         this.proInsId = proInsId;
@@ -122,9 +131,47 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         setRightOption(R.drawable.histroy);
+        //选择人员
+        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
+            binding.sendOrder.repairSelectedPepple.setText(model.getFullname());
+            patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.HANDING.getState());
+            patrolInfo.getData().getZyxcgd().setF_principal_id(model.getId());
+            patrolInfo.getData().getZyxcgd().setF_principal_name(model.getFullname());
 
+            if (patrolLocal!=null) {
+                patrolLocal.setDesignatePerson(model.getFullname());
+            }
+
+        });
+        binding.sendOrder.repairSelectPeople.setOnClickListener(view -> {
+            selectPeple();
+        });
     }
 
+    /**
+     *转单
+     */
+    public void resendOrder() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_ORDER_ID, orderId)
+                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
+                .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                .navigation();
+    }
+    /**
+     * 选择指派人
+     */
+    private void selectPeple() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                .withString(RouteKey.KEY_DIVIDE_ID, patrolInfo.getData().getZyxcgd().getF_massif_id())
+                .withString(RouteKey.KEY_PROJECT_ID, patrolInfo.getData().getZyxcgd().getF_project_id())
+                .navigation();
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -201,6 +248,10 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                     binding.btnAgree.setVisibility(View.VISIBLE);
                     binding.btnAgree.setEnabled(false);
                     binding.btnReject.setEnabled(false);
+                    binding.btnAgree.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.btnReject.setBackgroundResource(R.drawable.shape_button_corners_grey);
+                    binding.btnAgree.setTextColor(getResources().getColor(R.color.white));
+                    binding.btnReject.setTextColor(getResources().getColor(R.color.white));
                     binding.tvResult.setVisibility(View.GONE);
                     binding.tvResult.setText(R.string.text_un_need_handle);
                     binding.tvResult.setTypeface(null, Typeface.NORMAL);
@@ -254,9 +305,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         binding.rvNodes.setAdapter(nodesAdapter);
     }
 
+    private static final String TAG = "PatrolDetialActivity";
     protected void loadData() {
         if (listType == ListType.PENDING.getType()) {
             viewModel.loadPendingDetial(orderId).observe(this, patrolInfo -> {
+                mPatrolInfo = patrolInfo;
                 updateUI(patrolInfo);
                 viewModel.loadLocalUserData(orderId).observe(this, local -> {
                     patrolLocal = local;
@@ -297,14 +350,28 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             return;
         }
         if (orderId.isEmpty()) {
-            orderId=patrol.getData().getZyxcgd().getId_();
+            orderId = patrol.getData().getZyxcgd().getId_();
         }
         this.patrolInfo = patrol;
         f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
-        if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
-            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        if (f_plan_work_order_state==6) {
+            if (listType != ListType.DONE.getType()) {
+                binding.sendOrder.getRoot().setVisibility(View.VISIBLE);
+            }
+            binding.btnSubmit.setText("派单");
+        }else if (f_plan_work_order_state==5){
+            binding.btnSubmit.setText("接单");
+            binding.sendOrder.getRoot().setVisibility(View.GONE);
         }else {
+            binding.btnSubmit.setText("提交");
+            binding.sendOrder.getRoot().setVisibility(View.GONE);
+        }
+        if (f_plan_work_order_state == OrderState.HANDING.getState() || f_plan_work_order_state == OrderState.APPLY.getState() || f_plan_work_order_state == OrderState.NEW.getState()) {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
+        } else if (f_plan_work_order_state == OrderState.CLOSED.getState()){
             binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
+        }else {
+            binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
         }
         switchStateUI(f_plan_work_order_state);
         updateElapsedTime(patrol);
@@ -357,16 +424,27 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 }
                 photoSelectAdapter.setSelectedPhotos(uris);
             }
+            if (local.getDesignatePerson()!=null) {//被指派人
+                binding.sendOrder.repairSelectedPepple.setText(local.getDesignatePerson());
+            }
+            if (local.getRemark()!=null) {//指派备注
+                binding.sendOrder.repairSendReason.setText(local.getRemark());
+            }
             if (!TextUtils.isEmpty(local.getNote())) {
                 binding.limitInput.setText(local.getNote());
             }
             if (local.getNodes() != null) {
-                if (local.getNodes().size() >3) {
-                    nodesAdapter.setDataList(local.getNodes().subList(0, 3));
-                    binding.patroHistroyMore.setVisibility(View.VISIBLE);
-                } else {
+                if (isFirstClick) {
                     nodesAdapter.setDataList(local.getNodes());
                     binding.patroHistroyMore.setVisibility(View.GONE);
+                } else {
+                    if (local.getNodes().size() > 3) {
+                        nodesAdapter.setDataList(local.getNodes().subList(0, 3));
+                        binding.patroHistroyMore.setVisibility(View.VISIBLE);
+                    } else {
+                        nodesAdapter.setDataList(local.getNodes());
+                        binding.patroHistroyMore.setVisibility(View.GONE);
+                    }
                 }
                 addMore(local.getNodes());
             }
@@ -446,14 +524,14 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
                 binding.btnSubmit.setVisibility(View.GONE);
             } else {//已办显示全部信息
-                if (f_plan_work_order_state== OrderState.HANDING.getState()||f_plan_work_order_state==OrderState.APPLY.getState()||f_plan_work_order_state==OrderState.NEW.getState()) {
+                if (f_plan_work_order_state == OrderState.HANDING.getState() || f_plan_work_order_state == OrderState.APPLY.getState() || f_plan_work_order_state == OrderState.NEW.getState()|| f_plan_work_order_state == OrderState.PENDING.getState() || f_plan_work_order_state == OrderState.OVER_DUE.getState()) {
                     binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
-                }else {
+                } else {
                     binding.panelHandleInfo.getRoot().setVisibility(View.VISIBLE);
                 }
                 binding.cdWorkNodes.setVisibility(View.VISIBLE);
             }
-        } else if (state == ApplyState.REJECT.getState()){
+        } else if (state == ApplyState.REJECT.getState()) {
             binding.cdWorkNodes.setVisibility(View.VISIBLE);
             binding.panelHandleForm.setVisibility(View.VISIBLE);
             binding.panelHandleInfo.getRoot().setVisibility(View.GONE);
@@ -490,12 +568,19 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     protected void updateWorkNodesUI(PatrolInfo patrol) {
         List<WorkNode> nodes = viewModel.loadNodes(patrol);
         nodes.add(0, new WorkNode());
-        if (nodes.size() >3) {
-            nodesAdapter.setDataList(nodes.subList(0, 3));
-            binding.patroHistroyMore.setVisibility(View.VISIBLE);
-        } else {
+        if (isFirstClick) {//点击过后 展示所有数据
             nodesAdapter.setDataList(nodes);
             binding.patroHistroyMore.setVisibility(View.GONE);
+        } else {
+
+
+            if (nodes.size() > 3) {
+                nodesAdapter.setDataList(nodes.subList(0, 3));
+                binding.patroHistroyMore.setVisibility(View.VISIBLE);
+            } else {
+                nodesAdapter.setDataList(nodes);
+                binding.patroHistroyMore.setVisibility(View.GONE);
+            }
         }
         addMore(nodes);
     }
@@ -507,6 +592,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             public void onClick(View v) {
                 nodesAdapter.setDataList(nodes);
                 binding.patroHistroyMore.setVisibility(View.GONE);
+                isFirstClick = true;
             }
         });
     }
@@ -527,6 +613,15 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 保存本地数据
      */
     protected void saveLocalUserData() {
+        if (mPatrolInfo==null) {
+
+            return;
+
+        }
+        if (mPatrolInfo.getExtensionApplication() != null) {
+
+            return;
+        }
         List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
         List<String> images = new ArrayList<>();
         for (Uri uri : uris) {
@@ -539,18 +634,24 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         patrolLocal.setImages(images);
         patrolLocal.setNote(binding.limitInput.getString());
         List<WorkNode> workNodes = viewModel.loadNodes(patrolInfo);
-        workNodes.add(0,new WorkNode());
+        workNodes.add(0, new WorkNode());
         List<WorkNode> dataList = nodesAdapter.getDataList();
 
-        if (workNodes.size()==dataList.size()) {
+        if (workNodes.size() == dataList.size()) {
 
             patrolLocal.setNodes(nodesAdapter.getDataList());
-        }else {
-            List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
-            dataList.addAll(workNodes1);
-            patrolLocal.setNodes(dataList);
+        } else {
+            try {
+                List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
+                dataList.addAll(workNodes1);
+                patrolLocal.setNodes(dataList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
+        patrolLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());
+        patrolLocal.setRemark(binding.sendOrder.repairSendReason.getString());
         viewModel.saveLocal(patrolLocal);
     }
 

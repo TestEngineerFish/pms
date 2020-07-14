@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -148,10 +149,10 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         try {
             HashMap<String, String> map = new HashMap<>();
             map.put("user_name", UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(),map);
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.PLAN_ORDER_SEARCH.getTypeName(), map);
             DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {
-                searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<PlanWorkOrder>() {
+                searchFragment = new PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder>(getActivity(), BR.planModel, new PageSearchListener<ItemSearchWorkPlanBinding,PlanWorkOrder>() {
                     @Override
                     public LiveData<PagedList<PlanWorkOrder>> search(String search) {
                         request.setSearchValue(search);
@@ -172,13 +173,26 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                                 .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
                                 .navigation();
                     }
+                    @Override
+                    public void onItem(ItemSearchWorkPlanBinding binding,PlanWorkOrder model) {
+
+                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                            if (model.getF_OT_STATUS() == 1) {
+                                binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                            }
+                        } else {
+                            binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                        }
+                    }
 
                     @Override
                     public int getLayoutId() {
                         return R.layout.item_search_work_plan;
                     }
                 });
-                searchFragment.setHint("请搜索工单编号或计划名称");
+                searchFragment.setHint("请输入工单编号或计划名称");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (CloneNotSupportedException e) {
@@ -205,11 +219,14 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     @Override
     public void onResume() {
         super.onResume();
-        if (isfresh){
+
+        if (isfresh) {
             loadPagingData();
             isfresh = false;
-        }else{
-            viewModel.refresh();
+        } else {
+//            viewModel.refresh();
+            viewModel.refresh(getFragmentTag());
+//            loadPagingData();
         }
     }
 
@@ -231,7 +248,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 binding.sendOrderRef.setRefreshing(false);
             }
         });
-
+        loadPagingData();
         //切换筛选条件
         viewModel.getLiveEvent().observe(getActivity(), status -> {
             if (status.isRefresShown()) {
@@ -247,6 +264,31 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 @Override
                 public void onBindItem(ItemWorkPlanBinding binding, Plan distributeWorkOrder) {
 
+                    if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                        binding.waitHandleLayout.setVisibility(View.VISIBLE);
+                        if (distributeWorkOrder.getF_OT_STATUS() == 1) {
+                            binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                        }
+                        binding.turnOrder.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_TASK_ID, distributeWorkOrder.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, distributeWorkOrder.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, distributeWorkOrder.getF_DIVIDE_ID())
+                                        .withString(RouteKey.KEY_PROJECT_ID, distributeWorkOrder.getF_project_id())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                                        .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                        .navigation();
+                            }
+                        });
+                    } else {
+                        binding.waitHandleLayout.setVisibility(View.GONE);
+                        binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -273,13 +315,13 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
             viewModel.loadPendingInDB().observe(this, dataBeans -> {
                 if (dataBeans.size() == 0) {
-                    showLoading(getActivity());
+//                    showLoading(getActivity());
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             hideLoading();
                         }
-                    },3500);
+                    }, 3500);
                     updatePageUIState(PageUIState.EMPTY.getState());
                 } else {
                     updatePageUIState(PageUIState.FILLDATA.getState());
@@ -341,6 +383,8 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                 .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                 .withString(RouteKey.KEY_TASK_ID, data.getTaskId())
                 .withString(RouteKey.KEY_TASK_NODE_ID, data.getTaskNodeId())
+                .withString(RouteKey.KEY_DIVIDE_ID, data.getF_DIVIDE_ID())
+                .withString(RouteKey.KEY_PROJECT_ID, data.getF_project_id())
                 .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
                 .navigation();
     }

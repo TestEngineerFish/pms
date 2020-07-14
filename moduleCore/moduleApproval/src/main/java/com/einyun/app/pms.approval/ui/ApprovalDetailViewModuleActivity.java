@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -17,8 +18,12 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.ListType;
+import com.einyun.app.common.model.PicUrlModel;
+import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
+import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.pms.approval.R;
@@ -56,6 +61,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
     int tabId;
     private ApprovalFormdata approvalFormdata;
     private UrlxcgdGetInstBOModule urlxcgdGetInstBOModule;
+    private PhotoListAdapter photoOrderInfoAdapter;
 
     @Override
     protected ApprovalDetailViewModel initViewModel() {
@@ -75,7 +81,16 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(getString(R.string.tv_approval));
 
-
+        /**
+         * 图片
+         */
+        photoOrderInfoAdapter = new PhotoListAdapter(this);
+        binding.listPicOrderInfo.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false));
+        binding.listPicOrderInfo.addItemDecoration(new SpacesItemDecoration(18));
+        binding.listPicOrderInfo.setAdapter(photoOrderInfoAdapter);
     }
 
     @Override
@@ -105,7 +120,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 List<ApprovalDetailInfoBean.RowsBean> rows = model2.getRows();
                 if (rows!=null) {
                     ApprovalDetailInfoBean.RowsBean rowsBean = new ApprovalDetailInfoBean.RowsBean();
-                    rowsBean.setAuditor(getString(R.string.tv_me));
+                    rowsBean.setAuditor(urlxcgdGetInstBOModule.getData().getWorkorder_audit_model().getApply_user());
                     rowsBean.setApprovalRole(getString(R.string.tv_for_apply));
                     rowsBean.setComment("");
                     rowsBean.setAudit_date(TimeUtil.getTimeMillis(model.getData().getWorkorder_audit_model().getApply_date()));
@@ -187,7 +202,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                     break;
                 case ApprovalDataKey.FORCE_CLOSE_ENQUIRY://问询
                     ARouter.getInstance()
-                            .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                            .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                             .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TRANSFERRED_TO)
                             .withString(RouteKey.KEY_TASK_ID,"")
                             .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
@@ -378,6 +393,10 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 binding.rlFinishTime.setVisibility(View.GONE);
                 binding.rlDelayDay.setVisibility(View.GONE);
             }
+            //获取数据展示图片暂时注释
+            PicUrlModelConvert convert = new PicUrlModelConvert();
+            List<PicUrlModel> modelList = convert.stringToSomeObjectList(approvalFormdata.getAttachment());
+            photoOrderInfoAdapter.updateList(modelList);
 
             switch (subType) {//客服三类 强制闭单 申请延期 隐藏条线 派工单类型 工单负责人 创建时间工单截止时间
                 case ApprovalDataKey.FORCE_CLOSE_REPAIR:
@@ -390,6 +409,15 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                     binding.rlHeader.setVisibility(View.GONE);//工单负责人
                     binding.rlDispatchType.setVisibility(View.GONE);//派工单类型
                     binding.rlLine.setVisibility(View.GONE);//条线
+                    if (subType.equals(ApprovalDataKey.FORCE_CLOSE_COMPLAIN)) {
+                        binding.rlReason1.setVisibility(View.VISIBLE);
+                        binding.rlReason2.setVisibility(View.VISIBLE);
+                        binding.tvApplyNoWork.setText(approvalFormdata.getSetToInvalid());
+                        binding.tvApplyNoWorkReason.setText(approvalFormdata.getInvalidReasonCategory());
+                    }else {
+                        binding.rlReason1.setVisibility(View.GONE);
+                        binding.rlReason2.setVisibility(View.GONE);
+                    }
                     break;
                 case ApprovalDataKey.POSTPONED_PLAN://计划工单 三个都隐藏
                 case ApprovalDataKey.FORCE_CLOSE_PLAN:
@@ -411,7 +439,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvCloseOrderResponer.setText(approvalFormdata.getProcName());//工单负责人
             binding.tvCloseCreateTime.setText(approvalFormdata.getCreationTime());//工单创建时间
             binding.tvCloseEndTime.setText(approvalFormdata.getDeadlineTime());//工单截止时间
-            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays());//延期天数
+            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays()+"天");//延期天数
             binding.tvCloseApplyReason.setText(approvalFormdata.getApplicationDescription());//申请原因
 
 

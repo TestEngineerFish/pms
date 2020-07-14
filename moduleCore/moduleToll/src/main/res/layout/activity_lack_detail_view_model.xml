@@ -202,6 +202,7 @@
                                      android:layout_width="wrap_content"
                                      android:layout_height="match_parent"/>
                                  <TextView
+                                     android:id="@+id/tv_worth"
                                      android:onClick="@{()->callBack.onRejectClick()}"
                                      android:layout_alignParentRight="true"
                                      android:textStyle="bold"

@@ -377,6 +377,10 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
+        if (!detailModule.getData().getUnqualified_model().getParent_code().isEmpty()) {
+            binding.rlOldCode.setVisibility(View.VISIBLE);
+            binding.tvOldCode.setText(detailModule.getData().getUnqualified_model().getParent_code());
+        }
 //        updatePageUIState(PageUIState.FILLDATA.getState());
         code = detailModule.getData().getUnqualified_model().getCode();
         String status = detailModule.getData().getUnqualified_model().getStatus();
@@ -658,7 +662,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                             viewModel.deleteVerificationRequest("v_" + mTaskId);
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
-                                    .withString(DisqualifiedDataKey.CODE, code)
+                                    .withString(RouteKey.CODE , code)
                                     .navigation();
                             finish();
                         }

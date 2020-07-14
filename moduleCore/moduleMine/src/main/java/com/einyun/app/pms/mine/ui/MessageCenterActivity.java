@@ -30,6 +30,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.DisqualifiedDetailModel;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.common.service.LoginNavigationCallbackImpl;
@@ -103,7 +104,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 //            }
 //        });
 
-        LiveDataBusUtils.getLiveBusData(binding.rlEmpty,LiveDataBusKey.MSGCENTER_EMPTY,this);
+        LiveDataBusUtils.getLiveBusData(binding.rlEmpty, LiveDataBusKey.MSGCENTER_EMPTY, this);
     }
 
     private void loadPagingData(RequestPageBean requestBean, String tag) {
@@ -232,6 +233,14 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 });
 
                 break;
+            case "bpmnApprovalEnd"://强制关闭
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_APPROVAL_DETAIL)
+                        .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
+                        .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
+                        .withInt(RouteKey.KEY_TAB_ID, 1)
+//                        .withString(RouteKey.KEY_APPROVAL_USER_STATE,data.getUserAuditStatus())
+                        .navigation();
+                break;
             case "end"://强制关闭
             case "copyto"://抄送
                 initCopyAndEnd(msgModel, msgExtendVars);
@@ -249,73 +258,28 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                         break;
                     case "dispatch"://派工单消息
                         checkSendOrderTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
-//                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                                .navigation();
                         break;
                     case "plan"://计划工单消息
                         checkPlanOrderTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)
-//                                .navigation();
                         break;
                     case "inspection"://巡查工单消息
                         checkPatrolTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
-//                                .withString(RouteKey.KEY_TASK_ID,msgExtendVars.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_ORDER_ID,"")
-//                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                                .withString(RouteKey.KEY_PRO_INS_ID,msgExtendVars.getContent().getProcInstId())
-//                                .navigation();
                         break;
                     case "patrol"://巡更工单消息
                         checkPatrol2TaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-//                                .withString(RouteKey.KEY_TASK_ID,msgExtendVars.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_ORDER_ID,"")
-//                                .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                                .withString(RouteKey.KEY_PRO_INS_ID,msgExtendVars.getContent().getProcInstId())
-//                                .navigation();
                         break;
                     case "complain"://投诉工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                                .navigation();
                         checkComTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
                         break;
                     case "enquiry"://问询消息
                         checkTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
                         break;
                     case "repair"://报修消息
-//                        getNodeIdRequest.setDefkey("customer_repair_flow");
-////                        getNodeIdRequest.setId("74374815867208710");
-//                        OrderListModel orderListModel = new OrderListModel();
-//                        orderListModel.setID_(msgModel.getId());
-//                        orderListModel.setInstance_id(msgExtendVars.getContent().getProcInstId());
-//                        getNodeId(orderListModel);
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, msgModel.getId())
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, msgExtendVars.getContent().getTaskId())
-//                                .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
-//                                .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                                .navigation();
-
                         checkRepairTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        break;
+                    case "unqualified"://不合格单
+                        checkQualityTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId());
+
                         break;
                 }
                 break;
@@ -346,13 +310,13 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                         .navigation();
                 break;
             case "plan"://计划工单消息
-//                        ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                                .withString(RouteKey.KEY_ORDER_ID, "")
-//                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                                .withString(RouteKey.KEY_TASK_ID, "")
-//                                .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
-//                                .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
-//                                .navigation();
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                        .withString(RouteKey.KEY_ORDER_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
+                        .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
+                        .navigation();
                 break;
             case "inspection"://巡查工单消息
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
@@ -383,7 +347,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 break;
             case "enquiry"://问询消息
                 ARouter.getInstance()
-                        .build(RouterUtils.ACTIVITY_INQUIRIES_ORDER_DETAIL)
+                        .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
                         .withString(RouteKey.FRAGMENT_TAG, FRAGMENT_TRANSFERRED_TO)
                         .withString(RouteKey.KEY_TASK_ID, "")
                         .withString(RouteKey.KEY_PRO_INS_ID, msgExtendVars.getContent().getProcInstId())
@@ -420,18 +384,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
      * 问询提前判断任务是否失效
      */
     public void checkTaskId(String proInsId, String taskId, String type) {
-//        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-//            if (repairsDetail==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance()
-//                    .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
-//                    .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TO_FOLLOW_UP)
-//                    .withString(RouteKey.KEY_TASK_ID,taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-//                    .navigation();
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -477,20 +429,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
      * 投诉提前判断任务是否失效
      */
     public void checkComTaskId(String proInsId, String taskId, String type) {
-//        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-//            Log.e(TAG, "checkComTaskId: "+repairsDetail );
-//            if (repairsDetail==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                    .navigation();
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -542,20 +480,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
      * 报修提前判断任务是否失效
      */
     public void checkRepairTaskId(String proInsId, String taskId, String type) {
-//        viewModel.getRepairDetail("procInstId=" + proInsId + "&taskId=" + taskId).observe(this, repairsDetail -> {
-//            Log.e(TAG, "checkComTaskId: "+repairsDetail );
-//            if (repairsDetail==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_WAIT_FOLLOW)
-//                    .navigation();
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -599,23 +523,40 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     }
 
     /**
+     * 不合格单提前判断任务是否失效
+     */
+    public void checkQualityTaskId(String proInsId, String taskId) {
+        /**
+         * 获取详情信息
+         */
+        viewModel.msgRep.getTODODetailInfo(taskId, new CallBack<DisqualifiedDetailModel>() {
+            @Override
+            public void call(DisqualifiedDetailModel data) {
+
+                if (data == null) {
+                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                    return;
+                }
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                        .withString(RouteKey.KEY_TASK_ID, taskId)
+                        .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                        .withString(RouteKey.KEY_ID, data.getData().getUnqualified_model().getId_())
+                        .withString(RouteKey.FRAGMENT_TAG, RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW)
+                        .navigation();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                showMsg();
+            }
+        });
+    }
+
+    /**
      * 派工单提前判断任务是否失效
      */
     public void checkSendOrderTaskId(String proInsId, String taskId, String type) {
-//        viewModel.pendingDetial(taskId).observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-//                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                    .navigation();
-//
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -669,20 +610,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
      * 计划工单提前判断任务是否失效
      */
     public void checkPlanOrderTaskId(String proInsId, String taskId, String type) {
-//        viewModel.loadDetail(proInsId,taskId).observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-//                    .withString(RouteKey.KEY_ORDER_ID, "")
-//                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
-//                    .withString(RouteKey.KEY_TASK_ID, taskId)
-//                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
-////                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE)
-//                    .withString(RouteKey.KEY_FRAGEMNT_TAG, RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING)
-//                    .navigation();
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -732,20 +659,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskId(taskId);
         viewModel.request.setTaskNodeId("9");
-
-//        viewModel.loadPendingDetial().observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
-//                    .withString(RouteKey.KEY_TASK_ID,taskId)
-//                    .withString(RouteKey.KEY_ORDER_ID,"")
-//                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-//                    .navigation();
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -762,7 +675,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 //                    case "commuFeedBack"://反馈
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_HANDLE)
                                     .withString(RouteKey.KEY_TASK_ID, taskId)
-                                    .withString(RouteKey.KEY_ORDER_ID, "")
+                                    .withString(RouteKey.KEY_ORDER_ID, data.getData().getInfo().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
                                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
@@ -795,20 +708,6 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
         viewModel.request.setProInsId(proInsId);
         viewModel.request.setTaskId(taskId);
         viewModel.request.setTaskNodeId("UserTask1");
-
-//        viewModel.loadPendingDetial().observe(this, model -> {
-//            if (model==null) {
-//                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-//                return;
-//            }
-//            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
-//                    .withString(RouteKey.KEY_TASK_ID,taskId)
-//                    .withString(RouteKey.KEY_ORDER_ID,"")
-//                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
-//                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
-//                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
-//                    .navigation();
-//        });
         if ("commuFeedBack".equals(type)) {
             initCopyAndEnd(msgModel, msgExtendVars);
         } else {
@@ -825,7 +724,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 //                    case "commuFeedBack"://反馈
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_HANDLE)
                                     .withString(RouteKey.KEY_TASK_ID, taskId)
-                                    .withString(RouteKey.KEY_ORDER_ID, "")
+                                    .withString(RouteKey.KEY_ORDER_ID, data.getData().getInfo().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.PENDING.getType())
                                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
@@ -838,14 +737,11 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                                     .navigation();
                             break;
                     }
-
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
-
                     showMsg();
-
                 }
             });
         }

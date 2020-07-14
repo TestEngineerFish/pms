@@ -100,6 +100,8 @@ public class AddWorthReminderActivity extends BaseHeadViewModelActivity<Activity
 
                 if (model.getCode()==0) {
                     finish();
+                }else {
+                    ToastUtil.show(AddWorthReminderActivity.this,model.getMsg());
                 }
             });
         }

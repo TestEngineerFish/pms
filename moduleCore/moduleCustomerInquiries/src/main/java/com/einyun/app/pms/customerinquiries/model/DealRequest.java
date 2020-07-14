@@ -35,6 +35,10 @@ public class DealRequest {
          */
 
         private String handle_cont;
+        private String response_result;
+        private String pd_remark;
+        private String pd_assignor;
+        private String pd_assignor_id;
 
         public String getHandle_cont() {
             return handle_cont;
@@ -42,6 +46,41 @@ public class DealRequest {
 
         public void setHandle_cont(String handle_cont) {
             this.handle_cont = handle_cont;
+        }
+
+
+        public String getResponse_result() {
+            return response_result;
+        }
+
+        public void setResponse_result(String response_result) {
+            this.response_result = response_result;
+        }
+
+
+
+        public String getPd_assignor() {
+            return pd_assignor;
+        }
+
+        public void setPd_assignor(String pd_assignor) {
+            this.pd_assignor = pd_assignor;
+        }
+
+        public String getPd_assignor_id() {
+            return pd_assignor_id;
+        }
+
+        public void setPd_assignor_id(String pd_assignor_id) {
+            this.pd_assignor_id = pd_assignor_id;
+        }
+
+        public String getPd_remark() {
+            return pd_remark;
+        }
+
+        public void setPd_remark(String pd_remark) {
+            this.pd_remark = pd_remark;
         }
     }
 

@@ -30,6 +30,7 @@ import com.einyun.app.common.ui.component.photo.PhotoListAdapter;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.resource.workorder.model.ComplainOrderState;
+import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
 import com.einyun.app.pms.customerinquiries.constants.Constants;
@@ -54,7 +55,7 @@ import java.util.List;
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
 public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActivity<ActivityInquiriesDetailMsgViewModuleBinding, InquiriesDetailViewModel> {
-//    @Autowired(name = Constants.INQUIRIES_BEAN);
+    //    @Autowired(name = Constants.INQUIRIES_BEAN);
 //    Serializable data;
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String mTaskID;
@@ -64,13 +65,18 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
     String fragment;
     private PhotoListAdapter photoListInfoAdapter;
     private PhotoListAdapter forseClosephotoListInfoAdapter;
-    private int evaluation=1;
+    private int evaluation = 1;
     private AlertDialog alertDialog;
     private OrderDetailInfoModule orderDetailInfoModule;
     private RVBindingAdapter<ItemInquiriseFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean> adapter;
     private boolean isApplyForseClose;
     private String createTime;
     private InquiriesDetailModule.DataBean.CustomerEnquiryModelBean detail;
+    private boolean isSendOrder;
+    private boolean isResponse;
+    private boolean isCall;
+    private String state;
+    private DealRequest mDealRequest;
 
     @Override
     protected InquiriesDetailViewModel initViewModel() {
@@ -91,45 +97,114 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
         setRightTxt(R.string.tv_history);
         setRightTxtColor(R.color.blueTextColor);
         initRadioGroup();
+        mDealRequest = new DealRequest();
+        //选择人员
+        LiveEventBus.get(LiveDataBusKey.POST_RESEND_ORDER_USER, GetMappingByUserIdsResponse.class).observe(this, model -> {
+            binding.layoutSendOrder.repairSelectedPepple.setText(model.getFullname());
+            mDealRequest.getBizData().setPd_assignor(model.getFullname());
+            mDealRequest.getBizData().setPd_assignor_id(model.getId());
+        });
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-               finish();
+                finish();
+            }
+        });
+        binding.layoutSendOrder.repairSelectPeople.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPeple();
             }
         });
     }
+
+    /**
+     * 选择指派人
+     */
+    private void selectPeple() {
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_SELECT_PEOPLE)
+                .withString(RouteKey.KEY_DIVIDE_ID, detail.getWx_dk_id())
+                .withString(RouteKey.KEY_PROJECT_ID, detail.getU_project_id())
+                .navigation();
+    }
+
     private void initState(String state) {
         switch (state) {
-            case RouteKey.LIST_STATUS_HANDLE:
+            case RouteKey.LIST_STATUS_SEND_ORDER://待派单
+                if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
+                    binding.layoutSendOrder.getRoot().setVisibility(View.VISIBLE);
+                    binding.llPass.setVisibility(View.VISIBLE);
+                    binding.tvSave.setVisibility(View.GONE);
+                }
+                binding.tvDealState.setText(getString(R.string.text_wait_send));
+                binding.tvDealState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
+                break;
+            case RouteKey.LIST_STATUS_RESPONSE://待响应 展示 派单信息  响应操作
+                if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
+                    binding.layoutInquiriesResponse.getRoot().setVisibility(View.VISIBLE);
+                    binding.llPass.setVisibility(View.VISIBLE);
+                    binding.tvSave.setVisibility(View.GONE);
+                }
+                if (isSendOrder) {
+                    binding.layoutSendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+                }
+                binding.tvDealState.setText(getString(R.string.text_wait_response));
+                binding.tvDealState.setTextColor(getResources().getColor(R.color.repair_detail_response_color));
+                break;
+
+            case RouteKey.LIST_STATUS_HANDLE://待处理
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
                     binding.llReplyContent.setVisibility(View.VISIBLE);
                     binding.llPass.setVisibility(View.VISIBLE);
 //                    binding.llForseClose.setVisibility(View.VISIBLE);
                     binding.llEvaluation.setVisibility(View.GONE);
                 }
+                if (isSendOrder) {
+                    binding.layoutSendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+                }
+                if (isResponse) {
+                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }
                 binding.tvDealState.setText(getString(R.string.tv_dealing));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
                 break;
 
-            case  RouteKey.LIST_STATUS_EVALUATE:
+            case RouteKey.LIST_STATUS_EVALUATE://待评价
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
                     binding.llReplyContent.setVisibility(View.GONE);
                     binding.llPass.setVisibility(View.GONE);
 //                binding.llHistory.setVisibility(View.VISIBLE);
                     binding.llEvaluation.setVisibility(View.VISIBLE);
                 }
+                if (isSendOrder) {
+                    binding.layoutSendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+                }
+                if (isResponse) {
+                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }
+                if (isCall) {
+                    binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
+                }
                 binding.tvDealState.setText(getString(R.string.tv_for_respone));
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
                 break;
-            default:
-//                binding.tvDealState.setText(getString(R.string.tv_finish));
+            default://已完成
+                if (isSendOrder) {
+                    binding.layoutSendOrderInfo.getRoot().setVisibility(View.VISIBLE);
+                }
+                if (isResponse) {
+                    binding.layoutInquiriesResponseInfo.getRoot().setVisibility(View.VISIBLE);
+                }
+                if (isCall) {
+                    binding.llEvaluationCloseCall.setVisibility(View.VISIBLE);
+                }
                 binding.tvDealState.setText("已完成");
                 binding.tvDealState.setTextColor(getResources().getColor(R.color.greenTextColor));
-//                binding.llHistory.setVisibility(View.VISIBLE);
-//                binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 break;
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -151,7 +226,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
         /**
          * 获取详情信息
          */
-        viewModel.queryInquiriesBasicInfo(mProInsId).observe(this,module->{
+        viewModel.queryInquiriesBasicInfo(mProInsId).observe(this, module -> {
             updateUI(module);
         });
         /**
@@ -162,63 +237,85 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
     }
 
     private void queryOrderInfo() {
-        viewModel.queryOrderInfo(mProInsId,mTaskID==null?"":mTaskID).observe(this,module->{
+        viewModel.queryOrderInfo(mProInsId, mTaskID == null ? "" : mTaskID).observe(this, module -> {
 //            Log.e(TAG, "onResume:proInsId--"+inquiriesItemModule.proInsId+"--taskId--"+inquiriesItemModule.taskId);
             orderDetailInfoModule = module;
             int c_is_solve = orderDetailInfoModule.getData().getCustomer_repair_model().getC_is_solve();
+            if (module.getData().getCustomer_repair_model().getPd_time() != null) {
+                isSendOrder = true;
+            } else {
+                isSendOrder = false;
+            }
+            if (module.getData().getCustomer_repair_model().getResponse_time() != null) {
+                isResponse = true;
+            } else {
+                isResponse = false;
+            }
+            if (module.getData().getCustomer_repair_model().getReturn_visit_time() != null) {
+                isCall = true;
+            } else {
+                isCall = false;
+            }
 
-            if (c_is_solve ==1) {//1 已解决  0 未解决
-                binding.llEvaluationClose.setVisibility(View.VISIBLE);
+            if (c_is_solve == 1) {//1 已解决  0 未解决
+                if (module.getData().getCustomer_repair_model().getReturn_time() != null) {
+                    binding.llEvaluationClose.setVisibility(View.VISIBLE);
+                }
+
                 String return_time = (String) orderDetailInfoModule.getData().getCustomer_repair_model().getReturn_time();
                 binding.tvEvaluationTime.setText(return_time);
             }
 
+
+            state = module.getData().getCustomer_repair_model().getState();
+            initState(state);
             initHistoryList(orderDetailInfoModule);
             isCanApplyClose(orderDetailInfoModule);
         });
     }
 
     private static final String TAG = "InquiriesDetailViewModu";
+
     private void initHistoryList(OrderDetailInfoModule orderDetailInfoModule) {
         //一级列表适配器
         adapter = new RVBindingAdapter<ItemInquiriseFeedbackHistoryLayoutBinding, OrderDetailInfoModule.HandleListBean>(this, BR.module) {
-              @Override
-              public void onBindItem(ItemInquiriseFeedbackHistoryLayoutBinding binding, OrderDetailInfoModule.HandleListBean model, int position) {
-                  if (position == 0) {
-                      binding.ivFirst.setVisibility(View.INVISIBLE);
-                  } else {
-                      binding.ivFirst.setVisibility(View.VISIBLE);
-                  }
-                  if (position == adapter.getDataList().size() - 1) {
-                      binding.itemHistroyImg.setVisibility(View.INVISIBLE);
-                  } else {
-                      binding.itemHistroyImg.setVisibility(View.VISIBLE);
-                  }
-                  binding.tvContent.setText(model.getHandle_result());
-                  binding.tvName.setText(model.getHandle_user());
-                  binding.tvTime.setText(TimeUtil.getAllTime(model.getHandle_time()));
-              }
+            @Override
+            public void onBindItem(ItemInquiriseFeedbackHistoryLayoutBinding binding, OrderDetailInfoModule.HandleListBean model, int position) {
+                if (position == 0) {
+                    binding.ivFirst.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.ivFirst.setVisibility(View.VISIBLE);
+                }
+                if (position == adapter.getDataList().size() - 1) {
+                    binding.itemHistroyImg.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.itemHistroyImg.setVisibility(View.VISIBLE);
+                }
+                binding.tvContent.setText(model.getHandle_result());
+                binding.tvName.setText(model.getHandle_user());
+                binding.tvTime.setText(TimeUtil.getAllTime(model.getHandle_time()));
+            }
 
-              @Override
-              public int getLayoutId() {
-                  return R.layout.item_inquirise_feedback_history_layout;
-              }
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_inquirise_feedback_history_layout;
+            }
 
-          };
+        };
 //        adapter.setDataList(orderDetailInfoModule.getHandleList());
         binding.listHistory.setLayoutManager(new LinearLayoutManager(this));
         binding.listHistory.setAdapter(adapter);
         List<OrderDetailInfoModule.HandleListBean> handleList = orderDetailInfoModule.getHandleList();
-        List<OrderDetailInfoModule.HandleListBean> handleListThreeData=new ArrayList<>();
-        if (handleList !=null) {
+        List<OrderDetailInfoModule.HandleListBean> handleListThreeData = new ArrayList<>();
+        if (handleList != null) {
             binding.llHistory.setVisibility(View.VISIBLE);
-            if (handleList.size()>3) {//只展示三条
+            if (handleList.size() > 3) {//只展示三条
                 binding.rlLoadMore.setVisibility(View.VISIBLE);
                 for (int i = 0; i < 3; i++) {
                     handleListThreeData.add(handleList.get(i));
                 }
                 adapter.setDataList(handleListThreeData);
-            }else {
+            } else {
                 binding.rlLoadMore.setVisibility(View.GONE);
                 adapter.setDataList(handleList);
             }
@@ -226,15 +323,16 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                 adapter.setDataList(handleList);
                 binding.rlLoadMore.setVisibility(View.GONE);
             });
-        }else {
+        } else {
             binding.llHistory.setVisibility(View.GONE);
         }
 
     }
 
-    protected void updatePageUIState(int state){
+    protected void updatePageUIState(int state) {
         binding.pageState.setPageState(state);
     }
+
     private void updateUI(InquiriesDetailModule inquiriesDetailModule) {
         if (inquiriesDetailModule == null) {
             updatePageUIState(PageUIState.LOAD_FAILED.getState());
@@ -253,10 +351,13 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             runnable.run();
         }
         binding.setModule(inquiriesDetailModule);
+        binding.layoutSendOrderInfo.setRepairs(inquiriesDetailModule);
+        binding.layoutInquiriesResponseInfo.setRepairs(inquiriesDetailModule);
         PicUrlModelConvert convert = new PicUrlModelConvert();
         List<PicUrlModel> modelList = convert.stringToSomeObjectList(inquiriesDetailModule.getData().getCustomer_enquiry_model().getWx_attachment());
         photoListInfoAdapter.updateList(modelList);
     }
+
     @Override
     protected int getColorPrimary() {
         return getResources().getColor(R.color.white);
@@ -274,23 +375,28 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
     /**
      * 是否可以申请强制闭单
      *
-     * @param orderDetailInfoModule*/
-    public  void isCanApplyClose(OrderDetailInfoModule orderDetailInfoModule) {
-        viewModel.isCanApply(orderDetailInfoModule.getData().getCustomer_repair_model().getId_(),"FORCE_CLOSE_ENQUIRY").observe(this,module->{
+     * @param orderDetailInfoModule
+     */
+    public void isCanApplyClose(OrderDetailInfoModule orderDetailInfoModule) {
+        viewModel.isCanApply(orderDetailInfoModule.getData().getCustomer_repair_model().getId_(), "FORCE_CLOSE_ENQUIRY").observe(this, module -> {
 
             isApplyForseClose = module;
-            Log.e("isCanApplyClose", "isCanApplyClose: "+isApplyForseClose );
+            Log.e("isCanApplyClose", "isCanApplyClose: " + isApplyForseClose);
             if (isApplyForseClose) {
                 if (fragment.equals(RouteKey.FRAGMENT_TO_FOLLOW_UP)) {
                     if (binding.llEvaluation.isShown()) {
                         binding.llForseClose.setVisibility(View.GONE);
-                    }else {
-                        binding.llForseClose.setVisibility(View.VISIBLE);
+                    } else {
+                        if (RouteKey.LIST_STATUS_SEND_ORDER.equals(state)) {
+                            binding.llForseClose.setVisibility(View.GONE);
+                        }else {
+                            binding.llForseClose.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 
                 OrderDetailInfoModule.ForceCloseInfoBean forceCloseInfo = orderDetailInfoModule.getForceCloseInfo();
-                if (forceCloseInfo!=null) {
+                if (forceCloseInfo != null) {
                     binding.forceCloseInfo.setVisibility(View.VISIBLE);
                     binding.tvApprovalResult.setText(forceCloseInfo.getStatusStr());
                     binding.tvApprovalTime.setText(forceCloseInfo.getAuditDate().toString());
@@ -302,16 +408,18 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                     forseClosephotoListInfoAdapter.updateList(modelList);
                 }
 
-            }else {//强制关闭正在审批中  能操作的都隐藏掉 评价  提交 回复
+            } else {//强制关闭正在审批中  能操作的都隐藏掉 评价  提交 回复
                 binding.llForseClose.setVisibility(View.GONE);
 
+                binding.layoutSendOrder.getRoot().setVisibility(View.GONE);
+                binding.layoutInquiriesResponse.getRoot().setVisibility(View.GONE);
                 binding.llEvaluation.setVisibility(View.GONE);
                 binding.llReplyContent.setVisibility(View.GONE);
                 binding.llPass.setVisibility(View.GONE);
 
                 binding.forceCloseInfo.setVisibility(View.VISIBLE);
                 OrderDetailInfoModule.ForceCloseInfoBean forceCloseInfo = orderDetailInfoModule.getForceCloseInfo();
-                if (forceCloseInfo!=null) {
+                if (forceCloseInfo != null) {
                     binding.tvApprovalResult.setText(forceCloseInfo.getStatusStr());
                     binding.tvApprovalTime.setText(forceCloseInfo.getAuditDate().toString());
                     binding.tvApplyer.setText(forceCloseInfo.getApplyUser());
@@ -325,34 +433,58 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
 
         });
     }
+
     /**
      * 处理提交按钮
-     * */
+     */
     public void onPassClick() {
         if (IsFastClick.isFastDoubleClick()) {
-            if (binding.limitInput.getString().isEmpty()) {
-                ToastUtil.show(this, getString(R.string.tv_empty_feedback_content));
-                return;
+            switch (state) {
+                case RouteKey.LIST_STATUS_SEND_ORDER://待派单
+                    //判断指派人
+                    if (!StringUtil.isNullStr(mDealRequest.getBizData().getPd_assignor())) {
+                        ToastUtil.show(this, "请选择指派人");
+                        return;
+                    }
+                    mDealRequest.getBizData().setPd_remark(binding.layoutSendOrder.repairSendReason.getString());
+                    break;
+                case RouteKey.LIST_STATUS_RESPONSE://待响应
+                    String reasonString = binding.layoutInquiriesResponse.ltResponseReason.getString();
+                    if (!StringUtil.isNullStr(reasonString)) {
+                        ToastUtil.show(this, "请输入沟通结果");
+                        return;
+                    }
+                    mDealRequest.getBizData().setResponse_result(reasonString);
+                    break;
+
+                case RouteKey.LIST_STATUS_HANDLE://待处理
+                    if (binding.limitInput.getString().isEmpty()) {
+                        ToastUtil.show(this, getString(R.string.tv_empty_feedback_content));
+                        return;
+                    }
+                    mDealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
+
+                    break;
             }
-            DealRequest dealRequest = new DealRequest();
-            dealRequest.getBizData().setHandle_cont(binding.limitInput.getString());
-            dealRequest.getDoNextParam().setTaskId(mTaskID);
-            viewModel.deal(dealRequest).observe(this, module -> {
+            mDealRequest.getDoNextParam().setTaskId(mTaskID);
+            viewModel.deal(mDealRequest).observe(this, module -> {
                 if (module) {
                     LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).post(true);
-                    ToastUtil.show(this, getString(R.string.tv_feedback_suc));
+                    ToastUtil.show(this, "提交成功");
                     finish();
                 } else {
-                    ToastUtil.show(this, getString(R.string.tv_feedback_fail));
+                    ToastUtil.show(this, "提交失败");
 
                 }
             });
+
         }
     }
+
     /**
      * 评价
-     * */
-    public  void onEvaluationClick() {
+     */
+    public void onEvaluationClick() {
         if (IsFastClick.isFastDoubleClick()) {
             String content = binding.etLimitSuggestion.getString();
             if (evaluation == 0) {
@@ -377,6 +509,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             });
         }
     }
+
     /**
      * 申请强制闭单
      */
@@ -387,10 +520,11 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
                     .navigation();
         }
     }
+
     /**
      * 处理保存
      */
-    public  void onRejectClick() {
+    public void onRejectClick() {
         if (IsFastClick.isFastDoubleClick()) {
             if (binding.limitInput.getString().isEmpty()) {
                 ToastUtil.show(this, getString(R.string.tv_empty_save_content));
@@ -430,16 +564,17 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
         binding.radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i==R.id.rb_solve) {
+                if (i == R.id.rb_solve) {
                     binding.llIsSolved.setVisibility(View.GONE);
                     evaluation = 1;
-                }else if (i==R.id.rb_un_solve){
+                } else if (i == R.id.rb_un_solve) {
                     binding.llIsSolved.setVisibility(View.VISIBLE);
                     evaluation = 0;
                 }
             }
         });
     }
+
     /**
      * 设置图片间隔
      */
@@ -456,6 +591,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
             outRect.left = space;
         }
     }
+
     //立即调用方法
     Handler handler = new Handler();
     public Runnable runnable = new Runnable() {
@@ -471,7 +607,7 @@ public class InquiriesDetailMsgViewModuleActivity extends BaseHeadViewModelActiv
     protected void onDestroy() {
         super.onDestroy();
 //        handler.removeCallbacks(runnable);
-        if (handler!=null) {
+        if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
     }

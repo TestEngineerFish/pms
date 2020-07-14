@@ -36,6 +36,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.SpacesItemDecoration;
 import com.einyun.app.library.mdm.model.DivideGrid;
@@ -233,7 +234,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 binding.sendOrderRef.setRefreshing(false);
             }
         });
-
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.ORDER_LIST_EMPTY,this);
         RecyclerView mRecyclerView = binding.orderListRec;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -407,7 +408,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (value.equals(RouteKey.LIST_STATUS_EVALUATE)) {
             textView.setText(com.einyun.app.common.R.string.text_wait_evaluate);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_wait_evaluate);
-        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)) {
+        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)||value.equals(RouteKey.LIST_STATUS_SEND_ORDER2)) {
             textView.setText(com.einyun.app.common.R.string.text_wait_send);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_wait_send);
         } else if (value.equals(RouteKey.LIST_STATUS_WAIT_GRAB)) {
@@ -433,6 +434,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (valueInt == OrderState.CLOSED.getState()) {
             textView.setText(com.einyun.app.common.R.string.text_state_closed);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_closed);
+        } else if (valueInt == OrderState.PENDING.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_receive);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
+        } else if (valueInt == OrderState.OVER_DUE.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_send);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
         }
     }
 
@@ -452,6 +459,12 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (value == OrderState.CLOSED.getState()) {
             textView.setText(com.einyun.app.common.R.string.text_state_closed);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_closed);
+        } else if (value == OrderState.PENDING.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_receive);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
+        } else if (value == OrderState.OVER_DUE.getState()) {
+            textView.setText(com.einyun.app.common.R.string.text_state_wait_send);
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
         }
     }
 
@@ -738,7 +751,8 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
      */
     public String LimitText(String s) {
         if (s.length() > 10) {
-            return s.substring(0, 10) + "...";
+//            return s.substring(0, 10) + "...";
+            return s;
         } else {
             return s;
         }

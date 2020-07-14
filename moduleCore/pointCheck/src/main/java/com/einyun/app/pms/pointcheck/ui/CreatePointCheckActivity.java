@@ -95,9 +95,9 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.title_point_check_create);
         binding.setCallBack(this);
-        divideId = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_ID, "").toString();
-        divideName = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_NAME, "").toString();
-        binding.tvCheckDivide.setText(divideName);
+//        divideId = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_ID, "").toString();
+//        divideName = SPUtils.get(getApplicationContext(), SPKey.KEY_BLOCK_NAME, "").toString();
+//        binding.tvCheckDivide.setText(divideName);
         if(!TextUtils.isEmpty(divideName)){
             binding.setPeriodSelected(true);
         }

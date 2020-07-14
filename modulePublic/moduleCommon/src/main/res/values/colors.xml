@@ -63,6 +63,7 @@
     <color name="blueTextColor">#185CC7</color>
     <color name="blueConditionColor">#125DD3</color>
     <color name="lightBlueColor">#5C9BFF</color>
+    <color name="lightBlueColors">#1F185CC7</color>
     <color name="color_FAF">#FAFAFE</color>
     <color name="color_FFD">#FFDDD7</color>
 
@@ -89,4 +90,18 @@
     <color name="toll_red_text__color">#ffdc3839</color>
     <color name="toll_yellow_text__color">#fff7b500</color>
     <color name="toll_blue_bg__color">#ffecf1ff</color>
+    <color name="blue_36">#366AE9</color>
+    <color name="black_81">#818bab</color>
+    <color name="black_ef">#EFEFEF</color>
+    <color name="yellow_fe">#FE944B</color>
+    <color name="blue_52">#52B8DF</color>
+    <color name="blue_4d">#4D97FC</color>
+    <color name="green_61">#61C6AF</color>
+    <color name="gray_e3">#E3E3E3</color>
+    <color name="red_ff">#FF4A57</color>
+    <color name="black_97">#979797</color>
+    <color name="black_9d">#9da3b4</color>
+    <color name="black_13">#132D42</color>
+    <color name="red_e0">#e02020</color>
+    <color name="blue_4b">#4B8CF1</color>
 </resources>

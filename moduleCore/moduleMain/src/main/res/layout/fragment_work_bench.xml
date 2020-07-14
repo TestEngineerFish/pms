@@ -21,6 +21,7 @@
             name="numAdapter"
             type="android.widget.BaseAdapter" />
     </data>
+
     <com.einyun.app.common.ui.widget.CustomSwipeToRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
@@ -30,30 +31,93 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/home"
-                style="@style/gallery_layout_style">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <LinearLayout
+                    android:id="@+id/home"
+                    style="@style/gallery_layout_style"
+                    android:paddingLeft="@dimen/px_0"
+                    android:paddingRight="@dimen/px_0">
 
-                <!-- 顶部 -->
-                <include
-                    android:id="@+id/item_work_bench_first"
-                    layout="@layout/item_work_bench_pending"
-                    app:callBack="@{callBack}" />
+                    <!-- 顶部 -->
+                    <include
+                        android:id="@+id/item_work_bench_first"
+                        layout="@layout/item_work_bench_pending"
+                        app:callBack="@{callBack}" />
 
-                <!-- 工单处理情况总览 -->
-                <include
-                    android:id="@+id/item_work_bench_second"
-                    layout="@layout/item_work_bench_pending_pandect"
-                    app:callBack="@{callBack}" />
+                    <androidx.cardview.widget.CardView
+                        style="@style/cardview_style"
+                        android:layout_marginBottom="@dimen/px_40">
 
-                <!-- 运营收缴率 -->
-                <include
-                    android:id="@+id/item_work_bench_third"
-                    layout="@layout/item_operating_capture_rate"
-                    app:callBack="@{callBack}" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_30"
+                            android:layout_marginRight="@dimen/px_20"
+                            android:layout_marginBottom="@dimen/px_30"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->callBack.goToNotice()}"
+                                android:paddingLeft="@dimen/px_20"
+                                android:text="公告"
+                                android:textColor="#fffa6400"
+                                android:textSize="16sp" />
+
+                            <View
+                                android:layout_width="@dimen/px_2"
+                                android:layout_height="@dimen/px_40"
+                                android:layout_marginLeft="@dimen/px_20"
+                                android:background="#BEC3D2" />
+
+                            <com.stx.xmarqueeview.XMarqueeView
+                                android:id="@+id/mv_community_notice"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/px_64"
+                                android:layout_marginLeft="@dimen/px_16"
+                                android:layout_weight="1"
+                                app:isFlippingLessCount="true"
+                                app:isSetAnimDuration="true"
+                                app:isSingleLine="false"
+                                app:marquee_count="1" />
+
+                            <ImageView
+                                android:id="@+id/iv_notice"
+                                android:layout_width="@dimen/px_30"
+                                android:layout_height="@dimen/px_30"
+                                android:layout_marginLeft="@dimen/px_32"
+                                android:onClick="@{()->callBack.goToNotice()}"
+                                android:src="@mipmap/icon_arrow_right" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- 工单处理情况总览 -->
+                    <include
+                        android:id="@+id/item_work_bench_second"
+                        layout="@layout/item_work_bench_pending_pandect"
+                        app:callBack="@{callBack}" />
+
+                    <!-- 运营收缴率 -->
+                    <include
+                        android:id="@+id/item_work_bench_third"
+                        layout="@layout/item_operating_capture_rate"
+                        app:callBack="@{callBack}" />
+
+                </LinearLayout>
+                <!--                <com.einyun.app.common.ui.widget.NoticeSelectView-->
+                <!--                    android:id="@+id/notice_view"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:focusable="true"-->
+                <!--                    android:focusableInTouchMode="true"-->
+                <!--                    android:clickable="true"/>-->
+            </RelativeLayout>
         </com.einyun.app.common.ui.component.AbScrollView>
     </com.einyun.app.common.ui.widget.CustomSwipeToRefresh>
 </layout>

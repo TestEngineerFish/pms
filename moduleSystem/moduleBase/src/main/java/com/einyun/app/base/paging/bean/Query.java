@@ -20,6 +20,7 @@ public class Query {
     public static String GROUP="one";
     public static String SORT_DESC="DESC";
     public static String SORT_ASC="ASC";
+    public static String IN="IN";
     private PageBean pageBean;
     private Object params;
     private List<QueryItem<?>> querys;

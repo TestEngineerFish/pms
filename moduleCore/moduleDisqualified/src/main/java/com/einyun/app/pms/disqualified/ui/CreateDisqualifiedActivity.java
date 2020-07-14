@@ -20,11 +20,13 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
@@ -54,6 +56,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 import static com.einyun.app.pms.disqualified.SelectType.CHECK_DATE;
 import static com.einyun.app.pms.disqualified.SelectType.DEADLINE;
 
@@ -81,6 +84,31 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     String mCode;
     private CreateUnQualityRequest mDbRequest;
 
+    @Autowired(name = RouteKey.KEY_ORDER_ID)
+    String id;
+    @Autowired(name = RouteKey.KEY_ORDER_NO)
+    String orderNo;
+    @Autowired(name = RouteKey.KEY_TASK_ID)
+    String taskId;
+    @Autowired(name = RouteKey.KEY_PRO_INS_ID)
+    String proInsId;
+    @Autowired(name = RouteKey.KEY_FRAGEMNT_TAG)
+    String fragmentTag;
+    @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
+    String taskNodeId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+
+    String mDivideId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_NAME)
+    String divideName;
+    @Autowired(name = RouteKey.KEY_PROJECT)
+    String projectName;
+    @Autowired(name = RouteKey.KEY_LINE_ID)
+    String lineId;
+    @Autowired(name = RouteKey.KEY_LINE_CODE)
+    String lineCode;
+    @Autowired(name = RouteKey.KEY_LINE)
+    String lineName;
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
         return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
@@ -95,7 +123,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
-        setHeadTitle(R.string.tv_disqualified_order);
+        setHeadTitle(R.string.tv_create_disqualified_order);
         selectPng();
         LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
 
@@ -129,6 +157,19 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             createData();
         }else {
             createDbData(mDbRequest);
+        }
+        if (StringUtil.isNullStr(orderNo)){
+            divideId=mDivideId;
+            dimCode=lineId;
+            mRequest.getBizData().setDivide_id(divideId);
+            mRequest.getBizData().setDivide_name(divideName);
+            mRequest.getBizData().setLine(lineCode);
+            binding.tvDivide.setText(divideName);
+            binding.tvLine.setText(lineName);
+            binding.llOld.setVisibility(View.VISIBLE);
+            binding.vLine.setVisibility(View.VISIBLE);
+            binding.tvOldCode.setText(orderNo);
+
         }
     }
 
@@ -213,7 +254,26 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             photoSelectAdapter.addPhotos(uris);
         }
     }
-
+    //点击原工单号 跳转至计划工单详情界面
+    public void onOldCodeClick(){
+        if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                    .withString(RouteKey.KEY_ORDER_ID, id)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withString(RouteKey.KEY_TASK_ID, taskId)
+                    .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                    .withString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTag)
+                    .navigation();
+        }else {
+            ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                    .withString(RouteKey.KEY_ORDER_ID, id)
+                    .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                    .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                    .withString(RouteKey.KEY_TASK_ID, "")
+                    .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
+                    .navigation();
+        }
+    }
     /**
      * 点击事件回馈
      *

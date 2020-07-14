@@ -175,6 +175,9 @@ public class CustomPopWindow extends PopupWindow {
         if (mApprovalChildTypePosition!=-1) {
             llChirldType.setVisibility(View.VISIBLE);
         }
+        if (!"".equals(auditType)) {
+            llChirldType.setVisibility(View.VISIBLE);
+        }
         iv_close.setOnClickListener(view1 -> {dismiss();});
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

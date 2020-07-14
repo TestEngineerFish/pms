@@ -27,6 +27,7 @@ import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
@@ -137,6 +138,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
 //            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
 //            binding.tvDivide.setText(blockName);
 //        }
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.INQUIRIES_EMPTY+getFragmentTag(),this);
     }
 
     @Override
@@ -148,6 +150,14 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                 @Override
                 public void onBindItem(ItemInquiriesListBinding binding, InquiriesItemModule inquiriesItemModule) {
                     switch (inquiriesItemModule.getTaskNodeId()) {
+                        case Constants.INQUIRIES_STATE_SEND:
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_send));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_grab);
+                            break;
+                        case Constants.INQUIRIES_STATE_RESPONSE:
+                            binding.tvApprovalState.setText(getString(R.string.text_wait_response));
+                            binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_response);
+                            break;
                         case Constants.INQUIRIES_STATE_DEALING:
                             binding.tvApprovalState.setText(getString(R.string.tv_dealing));
                             binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_processing);
@@ -311,13 +321,19 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
      */
     @Override
     public void onItemClicked(View veiw, InquiriesItemModule data) {
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
-                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
-                .withSerializable(Constants.INQUIRIES_BEAN,data)
-                .navigation();
+//        ARouter.getInstance()
+//                .build(RouterUtils.ACTIVITY_INQUIRIES_DETAIL)
+//                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
+//                .withSerializable(Constants.INQUIRIES_BEAN,data)
+//                .navigation();
         String taskId = data.getTaskId();
         String proInsId = data.getProInsId();
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
+                .withString(RouteKey.FRAGMENT_TAG, getFragmentTag())
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
+                .navigation();
         Log.e(TAG, "onItemClicked: "+"taskId  "+taskId);
     }
 

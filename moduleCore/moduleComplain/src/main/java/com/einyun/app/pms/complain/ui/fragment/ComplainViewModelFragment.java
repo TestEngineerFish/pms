@@ -30,6 +30,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.FormatUtil;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.utils.UserUtil;
@@ -126,12 +127,13 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
             }, BasicDataTypeEnum.COMPLAIN_PROPERTYS,BasicDataTypeEnum.COMPLAIN_TYPES);
 
         });
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.COMPLAIN_EMPTY+getFragmentTag(),this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        showLoading(getActivity());
+//        showLoading(getActivity());
         loadPagingData();
     }
 
@@ -172,7 +174,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
-            hideLoading();
+//            hideLoading();
         });
     }
 

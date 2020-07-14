@@ -8,6 +8,8 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.pms.user.core.UserServiceManager;
 
+import java.util.List;
+
 
 /**
  * Description:UserServiceImpl
@@ -28,8 +30,33 @@ public class UserServiceImpl implements IUserModuleService {
     }
 
     @Override
+    public String getAccount() {
+        return UserServiceManager.getInstance().getCurrentUserModel().getAccount();
+    }
+
+    @Override
+    public String getPhone() {
+        return UserServiceManager.getInstance().getCurrentUserModel().getPhone();
+    }
+
+    @Override
     public String getUserName() {
+        return UserServiceManager.getInstance().getCurrentUserModel().getAccount();
+    }
+
+    @Override
+    public String getRealName() {
         return UserServiceManager.getInstance().getCurrentUserModel().getUsername();
+    }
+
+    @Override
+    public void saveDivideCodes(List<String> divideCodes) {
+        UserServiceManager.getInstance().saveDivideCodes(divideCodes);
+    }
+
+    @Override
+    public List<String> getDivideCodes() {
+        return UserServiceManager.getInstance().getDivideCodes();
     }
 
     public String getToken() {

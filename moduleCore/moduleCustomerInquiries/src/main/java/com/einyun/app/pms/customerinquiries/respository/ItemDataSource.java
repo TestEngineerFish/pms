@@ -9,6 +9,8 @@ import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.paging.datasource.BaseDataSource;
 import com.einyun.app.common.application.ThrowableParser;
 
+import com.einyun.app.common.constants.LiveDataBusKey;
+import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
 import com.einyun.app.pms.customerinquiries.model.InquiriesListModule;
 import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
@@ -51,6 +53,7 @@ public class ItemDataSource extends BaseDataSource<InquiriesItemModule> {
                     LoadRangeCallback loadInitialCallback= (LoadRangeCallback) callback;
                     loadInitialCallback.onResult(data.getRows());
                 }
+                LiveDataBusUtils.postLiveBusData(LiveDataBusKey.INQUIRIES_EMPTY+tag,data.getTotal());
             }
 
             @Override

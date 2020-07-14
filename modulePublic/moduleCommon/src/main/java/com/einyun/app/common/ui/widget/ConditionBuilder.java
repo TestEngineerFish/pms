@@ -580,6 +580,9 @@ public class ConditionBuilder {
      */
     protected List<SelectModel> createAllLineModels(List<WorkOrderTypeModel> models) {
         List<SelectModel> listAll=new ArrayList<>();
+        if (models==null) {
+            return listAll;
+        }
         for (WorkOrderTypeModel beanLoop : models) {
             SelectModel selectModel = new SelectModel();
             selectModel.setId(beanLoop.getId());

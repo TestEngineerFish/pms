@@ -164,7 +164,7 @@ public class OrderPreviewFragment extends BaseViewModelFragment<FragmentOrderPre
         //初始化数据，LiveData自动感知，刷新页面
         binding.sendOrderRef.setRefreshing(true);
         String fragmentTag = getFragmentTag();
-        viewModel.getRequest().setTypeRe(fragmentTag);
+//        viewModel.getRequest().setTypeRe(fragmentTag);
         viewModel.loadPadingData(viewModel.getRequest(), fragmentTag).observe(this, dataBeans -> adapter.submitList(dataBeans));
     }
 

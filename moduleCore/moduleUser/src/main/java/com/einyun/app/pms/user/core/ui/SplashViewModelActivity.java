@@ -100,11 +100,11 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
                 return;
             }
             //企业编码校验
-            viewModel.getTenantId(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString(), true).observe(this,
+            viewModel.getTenantId(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString().trim(), true).observe(this,
                     tenantModel -> {
 //                        ToastUtil.show(this,"tenantid->"+tenantModel.getCode());
                         //拿取最后一个user登陆
-                        viewModel.login(userModel.getUsername(), userModel.getPassword(), false)
+                        viewModel.login(userModel.getUsername().trim(), userModel.getPassword(), false)
                                 .observe(this,
                                         currentUserModel -> {
                                             CommonApplication.getInstance().bindAccount(currentUserModel.getUserId().replace("-", ""));

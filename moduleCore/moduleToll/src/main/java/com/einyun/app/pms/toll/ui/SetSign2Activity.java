@@ -194,12 +194,12 @@ public class SetSign2Activity extends BaseHeadViewModelActivity<ActivitySetSign2
                     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                         //判断是否是“完成”键
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
-                            //隐藏软键盘
-                            InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            if (imm.isActive()) {
-                                imm.hideSoftInputFromWindow(
-                                        textView.getApplicationWindowToken(), 0);
-                            }
+//                            //隐藏软键盘
+//                            InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                            if (imm.isActive()) {
+//                                imm.hideSoftInputFromWindow(
+//                                        textView.getApplicationWindowToken(), 0);
+//                            }
                             if (!StringUtil.isEmpty(textView.getText().toString().trim())) {
                                 model.setTagValue(textView.getText().toString());
                                 if (tagList.size() < 5) {

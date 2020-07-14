@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.einyun.app.pms.notice">
+
+    <application>
+        <activity android:name=".activity.NoticeListActivity"></activity>
+        <activity android:name=".activity.NoticeDetailActivity" />
+    </application>
+
+</manifest>

@@ -121,6 +121,12 @@
                         layout="@layout/layout_already_complain_evaluate"
                         android:visibility="gone"
                         app:complain="@{complain}" />
+                    <!-- Call评价详情 -->
+                    <include
+                        android:id="@+id/layout_already_complain_evaluate_call"
+                        layout="@layout/layout_already_complain_evaluate_call"
+                        android:visibility="gone"
+                        app:complain="@{complain}" />
 
                     <include
                         android:id="@+id/send_order"

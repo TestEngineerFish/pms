@@ -16,19 +16,25 @@ import com.alibaba.sdk.android.push.register.MeizuRegister;
 import com.alibaba.sdk.android.push.register.MiPushRegister;
 import com.alibaba.sdk.android.push.register.OppoRegister;
 import com.alibaba.sdk.android.push.register.VivoRegister;
+import com.einyun.app.base.ApplicationCrashHandler;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.common.BuildConfig;
+import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.utils.AppActiveStatusHelper;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.MsgUtils;
+import com.einyun.app.common.utils.whitecrash.CrashWhiteListManager;
 import com.einyun.app.library.EinyunSDK;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinAppCompatViewInflater;
@@ -52,6 +58,16 @@ public class CommonApplication extends BasicApplication {
     private static final String TAG = "CommonApplication";
     private static CommonApplication app;
     private boolean inBackground = false;
+    public IWXAPI api;
+
+    private void registerWeixin() {
+        api = WXAPIFactory.createWXAPI(this, DataConstants.WECHAT_APPID);
+        api.registerApp(DataConstants.WECHAT_APPID);
+    }
+
+    public IWXAPI getWeiXinApi() {
+        return api;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
@@ -64,11 +80,15 @@ public class CommonApplication extends BasicApplication {
         }
 
         preinitX5WebCore();
-        initSkin();
+//        initSkin();
         if (IsFastClick.isDebugVersion(this)) {
 //            LeakCanary.install(this);
         }
-        CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
+
+        if (!com.einyun.app.base.BuildConfig.DEBUG) {
+            CrashWhiteListManager.start();
+            CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
+        }
         initCloudChannel(this);
         initUmeng();
         initAppStatus();
@@ -103,6 +123,7 @@ public class CommonApplication extends BasicApplication {
         if (com.einyun.app.base.BuildConfig.DEBUG) {
             UMConfigure.setLogEnabled(true);
         }
+        PlatformConfig.setWeixin(DataConstants.WECHAT_APPID, DataConstants.WECHAT_APP_SECRET);
     }
 
     /**

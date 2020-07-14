@@ -66,6 +66,9 @@ public class PatrolSignInViewModel extends PatrolViewModel {
             public void call(PatrolLocal data) {
                 if(data!=null){
                     List<WorkNode> nodes=data.getNodes();
+                    if (nodes==null) {
+                        return;
+                    }
                     for(WorkNode node:nodes){
                         if(workNode.patrol_point_id.equals(node.patrol_point_id)){
                             liveData.postValue(node.getCachedImages());

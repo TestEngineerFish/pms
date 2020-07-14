@@ -19,12 +19,38 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@mipmap/img_login_bg" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/img_login_bg" />
+            <RadioGroup
+                android:id="@+id/pic_ev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/test_ev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="test"/>
+                <RadioButton
+                    android:id="@+id/uat_ev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="uat"/>
+                <RadioButton
+                    android:id="@+id/release_evZ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="release"/>
+            </RadioGroup>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ll_1"
@@ -36,13 +62,14 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:id="@+id/ll_org_code"
                     style="@style/login_input_ll">
 
                     <ImageView
                         style="@style/login_input_ll_img"
-                        app:srcCompat="@mipmap/img_login_code" />
+                        android:src="@mipmap/img_login_code" />
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_org_code"
@@ -69,7 +96,7 @@
                     <ImageView
                         style="@style/login_input_ll_img"
                         android:layout_toLeftOf="@id/et_user"
-                        app:srcCompat="@mipmap/img_login_user" />
+                        android:src="@mipmap/img_login_user" />
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/et_user"
@@ -118,7 +145,7 @@
 
                     <ImageView
                         style="@style/login_input_ll_img"
-                        app:srcCompat="@mipmap/img_login_password" />
+                        android:src="@mipmap/img_login_password" />
 
                     <com.einyun.app.common.ui.widget.NoMenuEditText
                         android:id="@+id/et_password"
@@ -148,10 +175,9 @@
                 android:id="@+id/bt_login"
                 style="@style/submit_btn"
                 android:layout_marginTop="@dimen/px_120"
-                android:onClick="@{()->callBack.onLoginClick()}"
                 android:enabled="false"
-                android:text="登录"
-                 />
+                android:onClick="@{()->callBack.onLoginClick()}"
+                android:text="登录" />
 
         </LinearLayout>
 

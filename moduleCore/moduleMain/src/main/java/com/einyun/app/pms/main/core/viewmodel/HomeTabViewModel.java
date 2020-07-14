@@ -35,6 +35,8 @@ public class HomeTabViewModel extends BaseViewModel implements HomeTabViewModelC
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
+
+
     /**
      * 获取用户Id
      *

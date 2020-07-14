@@ -94,10 +94,11 @@ public class LimitInput extends RelativeLayout implements TextWatcher {
         // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
         // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
         if (s.toString().length() > MAX_COUNT) { // 当输入字符个数超过限制的大小时，进行截断操作
-            s.delete(MAX_COUNT, editEnd);
-            textView.setText(s.toString().length() + "/" + MAX_COUNT);
+            int length = s.toString().length();
+            s.delete(editEnd - (length-MAX_COUNT), editEnd);
+            editText.setSelection(editEnd - (length-MAX_COUNT));//设置光标在最后
+            textView.setText(MAX_COUNT + "/" + MAX_COUNT);
             textView.setTextColor(getResources().getColor(R.color.red));
-            editText.setSelection(s.toString().length());//设置光标在最后
             ToastUtil.show(context, "请勿超过" + MAX_COUNT + "个字符");
         }else if (s.toString().length() == MAX_COUNT){
             textView.setText(s.toString().length() + "/" + MAX_COUNT);

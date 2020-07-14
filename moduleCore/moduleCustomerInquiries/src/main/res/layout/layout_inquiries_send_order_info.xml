@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repairs"
+            type="com.einyun.app.pms.customerinquiries.model.InquiriesDetailModule" />
+    </data>
+    <androidx.cardview.widget.CardView
+        style="@style/cardview_style"
+        >
+    <LinearLayout
+        android:id="@+id/panel_work_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/px_30"
+       >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_90"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/px_20"
+                android:gravity="center_vertical"
+                android:text="派单信息"
+                android:textStyle="bold"
+                android:textColor="@color/txt_black_order"
+                android:textSize="@dimen/font_size16" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/pd_view" />
+
+        <LinearLayout
+            style="@style/work_order_detail_ln"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="派单人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_enquiry_model.pd_user}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="派单时间" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_enquiry_model.pd_time}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln">
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="指派人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_enquiry_model.pd_assignor}" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/work_order_detail_ln"
+           >
+
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="派单备注" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{repairs.data.customer_enquiry_model.pd_remark}" />
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

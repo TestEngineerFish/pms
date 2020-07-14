@@ -97,28 +97,52 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
         View view=LayoutInflater.from(mcontext).inflate(R.layout.item_select_people_child,null);
         childBinding=DataBindingUtil.bind(view);
         if (groupPosition==0){
-            childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition).getName());
+            if (orgnizationModelList!=null&&orgnizationModelList.getValue()!=null) {
+                if (orgnizationModelList.getValue().size()==2) {
+                    childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition+1).getName());
+                }else {
+                    childBinding.itemSelectChildTxt.setText(orgnizationModelList.getValue().get(childPosition).getName());
+
+                }
+            }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        ArrayList<String> list=new ArrayList<>();
+                    if (orgnizationModelList != null && orgnizationModelList.getValue() != null) {
+                        ArrayList<String> list = new ArrayList<>();
                         list.add(orgnizationModelList.getValue().get(childPosition).getId());
                         list.add(orgnizationModelList.getValue().get(childPosition).getParentId());
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list)
-                                .navigation();
+                        if (orgnizationModelList.getValue().size() == 2) {
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
+                                    .withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list)
+                                    .withString(RouteKey.KEY_DIVIDE_NAME, orgnizationModelList.getValue().get(childPosition + 1).getName())
+                                    .navigation();
+                        }else {
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
+                                    .withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list)
+                                    .withString(RouteKey.KEY_DIVIDE_NAME, orgnizationModelList.getValue().get(childPosition).getName())
+                                    .navigation();
+                        }
+                    }
                 }
             });
         }else {
-            childBinding.itemSelectChildTxt.setText(jobList.getValue().get(childPosition).getName());
+            if (jobList!=null&&jobList.getValue()!=null) {
+                childBinding.itemSelectChildTxt.setText(jobList.getValue().get(childPosition).getName());
+            }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<String> list1=new ArrayList<>();
-                    list1.add(orgnizationModelList.getValue().get(0).getParentId());
-                    ArrayList<String> list2=new ArrayList<>();
-                    list2.add(jobList.getValue().get(childPosition).getId());
-                    ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER).withStringArrayList(RouteKey.KEY_ORG_ID_LIST,list1)
-                            .withStringArrayList(RouteKey.KEY_ROLE_ID_LIST,list2).navigation();
+                    if (orgnizationModelList != null && orgnizationModelList.getValue() != null) {
+                        ArrayList<String> list1 = new ArrayList<>();
+                        list1.add(orgnizationModelList.getValue().get(orgnizationModelList.getValue().size()-1).getId());
+                        ArrayList<String> list2 = new ArrayList<>();
+                        list2.add(jobList.getValue().get(childPosition).getId());
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
+                                .withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list1)
+                                .withStringArrayList(RouteKey.KEY_ROLE_ID_LIST, list2).navigation();
+                    }
                 }
             });
         }

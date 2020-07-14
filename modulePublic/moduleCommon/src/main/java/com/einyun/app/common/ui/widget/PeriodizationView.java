@@ -239,7 +239,7 @@ public class PeriodizationView extends DialogFragment implements ItemClickListen
             adapter = new RVBindingAdapter<ItemBlockChooseBinding, OrgModel>(getActivity(), com.einyun.app.common.BR.org) {
                 @Override
                 public void onBindItem(ItemBlockChooseBinding binding, OrgModel model, int pos) {
-                    if (model.getGrade().equals(DataConstants.KEY_ORG_DIVIDE)) {
+                    if (DataConstants.KEY_ORG_DIVIDE.equals(model.getGrade())) {
 //                        binding.ivRightselect.setVisibility(View.VISIBLE);
                     }
                     String s = ChinaeseToEnglish.getLetter(model.getName());

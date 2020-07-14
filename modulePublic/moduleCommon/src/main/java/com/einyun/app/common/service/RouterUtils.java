@@ -21,6 +21,7 @@ public class RouterUtils {
     /**********************Activity*********************************/
     public static final String ACTIVITY_USER_SPLASH="/user/SplashActivity";
     public static final String ACTIVITY_MAIN_HOME="/main/Home";
+    public static final String ACTIVITY_SYSTEM_NOTICE_DETAIL = "/main/SystemNoticeDetailActivity";
     public static final String ACTIVITY_USER_LOGIN="/user/LoginActivity";
     public static final String ACTIVITY_REPAIRS_PAGING="/repairs/RepairsActivity";
     public static final String ACTIVITY_HEALTH_WORK="/health/HealthActivity";
@@ -30,6 +31,7 @@ public class RouterUtils {
     public static final String ACTIVITY_ORDER_LIST="/orderList/OrderListActivity";
     public static final String ACTIVITY_ORDER_LIST_ALL="/orderList/OrderListAllActivity";
     public static final String ACTIVITY_ORDER_CONDITION_PANDECT="/main/OrderConditionPandectActivity";
+    public static final String ACTIVITY_SCAN_RES="/main/ScanResourceActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";
@@ -88,6 +90,10 @@ public class RouterUtils {
     public static final String ACTIVITY_MESSAGE_CENTER = "/mine/messageCenter";
     public static final String ACTIVITY_USER_HEAD_SHOT = "/mine/userHeadShot";
     public static final String ACTIVITY_ADVICE_FEED_BACK = "/mine/advcieFeedBack";
+    public static final String ACTIVITY_FEED_LIST = "/mine/FeedBackListActivity";
+    public static final String ACTIVITY_FEED_DETAIL = "/mine/FeedBackDetailActivity";
+    public static final String ACTIVITY_FEED_SUCCESS = "/mine/FeedBackSuccessActivity";
+    public static final String ACTIVITY_FEED = "/mine/FeedBackActivity";
 
     /**********************客户问询****************************/
     public static final String ACTIVITY_CUSTOMER_INQUIRIES = "/customerInquiries/CustomerInquiriesActivity";
@@ -109,7 +115,9 @@ public class RouterUtils {
     public static final String ACTIVITY_DISQUALIFIED_DETAIL= "/disqualified/DisqualifiedDetailActivity";
     public static final String ACTIVITY_PROPERTY = "/property/PropertyActivity";
     public static final String ACTIVITY_PROPERTY_CREATE = "/property/CreateActivity";
-
+    /**************************公告************************************/
+    public static final String ACTIVITY_NOTICE_LIST = "/notice/NoticeListActivity";
+    public static final String ACTIVITY_NOTICE_DETAIL = "/notice/NoticeDetailActivity";
     //收费
     public static final String ACTIVITY_TOLL = "/toll/TollActivity";
     public static final String ACTIVITY_TOLL_BUILD = "/toll/TollBuildActivity";
@@ -123,6 +131,7 @@ public class RouterUtils {
     public static final String ACTIVITY_ADD_WORTH_REMINDER = "/feesuc/AddWorthReminderActivity";
     public static final String ACTIVITY_SET_SIGN = "/feesuc/SetSignActivity";
     public static final String ACTIVITY_SET_SIGN2 = "/feesuc/SetSignActivity2";
+    public static final String ACTIVITY_SET_SIGN3 = "/feesuc/SetSignActivity3";
 //    public static final String ACTIVITY_CREATE_DISQUALIFIED = "/create/CreateDisqualifiedActivity";
     /***********************ACTIVITY REQUEST_CODE********************/
     public static final int ACTIVITY_REQUEST_BLOCK_CHOOSE =101;

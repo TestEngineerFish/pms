@@ -10,11 +10,15 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
+import com.einyun.app.base.db.entity.PlanLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
+import com.einyun.app.common.constants.URLS;
+import com.einyun.app.common.repository.MsgRepository;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
@@ -24,13 +28,18 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.ForseScanCodeModel;
-import com.einyun.app.library.resource.workorder.model.PlanInfo;
+import com.einyun.app.base.db.entity.PlanInfo;
 import com.einyun.app.library.resource.workorder.model.Sub_jhgdgzjdb;
 import com.einyun.app.library.resource.workorder.net.request.DoneDetialRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
+import com.einyun.app.pms.plan.convert.PlanInfoTypeConvert;
 import com.einyun.app.pms.plan.model.PlanOrderResLineModel;
 import com.einyun.app.pms.plan.repository.PlanOrderRepository;
 import com.einyun.app.pms.plan.repository.PlanOrderServiceApi;
+import com.einyun.app.pms.plan.repository.PlanRepository;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,16 +50,28 @@ import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_D
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
 public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
-    MutableLiveData<PlanInfo> liveData = new MutableLiveData<>();
+    MutableLiveData<com.einyun.app.base.db.entity.PlanInfo> liveData = new MutableLiveData<>();
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     ResourceWorkOrderService service;
+    public MsgRepository repository;
+    public  PlanRepository planRepository;
 
     public PlanOrderDetailViewModel(){
         service = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
-
+        repository=new MsgRepository();
+        planRepository = new PlanRepository();
     }
     PlanOrderRepository repository2= new PlanOrderRepository("");
+
+    public String getUserName(){
+
+        return userModuleService.getRealName();
+    }
+    public String getUserID(){
+
+        return userModuleService.getUserId();
+    }
     /**
      * 提交
      * @return
@@ -61,6 +82,52 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
         service.planSubmit(request, new CallBack<Boolean>() {
             @Override
             public void call(Boolean data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 接单
+     * @return
+     */
+    public LiveData<BaseResponse> receiceOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_RECEIVE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+    /**
+     * 指派
+     * @return
+     */
+    public LiveData<BaseResponse> assignOrder(PatrolSubmitRequest request){
+        MutableLiveData<BaseResponse> liveData=new MutableLiveData();
+        showLoading();
+        String url= URLS.URL_GET_ASSIGNE_ORDER;
+        repository.receiveOrder(url,request, new CallBack<BaseResponse>() {
+            @Override
+            public void call(BaseResponse data) {
                 hideLoading();
                 liveData.postValue(data);
             }
@@ -150,34 +217,45 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      *
      * @return
      */
-    public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag) {
+    public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag,String orderId) {
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
+            PlanInfo planInfo = planRepository.loadPlanInfo(orderId, userModuleService.getUserId());
+            if (planInfo != null) {
+                liveData.postValue(planInfo);
+            }
             DoneDetialRequest request = new DoneDetialRequest();
             request.setProInsId(proInsId);
             request.setTaskNodeId(taskNodeId);
-            service.planDoneDetial(request, new CallBack<PlanInfo>() {
+            service.planDoneDetial(request, new CallBack<com.einyun.app.library.resource.workorder.model.PlanInfo>() {
                 @Override
-                public void call(PlanInfo data) {
-                    liveData.postValue(data);
-                }
-
-                @Override
-                public void onFaild(Throwable throwable) {
-                    ThrowableParser.onFailed(throwable);
-                    liveData.postValue(null);
-                }
-            });
-        } else {
-            service.planOrderDetail(taskId, new CallBack<PlanInfo>() {
-                @Override
-                public void call(PlanInfo data) {
-                    liveData.postValue(data);
+                public void call(com.einyun.app.library.resource.workorder.model.PlanInfo data) {
+                    PlanInfo planInfo = saveCache(data, orderId);
+                    liveData.postValue(planInfo);
                     hideLoading();
                 }
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    liveData.postValue(null);
+                    ThrowableParser.onFailed(throwable);
+//                    liveData.postValue(null);
+                }
+            });
+        } else {
+            PlanInfo planInfo = planRepository.loadPlanInfo(orderId, userModuleService.getUserId());
+            if (planInfo != null) {
+                liveData.postValue(planInfo);
+            }
+            service.planOrderDetail(taskId, new CallBack<com.einyun.app.library.resource.workorder.model.PlanInfo>() {
+                @Override
+                public void call(com.einyun.app.library.resource.workorder.model.PlanInfo data) {
+                    PlanInfo planInfo = saveCache(data, orderId);
+                    liveData.postValue(planInfo);
+                    hideLoading();
+                }
+
+                @Override
+                public void onFaild(Throwable throwable) {
+//                    liveData.postValue(null);
                     ThrowableParser.onFailed(throwable);
                 }
             });
@@ -185,5 +263,103 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 
         return liveData;
     }
+    /**
+     * 缓存详情
+     * @param data
+     * @param orderId
+     * @return
+     */
+    @NotNull
+    public PlanInfo saveCache(com.einyun.app.library.resource.workorder.model.PlanInfo data, String orderId) {
+        String jsonStr = new Gson().toJson(data);
+        PlanInfoTypeConvert convert = new PlanInfoTypeConvert();
+        PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);
+        patrolInfo.setUserId(userModuleService.getUserId());
+        patrolInfo.setId(orderId);
+        planRepository.insertPlanInfo(patrolInfo);
+//        patrolInfo.setTaskId(request.getTaskId());
+//        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
+//            @Override
+//            public void call(PatrolLocal data) {
+//                if (data == null) {
+//                    PatrolLocal patrolLocal = new PatrolLocal();
+//                    patrolLocal.setOrderId(orderId);
+//                    patrolLocal.setUserId(userModuleService.getUserId());
+//                    repo.saveLocalData(patrolLocal);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//
+//            }
+//        });
+        planRepository.updatePlanCached(orderId, userModuleService.getUserId());
+//        repo.insertPatrolInfo(patrolInfo);
+        return patrolInfo;
+    }
+    /**
+     * 缓存操作
+     * @param data
+     * @param orderId
+     * @return
+     */
+    @NotNull
+    public PlanInfo saveCache(PlanInfo data, String orderId) {
+        String jsonStr = new Gson().toJson(data);
+        PlanInfoTypeConvert convert = new PlanInfoTypeConvert();
+        PlanInfo patrolInfo = convert.stringToSomeObject(jsonStr);
+        patrolInfo.setUserId(userModuleService.getUserId());
+        patrolInfo.setId(orderId);
+        planRepository.insertPlanInfo(patrolInfo);
+//        patrolInfo.setTaskId(request.getTaskId());
+//        repo.loadLocalUserData(orderId, userModuleService.getUserId(), new CallBack<PatrolLocal>() {
+//            @Override
+//            public void call(PatrolLocal data) {
+//                if (data == null) {
+//                    PatrolLocal patrolLocal = new PatrolLocal();
+//                    patrolLocal.setOrderId(orderId);
+//                    patrolLocal.setUserId(userModuleService.getUserId());
+//                    repo.saveLocalData(patrolLocal);
+//                }
+//            }
+//
+//            @Override
+//            public void onFaild(Throwable throwable) {
+//
+//            }
+//        });
+//        repo.insertPatrolInfo(patrolInfo);
+        return patrolInfo;
+    }
+    /**
+     * 获取用户本地输入数据
+     *
+     * @param orderId
+     * @return
+     */
+    protected MutableLiveData<PlanLocal> localData=new MutableLiveData<>();
+    public LiveData<PlanLocal> loadLocalUserData(String orderId) {
+        planRepository.loadPlanLocal(orderId,userModuleService.getUserId(), new CallBack<PlanLocal>() {
+            @Override
+            public void call(PlanLocal data) {
+                localData.postValue(data);
+            }
 
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+        return localData;
+    }
+    /**
+     * 保存本地用户输入数据
+     *
+     * @param local
+     */
+    public void saveLocal(PlanLocal local) {
+        local.setUserId(userModuleService.getUserId());
+        planRepository.insertPlanLocal(local);
+    }
 }

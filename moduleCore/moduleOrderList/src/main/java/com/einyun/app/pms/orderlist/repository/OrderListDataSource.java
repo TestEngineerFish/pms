@@ -77,6 +77,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.ORDER_LIST_EMPTY,data.getTotal());
                 }
 
                 @Override
@@ -98,6 +99,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.ORDER_LIST_EMPTY,data.getTotal());
                 }
 
                 @Override
@@ -119,6 +121,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.ORDER_LIST_EMPTY,data.getTotal());
                 }
 
                 @Override
@@ -140,6 +143,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.ORDER_LIST_EMPTY,data.getTotal());
                 }
 
                 @Override
@@ -161,6 +165,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.ORDER_LIST_EMPTY,data.getTotal());
                 }
 
                 @Override
@@ -182,6 +187,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
                         LoadRangeCallback loadInitialCallback = (LoadRangeCallback) callback;
                         loadInitialCallback.onResult(data.getRows());
                     }
+                    LiveDataBusUtils.postLiveBusData(LiveDataBusKey.ORDER_LIST_EMPTY,data.getTotal());
                 }
 
                 @Override

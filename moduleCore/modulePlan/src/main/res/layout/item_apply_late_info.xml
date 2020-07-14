@@ -6,7 +6,7 @@
 
         <variable
             name="ext"
-            type="com.einyun.app.library.resource.workorder.model.ExtensionApplication" />
+            type="com.einyun.app.base.db.entity.PlanInfo.ExtensionApplication" />
 
         <variable
             name="callBack"
@@ -57,7 +57,8 @@
                     style="@style/detail_item_left_tv"
                     android:text="延期天数" />
 
-                <TextView style="@style/detail_item_right_tv" android:text="@{ext.extensionDays}" />
+                <TextView style="@style/detail_item_right_tv"
+                    app:extDay="@{ext.extensionDays}"/>
             </LinearLayout>
 
             <LinearLayout style="@style/detail_item_ll">
