@@ -58,7 +58,7 @@ public class SelectPeopleActivity extends BaseHeadViewModelActivity<ActivitySele
         GetOrgRequest getOrgRequest=new GetOrgRequest();
         List<String> idList=new ArrayList<>();
         idList.add(divideID);
-        idList.add(projectID);
+//        idList.add(projectID);
         request.params=request.new params(idList);
         getOrgRequest.setOrgIdList(idList);
         viewModel.getJob(request);
