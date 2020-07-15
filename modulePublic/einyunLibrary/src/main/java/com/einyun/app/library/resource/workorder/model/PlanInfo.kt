@@ -62,6 +62,7 @@ class Sub_jhgdzyb {
     var F_SP_TYPE: String? = null
     var F_PG_ID: String? = null
     var F_RES_LOCATION: String? = null
+    var F_RES_QRCODE: String? = null
     var F_RES_TYPE: String? = null
     var F_RES_TYPENAME: String? = null
     //    var scan_result: Int? = 0

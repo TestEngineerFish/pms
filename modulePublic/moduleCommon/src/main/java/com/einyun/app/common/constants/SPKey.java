@@ -27,4 +27,5 @@ public class SPKey {
     public static final String KEY_ACCOUNT="ACCOUNT";
     public static final String SP_KEY_TOKEN = "KEY_TOKEN";
     public static final String SP_KEY_NOTIFICATION = "KEY_NOTIFICATION";
+    public static final String SP_KEY_BUILD_TYPE = "KEY_BUILD_TYPE";
 }

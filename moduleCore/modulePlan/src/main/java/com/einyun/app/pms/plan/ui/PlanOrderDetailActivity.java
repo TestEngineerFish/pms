@@ -1150,32 +1150,20 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }
         if (resultCode == RESULT_OK) {
             if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
-//                f_RES_CODE
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
-                String subCode = stringExtra.substring(2, stringExtra.length());
-                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE + "/" + subCode).observe(this, aBoolean -> {
-
-                    Log.e(TAG, "onActivityResult: " + aBoolean);
-                    if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
-                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-//                        viewModel.saveCache(planInfo,id);
-//                        resourceAdapter.notifyItemChanged(mClickPosition);
-                    } else {
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
-                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-//                        viewModel.saveCache(planInfo,id);
-//                        resourceAdapter.notifyItemChanged(mClickPosition);
-                        ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
-                    }
-                });
-//                planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
-//                planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
-//                resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-//                ToastUtil.show(PlanOrderDetailActivity.this, data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
+                List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
+                if (sub_jhgdzyb!=null) {
+                        if (stringExtra.equals(sub_jhgdzyb.get(mClickPosition).getF_RES_QRCODE())) {
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
+                            resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                        }else {
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
+                            resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                            ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
+                        }
+                }
             }
         }
     }

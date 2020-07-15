@@ -30,6 +30,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PageUIState;
@@ -80,6 +81,10 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     int listType;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
     String orderId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+    String divideId;
+    @Autowired(name = RouteKey.KEY_PROJECT_ID)
+    String projectId;
     private TipDialog tipDialog;
     PhotoListAdapter photoListInfoAdapter;
     PhotoListAdapter photoHandleListAdapter;
@@ -509,6 +514,19 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             @Override
             public void onChanged(Boolean aBoolean) {
                 SendOrderDetailActivity.this.finish();
+            }
+        });
+        binding.applyForceCloseAndPostpone.resendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                        .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName())
+                        .withString(RouteKey.KEY_TASK_ID, taskId)
+                        .withString(RouteKey.KEY_ORDER_ID, orderId)
+                        .withString(RouteKey.KEY_DIVIDE_ID, divideId)
+                        .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                        .navigation();
             }
         });
     }
