@@ -45,6 +45,7 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.Constants;
+import com.einyun.app.pms.main.core.ui.MainBindingAdapter;
 import com.einyun.app.pms.main.core.ui.adapter.HomeCommunityNoticeAdapter;
 import com.einyun.app.pms.main.core.viewmodel.ViewModelFactory;
 import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
@@ -72,6 +73,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     public static WorkBenchViewModelFragment newInstance() {
         return new WorkBenchViewModelFragment();
     }
+
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     RVBindingAdapter<ItemWorkTablePendingNumBinding, String> adapter;
@@ -83,6 +85,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     DecimalFormat formatInt = new DecimalFormat("#,###");
     boolean firstFresh = false;
     HomeCommunityNoticeAdapter marqueeFactory;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_work_bench;
@@ -109,10 +112,10 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 userModuleService.saveDivideCodes(divideCode);
                 firstFresh = true;
                 StringBuilder builder = new StringBuilder();
-                for (String divide:divideCode){
+                for (String divide : divideCode) {
                     builder.append(",").append(divide);
                 }
-                if (builder.length() > 1){
+                if (builder.length() > 1) {
                     divides = builder.substring(1);
                 }
                 freshData();
@@ -127,7 +130,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     private String divides;
 
-    private void initWheel(){
+    private void initWheel() {
         //社区广告
         marqueeFactory = new HomeCommunityNoticeAdapter(getActivity());
         binding.mvCommunityNotice.setAdapter(marqueeFactory);
@@ -149,7 +152,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //运营收缴率
         if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
             viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
-                if (operateCaptureData==null) {
+                if (operateCaptureData == null) {
                     return;
                 }
                 binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate() == null ? 0 : operateCaptureData.getTodayIncomeRate()) + "%");
@@ -162,7 +165,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //工单处理情况总览
         if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
             setWorkTablePendingNum("0".toCharArray());
-            viewModel.workOrderData("",userModuleService.getUserId()).observe(this, workOrderData -> {
+            viewModel.workOrderData("", userModuleService.getUserId()).observe(this, workOrderData -> {
                 if (workOrderData.getRate() != null) {
                     //工单完成率
                     String completedRate = workOrderData.getRate().getCompletedRate();
@@ -233,7 +236,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             } else {
                 binding.itemWorkBenchFirst.llSystemNotice.setVisibility(VISIBLE);
                 if (StringUtil.isNullStr(data.getType())) {
-                    switch (data.getType()){
+                    switch (data.getType()) {
                         case "system_upgrade":
                             binding.itemWorkBenchFirst.tvSystemNotice.setText("[系统升级]" + data.getTitle());
                             break;
@@ -250,7 +253,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 binding.itemWorkBenchFirst.tvSystemNotice.requestFocus();
                 binding.itemWorkBenchFirst.tvSystemNotice.setOnClickListener(v -> {
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_SYSTEM_NOTICE_DETAIL)
-                            .withString(RouteKey.KEY_ID,data.getId()).navigation();
+                            .withString(RouteKey.KEY_ID, data.getId()).navigation();
                 });
                 binding.itemWorkBenchFirst.ivSystemNoticeClose.setOnClickListener(v -> {
 //                    SPUtils.put(getActivity(), "systemNotice", systemNotice + "_" + data.getId());
@@ -265,6 +268,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
      * 获取首页社区公告
      */
     List<NoticeModel> noticeModels = new ArrayList<>();
+
     private void getMainNote() {
 
         NoticeListPageRequest noticeListPageRequest = new NoticeListPageRequest();
@@ -302,7 +306,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                             binding.mvCommunityNotice.startFlipping();
                         }
                     }
-                },1000);
+                }, 1000);
 
             } else {
                 noticeModels = new ArrayList<>();
@@ -412,39 +416,60 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //扫码处理
         if (userMenu.indexOf("smcl") != -1) {
             functionList.add("smcl");
-        }else {
-            functionList.add("smcl");
-
         }
         //点检
         if (userMenu.indexOf("dj") != -1) {
             functionList.add("dj");
         }
-
         //审批
         if (userMenu.indexOf("sprk") != -1) {
             functionList.add("sp");
         }
         //收费
-//        if (userMenu.indexOf("sfzl") != -1) {
+        if (userMenu.indexOf("sfzl") != -1) {
             functionList.add("sfzl");
-//        }
+        }
         //创建工单
-
-//        if (userMenu.indexOf("cjgd") != -1) {
+        if (userMenu.indexOf("cjgd") != -1) {
             functionList.add("cjgd");
-//        }
+        }
         //工单列表
         if (userMenu.indexOf("gdlbck") != -1) {
             functionList.add("gdlb");
         }
         //工作预览
-//        if (userMenu.indexOf("gzyl") != -1) {
+        if (userMenu.indexOf("gzyl") != -1) {
             functionList.add("gzyl");
-//        }
+        }
 
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
         binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
+        orderTitle(userMenu);
+    }
+
+    private void orderTitle(String userMenu) {
+        //不合格单
+        menuFirst(binding.itemWorkBenchFirst.rlUnqualified,userMenu,"unqualified");
+        //派工单
+        menuFirst(binding.itemWorkBenchFirst.rlDispatch,userMenu,"dispatch");
+        //计划工单
+        menuFirst(binding.itemWorkBenchFirst.rlPlan,userMenu,"plan");
+        //巡查工单
+        menuFirst(binding.itemWorkBenchFirst.rlInspection,userMenu,"inspection");
+        //客户投诉
+        menuFirst(binding.itemWorkBenchFirst.rlComplain,userMenu,"complain");
+        //客户问询
+        menuFirst(binding.itemWorkBenchFirst.rlEnquiry,userMenu,"enquiry");
+        //客户报修
+        menuFirst(binding.itemWorkBenchFirst.rlRepair,userMenu,"repair");
+    }
+
+    private void menuFirst(View v, String userMenu, String tag) {
+        if (userMenu.indexOf(tag) != -1) {
+            v.setVisibility(VISIBLE);
+        } else {
+            v.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -537,7 +562,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     public void scanner() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_SCANNER)
-                .withString(RouteKey.KEY_HOME_ENTER,RouteKey.KEY_HOME_ENTER)
+                .withString(RouteKey.KEY_HOME_ENTER, RouteKey.KEY_HOME_ENTER)
                 .navigation(getActivity(), RouterUtils.ACTIVITY_REQUEST_SCANNER);
     }
 
@@ -559,14 +584,14 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         } else if (type == 2) {//工单处理情况总览 更多点击
             HashMap<String, String> map = new HashMap<>();
             map.put("user_name", UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.ORDER_HANDLE.getTypeName(),map);
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.ORDER_HANDLE.getTypeName(), map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
                     .navigation();
         } else if (type == 1) {//运营收缴率 更多点击
             HashMap<String, String> map = new HashMap<>();
-            map.put("user_name",UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName(),map);
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName(), map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
                     .withObject(RouteKey.ORGCODE, projectCode)
@@ -620,7 +645,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
     }
 
-    public void goToNotice(){
+    public void goToNotice() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_NOTICE_LIST).navigation();
     }
 }

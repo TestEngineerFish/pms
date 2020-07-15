@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="userMenu"
+            type="String" />
         <variable
             name="router"
             type="com.einyun.app.common.service.RouterUtils" />
@@ -126,9 +128,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_160"
                     android:gravity="center_vertical"
+                    android:weightSum="4"
                     android:orientation="horizontal">
 
                     <RelativeLayout
+                        android:id="@+id/rl_unqualified"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -158,6 +162,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_dispatch"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -187,6 +192,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_plan"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -217,9 +223,11 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_inspection"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        hasMenu="inspection"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_PATROL_LIST)}">
 
                         <LinearLayout
@@ -261,9 +269,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:gravity="center_vertical"
+                    android:weightSum="4"
                     android:orientation="horizontal">
 
                     <RelativeLayout
+                        android:id="@+id/rl_complain"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -293,6 +303,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_enquiry"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -322,6 +333,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_repair"
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"

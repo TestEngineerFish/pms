@@ -1,7 +1,9 @@
 package com.einyun.app.pms.main.core.ui;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
