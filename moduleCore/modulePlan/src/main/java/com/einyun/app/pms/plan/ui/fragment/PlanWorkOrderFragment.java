@@ -298,7 +298,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                         }else {
                             isCached(binding.tvIsCached,binding.ivIsCached,false);
                         }
-                        if (distributeWorkOrder.getF_STATUS().equals(OrderState.PENDING.getState())){
+                        if (Integer.parseInt(distributeWorkOrder.getF_STATUS())==(OrderState.PENDING.getState())){
                             binding.turnOrder.setEnabled(false);
                             binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
                         }else {
