@@ -41,6 +41,8 @@ import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 
@@ -236,7 +238,12 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    ThrowableParser.onFailed(throwable);
+                    if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+                        //连接错误
+                        ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+                    }else {
+                        ThrowableParser.onFailed(throwable);
+                    }
 //                    liveData.postValue(null);
                 }
             });
@@ -256,7 +263,13 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
                 @Override
                 public void onFaild(Throwable throwable) {
 //                    liveData.postValue(null);
-                    ThrowableParser.onFailed(throwable);
+                    if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+                        //连接错误
+                        ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+                    }else {
+
+                        ThrowableParser.onFailed(throwable);
+                    }
                 }
             });
         }
