@@ -44,6 +44,7 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.UserUtil;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -296,6 +297,13 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                             isCached(binding.tvIsCached,binding.ivIsCached,true);
                         }else {
                             isCached(binding.tvIsCached,binding.ivIsCached,false);
+                        }
+                        if (distributeWorkOrder.getF_STATUS().equals(OrderState.PENDING.getState())){
+                            binding.turnOrder.setEnabled(false);
+                            binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+                        }else {
+                            binding.turnOrder.setEnabled(true);
+                            binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
                         }
                     } else {
                         binding.waitHandleLayout.setVisibility(View.GONE);
