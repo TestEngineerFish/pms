@@ -116,6 +116,8 @@ class DisttributeMainModel :Serializable {
     var originalCode: String? = null
     @SerializedName("F_ORIGINAL_ID")
     var originalID: String? = null
+    @SerializedName("F_ORIGINAL_PROLNSTLD")
+    var originalOldProId: String? = null
     @SerializedName("F_ORIGINAL_TYPE")
     var originalType: String? = null
     @SerializedName("F_OT_LEVEL")

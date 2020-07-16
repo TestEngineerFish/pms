@@ -67,6 +67,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
@@ -528,6 +529,25 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                         .withString(RouteKey.KEY_ORDER_ID, orderId)
                         .withString(RouteKey.KEY_DIVIDE_ID, divideId)
                         .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                        .navigation();
+            }
+        });
+        binding.orderInfo.llOriginalCode.setOnClickListener(view -> {
+            if ("1".equals(detialModel.getData().getInfo().getOriginalType())) {//1 计划工单
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                        .withString(RouteKey.KEY_ORDER_ID, "" )
+                        .withString(RouteKey.KEY_PRO_INS_ID,detialModel.getData().getInfo().getOriginalOldProId() )
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
+                        .navigation();
+            }else {//巡查工单
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                        .withString(RouteKey.KEY_ORDER_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, detialModel.getData().getInfo().getOriginalOldProId() )
+                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
                         .navigation();
             }
         });

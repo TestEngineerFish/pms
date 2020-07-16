@@ -124,7 +124,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textColor="@color/blackTextColor"
-                        app:setTime="@{planModel.createTime}" />
+                        app:setTime="@{planModel.F_CREATE_TIME}" />
                 </LinearLayout>
             </LinearLayout>
 

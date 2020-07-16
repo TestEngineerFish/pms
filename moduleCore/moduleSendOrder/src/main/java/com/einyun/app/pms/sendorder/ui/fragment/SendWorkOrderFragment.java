@@ -168,7 +168,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                                     .navigation();
                         }
                     });
-                    binding.selectOrderTime.setText(FormatUtil.formatDate(distribute.getCreateTime()));
+                    binding.selectOrderTime.setText(FormatUtil.formatDate(distribute.getF_CREATE_TIME()));
                 }
 
                 @Override

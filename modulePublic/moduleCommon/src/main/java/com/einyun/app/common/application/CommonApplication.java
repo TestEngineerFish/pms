@@ -85,7 +85,7 @@ public class CommonApplication extends BasicApplication {
 //            LeakCanary.install(this);
         }
 
-        if (!com.einyun.app.base.BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             CrashWhiteListManager.start();
             CrashReport.initCrashReport(getApplicationContext(), "ac69f9ff00", true);//bugly 初始化
         }

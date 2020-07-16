@@ -266,7 +266,12 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         serviceApi?.isClosed(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
-                    callBack.call(response.data)
+//                    callBack.call(response.data)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                    }
                 }, { callBack.onFaild(it) }
             )
     }

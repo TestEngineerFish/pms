@@ -269,7 +269,7 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
             public void onPick(int position, String label) {
                 ctDefaultPos = position;
                 if (childrenBeanX!=null) {
-                    TypeBigAndSmallModel.ChildrenBeanX.ChildrenBean childrenBean = childrenBeanX.getChildren().get(smallDefaultPos);
+                    TypeBigAndSmallModel.ChildrenBeanX.ChildrenBean childrenBean = childrenBeanX.getChildren().get(position);
                     request.getBizData().setSubCateId(childrenBean.getDataKey());
                     request.getBizData().setSubCate(childrenBean.getDataName());
                     binding.setBean(request);

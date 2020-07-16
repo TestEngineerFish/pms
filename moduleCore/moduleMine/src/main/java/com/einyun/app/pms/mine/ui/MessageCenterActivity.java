@@ -91,6 +91,12 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        loadPagingData(new RequestPageBean(), "");
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         getNodeIdRequest = new GetNodeIdRequest();

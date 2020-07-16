@@ -1,6 +1,7 @@
 package com.einyun.app.pms.sendorder.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.einyun.app.pms.sendorder.databinding.ItemSelectPeopleChildBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemSelectPeopleGroupBinding;
 import com.einyun.app.pms.sendorder.ui.SendOrderDetailActivity;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
