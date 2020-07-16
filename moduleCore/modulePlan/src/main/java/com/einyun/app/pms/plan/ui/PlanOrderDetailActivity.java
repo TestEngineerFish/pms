@@ -146,6 +146,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private List<WorkOrderTypeModel> lines;
     private List<PlanOrderResLineModel> mPlanResLines = new ArrayList<>();
     private PlanLocal planLocal;
+    private String f_status;
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -583,6 +584,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (planInfo == null || planInfo.getData() == null) {
                 return;
             }
+           projectId= planInfo.getData().zyjhgd.getF_PROJECT_ID();
+           divideId= planInfo.getData().zyjhgd.getF_DIVIDE_ID();
+            f_status = planInfo.getData().getZyjhgd().getF_STATUS();
+            Log.e(TAG, "requestData: "+f_status );
             updateUI(planInfo);
             updateElapsedTime(planInfo);
             if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
@@ -603,7 +608,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             viewModel.isClosed(request);
             viewModel.loadLocalUserData(id).observe(this, local -> {
                 planLocal = local;
-                updateLocalData(local);
+                if (String.valueOf(OrderState.CLOSED.getState()).equals(f_status)) {
+
+                }else {
+
+                    updateLocalData(local);
+                }
             });
         });
     }
@@ -913,6 +923,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
+                viewModel.finishTask(id);
 //                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
 //                tipDialog.setTipDialogListener(dialog -> {
 //                    if (hasException()) {
@@ -1061,6 +1072,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 return;
             }
             if (validateForceScan()) return;
+
             uploadImages(planInfo);
         }
     }

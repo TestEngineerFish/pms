@@ -30,6 +30,8 @@ class EnquiryOrderData {
     var wayId: String? = null
     @SerializedName("wx_cate_id")
     var cateId: String? = null
+    @SerializedName("wx_sub_cate_id")
+    var subCateId: String? = null
     @SerializedName("line_key")
     var lineKey: String? = null
     @SerializedName("line_name")
@@ -48,6 +50,8 @@ class EnquiryOrderData {
     var way: String? = null
     @SerializedName("wx_cate")
     var cate: String? = null
+    @SerializedName("wx_sub_cate")
+    var subCate: String? = null
     @SerializedName("wx_attachment")
     var imageList: String? = null
 }

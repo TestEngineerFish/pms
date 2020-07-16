@@ -246,6 +246,9 @@ class WorkOrderServiceImpl : WorkOrderService {
     override fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>> {
         return proxy.typeAndLineList(callBack)
     }
+    override fun typeBigAndSmall(callBack: CallBack<TypeBigAndSmallModel>): LiveData<TypeBigAndSmallModel> {
+        return proxy.typeBigAndSmall(callBack)
+    }
 
     override fun getMappingByUserIds(
         request: List<String>,
