@@ -39,6 +39,7 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
     UserCenterService userCenterService;
     ResourceWorkOrderService resourceWorkOrderService;
     private MdmService mdmService;
+
     public WorkBenchViewModel() {
 //        mUsersRepo = new UserRepository();
         mService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_DASHBOARD);
@@ -49,7 +50,7 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
     }
 
     @Override
-    public LiveData<WorkOrderData> workOrderData(String orgId,String userId) {
+    public LiveData<WorkOrderData> workOrderData(String orgId, String userId) {
         WorkOrderRequest request = new WorkOrderRequest();
         request.setOrgId(orgId);
         Calendar c = Calendar.getInstance();
@@ -114,7 +115,7 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
     }
 
 
-    public LiveData<WorkOrderData> workOrderData(String orgId,String year,String month,String userId) {
+    public LiveData<WorkOrderData> workOrderData(String orgId, String year, String month, String userId) {
         WorkOrderRequest request = new WorkOrderRequest();
         request.setOrgId(orgId);
         request.setYear(year);
@@ -150,10 +151,15 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
 
     @Override
     public LiveData<String> userMenuData(int menuType) {
-        return mService.userMenuData(menuType, new CallBack<String>() {
+        MutableLiveData<String> liveData = new MutableLiveData();
+        mService.userMenuData(menuType, new CallBack<String>() {
             @Override
             public void call(String data) {
-
+                if (data == null) {
+                    liveData.postValue("");
+                } else {
+                    liveData.postValue(data);
+                }
             }
 
             @Override
@@ -161,6 +167,7 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
                 ThrowableParser.onFailed(throwable);
             }
         });
+        return liveData;
     }
 
     @Override
@@ -195,6 +202,7 @@ public class WorkBenchViewModel extends BaseViewModel implements WorkBenchViewMo
 
     /**
      * 获取待办数量（客户报修，客户询问，客户投诉）
+     *
      * @return
      */
     @Override
