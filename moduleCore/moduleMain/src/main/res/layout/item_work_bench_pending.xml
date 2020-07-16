@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:text="@string/title_pending_work_order"
+                android:visibility="gone"
                 android:textColor="@color/tv_main_second_title_color"
                 android:textSize="@dimen/font_size22"
                 android:textStyle="bold" />
@@ -101,6 +102,7 @@
             android:layout_marginLeft="@dimen/px_30"
             android:layout_marginTop="@dimen/px_40"
             android:layout_marginRight="@dimen/px_30"
+            android:visibility="gone"
             android:background="@mipmap/img_pending_worktable_bg">
 
             <ImageView
@@ -372,6 +374,7 @@
 
         <com.einyun.app.pms.main.core.ui.widget.SlideShowView
             android:id="@+id/ssv_common_fun"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_280"
             android:layout_marginLeft="@dimen/px_30"

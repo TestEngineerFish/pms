@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px_30"
         android:layout_marginRight="@dimen/px_30"
-
+        android:visibility="gone"
         android:layout_marginTop="@dimen/px_50"
         android:orientation="vertical">
 
