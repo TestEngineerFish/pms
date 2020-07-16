@@ -37,6 +37,7 @@ import com.einyun.app.common.service.LoginNavigationCallbackImpl;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.core.net.EinyunHttpException;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
@@ -93,7 +94,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     @Override
     protected void onResume() {
         super.onResume();
-        loadPagingData(new RequestPageBean(), "");
+//        loadPagingData(new RequestPageBean(), "");
     }
 
     @Override
@@ -188,6 +189,11 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
         msgExtendVars = new Gson().fromJson(msgModel.getExtendVars(), MsgExtendVars.class);
 
         if (msgExtendVars == null) {
+            return;
+        }
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
         switch (msgExtendVars.getType()) {
@@ -609,35 +615,39 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     }
 
     private void showMsg(Throwable throwable) {
-        if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
-            //连接错误
-            if (Looper.myLooper() == null) {
-                Looper.prepare();
-            }
-            ToastUtil.show(CommonApplication.getInstance(), com.einyun.app.common.R.string.toast_error_net);
-            Looper.loop();
-        }else if(throwable instanceof EinyunHttpException){
-            //API业务错误
-            EinyunHttpException exception= (EinyunHttpException) throwable;
-            if (exception.getResponse().getCode().equals("34516")){
+        try {
+            if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+                //连接错误
+                if (Looper.myLooper() == null) {
+                    Looper.prepare();
+                }
+                ToastUtil.show(CommonApplication.getInstance(), com.einyun.app.common.R.string.toast_error_net);
+                Looper.loop();
+            }else if(throwable instanceof EinyunHttpException){
+                //API业务错误
+                EinyunHttpException exception= (EinyunHttpException) throwable;
+                if (exception.getResponse().getCode().equals("34516")){
+                    if (Looper.myLooper() == null) {
+                        Looper.prepare();
+                    }
+                    Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                } else {
+                    if (Looper.myLooper() == null) {
+                        Looper.prepare();
+                    }
+                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                    Looper.loop();
+                }
+            }else {
                 if (Looper.myLooper() == null) {
                     Looper.prepare();
                 }
                 Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
                 Looper.loop();
-            } else {
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
-                }
-                ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
-                Looper.loop();
             }
-        }else {
-            if (Looper.myLooper() == null) {
-                Looper.prepare();
-            }
-            Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
-            Looper.loop();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
