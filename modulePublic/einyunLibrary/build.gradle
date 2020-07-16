@@ -75,7 +75,7 @@ uploadArchives {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation project(deps.project.module_base)
-    implementation deps.einyun.base
+    implementation project(deps.project.module_base)
+//    implementation deps.einyun.base
     // Architecture components
 }

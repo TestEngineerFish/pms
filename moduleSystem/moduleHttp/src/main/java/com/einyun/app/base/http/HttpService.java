@@ -39,7 +39,7 @@ public class HttpService {
     public String getBaseUrl(){
         return BASE_URL;
     }
-    public static HttpService getInstance() {F
+    public static HttpService getInstance() {
         if(netWorkManager==null){
             synchronized (HttpService.class){
                 if (netWorkManager == null) {
@@ -140,7 +140,7 @@ public class HttpService {
         //基础参数
         Interceptor paramsInterceptor = new Interceptor() {
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public Response intercept(Chain chain) {
 
                 //旧request
                 Request oldRequest = chain.request();
@@ -169,9 +169,10 @@ public class HttpService {
                         .build();
                 try {
                     return chain.proceed(newRequest);
-                }catch(Exception e){
+                }catch(IOException e){
                     Log.e("111","111111111111111111111111111");
                 }
+                return null;
             }
         };
         clientBuilder.addInterceptor(paramsInterceptor);
