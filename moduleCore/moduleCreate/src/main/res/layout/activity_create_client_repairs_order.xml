@@ -29,7 +29,9 @@
         <include
             android:id="@id/head_bar"
             layout="@layout/include_layout_activity_head" />
+
         <View style="@style/base_underline" />
+
         <com.einyun.app.common.ui.component.AbScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -75,26 +77,24 @@
 
                 <View style="@style/base_underline" />
 
-                <LinearLayout
-                    style="@style/ll_create_order">
+                <LinearLayout style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
 
                     <TextView
                         style="@style/tv_create_order_name"
-                        android:text="联系电话"
-                        />
+                        android:text="联系电话" />
 
                     <com.einyun.app.common.ui.widget.BaseEditText
                         android:id="@+id/phone"
                         style="@style/et_create_order_right"
                         android:contentDescription="联系电话"
-                        android:inputType="phone"/>
+                        android:inputType="phone" />
                 </LinearLayout>
+
                 <View style="@style/base_underline" />
 
-                <LinearLayout
-                    style="@style/ll_create_order">
+                <LinearLayout style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
 
@@ -106,7 +106,9 @@
                         android:id="@+id/user_name"
                         style="@style/et_create_order_right" />
                 </LinearLayout>
+
                 <View style="@style/base_underline" />
+
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_WAY)}">
@@ -125,6 +127,7 @@
                 </LinearLayout>
 
                 <View style="@style/base_underline" />
+
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_LOCATION)}">
@@ -143,6 +146,7 @@
                 </LinearLayout>
 
                 <View style="@style/base_underline" />
+
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_TYPE)}">
@@ -155,12 +159,13 @@
 
                     <TextView
                         style="@style/tv_create_order_select_single"
-                        app:setSelectTxt="@{bean.bizData.cateLv3}" />
+                        app:setSelectTxt="@{bean.bizData.cateLv1 + '-' + bean.bizData.cateLv2 +'-' +bean.bizData.cateLv3}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
 
                 <View style="@style/base_underline" />
+
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_NATURE)}">
@@ -177,7 +182,9 @@
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
+
                 <View style="@style/base_underline" />
+
                 <LinearLayout
                     style="@style/ll_create_order"
                     android:onClick="@{()->callBack.pleaseSelect(type.REPAIRS_TIME)}">
@@ -192,9 +199,10 @@
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
+
                 <View style="@style/base_underline" />
-                <LinearLayout
-                    style="@style/ll_create_order">
+
+                <LinearLayout style="@style/ll_create_order">
 
                     <TextView style="@style/tv_create_order_red_star" />
 
