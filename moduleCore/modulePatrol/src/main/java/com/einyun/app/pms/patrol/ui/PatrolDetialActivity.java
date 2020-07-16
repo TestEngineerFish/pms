@@ -347,6 +347,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             orderId = patrol.getData().getZyxcgd().getId_();
         }
         this.patrolInfo = patrol;
+        projectId=patrolInfo.getData().getZyxcgd().getF_project_id();
+        divideId=patrolInfo.getData().getZyxcgd().getF_massif_id();
         f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
         if (f_plan_work_order_state==6) {
             if (listType != ListType.DONE.getType()) {

@@ -65,10 +65,6 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     String taskNodeId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
-    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
-    String divideId;
-    @Autowired(name = RouteKey.KEY_PROJECT_ID)
-    String projectId;
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType = ListType.PENDING.getType();
