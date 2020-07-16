@@ -87,6 +87,7 @@ public class CreateUnQualityRequest implements Serializable {
         private String check_date;
         private String correction_date;
         private String create_enclosure;
+        private String F_ORIGINAL_PROLNSTLD;
 
         public String getDivide_id() {
             return divide_id==null?"":divide_id;
@@ -206,6 +207,14 @@ public class CreateUnQualityRequest implements Serializable {
 
         public void setCreate_enclosure(String create_enclosure) {
             this.create_enclosure = create_enclosure;
+        }
+
+        public String getF_ORIGINAL_PROLNSTLD() {
+            return F_ORIGINAL_PROLNSTLD;
+        }
+
+        public void setF_ORIGINAL_PROLNSTLD(String f_ORIGINAL_PROLNSTLD) {
+            F_ORIGINAL_PROLNSTLD = f_ORIGINAL_PROLNSTLD;
         }
     }
 

@@ -167,7 +167,11 @@ public class HttpService {
                 Request newRequest = requestBuilder
                         .url(newUrl)
                         .build();
-                return chain.proceed(newRequest);
+                try {
+                    return chain.proceed(newRequest);
+                }catch(IOException e){
+                    Log.e("111","111");
+                }
             }
         };
         clientBuilder.addInterceptor(paramsInterceptor);

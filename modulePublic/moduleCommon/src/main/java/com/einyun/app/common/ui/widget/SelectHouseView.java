@@ -35,6 +35,7 @@ import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFac
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -204,6 +205,9 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
     }
 
     public void switchOrgTag(HouseModel model) {
+        if ("请选择楼栋".equals(model.getName()) ||"请选择单元".equals(model.getName())||"请选择房屋".equals(model.getName())){
+            return;
+        }
         selectOrgs.remove(selectOrgs.get(selectOrgs.size() - 1));
 
         List<HouseModel> list = new ArrayList<>();

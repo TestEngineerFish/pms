@@ -129,6 +129,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 false));
         binding.listPicInvalition.addItemDecoration(new SpacesItemDecoration(18));
         binding.listPicInvalition.setAdapter(photoValidationInfoAdapter);
+        binding.rlOldCode.setOnClickListener(view -> {
+
+        });
     }
 
     @Override

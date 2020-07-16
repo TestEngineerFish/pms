@@ -1169,11 +1169,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
                             planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
                             resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                            ToastUtil.show(CommonApplication.getInstance(), "扫码成功");
                         }else {
                             planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
                             planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
                             resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-                            ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
+                            ToastUtil.show(CommonApplication.getInstance(), "二维码不正确");
                         }
                 }
             }

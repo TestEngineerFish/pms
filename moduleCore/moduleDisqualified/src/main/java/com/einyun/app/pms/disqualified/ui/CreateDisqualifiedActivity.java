@@ -164,6 +164,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             mRequest.getBizData().setDivide_id(divideId);
             mRequest.getBizData().setDivide_name(divideName);
             mRequest.getBizData().setLine(lineCode);
+            mRequest.getBizData().setF_ORIGINAL_PROLNSTLD(proInsId);
             binding.tvDivide.setText(divideName);
             binding.tvLine.setText(lineName);
             binding.llOld.setVisibility(View.VISIBLE);
