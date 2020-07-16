@@ -395,7 +395,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                                     .navigation();
                             getActivity().finish();
                         }
-                    });
+                    }).show();
         }
 
         int functionIndex = 0;
@@ -463,8 +463,10 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         menuFirst(binding.itemWorkBenchFirst.rlRepair, userMenu, "repair");
         if (orderTitleIndex == 0) {
             binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(View.GONE);
+            binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(View.GONE);
         } else {
             binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(VISIBLE);
+            binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(VISIBLE);
         }
     }
 
