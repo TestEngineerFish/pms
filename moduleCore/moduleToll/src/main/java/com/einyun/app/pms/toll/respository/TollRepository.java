@@ -7,7 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.RxSchedulers;
+import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.BuildConfig;
+import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.utils.PicEvUtils;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.pms.toll.constants.URLS;
 import com.einyun.app.pms.toll.model.AddHouserModel;
@@ -59,7 +63,7 @@ public class TollRepository {
     TollServiceApi serviceApi2;
     String baseUrl;
     public TollRepository() {
-        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(BuildConfig.BASE_FEE_URL,TollServiceApi.class);
+        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi(PicEvUtils.getBaseFeeUrl((String) SPUtils.get(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE,"")),TollServiceApi.class);
 //        serviceApi = EinyunHttpService.Companion.getInstance().getServiceApi("https://fee.einyun.com/",TollServiceApi.class);
 }
 

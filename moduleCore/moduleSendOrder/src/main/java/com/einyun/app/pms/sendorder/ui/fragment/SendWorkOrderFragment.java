@@ -312,6 +312,8 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                 .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
                 .withInt(RouteKey.KEY_LIST_TYPE, listType)
                 .withString(RouteKey.KEY_PRO_INS_ID, data.getProInsId())
+                .withString(RouteKey.KEY_DIVIDE_ID, data.getF_DIVIDE_ID())
+                .withString(RouteKey.KEY_PROJECT_ID, data.getF_PROJECT_ID())
                 .navigation();
     }
 

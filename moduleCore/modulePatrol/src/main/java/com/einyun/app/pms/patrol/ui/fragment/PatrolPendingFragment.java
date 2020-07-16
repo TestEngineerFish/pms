@@ -38,6 +38,7 @@ import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PatrolWorkOrder;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -118,6 +119,7 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
 
                 @Override
                 public void onBindItem(ItemPatrolListBinding binding, Patrol model) {
+
                     binding.turnOrder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -132,6 +134,13 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                                     .navigation();
                         }
                     });
+                    if (model.getF_plan_work_order_state()==(OrderState.PENDING.getState())){
+                        binding.turnOrder.setEnabled(false);
+                        binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+                    }else {
+                        binding.turnOrder.setEnabled(true);
+                        binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+                    }
                 }
 
                 @Override

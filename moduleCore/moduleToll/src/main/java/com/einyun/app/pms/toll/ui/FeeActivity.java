@@ -16,12 +16,15 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.BuildConfig;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.constants.SPKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.utils.HttpUrlUtil;
+import com.einyun.app.common.utils.PicEvUtils;
 import com.einyun.app.common.utils.StatusBarcompUtils;
 import com.einyun.app.pms.toll.R;
 import com.einyun.app.pms.toll.databinding.ActivityFeeBinding;
@@ -81,7 +84,7 @@ public class FeeActivity extends BaseHeadViewModelActivity<ActivityFeeBinding, T
         });
         binding.tvHouseName.setText("尊敬的"+clientName+"业主"+"("+title+")");
         binding.tvMoney.setText("￥"+money);
-        String baseUrl = BuildConfig.BASE_FEE_URL;
+        String baseUrl = PicEvUtils.getBaseFeeUrl((String)SPUtils.get(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE,""));
         String key_tenant_id = (String) SPUtils.get(this, "KEY_TENANT_ID", "");
         String key_token = (String) SPUtils.get(this, "KEY_TOKEN", "");
         GlideUrl url = new GlideUrl(baseUrl+URL_GET_FEE_QR_CODE+orderId, new LazyHeaders.Builder()//debug

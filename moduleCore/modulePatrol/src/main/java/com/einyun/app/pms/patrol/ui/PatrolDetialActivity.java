@@ -13,6 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -149,20 +150,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     /**
-     *转单
-     */
-    public void resendOrder() {
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_RESEND_ORDER)
-                .withString(RouteKey.KEY_TASK_ID, taskId)
-                .withString(RouteKey.KEY_ORDER_ID, orderId)
-                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
-                .withString(RouteKey.KEY_PROJECT_ID, projectId)
-                .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
-                .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
-                .navigation();
-    }
-    /**
      * 选择指派人
      */
     private void selectPeple() {
@@ -180,6 +167,13 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         setUpWorkNodes();
         initRequest();
         loadData();
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                PatrolDetialActivity.this.finish();
+            }
+        });
     }
 
     /**
