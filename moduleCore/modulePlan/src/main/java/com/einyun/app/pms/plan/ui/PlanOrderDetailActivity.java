@@ -584,6 +584,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (planInfo == null || planInfo.getData() == null) {
                 return;
             }
+           projectId= planInfo.getData().zyjhgd.getF_PROJECT_ID();
+           divideId= planInfo.getData().zyjhgd.getF_DIVIDE_ID();
             f_status = planInfo.getData().getZyjhgd().getF_STATUS();
             Log.e(TAG, "requestData: "+f_status );
             updateUI(planInfo);
