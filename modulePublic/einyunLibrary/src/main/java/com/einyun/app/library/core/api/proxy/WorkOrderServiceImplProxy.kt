@@ -219,6 +219,9 @@ class WorkOrderServiceImplProxy : WorkOrderService {
     override fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>> {
         return instance?.typeAndLineList(callBack)!!
     }
+    override fun typeBigAndSmall(callBack: CallBack<TypeBigAndSmallModel>): LiveData<TypeBigAndSmallModel> {
+        return instance?.typeBigAndSmall(callBack)!!
+    }
 
     override fun startEnquiry(
         request: CreateClientEnquiryOrderRequest,

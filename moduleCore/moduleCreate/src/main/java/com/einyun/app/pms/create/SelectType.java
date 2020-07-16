@@ -13,6 +13,8 @@ public enum SelectType {
     COMPLAIN_NATURE("投诉性质","complain_nature"),
     ENQUIRY_WAY("问询方式","ENQUIRY_WAY"),
     ENQUIRY_TYPE("问询类别","ENQUIRY_Type"),
+    ENQUIRY_TYPE_BIG("问询大类","ENQUIRY_Type_Big"),
+    ENQUIRY_TYPE_SMALL("问询小类","ENQUIRY_Type_Small"),
     REPAIRS_TYPE("报修类别","REPAIRS_TYPE"),
     REPAIRS_WAY("报修方式","REPAIRS_WAY"),
     REPAIRS_NATURE("报修性质","REPAIRS_NATURE"),

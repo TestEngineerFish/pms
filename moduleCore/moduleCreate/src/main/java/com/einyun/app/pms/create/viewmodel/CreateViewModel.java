@@ -23,6 +23,7 @@ import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.workorder.model.ComplainModelPageResult;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.DoorResult;
+import com.einyun.app.library.workorder.model.TypeBigAndSmallModel;
 import com.einyun.app.library.workorder.model.UserInfoByHouseIdModel;
 import com.einyun.app.library.workorder.net.request.ComplainAppendRequest;
 import com.einyun.app.library.workorder.net.request.CreateClientComplainOrderRequest;
@@ -101,6 +102,19 @@ public class CreateViewModel extends BaseViewModel implements CreateViewModelCon
         return workOrderService.typeAndLineList(new CallBack<List<TypeAndLine>>() {
             @Override
             public void call(List<TypeAndLine> data) {
+
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+    }
+    public LiveData<TypeBigAndSmallModel> typeBigAndSmall() {
+        return workOrderService.typeBigAndSmall(new CallBack<TypeBigAndSmallModel>() {
+            @Override
+            public void call(TypeBigAndSmallModel data) {
 
             }
 

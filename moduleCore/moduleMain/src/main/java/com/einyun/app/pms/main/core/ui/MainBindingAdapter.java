@@ -139,6 +139,10 @@ public class MainBindingAdapter {
             view.setText(com.einyun.app.common.R.string.text_apply);
         } else if (valueInt == OrderState.CLOSED.getState()) {
             view.setText(com.einyun.app.common.R.string.text_state_closed);
+        } else if (valueInt == OrderState.PENDING.getState()) {
+            view.setText(com.einyun.app.common.R.string.text_state_wait_receive);
+        } else if (valueInt == OrderState.OVER_DUE.getState()) {
+            view.setText(com.einyun.app.common.R.string.text_state_wait_send);
         }
     }
     @BindingAdapter("status")
@@ -152,6 +156,10 @@ public class MainBindingAdapter {
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_work_order_apply);
         } else if (valueInt == OrderState.CLOSED.getState()) {
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_closed);
+        }else if (valueInt == OrderState.PENDING.getState()) {
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
+        }else if (valueInt == OrderState.OVER_DUE.getState()) {
+            view.setImageResource(com.einyun.app.common.R.mipmap.icon_new);
         }
     }
 }

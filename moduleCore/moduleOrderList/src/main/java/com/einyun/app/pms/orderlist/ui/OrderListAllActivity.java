@@ -307,7 +307,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         }
         if (tag.equals(RouteKey.ORDER_LIST_PLAN)) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-                    .withString(RouteKey.KEY_ORDER_ID, data.getREF_ID())
+                    .withString(RouteKey.KEY_ORDER_ID, data.getId())
                     .withString(RouteKey.KEY_TASK_NODE_ID, "")
                     .withString(RouteKey.KEY_TASK_ID, "")
                     .withBoolean(RouteKey.KEY_IS_ORDER_LIST, true)

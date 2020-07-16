@@ -445,6 +445,24 @@ class WorkOrderRepository : WorkOrderService {
             })
         return liveData
     }
+    /**
+     *  创建问询 大类小类返回
+     */
+    override fun typeBigAndSmall(callBack: CallBack<TypeBigAndSmallModel>): LiveData<TypeBigAndSmallModel> {
+        var liveData = MutableLiveData<TypeBigAndSmallModel>()
+        serviceApi?.typeBigAndSmall()?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({ response ->
+                if (response.isState) {
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
+                } else {
+                    callBack.onFaild(EinyunHttpException(response))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData
+    }
 
     /**
      * 追加投诉
