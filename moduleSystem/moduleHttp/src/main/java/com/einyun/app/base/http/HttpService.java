@@ -169,8 +169,8 @@ public class HttpService {
                         .build();
                 try {
                     return chain.proceed(newRequest);
-                }catch(IOException e){
-                    Log.e("111","111");
+                }catch(Exception e){
+                    Log.e("111","111111111111111111111111111");
                 }
             }
         };

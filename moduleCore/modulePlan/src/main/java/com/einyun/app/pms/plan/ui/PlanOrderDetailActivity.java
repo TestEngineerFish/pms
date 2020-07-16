@@ -66,6 +66,7 @@ import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.common.utils.Glide4Engine;
 
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.portal.dictdata.net.URLS;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 
@@ -791,6 +792,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 跳转申请延期
      */
     public void applyPostpone() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         IsClosedRequest request = new IsClosedRequest();
         request.setId(id);
         request.setType(WorkOrder.POSTPONED_PLAN);
@@ -801,6 +806,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      *
      */
     public void closeOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         if (isCloseClose) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_CLOSE)
@@ -819,6 +829,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      *转单
      */
     public void resendOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
@@ -874,6 +889,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      */
     private void uploadImages(PlanInfo planInfo) {
         if (planInfo == null) {
+            return;
+        }
+        if (!NetWorkUtils.isNetworkConnected(PlanOrderDetailActivity.this)) {
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {

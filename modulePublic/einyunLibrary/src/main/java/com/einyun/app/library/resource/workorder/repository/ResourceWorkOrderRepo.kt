@@ -269,10 +269,15 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
 //                    callBack.call(response.data)
                     if (response.isState) {
                         callBack.call(response.data)
+                        Log.e("call", "111111111111111111111111111")
                     } else {
                         callBack.onFaild(EinyunHttpException(response))
+                        Log.e("onFaild", "111111111111111111111111111")
                     }
-                }, { callBack.onFaild(it) }
+
+                }, { callBack.onFaild(it)
+                    Log.e("onFaildit", "111111111111111111111111111")
+                }
             )
     }
 

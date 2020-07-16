@@ -60,7 +60,7 @@ public class DisqualifiedRepository {
                     if(response.isState()){
                         callBack.call(response.getData());
                     }else{
-                        callBack.onFaild(new Exception(response.getCode()));
+//                        callBack.onFaild(new Exception(response.getCode()));
                     }
                 }, error -> {
                     callBack.onFaild(error);

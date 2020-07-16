@@ -32,6 +32,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.pms.patrol.R;
@@ -471,6 +472,12 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     private void uploadImage(List<WorkNode> nodes) {
         if (nodes == null) {
             ToastUtil.show(CommonApplication.getInstance(), R.string.text_alert_local_cached);
+            return;
+        }
+
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
         viewModel.uploadWorkNodesImages(nodes).observe(this, nodes1 -> submitForm(nodes1));

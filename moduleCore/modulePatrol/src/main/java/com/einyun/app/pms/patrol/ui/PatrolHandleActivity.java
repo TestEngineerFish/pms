@@ -34,6 +34,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
@@ -95,6 +96,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
      *转单
      */
     public void resendOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
@@ -296,6 +302,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
      */
     private void uploadImages(PatrolInfo patrol) {
         if (patrol == null) {
+            return;
+        }
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
