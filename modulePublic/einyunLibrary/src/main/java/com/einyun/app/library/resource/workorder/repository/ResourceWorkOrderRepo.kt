@@ -283,7 +283,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
 
     //巡查已办详情
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolDoneDetial(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.patrolDoneDetial(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -343,7 +343,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     override fun planOrderDetail(taskId: String, callBack: CallBack<PlanInfo>) {
         var request = PatrolDetialRequest()
         request.taskId = taskId
-        serviceApi?.planOrderDetail(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.planOrderDetail(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -720,7 +720,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 巡查工单详情
      */
     override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())?.doOnError({ error ->
+        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIoMain())?.doOnError({ error ->
             Log.e("error", error.toString())
         })?.subscribe(
             { response ->
