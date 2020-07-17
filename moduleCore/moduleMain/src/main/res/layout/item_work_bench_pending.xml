@@ -115,20 +115,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/px_30"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_work_order_title_first"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:layout_marginTop="@dimen/px_30"
                     android:text="物业工单"
                     android:textColor="#FFFFFFFF"
                     android:textSize="@dimen/font_size14" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_160"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:weightSum="4"
                     android:orientation="horizontal">
@@ -138,6 +139,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_DISQUALIFIED)}">
 
                         <LinearLayout
@@ -168,6 +170,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_SEND_ORDER)}">
 
                         <LinearLayout
@@ -198,6 +201,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_PLAN_ORDER)}">
 
                         <LinearLayout
@@ -229,7 +233,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        hasMenu="inspection"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_PATROL_LIST)}">
 
                         <LinearLayout
@@ -260,6 +264,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_work_order_title_second"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
@@ -269,7 +274,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:weightSum="4"
                     android:orientation="horizontal">
@@ -279,6 +284,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_COMPLAIN_PAGING)}">
 
                         <LinearLayout
@@ -309,6 +315,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_CUSTOMER_INQUIRIES)}">
 
                         <LinearLayout
@@ -339,6 +346,7 @@
                         style="@style/base_style"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="80dp"
                         android:onClick="@{()->callBack.jumpWorkTable(router.ACTIVITY_REPAIRS_PAGING)}">
 
                         <LinearLayout

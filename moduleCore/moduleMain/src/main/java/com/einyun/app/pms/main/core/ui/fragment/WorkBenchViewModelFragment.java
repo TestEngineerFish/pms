@@ -443,10 +443,12 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         orderTitle(userMenu);
     }
 
-    int orderTitleIndex = 0;
+    int orderTitleFirstIndex = 0;
+    int orderTitleSecondIndex = 0;
 
     private void orderTitle(String userMenu) {
-        orderTitleIndex = 0;
+        orderTitleFirstIndex = 0;
+        orderTitleSecondIndex = 0;
         //不合格单
         menuFirst(binding.itemWorkBenchFirst.rlUnqualified, userMenu, "unqualified");
         //派工单
@@ -456,15 +458,27 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         //巡查工单
         menuFirst(binding.itemWorkBenchFirst.rlInspection, userMenu, "inspection");
         //客户投诉
-        menuFirst(binding.itemWorkBenchFirst.rlComplain, userMenu, "complain");
+        menuSecond(binding.itemWorkBenchFirst.rlComplain, userMenu, "complain");
         //客户问询
-        menuFirst(binding.itemWorkBenchFirst.rlEnquiry, userMenu, "enquiry");
+        menuSecond(binding.itemWorkBenchFirst.rlEnquiry, userMenu, "enquiry");
         //客户报修
-        menuFirst(binding.itemWorkBenchFirst.rlRepair, userMenu, "repair");
-        if (orderTitleIndex == 0) {
+        menuSecond(binding.itemWorkBenchFirst.rlRepair, userMenu, "repair");
+        if (orderTitleFirstIndex == 0 && orderTitleSecondIndex == 0) {
             binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(View.GONE);
             binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(View.GONE);
         } else {
+            //没有物业工单
+            if (orderTitleFirstIndex == 0){
+                binding.itemWorkBenchFirst.tvWorkOrderTitleFirst.setVisibility(View.GONE);
+            }else{
+                binding.itemWorkBenchFirst.tvWorkOrderTitleFirst.setVisibility(VISIBLE);
+            }
+            //没有客服工单
+            if (orderTitleSecondIndex == 0){
+                binding.itemWorkBenchFirst.tvWorkOrderTitleSecond.setVisibility(View.GONE);
+            }else{
+                binding.itemWorkBenchFirst.tvWorkOrderTitleSecond.setVisibility(VISIBLE);
+            }
             binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(VISIBLE);
             binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(VISIBLE);
         }
@@ -473,7 +487,16 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     private void menuFirst(View v, String userMenu, String tag) {
         if (userMenu.indexOf(tag) != -1) {
             v.setVisibility(VISIBLE);
-            orderTitleIndex++;
+            orderTitleFirstIndex++;
+        } else {
+            v.setVisibility(View.GONE);
+        }
+    }
+
+    private void menuSecond(View v, String userMenu, String tag) {
+        if (userMenu.indexOf(tag) != -1) {
+            v.setVisibility(VISIBLE);
+            orderTitleSecondIndex++;
         } else {
             v.setVisibility(View.GONE);
         }
