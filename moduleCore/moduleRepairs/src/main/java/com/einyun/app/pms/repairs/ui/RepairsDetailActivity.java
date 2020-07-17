@@ -1209,7 +1209,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         BottomPicker.buildBottomPicker(this, txStrList, clDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
-                clDefaultPos = position;
+
                 for (Door data : doorResult) {
                     if (data.getDataName().equals(txStrList.get(position))) {
                         customerRepair.setBx_area(data.getDataName());
@@ -1217,6 +1217,18 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                         binding.repairsInfo.repairReportArea.setText(data.getDataName());
                     }
                 }
+//                customerRepair.setLine_key(model.get(0).getExpand().getMajorLine().getKey());
+//                customerRepair.setLine_name(model.get(0).getExpand().getMajorLine().getName());
+                if (clDefaultPos!=position) {
+                    customerRepair.setBx_cate_lv1("");
+                    customerRepair.setBx_cate_lv2("");
+                    customerRepair.setBx_cate_lv3("");
+                    customerRepair.setBx_cate_lv1_id("");
+                    customerRepair.setBx_cate_lv2_id("");
+                    customerRepair.setBx_cate_lv3_id("");
+                    binding.repairsInfo.repairType.setText("");
+                }
+                clDefaultPos = position;
             }
         });
     }
