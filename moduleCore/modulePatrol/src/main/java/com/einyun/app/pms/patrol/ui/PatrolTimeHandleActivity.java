@@ -92,8 +92,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_ORDER_ID, orderId)
-                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
-                .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                .withString(RouteKey.KEY_DIVIDE_ID, super.divideId)
+                .withString(RouteKey.KEY_PROJECT_ID, super.projectId)
                 .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
                 .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                 .navigation();
