@@ -84,8 +84,14 @@ class DashBoardRepo : DashBoardService {
                 ?.subscribe(
                         Consumer { response ->
                             if (response.code.equals("0")) {
-                                liveData.postValue(JsonUtil.toJson((response.data)[0].children.toString()))
-                                callBack.call(JsonUtil.toJson((response.data)[0].children.toString()))
+                                if (response.data == null || response.data.size == 0){
+                                    liveData.postValue("")
+                                    callBack.call("")
+                                }else{
+                                    liveData.postValue(JsonUtil.toJson((response.data)[0].children.toString()))
+                                    callBack.call(JsonUtil.toJson((response.data)[0].children.toString()))
+                                }
+
                             } else {
                                 callBack.onFaild(EinyunHttpException(response))
                             }
