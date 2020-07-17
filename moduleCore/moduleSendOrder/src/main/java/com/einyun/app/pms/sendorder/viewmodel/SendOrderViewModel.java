@@ -1,6 +1,8 @@
 package com.einyun.app.pms.sendorder.viewmodel;
 
 
+import android.os.Handler;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -78,6 +80,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
 
     /**
      * * 获取代办列表
+     *
      * @return LiveData
      */
     public LiveData<PagedList<Distribute>> loadPadingData() {
@@ -133,7 +136,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         return donePageList;
     }
 
-    public void  onConditionSelected(Map<String, SelectModel> selected) {
+    public void onConditionSelected(Map<String, SelectModel> selected) {
         if (isPending()) {
             request.resetConditions();
         }
@@ -153,6 +156,12 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      */
     public MutableLiveData<List<OrgnizationModel>> getOrgnization(GetOrgRequest request) {
         showLoading();
+       /* new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideLoading();
+            }
+        },5000);*/
         resourceWorkOrderService.getOrgnization(request, new CallBack<List<OrgnizationModel>>() {
             @Override
             public void call(List<OrgnizationModel> data) {
@@ -162,7 +171,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
 
             @Override
             public void onFaild(Throwable throwable) {
-
+                hideLoading();
             }
         });
 
@@ -176,6 +185,12 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
      */
     public MutableLiveData<List<JobModel>> getJob(GetJobRequest request) {
         showLoading();
+       /* new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideLoading();
+            }
+        },5000);*/
         resourceWorkOrderService.getJob(request, new CallBack<List<JobModel>>() {
             @Override
             public void call(List<JobModel> data) {
@@ -185,6 +200,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
 
             @Override
             public void onFaild(Throwable throwable) {
+                hideLoading();
             }
         });
 
@@ -213,6 +229,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
         });
         return resend;
     }
+
     /**
      * 三大客服类转单 LiveData
      *

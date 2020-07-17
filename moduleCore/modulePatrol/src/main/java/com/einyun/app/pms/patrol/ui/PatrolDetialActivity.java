@@ -50,6 +50,7 @@ import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -318,6 +319,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
 
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
+            if (isClosedState==null) {
+                return;
+            }
             if (isClosedState.isClosed()) {
                 if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PATROL)) {
                     navigatApply(RouterUtils.ACTIVITY_PATROL_FORCE_CLOSE);//强制关闭
@@ -347,6 +351,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             orderId = patrol.getData().getZyxcgd().getId_();
         }
         this.patrolInfo = patrol;
+        projectId=patrolInfo.getData().getZyxcgd().getF_project_id();
+        divideId=patrolInfo.getData().getZyxcgd().getF_massif_id();
         f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
         if (f_plan_work_order_state==6) {
             if (listType != ListType.DONE.getType()) {
@@ -715,6 +721,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 强制闭单
      */
     public void onForceClose() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         viewModel.isClosed(new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_PATROL));
     }
 
@@ -722,6 +733,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 申请延期
      */
     public void onPostpone() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         viewModel.isClosed(new IsClosedRequest(orderId, WorkOrder.POSTPONED_PATROL));
     }
 

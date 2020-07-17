@@ -32,6 +32,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 import com.einyun.app.pms.patrol.R;
@@ -91,8 +92,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_ORDER_ID, orderId)
-                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
-                .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                .withString(RouteKey.KEY_DIVIDE_ID, super.divideId)
+                .withString(RouteKey.KEY_PROJECT_ID, super.projectId)
                 .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
                 .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                 .navigation();
@@ -471,6 +472,12 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     private void uploadImage(List<WorkNode> nodes) {
         if (nodes == null) {
             ToastUtil.show(CommonApplication.getInstance(), R.string.text_alert_local_cached);
+            return;
+        }
+
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
         viewModel.uploadWorkNodesImages(nodes).observe(this, nodes1 -> submitForm(nodes1));

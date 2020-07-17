@@ -34,6 +34,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
@@ -65,10 +66,6 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     String taskNodeId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
-    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
-    String divideId;
-    @Autowired(name = RouteKey.KEY_PROJECT_ID)
-    String projectId;
 
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType = ListType.PENDING.getType();
@@ -91,16 +88,27 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         super.initViews(savedInstanceState);
         binding.setCallBack(this);
     }
+
+    @Override
+    protected void initData() {
+        super.initData();
+    }
+
     /**
      *转单
      */
     public void resendOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
                 .withString(RouteKey.KEY_ORDER_ID, orderId)
-                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
-                .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                .withString(RouteKey.KEY_DIVIDE_ID, super.divideId)
+                .withString(RouteKey.KEY_PROJECT_ID, super.projectId)
                 .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
                 .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                 .navigation();
@@ -296,6 +304,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
      */
     private void uploadImages(PatrolInfo patrol) {
         if (patrol == null) {
+            return;
+        }
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {

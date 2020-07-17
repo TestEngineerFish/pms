@@ -1,5 +1,7 @@
 package com.einyun.app.common.utils;
 
+import com.einyun.app.common.BuildConfig;
+
 public class PicEvUtils {
     public static String getBaseUrl(String type) {
         switch (type) {
@@ -10,7 +12,7 @@ public class PicEvUtils {
             case "release":
                 return "\"https://bms.einyun.com\"";
             default:
-                return "";
+                return BuildConfig.BASE_URL;
         }
     }
 
@@ -23,7 +25,7 @@ public class PicEvUtils {
             case "release":
                 return "\"https://fee.einyun.com\"";
             default:
-                return "";
+                return BuildConfig.BASE_FEE_URL;
         }
     }
 

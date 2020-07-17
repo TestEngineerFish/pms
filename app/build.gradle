@@ -5,8 +5,8 @@ android {
         applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 226
-        versionName "2.2.6"
+        versionCode 227
+        versionName "2.2.7"
         multiDexEnabled true
         flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -80,6 +80,9 @@ android {
     compileOptions {
         targetCompatibility = '1.8'
         sourceCompatibility = '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
     }
 
     android.applicationVariants.all { variant ->
