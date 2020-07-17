@@ -178,7 +178,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
-
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+        }
         binding.sendOrder.repairSelectPeople.setOnClickListener(view -> {
             selectPeple();
         });
@@ -445,26 +447,31 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         if ("4".equals(f_status)) {
 
                             binding.tvScanReasult.setText("成功");
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
+
 
                         } else {
                             if ("1".equals(model.getScan_result())) {
-
+                                binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
                                 binding.tvScanReasult.setText("成功");
                             } else if ("0".equals(model.getScan_result())) {
                                 binding.tvScanReasult.setText("失败");
+                                binding.tvScanReasult.setTextColor(getResources().getColor(R.color.redTextColor));
                             } else {
                                 binding.tvScanReasult.setText("未扫码");
-
+                                binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
                             }
                         }
                     } else {
                         if ("1".equals(model.getScan_result())) {
-
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
                             binding.tvScanReasult.setText("成功");
                         } else if ("0".equals(model.getScan_result())) {
                             binding.tvScanReasult.setText("失败");
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.redTextColor));
                         } else {
                             binding.tvScanReasult.setText("未扫码");
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
 
                         }
                     }
