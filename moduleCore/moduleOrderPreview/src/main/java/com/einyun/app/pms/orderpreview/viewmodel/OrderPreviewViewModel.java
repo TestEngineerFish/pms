@@ -62,7 +62,13 @@ public class OrderPreviewViewModel extends BasePageListViewModel<OrderPreviewMod
     public void onConditionSelected(Map<String, SelectModel> selected) {
         if (selected.get(SELECT_TIME_CIRCLE) != null) {
             String id = selected.get(SELECT_TIME_CIRCLE).getId();
-            request.getQuerys().get(0).setValue(id);
+            if (request.getQuerys()!=null) {
+                try {
+                    request.getQuerys().get(0).setValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         if (selected.get(PREVIEW_SELECT_TIAOXIAN) != null) {
             String id = selected.get(PREVIEW_SELECT_TIAOXIAN).getId();
