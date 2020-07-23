@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -28,6 +29,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -145,6 +147,9 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 
     }
     private void loadPagingData(DisqualifiedListRequest requestBean, String  tag){
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+            return;
+        }
 //        初始化数据，LiveData自动感知，刷新页面
         viewModel.loadPadingData(requestBean,tag).observe(this, dataBeans ->
                 adapter.submitList(dataBeans)
