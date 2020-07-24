@@ -4,6 +4,7 @@ package com.einyun.app.common.repository;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.common.viewmodel.DisqualifiedDetailResponse;
 import com.einyun.app.common.viewmodel.GetApprovalBasicInfoResponse;
+import com.einyun.app.common.viewmodel.IsCanDealResponse;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
 
 
@@ -48,4 +49,11 @@ public interface MsgServiceApi {
      */
     @GET
     Flowable<DisqualifiedDetailResponse> getTODODetailInfo(@Url String url);
+    /**
+     * 判断工单是否可处理
+     * @param
+     * @return
+     */
+    @GET
+    Flowable<IsCanDealResponse> isCanDeal(@Url String url);
 }

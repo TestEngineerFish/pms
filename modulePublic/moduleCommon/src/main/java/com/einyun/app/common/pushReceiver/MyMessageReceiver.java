@@ -26,10 +26,12 @@ import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.R;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.ContentModel;
 import com.einyun.app.common.model.DisqualifiedDetailModel;
+import com.einyun.app.common.model.IsCanDealModel;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PushResultModel;
 import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
@@ -257,30 +259,181 @@ public class MyMessageReceiver extends MessageReceiver{
                                             .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     break;
                                 case "dispatch"://派工单消息
-                                    checkSendOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkSendOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
                                     break;
                                 case "plan"://计划工单消息
-                                    checkPlanOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkPlanOrderTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
                                     break;
                                 case "inspection"://巡查工单消息
-                                    checkPatrolTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkPatrolTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
                                     break;
                                 case "patrol"://巡更工单消息
-                                    checkPatrol2TaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkPatrol2TaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
                                     break;
                                 case "complain"://投诉工单消息
-                                    checkComTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkComTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
                                     break;
                                 case "enquiry"://问询消息
-                                    checkTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
                                     break;
                                 case "repair"://报修消息
-                                    checkRepairTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkRepairTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId(),pushModel.getType());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
+
 
                                     break;
 
                                 case "unqualified"://不合格单
-                                    checkQualityTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
+                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                        @Override
+                                        public void call(IsCanDealModel data) {
+                                            if (!data.isCanTurn()) {
+                                                if (data.isShowDetail()) {
+                                                    initCopyAndEnd(pushModel);
+                                                } else {
+                                                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                                }
+                                            } else {
+                                                checkQualityTaskId(pushModel.getContent().getInstId(),pushModel.getContent().getTaskId());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFaild(Throwable throwable) {
+                                            ThrowableParser.onFailed(throwable);
+                                        }
+                                    });
 
                                     break;
                             }
