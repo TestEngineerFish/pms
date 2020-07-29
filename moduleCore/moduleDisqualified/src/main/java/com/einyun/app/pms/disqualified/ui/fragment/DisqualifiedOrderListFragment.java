@@ -6,12 +6,16 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.ItemClickListener;
@@ -22,7 +26,9 @@ import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.pms.disqualified.BR;
 import com.einyun.app.pms.disqualified.R;
 import com.einyun.app.pms.disqualified.constants.DisqualifiedDataKey;
 import com.einyun.app.pms.disqualified.databinding.FragmentDisqualifiedOrderListBinding;
@@ -37,7 +43,9 @@ import com.einyun.app.pms.disqualified.viewmodel.DisqualifiedViewModelFactory;
 import com.einyun.app.pms.disqualified.widget.DisqualifiedTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
@@ -124,7 +132,6 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
 //            binding.tvDivide.setText(blockName);
 //        }
 
-        binding.llSearch.setVisibility(View.GONE);
     }
     private void loadPagingData(DisqualifiedListRequest requestBean, String  tag){
 //        初始化数据，LiveData自动感知，刷新页面
@@ -202,9 +209,49 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
      * 搜索按钮点击
      * */
     public void onSearchClick(){
-
+        search();
     }
+    private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(),map);
+        try {
+//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemDisqualifiedListBinding, DisqualifiedItemModel>(getActivity(), com.einyun.app.pms.disqualified.BR.model, new PageSearchListener<ItemDisqualifiedListBinding,DisqualifiedItemModel>() {
+                    @Override
+                    public LiveData<PagedList<DisqualifiedItemModel>> search(String search) {
+                        DisqualifiedListRequest requestBean = viewModel.getRequestSearchListBean(1, 10, search);
+                        return viewModel.loadPadingData(requestBean, getFragmentTag());
+                    }
 
+                    @Override
+                    public void onItemClick(DisqualifiedItemModel model) {
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                                .withString(RouteKey.KEY_TASK_ID,model.getTaskId())
+                                .withString(RouteKey.KEY_PRO_INS_ID,model.getProInsId())
+                                .withString(RouteKey.FRAGMENT_TAG,getFragmentTag())
+                                .navigation();
+                    }
+
+                    @Override
+                    public void onItem(ItemDisqualifiedListBinding binding,DisqualifiedItemModel model) {
+
+                    }
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_disqualified_list;
+                    }
+                });
+
+                searchFragment.setHint("请搜索工单编号或工单名称");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
      * 筛选按钮点击

@@ -101,7 +101,24 @@
                 app:hintText="请输入文字信息"
                 app:maxNumber="300" />
         </LinearLayout>
-
+        <LinearLayout style="@style/ll_create_order">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联合处理人"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+            <EditText
+                android:id="@+id/et_joint_person"
+                android:layout_marginLeft="25dp"
+                android:background="@color/container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入"
+                android:textStyle="normal"
+                android:textSize="@dimen/font_size14" />
+        </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -131,7 +131,19 @@
                 android:text="@{workOrder.data.info.procContent}"/>
 
         </LinearLayout>
+        <LinearLayout style="@style/work_order_detail_ln"
+            android:layout_marginTop="@dimen/px_2"
+            android:layout_marginBottom="@dimen/px_22"
+            >
 
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="联合处理人" />
+
+            <TextView style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.joint_processor}"/>
+
+        </LinearLayout>
 
     </LinearLayout>
     </androidx.cardview.widget.CardView>

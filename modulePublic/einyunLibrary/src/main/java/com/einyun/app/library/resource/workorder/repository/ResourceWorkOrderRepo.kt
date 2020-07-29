@@ -960,6 +960,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addSort("bx_time", request.DESC)
             .setPageBean(request.pageBean)
+            .setParamsValue(request.searchValue)
         return builder
     }
 
@@ -990,6 +991,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addSort("F_ts_time", request.DESC)
             .setPageBean(request.pageBean)
+            .setParamsValue(request.searchValue)
         return builder
     }
 

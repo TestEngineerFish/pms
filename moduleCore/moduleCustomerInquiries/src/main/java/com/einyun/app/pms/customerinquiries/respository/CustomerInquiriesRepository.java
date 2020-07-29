@@ -49,6 +49,7 @@ public class CustomerInquiriesRepository {
                         .subscribe(response -> {
                     if(response.isState()){
                         if (mPage1==page.getPageBean().getPage()) {
+                            callback.call(response.getData());
                         }else {
                             mPage1=page.getPageBean().getPage();
                             callback.call(response.getData());
@@ -65,6 +66,7 @@ public class CustomerInquiriesRepository {
                         .subscribe(response -> {
                             if(response.isState()){
                                 if (mPage2==page.getPageBean().getPage()) {
+                                    callback.call(response.getData());
                                 }else {
                                     mPage2=page.getPageBean().getPage();
                                     callback.call(response.getData());
@@ -81,6 +83,7 @@ public class CustomerInquiriesRepository {
                         .subscribe(response -> {
                             if(response.isState()){
                                 if (mPage3==page.getPageBean().getPage()) {
+                                    callback.call(response.getData());
                                 }else {
                                     mPage3=page.getPageBean().getPage();
                                     callback.call(response.getData());
@@ -97,6 +100,7 @@ public class CustomerInquiriesRepository {
                         .subscribe(response -> {
                             if(response.isState()){
                                 if (mPage4==page.getPageBean().getPage()) {
+                                    callback.call(response.getData());
                                 }else {
                                     mPage4=page.getPageBean().getPage();
                                     callback.call(response.getData());
@@ -113,6 +117,7 @@ public class CustomerInquiriesRepository {
                         .subscribe(response -> {
                             if(response.isState()){
                                 if (mPage5==page.getPageBean().getPage()) {
+                                    callback.call(response.getData());
                                 }else {
                                     mPage5=page.getPageBean().getPage();
                                     callback.call(response.getData());

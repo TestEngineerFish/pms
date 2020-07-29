@@ -581,6 +581,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         DistributeSubmitRequest request = new DistributeSubmitRequest();
         request.setAfterPic(new ImageUploadManager().toJosnString(uploads));
         request.setTaskId(taskId);
+        request.setJoint_processor(binding.orderForm.etJointPerson.getText().toString().trim());
         request.setId(detialModel.getData().getInfo().getID());
         request.setProcConeten(binding.orderForm.etLimitInput.getString());
         viewModel.submit(request).observe(this, aBoolean -> {

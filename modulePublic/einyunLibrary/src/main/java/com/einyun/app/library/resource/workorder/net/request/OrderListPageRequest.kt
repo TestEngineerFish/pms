@@ -1,6 +1,7 @@
 package com.einyun.app.library.resource.workorder.net.request
 
 import com.einyun.app.base.paging.bean.Query
+import com.einyun.app.base.paging.bean.QueryBuilder
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -78,4 +79,10 @@ class OrderListPageRequest : PageRquest(), Cloneable {
     var dividePatroId: String? = null
     @SerializedName("F_line_code")
     var txPatroId:String?=null
+    var params: Params?=null
+
+     class Params {
+        var searchValue: String? = null
+    }
+
 }

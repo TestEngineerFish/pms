@@ -254,7 +254,7 @@
                             <TextView
                                 android:id="@+id/tv_ask_type"
                                 style="@style/style_text_approval_right"
-                                android:text="@{module.data.customer_enquiry_model.wx_cate}" />
+                                android:text="@{module.data.customer_enquiry_model.wx_cate+@string/text_padding+module.data.customer_enquiry_model.wx_sub_cate}" />
                         </RelativeLayout>
 
                         <RelativeLayout style="@style/style_rl_normal">

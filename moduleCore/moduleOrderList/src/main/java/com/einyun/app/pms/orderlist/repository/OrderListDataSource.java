@@ -61,6 +61,7 @@ public class OrderListDataSource extends BaseDataSource<DictDataModel> {
             request.setPageSize(PageBean.DEFAULT_PAGE_SIZE);
             request.setPage(pageBean.getPage());
         } else {
+            request.setParams(request.getParams());
             request.setPageBean(pageBean);
         }
 //        request.setPageBean(pageBean);

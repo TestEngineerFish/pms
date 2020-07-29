@@ -984,11 +984,24 @@ class WorkOrderRepository : WorkOrderService {
                 Query.OPERATION_EQUAL,
                 Query.RELATION_AND
             )
+//            .addQueryItem(
+//                "bx_code",
+//                request.searchValue,
+//                "LIKE",
+//                "OR"
+//            )
+//            .addQueryItem(
+//                "bx_content",
+//                request.searchValue,
+//                "LIKE",
+//                "OR"
+//            )
             .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
-            .addSort("bx_time", request.DESC)
+//            .addSort("bx_time", request.DESC)
             .setPageBean(request.pageBean)
+            .setParamsValue(request.searchValue)
         return builder
     }
 
@@ -1014,11 +1027,24 @@ class WorkOrderRepository : WorkOrderService {
                 Query.OPERATION_EQUAL,
                 Query.RELATION_AND
             )
+//            .addQueryItem(
+//                "F_ts_code",
+//                request.searchValue,
+//                "LIKE",
+//                "OR"
+//            )
+//            .addQueryItem(
+//                "F_ts_content",
+//                request.searchValue,
+//                "LIKE",
+//                "OR"
+//            )
             .addQueryItem("state", request.state, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("node_id_", request.node_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addSort("F_ts_time", request.DESC)
             .setPageBean(request.pageBean)
+            .setParamsValue(request.searchValue)
         return builder
     }
 

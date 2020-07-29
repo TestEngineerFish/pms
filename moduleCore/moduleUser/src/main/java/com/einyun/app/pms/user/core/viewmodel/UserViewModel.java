@@ -2,6 +2,7 @@ package com.einyun.app.pms.user.core.viewmodel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,6 +16,7 @@ import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.core.net.EinyunHttpService;
@@ -148,14 +150,26 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
 
                 @Override
                 public void onNegtiveClick() {
-                    privacyTermView.dismiss();
-                    ActivityUtil.finishActivitys();
+//                    privacyTermView.dismiss();
+//                    ActivityUtil.finishActivitys();
+                    showTip(context);
                 }
             });
             privacyTermView.show();
         }
     }
-
+    /**
+     * 不同意协议退出提示
+     */
+    private void showTip(Context context) {
+        new AlertDialog(context).builder().setTitle("提示").setMsg("因您未同意服务&隐私协议，\n" +
+                "请点击“确定”后退出APP！").setPositiveButton("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtil.finishActivitys();
+            }
+        }).show();
+    }
     /**
      * 通过用户名删除数据库数据
      *

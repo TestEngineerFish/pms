@@ -2,7 +2,9 @@ package com.einyun.app.pms.orderlist.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,18 +21,22 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.paging.bean.QueryBuilder;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.BasicDataManager;
 import com.einyun.app.common.manager.BasicDataTypeEnum;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
@@ -39,6 +45,7 @@ import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.LiveDataBusUtils;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.SpacesItemDecoration;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.mdm.model.DivideGrid;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -47,16 +54,25 @@ import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
 import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
+import com.einyun.app.library.workorder.model.RepairsModel;
+import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
+import com.einyun.app.pms.orderlist.BR;
 import com.einyun.app.pms.orderlist.R;
 import com.einyun.app.pms.orderlist.databinding.ActivityOrderListAllBinding;
 import com.einyun.app.pms.orderlist.databinding.ItemOrderListBinding;
+import com.einyun.app.pms.orderlist.databinding.ItemOrderListSearchBinding;
 import com.einyun.app.pms.orderlist.viewmodel.OrderListViewModel;
 import com.einyun.app.pms.orderlist.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_DISTRIBUTE;
+import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_PATRO;
+import static com.einyun.app.common.constants.RouteKey.ORDER_LIST_PLAN;
 import static com.einyun.app.common.manager.BasicDataTypeEnum.LINE_TYPES;
 import static com.einyun.app.common.manager.BasicDataTypeEnum.REPAIR_AREA;
 import static com.einyun.app.common.manager.BasicDataTypeEnum.RESOURCE;
@@ -84,8 +100,10 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     public String tag;
     OrderListPageRequest request;
+    OrderListPageRequest searchRequest;
     protected SelectPopUpView selectPopUpView;
     private GetNodeIdRequest getNodeIdRequest;
+    private PageSearchFragment searchFragment;
 
     @Override
     public int getLayoutId() {
@@ -221,6 +239,62 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
 //                selectPopUpView.showAsDropDown(binding.panelCondition.sendWorkOrerTabSelectLn);
             }
         });
+
+        binding.panelCondition.search.setOnClickListener(view -> {
+
+            search();
+        });
+    }
+
+    private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(this, CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(), map);
+        try {
+//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemOrderListSearchBinding, OrderListModel>(this, com.einyun.app.pms.orderlist.BR.workOrderSearch, new PageSearchListener<ItemOrderListSearchBinding, OrderListModel>() {
+                    @Override
+                    public LiveData<PagedList<OrderListModel>> search(String search) {
+                        searchRequest = new OrderListPageRequest();
+
+                        if (tag.equals(ORDER_LIST_DISTRIBUTE) || tag.equals(ORDER_LIST_PATRO) || tag.equals(ORDER_LIST_PLAN)) {
+                            searchRequest.setSearchValue(search);
+                        }else {
+                            OrderListPageRequest.Params params = new OrderListPageRequest.Params();
+                            params.setSearchValue(search);
+                            searchRequest.setSearchValue(search);
+                            searchRequest.setParams(params);
+                        }
+
+
+                        return viewModel.loadPagingData(searchRequest, tag);
+
+                    }
+
+                    @Override
+                    public void onItemClick(OrderListModel model) {
+
+                        initJump(model);
+                    }
+
+                    @Override
+                    public void onItem(ItemOrderListSearchBinding binding, OrderListModel model) {
+                        showSearchItemByTag(tag, binding, model);
+                    }
+
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_order_list_search;
+                    }
+                });
+
+                searchFragment.setHint("请搜索工单编号或工单名称");
+            }
+            searchFragment.show(getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -234,7 +308,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 binding.sendOrderRef.setRefreshing(false);
             }
         });
-        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.ORDER_LIST_EMPTY,this);
+        LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(), LiveDataBusKey.ORDER_LIST_EMPTY, this);
         RecyclerView mRecyclerView = binding.orderListRec;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -295,6 +369,15 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
 
     @Override
     public void onItemClicked(View veiw, OrderListModel data) {
+        initJump(data);
+
+    }
+
+    /**
+     * 页面跳转
+     */
+
+    private void initJump(OrderListModel data) {
         if (tag.equals(RouteKey.ORDER_LIST_DISTRIBUTE)) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
                     .withString(RouteKey.KEY_ORDER_ID, data.getREF_ID())
@@ -324,21 +407,21 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
                     .navigation();*/
-            if((data.getF_patrol_line_id()!=null)){
+            if ((data.getF_patrol_line_id() != null)) {
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
-                        .withString(RouteKey.KEY_TASK_ID,"")
-                        .withString(RouteKey.KEY_ORDER_ID,data.getID_())
-                        .withInt(RouteKey.KEY_LIST_TYPE,ListType.DONE.getType())
-                        .withString(RouteKey.KEY_TASK_NODE_ID,"UserTask1")
-                        .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID())
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "UserTask1")
+                        .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
                         .navigation();
-            }else{
+            } else {
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-                        .withString(RouteKey.KEY_TASK_ID,"")
-                        .withString(RouteKey.KEY_ORDER_ID,data.getID_())
-                        .withInt(RouteKey.KEY_LIST_TYPE,ListType.DONE.getType())
-                        .withString(RouteKey.KEY_TASK_NODE_ID,"")
-                        .withString(RouteKey.KEY_PRO_INS_ID,data.getPROC_INST_ID())
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_ORDER_ID, data.getID_())
+                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, data.getPROC_INST_ID())
                         .navigation();
             }
             return;
@@ -368,7 +451,6 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     .navigation();
             return;
         }
-
     }
 
     @Override
@@ -408,7 +490,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         } else if (value.equals(RouteKey.LIST_STATUS_EVALUATE)) {
             textView.setText(com.einyun.app.common.R.string.text_wait_evaluate);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_wait_evaluate);
-        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER)||value.equals(RouteKey.LIST_STATUS_SEND_ORDER2)) {
+        } else if (value.equals(RouteKey.LIST_STATUS_SEND_ORDER) || value.equals(RouteKey.LIST_STATUS_SEND_ORDER2)) {
             textView.setText(com.einyun.app.common.R.string.text_wait_send);
             view.setImageResource(com.einyun.app.common.R.mipmap.icon_state_wait_send);
         } else if (value.equals(RouteKey.LIST_STATUS_WAIT_GRAB)) {
@@ -491,7 +573,63 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 break;
             case RouteKey.ORDER_LIST_REPAIR:
                 setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getState());
-                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getBx_area()+ orderListModel.getBx_cate_lv1() + "-" + orderListModel.getBx_cate_lv2() + "-" + orderListModel.getBx_cate_lv3()));
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getBx_area() + orderListModel.getBx_cate_lv1() + "-" + orderListModel.getBx_cate_lv2() + "-" + orderListModel.getBx_cate_lv3()));
+                binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getBx_time()));
+                binding.itemOrderNum.setText(orderListModel.getBx_code());
+                binding.itemRepair.setVisibility(View.VISIBLE);
+                binding.itemRepairUser.setText(orderListModel.getBx_user());
+                binding.itemHouse.setVisibility(View.VISIBLE);
+                binding.itemHouseTxt.setText(orderListModel.getBx_house());
+                break;
+            case RouteKey.ORDER_LIST_DISTRIBUTE:
+                setStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_STATUS());
+                binding.itemCreateTime.setText(orderListModel.getF_CREATE_TIME());
+                binding.itemOrderNum.setText(orderListModel.getF_ORDER_NO());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_DESC()));
+                binding.itemLocationLn.setVisibility(View.VISIBLE);
+                binding.itemLocation.setText(orderListModel.getF_LOCATION());
+                break;
+            case RouteKey.ORDER_LIST_PATRO:
+                patroStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_plan_work_order_state());
+                binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getF_creation_date()));
+                binding.itemOrderNum.setText(orderListModel.getF_plan_work_order_code());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_inspection_work_plan_name()));
+                break;
+            case RouteKey.ORDER_LIST_PLAN:
+                setStatus(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_STATUS());
+                binding.itemCreateTime.setText(FormatUtil.formatDate(Long.parseLong(orderListModel.getF_CREATE_TIME())));
+                binding.itemOrderNum.setText(orderListModel.getF_ORDER_NO());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_WP_NAME()));
+                break;
+
+        }
+
+    }
+
+    /**
+     * 根据tag显示item
+     */
+    private void showSearchItemByTag(String tag, ItemOrderListSearchBinding binding, OrderListModel orderListModel) {
+        switch (tag) {
+            case RouteKey.ORDER_LIST_COMPLAIN:
+                setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getF_state());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getF_ts_content()));
+                binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getF_ts_time()));
+                binding.itemOrderNum.setText(orderListModel.getF_ts_code());
+                binding.itemComplain.setVisibility(View.VISIBLE);
+                binding.itemComplainUser.setText(orderListModel.getF_ts_user());
+                binding.itemHouse.setVisibility(View.VISIBLE);
+                binding.itemHouseTxt.setText(orderListModel.getF_ts_house());
+                break;
+            case RouteKey.ORDER_LIST_ASK:
+                setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getState());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getWx_content()));
+                binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getWx_time()));
+                binding.itemOrderNum.setText(orderListModel.getWx_code());
+                break;
+            case RouteKey.ORDER_LIST_REPAIR:
+                setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getState());
+                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getBx_area() + orderListModel.getBx_cate_lv1() + "-" + orderListModel.getBx_cate_lv2() + "-" + orderListModel.getBx_cate_lv3()));
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getBx_time()));
                 binding.itemOrderNum.setText(orderListModel.getBx_code());
                 binding.itemRepair.setVisibility(View.VISIBLE);
@@ -550,7 +688,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     request.setUnitId(unitId);
                     break;
             }
-        }else {
+        } else {
             if (tag.equals(RouteKey.ORDER_LIST_DISTRIBUTE)) {
                 request.setTxId(null);
                 request.setType(null);
@@ -664,7 +802,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
             request.setBx_area_id(selected.get(SELECT_AREA) == null ? null : selected.get(SELECT_AREA).getKey());
             request.setBx_cate_lv1_id(selected.get(SELECT_AREA_FIR) == null ? null : selected.get(SELECT_AREA_FIR).getKey());
             request.setBx_cate_lv2_id(selected.get(SELECT_AREA_SEC) == null ? null : selected.get(SELECT_AREA_SEC).getKey());
-        }else {
+        } else {
             request.setBx_area_id(null);
             request.setBx_cate_lv1_id(null);
             request.setBx_cate_lv2_id(null);
@@ -729,7 +867,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         if (selected.size() > 0) {
             request.setF_ts_property_id(selected.get(SELECT_COMPLAIN_PROPERTYS) == null ? null : selected.get(SELECT_COMPLAIN_PROPERTYS).getKey());
             request.setF_ts_cate_id(selected.get(SELECT_COMPLAIN_TYPES) == null ? null : selected.get(SELECT_COMPLAIN_TYPES).getKey());
-        }else {
+        } else {
             request.setF_ts_property_id(null);
             request.setF_ts_cate_id(null);
         }
