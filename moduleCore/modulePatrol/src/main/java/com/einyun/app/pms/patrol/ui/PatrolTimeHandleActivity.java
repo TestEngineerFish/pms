@@ -489,6 +489,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         patrolInfo.getData().getZyxcgd().setSub_inspection_work_order_flow_node(flowNodes);
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
+        request.setRemark(binding.limitInput.getString());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
                 viewModel.finishTask(orderId).observe(this, aBoolean1 -> {

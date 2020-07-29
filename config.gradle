@@ -303,7 +303,7 @@ def fee_server =[:]//收费 地址
 def fee_middle_server =[:]//收费uat含端口10018&&release切换url
 
 //开发调式环境
-server.debug = "\"http://uatbms.einyun.com\""
+server.debug = "\"http://testbms.einyun.com\""
 fee_server.debug = "\"http://uatbms.einyun.com\""
 fee_middle_server.debug = "\"/fee-center-api\""
 
