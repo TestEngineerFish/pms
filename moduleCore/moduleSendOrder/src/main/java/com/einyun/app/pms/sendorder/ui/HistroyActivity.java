@@ -61,7 +61,11 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                     } else {
                         binding.itemHistroyImg.setVisibility(View.VISIBLE);
                     }
-                    binding.taskName.setText(map.get(model.getTaskKey()));
+                    if (map.get(model.getTaskKey()) == null) {
+                        binding.taskName.setText(map.get(model.getTaskName()));
+                    } else {
+                        binding.taskName.setText(map.get(model.getTaskKey()));
+                    }
                     binding.opinonTxt.setText(model.getOpinion());
                     if (model.status.equals("deliverto")) {
                         binding.taskName.setText("转单");
@@ -70,7 +74,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                     } else if (model.status.equals("feedback")) {
                         binding.taskName.setText("沟通反馈");
                     }
-                    if (model.status.equals("timeout")){
+                    if (model.status.equals("timeout")) {
                         binding.opinonTxt.setText("系统");
                     }
                 }
@@ -105,8 +109,8 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
      */
     private void deleteNewStep(List<HistoryModel> historyModels) {
         if (historyModels != null && historyModels.size() > 0) {
-            int length=historyModels.size();
-            for (int i=0;i<length;i++){
+            int length = historyModels.size();
+            for (int i = 0; i < length; i++) {
                 if (historyModels.get(i).getTaskKey().contains("StartEvent")) {
                     historyModels.remove(i);
                     i--;
