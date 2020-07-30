@@ -185,14 +185,31 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                     public void onItem(ItemSearchWorkSendBinding binding, DistributeWorkOrder model) {
 
                         if (viewModel.listType==ListType.PENDING.getType()) {
-//                            if (model.getIs_coming_timeout() == 1) {
-//                                binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
-//                            } else {
-//                                binding.itemSendWorkLfImg.setVisibility(View.GONE);
-//                            }
+                            if (model.is_coming_timeout() == 1) {
+                                binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                            }
                         } else {
                             binding.itemSendWorkLfImg.setVisibility(View.GONE);
                         }
+                        if (listType == ListType.DONE.getType()) {
+                            binding.itemResendRe.setVisibility(View.GONE);
+                        }
+                        binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName())
+                                        .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, model.getF_DIVIDE_ID())
+                                        .withString(RouteKey.KEY_PROJECT_ID, model.getF_PROJECT_ID())
+                                        .navigation();
+                            }
+                        });
+                        binding.selectOrderTime.setText(FormatUtil.formatDate(model.getF_CREATE_TIME()));
                     }
 
                     @Override
@@ -200,7 +217,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
                         return R.layout.item_search_work_send;
                     }
                 });
-                searchFragment.setHint("请输入工单编号或计划名称");
+                searchFragment.setHint("请输入工单编号、问题描述、位置");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {

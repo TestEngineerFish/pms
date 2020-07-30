@@ -245,7 +245,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                searchFragment.setHint("请输入工单编号、问题描述");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {

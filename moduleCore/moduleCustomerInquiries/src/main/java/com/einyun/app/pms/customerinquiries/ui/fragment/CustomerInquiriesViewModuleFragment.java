@@ -202,13 +202,54 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                                 binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_closed);
                                 break;
                         }
-                        binding.rlFeedBack.setVisibility(View.GONE);
-                        binding.llTalkOrTurnSingle.setVisibility(View.GONE);
+                        switch (getFragmentTag()) {
+                            case FRAGMENT_TO_FOLLOW_UP://待跟进
+                                binding.llTalkOrTurnSingle.setVisibility(View.VISIBLE);
+                                binding.rlFeedBack.setVisibility(View.GONE);
+                                break;
+                            case FRAGMENT_TO_FEED_BACK://待反馈
+                                binding.llTalkOrTurnSingle.setVisibility(View.GONE);
+                                binding.rlFeedBack.setVisibility(View.VISIBLE);
+                                break;
+                            case FRAGMENT_HAVE_TO_FOLLOW_UP://已跟进
+                            case FRAGMENT_TRANSFERRED_TO://已办结
+                            case FRAGMENT_COPY_ME://抄送我
+                                binding.llTalkOrTurnSingle.setVisibility(View.GONE);
+                                binding.rlFeedBack.setVisibility(View.GONE);
+                                break;
+                        }
                         binding.tvInquiriesType.setText(model.wx_content);
                         binding.tvPropertyNum.setText(model.wx_house);
                         binding.tvAskingPeople.setText(model.wx_user);
                         binding.tvWorkOrderNum.setText(model.wx_code);
                         binding.tvCreateTime.setText(TimeUtil.getAllTime(model.createTime));
+                        binding.tvTurnOrder.setOnClickListener(new ClickProxy(view -> {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.INQUIRIES_TURN_ORDER.getTypeName())
+                                    .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, model.wx_dk_id)
+                                    .withString(RouteKey.KEY_PROJECT_ID, model.getU_project_id())
+                                    .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                    .navigation();
+
+                        }));
+                        binding.tvTalk.setOnClickListener(new ClickProxy(view -> {
+                            ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                    .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.INQUIRIES_COMMUN.getTypeName())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, model.wx_dk_id)
+                                    .withString(RouteKey.KEY_PROJECT_ID, model.getU_project_id())
+                                    .navigation();
+                        }));
+                        binding.rlFeedBack.setOnClickListener(new ClickProxy(view -> {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
+                                    .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                    .navigation();
+
+                        }));
                     }
 
                     @Override
@@ -217,7 +258,7 @@ public class CustomerInquiriesViewModuleFragment extends BaseViewModelFragment<F
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                searchFragment.setHint("请输入工单编号、问询内容");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {

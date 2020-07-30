@@ -203,13 +203,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     public LiveData<PagedList<RepairsModel>> search(String search) {
                         searchRequest = new RepairsPageRequest();
                         searchRequest.setSearchValue(search);
-
-//                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
                         return viewModel.loadPagingData(searchRequest, getFragmentTag());
-//                        } else {
-//                            return viewModel.loadPadingData(requestBean, getFragmentTag());
-//                            return viewModel.loadPadingData(request, getFragmentTag());
-//                        }
                     }
 
                     @Override
@@ -225,8 +219,51 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     }
 
                     @Override
-                    public void onItem(ItemOrderRepairSearchBinding binding, RepairsModel model) {
-
+                    public void onItem(ItemOrderRepairSearchBinding binding, RepairsModel repairsModel) {
+                        if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FOLLOW)) {
+                            binding.itemContactOrFeedRe.setVisibility(View.VISIBLE);
+                        }
+                        if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FEED)) {
+                            binding.itemFeedRe.setVisibility(View.VISIBLE);
+                        }
+                        //沟通
+                        binding.itemContact.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                        .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.REPAIR_COMMUN.getTypeName())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
+                                        .navigation();
+                            }
+                        });
+                        //反馈
+                        binding.itemFeedRe.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
+                                        .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                        .navigation();
+                            }
+                        });
+                        //转单
+                        binding.itemResend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName())
+                                        .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, repairsModel.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
+                                        .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                        .navigation();
+                            }
+                        });
+                        binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getBx_time()));
                     }
                     @Override
                     public int getLayoutId() {
@@ -234,7 +271,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                searchFragment.setHint("请输入工单编号、报修内容");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {

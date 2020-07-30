@@ -289,7 +289,25 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                switch (tag) {
+                    case RouteKey.ORDER_LIST_REPAIR://报修
+                        searchFragment.setHint("请输入工单编号、报修内容");
+                        break;
+                    case RouteKey.ORDER_LIST_PATRO://巡查
+                    case RouteKey.ORDER_LIST_PLAN://计划工单
+                        searchFragment.setHint("请输入工单编号、计划名称");
+                        break;
+                    case RouteKey.ORDER_LIST_DISTRIBUTE://派工单
+                        searchFragment.setHint("请输入工单编号、问题描述、位置");
+                        break;
+                    case RouteKey.ORDER_LIST_COMPLAIN://投诉
+                        searchFragment.setHint("请输入工单编号、投诉内容");
+                        break;
+                    case RouteKey.ORDER_LIST_ASK://问询
+                        searchFragment.setHint("请输入工单编号、问询内容");
+                        break;
+                }
+
             }
             searchFragment.show(getSupportFragmentManager(), "");
         } catch (Exception e) {

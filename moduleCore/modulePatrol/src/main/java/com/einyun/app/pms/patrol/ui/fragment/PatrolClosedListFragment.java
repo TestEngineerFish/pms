@@ -38,7 +38,7 @@ import java.util.Map;
  * 巡查工单已办列表
  */
 public class PatrolClosedListFragment extends PatrolPendingFragment implements ItemClickListener<Patrol> {
-    protected int listType = ListType.DONE.getType();
+
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
 
@@ -60,6 +60,7 @@ public class PatrolClosedListFragment extends PatrolPendingFragment implements I
                 search();
             }
         });
+        listType = ListType.DONE.getType();
     }
 
     protected void loadData() {

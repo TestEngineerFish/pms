@@ -210,7 +210,7 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                searchFragment.setHint("请输入工单编号、问询内容");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {

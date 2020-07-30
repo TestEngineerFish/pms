@@ -17,7 +17,7 @@
     <string name="tv_divide">分期</string>
     <string name="tv_work_order_info">工单信息</string>
     <string name="tv_work_nums">工单编号</string>
-    <string name="tv_complaint_time">投诉时间</string>
+    <string name="tv_complaint_time">问询时间</string>
     <string name="tv_record_person">记录人</string>
     <string name="tv_ask_way">问询方式</string>
     <string name="tv_ask_type">问询类型</string>

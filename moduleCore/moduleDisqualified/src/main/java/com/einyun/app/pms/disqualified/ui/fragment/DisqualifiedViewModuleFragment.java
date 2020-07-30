@@ -293,8 +293,37 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                     }
 
                     @Override
-                    public void onItem(ItemDisqualifiedListBinding binding,DisqualifiedItemModel model) {
-
+                    public void onItem(ItemDisqualifiedListBinding binding,DisqualifiedItemModel inquiriesItemModule) {
+                        DisqualifiedItemModel item = inquiriesItemModule;
+//                    initCached(binding, inquiriesItemModule);
+                        viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
+                            if (model==null) { return; }
+                            String taskId = model.getDoNextParamt().getTaskId();
+                            if (taskId.equals(item.getTaskId())) {
+                                item.cached=true;
+                            }else {
+                                item.cached=false;
+                            }
+                            binding.setModel(item);
+                        });
+                        viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
+                            if (model==null) { return; }
+                            String taskId = model.getDoNextParamt().getTaskId();
+                            if (taskId.equals(inquiriesItemModule.getTaskId())) {
+                                item.cached=true;
+                            }else {
+                                item.cached=false;
+                            }
+                            binding.setModel(item);
+                        });
+                        switch (getFragmentTag()) {
+                            case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
+                                binding.itemCache.setVisibility(View.VISIBLE);
+                                break;
+                            case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
+                                binding.itemCache.setVisibility(View.GONE);
+                                break;
+                        }
                     }
                     @Override
                     public int getLayoutId() {
@@ -302,7 +331,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                searchFragment.setHint("请输入工单编号、问题描述");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {
