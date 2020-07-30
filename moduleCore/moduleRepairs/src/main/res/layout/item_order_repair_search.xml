@@ -41,7 +41,7 @@
                 android:layout_marginRight="@dimen/px_140"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="@{repairSearch.bx_area+@string/text_padding+repairSearch.bx_cate_lv1+@string/text_padding+repairSearch.bx_cate_lv2+@string/text_padding+repairSearch.bx_cate_lv3}"
+                android:text="@{repairSearch.bx_content}"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size16" />
 

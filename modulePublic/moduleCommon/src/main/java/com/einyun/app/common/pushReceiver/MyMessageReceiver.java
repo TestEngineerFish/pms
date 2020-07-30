@@ -259,7 +259,7 @@ public class MyMessageReceiver extends MessageReceiver{
                                             .navigation(BasicApplication.getInstance(), new LoginNavigationCallbackImpl());
                                     break;
                                 case "dispatch"://派工单消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                    repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -281,7 +281,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
                                 case "plan"://计划工单消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                   repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -303,7 +303,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
                                 case "inspection"://巡查工单消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                   repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -325,7 +325,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
                                 case "patrol"://巡更工单消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                    repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -347,7 +347,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
                                 case "complain"://投诉工单消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                    repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -369,7 +369,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
                                 case "enquiry"://问询消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                    repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -391,7 +391,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
                                 case "repair"://报修消息
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                    repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
@@ -415,7 +415,7 @@ public class MyMessageReceiver extends MessageReceiver{
                                     break;
 
                                 case "unqualified"://不合格单
-                                    viewModel.repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                                    repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
                                             if (!data.isCanTurn()) {
