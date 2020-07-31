@@ -107,9 +107,9 @@ public class DisqualifiedDetailModel {
             private String verification_situation;
             private String verification_enclosure;
             private String completion_time;
-            private String F_ORIGINAL_CODE;//原工单编号
-            private String F_ORIGINAL_TYPE;//原工单类型
-            private String F_ORIGINAL_PROLNSTLD;//原工单流程id
+            private String original_code;//原工单编号
+            private String original_type;//原工单类型
+            private String original_prolnstld;//原工单流程id
             public String getCompletion_time() {
                 return completion_time==null?"":completion_time;
             }
@@ -365,29 +365,30 @@ public class DisqualifiedDetailModel {
                 this.parent_code = parent_code;
             }
 
-            public String getF_ORIGINAL_CODE() {
-                return F_ORIGINAL_CODE==null?"":F_ORIGINAL_CODE;
+            public String getOriginal_code() {
+                return original_code;
             }
 
-            public void setF_ORIGINAL_CODE(String f_ORIGINAL_CODE) {
-                F_ORIGINAL_CODE = f_ORIGINAL_CODE;
+            public void setOriginal_code(String original_code) {
+                this.original_code = original_code;
             }
 
-            public String getF_ORIGINAL_TYPE() {
-                return F_ORIGINAL_TYPE==null?"":F_ORIGINAL_TYPE;
+            public String getOriginal_type() {
+                return original_type;
             }
 
-            public void setF_ORIGINAL_TYPE(String f_ORIGINAL_TYPE) {
-                F_ORIGINAL_TYPE = f_ORIGINAL_TYPE;
+            public void setOriginal_type(String original_type) {
+                this.original_type = original_type;
             }
 
-            public String getF_ORIGINAL_PROLNSTLD() {
-                return F_ORIGINAL_PROLNSTLD==null?"":F_ORIGINAL_PROLNSTLD;
+            public String getOriginal_prolnstld() {
+                return original_prolnstld;
             }
 
-            public void setF_ORIGINAL_PROLNSTLD(String f_ORIGINAL_PROLNSTLD) {
-                F_ORIGINAL_PROLNSTLD = f_ORIGINAL_PROLNSTLD;
+            public void setOriginal_prolnstld(String original_prolnstld) {
+                this.original_prolnstld = original_prolnstld;
             }
+
 
             public static class InitDataBean {
             }

@@ -132,10 +132,10 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         binding.listPicInvalition.addItemDecoration(new SpacesItemDecoration(18));
         binding.listPicInvalition.setAdapter(photoValidationInfoAdapter);
         binding.rlOldCode.setOnClickListener(view -> {
-            if ("1".equals(mDetailModel.getData().getUnqualified_model().getF_ORIGINAL_TYPE())) {//1 计划工单
+            if ("1".equals(mDetailModel.getData().getUnqualified_model().getOriginal_type())) {//1 计划工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
                         .withString(RouteKey.KEY_ORDER_ID, "" )
-                        .withString(RouteKey.KEY_PRO_INS_ID,mDetailModel.getData().getUnqualified_model().getF_ORIGINAL_PROLNSTLD() )
+                        .withString(RouteKey.KEY_PRO_INS_ID,mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld() )
                         .withString(RouteKey.KEY_TASK_ID, "")
                         .withString(RouteKey.KEY_TASK_NODE_ID, "")
                         .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
@@ -143,7 +143,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             }else {//巡查工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                         .withString(RouteKey.KEY_ORDER_ID, "")
-                        .withString(RouteKey.KEY_PRO_INS_ID,mDetailModel.getData().getUnqualified_model().getF_ORIGINAL_PROLNSTLD() )
+                        .withString(RouteKey.KEY_PRO_INS_ID,mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld() )
                         .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
                         .withString(RouteKey.KEY_TASK_ID, "")
                         .withString(RouteKey.KEY_TASK_NODE_ID, "")
@@ -398,9 +398,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
-        if (!detailModule.getData().getUnqualified_model().getF_ORIGINAL_CODE().isEmpty()) {
+        if (!detailModule.getData().getUnqualified_model().getOriginal_code().isEmpty()) {
             binding.rlOldCode.setVisibility(View.VISIBLE);
-            binding.tvOldCode.setText(detailModule.getData().getUnqualified_model().getF_ORIGINAL_CODE());
+            binding.tvOldCode.setText(detailModule.getData().getUnqualified_model().getOriginal_code());
         }
 //        updatePageUIState(PageUIState.FILLDATA.getState());
         code = detailModule.getData().getUnqualified_model().getCode();
