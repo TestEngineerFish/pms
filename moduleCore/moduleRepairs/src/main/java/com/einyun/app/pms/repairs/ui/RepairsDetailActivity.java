@@ -321,15 +321,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_normal) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(0).getName());
-                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(0).getId());
+                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(0).getKey());
                 }
                 if (checkedId == R.id.rb_general) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(1).getName());
-                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(1).getId());
+                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(1).getKey());
                 }
                 if (checkedId == R.id.rb_warning) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(2).getName());
-                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(2).getId());
+                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(2).getKey());
                 }
             }
         });
