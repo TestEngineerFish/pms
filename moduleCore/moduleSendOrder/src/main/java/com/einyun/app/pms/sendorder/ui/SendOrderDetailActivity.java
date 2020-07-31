@@ -15,7 +15,9 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
@@ -163,6 +165,38 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             @Override
             public void onChanged(Boolean aBoolean) {
                 finish();
+            }
+        });
+        binding.orderForm.etJointPerson.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int editEnd = binding.orderForm.etJointPerson.getSelectionEnd();
+
+                // 先去掉监听器，否则会出现栈溢出
+                binding.orderForm.etJointPerson.removeTextChangedListener(this);
+
+                // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
+                // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
+                if (s.toString().length() > 300) { // 当输入字符个数超过限制的大小时，进行截断操作
+                    int length = s.toString().length();
+                    s.delete(editEnd - (length-300), editEnd);
+                    binding.orderForm.etJointPerson.setSelection(editEnd - (length-300));//设置光标在最后
+                    ToastUtil.show(CommonApplication.getInstance(), "请勿超过" + 300 + "个字符");
+                }
+
+                // 恢复监听器
+                binding.orderForm.etJointPerson.addTextChangedListener(this);
+
             }
         });
     }

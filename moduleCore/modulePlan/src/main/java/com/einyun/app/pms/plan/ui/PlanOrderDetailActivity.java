@@ -992,7 +992,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     }).setCreateUnOrder(v -> {
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
                                 .withString(RouteKey.CODE, planInfo.getData().getZyjhgd().getF_ORDER_NO())
-
+                                .withString(RouteKey.F_ORIGINAL_TYPE, "1")
                                 .withString(RouteKey.KEY_ORDER_ID, id)
                                 .withString(RouteKey.KEY_ORDER_NO, planInfo.getData().getZyjhgd().getF_ORDER_NO())
                                 .withString(RouteKey.KEY_LINE, planInfo.getData().getZyjhgd().getF_TX_NAME())

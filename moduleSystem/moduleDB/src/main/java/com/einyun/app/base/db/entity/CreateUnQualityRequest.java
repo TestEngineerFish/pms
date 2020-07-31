@@ -17,6 +17,43 @@ public class CreateUnQualityRequest implements Serializable {
     @PrimaryKey
     @NonNull
     private String code;
+    private String original_prolnstld;
+
+    public String getOriginal_prolnstld() {
+        return original_prolnstld;
+    }
+
+    public void setOriginal_prolnstld(String original_prolnstld) {
+        this.original_prolnstld = original_prolnstld;
+    }
+
+    public String getOriginal_code() {
+        return original_code;
+    }
+
+    public void setOriginal_code(String original_code) {
+        this.original_code = original_code;
+    }
+
+    public String getOriginal_id() {
+        return original_id;
+    }
+
+    public void setOriginal_id(String original_id) {
+        this.original_id = original_id;
+    }
+
+    public String getOriginal_type() {
+        return original_type;
+    }
+
+    public void setOriginal_type(String original_type) {
+        this.original_type = original_type;
+    }
+
+    private String original_code;
+    private String original_id;
+    private String original_type;
     /**
      * bizData : {"divide_id":"63872495547056133","divide_name":"长城盛世家园一期","code":"devCode_09","line":"engineering_classification","severity":"middle_level","problem_description":"哦拉拉拉拉.....","parent_id":null,"parent_code":null,"check_user_id":"1","check_user_name":"超级管理员","checked_user_id":"1","checked_user_name":"超级管理员","check_date":"2020-01-08","correction_date":"2020-01-12","create_enclosure":"{.....}"}
      * startFlowParamObject : {"flowKey":"unqualified_key"}
@@ -87,7 +124,10 @@ public class CreateUnQualityRequest implements Serializable {
         private String check_date;
         private String correction_date;
         private String create_enclosure;
-        private String F_ORIGINAL_PROLNSTLD;
+        private String original_prolnstld;
+        private String original_code;
+        private String original_id;
+        private String original_type;
 
         public String getDivide_id() {
             return divide_id==null?"":divide_id;
@@ -209,12 +249,36 @@ public class CreateUnQualityRequest implements Serializable {
             this.create_enclosure = create_enclosure;
         }
 
-        public String getF_ORIGINAL_PROLNSTLD() {
-            return F_ORIGINAL_PROLNSTLD;
+        public String getOriginal_prolnstld() {
+            return original_prolnstld;
         }
 
-        public void setF_ORIGINAL_PROLNSTLD(String f_ORIGINAL_PROLNSTLD) {
-            F_ORIGINAL_PROLNSTLD = f_ORIGINAL_PROLNSTLD;
+        public void setOriginal_prolnstld(String original_prolnstld) {
+            this.original_prolnstld = original_prolnstld;
+        }
+
+        public String getOriginal_code() {
+            return original_code;
+        }
+
+        public void setOriginal_code(String original_code) {
+            this.original_code = original_code;
+        }
+
+        public String getOriginal_id() {
+            return original_id;
+        }
+
+        public void setOriginal_id(String original_id) {
+            this.original_id = original_id;
+        }
+
+        public String getOriginal_type() {
+            return original_type;
+        }
+
+        public void setOriginal_type(String original_type) {
+            this.original_type = original_type;
         }
     }
 

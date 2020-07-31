@@ -132,9 +132,9 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             binding.tvOldCode.setText(orderNo);
             binding.tvLine.setText(lineName);
             binding.tvResource.setText(resouseName);
-            request.setResName(resouseName);
+//            request.setResName(resouseName);
             request.setTxName(lineName);
-            request.setResId(resouseId);
+//            request.setResId(resouseId);
             request.setTxId(lineId);
             request.setTxCode(lineCode);
 //            request.setDivideCode(divideId);

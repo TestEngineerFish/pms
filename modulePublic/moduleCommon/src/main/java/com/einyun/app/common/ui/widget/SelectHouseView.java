@@ -150,7 +150,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
     private List<HouseModel> InitSort(List<HouseModel> model) {
         Collections.sort(model, new Comparator<HouseModel>() {
             @Override
-            public int compare(HouseModel o1, HouseModel o2) {
+            public int compare(HouseModel o2, HouseModel o1) {
                 if (o1.getName().contains("-") && o2.getName().contains("-")) {
                     String[] split1 = o1.getName().split("-");
                     String s1 = split1[split1.length - 1];
@@ -279,7 +279,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
 
         Collections.sort(modelList, new Comparator<HouseModel>() {
             @Override
-            public int compare(HouseModel o1, HouseModel o2) {
+            public int compare(HouseModel o2, HouseModel o1) {
                 return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
             }
         });
