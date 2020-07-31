@@ -10,18 +10,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
         tools:context=".ui.HistroyActivity">
 
         <include
-            layout="@layout/include_layout_activity_head"
-            android:id="@+id/head_bar" />
+            android:id="@+id/head_bar"
+            layout="@layout/include_layout_activity_head" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_2"
+            android:background="@color/thin_divider_color" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history_rec"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_20"
-            android:layout_marginTop="@dimen/px_30"/>
+            android:layout_marginTop="@dimen/px_30" />
     </LinearLayout>
 </layout>
