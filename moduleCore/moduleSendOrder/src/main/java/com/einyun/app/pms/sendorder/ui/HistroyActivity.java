@@ -111,7 +111,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
         if (historyModels != null && historyModels.size() > 0) {
             int length = historyModels.size();
             for (int i = 0; i < length; i++) {
-                if (historyModels.get(i).getTaskKey().contains("StartEvent")) {
+                if (historyModels.get(i).getTaskKey().contains("StartEvent")||historyModels.get(i).getTaskKey().contains("Timeout_")) {
                     historyModels.remove(i);
                     i--;
                     length--;

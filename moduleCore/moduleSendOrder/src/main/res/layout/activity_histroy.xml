@@ -15,6 +15,7 @@
         tools:context=".ui.HistroyActivity">
 
         <include
+
             android:id="@+id/head_bar"
             layout="@layout/include_layout_activity_head" />
 
