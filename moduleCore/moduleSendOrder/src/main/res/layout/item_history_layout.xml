@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="@dimen/px_96"
+            android:layout_width="@dimen/px_80"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -87,6 +87,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <TextView
+                    android:id="@+id/wait_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
@@ -99,6 +100,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
                 android:orientation="horizontal">
 
                 <TextView
@@ -111,6 +113,7 @@
                     android:textSize="@dimen/font_size14" />
 
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"

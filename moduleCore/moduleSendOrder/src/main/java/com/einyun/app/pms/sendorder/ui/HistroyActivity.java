@@ -75,7 +75,29 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                         binding.taskName.setText("沟通反馈");
                     }
                     if (model.status.equals("timeout")) {
-                        binding.opinonTxt.setText("系统");
+                        binding.name.setText("系统");
+                        binding.opinonTxt.setText("超时");
+                    }
+                    if (model.status.equals("skip")) {
+                        binding.opinonTxt.setText("");
+                    }
+
+                    if (binding.name.getText().toString().contains("admin")){
+                        binding.name.setText(binding.name.getText().toString().replace("admin","系统"));
+                    }
+                    if (binding.waitName.getText().toString().contains("admin")){
+                        binding.waitName.setText(binding.waitName.getText().toString().replace("admin","系统"));
+                    }
+                    if (model.getOpinion()!=null) {
+                        if (model.getOpinion().equals("结束流程")) {
+                            binding.opinonTxt.setText("关闭工单");
+                        } else {
+                            if (model.getOpinion().equals("跳过第一个任务节点") || model.getStatusVal().equals("同意") && model.getOpinion().equals("同意")) {
+                                binding.opinonTxt.setText("");
+                            } else {
+                                binding.opinonTxt.setText(model.getOpinion());
+                            }
+                        }
                     }
                 }
 
@@ -115,6 +137,13 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                     historyModels.remove(i);
                     i--;
                     length--;
+                }
+                if (i==0){
+                    if (historyModels.get(0).getProcDefId().contains("zyxcgd")||historyModels.get(0).getProcDefId().contains("zyjhgd")){
+                        historyModels.get(0).setOpinion("工单自动生成");
+                    }else {
+                        historyModels.get(0).setOpinion("");
+                    }
                 }
             }
         }
