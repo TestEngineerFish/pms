@@ -358,6 +358,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 //        Logger.d("data->"+new Gson().toJson(patrol));
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyxcgd().getId_());
+        request.setRemark(binding.limitInput.getString());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
                 viewModel.finishTask(orderId);

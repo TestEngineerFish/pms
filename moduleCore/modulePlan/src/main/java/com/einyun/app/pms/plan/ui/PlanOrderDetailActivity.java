@@ -1059,6 +1059,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             Log.e(TAG, "onSubmitClick: " + planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(0).getScan_result());
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+            request.setRemark(binding.limitInput.getString());
             viewModel.receiceOrder(request).observe(this, model -> {
 
                 if (model.isState()) {
