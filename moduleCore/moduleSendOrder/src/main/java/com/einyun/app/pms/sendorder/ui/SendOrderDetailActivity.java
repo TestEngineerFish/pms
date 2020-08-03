@@ -268,6 +268,12 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         detialModel = distributeWorkOrder;
+        if (detialModel.getData()==null) {
+            return;
+        }
+        if (detialModel.getData().getInfo()==null) {
+            return;
+        }
         divideId=detialModel.getData().getInfo().getDivideID();
         projectId=detialModel.getData().getInfo().getProjectID();
         if (detialModel.getData().getInfo().getOriginalCode()==null||detialModel.getData().getInfo().getOriginalCode().isEmpty()) {
