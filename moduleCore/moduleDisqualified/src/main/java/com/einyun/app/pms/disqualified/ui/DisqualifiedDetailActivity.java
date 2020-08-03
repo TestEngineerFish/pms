@@ -96,6 +96,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(R.string.tv_disqualified_order);
+        setRightOption(R.drawable.histroy);
+        setRightTxt(R.string.text_histroy);
+        setRightTxtColor(R.color.blueTextColor);
         selectPng();
         selectValidationPng();
         binding.setCallBack(this);
@@ -151,7 +154,15 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             }
         });
     }
-
+    @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_HISTORY)
+                .withString(RouteKey.KEY_ORDER_ID, mDetailModel.getData().getUnqualified_model().getId_())
+                .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getProc_inst_id_())
+                .navigation();
+    }
     @Override
     protected void initData() {
         super.initData();
