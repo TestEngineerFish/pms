@@ -366,7 +366,7 @@ public class DisqualifiedDetailModel {
             }
 
             public String getOriginal_code() {
-                return original_code;
+                return original_code==null?"":original_code;
             }
 
             public void setOriginal_code(String original_code) {
