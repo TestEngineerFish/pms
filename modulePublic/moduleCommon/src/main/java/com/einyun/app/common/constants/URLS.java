@@ -17,4 +17,6 @@ public class URLS {
 
     //待跟进详情
     public static final String URL_GET_TO_FOLLOW_UP_DETAIL ="/bpm-runtime/runtime/task/v1/taskDetailMini?taskId=";
+    //判断是否可以处理
+    public static final String URL_IS_CAN_DEAL ="/workOrder/workOrder/task/v1/getMsgAction?taskId=";
 }

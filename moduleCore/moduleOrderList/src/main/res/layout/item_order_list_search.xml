@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="workOrder"
+            name="workOrderSearch"
             type="com.einyun.app.library.resource.workorder.model.OrderListModel" />
     </data>
 

@@ -83,7 +83,8 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     @Autowired(name =RouteKey.CODE )
     String mCode;
     private CreateUnQualityRequest mDbRequest;
-
+    @Autowired(name = RouteKey.F_ORIGINAL_TYPE)
+    String mORIGINAL_TYPE;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
     String id;
     @Autowired(name = RouteKey.KEY_ORDER_NO)
@@ -164,12 +165,32 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             mRequest.getBizData().setDivide_id(divideId);
             mRequest.getBizData().setDivide_name(divideName);
             mRequest.getBizData().setLine(lineCode);
-            mRequest.getBizData().setF_ORIGINAL_PROLNSTLD(proInsId);
+            mRequest.getBizData().setOriginal_prolnstld(proInsId);
             binding.tvDivide.setText(divideName);
             binding.tvLine.setText(lineName);
             binding.llOld.setVisibility(View.VISIBLE);
             binding.vLine.setVisibility(View.VISIBLE);
             binding.tvOldCode.setText(orderNo);
+            if (StringUtil.isNullStr(orderNo)) {//原工单号
+//            request.setOrderNo(orderNo);
+                mRequest.setOriginal_code(orderNo);
+                mRequest.getBizData().setOriginal_code(orderNo);
+            }
+            if (StringUtil.isNullStr(id)) {//原工单ID
+//            request.setOrderNo(orderNo);
+                mRequest.setOriginal_id(id);
+                mRequest.getBizData().setOriginal_id(id);
+            }
+            if (StringUtil.isNullStr(mORIGINAL_TYPE)) {//原工单类型
+//            request.setOrderNo(orderNo);
+                mRequest.setOriginal_type(mORIGINAL_TYPE);
+                mRequest.getBizData().setOriginal_type(mORIGINAL_TYPE);
+            }
+            if (StringUtil.isNullStr(proInsId)) {//原工单流程ID
+//            request.setOrderNo(orderNo);
+                mRequest.setOriginal_prolnstld(proInsId);
+                mRequest.getBizData().setOriginal_prolnstld(proInsId);
+            }
 
         }
     }

@@ -101,7 +101,44 @@
                 app:hintText="请输入文字信息"
                 app:maxNumber="300" />
         </LinearLayout>
+        <LinearLayout style="@style/ll_create_order">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联合处理人"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/font_size14" />
+<!--            <EditText-->
+<!--                android:id="@+id/et_joint_person"-->
+<!--                android:layout_marginLeft="25dp"-->
+<!--                android:background="@color/container"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="请输入"-->
+<!--                android:textStyle="normal"-->
+<!--                android:textSize="@dimen/font_size14" />-->
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="@dimen/px_30"
+            style="@style/ll_create_order"
+            android:layout_height="wrap_content"
+            >
 
+            <EditText
+                android:id="@+id/et_joint_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:hint="请输入姓名"
+                android:textColor="@color/normal_main_text_icon_color"
+                android:textColorHint="@color/normal_main_text_icon_color"
+                android:textSize = "14sp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/px_30"
+                android:paddingRight="@dimen/px_30"
+                android:background="@color/activity_bg_color"/>
+        </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

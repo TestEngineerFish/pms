@@ -12,15 +12,18 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.paging.viewmodel.BasePageListViewModel;
+import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
+import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.model.JobModel;
 import com.einyun.app.library.resource.workorder.model.JobPage;
 import com.einyun.app.library.resource.workorder.model.OrgnizationModel;
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.model.ResourceTypeBean;
 import com.einyun.app.library.resource.workorder.model.WorkOrderTypeModel;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -30,6 +33,7 @@ import com.einyun.app.library.resource.workorder.net.request.ResendOrderRequest;
 import com.einyun.app.library.resource.workorder.net.response.ResendOrderResponse;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.repository.DoneBoundaryCallBack;
+import com.einyun.app.pms.sendorder.repository.OrderDataSourceFactory;
 import com.einyun.app.pms.sendorder.repository.PendingBoundaryCallBack;
 import com.einyun.app.pms.sendorder.repository.SendOrderRespository;
 
@@ -48,6 +52,7 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     LiveData<PagedList<Distribute>> donePageList;
+    LiveData<PagedList<DistributeWorkOrder>> SearchPageList;
     PendingBoundaryCallBack pendingBoundaryCallBack;
     DoneBoundaryCallBack doneBoundaryCallBack;
     SendOrderRespository repo;
@@ -74,6 +79,20 @@ public class SendOrderViewModel extends BasePageListViewModel<Distribute> {
     public SendOrderViewModel() {
         repo = new SendOrderRespository();
         this.resourceWorkOrderService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_RESOURCE_WORK_ORDER);
+    }
+    /**
+     * * 在线搜索代办列表
+     *
+     * @return LiveData
+     */
+    public LiveData<PagedList<DistributeWorkOrder>> loadPadingNetData(DistributePageRequest request, String tag) {
+        if (!StringUtil.isNullStr(request.getDivideId())){
+            request.setDivideId(null);
+        }
+//        SearchPageList.getValue().getDataSource().invalidate();
+        SearchPageList = new LivePagedListBuilder(new OrderDataSourceFactory(request,tag), config)
+                .build();
+        return SearchPageList;
     }
 
     public MutableLiveData<List<JobModel>> jobModels = new MutableLiveData<>();

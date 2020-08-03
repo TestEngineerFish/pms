@@ -9,7 +9,7 @@
     <string name="tv_person_head">个人头像</string>
     <string name="tv_user_info">个人信息</string>
     <string name="tv_head_icon">头像</string>
-    <string name="tv_login_account">登陆账号</string>
+    <string name="tv_login_account">登录账号</string>
     <string name="name">姓名</string>
     <string name="tv_phone_num">手机号</string>
     <string name="tv_start">评价星级</string>

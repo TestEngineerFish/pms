@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
@@ -21,6 +22,8 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.db.entity.Distribute;
@@ -47,12 +50,14 @@ import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
+import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.resource.workorder.net.request.PageRquest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.sendorder.BR;
 import com.einyun.app.pms.sendorder.R;
 import com.einyun.app.pms.sendorder.databinding.FragmentSendWorkOrderBinding;
+import com.einyun.app.pms.sendorder.databinding.ItemSearchWorkSendBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemWorkSendBinding;
 import com.einyun.app.pms.sendorder.viewmodel.SendOdViewModelFactory;
 import com.einyun.app.pms.sendorder.viewmodel.SendOrderViewModel;
@@ -62,6 +67,8 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_PENDING;
 
 
 /**
@@ -81,7 +88,8 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     int listType;
-
+//    PageSearchFragment<ItemSearchWorkSendBinding, Distribute> searchFragment;
+    private PageSearchFragment searchFragment;
     protected SelectPopUpView selectPopUpView;
 
     public SendWorkOrderFragment() {
@@ -131,9 +139,91 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
             viewModel.refresh();
         });
         binding.workSendList.addItemDecoration(new SpacesItemDecoration(30));
-
+        binding.panelCondition.search.setVisibility(View.VISIBLE);
+        binding.panelCondition.search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
     }
+    private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(),map);
+        try {
+            DistributePageRequest request=new DistributePageRequest();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemSearchWorkSendBinding, DistributeWorkOrder>(getActivity(), BR.searchWorkOrder, new PageSearchListener<ItemSearchWorkSendBinding,DistributeWorkOrder>() {
+                    @Override
+                    public LiveData<PagedList<DistributeWorkOrder>> search(String search) {
+                        request.setUserId(userModuleService.getUserId());
+//                        if (!search.isEmpty()) {
+                            request.setSearchValue(search);
+//                        }
+                        if (viewModel.listType==ListType.PENDING.getType()) {
+                            return viewModel.loadPadingNetData(request, RouteKey.FRAGMENT_SEND_OWRKORDER_PENDING);
+                        } else {
+                            return viewModel.loadPadingNetData(request, RouteKey.FRAGMENT_SEND_OWRKORDER_DONE);
+                        }
+                    }
 
+                    @Override
+                    public void onItemClick(DistributeWorkOrder model) {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
+                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .withInt(RouteKey.KEY_LIST_TYPE, listType)
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .withString(RouteKey.KEY_DIVIDE_ID, model.getF_DIVIDE_ID())
+                                .withString(RouteKey.KEY_PROJECT_ID, model.getF_PROJECT_ID())
+                                .navigation();
+                    }
+                    @Override
+                    public void onItem(ItemSearchWorkSendBinding binding, DistributeWorkOrder model) {
+
+                        if (viewModel.listType==ListType.PENDING.getType()) {
+                            if (model.is_coming_timeout() == 1) {
+                                binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                            }
+                        } else {
+                            binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                        }
+                        if (listType == ListType.DONE.getType()) {
+                            binding.itemResendRe.setVisibility(View.GONE);
+                        }
+                        binding.itemResendRe.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName())
+                                        .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, model.getF_DIVIDE_ID())
+                                        .withString(RouteKey.KEY_PROJECT_ID, model.getF_PROJECT_ID())
+                                        .navigation();
+                            }
+                        });
+                        binding.selectOrderTime.setText(FormatUtil.formatDate(model.getF_CREATE_TIME()));
+                    }
+
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_search_work_send;
+                    }
+                });
+                searchFragment.setHint("请输入工单编号、问题描述、位置");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void setUpData() {
         viewModel.listType = listType;

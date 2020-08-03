@@ -5,28 +5,27 @@
     <data>
 
         <variable
-            name="workOrder"
-            type="com.einyun.app.library.resource.workorder.model.OrderListModel" />
+            name="complainSearch"
+            type="com.einyun.app.library.workorder.model.ComplainModel" />
     </data>
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_20"
+        android:layout_marginBottom="@dimen/px_5"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/px_10"
-        app:cardElevation="0.5dp">
-
+        app:cardElevation="0.5dp"
+        >
 
         <LinearLayout
-            android:id="@+id/item_order_ln"
+            android:id="@+id/item_repair_ln"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -34,25 +33,18 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
 
-                <ImageView
-                    android:id="@+id/item_send_work_lf_img"
-                    android:layout_width="@dimen/px_30"
-                    android:layout_height="@dimen/px_30"
-                    android:layout_centerVertical="true"
-                    android:visibility="gone"
-                    android:src="@drawable/warning" />
-
                 <TextView
-                    android:id="@+id/item_send_work_subject"
+                    android:textStyle="bold"
+                    android:id="@+id/item_repair_subject"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginRight="@dimen/px_130"
-                    android:layout_toRightOf="@id/item_send_work_lf_img"
-                    android:singleLine="true"
+                    android:layout_marginRight="@dimen/px_140"
                     android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@{complainSearch.F_ts_content}"
                     android:textColor="@color/blackTextColor"
-                    android:textSize="@dimen/px_32" />
+                    android:textSize="@dimen/font_size16" />
 
                 <RelativeLayout
                     android:layout_width="@dimen/px_136"
@@ -60,21 +52,19 @@
                     android:layout_alignParentRight="true">
 
                     <ImageView
-                        android:id="@+id/item_status_img"
                         android:layout_width="@dimen/px_136"
                         android:layout_height="@dimen/px_48"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                         />
+                        app:complainStatus="@{complainSearch.f_state}" />
 
                     <TextView
-                        android:id="@+id/item_status_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:textColor="@color/white"
-                       />
+                        app:complainStatus="@{complainSearch.f_state}" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -90,12 +80,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
-                    android:id="@+id/item_complain"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_60"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -105,60 +94,17 @@
                         android:text="投诉人" />
 
                     <TextView
-                        android:id="@+id/item_complain_user"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:text="@{complainSearch.f_ts_user}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/item_repair"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="报修人" />
-
-                    <TextView
-                        android:id="@+id/item_repair_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/item_ask"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="问询人" />
-
-                    <TextView
-                        android:id="@+id/item_ask_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/item_house"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_70"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -168,40 +114,16 @@
                         android:text="@string/text_house" />
 
                     <TextView
-                        android:id="@+id/item_house_txt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textColor="@color/blackTextColor"
-                        />
+                        android:text="@{complainSearch.f_ts_house}"/>
                 </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/item_location_ln"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/text_location" />
-
-                    <TextView
-                        android:id="@+id/item_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="@dimen/px_10"
-                    android:layout_marginBottom="@dimen/px_10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px_30"
                     android:orientation="horizontal">
 
@@ -212,10 +134,11 @@
                         android:text="@string/text_order_num" />
 
                     <TextView
-                        android:id="@+id/item_order_num"
+                        android:id="@+id/repair_time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:text="@{complainSearch.f_ts_code}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 
@@ -232,16 +155,64 @@
                         android:text="@string/text_create_time" />
 
                     <TextView
-                        android:id="@+id/item_create_time"
+                        android:id="@+id/repair_create_time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text=""
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/thin_divider_color"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_talk_or_turn_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_81"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_talk"
+                        style="@style/style_tv_turn_order"
+                        android:text="@string/tv_talk" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/thin_divider_color" />
+
+                    <TextView
+                        android:id="@+id/tv_turn_order"
+                        style="@style/style_tv_turn_order"
+                        android:text="@string/tv_turn_order" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_feed_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_82"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/style_text_approval_left"
+                        android:text="@string/tv_feed_back"
+                        android:textColor="@color/blueTextColor"
+                        android:textSize="@dimen/font_size15" />
+
+                    <ImageView
+                        android:layout_width="@dimen/px_25"
+                        android:layout_height="@dimen/px_25"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/px_28"
+                        android:src="@mipmap/icon_arrow_right" />
+                </RelativeLayout>
             </LinearLayout>
-
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

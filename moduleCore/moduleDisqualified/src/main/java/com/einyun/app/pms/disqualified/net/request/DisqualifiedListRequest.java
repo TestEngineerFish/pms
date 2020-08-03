@@ -3,6 +3,7 @@ package com.einyun.app.pms.disqualified.net.request;
 
 
 import com.einyun.app.base.paging.bean.PageBean;
+import com.einyun.app.library.resource.workorder.net.request.OrderListPageRequest;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class DisqualifiedListRequest {
 
     private PageBean pageBean;
     private List<QuerysBean> querys;
-
+    private OrderListPageRequest.Params params;
     public String getSearchValue() {
         return searchValue;
     }

@@ -127,7 +127,72 @@
                         app:setTime="@{planModel.F_CREATE_TIME}" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/wait_handle_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_2"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_20"
+                    android:background="@color/thin_divider_color" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/item_cache"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_80"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:layout_weight="1"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/iv_is_cached"
+                            android:layout_width="@dimen/px_30"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/px_14"
+                            android:gravity="center">
+
+                        </ImageView>
+
+                        <TextView
+                            android:id="@+id/tv_is_cached"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/iv_is_cached"
+                            android:gravity="center" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="@dimen/px_2"
+                        android:layout_height="match_parent"
+                        android:background="@color/thin_divider_color" />
+
+                    <TextView
+                        android:id="@+id/turn_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/px_20"
+                        android:paddingBottom="@dimen/px_20"
+                        android:text="转单"
+                        android:textColor="@color/stress_text_btn_icon_color"
+                        android:textSize="@dimen/font_size15" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

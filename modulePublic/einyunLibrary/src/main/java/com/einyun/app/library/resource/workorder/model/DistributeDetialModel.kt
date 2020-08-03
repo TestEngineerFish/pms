@@ -162,6 +162,8 @@ class DisttributeMainModel :Serializable {
     var procInstID: String? = null //实例ID
     @SerializedName("ref_id_")
     var refID: String? = null
+    @SerializedName("joint_processor")
+    var joint_processor: String? = null
     @SerializedName("tenant_id")
     var tenantID: String? = null
     var close: String? = null

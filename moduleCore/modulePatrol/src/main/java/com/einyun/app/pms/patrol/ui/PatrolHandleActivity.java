@@ -415,7 +415,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                                 .withString(RouteKey.KEY_TASK_ID, taskId)
                                 .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
                                 .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_WORK_PREVIEW_PATRO)
-
+                                .withString(RouteKey.F_ORIGINAL_TYPE, "2")
                                 .withString(RouteKey.KEY_LINE_ID, patrolInfo.getData().getZyxcgd().getF_line_id())
                                 .withString(RouteKey.KEY_LINE_CODE, patrolInfo.getData().getZyxcgd().getF_line_code())
                                 .withString(RouteKey.KEY_PROJECT, patrolInfo.getData().getZyxcgd().getF_project_name())

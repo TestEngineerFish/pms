@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="workOrder"
-            type="com.einyun.app.library.resource.workorder.model.OrderListModel" />
+            name="searchWorkOrder"
+            type="com.einyun.app.library.resource.workorder.model.DistributeWorkOrder" />
     </data>
 
 
@@ -40,6 +40,7 @@
                     android:layout_height="@dimen/px_30"
                     android:layout_centerVertical="true"
                     android:visibility="gone"
+                    app:isComingTimeout="@{searchWorkOrder.is_coming_timeout}"
                     android:src="@drawable/warning" />
 
                 <TextView
@@ -47,12 +48,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/px_20"
-                    android:layout_marginRight="@dimen/px_130"
+                    android:layout_marginRight="@dimen/px_140"
                     android:layout_toRightOf="@id/item_send_work_lf_img"
-                    android:singleLine="true"
                     android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@{searchWorkOrder.f_DESC}"
                     android:textColor="@color/blackTextColor"
-                    android:textSize="@dimen/px_32" />
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
 
                 <RelativeLayout
                     android:layout_width="@dimen/px_136"
@@ -60,21 +63,19 @@
                     android:layout_alignParentRight="true">
 
                     <ImageView
-                        android:id="@+id/item_status_img"
                         android:layout_width="@dimen/px_136"
                         android:layout_height="@dimen/px_48"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                         />
+                        app:status="@{searchWorkOrder.f_STATUS}" />
 
                     <TextView
-                        android:id="@+id/item_status_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:textColor="@color/white"
-                       />
+                        app:status="@{searchWorkOrder.f_STATUS}" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -90,98 +91,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
-                    android:id="@+id/item_complain"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_60"
                     android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="投诉人" />
-
-                    <TextView
-                        android:id="@+id/item_complain_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/item_repair"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="报修人" />
-
-                    <TextView
-                        android:id="@+id/item_repair_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/item_ask"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="问询人" />
-
-                    <TextView
-                        android:id="@+id/item_ask_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/item_house"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_70"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/px_150"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/text_house" />
-
-                    <TextView
-                        android:id="@+id/item_house_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/blackTextColor"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/item_location_ln"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px_60"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="@dimen/px_150"
@@ -190,10 +105,10 @@
                         android:text="@string/text_location" />
 
                     <TextView
-                        android:id="@+id/item_location"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:text="@{searchWorkOrder.f_LOCATION}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 
@@ -212,10 +127,10 @@
                         android:text="@string/text_order_num" />
 
                     <TextView
-                        android:id="@+id/item_order_num"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:text="@{searchWorkOrder.f_ORDER_NO}"
                         android:textColor="@color/blackTextColor" />
                 </LinearLayout>
 
@@ -232,7 +147,7 @@
                         android:text="@string/text_create_time" />
 
                     <TextView
-                        android:id="@+id/item_create_time"
+                        android:id="@+id/select_order_time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -241,7 +156,33 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/thin_divider_color" />
 
+            <RelativeLayout
+                android:id="@+id/item_resend_re"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_30">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="@string/text_turn_order"
+                    android:textColor="@color/blueTextColor" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/right_arrow" />
+            </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

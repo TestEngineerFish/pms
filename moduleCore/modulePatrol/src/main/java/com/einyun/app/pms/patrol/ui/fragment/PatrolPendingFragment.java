@@ -71,7 +71,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_UNIT;
  */
 public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolPendingBinding, PatrolListViewModel> implements ItemClickListener<Patrol>, PeriodizationView.OnPeriodSelectListener {
     protected SelectPopUpView selectPopUpView;
-    protected int listType = ListType.PENDING.getType();
+    public int listType = ListType.PENDING.getType();
     protected RVPageListAdapter<ItemPatrolListBinding, Patrol> adapter;
     protected PageSearchFragment<ItemWorkPatrolBinding, Patrol> searchFragment;
 
@@ -306,14 +306,40 @@ public class PatrolPendingFragment extends BaseViewModelFragment<FragmentPatrolP
                 }
                 @Override
                 public void onItem(ItemWorkPatrolBinding binding,Patrol model) {
+                    binding.turnOrder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ARouter.getInstance()
+                                    .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                    .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                    .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, model.getF_massif_id())
+                                    .withString(RouteKey.KEY_PROJECT_ID, model.getF_project_id())
+                                    .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                                    .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                    .navigation();
+                        }
+                    });
+                    if (model.getF_plan_work_order_state()==(OrderState.PENDING.getState())){
+                        binding.turnOrder.setEnabled(false);
+                        binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+                    }else {
+                        binding.turnOrder.setEnabled(true);
+                        binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+                    }
+                    if (listType== ListType.PENDING.getType()) {
+                        binding.handleLayout.setVisibility(View.VISIBLE);
+                    }else {//已跟进隐藏转单操作栏
+                        binding.handleLayout.setVisibility(View.GONE);
 
+                    }
                 }
                 @Override
                 public int getLayoutId() {
                     return R.layout.item_work_patrol;
                 }
             });
-            searchFragment.setHint("请输入工单编号或计划名称");
+            searchFragment.setHint("请输入工单编号、计划名称");
         }
         searchFragment.show(getActivity().getSupportFragmentManager(), "");
     }

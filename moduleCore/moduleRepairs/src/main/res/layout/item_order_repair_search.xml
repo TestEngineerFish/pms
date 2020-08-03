@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="repair"
+            name="repairSearch"
             type="com.einyun.app.library.workorder.model.RepairsModel"
             />
     </data>
@@ -41,7 +41,7 @@
                 android:layout_marginRight="@dimen/px_140"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="@{repair.bx_content}"
+                android:text="@{repairSearch.bx_content}"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size16" />
 
@@ -55,7 +55,7 @@
                     android:layout_height="@dimen/px_48"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:status="@{repair.taskNodeId}"
+                    app:status="@{repairSearch.taskNodeId}"
                      />
 
                 <TextView
@@ -64,7 +64,7 @@
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    app:status="@{repair.taskNodeId}"
+                    app:status="@{repairSearch.taskNodeId}"
                     />
             </RelativeLayout>
         </RelativeLayout>
@@ -99,7 +99,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/blackTextColor"
-                    android:text="@{repair.bx_user}"/>
+                    android:text="@{repairSearch.bx_user}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +119,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/blackTextColor"
-                    android:text="@{repair.bx_house}"
+                    android:text="@{repairSearch.bx_house}"
                    />
             </LinearLayout>
 
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@{repair.bx_code}"
+                    android:text="@{repairSearch.bx_code}"
                     android:textColor="@color/blackTextColor" />
             </LinearLayout>
 

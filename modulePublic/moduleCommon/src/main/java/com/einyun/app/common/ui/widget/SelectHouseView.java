@@ -2,6 +2,7 @@ package com.einyun.app.common.ui.widget;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,16 +32,18 @@ import com.einyun.app.common.BR;
 import com.einyun.app.common.R;
 import com.einyun.app.common.databinding.FragmentWorkTableSelectBinding;
 import com.einyun.app.common.databinding.ItemHouseChooseBinding;
-import com.einyun.app.common.databinding.ItemWorkTypeChooseBinding;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseVMFactory;
 import com.einyun.app.common.ui.component.blockchoose.viewmodel.BlockChooseViewModel;
-import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.common.utils.ChineseSortHouse;
+import com.einyun.app.common.utils.HanziToPinyin;
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Pattern;
 
 public class SelectHouseView extends DialogFragment implements ItemClickListener<HouseModel>, View.OnClickListener {
     FragmentWorkTableSelectBinding binding;
@@ -138,8 +142,33 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
             selectOrgs.add(orgModel1);
 
             loadTags();
-            adapter.setDataList(model.getChildren());
+            List<HouseModel> houseModels = InitSort(model.getChildren());
+            adapter.setDataList(houseModels);
         }
+    }
+
+    private List<HouseModel> InitSort(List<HouseModel> model) {
+        Collections.sort(model, new Comparator<HouseModel>() {
+            @Override
+            public int compare(HouseModel o2, HouseModel o1) {
+                if (o1.getName().contains("-") && o2.getName().contains("-")) {
+                    String[] split1 = o1.getName().split("-");
+                    String s1 = split1[split1.length - 1];
+                    String[] split2 = o2.getName().split("-");
+                    String s2 = split2[split2.length - 1];
+                    if (isInteger(s1) && isInteger(s2)) {
+                        return Integer.parseInt(s2) - Integer.parseInt(s1);//顺序
+                    } else {
+                        return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
+                    }
+
+                } else {
+                    return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
+                }
+
+            }
+        });
+        return model;
     }
 
     @Override
@@ -223,13 +252,46 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         orgModel1.setName(selectOrgs.size() == 0 ? "请选择楼栋" : selectOrgs.size() == 1 ? "请选择单元" : "请选择房屋");
         selectOrgs.add(orgModel1);
         if (selectOrgs.size() == 1) {
-            adapter.setDataList(houseModels);
+
+            adapter.setDataList(sort(houseModels));
         } else {
-            adapter.setDataList(model.getChildren());
+//            InitSort(model.getChildren());
+//            adapter.setDataList(sort(model.getChildren()));
+            adapter.setDataList(InitSort(model.getChildren()));
         }
         loadTags();
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void sortHouseModel(List<HouseModel> list) {
+            ChineseSortHouse.transferListBuildDown(list);
+    }
+    /**
+     * 是否为纯数字
+     */
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
+    }
+    /**
+     * 排序
+     */
+    public List<HouseModel>  sort(List<HouseModel> modelList){
 
+        Collections.sort(modelList, new Comparator<HouseModel>() {
+            @Override
+            public int compare(HouseModel o2, HouseModel o1) {
+                return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sortHouseModel(modelList);
+            return modelList;
+        }else {
+            return modelList;
+        }
+
+
+    }
 
     private void loadData() {
         if (adapter == null) {
@@ -255,7 +317,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         LinearLayoutManager layoutManage = new LinearLayoutManager(getActivity());
         layoutManage.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvTags.setLayoutManager(layoutManage);
-        adapter.setDataList(this.houseModels);
+        adapter.setDataList(sort(this.houseModels));
     }
 
     @Override

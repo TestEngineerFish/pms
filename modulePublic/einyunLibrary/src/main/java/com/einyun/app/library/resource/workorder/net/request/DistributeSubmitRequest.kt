@@ -11,4 +11,6 @@ class DistributeSubmitRequest {
     var procTime:String?=null
     @SerializedName("F_PROC_CONTENT")
     var procConeten:String?=null
+    @SerializedName("joint_processor")
+    var joint_processor:String?=null
 }

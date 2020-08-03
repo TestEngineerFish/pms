@@ -22,7 +22,7 @@ public class Query {
     public static String SORT_ASC="ASC";
     public static String IN="IN";
     private PageBean pageBean;
-    private Object params;
+    private QueryBuilder.Params params;
     private List<QueryItem<?>> querys;
     private List<SortItem> sorter;
 
@@ -34,11 +34,12 @@ public class Query {
         this.pageBean = pageBean;
     }
 
-    public Object getParams() {
+
+    public QueryBuilder.Params getParams() {
         return params;
     }
 
-    public void setParams(Object params) {
+    public void setParams(QueryBuilder.Params params) {
         this.params = params;
     }
 
