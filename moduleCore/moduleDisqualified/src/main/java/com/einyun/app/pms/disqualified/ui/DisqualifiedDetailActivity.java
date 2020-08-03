@@ -137,16 +137,16 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         binding.rlOldCode.setOnClickListener(view -> {
             if ("1".equals(mDetailModel.getData().getUnqualified_model().getOriginal_type())) {//1 计划工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
-                        .withString(RouteKey.KEY_ORDER_ID, "" )
-                        .withString(RouteKey.KEY_PRO_INS_ID,mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld() )
+                        .withString(RouteKey.KEY_ORDER_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
                         .withString(RouteKey.KEY_TASK_ID, "")
                         .withString(RouteKey.KEY_TASK_NODE_ID, "")
                         .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
                         .navigation();
-            }else {//巡查工单
+            } else {//巡查工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                         .withString(RouteKey.KEY_ORDER_ID, "")
-                        .withString(RouteKey.KEY_PRO_INS_ID,mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld() )
+                        .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
                         .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
                         .withString(RouteKey.KEY_TASK_ID, "")
                         .withString(RouteKey.KEY_TASK_NODE_ID, "")
@@ -154,6 +154,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
             }
         });
     }
+
     @Override
     public void onRightOptionClick(View view) {
         super.onRightOptionClick(view);
@@ -163,6 +164,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getProc_inst_id_())
                 .navigation();
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -191,6 +193,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                  * 获取详情信息
                  */
                 viewModel.getHaveDODetailInfo(mProInstId).observe(this, module -> {
+                    mDetailModel = module;
                     updateUI(module);
                 });
                 break;
@@ -314,6 +317,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //        photoValidationInfoAdapter.updateList(modelValidateList);
 
     }
+
     /**
      * 加载基本信息he反馈信息
      */
@@ -404,6 +408,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //        photoValidationInfoAdapter.updateList(modelValidateList);
 
     }
+
     private void updateUI(DisqualifiedDetailModel detailModule) {
         if (detailModule == null) {
 //            updatePageUIState(PageUIState.LOAD_FAILED.getState());
@@ -522,7 +527,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
      */
     public void onFeedBackPassClick() {
         if (!NetWorkUtils.isNetworkConnected(DisqualifiedDetailActivity.this)) {
-            ToastUtil.show(DisqualifiedDetailActivity.this,"当前网络连接不可用");
+            ToastUtil.show(DisqualifiedDetailActivity.this, "当前网络连接不可用");
             return;
         }
         if (binding.tvOpFeedbackDate.getText().toString().equals("请选择") || binding.tvOpFeedbackDate.getText().toString().isEmpty()) {
@@ -568,7 +573,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                     @Override
                     public void onClick(View view) {
                         if (!NetWorkUtils.isNetworkConnected(DisqualifiedDetailActivity.this)) {
-                            ToastUtil.show(DisqualifiedDetailActivity.this,"当前网络连接不可用");
+                            ToastUtil.show(DisqualifiedDetailActivity.this, "当前网络连接不可用");
                             return;
                         }
                         validateSubmit(true);
@@ -596,7 +601,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
 
         //缓存工单基本信息
-        if (mUnqualified_model!= null) {
+        if (mUnqualified_model != null) {
             mValidateRequest.getBizData().setOrder_info_state(mUnqualified_model.getStatus());
             mValidateRequest.getBizData().setOrder_info_code(mUnqualified_model.getCode());
             mValidateRequest.getBizData().setOrder_info_create_time(mUnqualified_model.getCreated_time());
@@ -624,7 +629,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     //验证信息提交
     public void onValidationPassClick() {
         if (!NetWorkUtils.isNetworkConnected(DisqualifiedDetailActivity.this)) {
-            ToastUtil.show(DisqualifiedDetailActivity.this,"当前网络连接不可用");
+            ToastUtil.show(DisqualifiedDetailActivity.this, "当前网络连接不可用");
             return;
         }
         validateSubmit(false);
@@ -694,7 +699,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                             viewModel.deleteVerificationRequest("v_" + mTaskId);
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
-                                    .withString(RouteKey.CODE , code)
+                                    .withString(RouteKey.CODE, code)
                                     .navigation();
                             finish();
                         }
