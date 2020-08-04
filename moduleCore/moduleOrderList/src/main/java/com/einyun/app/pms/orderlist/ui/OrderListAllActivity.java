@@ -591,7 +591,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
                 break;
             case RouteKey.ORDER_LIST_REPAIR:
                 setStatusCustom(binding.itemStatusTxt, binding.itemStatusImg, orderListModel.getState());
-                binding.itemSendWorkSubject.setText(LimitText(orderListModel.getBx_area() + orderListModel.getBx_cate_lv1() + "-" + orderListModel.getBx_cate_lv2() + "-" + orderListModel.getBx_cate_lv3()));
+                binding.itemSendWorkSubject.setText(orderListModel.getBx_content());
                 binding.itemCreateTime.setText(FormatUtil.formatDate(orderListModel.getBx_time()));
                 binding.itemOrderNum.setText(orderListModel.getBx_code());
                 binding.itemRepair.setVisibility(View.VISIBLE);
