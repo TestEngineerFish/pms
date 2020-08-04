@@ -132,7 +132,16 @@
                 style="@style/work_order_detail_txt_right"
                 android:text="@{workOrder.data.info.deadLineTime}" />
         </LinearLayout>
+        <LinearLayout style="@style/work_order_detail_ln">
 
+            <TextView
+                style="@style/work_order_detail_left_txt"
+                android:text="工单处理人" />
+
+            <TextView
+                style="@style/work_order_detail_txt_right"
+                android:text="@{workOrder.data.info.procName}" />
+        </LinearLayout>
         <LinearLayout style="@style/work_order_detail_ln">
 
             <TextView

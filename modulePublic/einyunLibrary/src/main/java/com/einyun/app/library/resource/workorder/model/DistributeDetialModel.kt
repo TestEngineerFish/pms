@@ -129,7 +129,8 @@ class DisttributeMainModel :Serializable {
     @SerializedName("F_PROC_ID")
     var procID: String? = null //处理人id
     @SerializedName("F_PROC_NAME")
-    var procName: String? = null //处理人名称
+    var procName: String? = null //工单负责人
+    var F_HANDLE_NAME: String? = null //处理人名称
     @SerializedName("F_PROJECT_ID")
     var projectID: String? = null//项目id
     @SerializedName("F_PROJECT_NAME")

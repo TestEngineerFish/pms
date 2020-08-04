@@ -40,7 +40,7 @@
     <string name="text_grid">网格</string>
     <string name="text_building">楼栋</string>
     <string name="text_unit">单元</string>
-    <string name="text_order_person">工单处理人</string>
+    <string name="text_order_person">工单负责人</string>
     <string name="text_order_create_time">工单创建时间</string>
     <string name="text_end_time">完成截止时间</string>
     <string name="text_state_completed">已完成</string>
