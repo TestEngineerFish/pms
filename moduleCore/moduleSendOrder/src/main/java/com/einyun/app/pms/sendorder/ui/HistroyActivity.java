@@ -62,7 +62,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                         binding.itemHistroyImg.setVisibility(View.VISIBLE);
                     }
                     if (map.get(model.getTaskKey()) == null) {
-                        binding.taskName.setText(map.get(model.getTaskName()));
+                        binding.taskName.setText(model.getTaskName());
                     } else {
                         binding.taskName.setText(map.get(model.getTaskKey()));
                     }
@@ -73,6 +73,8 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                         binding.taskName.setText("沟通");
                     } else if (model.status.equals("feedback")) {
                         binding.taskName.setText("沟通反馈");
+                    }else if (model.status.equals("awaiting_feedback")){
+                        binding.taskName.setText("待反馈");
                     }
                     if (model.status.equals("timeout")) {
                         binding.name.setText("系统");
@@ -171,7 +173,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
         map.put("RaiseLv3", "处理超时(第三次)");
         map.put("Timeout_Out", "超时升级返回");
         map.put("ConfirmCateAndAssignOrBrab", "派单");
-        map.put("WorkOrderPoolGrab", "待抢单");
+        map.put("WorkOrderPoolGrab", "抢单");
         map.put("OvertimeMandatoryAssign", "强制派单");
         map.put("EndEvent", "结束");
         map.put("UserTask6", "批复");
