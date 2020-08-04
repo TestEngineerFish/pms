@@ -143,7 +143,16 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                         .withString(RouteKey.KEY_TASK_NODE_ID, "")
                         .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
                         .navigation();
-            } else {//巡查工单
+            } else if ("3".equals(mDetailModel.getData().getUnqualified_model().getOriginal_type())){
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                        .withString(RouteKey.KEY_TASK_ID,"")
+                        .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
+                        .withString(RouteKey.KEY_ID,"")
+                        .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_DISQUALIFIED_HAD_FOLLOW)
+                        .navigation();
+            }
+            else {//巡查工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                         .withString(RouteKey.KEY_ORDER_ID, "")
                         .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
@@ -699,7 +708,15 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                             viewModel.deleteVerificationRequest("v_" + mTaskId);
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
+                                    .withString(RouteKey.F_ORIGINAL_TYPE, "3")
+                                    .withString(RouteKey.KEY_ORDER_ID, mDetailModel.getData().getUnqualified_model().getId_())
+                                    .withString(RouteKey.KEY_ORDER_NO, mDetailModel.getData().getUnqualified_model().getCode())
+                                    .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getProc_inst_id_())
                                     .withString(RouteKey.CODE, code)
+                                    .withString(RouteKey.KEY_LINE_CODE, mDetailModel.getData().getUnqualified_model().getLine())
+                                    .withString(RouteKey.KEY_DIVIDE_NAME, mDetailModel.getData().getUnqualified_model().getDivide_name())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, mDetailModel.getData().getUnqualified_model().getDivide_id())
+                                    .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_DISQUALIFIED_HAD_FOLLOW)
                                     .navigation();
                             finish();
                         }

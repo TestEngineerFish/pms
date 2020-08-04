@@ -56,12 +56,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 import static com.einyun.app.pms.disqualified.SelectType.CHECK_DATE;
 import static com.einyun.app.pms.disqualified.SelectType.DEADLINE;
 
 @Route(path = RouterUtils.ACTIVITY_PROPERTY_CREATE)
-public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<ActivityCreateDisqualifiedOrderBinding, DisqualifiedFragmentViewModel>implements PeriodizationView.OnPeriodSelectListener{
+public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<ActivityCreateDisqualifiedOrderBinding, DisqualifiedFragmentViewModel> implements PeriodizationView.OnPeriodSelectListener {
     int txDefaultPosLine = 0;
     int txDefaultPosSeverity = 0;
     private PhotoSelectAdapter photoSelectAdapter;
@@ -70,29 +71,29 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     private List<DisqualifiedTypesBean> severityTypeLists;
     private String mOrderCode;
     private String orderCodeChange;
-    public static final int HJ=0;
-    public static final int GC=1;
-    public static final int ZX=2;
-    public static final int KF=3;
+    public static final int HJ = 0;
+    public static final int GC = 1;
+    public static final int ZX = 2;
+    public static final int KF = 3;
     private CreateUnQualityRequest mRequest;
-    private String dimCode="";
-    private String divideId="";
+    private String dimCode = "";
+    private String divideId = "";
     private String format;
     @Autowired(name = RouteKey.KEY_MODEL_DATA)
     Serializable DbRequest;
-    @Autowired(name =RouteKey.CODE )
+    @Autowired(name = RouteKey.CODE)
     String mCode;
     private CreateUnQualityRequest mDbRequest;
     @Autowired(name = RouteKey.F_ORIGINAL_TYPE)
-    String mORIGINAL_TYPE;
+    String mORIGINAL_TYPE;//原工单类型
     @Autowired(name = RouteKey.KEY_ORDER_ID)
-    String id;
+    String id;//原工单id
     @Autowired(name = RouteKey.KEY_ORDER_NO)
-    String orderNo;
+    String orderNo;//原工单号
     @Autowired(name = RouteKey.KEY_TASK_ID)
     String taskId;
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
-    String proInsId;
+    String proInsId;//原工单流程id
     @Autowired(name = RouteKey.KEY_FRAGEMNT_TAG)
     String fragmentTag;
     @Autowired(name = RouteKey.KEY_TASK_NODE_ID)
@@ -110,6 +111,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     String lineCode;
     @Autowired(name = RouteKey.KEY_LINE)
     String lineName;
+
     @Override
     protected DisqualifiedFragmentViewModel initViewModel() {
         return new ViewModelProvider(this, new DisqualifiedViewModelFactory()).get(DisqualifiedFragmentViewModel.class);
@@ -130,80 +132,92 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 
             @Override
             public void onChanged(Boolean aBoolean) {
-                Log.e("onChanged", "onChanged: "+aBoolean);
+                Log.e("onChanged", "onChanged: " + aBoolean);
             }
         });
 
-        if (DbRequest!=null) {
+        if (DbRequest != null) {
             mDbRequest = (CreateUnQualityRequest) DbRequest;
         }
     }
+
     @Override
     protected void initData() {
         super.initData();
         binding.setCallBack(this);
-        viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this,model->{
+        viewModel.queryAduitType(DisqualifiedDataKey.LINE_TYPE_LIST).observe(this, model -> {
             lineTypeLists = model;
+            if (StringUtil.isNullStr(orderNo)) {
+                divideId = mDivideId;
+                if (lineId == null) {
+                    if (lineTypeLists!=null) {
+                        for (DisqualifiedTypesBean lineTypeList : lineTypeLists) {
+                            if (lineTypeList.getKey().equals(lineCode)) {
+                                dimCode = lineTypeList.getId();
+                                lineName = lineTypeList.getName();
+                            }
+                        }
+                    }
+                } else {
+                    dimCode = lineId;
+                }
+                mRequest.getBizData().setDivide_id(divideId);
+                mRequest.getBizData().setDivide_name(divideName);
+                mRequest.getBizData().setLine(lineCode);
+                mRequest.getBizData().setOriginal_prolnstld(proInsId);
+                binding.tvDivide.setText(divideName);
+                binding.tvLine.setText(lineName);
+                binding.llOld.setVisibility(View.VISIBLE);
+                binding.vLine.setVisibility(View.VISIBLE);
+                binding.tvOldCode.setText(orderNo);
+                if (StringUtil.isNullStr(orderNo)) {//原工单号
+//            request.setOrderNo(orderNo);
+                    mRequest.setOriginal_code(orderNo);
+                    mRequest.getBizData().setOriginal_code(orderNo);
+                }
+                if (StringUtil.isNullStr(id)) {//原工单ID
+//            request.setOrderNo(orderNo);
+                    mRequest.setOriginal_id(id);
+                    mRequest.getBizData().setOriginal_id(id);
+                }
+                if (StringUtil.isNullStr(mORIGINAL_TYPE)) {//原工单类型
+//            request.setOrderNo(orderNo);
+                    mRequest.setOriginal_type(mORIGINAL_TYPE);
+                    mRequest.getBizData().setOriginal_type(mORIGINAL_TYPE);
+                }
+                if (StringUtil.isNullStr(proInsId)) {//原工单流程ID
+//            request.setOrderNo(orderNo);
+                    mRequest.setOriginal_prolnstld(proInsId);
+                    mRequest.getBizData().setOriginal_prolnstld(proInsId);
+                }
 
+            }
         });
-        viewModel.queryAduitType(DisqualifiedDataKey.SEVERITY_TYPE_LIST).observe(this,model->{
+        viewModel.queryAduitType(DisqualifiedDataKey.SEVERITY_TYPE_LIST).observe(this, model -> {
             severityTypeLists = model;
         });
-        viewModel.queryOrderCode().observe(this,model2->{
+        viewModel.queryOrderCode().observe(this, model2 -> {
             mOrderCode = model2;
             orderCodeChange = model2;
 
         });
-        if (DbRequest==null) {
+        if (DbRequest == null) {
             createData();
-        }else {
+        } else {
             createDbData(mDbRequest);
         }
-        if (StringUtil.isNullStr(orderNo)){
-            divideId=mDivideId;
-            dimCode=lineId;
-            mRequest.getBizData().setDivide_id(divideId);
-            mRequest.getBizData().setDivide_name(divideName);
-            mRequest.getBizData().setLine(lineCode);
-            mRequest.getBizData().setOriginal_prolnstld(proInsId);
-            binding.tvDivide.setText(divideName);
-            binding.tvLine.setText(lineName);
-            binding.llOld.setVisibility(View.VISIBLE);
-            binding.vLine.setVisibility(View.VISIBLE);
-            binding.tvOldCode.setText(orderNo);
-            if (StringUtil.isNullStr(orderNo)) {//原工单号
-//            request.setOrderNo(orderNo);
-                mRequest.setOriginal_code(orderNo);
-                mRequest.getBizData().setOriginal_code(orderNo);
-            }
-            if (StringUtil.isNullStr(id)) {//原工单ID
-//            request.setOrderNo(orderNo);
-                mRequest.setOriginal_id(id);
-                mRequest.getBizData().setOriginal_id(id);
-            }
-            if (StringUtil.isNullStr(mORIGINAL_TYPE)) {//原工单类型
-//            request.setOrderNo(orderNo);
-                mRequest.setOriginal_type(mORIGINAL_TYPE);
-                mRequest.getBizData().setOriginal_type(mORIGINAL_TYPE);
-            }
-            if (StringUtil.isNullStr(proInsId)) {//原工单流程ID
-//            request.setOrderNo(orderNo);
-                mRequest.setOriginal_prolnstld(proInsId);
-                mRequest.getBizData().setOriginal_prolnstld(proInsId);
-            }
 
-        }
     }
 
     private void createData() {
 //        binding.tvInspected.setText(viewModel.getUserName());
         binding.tvCheckDate.setText(TimeUtil.getYMdTime(System.currentTimeMillis()));
-        binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
+        binding.tvDealLine.setText(TimeUtil.getYMdTime(System.currentTimeMillis() + 1000 * 60 * 60 * 24));
         mRequest = new CreateUnQualityRequest();
         mRequest.getStartFlowParamObject().setFlowKey("unqualified_key");
 
         mRequest.getBizData().setCheck_date(TimeUtil.getYMdTime(System.currentTimeMillis()));
-        mRequest.getBizData().setCorrection_date(TimeUtil.getYMdTime(System.currentTimeMillis()+1000*60*60*24));
+        mRequest.getBizData().setCorrection_date(TimeUtil.getYMdTime(System.currentTimeMillis() + 1000 * 60 * 60 * 24));
 
 
         mRequest.getBizData().setCheck_user_id(viewModel.getUserId());
@@ -212,13 +226,14 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //        mRequest.getBizData().setChecked_user_id(viewModel.getUserId());
 //        mRequest.getBizData().setChecked_user_name(viewModel.getUserName());
     }
+
     private void createDbData(CreateUnQualityRequest mDbrequest) {
-        binding.tvInspected.setText(mDbrequest.getBizData().getChecked_user_name().isEmpty()?"请选择":mDbrequest.getBizData().getChecked_user_name());
+        binding.tvInspected.setText(mDbrequest.getBizData().getChecked_user_name().isEmpty() ? "请选择" : mDbrequest.getBizData().getChecked_user_name());
         binding.tvCheckDate.setText(mDbrequest.getBizData().getCheck_date());
         binding.tvDealLine.setText(mDbrequest.getBizData().getCorrection_date());
         binding.ltQuestionDesc.setText(mDbrequest.getBizData().getProblem_description());
         binding.tvDivide.setText(mDbrequest.getBizData().getDivide_name());
-        divideId=mDbrequest.getBizData().getDivide_id();
+        divideId = mDbrequest.getBizData().getDivide_id();
         mRequest = new CreateUnQualityRequest();
         mRequest.getStartFlowParamObject().setFlowKey("unqualified_key");
         mRequest.getBizData().setCode(mDbrequest.getCode());
@@ -250,7 +265,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 break;
         }
         String line = mDbrequest.getBizData().getLine();
-        dimCode=mDbrequest.getBizData().getLine();
+        dimCode = mDbrequest.getBizData().getLine();
         switch (line) {
             case DisqualifiedDataKey.LINE_ENV://环境
                 binding.tvLine.setText("环境");
@@ -271,13 +286,14 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     }
 
     private void updatePhotoUI(CreateUnQualityRequest mDbrequest) {
-        List<Uri> uris=viewModel.loadCachePhotoUris(mDbrequest);
-        if(uris.size()>0){
+        List<Uri> uris = viewModel.loadCachePhotoUris(mDbrequest);
+        if (uris.size() > 0) {
             photoSelectAdapter.addPhotos(uris);
         }
     }
+
     //点击原工单号 跳转至计划工单详情界面
-    public void onOldCodeClick(){
+    public void onOldCodeClick() {
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
                     .withString(RouteKey.KEY_ORDER_ID, id)
@@ -286,7 +302,15 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                     .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
                     .withString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTag)
                     .navigation();
-        }else {
+        } else if (fragmentTag.equals(FRAGMENT_DISQUALIFIED_HAD_FOLLOW)) {
+            ARouter.getInstance()
+                    .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                    .withString(RouteKey.KEY_TASK_ID,taskId)
+                    .withString(RouteKey.KEY_PRO_INS_ID,proInsId)
+                    .withString(RouteKey.KEY_ID,id)
+                    .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_DISQUALIFIED_HAD_FOLLOW)
+                    .navigation();
+        } else {
             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
                     .withString(RouteKey.KEY_ORDER_ID, id)
                     .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
@@ -296,6 +320,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                     .navigation();
         }
     }
+
     /**
      * 点击事件回馈
      *
@@ -333,13 +358,14 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 break;
         }
     }
+
     private void chooseDisposePerson() {
         if (divideId.isEmpty()) {
-            ToastUtil.show(this,"请先选择分期");
+            ToastUtil.show(this, "请先选择分期");
             return;
         }
         if (dimCode.isEmpty()) {
-            ToastUtil.show(this,"请先选择条线");
+            ToastUtil.show(this, "请先选择条线");
             return;
         }
         ARouter.getInstance().build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON).
@@ -348,10 +374,11 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 withString(RouteKey.KEY_DIM_CODE, dimCode).
                 navigation(this, RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE);
     }
+
     /**
      * 缓存按钮
      */
-    public void onCacheClick(){
+    public void onCacheClick() {
 
 //        if (binding.tvDivide.getText().toString().equals("请选择")) {
 //            ToastUtil.show(this,"请选择分期");
@@ -362,7 +389,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //            return;
 //        }
         if (binding.ltQuestionDesc.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入问题描述");
+            ToastUtil.show(this, "请输入问题描述");
             return;
         }
 //        if (binding.tvLine.getText().toString().equals("请选择")) {
@@ -388,69 +415,73 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
 //            return;
 //        }
-        if (binding.tvLine.getText().toString().equals("请选择")||binding.tvLine.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择条线");
+        if (binding.tvLine.getText().toString().equals("请选择") || binding.tvLine.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择条线");
             return;
         }
         cachePhoto(photoSelectAdapter.getSelectedPhotos());
         mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
         viewModel.insertCreateRequest(mRequest);
-        ToastUtil.show(this,"缓存成功");
+        ToastUtil.show(this, "缓存成功");
         finish();
     }
+
     /**
      * 创建提交按钮
      */
     private static final String TAG = "CreateDisqualifiedActiv";
-    public void onPassClick(){
+
+    public void onPassClick() {
 //        Log.e(TAG, "onPassClick: "+mOrderCode);
 //        Log.e(TAG, "onPassClick: "+viewModel.getUserId());
 //        Log.e(TAG, "onPassClick: "+viewModel.getUserName());
 //        checkSubmit();
-        if (binding.tvDivide.getText().toString().equals("请选择")||binding.tvDivide.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择分期");
+        if (binding.tvDivide.getText().toString().equals("请选择") || binding.tvDivide.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择分期");
             return;
         }
-        if (binding.tvCheckDate.getText().toString().equals("请选择")||binding.tvCheckDate.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择检查日期");
+        if (binding.tvCheckDate.getText().toString().equals("请选择") || binding.tvCheckDate.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择检查日期");
             return;
         }
         if (binding.ltQuestionDesc.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入问题描述");
+            ToastUtil.show(this, "请输入问题描述");
             return;
         }
-        if (binding.tvLine.getText().toString().equals("请选择")||binding.tvLine.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择条线");
+        if (binding.tvLine.getText().toString().equals("请选择") || binding.tvLine.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择条线");
             return;
         }
-        if (binding.tvSeverity.getText().toString().equals("请选择")||binding.tvSeverity.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择严重程度");
+        if (binding.tvSeverity.getText().toString().equals("请选择") || binding.tvSeverity.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择严重程度");
             return;
         }
-        if (binding.tvDealLine.getText().toString().equals("请选择")||binding.tvDealLine.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择纠正截至日期");
+        if (binding.tvDealLine.getText().toString().equals("请选择") || binding.tvDealLine.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择纠正截至日期");
             return;
         }
-        if (binding.tvInspected.getText().toString().equals("请选择")||binding.tvInspected.getText().toString().isEmpty()) {
-            ToastUtil.show(this,"请选择被检查人");
+        if (binding.tvInspected.getText().toString().equals("请选择") || binding.tvInspected.getText().toString().isEmpty()) {
+            ToastUtil.show(this, "请选择被检查人");
             return;
         }
         long dealtime = TimeUtil.ymdToLong(binding.tvDealLine.getText().toString());
         long checkTime = TimeUtil.ymdToLong(binding.tvCheckDate.getText().toString());
-        long day=60*60*24*999;
-        if (dealtime-checkTime<day) {
-            ToastUtil.show(this,"纠正日期至少大于检查日期一天");
+        long day = 60 * 60 * 24 * 999;
+        if (dealtime - checkTime < day) {
+            ToastUtil.show(this, "纠正日期至少大于检查日期一天");
             return;
         }
         mRequest.getBizData().setProblem_description(binding.ltQuestionDesc.getString());
         String s = new Gson().toJson(mRequest, CreateUnQualityRequest.class);
-        Log.e(TAG, "onPassClick: requestjson=== "+s );
+        Log.e(TAG, "onPassClick: requestjson=== " + s);
         if (IsFastClick.isFastDoubleClick()) {
             uploadImages(mRequest);
         }
     }
+
     /**
      * 上传照片
+     *
      * @param mRequest
      */
     private void uploadImages(CreateUnQualityRequest mRequest) {
@@ -458,7 +489,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, data -> {
             hideLoading();
             if (data != null) {
-                viewModel.deal(mRequest,data).observe(this, flag -> {
+                viewModel.deal(mRequest, data).observe(this, flag -> {
                     if (!flag) {
                         ToastUtil.show(getApplicationContext(), R.string.alert_submit_error);
                     } else {
@@ -472,40 +503,41 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             }
         });
     }
+
     private void checkSubmit() {
         if (binding.tvDivide.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择分期");
+            ToastUtil.show(this, "请选择分期");
             return;
         }
         if (binding.tvCheckDate.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择检查日期");
+            ToastUtil.show(this, "请选择检查日期");
             return;
         }
         if (binding.ltQuestionDesc.getString().isEmpty()) {
-            ToastUtil.show(this,"请输入问题描述");
+            ToastUtil.show(this, "请输入问题描述");
             return;
         }
         if (binding.tvLine.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择条线");
+            ToastUtil.show(this, "请选择条线");
             return;
         }
         if (binding.tvSeverity.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择严重程度");
+            ToastUtil.show(this, "请选择严重程度");
             return;
         }
         if (binding.tvDealLine.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择纠正截至日期");
+            ToastUtil.show(this, "请选择纠正截至日期");
             return;
         }
         if (binding.tvInspected.getText().toString().equals("请选择")) {
-            ToastUtil.show(this,"请选择被检查人");
+            ToastUtil.show(this, "请选择被检查人");
             return;
         }
         long l1 = TimeUtil.ymdToLong(binding.tvDealLine.getText().toString());
         long l2 = TimeUtil.ymdToLong(binding.tvCheckDate.getText().toString());
-        long l3=60*60*24*999;
-        if (l1-l2<l3) {
-            ToastUtil.show(this,"纠正截至日期至少早于检查日期一天");
+        long l3 = 60 * 60 * 24 * 999;
+        if (l1 - l2 < l3) {
+            ToastUtil.show(this, "纠正截至日期至少早于检查日期一天");
             return;
         }
     }
@@ -515,6 +547,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     protected int getColorPrimary() {
         return getResources().getColor(R.color.white);
     }
+
     /**
      * 初始化选择图片
      */
@@ -545,6 +578,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                     .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
         }, this);
     }
+
     /**
      * 分期view
      */
@@ -554,6 +588,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         periodizationView.setPeriodListener(this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");
     }
+
     //分期结果
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
@@ -562,6 +597,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         mRequest.getBizData().setDivide_id(orgModel.getId());
         mRequest.getBizData().setDivide_name(orgModel.getName());
     }
+
     /**
      * 日期选择
      */
@@ -571,9 +607,9 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
         String[] split = format.split(",");
-        startDate.set(Integer.parseInt(split[0]),Integer.parseInt(split[1])-1,Integer.parseInt(split[2]));//设置起始年份
+        startDate.set(Integer.parseInt(split[0]), Integer.parseInt(split[1]) - 1, Integer.parseInt(split[2]));//设置起始年份
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2100,1,1);//设置结束年份
+        endDate.set(2100, 1, 1);//设置结束年份
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -593,16 +629,17 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 
             }
         }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .setRangDate(startDate,endDate)
+                .setRangDate(startDate, endDate)
                 .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
                 .build();
         pvTime.show();
     }
+
     /**
      * 条线选择
      */
     private void line() {
-        if (lineTypeLists==null||lineTypeLists.size() == 0) {
+        if (lineTypeLists == null || lineTypeLists.size() == 0) {
             ToastUtil.show(this, "暂无条线");
             return;
         }
@@ -613,7 +650,6 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         BottomPicker.buildBottomPicker(this, txStrList, txDefaultPosLine, new BottomPicker.OnItemPickListener() {
 
 
-
             @Override
             public void onPick(int position, String label) {
                 if (position != txDefaultPosLine) {
@@ -621,35 +657,36 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 }
                 switch (position) {
                     case HJ:
-                        mOrderCode="HJ"+orderCodeChange;
+                        mOrderCode = "HJ" + orderCodeChange;
                         break;
                     case GC:
-                        mOrderCode="GC"+orderCodeChange;
+                        mOrderCode = "GC" + orderCodeChange;
                         break;
                     case ZX:
-                        mOrderCode="ZX"+orderCodeChange;
+                        mOrderCode = "ZX" + orderCodeChange;
                         break;
                     case KF:
-                        mOrderCode="KF"+orderCodeChange;
+                        mOrderCode = "KF" + orderCodeChange;
                         break;
                 }
                 txDefaultPosLine = position;
                 binding.tvLine.setText(txStrList.get(position));
                 mRequest.getBizData().setLine(lineTypeLists.get(position).getKey());
                 mRequest.getBizData().setCode(mOrderCode);
-                if (mCode==null) {//正常创建
-                }else {//详情创建不合格单 关联编号
+                if (mCode == null) {//正常创建
+                } else {//详情创建不合格单 关联编号
                     mRequest.getBizData().setParent_code(mCode);
                 }
                 dimCode = lineTypeLists.get(position).getKey();
             }
         });
     }
+
     /**
      * 严重程度选择
      */
     private void severity() {
-        if (severityTypeLists==null||severityTypeLists.size() == 0) {
+        if (severityTypeLists == null || severityTypeLists.size() == 0) {
             ToastUtil.show(this, "暂无严重程度");
             return;
         }
@@ -669,6 +706,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -692,7 +730,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
         }
     }
 
-    private void cachePhoto(List<Uri> uris){
-        viewModel.cachePhotos(uris,mRequest);
+    private void cachePhoto(List<Uri> uris) {
+        viewModel.cachePhotos(uris, mRequest);
     }
 }

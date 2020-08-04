@@ -59,6 +59,18 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_left"
+                    android:text="处理人" />
+
+                <TextView
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{patrol.F_processing_person_name}"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/work_order_detail_txt_left"
                     android:text="是否超时" />
 
                 <TextView
