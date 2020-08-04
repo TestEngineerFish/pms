@@ -173,7 +173,7 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
         map.put("RaiseLv3", "处理超时(第三次)");
         map.put("Timeout_Out", "超时升级返回");
         map.put("ConfirmCateAndAssignOrBrab", "派单");
-        map.put("WorkOrderPoolGrab", "待抢单");
+        map.put("WorkOrderPoolGrab", "抢单");
         map.put("OvertimeMandatoryAssign", "强制派单");
         map.put("EndEvent", "结束");
         map.put("UserTask6", "批复");
