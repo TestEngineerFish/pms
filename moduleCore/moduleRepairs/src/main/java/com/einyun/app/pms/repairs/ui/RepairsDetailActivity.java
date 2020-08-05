@@ -770,6 +770,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (TextUtils.isEmpty(binding.sendOrder.repairSelectedPepple.getText().toString()) || "请选择".equals(binding.sendOrder.repairSelectedPepple.getText().toString())) {
                 ToastUtil.show(this, R.string.txt_plese_select_people);
                 return;
+            }else {
+                customerRepair.setPd_remark(binding.sendOrder.repairSendReason.getString());
             }
 
         }
