@@ -294,10 +294,10 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
 //        distributeWorkOrder.getData().info.typeName+@string/text_padding+workOrder.data.info.envirmentType2Name+@string/text_padding+workOrder.data.info.envirmentType3Name
                 type.append(info.getTypeName());
 
-        if (info.getEnvirmentType2Name()!=null) {
+        if (info.getEnvirmentType2Name()!=null&&!"".equals(info.getEnvirmentType2Name())) {
             type.append("-"+info.getEnvirmentType2Name());
         }
-        if (info.getEnvirmentType3Name()!=null) {
+        if (info.getEnvirmentType3Name()!=null&&!"".equals(info.getEnvirmentType3Name())) {
             type.append("-"+info.getEnvirmentType3Name());
         }
         binding.orderInfo.orderType.setText(type);
