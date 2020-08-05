@@ -70,6 +70,7 @@ import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.portal.dictdata.net.URLS;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 
+import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 //import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.base.db.entity.PlanInfo;
@@ -82,6 +83,7 @@ import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
+import com.einyun.app.pms.plan.convert.ExtensionApplicationPlanDBToWokerConvert;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanResouceBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeBinding;
@@ -196,11 +198,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (isClosedState != null) {
                 if (isClosedState.isClosed()) {
                     if (isClosedState.getType().equals(WorkOrder.POSTPONED_PLAN)) {
+
+                        ExtensionApplicationPlanDBToWokerConvert ss=new ExtensionApplicationPlanDBToWokerConvert();
+                        List<ExtensionApplication> extensionApplications = ss.stringToSomeObjectList(new Gson().toJson(planInfo.getExtensionApplication()));
                         //还需要传入参数
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_LATE)
                                 .withString(RouteKey.KEY_ORDER_ID, id)
-                                .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, (Serializable) planInfo.getExtensionApplication())
+                                .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, (Serializable) extensionApplications)
                                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                                 .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_PLAN)
                                 .navigation();
