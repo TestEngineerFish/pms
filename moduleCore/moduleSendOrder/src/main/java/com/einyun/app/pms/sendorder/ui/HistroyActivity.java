@@ -97,7 +97,6 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                             if (model.getOpinion().equals("跳过第一个任务节点") || model.getStatusVal().equals("同意") && model.getOpinion().equals("同意")) {
                                 binding.opinonTxt.setText("");
                             } else {
-                                binding.opinonTxt.setText(model.getOpinion());
                             }
                         }
                     }
