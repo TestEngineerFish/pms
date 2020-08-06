@@ -60,12 +60,14 @@ public class ThrowableParser {
         }else if(throwable instanceof EinyunHttpException){
             //API业务错误
             EinyunHttpException exception= (EinyunHttpException) throwable;
-            if (exception.getResponse().getMsg().contains("userAccount")) {
+            if (exception.getResponse().getMsg()!=null&&exception.getResponse().getMsg().contains("userAccount")) {
                 ToastUtil.show(CommonApplication.getInstance(), "沟通人员不能为自己");
-            }else if (exception.getResponse().getCode().equals("34516")){
+            }else if (exception.getResponse().getCode()!=null&&exception.getResponse().getCode().equals("34516")){
                 ToastUtil.show(CommonApplication.getInstance(), "任务不存在，可能已经被处理了");
             } else {
-                ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+                if (exception.getResponse().getMsg()!=null) {
+                    ToastUtil.show(CommonApplication.getInstance(), exception.getResponse().getMsg());
+                }
             }
         }
         else if (throwable instanceof JsonParseException
