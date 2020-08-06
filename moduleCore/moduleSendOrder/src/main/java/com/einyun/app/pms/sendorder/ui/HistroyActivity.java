@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -34,7 +35,6 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
     private Map<String, String> map;
-
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
@@ -80,10 +80,6 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                         binding.name.setText("系统");
                         binding.opinonTxt.setText("超时");
                     }
-                    if (model.status.equals("skip")) {
-                        binding.opinonTxt.setText("");
-                    }
-
                     if (binding.name.getText().toString().contains("admin")){
                         binding.name.setText(binding.name.getText().toString().replace("admin","系统"));
                     }
@@ -94,9 +90,13 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                         if (model.getOpinion().equals("结束流程")) {
                             binding.opinonTxt.setText("关闭工单");
                         } else {
-                            if (model.getOpinion().equals("跳过第一个任务节点") || model.getStatusVal().equals("同意") && model.getOpinion().equals("同意")) {
+                            if (model.getOpinion().equals("跳过第一个任务节点")) {
                                 binding.opinonTxt.setText("");
                             } else {
+                                if (model.getStatusVal().equals("同意") && model.getOpinion().equals("同意")){
+                                    binding.opinonTxt.setText("");
+                                }else {
+                                }
                             }
                         }
                     }
@@ -138,12 +138,16 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
                     historyModels.remove(i);
                     i--;
                     length--;
-                }
-                if (i==0){
-                    if (historyModels.get(0).getProcDefId().contains("zyxcgd")||historyModels.get(0).getProcDefId().contains("zyjhgd")){
-                        historyModels.get(0).setOpinion("工单自动生成");
-                    }else {
-                        historyModels.get(0).setOpinion("");
+                }else {
+                    if (historyModels.get(i).getStatus().equals("skip")) {
+                        historyModels.get(i).setOpinion("");
+                    }
+                    if (i == 0) {
+                        if (historyModels.get(0).getProcDefId().contains("zyxcgd") || historyModels.get(0).getProcDefId().contains("zyjhgd")) {
+                            historyModels.get(0).setOpinion("工单自动生成");
+                        } else {
+                            historyModels.get(0).setOpinion("");
+                        }
                     }
                 }
             }
