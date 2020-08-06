@@ -35,7 +35,6 @@ public class HistroyActivity extends BaseHeadViewModelActivity<ActivityHistroyBi
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
     private Map<String, String> map;
-
     @Override
     protected SendOrderDetialViewModel initViewModel() {
         return new ViewModelProvider(this, new SendOdViewModelFactory()).get(SendOrderDetialViewModel.class);
