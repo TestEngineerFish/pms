@@ -116,6 +116,8 @@ class DisttributeMainModel :Serializable {
     var originalCode: String? = null
     @SerializedName("F_ORIGINAL_ID")
     var originalID: String? = null
+    @SerializedName("F_ORIGINAL_PROLNSTLD")
+    var originalOldProId: String? = null
     @SerializedName("F_ORIGINAL_TYPE")
     var originalType: String? = null
     @SerializedName("F_OT_LEVEL")
@@ -127,7 +129,8 @@ class DisttributeMainModel :Serializable {
     @SerializedName("F_PROC_ID")
     var procID: String? = null //处理人id
     @SerializedName("F_PROC_NAME")
-    var procName: String? = null //处理人名称
+    var procName: String? = null //工单负责人
+    var F_HANDLE_NAME: String? = null //处理人名称
     @SerializedName("F_PROJECT_ID")
     var projectID: String? = null//项目id
     @SerializedName("F_PROJECT_NAME")
@@ -160,6 +163,8 @@ class DisttributeMainModel :Serializable {
     var procInstID: String? = null //实例ID
     @SerializedName("ref_id_")
     var refID: String? = null
+    @SerializedName("joint_processor")
+    var joint_processor: String? = null
     @SerializedName("tenant_id")
     var tenantID: String? = null
     var close: String? = null

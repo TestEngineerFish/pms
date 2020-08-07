@@ -42,6 +42,7 @@ public class PlanOrderBindAdapter {
         }
 
     }
+
     /**
      * xiangqing状态
      *
@@ -63,13 +64,14 @@ public class PlanOrderBindAdapter {
         } else if (state == OrderState.CLOSED.getState()) {
             view.setText(R.string.text_finished);
             view.setTextColor(view.getContext().getResources().getColor(R.color.greenTextColor));
-        }else if (state == OrderState.PENDING.getState()) {
+        } else if (state == OrderState.PENDING.getState()) {
             view.setText(R.string.text_state_wait_receive);
         } else if (state == OrderState.OVER_DUE.getState()) {
             view.setText(R.string.text_state_wait_send);
         }
 
     }
+
     /**
      * 派工单详情显示状态
      *
@@ -150,7 +152,7 @@ public class PlanOrderBindAdapter {
             view.setImageResource(R.mipmap.icon_work_order_apply);
         } else if (state == OrderState.CLOSED.getState()) {
             view.setImageResource(R.mipmap.icon_state_closed);
-        }else if (state == OrderState.PENDING.getState()) {
+        } else if (state == OrderState.PENDING.getState()) {
             view.setImageResource(R.mipmap.icon_new);
         } else if (state == OrderState.OVER_DUE.getState()) {
             view.setImageResource(R.mipmap.icon_new);
@@ -165,6 +167,7 @@ public class PlanOrderBindAdapter {
 //    public static void status(TextView view, GetMappingByUserIdsResponse value) {
 //        view.setText(value.getFullname() + "(" + value.getAccount() + ")");
 //    }
+
     /**
      * 是否强制扫码
      *
@@ -181,6 +184,7 @@ public class PlanOrderBindAdapter {
             view.setTextColor(view.getContext().getResources().getColor(R.color.redTextColor));
         }
     }
+
     /**
      * 是否强制扫码
      *
@@ -197,6 +201,7 @@ public class PlanOrderBindAdapter {
 //            view.setTextColor(view.getContext().getResources().getColor(R.color.redTextColor));
         }
     }
+
     /**
      * 是否强制扫码
      *
@@ -211,9 +216,27 @@ public class PlanOrderBindAdapter {
         } else if (state == 1) {
             view.setText("成功");
             view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
-        }else  {
+        } else {
             view.setText("");
             view.setTextColor(view.getContext().getResources().getColor(R.color.blackTextColor));
+        }
+    }
+    @BindingAdapter("isCached")
+    public static void isCached(ImageView view,boolean value){
+        if(value){
+            view.setImageResource(R.drawable.icon_cached);
+        }else{
+            view.setImageResource(R.drawable.icon_no_cache);
+        }
+    }
+    @BindingAdapter("isCached")
+    public static void isCached(TextView view,boolean value){
+        if(value){
+            view.setText("已缓存");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+        }else{
+            view.setText("未缓存");
+            view.setTextColor(view.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
         }
     }
 }

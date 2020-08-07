@@ -10,7 +10,7 @@ class PatrolSubmitRequest {
      var actionName: String?=null
      var data: String?=null
      var id: String?=null
-
+     var remark: String?=null
      constructor()
      constructor(taskId:String,zhipaiRemark:String,actionName:String,data:String,id:String){
           this.taskId=taskId

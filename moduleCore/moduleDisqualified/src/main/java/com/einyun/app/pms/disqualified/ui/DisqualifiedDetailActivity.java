@@ -20,6 +20,7 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.db.entity.CreateUnQualityRequest;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.pms.disqualified.db.UnQualityFeedBackRequest;
@@ -54,6 +55,7 @@ import java.util.List;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_HAD_FOLLOW;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_ORDER_LIST;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_DISQUALIFIED_WAIT_FOLLOW;
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 
 //@Route(path = RouterUtils.ACTIVITY_APPROVAL)
 @Route(path = RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
@@ -94,6 +96,9 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         super.initViews(savedInstanceState);
         setTxtColor(getResources().getColor(R.color.blackTextColor));
         setHeadTitle(R.string.tv_disqualified_order);
+        setRightOption(R.drawable.histroy);
+        setRightTxt(R.string.text_histroy);
+        setRightTxtColor(R.color.blueTextColor);
         selectPng();
         selectValidationPng();
         binding.setCallBack(this);
@@ -129,6 +134,44 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                 false));
         binding.listPicInvalition.addItemDecoration(new SpacesItemDecoration(18));
         binding.listPicInvalition.setAdapter(photoValidationInfoAdapter);
+        binding.rlOldCode.setOnClickListener(view -> {
+            if ("1".equals(mDetailModel.getData().getUnqualified_model().getOriginal_type())) {//1 计划工单
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                        .withString(RouteKey.KEY_ORDER_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
+                        .navigation();
+            } else if ("3".equals(mDetailModel.getData().getUnqualified_model().getOriginal_type())){
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_DISQUALIFIED_DETAIL)
+                        .withString(RouteKey.KEY_TASK_ID,"")
+                        .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
+                        .withString(RouteKey.KEY_ID,"")
+                        .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_DISQUALIFIED_HAD_FOLLOW)
+                        .navigation();
+            }
+            else {//巡查工单
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                        .withString(RouteKey.KEY_ORDER_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getOriginal_prolnstld())
+                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .navigation();
+            }
+        });
+    }
+
+    @Override
+    public void onRightOptionClick(View view) {
+        super.onRightOptionClick(view);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_HISTORY)
+                .withString(RouteKey.KEY_ORDER_ID, mDetailModel.getData().getUnqualified_model().getId_())
+                .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getProc_inst_id_())
+                .navigation();
     }
 
     @Override
@@ -159,6 +202,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                  * 获取详情信息
                  */
                 viewModel.getHaveDODetailInfo(mProInstId).observe(this, module -> {
+                    mDetailModel = module;
                     updateUI(module);
                 });
                 break;
@@ -282,6 +326,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //        photoValidationInfoAdapter.updateList(modelValidateList);
 
     }
+
     /**
      * 加载基本信息he反馈信息
      */
@@ -372,14 +417,15 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
 //        photoValidationInfoAdapter.updateList(modelValidateList);
 
     }
+
     private void updateUI(DisqualifiedDetailModel detailModule) {
         if (detailModule == null) {
 //            updatePageUIState(PageUIState.LOAD_FAILED.getState());
             return;
         }
-        if (!detailModule.getData().getUnqualified_model().getParent_code().isEmpty()) {
+        if (!detailModule.getData().getUnqualified_model().getOriginal_code().isEmpty()) {
             binding.rlOldCode.setVisibility(View.VISIBLE);
-            binding.tvOldCode.setText(detailModule.getData().getUnqualified_model().getParent_code());
+            binding.tvOldCode.setText(detailModule.getData().getUnqualified_model().getOriginal_code());
         }
 //        updatePageUIState(PageUIState.FILLDATA.getState());
         code = detailModule.getData().getUnqualified_model().getCode();
@@ -490,7 +536,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
      */
     public void onFeedBackPassClick() {
         if (!NetWorkUtils.isNetworkConnected(DisqualifiedDetailActivity.this)) {
-            ToastUtil.show(DisqualifiedDetailActivity.this,"当前网络连接不可用");
+            ToastUtil.show(DisqualifiedDetailActivity.this, "当前网络连接不可用");
             return;
         }
         if (binding.tvOpFeedbackDate.getText().toString().equals("请选择") || binding.tvOpFeedbackDate.getText().toString().isEmpty()) {
@@ -536,7 +582,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                     @Override
                     public void onClick(View view) {
                         if (!NetWorkUtils.isNetworkConnected(DisqualifiedDetailActivity.this)) {
-                            ToastUtil.show(DisqualifiedDetailActivity.this,"当前网络连接不可用");
+                            ToastUtil.show(DisqualifiedDetailActivity.this, "当前网络连接不可用");
                             return;
                         }
                         validateSubmit(true);
@@ -564,7 +610,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
         mValidateRequest.getDoNextParamt().setTaskId(mTaskId);
 
         //缓存工单基本信息
-        if (mUnqualified_model!= null) {
+        if (mUnqualified_model != null) {
             mValidateRequest.getBizData().setOrder_info_state(mUnqualified_model.getStatus());
             mValidateRequest.getBizData().setOrder_info_code(mUnqualified_model.getCode());
             mValidateRequest.getBizData().setOrder_info_create_time(mUnqualified_model.getCreated_time());
@@ -592,7 +638,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     //验证信息提交
     public void onValidationPassClick() {
         if (!NetWorkUtils.isNetworkConnected(DisqualifiedDetailActivity.this)) {
-            ToastUtil.show(DisqualifiedDetailActivity.this,"当前网络连接不可用");
+            ToastUtil.show(DisqualifiedDetailActivity.this, "当前网络连接不可用");
             return;
         }
         validateSubmit(false);
@@ -662,7 +708,15 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
                             viewModel.deleteVerificationRequest("v_" + mTaskId);
                             ARouter.getInstance()
                                     .build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
-                                    .withString(RouteKey.CODE , code)
+                                    .withString(RouteKey.F_ORIGINAL_TYPE, "3")
+                                    .withString(RouteKey.KEY_ORDER_ID, mDetailModel.getData().getUnqualified_model().getId_())
+                                    .withString(RouteKey.KEY_ORDER_NO, mDetailModel.getData().getUnqualified_model().getCode())
+                                    .withString(RouteKey.KEY_PRO_INS_ID, mDetailModel.getData().getUnqualified_model().getProc_inst_id_())
+                                    .withString(RouteKey.CODE, code)
+                                    .withString(RouteKey.KEY_LINE_CODE, mDetailModel.getData().getUnqualified_model().getLine())
+                                    .withString(RouteKey.KEY_DIVIDE_NAME, mDetailModel.getData().getUnqualified_model().getDivide_name())
+                                    .withString(RouteKey.KEY_DIVIDE_ID, mDetailModel.getData().getUnqualified_model().getDivide_id())
+                                    .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_DISQUALIFIED_HAD_FOLLOW)
                                     .navigation();
                             finish();
                         }

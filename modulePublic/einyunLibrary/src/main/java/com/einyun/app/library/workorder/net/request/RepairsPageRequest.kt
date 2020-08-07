@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 class RepairsPageRequest : PageRquest() {
     var bx_dk_id: String? = ""
+    var searchValue: String? = ""
     var bx_area_id: String? = ""
     var bx_cate_lv1_id: String? = ""
     var bx_cate_lv2_id: String? = ""

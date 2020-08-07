@@ -24,6 +24,7 @@ import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.CheckUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
+import com.einyun.app.library.workorder.model.TypeBigAndSmallModel;
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest;
 import com.einyun.app.library.uc.usercenter.model.HouseModel;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -51,6 +52,8 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
     private List<DictDataModel> dictComplainWayList = new ArrayList<>();
     private List<TypeAndLine> lines = new ArrayList<>();
     private List<DictDataModel> lineDictDataModelList = new ArrayList<>();
+    private List<TypeBigAndSmallModel.ChildrenBeanX> typeBigs=new ArrayList<>();
+    private TypeBigAndSmallModel.ChildrenBeanX childrenBeanX;
 
     @Override
     protected CreateViewModel initViewModel() {
@@ -71,8 +74,11 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
         viewModel.getByTypeKey(Constants.ENQUIRY_WAY).observe(this, dictDataModels -> {
             dictComplainWayList = dictDataModels;
         });
-        viewModel.typeAndLineList().observe(this, lines -> {
-            this.lines = lines;
+//        viewModel.typeAndLineList().observe(this, lines -> {
+//            this.lines = lines;
+//        });
+        viewModel.typeBigAndSmall().observe(this, model -> {
+            typeBigs = model.getChildren();
         });
         selectPng();
     }
@@ -125,8 +131,14 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
                 //问询方式
                 complainWay();
                 break;
-            case ENQUIRY_TYPE:
+//            case ENQUIRY_TYPE:
+//                complainType();
+//                break;
+            case ENQUIRY_TYPE_BIG:
                 complainType();
+                break;
+            case ENQUIRY_TYPE_SMALL:
+                complainTypeSmall();
                 break;
             case HOUSE:
                 selectHouse();
@@ -200,36 +212,71 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
     }
 
     int ctDefaultPos = 0;
+    int smallDefaultPos = 0;
 
     /**
      * 问询类型
      */
     private void complainType() {
-        if (dictComplainWayList.size() == 0) {
+        if (typeBigs.size() == 0) {
             ToastUtil.show(this, "暂无问询类别");
             return;
         }
         List<String> txStrList = new ArrayList<>();
-        for (TypeAndLine line : lines) {
-            txStrList.add(line.getDataName());
+        for (TypeBigAndSmallModel.ChildrenBeanX childrenBeanX : typeBigs) {
+            txStrList.add(childrenBeanX.getDataName());
         }
         BottomPicker.buildBottomPicker(this, txStrList, ctDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
-                ctDefaultPos = position;
-                for (TypeAndLine line : lines) {
-                    if (line.getDataName().equals(txStrList.get(position))) {
-                        request.getBizData().setCateId(line.getDataKey());
-                        request.getBizData().setCate(line.getDataName());
-                        request.getBizData().setLineKey(line.getMajorLine().getKey());
-                        request.getBizData().setLineName(line.getMajorLine().getName());
+
+                smallDefaultPos=0;
+                childrenBeanX = typeBigs.get(position);
+                if (childrenBeanX!=null) {
+                    request.getBizData().setCateId(childrenBeanX.getDataKey());
+                    request.getBizData().setCate(childrenBeanX.getDataName());
+                    if (ctDefaultPos!=position) {
+                        request.getBizData().setSubCate("");
+                        request.getBizData().setSubCateId("");
                     }
+                    binding.setBean(request);
                 }
-                binding.setBean(request);
+                ctDefaultPos = position;
             }
         });
     }
+    /**
+     * 问询小类
+     */
+    private void complainTypeSmall() {
+        if (typeBigs.size() == 0) {
+            ToastUtil.show(this, "暂无问询类别");
+            return;
+        }
+        if (!StringUtil.isNullStr(request.getBizData().getCate())) {
+            ToastUtil.show(this, "请先选择问询大类");
+            return ;
+        }
+        List<String> txStrList = new ArrayList<>();
 
+        for (TypeBigAndSmallModel.ChildrenBeanX.ChildrenBean child : childrenBeanX.getChildren()) {
+            txStrList.add(child.getDataName());
+        }
+
+
+        BottomPicker.buildBottomPicker(this, txStrList, smallDefaultPos, new BottomPicker.OnItemPickListener() {
+            @Override
+            public void onPick(int position, String label) {
+                ctDefaultPos = position;
+                if (childrenBeanX!=null) {
+                    TypeBigAndSmallModel.ChildrenBeanX.ChildrenBean childrenBean = childrenBeanX.getChildren().get(position);
+                    request.getBizData().setSubCateId(childrenBean.getDataKey());
+                    request.getBizData().setSubCate(childrenBean.getDataName());
+                    binding.setBean(request);
+                }
+            }
+        });
+    }
     /**
      * 分期view
      */
@@ -288,7 +335,11 @@ public class CreateClientEnquiryOrderViewModelActivity extends BaseHeadViewModel
             return false;
         }
         if (!StringUtil.isNullStr(request.getBizData().getCate())) {
-            ToastUtil.show(this, "请选择问询类别");
+            ToastUtil.show(this, "请选择问询大类");
+            return false;
+        }
+        if (!StringUtil.isNullStr(request.getBizData().getSubCate())) {
+            ToastUtil.show(this, "请选择问询小类");
             return false;
         }
         String problemDescription = binding.ltQuestionDesc.getString();

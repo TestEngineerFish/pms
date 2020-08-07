@@ -115,5 +115,75 @@ public class CusInquiriesFragmentViewModel extends BasePageListViewModel<Inquiri
 
         return new Gson().fromJson(jsonObject.toString(),InquiriesRequestBean.class);
     }
+    public InquiriesRequestBean getRequestSearchBean(int page, int pageSize, String line, String status, String divideId,String code,String desc){
 
+        JsonObject jsonObject = new JsonObject();
+        JsonObject pageBean = new JsonObject();
+        pageBean.addProperty("page", page);
+        pageBean.addProperty("pageSize", pageSize);
+        pageBean.addProperty("showTotal", false);
+        JsonObject params = new JsonObject();
+        params.addProperty("searchValue", code);
+
+        JsonArray querys = new JsonArray();
+
+//        JsonArray sorters = new JsonArray();
+//        JsonObject sorter = new JsonObject();
+//        sorter.addProperty("property", "wx_time");
+//        sorter.addProperty("direction", "DESC");
+//        sorters.add(sorter);
+
+        JsonObject querys1 = new JsonObject();
+        querys1.addProperty("property", "line");
+        querys1.addProperty("operation", "EQUAL");
+        querys1.addProperty("value", line);
+        querys1.addProperty("relation", "AND");
+
+        JsonObject querys2 = new JsonObject();
+        querys2.addProperty("property", "status");
+        querys2.addProperty("operation", "EQUAL");
+        querys2.addProperty("value", status);
+        querys2.addProperty("relation", "AND");
+
+        JsonObject querys3 = new JsonObject();
+        querys3.addProperty("property", "divide_id");
+        querys3.addProperty("operation", "EQUAL");
+        querys3.addProperty("value", divideId);
+        querys3.addProperty("relation", "AND");
+
+        JsonObject querys4 = new JsonObject();
+        querys4.addProperty("property", "wx_code");
+        querys4.addProperty("operation", "LIKE");
+        querys4.addProperty("value", code);
+        querys4.addProperty("relation", "OR");
+
+        JsonObject querys5 = new JsonObject();
+        querys5.addProperty("property", "wx_content");
+        querys5.addProperty("operation", "LIKE");
+        querys5.addProperty("value", desc);
+        querys5.addProperty("relation", "OR");
+        if (!divideId.isEmpty()) {
+            querys.add(querys3);
+        }
+
+        if (!line.isEmpty()) {
+            querys.add(querys1);
+        }
+        if (!status.isEmpty()) {
+            querys.add(querys2);
+        }
+//        if (!code.isEmpty()) {
+//            querys.add(querys4);
+//        }
+//        if (!desc.isEmpty()) {
+//            querys.add(querys5);
+//        }
+        jsonObject.add("pageBean", pageBean);
+        jsonObject.add("params", params);
+//        jsonObject.add("querys", querys);
+//        jsonObject.add("sorter", sorters);
+        Log.e("客户问询", "RequestTodoList: "+jsonObject.toString() );
+
+        return new Gson().fromJson(jsonObject.toString(),InquiriesRequestBean.class);
+    }
 }

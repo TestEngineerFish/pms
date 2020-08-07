@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -25,6 +27,8 @@ import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
@@ -43,6 +47,7 @@ import com.einyun.app.pms.complain.BR;
 import com.einyun.app.pms.complain.R;
 import com.einyun.app.pms.complain.databinding.ComplainFragmentBinding;
 import com.einyun.app.pms.complain.databinding.ItemOrderComplainBinding;
+import com.einyun.app.pms.complain.databinding.ItemOrderComplainSearchBinding;
 import com.einyun.app.pms.complain.viewmodel.ComplainViewModel;
 import com.einyun.app.pms.complain.viewmodel.ViewModelFactory;
 import com.jeremyliao.liveeventbus.LiveEventBus;
@@ -70,7 +75,7 @@ import static com.einyun.app.common.ui.widget.SelectPopUpView.SELECT_COMPLAIN_TY
  */
 public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFragmentBinding, ComplainViewModel> implements PeriodizationView.OnPeriodSelectListener, ItemClickListener<ComplainModel> {
     RVPageListAdapter<ItemOrderComplainBinding, ComplainModel> adapter;
-
+    private PageSearchFragment searchFragment;
     public static ComplainViewModelFragment newInstance(Bundle bundle) {
         ComplainViewModelFragment fragment = new ComplainViewModelFragment();
         fragment.setArguments(bundle);
@@ -128,8 +133,105 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
 
         });
         LiveDataBusUtils.getLiveBusData(binding.empty.getRoot(),LiveDataBusKey.COMPLAIN_EMPTY+getFragmentTag(),this);
+        /**
+         * 搜索
+         */
+        binding.panelCondition.search.setOnClickListener(view1 -> {
+            search();
+        });
     }
+    private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.COMPLAIN_SEARCH.getTypeName(),map);
+        try {
+//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemOrderComplainSearchBinding, ComplainModel>(getActivity(), BR.complainSearch, new PageSearchListener<ItemOrderComplainSearchBinding,ComplainModel>() {
+                    @Override
+                    public LiveData<PagedList<ComplainModel>> search(String search) {
+                        searchRequest = new ComplainPageRequest();
+                        searchRequest.setSearchValue(search);
 
+//                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                        return viewModel.loadPagingData(searchRequest, getFragmentTag());
+//                        } else {
+//                            return viewModel.loadPadingData(requestBean, getFragmentTag());
+//                            return viewModel.loadPadingData(request, getFragmentTag());
+//                        }
+                    }
+
+                    @Override
+                    public void onItemClick(ComplainModel model) {
+                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_COMPLAIN_DETAIL)
+                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .withString(RouteKey.ID, model.getID_())
+                                .withString(RouteKey.KEY_FRAGEMNT_TAG, getFragmentTag())
+                                .navigation();
+                    }
+
+                    @Override
+                    public void onItem(ItemOrderComplainSearchBinding binding, ComplainModel complainModel) {
+                        if (FRAGMENT_REPAIR_WAIT_FOLLOW.equals(getFragmentTag())) {
+                            binding.line.setVisibility(View.VISIBLE);
+                            binding.llTalkOrTurnSingle.setVisibility(View.VISIBLE);
+                            //转单
+                            binding.tvTurnOrder.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ARouter.getInstance()
+                                            .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                            .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                            .withString(RouteKey.KEY_ORDER_ID, complainModel.getID_())
+                                            .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
+                                            .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
+                                            .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                                            .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                            .navigation();
+                                }
+                            });
+                            //沟通
+                            binding.tvTalk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                            .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                            .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_COMMUN.getTypeName())
+                                            .withString(RouteKey.KEY_DIVIDE_ID, complainModel.getF_ts_dk_id())
+                                            .withString(RouteKey.KEY_PROJECT_ID, complainModel.getU_project_id())
+                                            .navigation();
+                                }
+                            });
+                        }
+                        if (FRAGMENT_REPAIR_WAIT_FEED.equals(getFragmentTag())) {
+                            binding.line.setVisibility(View.VISIBLE);
+                            binding.rlFeedBack.setVisibility(View.VISIBLE);
+                            binding.rlFeedBack.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ARouter.getInstance()
+                                            .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
+                                            .withString(RouteKey.KEY_TASK_ID, complainModel.getTaskId())
+                                            .navigation();
+                                }
+                            });
+                        }
+                        binding.repairCreateTime.setText(FormatUtil.formatDate(complainModel.getCreateTime()));
+                    }
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_order_complain_search;
+                    }
+                });
+
+                searchFragment.setHint("请输入工单编号、投诉内容");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -168,6 +270,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
     }
 
     ComplainPageRequest request;
+    ComplainPageRequest searchRequest;
 
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面

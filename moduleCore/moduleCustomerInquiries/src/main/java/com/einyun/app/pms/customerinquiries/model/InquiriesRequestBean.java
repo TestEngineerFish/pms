@@ -15,6 +15,7 @@ public class InquiriesRequestBean {
      */
 
     private PageBean pageBean;
+    private Params params;
     private List<QuerysBean> querys;
     private List<SorterBean> sorter;
 
@@ -41,7 +42,17 @@ public class InquiriesRequestBean {
     public void setSorter(List<SorterBean> sorter) {
         this.sorter = sorter;
     }
+    public static class Params {
+        private String searchValue;
 
+        public String getSearchValue() {
+            return searchValue;
+        }
+
+        public void setSearchValue(String searchValue) {
+            this.searchValue = searchValue;
+        }
+    }
     public static class PageBeanBean {
         /**
          * page : 1

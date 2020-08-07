@@ -64,7 +64,7 @@ public class OrderListModel {
     private String F_CONTENT;
     private String F_OPER_CONTENT;
     private String F_FILES;
-    private String id;
+    private String id_;
     private String RESPONSE_TIMEOUT;
     private String bx_dk_id;
     private String bx_way;
@@ -274,11 +274,11 @@ public class OrderListModel {
     }
 
     public String getId() {
-        return id;
+        return id_;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id_ = id;
     }
 
     public String getREF_ID() {

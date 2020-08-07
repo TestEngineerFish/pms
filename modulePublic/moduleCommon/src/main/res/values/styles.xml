@@ -108,7 +108,8 @@
     </style>
     <style name="ll_create_order">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/px_100</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/px_100</item>
         <item name="android:background">@color/white</item>
         <item name="android:paddingLeft">@dimen/px_30</item>
         <item name="android:paddingRight">@dimen/px_30</item>

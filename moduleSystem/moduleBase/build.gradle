@@ -123,8 +123,8 @@ dependencies {
     api deps.support.design
     api deps.live_event_bus
     //project
-//    api project(deps.project.module_http)
-    api deps.einyun.http
+    api project(deps.project.module_http)
+//    api deps.einyun.http
 //    api deps.einyun.db
 //    api 'com.tencent.bugly:crashreport:latest.release'
 

@@ -56,6 +56,7 @@
             android:textSize="@dimen/font_size15" />
 
     </LinearLayout>
+    <include layout="@layout/layout_empty" android:id="@+id/empty" android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

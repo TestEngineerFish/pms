@@ -27,6 +27,6 @@
             android:layout_marginLeft="@dimen/px_24"
             android:textSize="@dimen/px_30"
             android:textColor="@color/blackTextColor"
-            android:text="长城盛世家园一期" />
+            android:text="" />
     </RelativeLayout>
 </layout>

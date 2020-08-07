@@ -184,6 +184,7 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
                 if(patrolInfo==null){
                     liveData.postValue(null);
                 }
+                ThrowableParser.onFailed(throwable);
             }
         });
         return liveData;
@@ -212,6 +213,7 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                ThrowableParser.onFailed(throwable);
                 if(patrolInfo==null){
                     liveData.postValue(null);
                 }

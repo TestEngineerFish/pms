@@ -242,6 +242,7 @@ public class InquiriesDetailModule {
             private String wx_time;
             private Object u_city_area;
             private String wx_cate;
+            private String wx_sub_cate;
             private Object return_way;
             private Object return_visit_num;
             private Object u_region;
@@ -995,6 +996,14 @@ public class InquiriesDetailModule {
 
             public void setResponse_result(String response_result) {
                 this.response_result = response_result;
+            }
+
+            public String getWx_sub_cate() {
+                return wx_sub_cate;
+            }
+
+            public void setWx_sub_cate(String wx_sub_cate) {
+                this.wx_sub_cate = wx_sub_cate;
             }
 
             public static class InitDataBean {

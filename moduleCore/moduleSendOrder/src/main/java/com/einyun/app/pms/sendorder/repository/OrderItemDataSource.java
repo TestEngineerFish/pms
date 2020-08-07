@@ -22,7 +22,7 @@ import com.einyun.app.library.resource.workorder.repository.ResourceWorkOrderRep
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 
-public class OrderItemDataSource extends BaseDataSource<Distribute> {
+public class OrderItemDataSource extends BaseDataSource<DistributeWorkOrder> {
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     private DistributePageRequest request;

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
+import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,6 +29,7 @@ import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
+import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
@@ -36,6 +38,8 @@ import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.common.utils.HttpUrlUtil;
 import com.einyun.app.common.utils.IsFastClick;
+import com.einyun.app.common.utils.PicEvUtils;
+import com.einyun.app.library.EinyunSDK;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
@@ -88,6 +92,8 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     @Override
     protected void initData() {
         super.initData();
+        //根据编译类型展示切换环境控件
+//        showPicEv();
         //隐私页展示
         viewModel.showPrivacy(this);
         binding.setUserModel(new UserModel("", "", "", ""));
@@ -335,4 +341,32 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             }
         });
     }
+    //根据编译类型展示切换环境控件
+    private void showPicEv(){
+        if (com.einyun.app.common.BuildConfig.BUILD_TYPE.equals("debug")) {
+            binding.picEv.setVisibility(View.VISIBLE);
+            SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"debug");
+            binding.testEv.setChecked(true);
+            binding.picEv.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    if (checkedId==R.id.test_ev){
+                        SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"debug");
+                    }
+                    if (checkedId==R.id.uat_ev){
+                        SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"uat");
+                    }
+                    if (checkedId==R.id.release_ev){
+                        SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"release");
+                    }
+                    EinyunSDK.Companion.init(CommonApplication.getInstance(), PicEvUtils.getBaseUrl((String)SPUtils.get(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"")));
+                }
+            });
+        }else if (com.einyun.app.common.BuildConfig.BUILD_TYPE.equals("uat")){
+            SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"uat");
+        }else {
+            SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"release");
+        }
+    }
+
 }

@@ -30,7 +30,9 @@ public class NoticeAdapter {
                 case "other":
                     view.setImageResource(com.einyun.app.common.R.drawable.other_tag);
                     break;
-                default:break;
+                default:
+                    view.setImageResource(com.einyun.app.common.R.drawable.other_tag);
+                    break;
             }
         }
     }
@@ -57,7 +59,9 @@ public class NoticeAdapter {
                 case "other":
                     view.setText("其他");
                     break;
-                default:break;
+                default:
+                    view.setText("其他");
+                    break;
             }
         }
     }

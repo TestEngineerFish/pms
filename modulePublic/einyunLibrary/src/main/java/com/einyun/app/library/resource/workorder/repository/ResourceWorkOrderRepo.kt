@@ -266,14 +266,24 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
         serviceApi?.isClosed(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
-                    callBack.call(response.data)
-                }, { callBack.onFaild(it) }
+//                    callBack.call(response.data)
+                    if (response.isState) {
+                        callBack.call(response.data)
+                        Log.e("call", "111111111111111111111111111")
+                    } else {
+                        callBack.onFaild(EinyunHttpException(response))
+                        Log.e("onFaild", "111111111111111111111111111")
+                    }
+
+                }, { callBack.onFaild(it)
+                    Log.e("onFaildit", "111111111111111111111111111")
+                }
             )
     }
 
     //巡查已办详情
     override fun patrolDoneDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolDoneDetial(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.patrolDoneDetial(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -333,7 +343,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
     override fun planOrderDetail(taskId: String, callBack: CallBack<PlanInfo>) {
         var request = PatrolDetialRequest()
         request.taskId = taskId
-        serviceApi?.planOrderDetail(request)?.compose(RxSchedulers.inIo())
+        serviceApi?.planOrderDetail(request)?.compose(RxSchedulers.inIoMain())
             ?.subscribe(
                 { response ->
                     if (response.isState) {
@@ -710,7 +720,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
      * 巡查工单详情
      */
     override fun patrolPendingDetial(request: PatrolDetialRequest, callBack: CallBack<PatrolInfo>) {
-        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIo())?.doOnError({ error ->
+        serviceApi?.patrolPendingDetial(request)?.compose(RxSchedulers.inIoMain())?.doOnError({ error ->
             Log.e("error", error.toString())
         })?.subscribe(
             { response ->
@@ -950,6 +960,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addSort("bx_time", request.DESC)
             .setPageBean(request.pageBean)
+            .setParamsValue(request.searchValue)
         return builder
     }
 
@@ -980,6 +991,7 @@ class ResourceWorkOrderRepo : ResourceWorkOrderService {
             .addQueryItem("owner_id_", request.owner_id_, Query.OPERATION_EQUAL, Query.RELATION_AND)
             .addSort("F_ts_time", request.DESC)
             .setPageBean(request.pageBean)
+            .setParamsValue(request.searchValue)
         return builder
     }
 

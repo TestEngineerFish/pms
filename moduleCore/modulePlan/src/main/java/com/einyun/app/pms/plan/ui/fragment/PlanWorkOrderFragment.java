@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -18,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.db.entity.PlanInfo;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -41,6 +44,7 @@ import com.einyun.app.common.ui.widget.RecyclerViewNoBugLinearLayoutManager;
 import com.einyun.app.common.ui.widget.SelectPopUpView;
 import com.einyun.app.common.utils.RecyclerViewAnimUtil;
 import com.einyun.app.common.utils.UserUtil;
+import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
@@ -50,6 +54,7 @@ import com.einyun.app.pms.plan.databinding.FragmentPlanWorkOrderBinding;
 import com.einyun.app.pms.plan.databinding.ItemSearchWorkPlanBinding;
 import com.einyun.app.pms.plan.databinding.ItemWorkPlanBinding;
 import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
+import com.einyun.app.pms.plan.viewmodel.PlanOrderDetailViewModel;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
@@ -80,6 +85,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
     IUserModuleService userModuleService;
     PageSearchFragment<ItemSearchWorkPlanBinding, PlanWorkOrder> searchFragment;
     protected SelectPopUpView selectPopUpView;
+    private PlanOrderDetailViewModel planOrderDetailViewModel;
 
     public static PlanWorkOrderFragment newInstance(Bundle bundle) {
         PlanWorkOrderFragment fragment = new PlanWorkOrderFragment();
@@ -174,15 +180,53 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                                 .navigation();
                     }
                     @Override
-                    public void onItem(ItemSearchWorkPlanBinding binding,PlanWorkOrder model) {
+                    public void onItem(ItemSearchWorkPlanBinding binding,PlanWorkOrder distributeWorkOrder) {
 
                         if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
-                            if (model.getF_OT_STATUS() == 1) {
+                            if (distributeWorkOrder.getF_OT_STATUS() == 1) {
                                 binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
                             } else {
                                 binding.itemSendWorkLfImg.setVisibility(View.GONE);
                             }
                         } else {
+                            binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                        }
+                        if (getFragmentTag().equals(FRAGMENT_PLAN_OWRKORDER_PENDING)) {
+                            binding.waitHandleLayout.setVisibility(View.VISIBLE);
+                            if (distributeWorkOrder.getF_OT_STATUS() == 1) {
+                                binding.itemSendWorkLfImg.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.itemSendWorkLfImg.setVisibility(View.GONE);
+                            }
+                            binding.turnOrder.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ARouter.getInstance()
+                                            .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                            .withString(RouteKey.KEY_TASK_ID, distributeWorkOrder.getTaskId())
+                                            .withString(RouteKey.KEY_ORDER_ID, distributeWorkOrder.getID_())
+                                            .withString(RouteKey.KEY_DIVIDE_ID, distributeWorkOrder.getF_DIVIDE_ID())
+                                            .withString(RouteKey.KEY_PROJECT_ID, distributeWorkOrder.getF_project_id())
+                                            .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                                            .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                            .navigation();
+                                }
+                            });
+                            PlanInfo planInfo = planOrderDetailViewModel.planRepository.loadPlanInfo(distributeWorkOrder.getID_(), planOrderDetailViewModel.getUserID());
+                            if (planInfo!=null) {
+                                isCached(binding.tvIsCached,binding.ivIsCached,true);
+                            }else {
+                                isCached(binding.tvIsCached,binding.ivIsCached,false);
+                            }
+                            if (Integer.parseInt(distributeWorkOrder.getF_STATUS())==(OrderState.PENDING.getState())){
+                                binding.turnOrder.setEnabled(false);
+                                binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+                            }else {
+                                binding.turnOrder.setEnabled(true);
+                                binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+                            }
+                        } else {
+                            binding.waitHandleLayout.setVisibility(View.GONE);
                             binding.itemSendWorkLfImg.setVisibility(View.GONE);
                         }
                     }
@@ -192,7 +236,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                         return R.layout.item_search_work_plan;
                     }
                 });
-                searchFragment.setHint("请输入工单编号或计划名称");
+                searchFragment.setHint("请输入工单编号、计划名称");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (CloneNotSupportedException e) {
@@ -258,6 +302,7 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         RecyclerView mRecyclerView = binding.workSendList;
         RecyclerViewNoBugLinearLayoutManager mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        planOrderDetailViewModel = new PlanOrderDetailViewModel();
         if (adapter == null) {
             adapter = new RVPageListAdapter<ItemWorkPlanBinding, Plan>(getActivity(), BR.planWorkOrder, mDiffCallback) {
 
@@ -285,6 +330,19 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
                                         .navigation();
                             }
                         });
+                        PlanInfo planInfo = planOrderDetailViewModel.planRepository.loadPlanInfo(distributeWorkOrder.getID_(), planOrderDetailViewModel.getUserID());
+                        if (planInfo!=null) {
+                            isCached(binding.tvIsCached,binding.ivIsCached,true);
+                        }else {
+                            isCached(binding.tvIsCached,binding.ivIsCached,false);
+                        }
+                        if (Integer.parseInt(distributeWorkOrder.getF_STATUS())==(OrderState.PENDING.getState())){
+                            binding.turnOrder.setEnabled(false);
+                            binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+                        }else {
+                            binding.turnOrder.setEnabled(true);
+                            binding.turnOrder.setTextColor(getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+                        }
                     } else {
                         binding.waitHandleLayout.setVisibility(View.GONE);
                         binding.itemSendWorkLfImg.setVisibility(View.GONE);
@@ -301,7 +359,17 @@ public class PlanWorkOrderFragment extends BaseViewModelFragment<FragmentPlanWor
         binding.workSendList.setAdapter(adapter);
         adapter.setOnItemClick(this);
     }
-
+    public static void isCached(TextView textView,ImageView imageView, boolean value){
+        if(value){
+            imageView.setImageResource(R.drawable.icon_cached);
+            textView.setText("已缓存");
+            textView.setTextColor(textView.getContext().getResources().getColor(R.color.stress_text_btn_icon_color));
+        }else{
+            imageView.setImageResource(R.drawable.icon_no_cache);
+            textView.setText("未缓存");
+            textView.setTextColor(textView.getContext().getResources().getColor(R.color.normal_main_text_icon_color));
+        }
+    }
     private void loadPagingData() {
         //初始化数据，LiveData自动感知，刷新页面
 //        binding.sendOrderRef.setRefreshing(true);

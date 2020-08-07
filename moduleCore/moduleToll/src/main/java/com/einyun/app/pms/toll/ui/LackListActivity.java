@@ -317,17 +317,34 @@ public class LackListActivity extends BaseHeadViewModelActivity<ActivityLackList
             adapter=new RVBindingAdapter<ItemLackOutListBinding, PaymentList>(this, com.einyun.app.pms.toll.BR.outList){
 
 
-
+                /**
+                 * 预缴项目类型FeeAttribute
+                 * 1:水费,
+                 * 2:车位服务费,
+                 * 3:临时收费,
+                 * 4:物业服务费,
+                 * 5:电费,
+                 * 6:押金,
+                 **/
                 @Override
                 public void onBindItem(ItemLackOutListBinding outListBinding, PaymentList itemParentModel,int outPosition) {
                     outListBinding.tvItemName.setText(itemParentModel.getChargeTypeName());
                     outListBinding.tvToallFee.setText(itemParentModel.getFeeTotal()+"");
-                    if (itemParentModel.getChargeTypeCode().equals("2")) {
+                    if (itemParentModel.getChargeTypeCode().equals("2")) {//车位费
                         outListBinding.ivItem.setImageResource(R.drawable.iv_park_fee);
                         outListBinding.tvPark.setVisibility(View.VISIBLE);
-                    }else {
+                    }else if (itemParentModel.getChargeTypeCode().equals("4")){//物业费
                         outListBinding.tvPark.setVisibility(View.GONE);
-
+                        outListBinding.ivItem.setImageResource(R.drawable.iv_property_fee);
+                    }else if (itemParentModel.getChargeTypeCode().equals("1")){//水费
+                        outListBinding.tvPark.setVisibility(View.GONE);
+                        outListBinding.ivItem.setImageResource(R.drawable.iv_water_fee);
+                    }else if (itemParentModel.getChargeTypeCode().equals("5")){//电费
+                        outListBinding.tvPark.setVisibility(View.GONE);
+                        outListBinding.ivItem.setImageResource(R.drawable.iv_electricity_fee);
+                    }else {
+                        outListBinding.ivItem.setImageResource(R.drawable.iv_other_fee);
+                        outListBinding.tvPark.setVisibility(View.GONE);
                     }
                     outListBinding.tvPark.setText(itemParentModel.getParkingNum());
                     outListBinding.cbOutCheck.setChecked(itemParentModel.isCheckParent());

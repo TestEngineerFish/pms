@@ -10,11 +10,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_260"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="@dimen/px_96"
+            android:layout_width="@dimen/px_80"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -28,128 +28,129 @@
                     android:id="@+id/item_histroy_step"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:text="1" />
+                    android:text="1"
+                    android:textColor="@color/white" />
             </RelativeLayout>
+
             <ImageView
                 android:id="@+id/item_histroy_img"
                 android:layout_width="@dimen/px_4"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/px_47"
-                android:src="@drawable/rect"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/rect" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_30"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/px_30"
-                android:text="@{history.taskName}"
-                android:textColor="@color/blackTextColor"
-                android:textSize="@dimen/font_size16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_40"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/task_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/font_size16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:gravity="center_vertical"
+                    android:text="@{history.completeTime}"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/px_20"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
                     android:gravity="center_vertical"
+                    android:text="待执行人："
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="执行人：" />
+                    android:textSize="@dimen/font_size14" />
 
                 <TextView
+                    android:id="@+id/wait_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_30"
                     android:gravity="center_vertical"
+                    android:text="@{history.qualfiedNames}"
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="@{history.auditorName}" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_40"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:text="处理时间：" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:text="@{history.completeTime}" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_40"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:text="状态：" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/normal_main_text_icon_color"
-                    android:text="@{history.statusVal}" />
+                    android:textSize="@dimen/font_size14" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
                     android:gravity="center_vertical"
+                    android:text="执行人："
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="意见：" />
+                    android:textSize="@dimen/font_size14" />
 
                 <TextView
-                    android:maxLines="2"
-                    android:ellipsize="end"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:textSize="@dimen/font_size14"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:gravity="center_vertical"
+                    android:text="@{history.auditorName}"
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:gravity="center_vertical"
+                    android:text="操作说明："
+                    android:textColor="@color/normal_main_text_icon_color"
+                    android:textSize="@dimen/font_size14" />
+
+                <TextView
+                    android:id="@+id/opinon_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_30"
                     android:gravity="center_vertical"
                     android:textColor="@color/normal_main_text_icon_color"
-                    android:text="@{history.opinion}" />
+                    android:textSize="@dimen/font_size14" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

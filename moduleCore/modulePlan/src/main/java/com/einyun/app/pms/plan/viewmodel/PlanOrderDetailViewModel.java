@@ -41,6 +41,8 @@ import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 
@@ -219,10 +221,10 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
      */
     public LiveData<PlanInfo> loadDetail(String proInsId, String taskId, String taskNodeId, String fragmentTag,String orderId) {
         if (fragmentTag.equals(FRAGMENT_PLAN_OWRKORDER_DONE)) {
-            PlanInfo planInfo = planRepository.loadPlanInfo(orderId, userModuleService.getUserId());
-            if (planInfo != null) {
-                liveData.postValue(planInfo);
-            }
+//            PlanInfo planInfo = planRepository.loadPlanInfo(orderId, userModuleService.getUserId());
+//            if (planInfo != null) {
+//                liveData.postValue(planInfo);
+//            }
             DoneDetialRequest request = new DoneDetialRequest();
             request.setProInsId(proInsId);
             request.setTaskNodeId(taskNodeId);
@@ -236,7 +238,12 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    ThrowableParser.onFailed(throwable);
+                    if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+                        //连接错误
+                        ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+                    }else {
+                        ThrowableParser.onFailed(throwable);
+                    }
 //                    liveData.postValue(null);
                 }
             });
@@ -256,7 +263,13 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
                 @Override
                 public void onFaild(Throwable throwable) {
 //                    liveData.postValue(null);
-                    ThrowableParser.onFailed(throwable);
+                    if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+                        //连接错误
+                        ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+                    }else {
+
+                        ThrowableParser.onFailed(throwable);
+                    }
                 }
             });
         }
@@ -361,5 +374,33 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
     public void saveLocal(PlanLocal local) {
         local.setUserId(userModuleService.getUserId());
         planRepository.insertPlanLocal(local);
+    }
+//    /**
+//     * 删除本地缓存
+//     *
+//     * @param
+//     */
+//    public void delLocal(String orderId) {
+//        planRepository.deletePlanInfo(orderId,userModuleService.getUserId());
+//        planRepository.deletePlanLocal(orderId,userModuleService.getUserId());
+//    }
+    /**
+     * 完成任务，结束任务
+     * @param orderId
+     */
+    public LiveData<Boolean> finishTask(String orderId){
+        MutableLiveData<Boolean> liveData=new MutableLiveData<>();
+        planRepository.deleteTask(orderId,userModuleService.getUserId(), new CallBack<Boolean>() {
+            @Override
+            public void call(Boolean data) {
+                liveData.postValue(true);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                liveData.postValue(false);
+            }
+        });
+        return liveData;
     }
 }

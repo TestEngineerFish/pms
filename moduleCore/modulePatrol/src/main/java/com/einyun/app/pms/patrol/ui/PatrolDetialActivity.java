@@ -13,6 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -49,6 +50,7 @@ import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.ApplyState;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 import com.einyun.app.library.resource.workorder.model.OrderState;
@@ -149,20 +151,6 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
     }
 
     /**
-     *转单
-     */
-    public void resendOrder() {
-        ARouter.getInstance()
-                .build(RouterUtils.ACTIVITY_RESEND_ORDER)
-                .withString(RouteKey.KEY_TASK_ID, taskId)
-                .withString(RouteKey.KEY_ORDER_ID, orderId)
-                .withString(RouteKey.KEY_DIVIDE_ID, divideId)
-                .withString(RouteKey.KEY_PROJECT_ID, projectId)
-                .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
-                .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
-                .navigation();
-    }
-    /**
      * 选择指派人
      */
     private void selectPeple() {
@@ -180,6 +168,13 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         setUpWorkNodes();
         initRequest();
         loadData();
+        LiveEventBus.get(LiveDataBusKey.CUSTOMER_FRAGMENT_REFRESH, Boolean.class).observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                PatrolDetialActivity.this.finish();
+            }
+        });
     }
 
     /**
@@ -324,6 +319,9 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
         }
 
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
+            if (isClosedState==null) {
+                return;
+            }
             if (isClosedState.isClosed()) {
                 if (isClosedState.getType().equals(WorkOrder.FORCE_CLOSE_PATROL)) {
                     navigatApply(RouterUtils.ACTIVITY_PATROL_FORCE_CLOSE);//强制关闭
@@ -353,6 +351,8 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
             orderId = patrol.getData().getZyxcgd().getId_();
         }
         this.patrolInfo = patrol;
+        projectId=patrolInfo.getData().getZyxcgd().getF_project_id();
+        divideId=patrolInfo.getData().getZyxcgd().getF_massif_id();
         f_plan_work_order_state = patrolInfo.getData().getZyxcgd().getF_plan_work_order_state();
         if (f_plan_work_order_state==6) {
             if (listType != ListType.DONE.getType()) {
@@ -721,6 +721,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 强制闭单
      */
     public void onForceClose() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         viewModel.isClosed(new IsClosedRequest(orderId, WorkOrder.FORCE_CLOSE_PATROL));
     }
 
@@ -728,6 +733,11 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 申请延期
      */
     public void onPostpone() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         viewModel.isClosed(new IsClosedRequest(orderId, WorkOrder.POSTPONED_PATROL));
     }
 

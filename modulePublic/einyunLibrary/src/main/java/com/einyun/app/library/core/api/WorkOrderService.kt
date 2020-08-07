@@ -85,6 +85,7 @@ interface WorkOrderService : EinyunService {
     fun repaireSend(request: RepairSendOrderRequest, callBack: CallBack<BaseResponse<Any>>): LiveData<BaseResponse<Any>>
 
     fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>>
+    fun typeBigAndSmall(callBack: CallBack<TypeBigAndSmallModel>): LiveData<TypeBigAndSmallModel>
     fun startEnquiry(
         request: CreateClientEnquiryOrderRequest,
         callBack: CallBack<Boolean>

@@ -31,8 +31,10 @@
                 android:src="@mipmap/img_login_bg" />
             <RadioGroup
                 android:id="@+id/pic_ev"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_40"
                 android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/test_ev"
@@ -45,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="uat"/>
                 <RadioButton
-                    android:id="@+id/release_evZ"
+                    android:id="@+id/release_ev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="release"/>

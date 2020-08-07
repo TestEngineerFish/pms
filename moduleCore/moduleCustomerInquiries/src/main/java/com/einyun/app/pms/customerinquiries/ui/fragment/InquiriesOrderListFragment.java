@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -18,10 +20,14 @@ import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.customerinquiries.BR;
 import com.einyun.app.pms.customerinquiries.R;
@@ -29,6 +35,7 @@ import com.einyun.app.pms.customerinquiries.constants.Constants;
 import com.einyun.app.pms.customerinquiries.databinding.FragmentCustomerInquiriesViewModuleBinding;
 import com.einyun.app.pms.customerinquiries.databinding.FragmentInquiriesOrderListBinding;
 import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriesListBinding;
+import com.einyun.app.pms.customerinquiries.databinding.ItemInquiriesListSearchBinding;
 import com.einyun.app.pms.customerinquiries.model.InquiriesItemModule;
 import com.einyun.app.pms.customerinquiries.model.InquiriesRequestBean;
 import com.einyun.app.pms.customerinquiries.respository.CustomerInquiriesRepository;
@@ -39,6 +46,9 @@ import com.einyun.app.pms.customerinquiries.viewmodule.CustomerInquiriesViewMode
 import com.einyun.app.pms.customerinquiries.widget.InquiriesTypeSelectPopWindow;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_COPY_ME;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_HAVE_TO_FOLLOW_UP;
@@ -70,7 +80,7 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
     private String blockName;
     private InquiriesTypeSelectPopWindow inquiriesTypeSelectPopWindow;
     private PeriodizationView periodizationView;
-
+    private PageSearchFragment searchFragment;
     public static InquiriesOrderListFragment newInstance(Bundle bundle) {
         InquiriesOrderListFragment fragment = new InquiriesOrderListFragment();
         fragment.setArguments(bundle);
@@ -130,8 +140,83 @@ public class InquiriesOrderListFragment extends BaseViewModelFragment<FragmentIn
 //            binding.ivTriangleDivide.setImageResource(R.drawable.iv_approval_sel_type_blue);
 //            binding.tvDivide.setText(blockName);
 //        }
-    }
+        binding.search.setOnClickListener(view -> {
 
+            search();
+        });
+    }
+    private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.ORDER_LIST_SEARCH.getTypeName(), map);
+        try {
+//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemInquiriesListSearchBinding, InquiriesItemModule>(getActivity(), BR.InquiriesItemModuleSearch, new PageSearchListener<ItemInquiriesListSearchBinding, InquiriesItemModule>() {
+                    @Override
+                    public LiveData<PagedList<InquiriesItemModule>> search(String search) {
+                        InquiriesRequestBean requestSearchBean = viewModel.getRequestSearchBean(1, 10, "", "", "", search, search);
+
+                        return viewModel.loadPadingData(requestSearchBean, getFragmentTag());
+                    }
+
+                    @Override
+                    public void onItemClick(InquiriesItemModule model) {
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
+                                .withString(RouteKey.FRAGMENT_TAG, getFragmentTag())
+                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .navigation();
+                    }
+
+                    @Override
+                    public void onItem(ItemInquiriesListSearchBinding binding, InquiriesItemModule model) {
+                        switch (model.getTaskNodeId()) {
+                            case Constants.INQUIRIES_STATE_SEND:
+                                binding.tvApprovalState.setText(getString(R.string.text_wait_send));
+                                binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_grab);
+                                break;
+                            case Constants.INQUIRIES_STATE_RESPONSE:
+                                binding.tvApprovalState.setText(getString(R.string.text_wait_response));
+                                binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_wait_response);
+                                break;
+                            case Constants.INQUIRIES_STATE_DEALING:
+                                binding.tvApprovalState.setText(getString(R.string.tv_dealing));
+                                binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_processing);
+                                break;
+
+                            case Constants.INQUIRIES_STATE_RETURN_VISIT:
+                                binding.tvApprovalState.setText(getString(R.string.tv_for_respone));
+                                binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_evaluate);
+                                break;
+                            default:
+                                binding.tvApprovalState.setText(getString(R.string.tv_closed));
+                                binding.tvApprovalState.setBackgroundResource(R.mipmap.icon_state_closed);
+                                break;
+                        }
+                        binding.rlFeedBack.setVisibility(View.GONE);
+                        binding.llTalkOrTurnSingle.setVisibility(View.GONE);
+                        binding.tvInquiriesType.setText(model.wx_content);
+                        binding.tvPropertyNum.setText(model.wx_house);
+                        binding.tvAskingPeople.setText(model.wx_user);
+                        binding.tvWorkOrderNum.setText(model.wx_code);
+                        binding.tvCreateTime.setText(TimeUtil.getAllTime(model.createTime));
+                    }
+
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_inquiries_list_search;
+                    }
+                });
+
+                searchFragment.setHint("请输入工单编号、问询内容");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void setUpData() {
         binding.setCallBack(this);

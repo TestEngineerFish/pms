@@ -15,7 +15,9 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
@@ -30,6 +32,7 @@ import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.PageUIState;
@@ -66,6 +69,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.List;
 
+import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_SEND_OWRKORDER_DONE;
 
 @Route(path = RouterUtils.ACTIVITY_SEND_ORDER_DETAIL)
@@ -80,6 +84,10 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
     int listType;
     @Autowired(name = RouteKey.KEY_ORDER_ID)
     String orderId;
+    @Autowired(name = RouteKey.KEY_DIVIDE_ID)
+    String divideId;
+    @Autowired(name = RouteKey.KEY_PROJECT_ID)
+    String projectId;
     private TipDialog tipDialog;
     PhotoListAdapter photoListInfoAdapter;
     PhotoListAdapter photoHandleListAdapter;
@@ -159,6 +167,38 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 finish();
             }
         });
+        binding.orderForm.etJointPerson.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int editEnd = binding.orderForm.etJointPerson.getSelectionEnd();
+
+                // 先去掉监听器，否则会出现栈溢出
+                binding.orderForm.etJointPerson.removeTextChangedListener(this);
+
+                // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
+                // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
+                if (s.toString().length() > 300) { // 当输入字符个数超过限制的大小时，进行截断操作
+                    int length = s.toString().length();
+                    s.delete(editEnd - (length-300), editEnd);
+                    binding.orderForm.etJointPerson.setSelection(editEnd - (length-300));//设置光标在最后
+                    ToastUtil.show(CommonApplication.getInstance(), "请勿超过" + 300 + "个字符");
+                }
+
+                // 恢复监听器
+                binding.orderForm.etJointPerson.addTextChangedListener(this);
+
+            }
+        });
     }
 
     /**
@@ -228,6 +268,14 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
             return;
         }
         detialModel = distributeWorkOrder;
+        if (detialModel.getData()==null) {
+            return;
+        }
+        if (detialModel.getData().getInfo()==null) {
+            return;
+        }
+        divideId=detialModel.getData().getInfo().getDivideID();
+        projectId=detialModel.getData().getInfo().getProjectID();
         if (detialModel.getData().getInfo().getOriginalCode()==null||detialModel.getData().getInfo().getOriginalCode().isEmpty()) {
             binding.orderInfo.llOriginalCode.setVisibility(View.GONE);
         }
@@ -246,10 +294,10 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
 //        distributeWorkOrder.getData().info.typeName+@string/text_padding+workOrder.data.info.envirmentType2Name+@string/text_padding+workOrder.data.info.envirmentType3Name
                 type.append(info.getTypeName());
 
-        if (info.getEnvirmentType2Name()!=null) {
+        if (info.getEnvirmentType2Name()!=null&&!"".equals(info.getEnvirmentType2Name())) {
             type.append("-"+info.getEnvirmentType2Name());
         }
-        if (info.getEnvirmentType3Name()!=null) {
+        if (info.getEnvirmentType3Name()!=null&&!"".equals(info.getEnvirmentType3Name())) {
             type.append("-"+info.getEnvirmentType3Name());
         }
         binding.orderInfo.orderType.setText(type);
@@ -511,6 +559,38 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
                 SendOrderDetailActivity.this.finish();
             }
         });
+        binding.applyForceCloseAndPostpone.resendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                        .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.SEND_ORDER_TURN_ORDER.getTypeName())
+                        .withString(RouteKey.KEY_TASK_ID, taskId)
+                        .withString(RouteKey.KEY_ORDER_ID, orderId)
+                        .withString(RouteKey.KEY_DIVIDE_ID, divideId)
+                        .withString(RouteKey.KEY_PROJECT_ID, projectId)
+                        .navigation();
+            }
+        });
+        binding.orderInfo.llOriginalCode.setOnClickListener(view -> {
+            if ("1".equals(detialModel.getData().getInfo().getOriginalType())) {//1 计划工单
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
+                        .withString(RouteKey.KEY_ORDER_ID, "" )
+                        .withString(RouteKey.KEY_PRO_INS_ID,detialModel.getData().getInfo().getOriginalOldProId() )
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_PLAN_OWRKORDER_DONE)
+                        .navigation();
+            }else {//巡查工单
+                ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
+                        .withString(RouteKey.KEY_ORDER_ID, "")
+                        .withString(RouteKey.KEY_PRO_INS_ID, detialModel.getData().getInfo().getOriginalOldProId() )
+                        .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
+                        .withString(RouteKey.KEY_TASK_ID, "")
+                        .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                        .navigation();
+            }
+        });
     }
 
     @Override
@@ -541,6 +621,7 @@ public class SendOrderDetailActivity extends BaseHeadViewModelActivity<ActivityS
         DistributeSubmitRequest request = new DistributeSubmitRequest();
         request.setAfterPic(new ImageUploadManager().toJosnString(uploads));
         request.setTaskId(taskId);
+        request.setJoint_processor(binding.orderForm.etJointPerson.getText().toString().trim());
         request.setId(detialModel.getData().getInfo().getID());
         request.setProcConeten(binding.orderForm.etLimitInput.getString());
         viewModel.submit(request).observe(this, aBoolean -> {

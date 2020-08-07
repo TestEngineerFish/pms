@@ -40,6 +40,8 @@ class URLs {
         const val URL_COMPLAIN_WORK_LIST:String="/$DOMAIN/workOrder/task/v1/getPersonWorkByKey/customer_complain_flow"
         //获取投诉、问询工单类别与条线
         const val URL_BIZDATA_BASE_LIST:String="/$DOMAIN/workOrder/bizData/v1/getBaseList?categoryKey=workorder_type_and_line"
+        //获取创建问询大类小类
+        const val URL_BIZDATA_ENQUI_LIST:String="/$DOMAIN/workOrder/bizData/v1/getBizDataTree?categoryKey=inquiry_categories"
         //提交追加投诉
         const val URL_COMPLAIN_SUBMIT:String="/$DOMAIN/workOrder/task/v1/appendWorkOrder"
         // 客户端启动投诉流程

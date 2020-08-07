@@ -170,28 +170,28 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     * 跳转意见反馈
     * */
     public void adviceFeedBack(){
-        if (userInfoModel1!=null) {
+//        if (userInfoModel1!=null) {
             HashMap<String, String> map = new HashMap<>();
             map.put("user_name", UserUtil.getUserName());
             MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName(),map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_FEED)
                     .navigation();
-        }
+//        }
 
     }
     /**
     * 跳转消息中心
     * */
     public void goToMsgCenter(){
-        if (userInfoModel1!=null) {
+//        if (userInfoModel1!=null) {
             binding.tvRedPoint.setVisibility(View.GONE);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_MESSAGE_CENTER)
                     .withString(RouteKey.KEY_START_TIME,startTime)
                     .withString(RouteKey.KEY_END_TIME,endTime)
                     .navigation();
-        }
+//        }
 
     }
     /**

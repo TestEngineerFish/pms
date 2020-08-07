@@ -24,6 +24,7 @@ import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.WorkOrder;
+import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.manager.GetUploadJson;
 import com.einyun.app.common.model.IsClosedState;
 import com.einyun.app.common.model.ListType;
@@ -33,6 +34,7 @@ import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.dialog.CreateNewOrderDialog;
 import com.einyun.app.common.ui.widget.TipDialog;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 import com.einyun.app.library.resource.workorder.net.request.IsClosedRequest;
 import com.einyun.app.library.resource.workorder.net.request.PatrolSubmitRequest;
@@ -65,7 +67,6 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
     @Autowired(name = RouteKey.KEY_PRO_INS_ID)
     String proInsId;
 
-
     @Autowired(name = RouteKey.KEY_LIST_TYPE)
     int listType = ListType.PENDING.getType();
 
@@ -88,6 +89,30 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         binding.setCallBack(this);
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+    }
+
+    /**
+     *转单
+     */
+    public void resendOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                .withString(RouteKey.KEY_TASK_ID, taskId)
+                .withString(RouteKey.KEY_ORDER_ID, orderId)
+                .withString(RouteKey.KEY_DIVIDE_ID, super.divideId)
+                .withString(RouteKey.KEY_PROJECT_ID, super.projectId)
+                .withString(RouteKey.KEY_CUSTOM_TYPE, CustomEventTypeEnum.COMPLAIN_TURN_ORDER.getTypeName())
+                .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                .navigation();
+    }
     protected void switchStateUI(int f_plan_work_order_state) {//TODO 根据f_plan_work_order_state判断当前状态 显示隐藏处理布局，显示隐藏接单跟派单
         super.switchStateUI(f_plan_work_order_state);
         binding.btnSubmit.setVisibility(View.VISIBLE);
@@ -281,6 +306,11 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
         if (patrol == null) {
             return;
         }
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
             if (picUrls == null) {
                 ToastUtil.show(CommonApplication.getInstance(), R.string.text_alert_local_cached);
@@ -328,6 +358,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
 //        Logger.d("data->"+new Gson().toJson(patrol));
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyxcgd().getId_());
+        request.setRemark(binding.limitInput.getString());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
                 viewModel.finishTask(orderId);
@@ -385,7 +416,7 @@ public class PatrolHandleActivity extends PatrolDetialActivity {
                                 .withString(RouteKey.KEY_TASK_ID, taskId)
                                 .withString(RouteKey.KEY_TASK_NODE_ID, taskNodeId)
                                 .withString(RouteKey.KEY_FRAGEMNT_TAG, FRAGMENT_WORK_PREVIEW_PATRO)
-
+                                .withString(RouteKey.F_ORIGINAL_TYPE, "2")
                                 .withString(RouteKey.KEY_LINE_ID, patrolInfo.getData().getZyxcgd().getF_line_id())
                                 .withString(RouteKey.KEY_LINE_CODE, patrolInfo.getData().getZyxcgd().getF_line_code())
                                 .withString(RouteKey.KEY_PROJECT, patrolInfo.getData().getZyxcgd().getF_project_name())

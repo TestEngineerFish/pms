@@ -7,7 +7,7 @@ import com.einyun.app.base.db.entity.Distribute;
 import com.einyun.app.library.resource.workorder.model.DistributeWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
 
-public class OrderDataSourceFactory extends DataSource.Factory<Integer, Distribute> {
+public class OrderDataSourceFactory extends DataSource.Factory<Integer, DistributeWorkOrder> {
     private DistributePageRequest request;
     private String tag;
     public OrderDataSourceFactory(DistributePageRequest request,String tag){
@@ -16,7 +16,7 @@ public class OrderDataSourceFactory extends DataSource.Factory<Integer, Distribu
     }
     @NonNull
     @Override
-    public DataSource<Integer, Distribute> create() {
+    public DataSource<Integer, DistributeWorkOrder> create() {
         return new OrderItemDataSource(request,tag);
     }
 }
