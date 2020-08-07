@@ -32,6 +32,7 @@ import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -204,6 +205,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairHandleHistory.repairHandleHistroyList.setAdapter(handleAdapter);
         binding.repairHandleInfo.repairHandledRec.setAdapter(materialAdapter);
         binding.repairHandleInfo.repairHandledRec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        setEnterNum();
     }
 
     @Override
@@ -232,7 +234,9 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 binding.repairHandle.rbYes.setChecked(true);
                 binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
                 binding.repairHandlePaid.repairMaterialPrice.setText(detialModel.getData().getCustomer_repair_model().getMaterial_cost()+"");
-                binding.repairHandlePaid.repairHandleManMoney.setText(detialModel.getData().getCustomer_repair_model().getArtificial_cost()+"");
+                if (detialModel.getData().getCustomer_repair_model().getArtificial_cost()!=null) {
+                    binding.repairHandlePaid.repairHandleManMoney.setText(detialModel.getData().getCustomer_repair_model().getArtificial_cost()+"");
+                }
                 binding.repairHandlePaid.repairHandleTotalMoney.setText(detialModel.getData().getCustomer_repair_model().getHandle_fee()+"");
 
             }
@@ -431,7 +435,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText())) {
                 } else {
-                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) * Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
+                    String handle_is_paid = detialModel.getData().getCustomer_repair_model().getHandle_is_paid();
+                    if ("1".equals(handle_is_paid)) {
+
+                        try {
+                            binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) * Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
             }
@@ -454,13 +466,53 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())+ "");
                 } else
                  {
-                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) + Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
-                }
+                     String s1 = binding.repairHandlePaid.repairMaterialPrice.getText().toString();
+                     String s2 = binding.repairHandlePaid.repairHandleManMoney.getText().toString();
+
+                     try {
+                         binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(s1) + Float.parseFloat(s2) + "");
+                     } catch (NumberFormatException e) {
+                         e.printStackTrace();
+                     }
+                 }
 
             }
         });
     }
+public  void setEnterNum(){
+    binding.repairHandlePaid.repairHandleTogetherMan.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            int editEnd = binding.repairHandlePaid.repairHandleTogetherMan.getSelectionEnd();
+
+            // 先去掉监听器，否则会出现栈溢出
+            binding.repairHandlePaid.repairHandleTogetherMan.removeTextChangedListener(this);
+
+            // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
+            // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
+            if (s.toString().length() > 300) { // 当输入字符个数超过限制的大小时，进行截断操作
+                int length = s.toString().length();
+                s.delete(editEnd - (length-300), editEnd);
+                binding.repairHandlePaid.repairHandleTogetherMan.setSelection(editEnd - (length-300));//设置光标在最后
+                ToastUtil.show(CommonApplication.getInstance(), "请勿超过" + 300 + "个字符");
+            }
+
+            // 恢复监听器
+            binding.repairHandlePaid.repairHandleTogetherMan.addTextChangedListener(this);
+
+        }
+    });
+}
     @Override
     protected void onResume() {
         super.onResume();
@@ -1128,10 +1180,10 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
             } else {
                 customerRepair.setHandle_is_paid(HANDLE_NO_PAID);
-                customerRepair.setMaterial_cost(binding.repairHandlePaid.repairMaterialPrice.getText().toString().trim());
-                customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
-                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
-                customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
+//                customerRepair.setMaterial_cost(binding.repairHandlePaid.repairMaterialPrice.getText().toString().trim());
+//                customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
+//                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
+//                customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
             }
 
         }
