@@ -150,7 +150,7 @@ public class SendWorkOrderFragment extends BaseViewModelFragment<FragmentSendWor
     private void search() {
         HashMap<String, String> map = new HashMap<>();
         map.put("user_name", UserUtil.getUserName());
-        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(),map);
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.SEND_ORDER_SEARCH.getTypeName(),map);
         try {
             DistributePageRequest request=new DistributePageRequest();
             if (searchFragment == null) {

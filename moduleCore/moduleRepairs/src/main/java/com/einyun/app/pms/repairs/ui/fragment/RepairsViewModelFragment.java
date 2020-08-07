@@ -194,7 +194,7 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     private void search() {
         HashMap<String, String> map = new HashMap<>();
         map.put("user_name", UserUtil.getUserName());
-        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(),map);
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.REPAIR_SERACH.getTypeName(),map);
         try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {

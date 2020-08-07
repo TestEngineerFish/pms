@@ -214,7 +214,7 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
     private void search() {
         HashMap<String, String> map = new HashMap<>();
         map.put("user_name", UserUtil.getUserName());
-        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.UNQUALIFIED_SEARCH.getTypeName(),map);
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.ORDER_LIST_SEARCH.getTypeName(),map);
         try {
 //            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
             if (searchFragment == null) {
