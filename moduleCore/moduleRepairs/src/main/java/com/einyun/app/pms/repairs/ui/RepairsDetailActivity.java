@@ -243,6 +243,16 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     binding.repairHandlePaid.repairHandleTotalMoney.setText(detialModel.getData().getCustomer_repair_model().getHandle_fee()+"");
                 }
 
+            }else {
+                if (detialModel.getData().getCustomer_repair_model().getMaterial_cost()!=null) {
+                    binding.repairHandlePaid.repairMaterialPrice.setText(detialModel.getData().getCustomer_repair_model().getMaterial_cost()+"");
+                }
+                if (detialModel.getData().getCustomer_repair_model().getArtificial_cost()!=null) {
+                    binding.repairHandlePaid.repairHandleManMoney.setText(detialModel.getData().getCustomer_repair_model().getArtificial_cost()+"");
+                }
+                if (detialModel.getData().getCustomer_repair_model().getHandle_fee()!=null) {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(detialModel.getData().getCustomer_repair_model().getHandle_fee()+"");
+                }
             }
             return_visit_time = repairsDetail.getData().getCustomer_repair_model().getReturn_visit_time();
             return_time = repairsDetail.getData().getCustomer_repair_model().getReturn_time();
@@ -1184,10 +1194,10 @@ public  void setEnterNum(){
                 customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
             } else {
                 customerRepair.setHandle_is_paid(HANDLE_NO_PAID);
-//                customerRepair.setMaterial_cost(binding.repairHandlePaid.repairMaterialPrice.getText().toString().trim());
-//                customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
-//                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
-//                customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
+                customerRepair.setMaterial_cost(binding.repairHandlePaid.repairMaterialPrice.getText().toString().trim());
+                customerRepair.setArtificial_cost(binding.repairHandlePaid.repairHandleManMoney.getText().toString().trim());
+                customerRepair.setHandle_fee(binding.repairHandlePaid.repairHandleTotalMoney.getText().toString().trim());
+                customerRepair.setJoint_processor(binding.repairHandlePaid.repairHandleTogetherMan.getText().toString().trim());
             }
 
         }
