@@ -8,4 +8,4 @@ include ':app',
         ':moduleCore:moduleNotice',
         ':modulePublic',':modulePublic:moduleCommon',
         ':modulePublic:einyunLibrary',
-        ':moduleSystem',':moduleSystem:moduleDB',':moduleCore:moduleCustomerInquiries',':moduleCore:moduleOrderList'
+        ':moduleSystem',':moduleSystem:moduleDB',':moduleSystem:moduleBase',':moduleSystem:moduleHttp',':moduleCore:moduleCustomerInquiries',':moduleCore:moduleOrderList'

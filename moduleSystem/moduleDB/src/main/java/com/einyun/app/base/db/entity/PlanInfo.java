@@ -985,6 +985,7 @@ public class PlanInfo {
                 private String F_RES_LOCATION;
                 private String F_RES_TYPENAME;
                 private String F_RES_TYPE;
+                private String F_RES_QRCODE;
 
                 public String getF_RES_CODE() {
                     return F_RES_CODE;
@@ -1120,6 +1121,14 @@ public class PlanInfo {
 
                 public void setIs_suc(int is_suc) {
                     this.is_suc = is_suc;
+                }
+
+                public String getF_RES_QRCODE() {
+                    return F_RES_QRCODE;
+                }
+
+                public void setF_RES_QRCODE(String f_RES_QRCODE) {
+                    F_RES_QRCODE = f_RES_QRCODE;
                 }
             }
         }

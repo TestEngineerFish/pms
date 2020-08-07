@@ -107,6 +107,9 @@ public class DisqualifiedDetailModel {
             private String verification_situation;
             private String verification_enclosure;
             private String completion_time;
+            private String original_code;//原工单编号
+            private String original_type;//原工单类型
+            private String original_prolnstld;//原工单流程id
             public String getCompletion_time() {
                 return completion_time==null?"":completion_time;
             }
@@ -361,6 +364,31 @@ public class DisqualifiedDetailModel {
             public void setParent_code(String parent_code) {
                 this.parent_code = parent_code;
             }
+
+            public String getOriginal_code() {
+                return original_code==null?"":original_code;
+            }
+
+            public void setOriginal_code(String original_code) {
+                this.original_code = original_code;
+            }
+
+            public String getOriginal_type() {
+                return original_type;
+            }
+
+            public void setOriginal_type(String original_type) {
+                this.original_type = original_type;
+            }
+
+            public String getOriginal_prolnstld() {
+                return original_prolnstld;
+            }
+
+            public void setOriginal_prolnstld(String original_prolnstld) {
+                this.original_prolnstld = original_prolnstld;
+            }
+
 
             public static class InitDataBean {
             }

@@ -34,7 +34,7 @@ public class CreateOrderBindiAdapter {
 
     @BindingAdapter("setSelectTxt")
     public static void setSelectTxt(TextView view, String value) {
-        if (StringUtil.isNullStr(value)) {
+        if (StringUtil.isNullStr(value) && !"null-null-null".equals(value)&& !"--".equals(value)) {
             view.setText(value);
         } else {
             view.setText("请选择");

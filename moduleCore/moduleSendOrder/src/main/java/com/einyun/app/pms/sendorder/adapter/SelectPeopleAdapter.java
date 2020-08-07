@@ -1,6 +1,7 @@
 package com.einyun.app.pms.sendorder.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.einyun.app.pms.sendorder.databinding.ItemSelectPeopleChildBinding;
 import com.einyun.app.pms.sendorder.databinding.ItemSelectPeopleGroupBinding;
 import com.einyun.app.pms.sendorder.ui.SendOrderDetailActivity;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,6 +143,7 @@ public class SelectPeopleAdapter extends BaseExpandableListAdapter {
                         list2.add(jobList.getValue().get(childPosition).getId());
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_CHOOSE_DISPOSE_PERSON_SEND_ORDER)
+                                .withString(RouteKey.KEY_DIVIDE_NAME, orgnizationModelList.getValue().get(orgnizationModelList.getValue().size()-1).getName())
                                 .withStringArrayList(RouteKey.KEY_ORG_ID_LIST, list1)
                                 .withStringArrayList(RouteKey.KEY_ROLE_ID_LIST, list2).navigation();
                     }

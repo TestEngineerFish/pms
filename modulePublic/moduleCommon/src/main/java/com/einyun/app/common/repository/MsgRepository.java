@@ -10,6 +10,7 @@ import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.http.RxSchedulers;
 import com.einyun.app.common.constants.URLS;
 import com.einyun.app.common.model.DisqualifiedDetailModel;
+import com.einyun.app.common.model.IsCanDealModel;
 import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
 import com.einyun.app.library.core.api.ServiceManager;
@@ -189,6 +190,19 @@ public class MsgRepository {
                     }else{
                         callBack.onFaild(new Exception(response.getCode()));
                     }
+                }, error -> {
+                    callBack.onFaild(error);
+                });
+    }
+    /**
+     * get
+     * 判断工单是否可以处理
+     */
+    public void checkIsCanDeal(String taskId, CallBack<IsCanDealModel> callBack) {
+        String url = URLS.URL_IS_CAN_DEAL+taskId;
+        serviceApi.isCanDeal(url).compose(RxSchedulers.inIoMain())
+                .subscribe(response -> {
+                        callBack.call(response.getData());
                 }, error -> {
                     callBack.onFaild(error);
                 });

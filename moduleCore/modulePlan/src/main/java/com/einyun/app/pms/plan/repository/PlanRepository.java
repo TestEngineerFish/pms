@@ -86,6 +86,21 @@ public class PlanRepository extends DatabaseRepo<Plan> {
     public void updatePlanCached(String orderId,String userId) {
         dao.updateCachedState(orderId,userId);
     }
+    /**
+     * 删除任务，完成关闭
+     *
+     * @param orderId
+     */
+    public void deleteTask(String orderId,String userId,CallBack<Boolean> callBack) {
+        db.runInTransaction(new Runnable() {
+            @Override
+            public void run() {
+                infoDao.deletePlanLocal(orderId,userId);
+                infoDao.deletePlanLocal(orderId,userId);
+                callBack.call(true);
+            }
+        });
+    }
     @Override
     public DataSource.Factory<Integer, Plan> queryAll(@NonNull String userId,int listType) {
         return dao.queryAll(userId,listType);

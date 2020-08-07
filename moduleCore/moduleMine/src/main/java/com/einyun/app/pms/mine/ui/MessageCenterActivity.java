@@ -24,19 +24,24 @@ import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVPageListAdapter;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.event.ItemClickListener;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.paging.bean.PageBean;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.model.DisqualifiedDetailModel;
+import com.einyun.app.common.model.IsCanDealModel;
 import com.einyun.app.common.model.ListType;
 import com.einyun.app.common.model.UrlxcgdGetInstBOModule;
 import com.einyun.app.common.service.LoginNavigationCallbackImpl;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseHeadViewModelActivity;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.NetWorkUtils;
+import com.einyun.app.library.core.net.EinyunHttpException;
 import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.model.PlanInfo;
@@ -54,6 +59,9 @@ import com.einyun.app.pms.mine.viewmodule.SettingViewModelFactory;
 import com.einyun.app.pms.mine.viewmodule.SignSetViewModel;
 import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TO_FOLLOW_UP;
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_TRANSFERRED_TO;
@@ -84,6 +92,12 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
         binding.setCallBack(this);
         setRightTxt(R.string.tv_sign_read);
         headBinding.tvRightTitle.setTextColor(getResources().getColor(R.color.blueTextColor));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        loadPagingData(new RequestPageBean(), "");
     }
 
     @Override
@@ -180,6 +194,11 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
         if (msgExtendVars == null) {
             return;
         }
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         switch (msgExtendVars.getType()) {
             case "grab"://抢单
 
@@ -227,7 +246,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                     @Override
                     public void onFaild(Throwable throwable) {
                         Log.e(TAG, "onFaild: ");
-                        showMsg();
+                        showMsg(throwable);
                         hideLoading();
                     }
                 });
@@ -257,28 +276,189 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                                 .navigation();
                         break;
                     case "dispatch"://派工单消息
-                        checkSendOrderTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkSendOrderTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "plan"://计划工单消息
-                        checkPlanOrderTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkPlanOrderTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "inspection"://巡查工单消息
-                        checkPatrolTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkPatrolTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "patrol"://巡更工单消息
-                        checkPatrol2TaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkPatrol2TaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "complain"://投诉工单消息
-                        checkComTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkComTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "enquiry"://问询消息
-                        checkTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+
+                                } else {
+                                    checkTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "repair"://报修消息
-                        checkRepairTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkRepairTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId(), msgExtendVars.getType());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
                         break;
                     case "unqualified"://不合格单
-                        checkQualityTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId());
+                        viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
+                            @Override
+                            public void call(IsCanDealModel data) {
+                                if (!data.isCanTurn()) {
+                                    if (data.isShowDetail()) {
+
+                                        initCopyAndEnd(msgModel, msgExtendVars);
+                                    } else {
+                                        ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                                    }
+                                } else {
+                                    checkQualityTaskId(msgExtendVars.getContent().getProcInstId(), msgExtendVars.getContent().getTaskId());
+                                }
+                            }
+
+                            @Override
+                            public void onFaild(Throwable throwable) {
+                                ThrowableParser.onFailed(throwable);
+                            }
+                        });
+
 
                         break;
                 }
@@ -418,7 +598,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -470,7 +650,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -515,7 +695,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -548,7 +728,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
             @Override
             public void onFaild(Throwable throwable) {
-                showMsg();
+                showMsg(throwable);
             }
         });
     }
@@ -591,19 +771,48 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
 
     }
 
-    private void showMsg() {
-        if (Looper.myLooper() == null) {
-            Looper.prepare();
+    private void showMsg(Throwable throwable) {
+        try {
+            if (throwable instanceof UnknownHostException || throwable instanceof SocketTimeoutException) {
+                //连接错误
+                if (Looper.myLooper() == null) {
+                    Looper.prepare();
+                }
+                ToastUtil.show(CommonApplication.getInstance(), com.einyun.app.common.R.string.toast_error_net);
+                Looper.loop();
+            } else if (throwable instanceof EinyunHttpException) {
+                //API业务错误
+                EinyunHttpException exception = (EinyunHttpException) throwable;
+                if (exception.getResponse().getCode().equals("34516")) {
+                    if (Looper.myLooper() == null) {
+                        Looper.prepare();
+                    }
+                    Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                } else {
+                    if (Looper.myLooper() == null) {
+                        Looper.prepare();
+                    }
+                    ToastUtil.show(CommonApplication.getInstance(), "该任务已处理完成");
+                    Looper.loop();
+                }
+            } else {
+                if (Looper.myLooper() == null) {
+                    Looper.prepare();
+                }
+                Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Toast.makeText(CommonApplication.getInstance(), "该任务已处理完成", Toast.LENGTH_SHORT).show();
-        Looper.loop();
     }
 
     /**
@@ -645,8 +854,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 @Override
                 public void onFaild(Throwable throwable) {
-
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }
@@ -694,7 +902,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                 @Override
                 public void onFaild(Throwable throwable) {
 
-                    showMsg();
+                    showMsg(throwable);
 
                 }
             });
@@ -741,7 +949,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
 
                 @Override
                 public void onFaild(Throwable throwable) {
-                    showMsg();
+                    showMsg(throwable);
                 }
             });
         }

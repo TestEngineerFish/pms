@@ -125,15 +125,25 @@
 
             <LinearLayout style="@style/ll_create_order">
 
-                <TextView
-                    style="@style/tv_create_order_name"
-                    android:text="联合处理人" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/px_200"
+                       android:layout_centerVertical="true"
+                        style="@style/tv_create_order_name"
+                        android:text="联合处理人" />
 
-                <com.einyun.app.common.ui.widget.BaseEditText
-                    android:id="@+id/repair_handle_together_man"
-                    style="@style/tv_handle_order_select"
-                    android:layout_marginLeft="@dimen/px_30"
-                    android:hint="请输入" />
+                    <com.einyun.app.common.ui.widget.BaseEditText
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:id="@+id/repair_handle_together_man"
+                        style="@style/tv_handle_order_select"
+                        android:layout_marginLeft="@dimen/px_200"
+                        android:hint="请输入" />
+
+                </RelativeLayout>
+
 
             </LinearLayout>
 

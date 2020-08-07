@@ -467,7 +467,20 @@ public class DisqualifiedFragmentViewModel extends BasePageListViewModel<Disqual
 
         return new Gson().fromJson(jsonObject.toString(),DisqualifiedListRequest.class);
     }
+    public DisqualifiedListRequest getRequestSearchListBean(int page, int pageSize,String code){
+        JsonObject jsonObject = new JsonObject();
+        JsonObject pageBean = new JsonObject();
+        pageBean.addProperty("page", page);
+        pageBean.addProperty("pageSize", pageSize);
+        pageBean.addProperty("showTotal", false);
+        JsonObject params = new JsonObject();
+        params.addProperty("searchValue", code);
+        jsonObject.add("pageBean", pageBean);
+        jsonObject.add("params", params);
+        Log.e("客户问询", "RequestTodoList: "+jsonObject.toString() );
 
+        return new Gson().fromJson(jsonObject.toString(),DisqualifiedListRequest.class);
+    }
     public void cacheFeedBackPhotos(List<Uri> uris, String code,UnQualityFeedBackRequest mRequest) {
         String paths=new Gson().toJson(cachedPhotoList(uris));
         mRequest.getBizData().setFeedback_enclosure(paths);

@@ -1,45 +1,33 @@
 package com.einyun.app.pms.main.core.ui.fragment;
 
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.bumptech.glide.Glide;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.adapter.RVBindingAdapter;
-import com.einyun.app.base.event.ItemClickListener;
 import com.einyun.app.base.util.JsonUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
-import com.einyun.app.base.util.TimeUtil;
-import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
-import com.einyun.app.common.constants.LiveDataBusKey;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
-import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.dashboard.model.WorkOrder;
 import com.einyun.app.library.mdm.model.NoticeModel;
-import com.einyun.app.library.mdm.model.SystemNoticeModel;
 import com.einyun.app.library.mdm.net.request.NoticeListPageRequest;
 import com.einyun.app.library.uc.usercenter.model.OrgModel;
 import com.einyun.app.pms.main.BR;
@@ -51,14 +39,12 @@ import com.einyun.app.pms.main.core.viewmodel.WorkBenchViewModel;
 import com.einyun.app.pms.main.databinding.FragmentWorkBenchBinding;
 import com.einyun.app.pms.main.databinding.ItemWorkTablePendingNumBinding;
 import com.google.gson.Gson;
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.orhanobut.logger.Logger;
 import com.umeng.analytics.MobclickAgent;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,6 +58,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     public static WorkBenchViewModelFragment newInstance() {
         return new WorkBenchViewModelFragment();
     }
+
     @Autowired(name = RouterUtils.SERVICE_USER)
     IUserModuleService userModuleService;
     RVBindingAdapter<ItemWorkTablePendingNumBinding, String> adapter;
@@ -83,6 +70,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     DecimalFormat formatInt = new DecimalFormat("#,###");
     boolean firstFresh = false;
     HomeCommunityNoticeAdapter marqueeFactory;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_work_bench;
@@ -99,25 +87,22 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     }
 
     private void onlyInitData() {
-        //获取配置信息
-        viewModel.userMenuData(2).observe(this, userMenu -> {
-            handleUserMenu(userMenu);
-            //获取分期数据
-            viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
-                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, new Gson().toJson(orgModels));
-                handleStagingData(orgModels);
-                userModuleService.saveDivideCodes(divideCode);
-                firstFresh = true;
-                StringBuilder builder = new StringBuilder();
-                for (String divide:divideCode){
-                    builder.append(",").append(divide);
-                }
-                if (builder.length() > 1){
-                    divides = builder.substring(1);
-                }
-                freshData();
-            });
+        //获取分期数据
+        viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
+            SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, new Gson().toJson(orgModels));
+            handleStagingData(orgModels);
+            userModuleService.saveDivideCodes(divideCode);
+            firstFresh = true;
+            StringBuilder builder = new StringBuilder();
+            for (String divide : divideCode) {
+                builder.append(",").append(divide);
+            }
+            if (builder.length() > 1) {
+                divides = builder.substring(1);
+            }
+            freshData();
         });
+
         initWheel();
         binding.swipeRefresh.setOnRefreshListener(() -> {
             binding.swipeRefresh.setRefreshing(false);
@@ -127,7 +112,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     private String divides;
 
-    private void initWheel(){
+    private void initWheel() {
         //社区广告
         marqueeFactory = new HomeCommunityNoticeAdapter(getActivity());
         binding.mvCommunityNotice.setAdapter(marqueeFactory);
@@ -146,80 +131,83 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         if (!firstFresh) {
             return;
         }
-        //运营收缴率
-        if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
-            viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
-                if (operateCaptureData==null) {
-                    return;
-                }
-                binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate() == null ? 0 : operateCaptureData.getTodayIncomeRate()) + "%");
-                binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate() == null ? 0 : operateCaptureData.getTodayArrearsRate()) + "%");
-                //涨幅 下跌
+        //获取配置信息
+        viewModel.userMenuData(2).observe(this, userMenu -> {
+            handleUserMenu(userMenu);
+            //运营收缴率
+            if (binding.itemWorkBenchThird.layoutMain.getVisibility() == View.VISIBLE) {
+                viewModel.operateCaptureData(projectCode).observe(this, operateCaptureData -> {
+                    if (operateCaptureData == null) {
+                        return;
+                    }
+                    binding.itemWorkBenchThird.tvTodayIncomeRate.setText(formatDouble.format(operateCaptureData.getTodayIncomeRate() == null ? 0 : operateCaptureData.getTodayIncomeRate()) + "%");
+                    binding.itemWorkBenchThird.tvTodayArrearsRate.setText(formatDouble.format(operateCaptureData.getTodayArrearsRate() == null ? 0 : operateCaptureData.getTodayArrearsRate()) + "%");
+                    //涨幅 下跌
 //                calculateOperateUpDown(binding.itemWorkBenchThird.tvDown, binding.itemWorkBenchThird.tvDownNum, operateCaptureData.getTodayIncomeRise());
 //                calculateOperateUpDown(binding.itemWorkBenchThird.tvUp, binding.itemWorkBenchThird.tvUpNum, operateCaptureData.getTodayArrearsRise());
-            });
-        }
-        //工单处理情况总览
-        if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
-            setWorkTablePendingNum("0".toCharArray());
-            viewModel.workOrderData("",userModuleService.getUserId()).observe(this, workOrderData -> {
-                if (workOrderData.getRate() != null) {
-                    //工单完成率
-                    String completedRate = workOrderData.getRate().getCompletedRate();
-                    binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
-                    //工单及时率
-                    String timelyRate = workOrderData.getRate().getTimelyRate();
-                    binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
-                } else {
-                    binding.itemWorkBenchSecond.tvWorkOrderProcess.setText("0%");
-                    binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText("0%");
-                    return;
-                }
+                });
+            }
+            //工单处理情况总览
+            if (binding.itemWorkBenchSecond.llWorkOrderPendingPandect.getVisibility() == View.VISIBLE) {
+                setWorkTablePendingNum("0".toCharArray());
+                viewModel.workOrderData("", userModuleService.getUserId()).observe(this, workOrderData -> {
+                    if (workOrderData.getRate() != null) {
+                        //工单完成率
+                        String completedRate = workOrderData.getRate().getCompletedRate();
+                        binding.itemWorkBenchSecond.tvWorkOrderProcess.setText(completedRate);
+                        //工单及时率
+                        String timelyRate = workOrderData.getRate().getTimelyRate();
+                        binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText(timelyRate);
+                    } else {
+                        binding.itemWorkBenchSecond.tvWorkOrderProcess.setText("0%");
+                        binding.itemWorkBenchSecond.tvWorkOrderTimeliness.setText("0%");
+                        return;
+                    }
 
-                //总单总数
-                int num = 0;
-                for (WorkOrder workOrder : workOrderData.getWorkOrder()) {
-                    num += workOrder.getCount();
-                }
-                String format = formatInt.format(num);
-                setWorkTablePendingNum(format.toCharArray());
-            });
-        }
-
-        //获取审批数量
-        if (binding.itemWorkBenchFirst.ssvCommonFun.getVisibility() == View.VISIBLE) {
-            viewModel.getAuditCount().observe(this, integer -> {
-                binding.itemWorkBenchFirst.ssvCommonFun.setRed_SP(integer);
-            });
-        }
-        //带处理工单条数
-        if (binding.itemWorkBenchFirst.llWorkOrderList.getVisibility() == View.VISIBLE) {
-            //获取待办数量（客户报修，客户询问，客户投诉）
-            viewModel.getBlocklogNums().observe(this, blocklogNums -> {
-                binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
-                binding.itemWorkBenchFirst.tvClentComplainNum.setText(StringUtil.isNullStr(blocklogNums.getComplainNum()) ? blocklogNums.getComplainNum() : "0");
-                binding.itemWorkBenchFirst.tvClentInquiryNum.setText(StringUtil.isNullStr(blocklogNums.getEnquiryNum()) ? blocklogNums.getEnquiryNum() : "0");
-                binding.itemWorkBenchFirst.tvClentRepairsNum.setText(StringUtil.isNullStr(blocklogNums.getRepairNum()) ? blocklogNums.getRepairNum() : "0");
-                binding.itemWorkBenchFirst.tvWorkTableDisqualifiedNum.setText(StringUtil.isNullStr(blocklogNums.getUnqualifiedNum()) ? blocklogNums.getUnqualifiedNum() : "0");
-                binding.itemWorkBenchFirst.ivWaringDisqualified.setVisibility(blocklogNums.getUnqualifiedTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
-            });
-            //待办统计-计划、巡查、派工单
-            viewModel.getWaitCount().observe(this, waitCount -> {
-                binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
-                binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
-                //派工单
-                binding.itemWorkBenchFirst.tvWorkTableDispatchNum.setText("" + waitCount.getDispatchOrderCount());
-                //计划工单
-                binding.itemWorkBenchFirst.tvWorkTablePlanNum.setText("" + waitCount.getPlanOrderCount());
-                //巡查工单
-                binding.itemWorkBenchFirst.tvWorkTablePatrolNum.setText("" + waitCount.getInspectionOrderCount());
-            });
-        }
-        getMainNote();
-        showSystemNotice();
+                    //总单总数
+                    int num = 0;
+                    for (WorkOrder workOrder : workOrderData.getWorkOrder()) {
+                        num += workOrder.getCount();
+                    }
+                    String format = formatInt.format(num);
+                    setWorkTablePendingNum(format.toCharArray());
+                });
+            }
+            //获取审批数量
+            if (binding.itemWorkBenchFirst.ssvCommonFun.getVisibility() == View.VISIBLE) {
+                viewModel.getAuditCount().observe(this, integer -> {
+                    binding.itemWorkBenchFirst.ssvCommonFun.setRed_SP(integer);
+                });
+            }
+            //带处理工单条数
+            if (binding.itemWorkBenchFirst.llWorkOrderList.getVisibility() == View.VISIBLE) {
+                //获取待办数量（客户报修，客户询问，客户投诉）
+                viewModel.getBlocklogNums().observe(this, blocklogNums -> {
+                    binding.itemWorkBenchFirst.ivWaringComplain.setVisibility(blocklogNums.getComplainTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                    binding.itemWorkBenchFirst.ivWaringRepairs.setVisibility(blocklogNums.getRepairTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                    binding.itemWorkBenchFirst.ivWaringEnq.setVisibility(blocklogNums.getEnquiryTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                    binding.itemWorkBenchFirst.tvClentComplainNum.setText(StringUtil.isNullStr(blocklogNums.getComplainNum()) ? blocklogNums.getComplainNum() : "0");
+                    binding.itemWorkBenchFirst.tvClentInquiryNum.setText(StringUtil.isNullStr(blocklogNums.getEnquiryNum()) ? blocklogNums.getEnquiryNum() : "0");
+                    binding.itemWorkBenchFirst.tvClentRepairsNum.setText(StringUtil.isNullStr(blocklogNums.getRepairNum()) ? blocklogNums.getRepairNum() : "0");
+                    binding.itemWorkBenchFirst.tvWorkTableDisqualifiedNum.setText(StringUtil.isNullStr(blocklogNums.getUnqualifiedNum()) ? blocklogNums.getUnqualifiedNum() : "0");
+                    binding.itemWorkBenchFirst.ivWaringDisqualified.setVisibility(blocklogNums.getUnqualifiedTimeout() == 1 ? View.VISIBLE : View.INVISIBLE);
+                });
+                //待办统计-计划、巡查、派工单
+                viewModel.getWaitCount().observe(this, waitCount -> {
+                    binding.itemWorkBenchFirst.ivWaringPlan.setVisibility(waitCount.getPlanOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                    binding.itemWorkBenchFirst.ivWaringSendOrder.setVisibility(waitCount.getDispatchOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                    binding.itemWorkBenchFirst.ivWaringPatrol.setVisibility(waitCount.getInspectionOrderFlowListIsComing() == 1 ? View.VISIBLE : View.INVISIBLE);
+                    //派工单
+                    binding.itemWorkBenchFirst.tvWorkTableDispatchNum.setText("" + waitCount.getDispatchOrderCount());
+                    //计划工单
+                    binding.itemWorkBenchFirst.tvWorkTablePlanNum.setText("" + waitCount.getPlanOrderCount());
+                    //巡查工单
+                    binding.itemWorkBenchFirst.tvWorkTablePatrolNum.setText("" + waitCount.getInspectionOrderCount());
+                });
+            }
+            getMainNote();
+            showSystemNotice();
+        });
     }
 
     private boolean isShowSystemNotice = true;
@@ -233,7 +221,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             } else {
                 binding.itemWorkBenchFirst.llSystemNotice.setVisibility(VISIBLE);
                 if (StringUtil.isNullStr(data.getType())) {
-                    switch (data.getType()){
+                    switch (data.getType()) {
                         case "system_upgrade":
                             binding.itemWorkBenchFirst.tvSystemNotice.setText("[系统升级]" + data.getTitle());
                             break;
@@ -250,7 +238,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                 binding.itemWorkBenchFirst.tvSystemNotice.requestFocus();
                 binding.itemWorkBenchFirst.tvSystemNotice.setOnClickListener(v -> {
                     ARouter.getInstance().build(RouterUtils.ACTIVITY_SYSTEM_NOTICE_DETAIL)
-                            .withString(RouteKey.KEY_ID,data.getId()).navigation();
+                            .withString(RouteKey.KEY_ID, data.getId()).navigation();
                 });
                 binding.itemWorkBenchFirst.ivSystemNoticeClose.setOnClickListener(v -> {
 //                    SPUtils.put(getActivity(), "systemNotice", systemNotice + "_" + data.getId());
@@ -265,6 +253,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
      * 获取首页社区公告
      */
     List<NoticeModel> noticeModels = new ArrayList<>();
+
     private void getMainNote() {
 
         NoticeListPageRequest noticeListPageRequest = new NoticeListPageRequest();
@@ -302,7 +291,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                             binding.mvCommunityNotice.startFlipping();
                         }
                     }
-                },1000);
+                }, 1000);
 
             } else {
                 noticeModels = new ArrayList<>();
@@ -406,45 +395,111 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
                                     .navigation();
                             getActivity().finish();
                         }
-                    });
+                    }).show();
         }
+
+        int functionIndex = 0;
         List<String> functionList = new ArrayList<>();
         //扫码处理
         if (userMenu.indexOf("smcl") != -1) {
             functionList.add("smcl");
-        }else {
-            functionList.add("smcl");
-
+            functionIndex++;
         }
         //点检
-        if (userMenu.indexOf("dj") != -1) {
+        if (userMenu.indexOf("dj_new") != -1) {
             functionList.add("dj");
+            functionIndex++;
         }
-
         //审批
-        if (userMenu.indexOf("sprk") != -1) {
+        if (userMenu.indexOf("sprk_new") != -1) {
             functionList.add("sp");
+            functionIndex++;
         }
         //收费
-//        if (userMenu.indexOf("sfzl") != -1) {
+        if (userMenu.indexOf("sfzl") != -1) {
             functionList.add("sfzl");
-//        }
+            functionIndex++;
+        }
         //创建工单
-
-//        if (userMenu.indexOf("cjgd") != -1) {
+        if (userMenu.indexOf("cjgd") != -1) {
             functionList.add("cjgd");
-//        }
+            functionIndex++;
+        }
         //工单列表
-        if (userMenu.indexOf("gdlbck") != -1) {
+        if (userMenu.indexOf("gdlbck_new") != -1) {
             functionList.add("gdlb");
+            functionIndex++;
         }
         //工作预览
-//        if (userMenu.indexOf("gzyl") != -1) {
+        if (userMenu.indexOf("gzyl") != -1) {
             functionList.add("gzyl");
-//        }
-
+            functionIndex++;
+        }
+        if (functionIndex == 0) {
+            binding.itemWorkBenchFirst.ssvCommonFun.setVisibility(View.GONE);
+        }
         Log.d(this.getActivity().getLocalClassName(), "functionList --->" + JsonUtil.toJson(functionList));
         binding.itemWorkBenchFirst.ssvCommonFun.setImageData(getActivity(), functionList);
+        orderTitle(userMenu);
+    }
+
+    int orderTitleFirstIndex = 0;
+    int orderTitleSecondIndex = 0;
+
+    private void orderTitle(String userMenu) {
+        orderTitleFirstIndex = 0;
+        orderTitleSecondIndex = 0;
+        //不合格单
+        menuFirst(binding.itemWorkBenchFirst.rlUnqualified, userMenu, "unqualified");
+        //派工单
+        menuFirst(binding.itemWorkBenchFirst.rlDispatch, userMenu, "dispatch");
+        //计划工单
+        menuFirst(binding.itemWorkBenchFirst.rlPlan, userMenu, "plan");
+        //巡查工单
+        menuFirst(binding.itemWorkBenchFirst.rlInspection, userMenu, "inspection");
+        //客户投诉
+        menuSecond(binding.itemWorkBenchFirst.rlComplain, userMenu, "complain");
+        //客户问询
+        menuSecond(binding.itemWorkBenchFirst.rlEnquiry, userMenu, "enquiry");
+        //客户报修
+        menuSecond(binding.itemWorkBenchFirst.rlRepair, userMenu, "repair");
+        if (orderTitleFirstIndex == 0 && orderTitleSecondIndex == 0) {
+            binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(View.GONE);
+            binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(View.GONE);
+        } else {
+            //没有物业工单
+            if (orderTitleFirstIndex == 0){
+                binding.itemWorkBenchFirst.tvWorkOrderTitleFirst.setVisibility(View.GONE);
+            }else{
+                binding.itemWorkBenchFirst.tvWorkOrderTitleFirst.setVisibility(VISIBLE);
+            }
+            //没有客服工单
+            if (orderTitleSecondIndex == 0){
+                binding.itemWorkBenchFirst.tvWorkOrderTitleSecond.setVisibility(View.GONE);
+            }else{
+                binding.itemWorkBenchFirst.tvWorkOrderTitleSecond.setVisibility(VISIBLE);
+            }
+            binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(VISIBLE);
+            binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(VISIBLE);
+        }
+    }
+
+    private void menuFirst(View v, String userMenu, String tag) {
+        if (userMenu.indexOf(tag) != -1) {
+            v.setVisibility(VISIBLE);
+            orderTitleFirstIndex++;
+        } else {
+            v.setVisibility(View.GONE);
+        }
+    }
+
+    private void menuSecond(View v, String userMenu, String tag) {
+        if (userMenu.indexOf(tag) != -1) {
+            v.setVisibility(VISIBLE);
+            orderTitleSecondIndex++;
+        } else {
+            v.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -537,7 +592,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     public void scanner() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_SCANNER)
-                .withString(RouteKey.KEY_HOME_ENTER,RouteKey.KEY_HOME_ENTER)
+                .withString(RouteKey.KEY_HOME_ENTER, RouteKey.KEY_HOME_ENTER)
                 .navigation(getActivity(), RouterUtils.ACTIVITY_REQUEST_SCANNER);
     }
 
@@ -559,14 +614,14 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         } else if (type == 2) {//工单处理情况总览 更多点击
             HashMap<String, String> map = new HashMap<>();
             map.put("user_name", UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(),CustomEventTypeEnum.ORDER_HANDLE.getTypeName(),map);
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.ORDER_HANDLE.getTypeName(), map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_ORDER_CONDITION_PANDECT)
                     .navigation();
         } else if (type == 1) {//运营收缴率 更多点击
             HashMap<String, String> map = new HashMap<>();
-            map.put("user_name",UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName(),map);
+            map.put("user_name", UserUtil.getUserName());
+            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.OPERATE_CAPTURE_RATE.getTypeName(), map);
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_OPERATE_PERCENT)
                     .withObject(RouteKey.ORGCODE, projectCode)
@@ -620,7 +675,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
         }
     }
 
-    public void goToNotice(){
+    public void goToNotice() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_NOTICE_LIST).navigation();
     }
 }

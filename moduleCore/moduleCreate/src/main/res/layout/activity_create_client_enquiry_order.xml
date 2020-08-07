@@ -123,8 +123,9 @@
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>
 
-                <View style="@style/base_underline" />
+<!--                <View style="@style/base_underline" />-->
                 <LinearLayout
+                    android:visibility="gone"
                     style="@style/ll_create_order"
                     android:onClick="@{()->callBack.pleaseSelect(type.ENQUIRY_TYPE)}">
 
@@ -137,6 +138,43 @@
                     <TextView
                         style="@style/tv_create_order_select_single"
                         app:setSelectTxt="@{bean.bizData.cate}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    android:visibility="visible"
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.ENQUIRY_TYPE_BIG)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="问询大类" />
+
+                    <TextView
+                        style="@style/tv_create_order_select_single"
+                        app:setSelectTxt="@{bean.bizData.cate}" />
+
+                    <ImageView style="@style/tv_create_order_right_arrow" />
+                </LinearLayout>
+                <View style="@style/base_underline" />
+                <LinearLayout
+                    android:visibility="visible"
+                    style="@style/ll_create_order"
+                    android:onClick="@{()->callBack.pleaseSelect(type.ENQUIRY_TYPE_SMALL)}">
+
+                    <TextView style="@style/tv_create_order_red_star" />
+
+                    <TextView
+                        style="@style/tv_create_order_name"
+                        android:text="问询小类" />
+
+                    <TextView
+                        style="@style/tv_create_order_select_single"
+                        app:setSelectTxt="@{bean.bizData.subCate}" />
 
                     <ImageView style="@style/tv_create_order_right_arrow" />
                 </LinearLayout>

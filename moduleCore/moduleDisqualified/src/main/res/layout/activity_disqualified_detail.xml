@@ -94,8 +94,9 @@
                                  style="@style/style_text_approval_left"
                                  android:text="原工单编号" />
                              <TextView
+                                 android:textColor="@color/blueTextColor"
                                  android:id="@+id/tv_old_code"
-                                 android:text="@{model.data.unqualified_model.parent_code}"
+                                 android:text="@{model.data.unqualified_model.original_code}"
                                  style="@style/style_text_approval_right"/>
                          </RelativeLayout>
                          <RelativeLayout

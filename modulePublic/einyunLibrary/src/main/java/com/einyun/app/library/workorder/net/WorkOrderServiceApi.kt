@@ -93,6 +93,11 @@ interface WorkOrderServiceApi {
      */
     @GET(URLs.URL_BIZDATA_BASE_LIST)
     fun typeAndLineList(): Flowable<TypeAndLineListResponse>
+    /**
+     *  创建问询获取大类小类
+     */
+    @GET(URLs.URL_BIZDATA_ENQUI_LIST)
+    fun typeBigAndSmall(): Flowable<TypeBigAndSmallResponse>
 
     /**
      * 追加投诉

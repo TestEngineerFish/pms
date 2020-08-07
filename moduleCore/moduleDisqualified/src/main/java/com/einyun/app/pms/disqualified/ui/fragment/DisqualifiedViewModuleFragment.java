@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.base.adapter.RVPageListAdapter;
@@ -28,6 +29,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.utils.ClickProxy;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.resource.workorder.model.PlanWorkOrder;
 import com.einyun.app.library.resource.workorder.net.request.DistributePageRequest;
@@ -145,6 +147,9 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
 
     }
     private void loadPagingData(DisqualifiedListRequest requestBean, String  tag){
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+            return;
+        }
 //        初始化数据，LiveData自动感知，刷新页面
         viewModel.loadPadingData(requestBean,tag).observe(this, dataBeans ->
                 adapter.submitList(dataBeans)
@@ -288,8 +293,37 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                     }
 
                     @Override
-                    public void onItem(ItemDisqualifiedListBinding binding,DisqualifiedItemModel model) {
-
+                    public void onItem(ItemDisqualifiedListBinding binding,DisqualifiedItemModel inquiriesItemModule) {
+                        DisqualifiedItemModel item = inquiriesItemModule;
+//                    initCached(binding, inquiriesItemModule);
+                        viewModel.loadFeedBackRequest("f_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this, model->{
+                            if (model==null) { return; }
+                            String taskId = model.getDoNextParamt().getTaskId();
+                            if (taskId.equals(item.getTaskId())) {
+                                item.cached=true;
+                            }else {
+                                item.cached=false;
+                            }
+                            binding.setModel(item);
+                        });
+                        viewModel.loadVerificationRequest("v_"+inquiriesItemModule.getTaskId()).observe(DisqualifiedViewModuleFragment.this,model->{
+                            if (model==null) { return; }
+                            String taskId = model.getDoNextParamt().getTaskId();
+                            if (taskId.equals(inquiriesItemModule.getTaskId())) {
+                                item.cached=true;
+                            }else {
+                                item.cached=false;
+                            }
+                            binding.setModel(item);
+                        });
+                        switch (getFragmentTag()) {
+                            case FRAGMENT_DISQUALIFIED_WAIT_FOLLOW://待跟进
+                                binding.itemCache.setVisibility(View.VISIBLE);
+                                break;
+                            case FRAGMENT_DISQUALIFIED_HAD_FOLLOW://已跟进
+                                binding.itemCache.setVisibility(View.GONE);
+                                break;
+                        }
                     }
                     @Override
                     public int getLayoutId() {
@@ -297,7 +331,7 @@ public class DisqualifiedViewModuleFragment extends BaseViewModelFragment<Fragme
                     }
                 });
 
-                searchFragment.setHint("请搜索工单编号或工单名称");
+                searchFragment.setHint("请输入工单编号、问题描述");
             }
             searchFragment.show(getActivity().getSupportFragmentManager(), "");
         } catch (Exception e) {

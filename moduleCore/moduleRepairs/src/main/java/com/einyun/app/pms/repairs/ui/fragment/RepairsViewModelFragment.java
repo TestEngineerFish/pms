@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -27,6 +29,8 @@ import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.model.BasicData;
 import com.einyun.app.common.model.SelectModel;
 import com.einyun.app.common.service.RouterUtils;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchFragment;
+import com.einyun.app.common.ui.component.searchhistory.PageSearchListener;
 import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.ConditionBuilder;
 import com.einyun.app.common.ui.widget.PeriodizationView;
@@ -44,6 +48,7 @@ import com.einyun.app.library.workorder.net.request.RepairsPageRequest;
 import com.einyun.app.pms.repairs.BR;
 import com.einyun.app.pms.repairs.R;
 import com.einyun.app.pms.repairs.databinding.ItemOrderRepairBinding;
+import com.einyun.app.pms.repairs.databinding.ItemOrderRepairSearchBinding;
 import com.einyun.app.pms.repairs.databinding.RepairsFragmentBinding;
 import com.einyun.app.pms.repairs.ui.RepairsActivity;
 import com.einyun.app.pms.repairs.viewmodel.RepairsViewModel;
@@ -78,7 +83,8 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
     RVPageListAdapter<ItemOrderRepairBinding, RepairsModel> adapter;
     private SelectPopUpView selectPopUpView = null;
     RepairsPageRequest request;
-
+    RepairsPageRequest searchRequest;
+    private PageSearchFragment searchFragment;
     public RepairsViewModelFragment() {
 
     }
@@ -177,8 +183,101 @@ public class RepairsViewModelFragment extends BaseViewModelFragment<RepairsFragm
         viewModel.loadPagingData(request, getFragmentTag()).observe(this, dataBeans -> {
             adapter.submitList(dataBeans);
         });
-    }
 
+        /**
+         * 搜索
+         */
+        binding.search.setOnClickListener(view -> {
+            search();
+        });
+    }
+    private void search() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.REPAIR_SERACH.getTypeName(),map);
+        try {
+//            DistributePageRequest request = (DistributePageRequest) viewModel.request.clone();
+            if (searchFragment == null) {
+                searchFragment = new PageSearchFragment<ItemOrderRepairSearchBinding, RepairsModel>(getActivity(), BR.repairSearch, new PageSearchListener<ItemOrderRepairSearchBinding,RepairsModel>() {
+                    @Override
+                    public LiveData<PagedList<RepairsModel>> search(String search) {
+                        searchRequest = new RepairsPageRequest();
+                        searchRequest.setSearchValue(search);
+                        return viewModel.loadPagingData(searchRequest, getFragmentTag());
+                    }
+
+                    @Override
+                    public void onItemClick(RepairsModel model) {
+                        ARouter.getInstance()
+                                .build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+                                .withString(RouteKey.KEY_ORDER_ID, model.getID_())
+                                .withString(RouteKey.KEY_PRO_INS_ID, model.getProInsId())
+                                .withString(RouteKey.KEY_TASK_ID, model.getTaskId())
+                                .withString(RouteKey.KEY_TASK_NODE_ID, model.getTaskNodeId())
+                                .withString(RouteKey.KEY_LIST_TYPE, getFragmentTag())
+                                .navigation();
+                    }
+
+                    @Override
+                    public void onItem(ItemOrderRepairSearchBinding binding, RepairsModel repairsModel) {
+                        if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FOLLOW)) {
+                            binding.itemContactOrFeedRe.setVisibility(View.VISIBLE);
+                        }
+                        if (getFragmentTag().equals(FRAGMENT_REPAIR_WAIT_FEED)) {
+                            binding.itemFeedRe.setVisibility(View.VISIBLE);
+                        }
+                        //沟通
+                        binding.itemContact.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance().build(RouterUtils.ACTIVITY_COMMUNICATION)
+                                        .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.REPAIR_COMMUN.getTypeName())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
+                                        .navigation();
+                            }
+                        });
+                        //反馈
+                        binding.itemFeedRe.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_INQUIRIES_FEEDBACK)
+                                        .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                        .navigation();
+                            }
+                        });
+                        //转单
+                        binding.itemResend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_RESEND_ORDER)
+                                        .withString(RouteKey.KEY_CUSTOM_TYPE,CustomEventTypeEnum.REPAIR_TURN_ORDER.getTypeName())
+                                        .withString(RouteKey.KEY_TASK_ID, repairsModel.getTaskId())
+                                        .withString(RouteKey.KEY_ORDER_ID, repairsModel.getID_())
+                                        .withString(RouteKey.KEY_DIVIDE_ID, repairsModel.getBx_dk_id())
+                                        .withString(RouteKey.KEY_PROJECT_ID, repairsModel.getU_project_id())
+                                        .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
+                                        .navigation();
+                            }
+                        });
+                        binding.repairCreateTime.setText(FormatUtil.formatDate(repairsModel.getBx_time()));
+                    }
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_order_repair_search;
+                    }
+                });
+
+                searchFragment.setHint("请输入工单编号、报修内容");
+            }
+            searchFragment.show(getActivity().getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void setUpData() {
         request = new RepairsPageRequest();

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="searchWorkOrder"
+            type="com.einyun.app.library.resource.workorder.model.DistributeWorkOrder" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/px_10"
+        app:cardElevation="0.5dp">
+
+
+        <LinearLayout
+            android:id="@+id/item_order_ln"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <ImageView
+                    android:id="@+id/item_send_work_lf_img"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    app:isComingTimeout="@{searchWorkOrder.is_coming_timeout}"
+                    android:src="@drawable/warning" />
+
+                <TextView
+                    android:id="@+id/item_send_work_subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginRight="@dimen/px_140"
+                    android:layout_toRightOf="@id/item_send_work_lf_img"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@{searchWorkOrder.f_DESC}"
+                    android:textColor="@color/blackTextColor"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_size16" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/px_136"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/px_136"
+                        android:layout_height="@dimen/px_48"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        app:status="@{searchWorkOrder.f_STATUS}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        app:status="@{searchWorkOrder.f_STATUS}" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/pd_view" />
+
+            <LinearLayout
+                android:id="@+id/item_work_send_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_location" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@{searchWorkOrder.f_LOCATION}"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px_10"
+                    android:layout_marginBottom="@dimen/px_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_order_num" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@{searchWorkOrder.f_ORDER_NO}"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/px_150"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/text_create_time" />
+
+                    <TextView
+                        android:id="@+id/select_order_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text=""
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/thin_divider_color" />
+
+            <RelativeLayout
+                android:id="@+id/item_resend_re"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_30">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="@string/text_turn_order"
+                    android:textColor="@color/blueTextColor" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_26"
+                    android:layout_height="@dimen/px_26"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/right_arrow" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

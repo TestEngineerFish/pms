@@ -1216,7 +1216,7 @@ public class TollUnitActivity extends BaseHeadViewModelActivity<ActivityTollUnit
                         }
                         feeHouseRequset = new FeeRequset();
                         feeHouseRequset.setUntiId(houseBuilds);
-                        feeHouseRequset.setDivideId(feeDivideId);
+                        feeHouseRequset.setDivideId(mFeeDivideId);
                         feeHouseRequset.setType(3);
                         reFreshHouseData(feeHouseRequset);
 

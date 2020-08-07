@@ -32,6 +32,7 @@ import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -204,6 +205,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         binding.repairHandleHistory.repairHandleHistroyList.setAdapter(handleAdapter);
         binding.repairHandleInfo.repairHandledRec.setAdapter(materialAdapter);
         binding.repairHandleInfo.repairHandledRec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        setEnterNum();
     }
 
     @Override
@@ -227,6 +229,31 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 return;
             }
             detialModel=repairsDetail;
+            String handle_is_paid = detialModel.getData().getCustomer_repair_model().getHandle_is_paid();
+            if ("1".equals(handle_is_paid)) {
+                binding.repairHandle.rbYes.setChecked(true);
+                binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
+                if (detialModel.getData().getCustomer_repair_model().getMaterial_cost()!=null) {
+                    binding.repairHandlePaid.repairMaterialPrice.setText(detialModel.getData().getCustomer_repair_model().getMaterial_cost()+"");
+                }
+                if (detialModel.getData().getCustomer_repair_model().getArtificial_cost()!=null) {
+                    binding.repairHandlePaid.repairHandleManMoney.setText(detialModel.getData().getCustomer_repair_model().getArtificial_cost()+"");
+                }
+                if (detialModel.getData().getCustomer_repair_model().getHandle_fee()!=null) {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(detialModel.getData().getCustomer_repair_model().getHandle_fee()+"");
+                }
+
+            }else {
+                if (detialModel.getData().getCustomer_repair_model().getMaterial_cost()!=null) {
+                    binding.repairHandlePaid.repairMaterialPrice.setText(detialModel.getData().getCustomer_repair_model().getMaterial_cost()+"");
+                }
+                if (detialModel.getData().getCustomer_repair_model().getArtificial_cost()!=null) {
+                    binding.repairHandlePaid.repairHandleManMoney.setText(detialModel.getData().getCustomer_repair_model().getArtificial_cost()+"");
+                }
+                if (detialModel.getData().getCustomer_repair_model().getHandle_fee()!=null) {
+                    binding.repairHandlePaid.repairHandleTotalMoney.setText(detialModel.getData().getCustomer_repair_model().getHandle_fee()+"");
+                }
+            }
             return_visit_time = repairsDetail.getData().getCustomer_repair_model().getReturn_visit_time();
             return_time = repairsDetail.getData().getCustomer_repair_model().getReturn_time();
             GetNodeIdRequest getNodeIdRequest = new GetNodeIdRequest();
@@ -321,15 +348,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_normal) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(0).getName());
-                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(0).getId());
+                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(0).getKey());
                 }
                 if (checkedId == R.id.rb_general) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(1).getName());
-                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(1).getId());
+                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(1).getKey());
                 }
                 if (checkedId == R.id.rb_warning) {
                     detialModel.getData().getCustomer_repair_model().setBx_property_ass(dictNatureList.get(2).getName());
-                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(2).getId());
+                    detialModel.getData().getCustomer_repair_model().setBx_property_ass_id(dictNatureList.get(2).getKey());
                 }
             }
         });
@@ -422,7 +449,15 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(binding.repairHandlePaid.repairHandleManMoney.getText())) {
                 } else {
-                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) * Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
+                    String handle_is_paid = detialModel.getData().getCustomer_repair_model().getHandle_is_paid();
+                    if ("1".equals(handle_is_paid)) {
+
+                        try {
+                            binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) * Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
             }
@@ -445,13 +480,53 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString())+ "");
                 } else
                  {
-                    binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(binding.repairHandlePaid.repairMaterialPrice.getText().toString()) + Float.parseFloat(binding.repairHandlePaid.repairHandleManMoney.getText().toString()) + "");
-                }
+                     String s1 = binding.repairHandlePaid.repairMaterialPrice.getText().toString();
+                     String s2 = binding.repairHandlePaid.repairHandleManMoney.getText().toString();
+
+                     try {
+                         binding.repairHandlePaid.repairHandleTotalMoney.setText(Float.parseFloat(s1) + Float.parseFloat(s2) + "");
+                     } catch (NumberFormatException e) {
+                         e.printStackTrace();
+                     }
+                 }
 
             }
         });
     }
+public  void setEnterNum(){
+    binding.repairHandlePaid.repairHandleTogetherMan.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            int editEnd = binding.repairHandlePaid.repairHandleTogetherMan.getSelectionEnd();
+
+            // 先去掉监听器，否则会出现栈溢出
+            binding.repairHandlePaid.repairHandleTogetherMan.removeTextChangedListener(this);
+
+            // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
+            // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
+            if (s.toString().length() > 300) { // 当输入字符个数超过限制的大小时，进行截断操作
+                int length = s.toString().length();
+                s.delete(editEnd - (length-300), editEnd);
+                binding.repairHandlePaid.repairHandleTogetherMan.setSelection(editEnd - (length-300));//设置光标在最后
+                ToastUtil.show(CommonApplication.getInstance(), "请勿超过" + 300 + "个字符");
+            }
+
+            // 恢复监听器
+            binding.repairHandlePaid.repairHandleTogetherMan.addTextChangedListener(this);
+
+        }
+    });
+}
     @Override
     protected void onResume() {
         super.onResume();
@@ -770,6 +845,8 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (TextUtils.isEmpty(binding.sendOrder.repairSelectedPepple.getText().toString()) || "请选择".equals(binding.sendOrder.repairSelectedPepple.getText().toString())) {
                 ToastUtil.show(this, R.string.txt_plese_select_people);
                 return;
+            }else {
+                customerRepair.setPd_remark(binding.sendOrder.repairSendReason.getString());
             }
 
         }
@@ -1209,7 +1286,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
         BottomPicker.buildBottomPicker(this, txStrList, clDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
-                clDefaultPos = position;
+
                 for (Door data : doorResult) {
                     if (data.getDataName().equals(txStrList.get(position))) {
                         customerRepair.setBx_area(data.getDataName());
@@ -1217,6 +1294,18 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                         binding.repairsInfo.repairReportArea.setText(data.getDataName());
                     }
                 }
+//                customerRepair.setLine_key(model.get(0).getExpand().getMajorLine().getKey());
+//                customerRepair.setLine_name(model.get(0).getExpand().getMajorLine().getName());
+                if (clDefaultPos!=position) {
+                    customerRepair.setBx_cate_lv1("");
+                    customerRepair.setBx_cate_lv2("");
+                    customerRepair.setBx_cate_lv3("");
+                    customerRepair.setBx_cate_lv1_id("");
+                    customerRepair.setBx_cate_lv2_id("");
+                    customerRepair.setBx_cate_lv3_id("");
+                    binding.repairsInfo.repairType.setText("");
+                }
+                clDefaultPos = position;
             }
         });
     }

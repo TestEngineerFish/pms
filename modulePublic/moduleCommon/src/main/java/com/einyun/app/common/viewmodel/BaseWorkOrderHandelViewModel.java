@@ -81,7 +81,7 @@ public class BaseWorkOrderHandelViewModel extends BaseUploadViewModel{
                @Override
                public void onFaild(Throwable throwable) {
                     isClosedLiveData.postValue(null);
-                    ThrowableParser.onFailed(throwable);
+//                    ThrowableParser.onFailed(throwable);
                }
           });
 

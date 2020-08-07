@@ -245,7 +245,7 @@
 
                                 <TextView
                                     style="@style/detail_item_left_tv"
-                                    android:text="@string/text_location" />
+                                    android:text="工单说明" />
 
                                 <TextView
                                     android:id="@+id/tv_location"

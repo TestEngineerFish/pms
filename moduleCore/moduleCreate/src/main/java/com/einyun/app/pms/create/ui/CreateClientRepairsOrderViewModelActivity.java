@@ -332,6 +332,9 @@ public class CreateClientRepairsOrderViewModelActivity extends BaseHeadViewModel
         BottomPicker.buildBottomPicker(this, txStrList, clDefaultPos, new BottomPicker.OnItemPickListener() {
             @Override
             public void onPick(int position, String label) {
+                if (position != clDefaultPos){
+                    clearRequest(SelectType.REPAIRS_LOCATION);
+                }
                 clDefaultPos = position;
                 for (Door data : doorResult) {
                     if (data.getDataName().equals(txStrList.get(position))) {

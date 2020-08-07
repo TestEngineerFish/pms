@@ -23,6 +23,7 @@ public class QueryBuilder {
     QueryBuilder builder;
     private Query query;
     private PageBean pageBean;
+    private Params params;
     private List<QueryItem<?>> items;
     private List<SortItem> sorts;
 
@@ -31,9 +32,35 @@ public class QueryBuilder {
         builder = this;
     }
 
+    public Params getParams() {
+        return params;
+    }
+
+    public void setParams(Params params) {
+        this.params = params;
+    }
+
+      class Params{
+       private String searchValue;
+
+        public String getSearchValue() {
+            return searchValue;
+        }
+
+        public void setSearchValue(String searchValue) {
+            this.searchValue = searchValue;
+        }
+    }
     public QueryBuilder setPageBean(PageBean pageBean) {
         this.pageBean = pageBean;
         query.setPageBean(pageBean);
+        return builder;
+    }
+    public QueryBuilder setParamsValue(String value) {
+        Params params = new Params();
+        params.setSearchValue(value);
+        this.params = params;
+        query.setParams(params);
         return builder;
     }
 

@@ -28,7 +28,13 @@ public enum CustomEventTypeEnum {
 
 	FEEDBACK("feedback"),//点击“意见反馈”按钮提交后触发
 	APPROVAL_SUBMIT("approval_submit"),//点击通过/不通过按钮提交后触发
-	MSG_SWITCH("msg_switch");//点击消息通知打开/关闭按钮触发
+	MSG_SWITCH("msg_switch"),//点击消息通知打开/关闭按钮触发
+
+	SEND_ORDER_SEARCH("send_order_search"),//派工单搜索触发
+	COMPLAIN_SEARCH("complain_search"),//投诉搜索触发
+	INQUIRIES_SEARCH("inquiries_search"),//问询搜索触发
+	REPAIR_SERACH("repair_search"),//报修搜索触发
+	ORDER_LIST_SEARCH("order_list_search");//工单列表搜索
 
 
 	String typeName;

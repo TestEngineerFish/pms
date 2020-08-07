@@ -8,6 +8,7 @@ class ComplainPageRequest : PageRquest() {
     var F_ts_cate_id: String? = null
     var F_ts_property_id: String? = null
     var state: String? = null
+    var searchValue: String? = null
     var node_id_: String? = null
     var owner_id_: String? = null
     var ts_time: String? = null

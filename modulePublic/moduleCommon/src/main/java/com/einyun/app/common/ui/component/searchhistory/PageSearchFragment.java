@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
     private PagedList<M> list;
     RVPageListAdapter<D, M> adapter;
     String hint;
+    private View empty;
 
     public PageSearchFragment(Context context, int br_id, PageSearchListener<D,M> listener) {
         this.context = context;
@@ -86,6 +88,7 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
 //        histories = new ArrayList<>();
 //        repository = new SearchHistoryRepository();
         recycleView = view.findViewById(R.id.list);
+        empty = view.findViewById(R.id.empty);
         etSearch = view.findViewById(R.id.et_search);
         cancel = view.findViewById(R.id.cancel);
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -172,6 +175,12 @@ public class PageSearchFragment<D extends ViewDataBinding, M> extends DialogFrag
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         listener.search(s.toString()).observe(this, list -> {
             this.list = list;
+            if (list==null||list.size()==0) {
+                empty.setVisibility(View.GONE);
+            }else {
+                empty.setVisibility(View.GONE);
+
+            }
             adapter.submitList(this.list);
         });
     }

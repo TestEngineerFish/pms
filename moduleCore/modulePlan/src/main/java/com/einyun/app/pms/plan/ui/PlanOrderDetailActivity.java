@@ -66,9 +66,11 @@ import com.einyun.app.common.ui.widget.TipDialog;
 import com.einyun.app.common.utils.CaptureUtils;
 import com.einyun.app.common.utils.Glide4Engine;
 
+import com.einyun.app.common.utils.NetWorkUtils;
 import com.einyun.app.library.portal.dictdata.net.URLS;
 import com.einyun.app.library.resource.workorder.model.ApplyType;
 
+import com.einyun.app.library.resource.workorder.model.ExtensionApplication;
 import com.einyun.app.library.resource.workorder.model.OrderState;
 //import com.einyun.app.library.resource.workorder.model.PlanInfo;
 import com.einyun.app.base.db.entity.PlanInfo;
@@ -81,6 +83,7 @@ import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse;
 import com.einyun.app.pms.plan.BR;
 import com.einyun.app.pms.plan.R;
+import com.einyun.app.pms.plan.convert.ExtensionApplicationPlanDBToWokerConvert;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanResouceBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeBinding;
@@ -146,6 +149,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private List<WorkOrderTypeModel> lines;
     private List<PlanOrderResLineModel> mPlanResLines = new ArrayList<>();
     private PlanLocal planLocal;
+    private String f_status;
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -176,7 +180,9 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         setRightTxt(R.string.text_histroy);
         setRightTxtColor(R.color.blueTextColor);
         binding.setCallBack(this);
-
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+        }
         binding.sendOrder.repairSelectPeople.setOnClickListener(view -> {
             selectPeple();
         });
@@ -192,11 +198,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (isClosedState != null) {
                 if (isClosedState.isClosed()) {
                     if (isClosedState.getType().equals(WorkOrder.POSTPONED_PLAN)) {
+
+                        ExtensionApplicationPlanDBToWokerConvert ss=new ExtensionApplicationPlanDBToWokerConvert();
+                        List<ExtensionApplication> extensionApplications = ss.stringToSomeObjectList(new Gson().toJson(planInfo.getExtensionApplication()));
                         //还需要传入参数
                         ARouter.getInstance()
                                 .build(RouterUtils.ACTIVITY_LATE)
                                 .withString(RouteKey.KEY_ORDER_ID, id)
-                                .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, (Serializable) planInfo.getExtensionApplication())
+                                .withSerializable(RouteKey.KEY_ORDER_DETAIL_EXTEN, (Serializable) extensionApplications)
                                 .withString(RouteKey.KEY_PRO_INS_ID, proInsId)
                                 .withString(RouteKey.KEY_LATER_ID, RouteKey.KEY_PLAN)
                                 .navigation();
@@ -443,26 +452,31 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         if ("4".equals(f_status)) {
 
                             binding.tvScanReasult.setText("成功");
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
+
 
                         } else {
                             if ("1".equals(model.getScan_result())) {
-
+                                binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
                                 binding.tvScanReasult.setText("成功");
                             } else if ("0".equals(model.getScan_result())) {
                                 binding.tvScanReasult.setText("失败");
+                                binding.tvScanReasult.setTextColor(getResources().getColor(R.color.redTextColor));
                             } else {
                                 binding.tvScanReasult.setText("未扫码");
-
+                                binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
                             }
                         }
                     } else {
                         if ("1".equals(model.getScan_result())) {
-
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
                             binding.tvScanReasult.setText("成功");
                         } else if ("0".equals(model.getScan_result())) {
                             binding.tvScanReasult.setText("失败");
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.redTextColor));
                         } else {
                             binding.tvScanReasult.setText("未扫码");
+                            binding.tvScanReasult.setTextColor(getResources().getColor(R.color.blackTextColor));
 
                         }
                     }
@@ -583,6 +597,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (planInfo == null || planInfo.getData() == null) {
                 return;
             }
+           projectId= planInfo.getData().zyjhgd.getF_PROJECT_ID();
+           divideId= planInfo.getData().zyjhgd.getF_DIVIDE_ID();
+            f_status = planInfo.getData().getZyjhgd().getF_STATUS();
+            Log.e(TAG, "requestData: "+f_status );
             updateUI(planInfo);
             updateElapsedTime(planInfo);
             if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
@@ -603,7 +621,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             viewModel.isClosed(request);
             viewModel.loadLocalUserData(id).observe(this, local -> {
                 planLocal = local;
-                updateLocalData(local);
+                if (String.valueOf(OrderState.CLOSED.getState()).equals(f_status)) {
+
+                }else {
+
+                    updateLocalData(local);
+                }
             });
         });
     }
@@ -781,6 +804,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * 跳转申请延期
      */
     public void applyPostpone() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         IsClosedRequest request = new IsClosedRequest();
         request.setId(id);
         request.setType(WorkOrder.POSTPONED_PLAN);
@@ -791,6 +818,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      *
      */
     public void closeOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         if (isCloseClose) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_CLOSE)
@@ -809,6 +841,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      *转单
      */
     public void resendOrder() {
+        if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
+
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_RESEND_ORDER)
                 .withString(RouteKey.KEY_TASK_ID, taskId)
@@ -866,6 +903,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         if (planInfo == null) {
             return;
         }
+        if (!NetWorkUtils.isNetworkConnected(PlanOrderDetailActivity.this)) {
+            ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
+            return;
+        }
         viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
             wrapFormData(planInfo, picUrls);
             acceptForm(planInfo);
@@ -911,8 +952,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         Log.e("传参  patrol  为", JsonUtil.toJson(patrol));
         String base64 = Base64Util.encodeBase64(new Gson().toJson(patrol.getData()));
         PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrol.getData().getZyjhgd().getId_());
+        request.setRemark(binding.limitInput.getString());
         viewModel.submit(request).observe(this, aBoolean -> {
             if (aBoolean) {
+                viewModel.finishTask(id);
 //                tipDialog = new TipDialog(this, getString(R.string.text_handle_success));
 //                tipDialog.setTipDialogListener(dialog -> {
 //                    if (hasException()) {
@@ -955,7 +998,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     }).setCreateUnOrder(v -> {
                         ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY_CREATE)
                                 .withString(RouteKey.CODE, planInfo.getData().getZyjhgd().getF_ORDER_NO())
-
+                                .withString(RouteKey.F_ORIGINAL_TYPE, "1")
                                 .withString(RouteKey.KEY_ORDER_ID, id)
                                 .withString(RouteKey.KEY_ORDER_NO, planInfo.getData().getZyjhgd().getF_ORDER_NO())
                                 .withString(RouteKey.KEY_LINE, planInfo.getData().getZyjhgd().getF_TX_NAME())
@@ -1022,9 +1065,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             Log.e(TAG, "onSubmitClick: " + planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(0).getScan_result());
             String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+//            request.setRemark(binding.limitInput.getString());
             viewModel.receiceOrder(request).observe(this, model -> {
 
                 if (model.isState()) {
+                    viewModel.saveCache(planInfo, id);
                     initDialog("接单成功");
                 } else {
                     planInfo.getData().getZyjhgd().setF_STATUS("5");
@@ -1041,9 +1086,11 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 String base64 = Base64Util.encodeBase64(new Gson().toJson(planInfo.getData()));
                 String f_send_remark = binding.sendOrder.repairSendReason.getString();
                 PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, f_send_remark, PatrolSubmitRequest.ACTION_AGREE, base64, planInfo.getData().getZyjhgd().getId_());
+                request.setRemark(binding.limitInput.getString());
                 viewModel.assignOrder(request).observe(this, model -> {
 
                     if (model.isState()) {
+                        viewModel.saveCache(planInfo, id);
                         initDialog("派单成功");
                     } else {
                         planInfo.getData().getZyjhgd().setF_STATUS("6");
@@ -1059,6 +1106,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 return;
             }
             if (validateForceScan()) return;
+
             uploadImages(planInfo);
         }
     }
@@ -1148,32 +1196,21 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }
         if (resultCode == RESULT_OK) {
             if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
-//                f_RES_CODE
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
-                String subCode = stringExtra.substring(2, stringExtra.length());
-                viewModel.checkQrCode(URL_RESOURCE_WORKORDER_PLAN_QRCODE + "/" + subCode).observe(this, aBoolean -> {
-
-                    Log.e(TAG, "onActivityResult: " + aBoolean);
-                    if (aBoolean.getResourceCode().equals(planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).getF_RES_CODE())) {
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(aBoolean.getResourceCode());
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
-                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-//                        viewModel.saveCache(planInfo,id);
-//                        resourceAdapter.notifyItemChanged(mClickPosition);
-                    } else {
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
-                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
-                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-//                        viewModel.saveCache(planInfo,id);
-//                        resourceAdapter.notifyItemChanged(mClickPosition);
-                        ToastUtil.show(CommonApplication.getInstance(), "工单号不匹配");
-                    }
-                });
-//                planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setF_RES_CODE(data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
-//                planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).set_suc(1);
-//                resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-//                ToastUtil.show(PlanOrderDetailActivity.this, data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT));
+                List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
+                if (sub_jhgdzyb!=null) {
+                        if (stringExtra.equals(sub_jhgdzyb.get(mClickPosition).getF_RES_QRCODE())) {
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
+                            resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                            ToastUtil.show(CommonApplication.getInstance(), "扫码成功");
+                        }else {
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
+                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
+                            resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                            ToastUtil.show(CommonApplication.getInstance(), "二维码不正确");
+                        }
+                }
             }
         }
     }
