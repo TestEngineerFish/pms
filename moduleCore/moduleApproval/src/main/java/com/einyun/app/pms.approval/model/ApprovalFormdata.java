@@ -68,6 +68,15 @@ public class ApprovalFormdata {
     private String approvalId;
 
     private List<String> frequency;
+    private String work_ascription="";
+
+    public String getWork_ascription() {
+        return work_ascription;
+    }
+
+    public void setWork_ascription(String work_ascription) {
+        this.work_ascription = work_ascription;
+    }
 
     public ApprovalFormdata() {
 

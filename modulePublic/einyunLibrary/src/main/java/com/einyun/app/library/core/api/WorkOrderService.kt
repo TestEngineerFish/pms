@@ -11,6 +11,8 @@ import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
 import com.einyun.app.library.workorder.net.request.*
+import com.einyun.app.library.workorder.net.response.ArriveCheckResponse
+import com.einyun.app.library.workorder.net.response.ArriveCodeResponse
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import io.reactivex.Flowable
 import retrofit2.http.Body
@@ -126,4 +128,6 @@ interface WorkOrderService : EinyunService {
         request: ComplainAppendRequest,
         callBack: CallBack<Boolean>
     ): LiveData<Boolean>
+    fun getArriveCode(url:String,callBack: CallBack<ArriveCodeResponse>):LiveData<ArriveCodeResponse>
+    fun checkArriveCode(id:String,code:String,callBack: CallBack<ArriveCheckResponse>):LiveData<ArriveCheckResponse>
 }

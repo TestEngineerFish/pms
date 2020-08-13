@@ -68,7 +68,7 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <meta-data android:value="5dad68473fc195309b001055" android:name="UMENG_APPKEY"/>
+    <meta-data android:value="5f33450bb4b08b653e936773" android:name="UMENG_APPKEY"/>
 
     <!--多渠道打包-->
     <meta-data

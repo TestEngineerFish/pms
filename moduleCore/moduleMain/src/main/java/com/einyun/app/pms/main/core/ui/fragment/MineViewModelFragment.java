@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.manager.CustomEventTypeEnum;
 import com.einyun.app.common.ui.fragment.BaseViewModelFragment;
 import com.einyun.app.common.constants.LiveDataBusKey;
@@ -17,8 +18,10 @@ import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.dialog.AlertDialog;
+import com.einyun.app.common.utils.ToastUtil;
 import com.einyun.app.common.utils.UserUtil;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel;
 import com.einyun.app.pms.main.R;
 import com.einyun.app.pms.main.core.model.UserStarsBean;
 import com.einyun.app.pms.main.core.viewmodel.MineViewModel;
@@ -28,6 +31,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 我的page
@@ -60,17 +64,18 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                     }
                 });
         LiveEventBus
-                .get(LiveDataBusKey.BELL_STATE_FRESH,String.class)
+                .get(LiveDataBusKey.BELL_STATE_FRESH, String.class)
                 .observe(this, new Observer<String>() {
                     @Override
                     public void onChanged(String s) {
-                        Log.e(TAG, "onChanged: "+"来了新消息显示小红点");
+                        Log.e(TAG, "onChanged: " + "来了新消息显示小红点");
                         binding.tvRedPoint.setVisibility(View.VISIBLE);
                     }
                 });
     }
 
     private static final String TAG = "MineViewModelFragment";
+
     @Override
     protected void setUpData() {
         binding.setCallBack(this);
@@ -83,7 +88,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
             binding.setUserInfo(userInfoModel);
             userInfoModel1 = userInfoModel;
             viewModel.getWorkState().observe(this, status -> {
-                if(status!=null){
+                if (status != null) {
                     binding.ivWorkStatus.setVisibility(View.VISIBLE);
                     upWorkStatus(status);
                 }
@@ -91,7 +96,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
             /**
              * 设置星级
              * */
-            viewModel.getStars(new UserStarsBean("",userInfoModel.getId())).observe(this, model -> {
+            viewModel.getStars(new UserStarsBean("", userInfoModel.getId())).observe(this, model -> {
                 float stars = (float) model.getStars();
                 binding.ratingBar.setStar(5f);
 
@@ -112,10 +117,10 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
          * */
         viewModel.hadRead().observe(this, model -> {
 
-            if (model!=null) {
+            if (model != null) {
                 if (model.isMsgFlag()) {
                     binding.tvRedPoint.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     binding.tvRedPoint.setVisibility(View.GONE);
 
                 }
@@ -151,58 +156,63 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                 .build(routerName)
                 .navigation();
     }
+
     /**
-    * 跳转设置界面
-    * */
-    public void Setting(){
+     * 跳转设置界面
+     */
+    public void Setting() {
         jumpUserSetting(RouterUtils.ACTIVITY_MINE_SETTING);
     }
+
     /**
-    * 跳转审批界面
-    * */
-    public void approvalOnClick(){
+     * 跳转审批界面
+     */
+    public void approvalOnClick() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_APPROVAL)
-                .withString(RouteKey.APPROVAL_LIST_FROM,RouteKey.APPROVAL_LIST_FROM)
+                .withString(RouteKey.APPROVAL_LIST_FROM, RouteKey.APPROVAL_LIST_FROM)
                 .navigation();
     }
-    /**
-    * 跳转意见反馈
-    * */
-    public void adviceFeedBack(){
-//        if (userInfoModel1!=null) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("user_name", UserUtil.getUserName());
-            MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName(),map);
-            ARouter.getInstance()
-                    .build(RouterUtils.ACTIVITY_FEED)
-                    .navigation();
-//        }
 
-    }
     /**
-    * 跳转消息中心
-    * */
-    public void goToMsgCenter(){
-//        if (userInfoModel1!=null) {
-            binding.tvRedPoint.setVisibility(View.GONE);
-            ARouter.getInstance()
-                    .build(RouterUtils.ACTIVITY_MESSAGE_CENTER)
-                    .withString(RouteKey.KEY_START_TIME,startTime)
-                    .withString(RouteKey.KEY_END_TIME,endTime)
-                    .navigation();
-//        }
-
-    }
-    /**
-     *跳转个人信息
+     * 跳转意见反馈
      */
-    public void userInfoOnClick(){
-        if (userInfoModel1!=null) {
+    public void adviceFeedBack() {
+//        if (userInfoModel1!=null) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_name", UserUtil.getUserName());
+        MobclickAgent.onEvent(getActivity(), CustomEventTypeEnum.FEEDBACK.getTypeName(), map);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_FEED)
+                .navigation();
+//        }
+
+    }
+
+    /**
+     * 跳转消息中心
+     */
+    public void goToMsgCenter() {
+//        if (userInfoModel1!=null) {
+        binding.tvRedPoint.setVisibility(View.GONE);
+        ARouter.getInstance()
+                .build(RouterUtils.ACTIVITY_MESSAGE_CENTER)
+                .withString(RouteKey.KEY_START_TIME, startTime)
+                .withString(RouteKey.KEY_END_TIME, endTime)
+                .navigation();
+//        }
+
+    }
+
+    /**
+     * 跳转个人信息
+     */
+    public void userInfoOnClick() {
+        if (userInfoModel1 != null) {
             ARouter.getInstance()
                     .build(RouterUtils.ACTIVITY_USER_INFO)
-                    .withString(RouteKey.ACCOUNT,userInfoModel1.getAccount())
-                    .withString(RouteKey.ID,userInfoModel1.getId())
+                    .withString(RouteKey.ACCOUNT, userInfoModel1.getAccount())
+                    .withString(RouteKey.ID, userInfoModel1.getId())
                     .navigation();
         }
     }
@@ -227,12 +237,27 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                     @Override
                     public void onClick(View view) {
                         viewModel.updateWorkState("0".equals(workStatus) ? "1" : "0").observe(getActivity(), workStatus -> {
+                            if (workStatus==null){
+                                ToastUtil.show(CommonApplication.getInstance(),"打卡失败");
+                                return;
+                            }
                             viewModel.getWorkState().observe(getActivity(), status -> {
                                 upWorkStatus(status);
                             });
+                            new AlertDialog(getActivity()).builder()
+                                    .setTitle("打卡成功")
+                                    .setMsg(getTime(workStatus))
+                                    .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                        }
+                                    }).show();
                         });
                     }
                 }).show();
+
+
     }
 
     @Override
@@ -240,4 +265,14 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
         return new ViewModelProvider(this, new ViewModelFactory()).get(MineViewModel.class);
     }
 
+
+    private String getTime(List<WorkStatusModel> list) {
+        if (list == null) {
+            return "";
+        } else if (list.size() == 0) {
+            return "本次打卡时间" + list.get(0).getCreateTime();
+        } else {
+            return "本次打卡时间" + list.get(0).getCreateTime() +"\n"+ "上次打卡时间" + list.get(1).getCreateTime();
+        }
+    }
 }

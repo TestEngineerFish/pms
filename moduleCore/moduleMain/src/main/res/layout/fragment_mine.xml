@@ -120,7 +120,21 @@
                 android:onClick="@{()->callBack.changeWorkStatus()}"
                 android:src="@mipmap/img_mine_working"
                 android:visibility="invisible" />
-
+            <!--<TextView
+                android:id="@+id/iv_work_status"
+                android:layout_width="@dimen/px_146"
+                android:layout_height="@dimen/px_46"
+                android:layout_below="@id/ll_user"
+                android:layout_marginLeft="@dimen/px_36"
+                android:layout_marginTop="@dimen/px_24"
+                android:layout_toRightOf="@id/user_head_image"
+                android:background="@drawable/arrive_bg"
+                android:text="打卡"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size18"
+                android:gravity="center"
+                android:onClick="@{()->callBack.changeWorkStatus()}"
+                />-->
         </RelativeLayout>
 
         <LinearLayout

@@ -104,5 +104,10 @@ class URLs {
 
         //根据房产ID来查询用户
         const val URL_USERINFO_BY_HOUSE_ID="/mdm/api/mdm/v1/houseClientRef/getListByHouseId"
+
+        //报修上门
+        const val URL_ARRIVE="/workOrder/workOrder/customerRepair/v1/sendSmCode?id="
+        //报修上门码校验
+        const val URL_ARRIVE_CHECK="/workOrder/workOrder/customerRepair/v1/checkSmCode"
     }
 }

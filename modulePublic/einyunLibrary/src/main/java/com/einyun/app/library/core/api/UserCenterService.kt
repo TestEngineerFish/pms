@@ -6,6 +6,7 @@ import com.einyun.app.base.paging.bean.PageResult
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.HouseModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel
 import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import io.reactivex.Flowable
@@ -45,8 +46,8 @@ interface UserCenterService : EinyunService {
         userId: String,
         userName: String,
         status: String,
-        callBack: CallBack<String>
-    ): LiveData<String>
+        callBack: CallBack<List<WorkStatusModel>>
+    ): LiveData<List<WorkStatusModel>>
 
     fun searchUserByCondition(
         request: SearchUserRequest,

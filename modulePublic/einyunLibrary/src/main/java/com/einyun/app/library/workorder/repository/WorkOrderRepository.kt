@@ -21,6 +21,8 @@ import com.einyun.app.library.workorder.net.request.*
 import com.einyun.app.library.workorder.net.request.ComplainAppendRequest
 import com.einyun.app.library.workorder.net.request.CreateClientEnquiryOrderRequest
 import com.einyun.app.library.workorder.net.request.*
+import com.einyun.app.library.workorder.net.response.ArriveCheckResponse
+import com.einyun.app.library.workorder.net.response.ArriveCodeResponse
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import retrofit2.http.Url
 
@@ -482,6 +484,43 @@ class WorkOrderRepository : WorkOrderService {
             })
         return liveData
     }
+
+    override fun getArriveCode(
+        url: String,
+        callBack: CallBack<ArriveCodeResponse>
+    ): LiveData<ArriveCodeResponse> {
+        var liveData = MutableLiveData<ArriveCodeResponse>()
+        serviceApi?.getArriveCode(URLs.URL_ARRIVE+url)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    callBack.call(it)
+                    liveData.postValue(it)
+                }else{
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData    }
+
+    override fun checkArriveCode(
+        id: String,
+        code: String,
+        callBack: CallBack<ArriveCheckResponse>
+    ): LiveData<ArriveCheckResponse> {
+        var liveData = MutableLiveData<ArriveCheckResponse>()
+        serviceApi?.checkArriveCode(id,code)?.compose(RxSchedulers.inIoMain())
+            ?.subscribe({
+                if (it.isState){
+                    callBack.call(it)
+                    liveData.postValue(it)
+                }else{
+                    callBack.onFaild(EinyunHttpException(it))
+                }
+            }, {
+                callBack.onFaild(it)
+            })
+        return liveData       }
 
     /**
      * 启动投诉流程

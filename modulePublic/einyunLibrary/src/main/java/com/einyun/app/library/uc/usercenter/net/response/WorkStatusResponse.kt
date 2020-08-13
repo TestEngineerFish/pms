@@ -2,6 +2,7 @@ package com.einyun.app.library.uc.usercenter.net.response
 
 import com.einyun.app.base.http.BaseResponse
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel
 
 /**
  *
@@ -16,5 +17,5 @@ import com.einyun.app.library.uc.usercenter.model.OrgModel
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class WorkStatusResponse: BaseResponse<String>() {
+ class WorkStatusResponse: BaseResponse<List<WorkStatusModel>>() {
 }

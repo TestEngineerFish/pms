@@ -52,7 +52,65 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/pd_view" />
 
+        <LinearLayout
+            style="@style/ll_create_order"
+            android:layout_marginLeft="@dimen/px_20"
+            android:paddingLeft="@dimen/px_0"
+            >
 
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="是否上门"
+                android:layout_weight="0"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor"/>
+            <Button
+                android:id="@+id/arrive_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:background="@drawable/arrive_bg"
+                android:textColor="@color/white"
+                android:text="上门"/>
+            <Button
+                android:id="@+id/send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:visibility="gone"
+                android:background="@drawable/send_bg"
+                android:textColor="@color/white"
+                android:text="已发送"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/arriveCode_layout"
+            style="@style/ll_create_order"
+            android:layout_marginLeft="@dimen/px_20"
+            android:paddingLeft="@dimen/px_0"
+            android:visibility="gone"
+            >
+
+            <TextView
+                style="@style/tv_create_order_name"
+                android:text="验证码"
+                android:layout_weight="0"
+                android:textStyle="normal"
+                android:textColor="@color/blackTextColor"/>
+            <EditText
+                android:id="@+id/check_edt"
+                android:layout_width="@dimen/px_200"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_gravity="center_vertical"/>
+            <Button
+                android:id="@+id/check_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_60"
+                android:layout_marginLeft="@dimen/px_30"
+                android:background="@drawable/arrive_bg"
+                android:textColor="@color/white"
+                android:text="校验"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/repair_select_people"
             style="@style/ll_create_order"

@@ -118,9 +118,11 @@
                 android:textSize="15sp" />
         </RelativeLayout>
 
-        <View style="@style/base_underline" />
+        <View style="@style/base_underline"
+            android:visibility="gone"/>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/tv_privacy"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_100"
@@ -142,8 +144,10 @@
                 style="@style/tv_create_order_right_arrow"
                 android:layout_marginRight="15dp" />
         </LinearLayout>
-        <View style="@style/base_underline" />
+        <View style="@style/base_underline"
+            android:visibility="gone"/>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/tv_user_agreement"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_100"

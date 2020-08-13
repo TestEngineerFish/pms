@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion deps.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.einyun.app.pms" //property management system
+        applicationId "com.app.sf" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 2303
-        versionName "2.3.03"
+        versionCode 100
+        versionName "1.0.0"
         multiDexEnabled true
         flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,10 +39,10 @@ android {
 
     signingConfigs {
         release  {
-            keyAlias 'shimaoapp'
-            keyPassword '123456'
-            storeFile file("../cert.jks")
-            storePassword '123456'
+            keyAlias 'sf'
+            keyPassword 'sf123456'
+            storeFile file("../sf.keystore")
+            storePassword 'sf123456'
         }
     }
     buildTypes {
@@ -89,7 +89,7 @@ android {
         variant.outputs.all {
             def createTime = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
 //            outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${createTime}.apk"
-            outputFileName = "Einyun_${defaultConfig.versionName}_${variant.buildType.name}_${variant.productFlavors[0].name}_${createTime}.apk"
+            outputFileName = "Sf_${defaultConfig.versionName}_${variant.buildType.name}.apk"
         }
     }
 

@@ -256,4 +256,16 @@ interface WorkOrderServiceApi {
 
     @GET(URLs.URL_USERINFO_BY_HOUSE_ID)
     fun getUserInfoByHouseId(@retrofit2.http.Query("houseId") houseId:String):Flowable<BaseResponse<List<UserInfoByHouseIdModel>>>
+
+    /**
+     * 发送上门验证码
+     * */
+    @GET
+    fun getArriveCode(@Url url: String):Flowable<ArriveCodeResponse>
+
+    /**
+     * 上门码校验
+     * */
+    @GET(URLs.URL_ARRIVE_CHECK)
+    fun checkArriveCode(@retrofit2.http.Query("id") id: String,@retrofit2.http.Query("code") code: String):Flowable<ArriveCheckResponse>
 }

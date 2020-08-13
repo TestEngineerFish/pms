@@ -11,6 +11,7 @@ import com.einyun.app.library.core.net.EinyunHttpService
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.HouseModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel
 import com.einyun.app.library.uc.usercenter.net.URLs
 import com.einyun.app.library.uc.usercenter.net.UserCenterServiceApi
 import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
@@ -110,8 +111,8 @@ class UserCenterRepository() : UserCenterService {
                     liveData.postValue(response.data)
                 } else {
                     if ("-1".equals(response.code)) {
-                        callBack.call("1")
-                        liveData.postValue("1")
+//                        callBack.call("1")
+//                        liveData.postValue("1")
                     }
                 }
             }, { error -> callBack.onFaild(error) })
@@ -122,14 +123,14 @@ class UserCenterRepository() : UserCenterService {
         userId: String,
         userName: String,
         status: String,
-        callBack: CallBack<String>
-    ): LiveData<String> {
-        val liveData = MutableLiveData<String>()
+        callBack: CallBack<List<WorkStatusModel>>
+    ): LiveData<List<WorkStatusModel>> {
+        val liveData = MutableLiveData<List<WorkStatusModel>>()
         serviceApi?.updateWorkStatus(userId, userName, status)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState()) {
-                    callBack.call(response.value)
-                    liveData.postValue(response.value)
+                    callBack.call(response.data)
+                    liveData.postValue(response.data)
                 }
             }, { error -> callBack.onFaild(error) })
         return liveData

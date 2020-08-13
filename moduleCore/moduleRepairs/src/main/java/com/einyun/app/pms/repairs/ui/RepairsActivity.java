@@ -59,9 +59,9 @@ public class RepairsActivity extends BaseHeadViewModelActivity<RepairsActivityBi
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
         setHeadTitle(R.string.text_work_repair);
-        mTitles = new String[]{getResources().getString(R.string.text_grab_order), getResources().getString(R.string.text_wait_follow), getResources().getString(R.string.text_wait_feedback), getResources().getString(R.string.text_already_follow), getResources().getString(R.string.text_already_done), getResources().getString(R.string.text_copy_me)};
+        mTitles = new String[]{ getResources().getString(R.string.text_wait_follow), getResources().getString(R.string.text_wait_feedback), getResources().getString(R.string.text_already_follow), getResources().getString(R.string.text_already_done), getResources().getString(R.string.text_copy_me)};
         fragments = new ArrayList<>();
-        String fragmentTags[] = new String[]{FRAGMENT_REPAIR_GRAB, FRAGMENT_REPAIR_WAIT_FOLLOW, FRAGMENT_REPAIR_WAIT_FEED, FRAGMENT_REPAIR_ALREADY_FOLLOW, FRAGMENT_REPAIR_ALREDY_DONE, FRAGMENT_REPAIR_COPY_ME};
+        String fragmentTags[] = new String[]{FRAGMENT_REPAIR_WAIT_FOLLOW, FRAGMENT_REPAIR_WAIT_FEED, FRAGMENT_REPAIR_ALREADY_FOLLOW, FRAGMENT_REPAIR_ALREDY_DONE, FRAGMENT_REPAIR_COPY_ME};
         for (int i = 0; i < mTitles.length; i++) {
             Bundle bundle = new Bundle();
             bundle.putString(RouteKey.KEY_FRAGEMNT_TAG, fragmentTags[i]);

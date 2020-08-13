@@ -21,6 +21,8 @@ import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
 import com.einyun.app.library.workorder.net.request.*
+import com.einyun.app.library.workorder.net.response.ArriveCheckResponse
+import com.einyun.app.library.workorder.net.response.ArriveCodeResponse
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 
 /**
@@ -43,6 +45,24 @@ class WorkOrderServiceImpl : WorkOrderService {
     ): LiveData<Boolean> {
         return proxy.appendComplain(
             request,
+            callBack
+        )
+    }
+
+    override fun getArriveCode(
+        url: String,
+        callBack: CallBack<ArriveCodeResponse>
+    ): LiveData<ArriveCodeResponse> {
+        return proxy.getArriveCode(url,
+            callBack
+        )        }
+
+    override fun checkArriveCode(
+        id: String,
+        code: String,
+        callBack: CallBack<ArriveCheckResponse>
+    ): LiveData<ArriveCheckResponse> {
+        return proxy.checkArriveCode(id,code,
             callBack
         )
     }

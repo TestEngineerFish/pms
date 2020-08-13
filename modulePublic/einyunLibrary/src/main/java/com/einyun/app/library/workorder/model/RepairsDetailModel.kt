@@ -332,7 +332,10 @@ class RepairsDetailModel {
             var handle_attach: Any? = null
             var initData: InitDataBean? = null
             var sub_repair_materials: List<InitDataBean.RepairMaterialsBean>? = null
-
+            var sm_flag: String? = null
+            var sm_time: String? = null
+            var sm_code: String? = null
+            var sm_sendflag: String? = null
             class InitDataBean {
                 /**
                  * repair_materials : {"MAKTX":"","quantity":"","LABST":"","total_price":"","LGORT":"","WERKS":"","LGOBE":"","MEINS":"","NAME1":"","NETPR":"","price":"","name":"","MATKL":"","MATNR":""}

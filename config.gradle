@@ -19,7 +19,7 @@
  * Shared file between builds so that they can all use the same dependencies and
  * maven repositories.
  **/
-ext.app_name="一应未来"
+ext.app_name="物业运营"
 ext.deps = [:]
 def versions = [:]
 versions.android_gradle_plugin = '3.5.2'
@@ -303,7 +303,7 @@ def fee_server =[:]//收费 地址
 def fee_middle_server =[:]//收费uat含端口10018&&release切换url
 
 //开发调式环境
-server.debug = "\"https://testbms.einyun.com\""
+server.debug = "\"http://172.16.0.74/\""
 fee_server.debug = "\"https://testbms.einyun.com\""
 fee_middle_server.debug = "\"/fee-center-api\""
 

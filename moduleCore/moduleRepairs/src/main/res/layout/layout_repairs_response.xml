@@ -74,12 +74,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/px_90"
+                android:layout_marginLeft="@dimen/px_20"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rb_normal"
                     android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="@dimen/px_50"
                     android:background="@drawable/radio_group_order_own"
                     android:button="@null"
@@ -88,13 +89,14 @@
                     android:checked="true"
                     android:text="工程维保"
                     android:textColor="@drawable/select_radio_button_text"
-                    android:paddingLeft="@dimen/px_20"
-                    android:paddingRight="@dimen/px_20"
-                    android:textSize="@dimen/font_size13" />
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10"
+                    android:textSize="@dimen/font_size11" />
 
                 <RadioButton
                     android:id="@+id/rb_general"
                     android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="@dimen/px_50"
                     android:layout_marginLeft="@dimen/px_20"
                     android:background="@drawable/radio_group_order_own"
@@ -102,10 +104,25 @@
                     android:gravity="center"
                     android:tag="2"
                     android:text="地产维保"
-                    android:paddingLeft="@dimen/px_20"
-                    android:paddingRight="@dimen/px_20"
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10"
                     android:textColor="@drawable/select_radio_button_text"
-                    android:textSize="@dimen/font_size13" />
+                    android:textSize="@dimen/font_size11" />
+                <RadioButton
+                    android:id="@+id/rb_project"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_50"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:background="@drawable/radio_group_order_own"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:tag="3"
+                    android:text="工程改造"
+                    android:paddingLeft="@dimen/px_10"
+                    android:paddingRight="@dimen/px_10"
+                    android:textColor="@drawable/select_radio_button_text"
+                    android:textSize="@dimen/font_size11" />
             </RadioGroup>
         </LinearLayout>
 

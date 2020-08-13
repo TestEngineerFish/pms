@@ -106,7 +106,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
          * */
         viewModel.queryApprovalBasicInfo(mProinsId).observe(this, model -> {
             urlxcgdGetInstBOModule = model;
-            if (urlxcgdGetInstBOModule==null||model.getData().getWorkorder_audit_model()==null) {
+            if (urlxcgdGetInstBOModule == null || model.getData().getWorkorder_audit_model() == null) {
                 return;
             }
 
@@ -118,14 +118,14 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
              * */
             viewModel.queryApprovalDetialInfo(model.getData().getWorkorder_audit_model().getId_()).observe(this, model2 -> {
                 List<ApprovalDetailInfoBean.RowsBean> rows = model2.getRows();
-                if (rows!=null) {
+                if (rows != null) {
                     ApprovalDetailInfoBean.RowsBean rowsBean = new ApprovalDetailInfoBean.RowsBean();
                     rowsBean.setAuditor(urlxcgdGetInstBOModule.getData().getWorkorder_audit_model().getApply_user());
                     rowsBean.setApprovalRole(getString(R.string.tv_for_apply));
                     rowsBean.setComment("");
                     rowsBean.setAudit_date(TimeUtil.getTimeMillis(model.getData().getWorkorder_audit_model().getApply_date()));
-                    rows.add(rows.size(),rowsBean);
-                    ApprovalInfoDetailAdapter approvalInfoDetailAdapter = new ApprovalInfoDetailAdapter(this,rows);
+                    rows.add(rows.size(), rowsBean);
+                    ApprovalInfoDetailAdapter approvalInfoDetailAdapter = new ApprovalInfoDetailAdapter(this, rows);
                     binding.listview.setAdapter(approvalInfoDetailAdapter);
                 }
 
@@ -133,21 +133,23 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         });
 
     }
+
     /*
-    * 审批通过按钮
-    * */
+     * 审批通过按钮
+     * */
     public void onPassClick() {
         if (IsFastClick.isFastDoubleClick()) {
             Log.e("sumitApproval", "onPassClick: ");
             sumit(ApprovalDataKey.APPROVAL_SUMIT_AGREE);
         }
     }
+
     /**
-    * 点击工单编码跳转工单详情
-    * */
+     * 点击工单编码跳转工单详情
+     */
     public void goToOrderDetailClick() {
         if (IsFastClick.isFastDoubleClick()) {
-           //根据不同类型得单子分别跳转不同的详情界面
+            //根据不同类型得单子分别跳转不同的详情界面
             UrlxcgdGetInstBOModule.DataBean.WorkorderAuditModelBean workorder_audit_model = urlxcgdGetInstBOModule.getData().getWorkorder_audit_model();
             switch (workorder_audit_model.getAudit_sub_type()) {
                 case ApprovalDataKey.CREATE_WORK_PLAN://计划工单
@@ -166,23 +168,23 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 case ApprovalDataKey.CREATE_PATROL_PLAN:
                 case ApprovalDataKey.FORCE_CLOSE_PATROL:
                 case ApprovalDataKey.UPDATE_PATROL_PLAN:
-                    viewModel.getPatrolType(workorder_audit_model.getApply_instance_id()).observe(this,model->{
+                    viewModel.getPatrolType(workorder_audit_model.getApply_instance_id()).observe(this, model -> {
 
-                        if (model.getData().getZyxcgd().getF_patrol_line_id()==null) {//巡查
+                        if (model.getData().getZyxcgd().getF_patrol_line_id() == null) {//巡查
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_DETIAL)
-                                    .withString(RouteKey.KEY_TASK_ID,"")
-                                    .withString(RouteKey.KEY_ORDER_ID,model.getData().getZyxcgd().getId_())
+                                    .withString(RouteKey.KEY_TASK_ID, "")
+                                    .withString(RouteKey.KEY_ORDER_ID, model.getData().getZyxcgd().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-                                    .withString(RouteKey.KEY_TASK_NODE_ID,"")
-                                    .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
+                                    .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                                    .withString(RouteKey.KEY_PRO_INS_ID, workorder_audit_model.getApply_instance_id())
                                     .navigation();
-                        }else {//巡更
+                        } else {//巡更
                             ARouter.getInstance().build(RouterUtils.ACTIVITY_PATROL_TIME_DETIAL)
-                                    .withString(RouteKey.KEY_TASK_ID,"")
-                                    .withString(RouteKey.KEY_ORDER_ID,model.getData().getZyxcgd().getId_())
+                                    .withString(RouteKey.KEY_TASK_ID, "")
+                                    .withString(RouteKey.KEY_ORDER_ID, model.getData().getZyxcgd().getId_())
                                     .withInt(RouteKey.KEY_LIST_TYPE, ListType.DONE.getType())
-                                    .withString(RouteKey.KEY_TASK_NODE_ID,"UserTask1")
-                                    .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
+                                    .withString(RouteKey.KEY_TASK_NODE_ID, "UserTask1")
+                                    .withString(RouteKey.KEY_PRO_INS_ID, workorder_audit_model.getApply_instance_id())
                                     .navigation();
 
                         }
@@ -203,9 +205,9 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                 case ApprovalDataKey.FORCE_CLOSE_ENQUIRY://问询
                     ARouter.getInstance()
                             .build(RouterUtils.ACTIVITY_INQUIRIES_MSG_DETAIL)
-                            .withString(RouteKey.FRAGMENT_TAG,FRAGMENT_TRANSFERRED_TO)
-                            .withString(RouteKey.KEY_TASK_ID,"")
-                            .withString(RouteKey.KEY_PRO_INS_ID,workorder_audit_model.getApply_instance_id())
+                            .withString(RouteKey.FRAGMENT_TAG, FRAGMENT_TRANSFERRED_TO)
+                            .withString(RouteKey.KEY_TASK_ID, "")
+                            .withString(RouteKey.KEY_PRO_INS_ID, workorder_audit_model.getApply_instance_id())
                             .navigation();
                     break;
                 case ApprovalDataKey.FORCE_CLOSE_COMPLAIN://投诉
@@ -220,23 +222,24 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                     break;
                 case ApprovalDataKey.FORCE_CLOSE_REPAIR://报修
                 case ApprovalDataKey.POSTPONED_REPAIR:
-                        ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
-                                .withString(RouteKey.KEY_ORDER_ID, workorder_audit_model.getId_())
-                                .withString(RouteKey.KEY_TASK_NODE_ID, "")
-                                .withString(RouteKey.KEY_TASK_ID, "")
-                                .withString(RouteKey.KEY_PRO_INS_ID, workorder_audit_model.getApply_instance_id())
-                                .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
-                                .navigation();
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
+                            .withString(RouteKey.KEY_ORDER_ID, workorder_audit_model.getId_())
+                            .withString(RouteKey.KEY_TASK_NODE_ID, "")
+                            .withString(RouteKey.KEY_TASK_ID, "")
+                            .withString(RouteKey.KEY_PRO_INS_ID, workorder_audit_model.getApply_instance_id())
+                            .withString(RouteKey.KEY_LIST_TYPE, RouteKey.FRAGMENT_REPAIR_ALREADY_FOLLOW)
+                            .navigation();
                     break;
 
             }
 
         }
     }
+
     /*
      * 审批不通过按钮
      * */
-    public  void onRejectClick(){
+    public void onRejectClick() {
 //        new DoubleChoiceDialog(this,"test","teast","left","right",
 //                view -> {},view -> {}).show();
         if (IsFastClick.isFastDoubleClick()) {
@@ -244,19 +247,20 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             sumit(ApprovalDataKey.APPROVAL_SUMIT_REJECT);
         }
     }
+
     /**
-    * 提交审批
-    * */
+     * 提交审批
+     */
     private void sumit(String actionName) {
 
-        String comment=binding.limitInput.getString().trim();
+        String comment = binding.limitInput.getString().trim();
         if (ApprovalDataKey.APPROVAL_SUMIT_REJECT.equals(actionName)) {
             if (comment.isEmpty()) {
                 ToastUtil.show(getApplicationContext(), R.string.tv_empty_sug);
                 return;
             }
         }
-        if (approvalFormdata==null) {
+        if (approvalFormdata == null) {
             return;
         }
         //获取请求参数
@@ -264,19 +268,19 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
         /**
          *提交审批
          * */
-        viewModel.sumitApproval((ApprovalSumitBean) approve.get(ApprovalDataKey.APPROVAL_SUMIT_PARMS),(String) approve.get(ApprovalDataKey.APPROVAL_SUMIT_URL)).observe(this, model -> {
-            Logger.d("sumitApproval-----model="+model);
+        viewModel.sumitApproval((ApprovalSumitBean) approve.get(ApprovalDataKey.APPROVAL_SUMIT_PARMS), (String) approve.get(ApprovalDataKey.APPROVAL_SUMIT_URL)).observe(this, model -> {
+            Logger.d("sumitApproval-----model=" + model);
             if (model) {
 //                ToastUtil.show(getApplicationContext(), R.string.tv_had_pass);
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
                 finish();
-            }else {
+            } else {
                 ToastUtil.show(getApplicationContext(), R.string.tv_no_pass);
                 LiveEventBus.get(ApprovalDataKey.APPROVAL_FRAGMENT_REFRESH, Boolean.class).post(true);
             }
             HashMap<String, String> map = new HashMap<>();
             map.put("user_name", UserUtil.getUserName());
-            MobclickAgent.onEvent(this, CustomEventTypeEnum.APPROVAL_SUBMIT.getTypeName(),map);
+            MobclickAgent.onEvent(this, CustomEventTypeEnum.APPROVAL_SUBMIT.getTypeName(), map);
         });
     }
 
@@ -287,15 +291,15 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
 
             binding.listview.setVisibility(View.GONE);//
-            if (userAudioState==null) {
+            if (userAudioState == null) {
                 binding.rlApprovalSug.setVisibility(View.VISIBLE);
                 binding.limitInput.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 binding.llPass.setVisibility(View.GONE);
             }
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_evaluate_color));
             binding.tvApprovalState.setText(getString(R.string.tv_wait_approval));
-            if (tabId==2) {
+            if (tabId == 2) {
                 binding.cdLimit.setVisibility(View.GONE);
             }
         } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_HAD_PASS)) {//通过
@@ -319,7 +323,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvApprovalState.setTextColor(getResources().getColor(R.color.redTextColor));
         } else if (workorder_audit_model.getStatus().equals(ApprovalDataKey.APPROVAL_STATE_IN_APPROVAL)) {//审批中
 //                binding.tvApprovalState.setBackgroundResource(R.drawable.iv_wait_approval);
-            if (userAudioState==null) {//自己没有审批过
+            if (userAudioState == null) {//自己没有审批过
 
                 binding.listview.setVisibility(View.GONE);//
                 binding.rlApprovalSug.setVisibility(View.VISIBLE);
@@ -327,7 +331,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
 
                 binding.tvApprovalState.setText(getString(R.string.tv_approvaling));
                 binding.tvApprovalState.setTextColor(getResources().getColor(R.color.repair_detail_send_color));
-            }else {//自己审批过 显示审批列表 UserAuditStatus 不为空
+            } else {//自己审批过 显示审批列表 UserAuditStatus 不为空
                 binding.listview.setVisibility(View.VISIBLE);//显示审批信息列表
                 binding.rlApprovalSug.setVisibility(View.GONE);
                 binding.limitInput.setVisibility(View.GONE);
@@ -348,16 +352,16 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             }
         }
         /**
-        * 基本信息
-        * */
+         * 基本信息
+         * */
         binding.tvApprovalNum.setText(workorder_audit_model.getAudit_code());
         binding.tvIntallment.setText(workorder_audit_model.getDivide_name());
         binding.tvApplyPerson.setText(workorder_audit_model.getApply_user());
         binding.tvApplyTime.setText(workorder_audit_model.getApply_date());
-        binding.tvApprovalType.setText(viewModel.getTypeValue(workorder_audit_model.getAudit_type(),workorder_audit_model.getAudit_sub_type()));
+        binding.tvApprovalType.setText(viewModel.getTypeValue(workorder_audit_model.getAudit_type(), workorder_audit_model.getAudit_sub_type()));
         /**
-        * 申请信息
-        * */
+         * 申请信息
+         * */
         String type = workorder_audit_model.getAudit_type();
         String subType = workorder_audit_model.getAudit_sub_type();
 
@@ -376,17 +380,17 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvCreateResourceClassification.setText(approvalFormdata.getResourceClassificationName());//资源分类
             binding.tvCreateWorkOrderRespone.setText(approvalFormdata.getPrincipal());//工单负责职位
             String effectivePeriod = approvalFormdata.getEffectivePeriod();
-            if (effectivePeriod!=null) {
+            if (effectivePeriod != null) {
                 String[] split = effectivePeriod.split("----");
                 binding.tvCreateApplyStartTime.setText(split[0]);//申请开始时间
                 binding.tvCreateApplyEndTime.setText(split[1]);//申请结束时间
             }
-            if (approvalFormdata.getFrequency()!=null&&approvalFormdata.getFrequency().size()>0) {
+            if (approvalFormdata.getFrequency() != null && approvalFormdata.getFrequency().size() > 0) {
                 binding.tvCreateExecutionFrequency.setText(approvalFormdata.getFrequency().get(0));//执行频率
             }
 
 
-        }else if ("INNER_AUDIT_POSTPONED".equals(type)||"INNER_AUDIT_FORCE_CLOSE".equals(type)){//工单延期 强制闭单
+        } else if ("INNER_AUDIT_POSTPONED".equals(type) || "INNER_AUDIT_FORCE_CLOSE".equals(type)) {//工单延期 强制闭单
             if ("INNER_AUDIT_FORCE_CLOSE".equals(type)) {
 //                binding.llGoneTime.setVisibility(View.GONE);//强制闭单没有时间信息
                 binding.rlCreateTime.setVisibility(View.GONE);
@@ -414,7 +418,7 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
                         binding.rlReason2.setVisibility(View.VISIBLE);
                         binding.tvApplyNoWork.setText(approvalFormdata.getSetToInvalid());
                         binding.tvApplyNoWorkReason.setText(approvalFormdata.getInvalidReasonCategory());
-                    }else {
+                    } else {
                         binding.rlReason1.setVisibility(View.GONE);
                         binding.rlReason2.setVisibility(View.GONE);
                     }
@@ -439,13 +443,13 @@ public class ApprovalDetailViewModuleActivity extends BaseHeadViewModelActivity<
             binding.tvCloseOrderResponer.setText(approvalFormdata.getProcName());//工单负责人
             binding.tvCloseCreateTime.setText(approvalFormdata.getCreationTime());//工单创建时间
             binding.tvCloseEndTime.setText(approvalFormdata.getDeadlineTime());//工单截止时间
-            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays()+"天");//延期天数
+            binding.tvCloseDelayDay.setText(approvalFormdata.getExtensionDays() + "天");//延期天数
             binding.tvCloseApplyReason.setText(approvalFormdata.getApplicationDescription());//申请原因
-
+            binding.tvWorkAsc.setText(approvalFormdata.getWork_ascription());//工单归属
 
         }
 
-        if (tabId==2) {//我发起的tab 不能操作
+        if (tabId == 2) {//我发起的tab 不能操作
             binding.llPass.setVisibility(View.GONE);
 //            binding.cdLimit.setVisibility(View.GONE);
         }

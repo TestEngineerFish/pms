@@ -17,4 +17,6 @@ class WorkOrderData {
      val rate: RateModel? = null
      val workOrder: List<WorkOrder?>? = null
      val lineOrder: List<LineOrder?>? = null
+     val lineatitude: List<LineOrder?>? = null
+     val lineQuality: List<LineOrder?>? = null
 }

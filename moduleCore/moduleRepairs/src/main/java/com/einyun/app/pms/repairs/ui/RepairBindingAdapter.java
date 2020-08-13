@@ -100,6 +100,22 @@ public class RepairBindingAdapter {
         }
 
     }
+
+    @BindingAdapter("ifSm")
+    public static void ifSm(TextView view, String value) {
+        if (value == null) {
+            view.setText(R.string.no);
+            return;
+        }
+        if (value.equals("1")) {
+            view.setText(R.string.yes);
+            return;
+        }
+        if (value.equals("0")) {
+            view.setText(R.string.no);
+        }
+
+    }
     @BindingAdapter("asses")
     public static void asses(TextView view, String value) {
         if (value == null) {

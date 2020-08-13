@@ -7,6 +7,7 @@ import com.einyun.app.library.portal.dictdata.net.URLS
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.HouseModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel
 import com.einyun.app.library.uc.usercenter.net.request.OrgRequest
 import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
 import com.einyun.app.library.uc.usercenter.net.response.OrgListResponse
@@ -37,10 +38,10 @@ interface UserCenterServiceApi {
     fun userCenterUserList(@Url url: String): Flowable<OrgListResponse>
 
     @GET(URLs.URL_GET_WORK_STATUS)
-    fun getWorkStatus(@Query("userId") userId: String): Flowable<WorkStatusResponse>
+    fun getWorkStatus(@Query("userId") userId: String): Flowable<BaseResponse<String>>
 
     @GET(URLs.URL_UPDATE_WORK_STATUS)
-    fun updateWorkStatus(@Query("userId") userId: String, @Query("account") account: String, @Query("status") status: String): Flowable<WorkStatusResponse>
+    fun updateWorkStatus(@Query("userId") userId: String, @Query("account") account: String, @Query("status") status: String): Flowable<BaseResponse<List<WorkStatusModel>>>
 
     @GET(URLs.URL_GET_DISPOSE_PERSON)
     fun getDisposePerson(@Query("orgId") orgId: String, @Query("dimCode") dimCode: String): Flowable<BaseResponse<List<OrgModel>>>

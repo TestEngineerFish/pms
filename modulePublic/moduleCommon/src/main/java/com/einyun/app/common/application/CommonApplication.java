@@ -117,7 +117,7 @@ public class CommonApplication extends BasicApplication {
 
 
     private void initUmeng() {
-        UMConfigure.init(this, "5ddf3f8a0cafb2f7d700066f", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5f33450bb4b08b653e936773", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
 //        UMConfigure.init(this, "5ddf3f8a0cafb2f7d700066f", BuildConfig.FLAVOR, UMConfigure.DEVICE_TYPE_PHONE, null);
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.LEGACY_MANUAL);
         if (com.einyun.app.base.BuildConfig.DEBUG) {

@@ -22,6 +22,8 @@ import com.einyun.app.library.workorder.model.BlocklogNums
 import com.einyun.app.library.workorder.model.DoorResult
 import com.einyun.app.library.workorder.model.TypeAndLine
 import com.einyun.app.library.workorder.net.request.*
+import com.einyun.app.library.workorder.net.response.ArriveCheckResponse
+import com.einyun.app.library.workorder.net.response.ArriveCodeResponse
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
 import com.einyun.app.library.workorder.repository.WorkOrderRepository
 
@@ -49,6 +51,21 @@ class WorkOrderServiceImplProxy : WorkOrderService {
         )!!
     }
 
+    override fun getArriveCode(
+        url: String,
+        callBack: CallBack<ArriveCodeResponse>
+    ): LiveData<ArriveCodeResponse> {
+        return instance?.getArriveCode(url, callBack)!!
+    }
+
+    override fun checkArriveCode(
+        id: String,
+        code: String,
+        callBack: CallBack<ArriveCheckResponse>
+    ): LiveData<ArriveCheckResponse> {
+        return instance?.checkArriveCode(id,code, callBack)!!    }
+
+
     override fun getUserInfoByHouseId(
         houseId: String,
         callBack: CallBack<List<UserInfoByHouseIdModel>>
@@ -65,14 +82,15 @@ class WorkOrderServiceImplProxy : WorkOrderService {
     override fun getAreaType(callBack: CallBack<AreaModel>): LiveData<AreaModel> {
         return instance?.getAreaType(
             callBack
-        )!!    }
+        )!!
+    }
 
     override fun getRepairWaitFeed(request: RepairsPageRequest, callBack: CallBack<RepairsPage>) {
         return instance?.getRepairWaitFollow(
             request,
             callBack
         )!!
-       }
+    }
 
     override fun complainDetailSave(
         request: ComplainDetailCompleteRequest,
@@ -108,7 +126,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
         callBack: CallBack<ComplainModelPageResult>
     ): LiveData<ComplainModelPageResult> {
         return instance?.complainWorkListdPage(
-            pageBean,mobile,
+            pageBean, mobile,
             callBack
         )!!
     }
@@ -120,7 +138,8 @@ class WorkOrderServiceImplProxy : WorkOrderService {
         return instance?.saveHandler(
             request,
             callBack
-        )!!       }
+        )!!
+    }
 
     override fun repaireSend(
         request: RepairSendOrderRequest,
@@ -129,13 +148,18 @@ class WorkOrderServiceImplProxy : WorkOrderService {
         return instance?.repaireSend(
             request,
             callBack
-        )!!       }
+        )!!
+    }
 
-    override fun getRepairDetail(instId: String, callBack: CallBack<RepairsDetailModel>): LiveData<RepairsDetailModel> {
+    override fun getRepairDetail(
+        instId: String,
+        callBack: CallBack<RepairsDetailModel>
+    ): LiveData<RepairsDetailModel> {
         return instance?.getRepairDetail(
             instId,
             callBack
-        )!!    }
+        )!!
+    }
 
     override fun grabRepair(taskId: String, callBack: CallBack<Boolean>): LiveData<Boolean> {
         return instance?.grabRepair(
@@ -219,6 +243,7 @@ class WorkOrderServiceImplProxy : WorkOrderService {
     override fun typeAndLineList(callBack: CallBack<List<TypeAndLine>>): LiveData<List<TypeAndLine>> {
         return instance?.typeAndLineList(callBack)!!
     }
+
     override fun typeBigAndSmall(callBack: CallBack<TypeBigAndSmallModel>): LiveData<TypeBigAndSmallModel> {
         return instance?.typeBigAndSmall(callBack)!!
     }

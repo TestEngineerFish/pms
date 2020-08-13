@@ -6,6 +6,7 @@ import com.einyun.app.library.core.api.UserCenterService
 import com.einyun.app.library.uc.user.model.UserInfoModel
 import com.einyun.app.library.uc.usercenter.model.HouseModel
 import com.einyun.app.library.uc.usercenter.model.OrgModel
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel
 import com.einyun.app.library.uc.usercenter.net.request.SearchUserRequest
 import com.einyun.app.library.uc.usercenter.repository.UserCenterRepository
 import com.einyun.app.library.workorder.net.response.GetMappingByUserIdsResponse
@@ -61,8 +62,8 @@ class UserCenterServiceImplProxy : UserCenterService {
         userId: String,
         userName: String,
         status: String,
-        callBack: CallBack<String>
-    ): LiveData<String> {
+        callBack: CallBack<List<WorkStatusModel>>
+    ): LiveData<List<WorkStatusModel>> {
         return instance?.updateWorkStatus(userId, userName, status, callBack)!!
     }
 

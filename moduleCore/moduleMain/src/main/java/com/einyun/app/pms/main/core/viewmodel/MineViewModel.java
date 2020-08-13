@@ -17,6 +17,7 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.core.api.UserCenterService;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
+import com.einyun.app.library.uc.usercenter.model.WorkStatusModel;
 import com.einyun.app.pms.main.core.model.HasReadModel;
 import com.einyun.app.pms.main.core.model.LineListModel;
 import com.einyun.app.pms.main.core.model.ScanPatrolModel;
@@ -63,10 +64,10 @@ public class MineViewModel extends BasePageListViewModel<ScanResItemModel> imple
     }
 
     @Override
-    public LiveData<String> updateWorkState(String status) {
-        return userCenterService.updateWorkStatus(getUserId(), userModuleService.getUserName(), status, new CallBack<String>() {
+    public LiveData<List<WorkStatusModel>> updateWorkState(String status) {
+        return userCenterService.updateWorkStatus(getUserId(), userModuleService.getUserName(), status, new CallBack<List<WorkStatusModel>>() {
             @Override
-            public void call(String data) {
+            public void call(List<WorkStatusModel> data) {
 
             }
 

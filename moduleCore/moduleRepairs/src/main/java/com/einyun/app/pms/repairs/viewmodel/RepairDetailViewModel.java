@@ -27,10 +27,13 @@ import com.einyun.app.library.resource.workorder.model.DisttributeDetialModel;
 import com.einyun.app.library.resource.workorder.model.GetNodeIdModel;
 import com.einyun.app.library.resource.workorder.model.OrderListModel;
 import com.einyun.app.library.resource.workorder.net.request.GetNodeIdRequest;
+import com.einyun.app.library.workorder.model.ArriveCodeModel;
 import com.einyun.app.library.workorder.model.Door;
 import com.einyun.app.library.workorder.model.RepairsDetailModel;
 import com.einyun.app.library.workorder.net.request.RepairSendOrderRequest;
 import com.einyun.app.library.workorder.net.request.SaveHandleRequest;
+import com.einyun.app.library.workorder.net.response.ArriveCheckResponse;
+import com.einyun.app.library.workorder.net.response.ArriveCodeResponse;
 
 import java.util.List;
 
@@ -164,6 +167,9 @@ public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
         });
     }
     public MutableLiveData<GetNodeIdModel> getNodeIdModelMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<ArriveCodeResponse> getArriveCodeMultableLiveData = new MutableLiveData<>();
+    public MutableLiveData<ArriveCheckResponse> getArriveCheckMultableLiveData = new MutableLiveData<>();
+
     private String nodeId;
     /**
      * 获取组织架构 LiveData
@@ -204,5 +210,51 @@ public class RepairDetailViewModel extends BaseWorkOrderHandelViewModel {
         });
 
         return getNodeIdModelMutableLiveData;
+    }
+
+    /**
+     * 获取上门验证码 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<ArriveCodeResponse> getArriveCode(String orderId) {
+        showLoading();
+        workOrderService.getArriveCode(orderId, new CallBack<ArriveCodeResponse>() {
+            @Override
+            public void call(ArriveCodeResponse data) {
+                hideLoading();
+                getArriveCodeMultableLiveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return getArriveCodeMultableLiveData;
+    }
+
+    /**
+     * 校验上门验证码 LiveData
+     *
+     * @return LiveData
+     */
+    public MutableLiveData<ArriveCheckResponse> checkArriveCode(String orderId,String code) {
+        showLoading();
+        workOrderService.checkArriveCode(orderId,code, new CallBack<ArriveCheckResponse>() {
+            @Override
+            public void call(ArriveCheckResponse data) {
+                hideLoading();
+                getArriveCheckMultableLiveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+
+        return getArriveCheckMultableLiveData;
     }
 }

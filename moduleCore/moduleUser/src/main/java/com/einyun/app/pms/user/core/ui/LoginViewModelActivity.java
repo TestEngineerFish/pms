@@ -33,6 +33,7 @@ import com.einyun.app.common.BuildConfig;
 import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
@@ -95,7 +96,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         //根据编译类型展示切换环境控件
 //        showPicEv();
         //隐私页展示
-        viewModel.showPrivacy(this);
+//        viewModel.showPrivacy(this);
         binding.setUserModel(new UserModel("", "", "", ""));
         //本地用户信息展示
         viewModel.getLastUser().observe(this,
@@ -159,22 +160,6 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      * 设置事件监听
      */
     private void initEvent() {
-        binding.etOrgCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkData();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         binding.etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -220,7 +205,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     }
 
     private void checkData() {
-        if (StringUtil.isNullStr(binding.etOrgCode.getText().toString()) && StringUtil.isNullStr(binding.etUser.getText().toString())
+        if (StringUtil.isNullStr(binding.etUser.getText().toString())
                 && StringUtil.isNullStr(binding.etPassword.getText().toString())) {
             binding.btLogin.setEnabled(true);
         } else {
@@ -255,45 +240,48 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         if (!IsFastClick.isFastDoubleClick()) {
             return;
         }
-        viewModel.getTenantId(binding.etOrgCode.getText().toString().trim(), false).observe(this,
-                tenantModel -> {
+     /*   viewModel.getTenantId(binding.etOrgCode.getText().toString().trim(), false).observe(this,
+                tenantModel -> {*/
 //                    ToastUtil.show(this, "tentantId" + tenantModel.getId());
-                    UserModel model = binding.getUserModel();
-                    //判断用户名是否为空
+        CommonHttpService.getInstance().tenantId("-1");
+        SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, "-1");
+        SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_ID, "-1");
+        UserModel model = binding.getUserModel();
+                   /* //判断用户名是否为空
                     if (!StringUtil.isNullStr(binding.etOrgCode.getText().toString().trim())) {
                         ToastUtil.show(this, "请输入企业编码");
                         return;
-                    }
-                    //判断用户名是否为空
-                    if (!StringUtil.isNullStr(binding.etUser.getText().toString().trim())) {
-                        ToastUtil.show(this, R.string.login_username_null_tip);
-                        return;
-                    }
-                    //判断密码是否为空
-                    if (!StringUtil.isNullStr(model.getPassword())) {
-                        ToastUtil.show(this, R.string.login_password_null_tip);
-                        return;
-                    }
-                    viewModel.login(binding.etUser.getText().toString().trim(), model.getPassword(), true)
-                            .observe(LoginViewModelActivity.this,
-                                    user -> {
-                                        getPersonInfo(user.getAccount());
-                                        CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
-                                        SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
-                                        SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
-                                        SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, binding.etOrgCode.getText().toString());
-                                        if (StringUtil.isNullStr(path)) {
-                                            ARouter.getInstance()
-                                                    .build(path).with(getIntent().getExtras())
-                                                    .navigation();
-                                        } else {
-                                            ARouter.getInstance()
-                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                                    .navigation();
-                                        }
-                                        finish();
-                                    });
-                });
+                    }*/
+        //判断用户名是否为空
+        if (!StringUtil.isNullStr(binding.etUser.getText().toString().trim())) {
+            ToastUtil.show(this, R.string.login_username_null_tip);
+            return;
+        }
+        //判断密码是否为空
+        if (!StringUtil.isNullStr(model.getPassword())) {
+            ToastUtil.show(this, R.string.login_password_null_tip);
+            return;
+        }
+        viewModel.login(binding.etUser.getText().toString().trim(), model.getPassword(), true)
+                .observe(LoginViewModelActivity.this,
+                        user -> {
+                            getPersonInfo(user.getAccount());
+                            CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
+                            SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
+                            SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
+                            SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, binding.etOrgCode.getText().toString());
+                            if (StringUtil.isNullStr(path)) {
+                                ARouter.getInstance()
+                                        .build(path).with(getIntent().getExtras())
+                                        .navigation();
+                            } else {
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                        .navigation();
+                            }
+                            finish();
+                        });
+//                });
 
     }
 
@@ -341,31 +329,32 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             }
         });
     }
+
     //根据编译类型展示切换环境控件
-    private void showPicEv(){
+    private void showPicEv() {
         if (com.einyun.app.common.BuildConfig.BUILD_TYPE.equals("debug")) {
             binding.picEv.setVisibility(View.VISIBLE);
-            SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"debug");
+            SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "debug");
             binding.testEv.setChecked(true);
             binding.picEv.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId==R.id.test_ev){
-                        SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"debug");
+                    if (checkedId == R.id.test_ev) {
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "debug");
                     }
-                    if (checkedId==R.id.uat_ev){
-                        SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"uat");
+                    if (checkedId == R.id.uat_ev) {
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "uat");
                     }
-                    if (checkedId==R.id.release_ev){
-                        SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"release");
+                    if (checkedId == R.id.release_ev) {
+                        SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "release");
                     }
-                    EinyunSDK.Companion.init(CommonApplication.getInstance(), PicEvUtils.getBaseUrl((String)SPUtils.get(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"")));
+                    EinyunSDK.Companion.init(CommonApplication.getInstance(), PicEvUtils.getBaseUrl((String) SPUtils.get(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "")));
                 }
             });
-        }else if (com.einyun.app.common.BuildConfig.BUILD_TYPE.equals("uat")){
-            SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"uat");
-        }else {
-            SPUtils.put(CommonApplication.getInstance(),SPKey.SP_KEY_BUILD_TYPE,"release");
+        } else if (com.einyun.app.common.BuildConfig.BUILD_TYPE.equals("uat")) {
+            SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "uat");
+        } else {
+            SPUtils.put(CommonApplication.getInstance(), SPKey.SP_KEY_BUILD_TYPE, "release");
         }
     }
 

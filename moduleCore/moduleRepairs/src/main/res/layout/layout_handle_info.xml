@@ -11,8 +11,8 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="0dp"
-        style="@style/cardview_style">
+        style="@style/cardview_style"
+        app:cardCornerRadius="0dp">
 
         <LinearLayout
             android:id="@+id/panel_work_order_info"
@@ -59,6 +59,34 @@
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
+                    android:text="是否上门" />
+
+                <TextView
+                    android:id="@+id/if_sm"
+                    style="@style/work_order_detail_txt_right"
+                    app:ifSm="@{repairs.data.customer_repair_model.sm_flag}" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/work_order_detail_left_txt"
+                    android:text="上门时间" />
+
+                <TextView
+                    android:id="@+id/sm_time"
+                    style="@style/work_order_detail_txt_right"
+                    android:text="@{repairs.data.customer_repair_model.sm_time}" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/work_order_detail_ln"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/work_order_detail_left_txt"
                     android:text="是否有偿" />
 
                 <TextView
@@ -74,8 +102,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.handle_man_hour+@string/text_padding_empty}"
-                     />
+                    app:setText="@{repairs.data.customer_repair_model.handle_man_hour+@string/text_padding_empty}" />
             </LinearLayout>
 
             <View
@@ -107,48 +134,49 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="材料名称"
-                    android:textColor="@color/material_txt_color" />
+                    android:textColor="@color/material_txt_color"
+                    android:textSize="@dimen/font_size13" />
 
                 <TextView
-                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="单价(元)"
-                    android:textColor="@color/material_txt_color" />
+                    android:textColor="@color/material_txt_color"
+                    android:textSize="@dimen/font_size13" />
 
                 <TextView
-                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="数量"
-                    android:textColor="@color/material_txt_color" />
+                    android:textColor="@color/material_txt_color"
+                    android:textSize="@dimen/font_size13" />
+
                 <TextView
-                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="计量单位"
-                    android:textColor="@color/material_txt_color" />
+                    android:textColor="@color/material_txt_color"
+                    android:textSize="@dimen/font_size13" />
 
                 <TextView
-                    android:textSize="@dimen/font_size13"
                     android:layout_width="@dimen/px_70"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="总价(元)"
-                    android:textColor="@color/material_txt_color" />
+                    android:textColor="@color/material_txt_color"
+                    android:textSize="@dimen/font_size13" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -166,8 +194,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.material_cost+@string/text_padding_empty}"
-                   />
+                    app:setText="@{repairs.data.customer_repair_model.material_cost+@string/text_padding_empty}" />
             </LinearLayout>
 
             <LinearLayout
@@ -180,8 +207,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.artificial_cost+@string/text_padding_empty}"
-                     />
+                    app:setText="@{repairs.data.customer_repair_model.artificial_cost+@string/text_padding_empty}" />
             </LinearLayout>
 
             <LinearLayout
@@ -194,8 +220,7 @@
 
                 <TextView
                     style="@style/work_order_detail_txt_right"
-                    app:setText="@{repairs.data.customer_repair_model.handle_fee+@string/text_padding_empty}"
-                    />
+                    app:setText="@{repairs.data.customer_repair_model.handle_fee+@string/text_padding_empty}" />
             </LinearLayout>
 
             <LinearLayout
