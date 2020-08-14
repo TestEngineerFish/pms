@@ -1,6 +1,7 @@
 package com.einyun.app.pms.main.core.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -56,6 +57,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     private RVBindingAdapter<ItemWorkTableNumBinding, String> adapter;
     private RVBindingAdapter<ItemWorkTableBinding, WorkOrder> tableAdapter;
     private RVBindingAdapter<ItemWorkTableLineBinding, LineOrder> lineAdapter;
+    private RVBindingAdapter<ItemWorkTableLineBinding, LineOrder> attitudeAdapter;
     private List<OrgModel> orgModels;
     String orgCodes;
     DecimalFormat formatInt = new DecimalFormat("#,###");
@@ -119,6 +121,21 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
                 }
                 lineMax = (float) Collections.max(integers) / 4 * 5;
                 setWorkTableLine(workOrderData.getLineOrder());
+            }
+            //员工满意度
+            if (workOrderData.getLineatitude() != null) {
+                List<Integer> integers = new ArrayList<>();
+                for (int i = 0; i < workOrderData.getLineatitude().size(); i++)
+                    for (LineOrder workOrder : workOrderData.getLineatitude()) {
+                        integers.add(workOrder.getCompleted_num());
+                        integers.add(workOrder.getUnfinished_num());
+                    }
+                for (LineOrder workOrder : workOrderData.getLineQuality()) {
+                    integers.add(workOrder.getCompleted_num());
+                    integers.add(workOrder.getUnfinished_num());
+                }
+                lineMax = (float) Collections.max(integers) / 4 * 5;
+                setAttitudeTableLine(workOrderData.getLineQuality(), workOrderData.getLineatitude());
             }
         });
     }
@@ -297,62 +314,146 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
         lineAdapter.setDataList(orders);
     }
 
-    TimePickerView pvTime;
+    private void setAttitudeTableLine(List<LineOrder> lineOrders, List<LineOrder> lineOrders1) {
+        List<LineOrder> orders = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            for (LineOrder workOrder2 : lineOrders) {
+                if (i == 0 && "1.0".equals(workOrder2.getType())) {
+                    workOrder2.setCompleted_num(workOrder2.getCount());
+                    orders.add(workOrder2);
 
-    public void selectTime() {
-        if (pvTime == null) {
-            //时间选择器
-            pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    binding.setConditionSelected(true);
-                    year = String.valueOf(date.getYear() + 1900);
-                    month = String.valueOf(date.getMonth() + 1);
-                    binding.selectSelected.setText(year + "-" + month);
-                    fresh();
                 }
-            }).setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
-                    .setRangDate(null, Calendar.getInstance())
-                    .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
-                    .build();
+                if (i == 1 && "2.0".equals(workOrder2.getType())) {
+                    workOrder2.setCompleted_num(workOrder2.getCount());
+                    orders.add(workOrder2);
+                }
+                if (i == 2 && "3.0".equals(workOrder2.getType())) {
+                    workOrder2.setCompleted_num(workOrder2.getCount());
+                    orders.add(workOrder2);
+                }
+                if (i == 3 && "4.0".equals(workOrder2.getType())) {
+                    workOrder2.setCompleted_num(workOrder2.getCount());
+                    orders.add(workOrder2);
+                }
+                if (i == 4 && "5.0".equals(workOrder2.getType())) {
+                    workOrder2.setCompleted_num(workOrder2.getCount());
+                    orders.add(workOrder2);
+                }
+            }
+            }
+        for (int j=0;j<5;j++){
+        for (LineOrder workOrder3 : lineOrders1) {
+            if (j == 0 && "1.0".equals(workOrder3.getType())) {
+                workOrder3.setUnfinished_num(workOrder3.getCount());
+                orders.get(j).setUnfinished_num(workOrder3.getCount());
+            }
+            if (j == 1 && "2.0".equals(workOrder3.getType())) {
+                orders.get(j).setUnfinished_num(workOrder3.getCount());
+            }
+            if (j == 2 && "3.0".equals(workOrder3.getType())) {
+                orders.get(j).setUnfinished_num(workOrder3.getCount());
+            }
+            if (j == 3 && "4.0".equals(workOrder3.getType())) {
+                orders.get(j).setUnfinished_num(workOrder3.getCount());
+            }
+            if (j == 4 && "5.0".equals(workOrder3.getType())) {
+                orders.get(j).setUnfinished_num(workOrder3.getCount());
+            }
+        }
+            Log.d("Test",orders.size()+"");
+            int width = binding.cvLineTable1.getWidth();
+            int llHeightHeight = binding.llLineHeight.getHeight();
+            heightLine = llHeightHeight / lineMax;
+            if (attitudeAdapter == null) {
+                attitudeAdapter = new RVBindingAdapter<ItemWorkTableLineBinding, LineOrder>(this, BR.lineOrder) {
+                    @Override
+                    public void onBindItem(ItemWorkTableLineBinding binding, LineOrder model, int position) {
+                        ViewGroup.LayoutParams layoutParams = binding.llOrg.getLayoutParams();
+                        layoutParams.width = width / 4;
+                        binding.llOrg.setLayoutParams(layoutParams);
+                        ViewGroup.LayoutParams lineHeightLayoutParams = binding.lineHeight.getLayoutParams();
+                        lineHeightLayoutParams.height = Math.round(heightLine * model.getCompleted_num());
+                        binding.lineHeight.setLayoutParams(lineHeightLayoutParams);
+                        ViewGroup.LayoutParams lineHeightUnLayoutParams = binding.lineHeightUn.getLayoutParams();
+                        lineHeightUnLayoutParams.height = Math.round(heightLine * model.getUnfinished_num());
+                        binding.lineHeightUn.setLayoutParams(lineHeightUnLayoutParams);
+                    }
+
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_work_table_line;
+                    }
+                };
+                binding.cvLineTable1.setAdapter(attitudeAdapter);
+                LinearLayoutManager manager = new LinearLayoutManager(this);
+                manager.setOrientation(RecyclerView.HORIZONTAL);
+                binding.cvLineTable1.setLayoutManager(manager);
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_item);
+                LayoutAnimationController controller = new LayoutAnimationController
+                        (animation);
+                controller.setDelay(0.5f);
+                controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+                binding.cvLineTable1.setLayoutAnimation(controller);
+            }
+            attitudeAdapter.setDataList(orders);
+        }
+    }
+        TimePickerView pvTime;
+
+        public void selectTime () {
+            if (pvTime == null) {
+                //时间选择器
+                pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {
+                        binding.setConditionSelected(true);
+                        year = String.valueOf(date.getYear() + 1900);
+                        month = String.valueOf(date.getMonth() + 1);
+                        binding.selectSelected.setText(year + "-" + month);
+                        fresh();
+                    }
+                }).setType(new boolean[]{true, true, false, false, false, false})// 默认全部显示
+                        .setRangDate(null, Calendar.getInstance())
+                        .setLabel("年", "月", "日", "时", "分", "秒")//默认设置为年月日时分秒
+                        .build();
+            }
+
+            pvTime.show();
         }
 
-        pvTime.show();
+        PeriodizationNoAutoJumpView periodizationView;
+
+        public void selectOrgCodes () {
+
+            //弹出分期view
+            periodizationView = new PeriodizationNoAutoJumpView();
+            periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
+            periodizationView.show(getSupportFragmentManager(), "");
+        }
+
+        @Override
+        protected WorkBenchViewModel initViewModel () {
+            return new ViewModelProvider(this, new ViewModelFactory()).get(WorkBenchViewModel.class);
+        }
+
+        @Autowired(name = RouterUtils.SERVICE_USER)
+        IUserModuleService userModuleService;
+
+        @Override
+        public int getLayoutId () {
+            return R.layout.activity_order_condition_pandect;
+        }
+
+        @Override
+        protected void initListener () {
+            super.initListener();
+        }
+
+        @Override
+        public void onPeriodSelectListener (OrgModel orgModel){
+            binding.periodSelected.setText(orgModel.getName());
+            binding.setPeriodSelected(true);
+            orgCodes = orgModel.getId();
+            fresh();
+        }
     }
-
-    PeriodizationNoAutoJumpView periodizationView;
-
-    public void selectOrgCodes() {
-
-        //弹出分期view
-        periodizationView = new PeriodizationNoAutoJumpView();
-        periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
-        periodizationView.show(getSupportFragmentManager(), "");
-    }
-
-    @Override
-    protected WorkBenchViewModel initViewModel() {
-        return new ViewModelProvider(this, new ViewModelFactory()).get(WorkBenchViewModel.class);
-    }
-
-    @Autowired(name = RouterUtils.SERVICE_USER)
-    IUserModuleService userModuleService;
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_order_condition_pandect;
-    }
-
-    @Override
-    protected void initListener() {
-        super.initListener();
-    }
-
-    @Override
-    public void onPeriodSelectListener(OrgModel orgModel) {
-        binding.periodSelected.setText(orgModel.getName());
-        binding.setPeriodSelected(true);
-        orgCodes = orgModel.getId();
-        fresh();
-    }
-}

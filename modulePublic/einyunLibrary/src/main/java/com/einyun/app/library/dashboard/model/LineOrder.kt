@@ -14,10 +14,10 @@ package com.einyun.app.library.dashboard.model
  * @Version:        1.0
  */
 class LineOrder {
-     val completed_num = 0
-     val unfinished_num = 0
-     val count = 0
-     val name: String? = null
-     val type: String? = null
-     val timely_num = 0
+     var completed_num = 0
+     var unfinished_num = 0
+     var count = 0
+     var name: String? = null
+     var type: String? = null
+     var timely_num = 0
 }

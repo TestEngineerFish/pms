@@ -28,6 +28,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -53,6 +54,7 @@ import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.SelectRepairsTypeView;
 import com.einyun.app.common.ui.widget.SwipeItemLayout;
+import com.einyun.app.common.utils.FileProviderUtil;
 import com.einyun.app.common.utils.FormatUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.common.utils.SpacesItemDecoration;
@@ -77,12 +79,17 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 @Route(path = RouterUtils.ACTIVITY_CUSTOMER_REPAIR_DETAIL)
 public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRepairsDetailBinding, RepairDetailViewModel> implements View.OnClickListener {
@@ -586,11 +593,24 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             if (data == null) return;
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
-                photoListFormAdapter.addPhotos(uris);
+                for (Uri uri : uris) {
+                    addWater(uri);
+                }
             }
         }
     }
-
+    private void addWater(Uri uri) {
+        String file = FileProviderUtil.getUploadImagePath(uri);
+        Observable.just(file).subscribeOn(Schedulers.io())
+                .subscribe(path -> {
+                    BitmapUtil.AddTimeWatermark(new File(path));
+                    runOnUiThread(() -> {
+                        if (uri != null) {
+                            photoListFormAdapter.addPhotos(Arrays.asList(uri));
+                        }
+                    });
+                });
+    }
     //立即调用方法
     Handler handler = new Handler();
     public Runnable runnable = new Runnable() {

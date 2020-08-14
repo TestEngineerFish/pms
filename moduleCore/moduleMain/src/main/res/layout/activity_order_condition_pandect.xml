@@ -449,7 +449,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="员工端满意统计"
+                                android:text="员工满意度统计"
                                 android:textColor="#FF132D42"
                                 android:textSize="@dimen/font_size16" />
 

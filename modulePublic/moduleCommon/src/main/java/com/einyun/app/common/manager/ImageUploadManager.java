@@ -61,7 +61,7 @@ public class ImageUploadManager {
                         long fileSize=data.length();
                         PicUrl picUrl=new PicUrl();
                         picUrl.setOriginUrl(uri.toString());
-                        picUrl.setCompressed(filePath);
+                        picUrl.setCompressed(data.getAbsolutePath());
                         fileList.add(picUrl);
                         latch.countDown();
                     }
