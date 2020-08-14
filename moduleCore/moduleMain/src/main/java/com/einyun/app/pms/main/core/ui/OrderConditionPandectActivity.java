@@ -127,12 +127,10 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
                 List<Integer> integers = new ArrayList<>();
                 for (int i = 0; i < workOrderData.getLineatitude().size(); i++)
                     for (LineOrder workOrder : workOrderData.getLineatitude()) {
-                        integers.add(workOrder.getCompleted_num());
-                        integers.add(workOrder.getUnfinished_num());
+                        integers.add(workOrder.getCount());
                     }
                 for (LineOrder workOrder : workOrderData.getLineQuality()) {
-                    integers.add(workOrder.getCompleted_num());
-                    integers.add(workOrder.getUnfinished_num());
+                    integers.add(workOrder.getCount());
                 }
                 lineMax = (float) Collections.max(integers) / 4 * 5;
                 setAttitudeTableLine(workOrderData.getLineQuality(), workOrderData.getLineatitude());
@@ -360,7 +358,6 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
                 orders.get(j).setUnfinished_num(workOrder3.getCount());
             }
         }
-            Log.d("Test",orders.size()+"");
             int width = binding.cvLineTable1.getWidth();
             int llHeightHeight = binding.llLineHeight.getHeight();
             heightLine = llHeightHeight / lineMax;
