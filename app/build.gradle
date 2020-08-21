@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion deps.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.app.sf" //property management system
+        applicationId "com.einyun.app.pms" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
         versionCode 100

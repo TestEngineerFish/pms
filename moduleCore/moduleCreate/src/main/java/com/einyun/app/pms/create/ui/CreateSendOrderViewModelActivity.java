@@ -3,18 +3,21 @@ package com.einyun.app.pms.create.ui;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -31,6 +34,7 @@ import com.einyun.app.common.ui.widget.BottomPicker;
 import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectWorkOrderTypeView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
+import com.einyun.app.common.utils.FileProviderUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.resource.workorder.model.ResourceChildBean;
@@ -47,8 +51,13 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.einyun.app.common.constants.RouteKey.FRAGMENT_PLAN_OWRKORDER_DONE;
 
@@ -90,7 +99,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     private List<DictDataModel> dictDataModelList = new ArrayList<>();
     private List<DictDataModel> dictDataModelWorkTypeList = new ArrayList<>();
     private List<DictDataModel> lineDictDataModelList = new ArrayList<>();
-
+    private File imageFile;
     @Override
     protected CreateViewModel initViewModel() {
         return new ViewModelProvider(this, new CreateViewModelFactory()).get(CreateViewModel.class);
@@ -383,6 +392,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         });
     }
 
+
     /**
      * 分期view
      */
@@ -594,7 +604,9 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             if (data == null) return;
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
-                photoSelectAdapter.addPhotos(uris);
+                for (Uri uri : uris) {
+                    addWater(uri);
+                }
             }
         }
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_PERSON_CHOOSE && data != null) {
@@ -605,6 +617,17 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             binding.setBean(request);
         }
     }
-
+    private void addWater(Uri uri) {
+        String file = FileProviderUtil.getUploadImagePath(uri);
+        Observable.just(file).subscribeOn(Schedulers.io())
+                .subscribe(path -> {
+                    BitmapUtil.AddTimeWatermark(new File(path));
+                    runOnUiThread(() -> {
+                        if (uri != null) {
+                            photoSelectAdapter.addPhotos(Arrays.asList(uri));
+                        }
+                    });
+                });
+    }
 
 }

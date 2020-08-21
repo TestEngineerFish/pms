@@ -69,7 +69,7 @@ public class MyMessageReceiver extends MessageReceiver{
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         super.onNotification(context, title, summary, extraMap);
         // TODO 处理推送通知
-        Log.e("MyMessageReceiver", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
+        Log.e("MyMessageReceiver1", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
         //通知刷新界面
         LiveEventBus.get(LiveDataBusKey.BELL_STATE_FRESH, String.class).post("");
         try {

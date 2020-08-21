@@ -86,8 +86,8 @@
 <!--        <meta-data android:name="com.alibaba.app.appkey" android:value="28234922"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
 <!--        <meta-data android:name="com.alibaba.app.appsecret" android:value="a74f45b4bfea4a5d481892d9c0a1d3ad"/> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;-->
 <!-- 公司的阿里key -->
-        <meta-data android:name="com.alibaba.app.appkey" android:value="28169242"/> <!-- 请填写你自己的- appKey -->
-        <meta-data android:name="com.alibaba.app.appsecret" android:value="ecd0a9e3c22cfe011cc5a31b9a63a433"/> <!-- 请填写你自己的appSecret -->
+        <meta-data android:name="com.alibaba.app.appkey" android:value="31064503"/> <!-- 请填写你自己的- appKey -->
+        <meta-data android:name="com.alibaba.app.appsecret" android:value="480a5670a6376da51b6e283aa7f88e73"/> <!-- 请填写你自己的appSecret -->
         <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
             android:theme="@style/NoActionBarAppTheme">
             <intent-filter>

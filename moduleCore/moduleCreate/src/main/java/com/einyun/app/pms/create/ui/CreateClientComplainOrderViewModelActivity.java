@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.adapter.RVBindingAdapter;
+import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.Constants;
@@ -30,6 +31,7 @@ import com.einyun.app.common.ui.widget.PeriodizationView;
 import com.einyun.app.common.ui.widget.SelectHouseView;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.CheckUtil;
+import com.einyun.app.common.utils.FileProviderUtil;
 import com.einyun.app.common.utils.Glide4Engine;
 import com.einyun.app.library.portal.dictdata.model.DictDataModel;
 import com.einyun.app.library.workorder.model.ComplainModel;
@@ -49,8 +51,13 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 import static androidx.test.InstrumentationRegistry.getContext;
 
@@ -440,12 +447,25 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
             if (data == null) return;
             List<Uri> uris = Matisse.obtainResult(data);
             if (uris != null && uris.size() > 0) {
-                photoSelectAdapter.addPhotos(uris);
+                for (Uri uri : uris) {
+                    addWater(uri);
+                }
             }
         }
     }
 
-
+    private void addWater(Uri uri) {
+        String file = FileProviderUtil.getUploadImagePath(uri);
+        Observable.just(file).subscribeOn(Schedulers.io())
+                .subscribe(path -> {
+                    BitmapUtil.AddTimeWatermark(new File(path));
+                    runOnUiThread(() -> {
+                        if (uri != null) {
+                            photoSelectAdapter.addPhotos(Arrays.asList(uri));
+                        }
+                    });
+                });
+    }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
