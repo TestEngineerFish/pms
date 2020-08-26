@@ -509,6 +509,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                         return;
                     }
                     if (model.isState()) {
+                        detialModel.getData().getCustomer_repair_model().setSm_sendflag("1");
                         binding.repairHandle.arriveBtn.setVisibility(View.GONE);
                         binding.repairHandle.sendBtn.setVisibility(View.VISIBLE);
                         binding.repairHandle.arriveCodeLayout.setVisibility(View.VISIBLE);
@@ -527,6 +528,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                     if (model == null) {
                         return;
                     }
+                    detialModel.getData().getCustomer_repair_model().setSm_flag("1");
                     ToastUtil.show(RepairsDetailActivity.this,model.getMsg());
                 });
             }
@@ -881,11 +883,14 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
                 customerRepair.setResponse_result(binding.repariResponse.repairResponseReason.getString());
             }
             if (binding.repariResponse.rgs.getCheckedRadioButtonId() == R.id.rb_normal) {
-                customerRepair.setWork_ascription("工程维修");
-                customerRepair.setWork_ascription_code("Engineering_Maintenance");
-            } else {
-                customerRepair.setWork_ascription("地块维保");
-                customerRepair.setWork_ascription_code("Massif_Maintenance");
+                customerRepair.setWork_ascription(dictAscriptLsit.get(0).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(0).getKey());
+            } else if (binding.repariResponse.rgs.getCheckedRadioButtonId() == R.id.rb_general) {
+                customerRepair.setWork_ascription(dictAscriptLsit.get(1).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(1).getKey());
+            }else {
+                customerRepair.setWork_ascription(dictAscriptLsit.get(2).getName());
+                customerRepair.setWork_ascription_code(dictAscriptLsit.get(2).getKey());
             }
 
         }

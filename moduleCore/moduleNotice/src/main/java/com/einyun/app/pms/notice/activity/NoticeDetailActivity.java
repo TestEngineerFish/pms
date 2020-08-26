@@ -94,7 +94,7 @@ public class NoticeDetailActivity extends BaseHeadViewModelActivity<ActivityNoti
     @Override
     public void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-        setRightOption(R.mipmap.share);
+//        setRightOption(R.mipmap.share);
         webUrl = DataConstants.NOTICE_DETAIL_URL + id + "&tenantId=" + CommonHttpService.getInstance().getTenantId();
 
         headBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
