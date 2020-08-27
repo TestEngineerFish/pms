@@ -403,7 +403,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_yes) {
-                    binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
+                    binding.repairHandlePaid.getRoot().setVisibility(View.GONE);
                     detialModel.getData().getCustomer_repair_model().setHandle_is_paid(HANDLE_PAID);//有偿
                 } else {
                     binding.repairHandlePaid.getRoot().setVisibility(View.GONE);
