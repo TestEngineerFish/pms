@@ -239,7 +239,7 @@ public class RepairsDetailActivity extends BaseHeadViewModelActivity<ActivityRep
             String handle_is_paid = detialModel.getData().getCustomer_repair_model().getHandle_is_paid();
             if ("1".equals(handle_is_paid)) {
                 binding.repairHandle.rbYes.setChecked(true);
-                binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
+//                binding.repairHandlePaid.getRoot().setVisibility(View.VISIBLE);
                 if (detialModel.getData().getCustomer_repair_model().getMaterial_cost() != null) {
                     binding.repairHandlePaid.repairMaterialPrice.setText(detialModel.getData().getCustomer_repair_model().getMaterial_cost() + "");
                 }
