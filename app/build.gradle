@@ -48,18 +48,15 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            versionNameSuffix "-dev"
             manifestPlaceholders=[APP_NAME:app_name]
             signingConfig signingConfigs.release
         }
         debugTest.initWith(buildTypes.debug)
         debugTest {
-            versionNameSuffix "-test"
             manifestPlaceholders=[APP_NAME:app_name+"Test"]
         }
         //请勿删除，提测uat环境，上线开启
         uat {
-            versionNameSuffix ""//"-uat"
             manifestPlaceholders=[APP_NAME:app_name+"Uat"]
             minifyEnabled true   //开启混淆
             zipAlignEnabled true  //压缩优化
@@ -69,7 +66,6 @@ android {
         }
         release.initWith(uat)
         release {
-            versionNameSuffix ""
             debuggable true
             manifestPlaceholders=[APP_NAME:app_name]
         }
