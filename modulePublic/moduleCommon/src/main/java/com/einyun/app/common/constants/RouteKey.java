@@ -129,7 +129,7 @@ public class RouteKey {
     //未解决
     public static final int KEY_NO_SOLVED=0;
 
-    //不合格单
+    //品检工单
     public static final String FRAGMENT_DISQUALIFIED_WAIT_FOLLOW = "FRAGMENT_DISQUALIFIED_WAIT_FOLLOW";
     public static final String FRAGMENT_DISQUALIFIED_HAD_FOLLOW = "FRAGMENT_DISQUALIFIED_HAD_FOLLOW";
     public static final String FRAGMENT_DISQUALIFIED_ORDER_LIST = "FRAGMENT_DISQUALIFIED_ORDER_LIST";

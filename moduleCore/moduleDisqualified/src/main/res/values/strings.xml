@@ -12,7 +12,7 @@
     <string name="tv_feedback_info">反馈信息</string>
     <string name="text_cached">已缓存</string>
     <string name="text_no_cached">未缓存</string>
-    <string name="tv_create_suc">创建不合格工单成功</string>
+    <string name="tv_create_suc">创建品检工单成功</string>
     <string name="tv_validate_suc">提交成功</string>
     <string name="tv_feed_back_suc">提交成功</string>
     <string name="add">新增</string>

@@ -674,7 +674,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
                 mRequest.getBizData().setLine(lineTypeLists.get(position).getKey());
                 mRequest.getBizData().setCode(mOrderCode);
                 if (mCode == null) {//正常创建
-                } else {//详情创建不合格单 关联编号
+                } else {//详情创建品检工单 关联编号
                     mRequest.getBizData().setParent_code(mCode);
                 }
                 dimCode = lineTypeLists.get(position).getKey();

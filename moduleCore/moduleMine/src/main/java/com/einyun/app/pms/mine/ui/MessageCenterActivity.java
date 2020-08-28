@@ -437,7 +437,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
                         });
 
                         break;
-                    case "unqualified"://不合格单
+                    case "unqualified"://品检工单
                         viewModel.msgRep.checkIsCanDeal(msgExtendVars.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                             @Override
                             public void call(IsCanDealModel data) {
@@ -703,7 +703,7 @@ public class MessageCenterActivity extends BaseHeadViewModelActivity<ActivityMes
     }
 
     /**
-     * 不合格单提前判断任务是否失效
+     * 品检工单提前判断任务是否失效
      */
     public void checkQualityTaskId(String proInsId, String taskId) {
         /**

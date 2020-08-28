@@ -40,7 +40,7 @@ public interface DisqualifiedServiceApi {
     @GET
     Flowable<GetDisqualifiedTypesResponse> getTypes(@Url String url);
     /**
-     * 获取不合格单号
+     * 获取品检工单号
      * @param url
      * @return
      */
@@ -69,7 +69,7 @@ public interface DisqualifiedServiceApi {
     @POST(URLS.URL_VERIFICATION)
     Flowable<BaseResponse> dealValidate(@Body UnQualityVerificationRequest bean);
     /**
-     * 不合格单列表
+     * 品检工单列表
      * @param request
      * @return
      */

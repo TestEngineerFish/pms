@@ -414,7 +414,7 @@ public class MyMessageReceiver extends MessageReceiver{
 
                                     break;
 
-                                case "unqualified"://不合格单
+                                case "unqualified"://品检工单
                                     repository.checkIsCanDeal(pushModel.getContent().getTaskId(), new CallBack<IsCanDealModel>() {
                                         @Override
                                         public void call(IsCanDealModel data) {
@@ -551,7 +551,7 @@ public class MyMessageReceiver extends MessageReceiver{
         }
     }
     /**
-     * 不合格单提前判断任务是否失效
+     * 品检工单提前判断任务是否失效
      */
     public void checkQualityTaskId(String proInsId, String taskId) {
         /**

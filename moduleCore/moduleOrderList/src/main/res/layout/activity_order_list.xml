@@ -80,7 +80,7 @@
 
                     <TextView
                         style="@style/order_list_main_txt"
-                        android:text="不合格单" />
+                        android:text="品检工单" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

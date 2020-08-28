@@ -170,13 +170,13 @@
         <activity android:name=".customerinquiries.ui.InquiriesOrderListActivity"/>
         <activity android:name=".customerinquiries.ui.InquiriesOrderDetailViewModuleActivity"/>
         <!--  客户问询结束      -->
-        <!--  不合格单开始      -->
+        <!--  品检工单开始      -->
         <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity"/>
         <activity android:name=".disqualified.ui.PropertyListViewModuleActivity"/>
         <activity android:name=".disqualified.ui.CreateDisqualifiedActivity"/>
         <activity android:name=".disqualified.ui.DisqualifiedDetailActivity"/>
         <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity"/>
-        <!--  不合格单结束      -->
+        <!--  品检工单结束      -->
 
         <!--  收费开始      -->
         <activity android:name=".toll.ui.TollViewModelActivity"/>

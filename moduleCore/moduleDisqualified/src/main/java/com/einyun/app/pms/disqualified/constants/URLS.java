@@ -7,7 +7,7 @@ public class URLS {
     public static final String URL_GET_LINE_STATE_LIST ="/portal/sys/dataDict/v1/getByTypeKey?typeKey=";
     //获取工单编号
     public static final String URL_GET_ORDER_CODE ="/portal/sys/identity/v1/getNextIdByAlias?alias=bhggdbh";
-    //创建不合格单
+    //创建品检工单
     public static final String URL_CREATE_ORDER ="/workOrder/workOrder/unqualified/v1/start";
     //待跟进列表
     public static final String URL_GET_TO_FOLLOW_UP_LIST ="/workOrder/workOrder/task/v1/getTodoListAliaForApp/unqualified_key/NORMAL";

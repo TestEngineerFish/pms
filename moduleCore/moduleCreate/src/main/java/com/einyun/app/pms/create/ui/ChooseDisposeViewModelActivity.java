@@ -85,7 +85,7 @@ public class ChooseDisposeViewModelActivity extends BaseHeadViewModelActivity<Ac
             };
         }
         binding.rvChooseDisposePerson.setAdapter(adapter);
-        if (isUnquality) {//创建不合格单选择人员
+        if (isUnquality) {//创建品检工单选择人员
             viewModel.getCheckedPerson(orgId).observe(this, orgModels -> {
                 this.orgModels = orgModels;
                 adapter.setDataList(orgModels);

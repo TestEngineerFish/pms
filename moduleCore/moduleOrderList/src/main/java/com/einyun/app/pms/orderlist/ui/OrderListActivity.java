@@ -46,7 +46,7 @@ public class OrderListActivity extends BaseHeadViewModelActivity<ActivityOrderLi
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER).navigation();
             }
             if (v.getId() == R.id.og_unwell_order) {
-                //不合格单
+                //品检工单
                 ARouter.getInstance().build(RouterUtils.ACTIVITY_PROPERTY).navigation();
             }
             if (v.getId() == R.id.client_complain_order) {

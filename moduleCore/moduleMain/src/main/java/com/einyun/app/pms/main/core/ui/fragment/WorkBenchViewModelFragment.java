@@ -449,7 +449,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     private void orderTitle(String userMenu) {
         orderTitleFirstIndex = 0;
         orderTitleSecondIndex = 0;
-        //不合格单
+        //品检工单
         menuFirst(binding.itemWorkBenchFirst.rlUnqualified, userMenu, "unqualified");
         //派工单
         menuFirst(binding.itemWorkBenchFirst.rlDispatch, userMenu, "dispatch");

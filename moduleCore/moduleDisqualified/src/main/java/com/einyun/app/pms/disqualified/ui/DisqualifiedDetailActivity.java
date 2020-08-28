@@ -571,7 +571,7 @@ public class DisqualifiedDetailActivity extends BaseHeadViewModelActivity<Activi
     public void onCreateOrderClick() {
 
         new AlertDialog(this).builder().setTitle(getResources().getString(R.string.tip))
-                .setMsg("创建不合格单？")
+                .setMsg("创建品检工单？")
                 .setNegativeButton(getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

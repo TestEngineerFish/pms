@@ -48,7 +48,7 @@
         android:paddingTop="@dimen/px_30"
         android:paddingBottom="@dimen/px_30"
         android:gravity="center"
-        android:text="不合格单"
+        android:text="品检工单"
         android:textColor="#FF185CC7"
         android:textSize="@dimen/font_size15"/>
 

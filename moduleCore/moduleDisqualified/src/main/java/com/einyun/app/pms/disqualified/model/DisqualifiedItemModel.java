@@ -6,7 +6,7 @@ public class DisqualifiedItemModel {
      * code : HJ-BHG-2020019-0014
      * check_user_id : 63879813097586693
      * correction_date : 1578585600000
-     * subject : 李淑杰在2020-01-09发起不合格单
+     * subject : 李淑杰在2020-01-09发起品检工单
      * line : environmental_classification
      * parentNodeId : 0
      * ownerId : 63879813097586693
