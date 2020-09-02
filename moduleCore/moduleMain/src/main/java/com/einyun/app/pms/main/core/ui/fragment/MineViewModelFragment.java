@@ -269,7 +269,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
     private String getTime(List<WorkStatusModel> list) {
         if (list == null) {
             return "";
-        } else if (list.size() == 0) {
+        } else if (list.size() == 1) {
             return "本次打卡时间" + list.get(0).getCreateTime();
         } else {
             return "本次打卡时间" + list.get(0).getCreateTime() +"\n"+ "上次打卡时间" + list.get(1).getCreateTime();
