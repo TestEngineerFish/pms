@@ -32,26 +32,29 @@
 
             <RadioGroup
                 android:id="@+id/pic_ev"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/px_40"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <RadioButton
                     android:id="@+id/test_ev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="test"/>
+                    android:text="test" />
+
                 <RadioButton
                     android:id="@+id/uat_ev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="uat"/>
+                    android:text="uat" />
+
                 <RadioButton
                     android:id="@+id/release_ev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="release"/>
+                    android:text="release" />
             </RadioGroup>
         </RelativeLayout>
 
@@ -63,9 +66,9 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:visibility="gone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/ll_org_code"
@@ -90,8 +93,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/ll_user"
@@ -174,6 +176,18 @@
                     style="@style/login_input_ll_underline"
                     android:layout_below="@id/ll_password" />
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/forget_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_60"
+                android:padding="@dimen/px_10"
+                android:layout_marginTop="@dimen/px_10"
+                android:textSize="@dimen/font_size14"
+                android:textColor="@color/hint_text_color"
+                android:text="忘记密码"
+                android:onClick="@{()->callBack.enterAccount()}"/>
 
             <Button
                 android:id="@+id/bt_login"

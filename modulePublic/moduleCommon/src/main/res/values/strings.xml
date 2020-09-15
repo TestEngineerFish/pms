@@ -293,4 +293,6 @@
     <string name="txt_add_feed">新增</string>
     <string name="txt_sub_feed">提交反馈</string>
     <string name="txt_feed_list">历史反馈</string>
+    <string name="txt_account">账号</string>
+    <string name="txt_next_step">下一步</string>
 </resources>

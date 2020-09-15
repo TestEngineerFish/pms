@@ -3,7 +3,8 @@
     package="com.einyun.app.pms.user">
 
     <application>
-        <activity android:name=".core.ui.GetSmsCodeActivity"></activity>
+        <activity android:name=".core.ui.EnterAccountActivity"></activity>
+        <activity android:name=".core.ui.GetSmsCodeActivity" />
     </application>
 
 </manifest>

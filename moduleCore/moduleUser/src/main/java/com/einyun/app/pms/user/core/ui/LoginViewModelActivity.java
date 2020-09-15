@@ -234,6 +234,13 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     }
 
     /**
+     * 忘记密码页面
+     * */
+    public void enterAccount(){
+        ARouter.getInstance().build(RouterUtils.ACTIVITY_ENTER_ACCOUNT).navigation();
+    }
+
+    /**
      * 登陆事件
      */
     public void onLoginClick() {
