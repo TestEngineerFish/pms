@@ -84,4 +84,22 @@ object URLs {
 
     const val URL_APP_UPDATE = "/appcenter/api/appConf/v1/appbbConf/isUp"
 
+    /**
+     * 获取验证码
+     * */
+    const val URL_GET_VERIFY_CODE = "/sms/sms/v1/sendVerificationCode"
+    /**
+     * 根据账号获取手机号
+     * */
+    const val URL_GET_PHONE_BY_ACCOUNT = "/user-center/api/usercenter/v1/ucUser/getMobile"
+
+    /**
+     * 校验验证码
+     * */
+    const val URL_CHECK_VERIFY_CODE = "/sms/sms/v1/verifyVerificationCode"
+
+    /**
+     * 修改密码
+     * */
+    const val URL_CHANGE_PASS= "/user-center/api/usercenter/v1/ucUser/updatePwd"
 }

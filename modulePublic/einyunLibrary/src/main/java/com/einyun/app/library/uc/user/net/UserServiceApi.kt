@@ -1,14 +1,8 @@
 package com.einyun.app.library.uc.user.net
 
 import com.einyun.app.base.http.BaseResponse
-import com.einyun.app.library.uc.user.net.request.ChangePwdRequest
-import com.einyun.app.library.uc.user.net.request.LoginRequest
-import com.einyun.app.library.uc.user.net.request.UpdateAppRequest
-import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
-import com.einyun.app.library.uc.user.net.response.LoginResponse
-import com.einyun.app.library.uc.user.net.response.TentantResponse
-import com.einyun.app.library.uc.user.net.response.UpdateAppResponse
-import com.einyun.app.library.uc.user.net.response.UserResponse
+import com.einyun.app.library.uc.user.net.request.*
+import com.einyun.app.library.uc.user.net.response.*
 import io.reactivex.Flowable
 import retrofit2.http.*
 
@@ -55,7 +49,10 @@ interface UserServiceApi {
      * 获取用户信息
      */
     @GET(URLs.URL_UC_GET_USER)
-    fun getUser(@Query("account") account: String,@Query("userNumber") userNumber: String?): Flowable<UserResponse>
+    fun getUser(
+        @Query("account") account: String,
+        @Query("userNumber") userNumber: String?
+    ): Flowable<UserResponse>
 
     /**
      *根据用户id获取用户信息
@@ -85,7 +82,10 @@ interface UserServiceApi {
      *查询工号是否已存在
      */
     @GET(URLs.URL_UC_IS_NUMBER_EXIST)
-    fun isUserNumberExist(@Query("account") account: String,@Query("userNumber") userNumber: String?): Flowable<BaseResponse<Any>>
+    fun isUserNumberExist(
+        @Query("account") account: String,
+        @Query("userNumber") userNumber: String?
+    ): Flowable<BaseResponse<Any>>
 
     /**
      *
@@ -95,5 +95,29 @@ interface UserServiceApi {
     fun updateUserInfo(@Body request: UpdateUserRequest): Flowable<BaseResponse<Any>>
 
     @POST(URLs.URL_APP_UPDATE)
-    fun updateApp(@Body updateAppRequest: UpdateAppRequest):Flowable<UpdateAppResponse>
+    fun updateApp(@Body updateAppRequest: UpdateAppRequest): Flowable<UpdateAppResponse>
+
+    /**
+     *获取验证码
+     */
+    @POST(URLs.URL_GET_VERIFY_CODE)
+    fun getCheckNum(@Body checkNumRequest: CheckNumRequest): Flowable<CheckNumResponse>
+
+    /**
+     * 获取手机号
+     * */
+    @GET(URLs.URL_GET_PHONE_BY_ACCOUNT)
+    fun getPhone(@Query("account") account: String): Flowable<BaseResponse<String>>
+    /**
+     *校验验证码
+     */
+    @POST(URLs.URL_CHECK_VERIFY_CODE)
+    fun checkNum(@Body checkNumRequest: CheckNumRequest): Flowable<CheckNumResponse>
+
+    /**
+     *修改密码
+     */
+    @POST(URLs.URL_CHANGE_PASS)
+    fun changePass(@Body changePassRequest: ChangePassRequest): Flowable<CheckNumResponse>
+
 }

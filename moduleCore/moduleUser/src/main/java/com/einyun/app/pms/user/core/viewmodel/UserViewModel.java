@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.common.application.ThrowableParser;
@@ -20,10 +21,12 @@ import com.einyun.app.common.ui.dialog.AlertDialog;
 import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.core.net.EinyunHttpService;
+import com.einyun.app.library.uc.user.model.CheckNumModel;
 import com.einyun.app.library.uc.user.model.TenantModel;
 import com.einyun.app.library.uc.user.model.UpdateAppModel;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
 import com.einyun.app.library.uc.user.model.UserModel;
+import com.einyun.app.library.uc.user.net.request.ChangePassRequest;
 import com.einyun.app.pms.mine.model.GetUserByccountBean;
 import com.einyun.app.pms.mine.repository.FeedBackRepository;
 import com.einyun.app.pms.user.R;
@@ -45,7 +48,10 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
     private UserRepository mUsersRepo;
     private UCService mUCService;
     private LiveData<UserModel> mUserModel;
-    FeedBackRepository repository=new FeedBackRepository();
+    private LiveData<Object> checkNumModelLiveData;
+    private LiveData<String> phoneLiveData;
+    FeedBackRepository repository = new FeedBackRepository();
+
     public UserViewModel() {
         mUsersRepo = new UserRepository();
         mUCService = ServiceManager.Companion.obtain().getService(ServiceManager.SERVICE_UC);
@@ -158,6 +164,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             privacyTermView.show();
         }
     }
+
     /**
      * 不同意协议退出提示
      */
@@ -170,6 +177,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             }
         }).show();
     }
+
     /**
      * 通过用户名删除数据库数据
      *
@@ -200,9 +208,9 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
         });
     }
 
-    public LiveData<GetUserByccountBean> getUserByccountBeanLiveData(String id){
+    public LiveData<GetUserByccountBean> getUserByccountBeanLiveData(String id) {
         showLoading();
-        MutableLiveData<GetUserByccountBean> userBean=new MutableLiveData<>();
+        MutableLiveData<GetUserByccountBean> userBean = new MutableLiveData<>();
         repository.queryUserInfo(id, new CallBack<GetUserByccountBean>() {
             @Override
             public void call(GetUserByccountBean data) {
@@ -216,5 +224,102 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             }
         });
         return userBean;
+    }
+
+    /**
+     * 获取短信验证码
+     */
+    public LiveData<BaseResponse> getCheckNum(String phone) {
+        showLoading();
+        MutableLiveData<BaseResponse> booleanLiveData = new MutableLiveData<>();
+        checkNumModelLiveData = mUCService.getCheckNum(phone, new CallBack<Object>() {
+            @Override
+            public void call(Object data) {
+                hideLoading();
+
+                booleanLiveData.postValue((BaseResponse) data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                booleanLiveData.postValue(null);
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return booleanLiveData;
+    }
+
+    /**
+     * 获取短信验证码
+     */
+    public LiveData<BaseResponse> checkNum(String phone, String code) {
+        showLoading();
+        MutableLiveData<BaseResponse> booleanLiveData = new MutableLiveData<>();
+        checkNumModelLiveData = mUCService.checkkNum(phone, code, new CallBack<Object>() {
+            @Override
+            public void call(Object data) {
+                hideLoading();
+                booleanLiveData.postValue((BaseResponse) data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                booleanLiveData.postValue(null);
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return booleanLiveData;
+    }
+    /**
+     * 修改密码
+     */
+    public LiveData<BaseResponse> changePass(String phone, String code,String account,String newPass) {
+        showLoading();
+        MutableLiveData<BaseResponse> booleanLiveData = new MutableLiveData<>();
+        ChangePassRequest request=new ChangePassRequest();
+        request.setPhone(phone);
+        request.setAccount(account);
+        request.setCode(code);
+        request.setNewPwd(newPass);
+        checkNumModelLiveData = mUCService.changePass(request, new CallBack<Object>() {
+            @Override
+            public void call(Object data) {
+                hideLoading();
+                booleanLiveData.postValue((BaseResponse) data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                booleanLiveData.postValue(null);
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return booleanLiveData;
+    }
+    /**
+     * 根据账号获取手机号
+     */
+    public LiveData<String> getPhone(String account) {
+        showLoading();
+        MutableLiveData<String> liveData = new MutableLiveData<>();
+        phoneLiveData = mUCService.getPhone(account, new CallBack<String>() {
+
+            @Override
+            public void call(String data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                liveData.postValue("");
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
     }
 }

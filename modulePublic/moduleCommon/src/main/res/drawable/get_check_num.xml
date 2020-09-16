@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:drawable="@drawable/corners_privacy_bottom_btn"/>
+    <item android:state_enabled="false" android:drawable="@drawable/corners_privacy_bottom_btn_false"/>
+    <item android:drawable="@drawable/normal_btn_bg"/>
+</selector>

@@ -2,10 +2,8 @@ package com.einyun.app.library.core.api
 
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
-import com.einyun.app.library.uc.user.model.TenantModel
-import com.einyun.app.library.uc.user.model.UpdateAppModel
-import com.einyun.app.library.uc.user.model.UserInfoModel
-import com.einyun.app.library.uc.user.model.UserModel
+import com.einyun.app.library.uc.user.model.*
+import com.einyun.app.library.uc.user.net.request.ChangePassRequest
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 
 /**
@@ -72,4 +70,23 @@ interface UCService :EinyunService{
     fun updateUser(request: UpdateUserRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
 
     fun updateApp(callBack: CallBack<UpdateAppModel>):LiveData<UpdateAppModel>
+
+    /**
+     * 获取短信验证码
+     * */
+    fun getCheckNum(phone:String,callBack: CallBack<Any>):LiveData<Any>
+
+    /**
+     * 根据账号获取手机号
+     * */
+    fun getPhone(account: String,callBack: CallBack<String>):LiveData<String>
+
+    /**
+     * 校验短信验证码
+     * */
+    fun checkkNum(phone:String,code: String,callBack: CallBack<Any>):LiveData<Any>
+    /**
+     * 修改密码
+     * */
+    fun changePass(changePassRequest: ChangePassRequest,callBack: CallBack<Any>):LiveData<Any>
 }

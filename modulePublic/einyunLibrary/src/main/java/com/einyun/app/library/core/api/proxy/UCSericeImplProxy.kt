@@ -3,10 +3,8 @@ package com.einyun.app.library.core.api.proxy
 import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.core.api.UCService
-import com.einyun.app.library.uc.user.model.TenantModel
-import com.einyun.app.library.uc.user.model.UpdateAppModel
-import com.einyun.app.library.uc.user.model.UserInfoModel
-import com.einyun.app.library.uc.user.model.UserModel
+import com.einyun.app.library.uc.user.model.*
+import com.einyun.app.library.uc.user.net.request.ChangePassRequest
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 import com.einyun.app.library.uc.user.repository.UserRepository
 
@@ -26,6 +24,27 @@ import com.einyun.app.library.uc.user.repository.UserRepository
 class UCSericeImplProxy :UCService{
     override fun updateApp(callBack: CallBack<UpdateAppModel>): LiveData<UpdateAppModel> {
         return instance?.updateApp(callBack)!!
+    }
+
+    override fun getCheckNum(
+        phone: String,
+        callBack: CallBack<Any>
+    ): LiveData<Any> {
+        return instance?.getCheckNum(phone,callBack)!!
+    }
+
+    override fun getPhone(account: String, callBack: CallBack<String>): LiveData<String> {
+        return instance?.getPhone(account,callBack)!!    }
+
+    override fun checkkNum(phone: String, code: String, callBack: CallBack<Any>): LiveData<Any> {
+        return instance?.checkkNum(phone,code,callBack)!!
+    }
+
+    override fun changePass(
+        changePassRequest: ChangePassRequest,
+        callBack: CallBack<Any>
+    ): LiveData<Any> {
+        return instance?.changePass(changePassRequest,callBack)!!
     }
 
     private var instance:UCService?=null

@@ -41,6 +41,7 @@ import com.einyun.app.common.utils.HttpUrlUtil;
 import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.PicEvUtils;
 import com.einyun.app.library.EinyunSDK;
+import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
@@ -237,6 +238,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
      * 忘记密码页面
      * */
     public void enterAccount(){
+        CommonHttpService.getInstance().tenantId("-1");
         ARouter.getInstance().build(RouterUtils.ACTIVITY_ENTER_ACCOUNT).navigation();
     }
 

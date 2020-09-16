@@ -6,7 +6,7 @@
     <data>
         <variable
             name="callBack"
-            type="com.einyun.app.pms.user.core.ui.EnterAccountActivity" />
+            type="com.einyun.app.pms.user.core.ui.ChangePassActivity" />
     </data>
 
     <LinearLayout
@@ -27,18 +27,18 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="@string/txt_account"
+                android:text="新密码"
                 style="@style/style_userinfo_tv_left" />
 
             <com.einyun.app.common.ui.widget.BaseEditText
                 android:layout_marginRight="15dp"
                 android:textColor="@color/greyTextColor"
-                android:hint="请输入账号"
+                android:hint="请输入新密码"
                 android:background="@null"
                 android:gravity="center_vertical|end"
                 android:layout_width="@dimen/px_400"
-                android:id="@+id/et_account"
                 android:singleLine="true"
+                android:id="@+id/et_account"
                 style="@style/style_userinfo_right_text" />
         </RelativeLayout>
 

@@ -104,4 +104,6 @@
     <color name="black_13">#132D42</color>
     <color name="red_e0">#e02020</color>
     <color name="blue_4b">#4B8CF1</color>
+    <color name="grey_c7">#C7C7C7</color>
+    <color name="user_privacy_bottom_btn_color">#366ae9</color>
 </resources>

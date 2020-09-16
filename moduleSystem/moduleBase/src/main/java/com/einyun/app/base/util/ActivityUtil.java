@@ -404,7 +404,11 @@ public class ActivityUtil {
         finish(activityList.get(activityList.size()-1));
         finish(activityList.get(activityList.size()-1));
     }
-
+    public static void finishLastThreeActivity(){
+        finish(activityList.get(activityList.size()-1));
+        finish(activityList.get(activityList.size()-1));
+        finish(activityList.get(activityList.size()-1));
+    }
     /**
      * finish 到 cls
      */
