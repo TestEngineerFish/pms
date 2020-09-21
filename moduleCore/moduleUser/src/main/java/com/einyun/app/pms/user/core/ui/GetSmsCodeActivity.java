@@ -89,8 +89,7 @@ public class GetSmsCodeActivity extends BaseHeadViewModelActivity<ActivityGetSms
      * 获取验证码
      */
     public void getCheckNum() {
-        if (checkCheck())
-            viewModel.getCheckNum(binding.cpPhone.getText().toString()).observe(this, data -> {
+            viewModel.getCheckNum(phone).observe(this, data -> {
                 if (data != null && data.isState()) {
                     countDownTime(binding.getCheck);
                 } else {
@@ -121,15 +120,5 @@ public class GetSmsCodeActivity extends BaseHeadViewModelActivity<ActivityGetSms
         mTimer.start();
         view.setEnabled(false);
         view.setTextColor(getResources().getColor(R.color.grey_c7));
-    }
-
-    /**
-     * 获取验证码表单校验
-     */
-    private boolean checkCheck() {
-        if (!CheckUtil.getInstance(this).isMatch(binding.cpPhone, CheckUtil.REG_PHONE)) {
-            return false;
-        }
-        return true;
     }
 }

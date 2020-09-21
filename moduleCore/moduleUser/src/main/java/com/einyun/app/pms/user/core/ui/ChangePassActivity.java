@@ -53,10 +53,12 @@ public class ChangePassActivity extends BaseHeadViewModelActivity<ActivityChange
      * 跳转到修改密码界面
      */
     public void changePass() {
-        if (TextUtils.isEmpty(binding.etAccount.getText().toString())) {
+        if (TextUtils.isEmpty(binding.etAccount.getText().toString().trim())) {
             ToastUtil.show(this, "请输入新密码");
+        }else if (binding.etAccount.getText().toString().trim().length()<6){
+            ToastUtil.show(this, "密码必须大于6个字符");
         } else {
-            viewModel.changePass(phone,code,account,binding.etAccount.getText().toString()).observe(this, data -> {
+            viewModel.changePass(phone,code,account,binding.etAccount.getText().toString().trim()).observe(this, data -> {
                 if (data!=null&&data.isState()){
                     ToastUtil.show(this,"密码修改成功!");
                     ActivityUtil.finishLastThreeActivity();
