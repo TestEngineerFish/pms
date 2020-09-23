@@ -61,7 +61,7 @@
                         <TextView
 
                             style="@style/style_text_approval_left"
-                            android:text="分期" />
+                            android:text="园区" />
 
                         <TextView
                             style="@style/style_text_approval_right"
@@ -233,7 +233,7 @@
                             <TextView
 
                                 style="@style/style_text_approval_left"
-                                android:text="分期" />
+                                android:text="园区" />
 
                             <TextView
                                 style="@style/style_text_approval_right"
@@ -624,7 +624,7 @@
                             <TextView
 
                                 style="@style/style_text_approval_left"
-                                android:text="分期" />
+                                android:text="园区" />
 
                             <TextView
                                 style="@style/style_text_approval_right"

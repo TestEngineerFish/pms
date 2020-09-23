@@ -117,7 +117,7 @@ public class NoticeListActivity extends BaseHeadViewModelActivity<ActivityNotice
         binding.llOrderTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //弹出分期view
+                //弹出园区view
                 PeriodizationView periodizationView = new PeriodizationView();
                 periodizationView.setPeriodListener(NoticeListActivity.this::onPeriodSelectListener);
                 periodizationView.show(getSupportFragmentManager(), "");

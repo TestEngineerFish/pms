@@ -1,7 +1,7 @@
 package com.einyun.app.pms.create;
 
 public enum SelectType {
-    AGING("分期", "aging"),
+    AGING("园区", "aging"),
     LINE("条线", "line"),
     WORKY_TYPE("工单类型","work_type"),
     RESOURCE_TYPE("资源类型","resource_type"),

@@ -51,7 +51,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
     private String divideId;
     List<HouseModel> selectOrgs = new CopyOnWriteArrayList<>();
     private OnWorkTypeSelectListener onWorkTypeSelectListener;
-    //设置分期选择监听
+    //设置园区选择监听
 
     RVBindingAdapter<ItemHouseChooseBinding, HouseModel> adapter;
     TagAdapter tagAdapter;
@@ -326,7 +326,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
     }
 
     /**
-     * 设置分期选择监听
+     * 设置园区选择监听
      */
     public interface OnWorkTypeSelectListener {
         void onWorkTypeSelectListener(List<HouseModel> model);

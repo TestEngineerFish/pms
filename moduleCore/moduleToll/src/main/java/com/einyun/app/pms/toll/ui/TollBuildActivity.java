@@ -307,8 +307,8 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
         LiveEventBus.get(LiveDataBusKey.KEY_DIVIDE_CLOSE,Boolean.class).observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-            //弹出分期
-                //弹出分期view
+            //弹出园区
+                //弹出园区view
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -578,10 +578,10 @@ public class TollBuildActivity extends BaseHeadViewModelActivity<ActivityTollBui
     }
 
     /**
-     * 选择分期
+     * 选择园区
      */
     public void onPlotClick() {
-        //弹出分期view
+        //弹出园区view
         if (IsFastClick.isFastDoubleClick()) {
 
             initDivide();

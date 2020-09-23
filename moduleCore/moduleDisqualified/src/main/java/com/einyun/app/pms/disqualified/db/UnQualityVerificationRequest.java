@@ -29,7 +29,7 @@ public class UnQualityVerificationRequest {
         private String order_info_state="";//工单状态
         private String order_info_code="";//工单编号
         private String order_info_create_time="";//创建时间
-        private String order_info_divide="";//分期
+        private String order_info_divide="";//园区
         private String order_info_check_date="";//检查日期
         private String order_info_qus_desc="";//问题描述
         private String order_info_line="";

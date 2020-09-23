@@ -142,7 +142,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
     Float lineMax = 1F;
 
     /**
-     * 处理分期数据
+     * 处理园区数据
      *
      * @param orgModels
      * @return
@@ -422,7 +422,7 @@ public class OrderConditionPandectActivity extends BaseHeadViewModelActivity<Act
 
         public void selectOrgCodes () {
 
-            //弹出分期view
+            //弹出园区view
             periodizationView = new PeriodizationNoAutoJumpView();
             periodizationView.setPeriodListener(OrderConditionPandectActivity.this::onPeriodSelectListener);
             periodizationView.show(getSupportFragmentManager(), "");

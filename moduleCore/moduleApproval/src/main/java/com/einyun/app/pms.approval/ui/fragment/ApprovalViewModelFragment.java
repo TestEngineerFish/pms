@@ -330,10 +330,10 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
         }
     }
     /*
-     * 分期按钮点击
+     * 园区按钮点击
      * */
     public void onPlotClick(){
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView=new PeriodizationView();
         periodizationView.setPeriodListener(ApprovalViewModelFragment.this::onPeriodSelectListener);
         periodizationView.show(getActivity().getSupportFragmentManager(),"");
@@ -366,7 +366,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
     }
     /*
     * 筛选各类型字段
-    *结合分期 根据个字段生成请求bean
+    *结合园区 根据个字段生成请求bean
     * */
     @Override
     public void onData(String auditType, String auditSubType, String auditStatus, int mApprovalTypePosition, int mApprovalChildTypePosition, int mApprovalStatusPosition) {
@@ -391,7 +391,7 @@ public class ApprovalViewModelFragment extends BaseViewModelFragment<FragmentApp
 //        viewModel.refresh();
     }
     /*
-     * 分期参数
+     * 园区参数
      * */
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {

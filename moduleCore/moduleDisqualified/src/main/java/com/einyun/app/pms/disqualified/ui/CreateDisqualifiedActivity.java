@@ -332,7 +332,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //        }
         switch (type) {
             case AGING:
-                //分期
+                //园区
                 aging();
                 break;
             case CHECK_DATE:
@@ -361,7 +361,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 
     private void chooseDisposePerson() {
         if (divideId.isEmpty()) {
-            ToastUtil.show(this, "请先选择分期");
+            ToastUtil.show(this, "请先选择园区");
             return;
         }
         if (dimCode.isEmpty()) {
@@ -381,7 +381,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     public void onCacheClick() {
 
 //        if (binding.tvDivide.getText().toString().equals("请选择")) {
-//            ToastUtil.show(this,"请选择分期");
+//            ToastUtil.show(this,"请选择园区");
 //            return;
 //        }
 //        if (binding.tvCheckDate.getText().toString().equals("请选择")) {
@@ -437,7 +437,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 //        Log.e(TAG, "onPassClick: "+viewModel.getUserName());
 //        checkSubmit();
         if (binding.tvDivide.getText().toString().equals("请选择") || binding.tvDivide.getText().toString().isEmpty()) {
-            ToastUtil.show(this, "请选择分期");
+            ToastUtil.show(this, "请选择园区");
             return;
         }
         if (binding.tvCheckDate.getText().toString().equals("请选择") || binding.tvCheckDate.getText().toString().isEmpty()) {
@@ -506,7 +506,7 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
 
     private void checkSubmit() {
         if (binding.tvDivide.getText().toString().equals("请选择")) {
-            ToastUtil.show(this, "请选择分期");
+            ToastUtil.show(this, "请选择园区");
             return;
         }
         if (binding.tvCheckDate.getText().toString().equals("请选择")) {
@@ -580,16 +580,16 @@ public class CreateDisqualifiedActivity extends BaseHeadViewModelActivity<Activi
     }
 
     /**
-     * 分期view
+     * 园区view
      */
     private void aging() {
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView = new PeriodizationView();
         periodizationView.setPeriodListener(this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");
     }
 
-    //分期结果
+    //园区结果
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {
         divideId = orgModel.getId();

@@ -53,7 +53,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
 
     List<DictDataModel> selectOrgs = new CopyOnWriteArrayList<>();
     private OnWorkTypeSelectListener onWorkTypeSelectListener;
-    //设置分期选择监听
+    //设置园区选择监听
 
     RVBindingAdapter<ItemWorkTypeChooseBinding, DictDataModel> adapter;
     String blockId = "";
@@ -300,7 +300,7 @@ public class SelectWorkOrderTypeView extends DialogFragment implements ItemClick
     }
 
     /**
-     * 设置分期选择监听
+     * 设置园区选择监听
      */
     public interface OnWorkTypeSelectListener {
         void onWorkTypeSelectListener(List<DictDataModel> model);

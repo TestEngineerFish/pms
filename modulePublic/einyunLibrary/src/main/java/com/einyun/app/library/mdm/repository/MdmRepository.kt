@@ -250,7 +250,7 @@ class MdmRepository : MdmService {
     }
 
     /**
-     * 获取分期下面的网格信息
+     * 获取园区下面的网格信息
      */
     override fun gridPage(divideId: String, callBack: CallBack<PageResult<GridModel>>) {
         var queryBuilder = QueryBuilder()

@@ -141,12 +141,12 @@ public interface TollServiceApi {
     @POST()
     Flowable<DivideIdResponse> getFeeDivideId(@Url String url);
     /**
-     * 获取默认分期ID
+     * 获取默认园区ID
      */
     @GET()
     Flowable<DivideIdResponse> getDefauftDivideId(@Url String url);
     /**
-     * 获取默认分期Name
+     * 获取默认园区Name
      */
     @GET()
     Flowable<DivideIdNameResponse> getDefauftDivideName(@Url String url);

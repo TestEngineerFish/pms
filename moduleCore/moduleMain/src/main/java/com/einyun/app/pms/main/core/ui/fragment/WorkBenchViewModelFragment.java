@@ -64,7 +64,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     RVBindingAdapter<ItemWorkTablePendingNumBinding, String> adapter;
     //所有的项目CODE集合（disabked == 1）  运营收缴率使用
     ArrayList<String> projectCode = new ArrayList<>();
-    //所有的分期集合（disabked == 1）  待处理工单使用
+    //所有的园区集合（disabked == 1）  待处理工单使用
     ArrayList<String> divideCode = new ArrayList<>();
     NumberFormat formatDouble = new DecimalFormat("#.##");
     DecimalFormat formatInt = new DecimalFormat("#,###");
@@ -87,7 +87,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     }
 
     private void onlyInitData() {
-        //获取分期数据
+        //获取园区数据
         viewModel.userCenterUserList(userModuleService.getUserId()).observe(this, orgModels -> {
             SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_STAGING, new Gson().toJson(orgModels));
             handleStagingData(orgModels);
@@ -503,7 +503,7 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     }
 
     /**
-     * 处理分期数据
+     * 处理园区数据
      *
      * @param orgModels
      */

@@ -285,16 +285,16 @@ public class DisqualifiedOrderListFragment extends BaseViewModelFragment<Fragmen
 
     }
     /*
-     * 分期按钮点击
+     * 园区按钮点击
      * */
     public void onPlotClick(){
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView=new PeriodizationView();
         periodizationView.setPeriodListener(DisqualifiedOrderListFragment.this::onPeriodSelectListener);
         periodizationView.show(getActivity().getSupportFragmentManager(),"");
     }
     /**
-     *分期返回
+     *园区返回
      */
     @Override
     public void onPeriodSelectListener(OrgModel orgModel) {

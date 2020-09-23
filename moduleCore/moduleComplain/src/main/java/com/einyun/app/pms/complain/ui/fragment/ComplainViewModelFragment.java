@@ -102,7 +102,7 @@ public class ComplainViewModelFragment extends BaseViewModelFragment<ComplainFra
         binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //弹出分期view
+                //弹出园区view
                 PeriodizationView periodizationView = new PeriodizationView();
                 periodizationView.setPeriodListener(ComplainViewModelFragment.this::onPeriodSelectListener);
                 periodizationView.show(getParentFragmentManager(), "");

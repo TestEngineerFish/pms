@@ -85,9 +85,9 @@ class DisttributeMainModel :Serializable {
     @SerializedName("F_DESC")
     var desc: String? = null//问题描述
     @SerializedName("F_DIVIDE_ID")
-    var divideID: String? = null//分期id
+    var divideID: String? = null//园区id
     @SerializedName("F_DIVIDE_NAME")
-    var divideName: String? = null////分期名称
+    var divideName: String? = null////园区名称
     @SerializedName("F_TYPE")
     var type: String? = null //工单类型 （一级）
     @SerializedName("F_TYPE_NAME")

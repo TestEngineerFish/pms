@@ -45,7 +45,7 @@ public class SelectRepairsTypeView extends DialogFragment implements ItemClickLi
 
     List<Door> selectOrgs = new CopyOnWriteArrayList<>();
     private OnWorkTypeSelectListener onWorkTypeSelectListener;
-    //设置分期选择监听
+    //设置园区选择监听
 
     RVBindingAdapter<ItemRepairsTypeChooseBinding, Door> adapter;
     TagAdapter tagAdapter;
@@ -260,7 +260,7 @@ public class SelectRepairsTypeView extends DialogFragment implements ItemClickLi
     }
 
     /**
-     * 设置分期选择监听
+     * 设置园区选择监听
      */
     public interface OnWorkTypeSelectListener {
         void onWorkTypeSelectListener(List<Door> model);

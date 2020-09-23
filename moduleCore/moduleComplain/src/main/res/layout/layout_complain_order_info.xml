@@ -70,7 +70,7 @@
 
                 <TextView
                     style="@style/work_order_detail_left_txt"
-                    android:text="分期" />
+                    android:text="园区" />
 
                 <TextView
                     style="@style/work_order_detail_txt_right"

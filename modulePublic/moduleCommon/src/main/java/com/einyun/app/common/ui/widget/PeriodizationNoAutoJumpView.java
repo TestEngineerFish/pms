@@ -50,7 +50,7 @@ public class PeriodizationNoAutoJumpView extends DialogFragment implements ItemC
     IUserModuleService userModuleService;
     List<OrgModel> selectOrgs = new CopyOnWriteArrayList<>();
     private OnPeriodSelectListener onPeriodSelectListener;
-    //设置分期选择监听
+    //设置园区选择监听
 
     RVBindingAdapter<ItemBlockChooseNoJumpBinding, OrgModel> adapter;
     String blockId = "";
@@ -258,7 +258,7 @@ public class PeriodizationNoAutoJumpView extends DialogFragment implements ItemC
     }
 
     /**
-     * 设置分期选择监听
+     * 设置园区选择监听
      */
     public interface OnPeriodSelectListener {
         void onPeriodSelectListener(OrgModel orgModel);

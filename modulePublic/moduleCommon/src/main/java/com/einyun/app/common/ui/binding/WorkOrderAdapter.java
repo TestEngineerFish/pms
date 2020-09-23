@@ -82,7 +82,7 @@ public class WorkOrderAdapter {
     }
 
     /**
-     * 筛选条件是否选择，分期是否选择
+     * 筛选条件是否选择，园区是否选择
      *
      * @param textView
      * @param state
@@ -97,7 +97,7 @@ public class WorkOrderAdapter {
     }
 
     /**
-     * 筛选条件是否选择，分期是否选择
+     * 筛选条件是否选择，园区是否选择
      *
      * @param view
      * @param state

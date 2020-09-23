@@ -545,7 +545,7 @@ public class BasicDataManager {
     }
 
     /**
-     * 获取分期下面的网格信息
+     * 获取园区下面的网格信息
      *
      * @param divideId
      * @param callBack

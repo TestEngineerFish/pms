@@ -194,7 +194,7 @@ public class ReportFormFragment extends BaseViewModelFragment<ReportFormLayoutBi
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.operate_percent_tab_peroid_ln) {
-            //弹出分期view
+            //弹出园区view
             periodizationView.setPeriodListener(ReportFormFragment.this::onPeriodSelectListener);
             periodizationView.show(getParentFragmentManager(), "");
         } else if (v.getId() == R.id.operate_percent_tab_select_ln) {

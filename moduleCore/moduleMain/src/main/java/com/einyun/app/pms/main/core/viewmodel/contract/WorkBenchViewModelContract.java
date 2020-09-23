@@ -27,7 +27,7 @@ public interface WorkBenchViewModelContract {
     //获取审批数量
     LiveData<Integer> getAuditCount();
 
-    //分期集合
+    //园区集合
     LiveData<List<OrgModel>> userCenterUserList(String userId);
 
     //获取待办数量（客户报修，客户询问，客户投诉）

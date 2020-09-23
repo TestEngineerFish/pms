@@ -171,7 +171,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
         }
         switch (type) {
             case AGING:
-                //分期
+                //园区
                 aging();
                 break;
             case COMPLAIN_WAY:
@@ -314,10 +314,10 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
     }
 
     /**
-     * 分期view
+     * 园区view
      */
     private void aging() {
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView = new PeriodizationView();
         periodizationView.setPeriodListener(this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");
@@ -338,7 +338,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
     private boolean selectCheck(SelectType selectType) {
         if (selectType == SelectType.HOUSE) {
             if (!StringUtil.isNullStr(request.getBizData().getDivideId())) {
-                ToastUtil.show(this, "请先选择分期");
+                ToastUtil.show(this, "请先选择园区");
                 return false;
             }
         }
@@ -352,7 +352,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
      */
     private boolean checkData() {
         if (!StringUtil.isNullStr(request.getBizData().getDivideName())) {
-            ToastUtil.show(this, "请选择分期");
+            ToastUtil.show(this, "请选择园区");
             return false;
         }
         if (!StringUtil.isNullStr(binding.phone.getText().toString())) {
@@ -395,7 +395,7 @@ public class CreateClientComplainOrderViewModelActivity extends BaseHeadViewMode
 
 
     /**
-     * 分期回调
+     * 园区回调
      *
      * @param orgModel
      */

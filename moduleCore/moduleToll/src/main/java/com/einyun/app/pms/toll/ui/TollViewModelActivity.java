@@ -362,10 +362,10 @@ public class TollViewModelActivity extends BaseHeadViewModelActivity<ActivityTol
     }
 
     /**
-     * 选择分期
+     * 选择园区
      */
     public void onPlotClick() {
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView = new PeriodizationView();
         periodizationView.setPeriodListener(this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");

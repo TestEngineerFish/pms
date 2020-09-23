@@ -5,7 +5,7 @@
     <string name="tv_wait_approval">待审批</string>
     <string name="tv_had_approval">已审批</string>
     <string name="tv_me_started">我发起的</string>
-    <string name="tv_approval_installment">分期</string>
+    <string name="tv_approval_installment">园区</string>
     <string name="tv_approval_filter">筛选</string>
     <string name="tv_pl_choice">请选择</string>
     <string name="tv_approval_type">审批类型</string>
@@ -14,7 +14,7 @@
     <string name="tv_applicat_detail">申请人</string>
     <string name="tv_approval_wait">待审批</string>
     <string name="tv_approval_num">审批单号</string>
-    <string name="tv_installment">分期</string>
+    <string name="tv_installment">园区</string>
     <string name="tv_apply_time">申请时间</string>
     <string name="tv_approval_time">审批时间</string>
     <string name="tv_approval_info">申请信息</string>

@@ -68,7 +68,7 @@
                         android:layout_width="@dimen/px_150"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="分期" />
+                        android:text="园区" />
 
                     <TextView
                         android:layout_width="match_parent"

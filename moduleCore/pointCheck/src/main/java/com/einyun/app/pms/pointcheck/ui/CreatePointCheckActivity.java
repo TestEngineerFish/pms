@@ -255,11 +255,11 @@ public class CreatePointCheckActivity extends BaseHeadViewModelActivity<Activity
     }
 
     public void onDivideClick() {
-        //选择分期
+        //选择园区
 //        ARouter.getInstance().build(RouterUtils.ACTIVITY_BLOCK_CHOOSE)
 //                .withString(RouteKey.KEY_USER_ID, userModuleService.getUserId())
 //                .navigation(this, RouterUtils.ACTIVITY_REQUEST_BLOCK_CHOOSE);
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView = new PeriodizationView();
         periodizationView.setPeriodListener(CreatePointCheckActivity.this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");

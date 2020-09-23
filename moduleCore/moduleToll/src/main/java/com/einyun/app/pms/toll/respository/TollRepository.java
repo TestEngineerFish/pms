@@ -333,7 +333,7 @@ public class TollRepository {
     }
     /**
      * get
-     * 获取默认分期id
+     * 获取默认园区id
      *
      */
     public void getDefauftDivideId(String userId, CallBack<String> callBack) {
@@ -352,7 +352,7 @@ public class TollRepository {
     }
     /**
      * get
-     * 获取默认分期iName
+     * 获取默认园区iName
      *
      */
     public void getDefauftDivideName(String userId, CallBack<List<DivideNameModel>> callBack) {

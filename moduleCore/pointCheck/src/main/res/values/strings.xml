@@ -4,7 +4,7 @@
     <string name="title_point_check_detial">点检详情</string>
     <string name="title_sign_check_detial">巡更工单</string>
     <string name="title_point_check_list">点检记录</string>
-    <string name="alert_choose_massif">请选择分期</string>
+    <string name="alert_choose_massif">请选择园区</string>
     <string name="alert_choose_project">请选择点检事项</string>
     <string name="alert_choose_pic">请上传图片</string>
 
@@ -29,7 +29,7 @@
     <string name="text_check_type">类型</string>
     <string name="text_check_range_normal">正常范围</string>
     <string name="text_check_no">编号</string>
-    <string name="text_divide">分期</string>
+    <string name="text_divide">园区</string>
     <string name="text_check_inventory">点检事项</string>
     <string name="text_check_object">点检对象</string>
     <string name="text_check_address">对象地址</string>

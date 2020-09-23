@@ -1,7 +1,7 @@
 package com.einyun.app.pms.disqualified;
 
 public enum SelectType {
-    AGING("分期", "aging"),
+    AGING("园区", "aging"),
     CHECK_DATE("检查日期", "check_date"),
     LINE("条线", "line"),
     SEVERITY("严重程度", "severity"),

@@ -18,13 +18,13 @@
     <string name="tv_wait_approval">待审批</string>
     <string name="tv_had_approval">已审批</string>
     <string name="tv_me_started">我发起的</string>
-    <string name="tv_approval_installment">分期</string>
+    <string name="tv_approval_installment">园区</string>
     <string name="tv_approval_filter">筛选</string>
     <string name="tv_pl_choice">请选择</string>
     <string name="tv_approval_type">审批类型</string>
     <string name="tv_approval_status">审批状态</string>
     <string name="text_filtrate">筛选</string>
-    <string name="text_divide">分期</string>
+    <string name="text_divide">园区</string>
     <string name="text_state_closed">已关闭</string>
     <string name="text_state_wait_receive">待接单</string>
     <string name="text_state_wait_send">待派单</string>
@@ -204,7 +204,7 @@
     <string name="text_wait_send">待派单</string>
     <string name="text_wait_evaluate">待评价</string>
     <string name="text_wait_grab">待抢单</string>
-    <string name="text_need_divide_selected">请先选择分期</string>
+    <string name="text_need_divide_selected">请先选择园区</string>
     <string-array name="customer_inquiries_list">
         <item>待跟进</item>
         <item>待反馈</item>

@@ -60,7 +60,7 @@ public class CreateCheckViewModel extends BaseViewModel {
             public void call(List<ProjectModel> data) {
                 List<String> strings = loadProjectItems(data);
                 if (strings.size()==0) {
-                    ToastUtil.show(CommonApplication.getInstance(), "该分期下无点检事项");
+                    ToastUtil.show(CommonApplication.getInstance(), "该园区下无点检事项");
                 }else {
                     projectItems.postValue(loadProjectItems(data));
                     projects.postValue(data);

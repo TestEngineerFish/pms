@@ -33,9 +33,9 @@ public class URLS {
     public static final String URL_GET_FEE_LACK_DETAIL_LIST =relaseBasesUrl+"/payment/uppaidAmountOutV2";
     //获取feedid
     public static final String URL_GET_FEE_DIVIDE_ID =relaseBasesUrl+"/payInfo/queryIdByMdmid/";
-    //获取Defauft分期Id
+    //获取Defauft园区Id
     public static final String URL_GET_DEFAUFT_DIVIDE_ID ="/uc/api/org/v1/getCurrentOrg/";
-    //获取Defauft分期名字
+    //获取Defauft园区名字
     public static final String URL_GET_DEFAUFT_DIVIDE_NAME ="/user-center/api/usercenter/v1/ucOrg/userList/";
     //获取上次催缴时间
     public static final String URL_GET_LAST_WORTH_TIME =relaseBasesUrl+"/payment/getOverduePaymentByDivideId/";

@@ -213,7 +213,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
         }
         switch (type) {
             case AGING:
-                //分期
+                //园区
                 aging();
                 break;
             case LINE:
@@ -394,10 +394,10 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
 
 
     /**
-     * 分期view
+     * 园区view
      */
     private void aging() {
-        //弹出分期view
+        //弹出园区view
         PeriodizationView periodizationView = new PeriodizationView();
         periodizationView.setPeriodListener(this::onPeriodSelectListener);
         periodizationView.show(getSupportFragmentManager(), "");
@@ -446,7 +446,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
             return true;
         }
         if (!StringUtil.isNullStr(request.getDivideId())) {
-            ToastUtil.show(this, "请先选择分期");
+            ToastUtil.show(this, "请先选择园区");
             return false;
         }
         if (selectType == SelectType.LINE) {
@@ -529,7 +529,7 @@ public class CreateSendOrderViewModelActivity extends BaseHeadViewModelActivity<
     }
 
     /**
-     * 分期回调
+     * 园区回调
      *
      * @param orgModel
      */

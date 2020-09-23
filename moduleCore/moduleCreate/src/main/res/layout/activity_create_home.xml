@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_6"
                 android:layout_weight="1"
-                android:text="分期"
+                android:text="园区"
                 android:textColor="@color/blackTextColor"
                 android:textSize="@dimen/font_size16"
                 android:textStyle="bold" />

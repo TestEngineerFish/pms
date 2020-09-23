@@ -88,7 +88,7 @@ public class FeedBackActivity extends BaseHeadViewModelActivity<ActivityFeedBack
         binding.selectDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //弹出分期view
+                //弹出园区view
                 PeriodizationView periodizationView = new PeriodizationView();
                 periodizationView.setPeriodListener(FeedBackActivity.this::onPeriodSelectListener);
                 periodizationView.show(getSupportFragmentManager(), "");

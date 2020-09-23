@@ -157,7 +157,7 @@ public class OrderListAllActivity extends BaseHeadViewModelActivity<ActivityOrde
         binding.panelCondition.sendWorkOrerTabPeroidLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //弹出分期view
+                //弹出园区view
                 PeriodizationView periodizationView = new PeriodizationView();
                 periodizationView.setPeriodListener(OrderListAllActivity.this::onPeriodSelectListener);
                 periodizationView.show(OrderListAllActivity.this.getSupportFragmentManager(), "");
