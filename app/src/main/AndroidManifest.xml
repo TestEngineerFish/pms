@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.einyun.app.pms">
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -42,6 +43,7 @@
     <!--解锁-->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <permission android:name="android.permission.UPDATE_DEVICE_STATS" />
 
     <!--<uses-feature android:name="android.hardware.camera" />-->
@@ -68,27 +70,56 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <meta-data android:value="5f33450bb4b08b653e936773" android:name="UMENG_APPKEY"/>
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <meta-data
+        android:name="UMENG_APPKEY"
+        android:value="5f33450bb4b08b653e936773" />
 
     <!--多渠道打包-->
     <meta-data
         android:name="UMENG_CHANNEL"
-        android:value="${UMENG_CHANNEL_VALUE}"/>
+        android:value="${UMENG_CHANNEL_VALUE}" />
     <application
         android:name="com.einyun.app.common.application.CommonApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ico_app"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:label="${APP_NAME}"
-        tools:replace="android:label"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeFullScreen">
-<!--        <meta-data android:name="com.alibaba.app.appkey" android:value="28234922"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
-<!--        <meta-data android:name="com.alibaba.app.appsecret" android:value="a74f45b4bfea4a5d481892d9c0a1d3ad"/> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;-->
-<!-- 公司的阿里key -->
-        <meta-data android:name="com.alibaba.app.appkey" android:value="31064503"/> <!-- 请填写你自己的- appKey -->
-        <meta-data android:name="com.alibaba.app.appsecret" android:value="480a5670a6376da51b6e283aa7f88e73"/> <!-- 请填写你自己的appSecret -->
-        <activity android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
+        android:theme="@style/AppThemeFullScreen"
+        tools:replace="android:label">
+        <!-- 百度地图-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="t79tG1rFbITQ7OQLqtIlBOQZ627EWirT"></meta-data>
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
+        <!--        <meta-data android:name="com.alibaba.app.appkey" android:value="28234922"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
+        <!--        <meta-data android:name="com.alibaba.app.appsecret" android:value="a74f45b4bfea4a5d481892d9c0a1d3ad"/> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;-->
+        <!-- 公司的阿里key -->
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="31064503" /> <!-- 请填写你自己的- appKey -->
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="480a5670a6376da51b6e283aa7f88e73" /> <!-- 请填写你自己的appSecret -->
+        <activity
+            android:name="com.einyun.app.pms.user.core.ui.SplashViewModelActivity"
             android:theme="@style/NoActionBarAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -96,97 +127,124 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".wxapi.WXEntryActivity"
+        <activity
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity  android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity" android:launchMode="singleTask"/>
-        <activity  android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity" android:launchMode="singleTask"/>
-        <activity  android:name="com.einyun.app.pms.repairs.ui.RepairsActivity" android:launchMode="singleTask"/>
-        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity"/>
-        <activity android:name="com.einyun.app.common.zxing.ScannerActivity"/>
-        <activity  android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity"/>
-        <activity  android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
-        <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity"/>
-        <activity android:name=".main.core.ui.OrderConditionPandectActivity"/>
-        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyForceCloseActivity"/>
-        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.einyun.app.pms.user.core.ui.LoginViewModelActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.einyun.app.pms.main.core.ui.HomeTabViewModelActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.einyun.app.pms.repairs.ui.RepairsActivity"
+            android:launchMode="singleTask" />
+        <activity android:name="com.einyun.app.common.ui.component.blockchoose.BlockChooseActivity" />
+        <activity android:name="com.einyun.app.common.zxing.ScannerActivity" />
+        <activity android:name="com.einyun.app.common.ui.component.photo.PhotoShowActivity" />
+        <activity
+            android:name="com.einyun.app.common.ui.activity.X5WebViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.einyun.app.pms.sendorder.ui.SendOrderActivity" />
+        <activity android:name=".main.core.ui.OrderConditionPandectActivity" />
+        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyForceCloseActivity" />
+        <activity android:name="com.einyun.app.common.ui.activity.BaseApplyPostPoneActivity" />
 
         <!--点检Start-->
-        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity"/>
-        <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity"/>
-        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity"/>
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckListActivity" />
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.CreatePointCheckActivity" />
+        <activity android:name="com.einyun.app.pms.pointcheck.ui.PointCheckDetialActivity" />
         <!--点检End-->
 
         <!--计划工单Start-->
-        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderActivity"/>
-        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.einyun.app.pms.plan.ui.PlanOrderActivity" />
+        <activity
+            android:name="com.einyun.app.pms.plan.ui.PlanOrderDetailActivity"
+            android:launchMode="singleTask" />
         <!--计划工单End-->
 
         <!--巡查工单Start-->
-        <activity android:name=".patrol.ui.PatrolListActivity"/>
-        <activity android:name=".patrol.ui.PatrolHandleActivity" android:launchMode="singleTask"/>
-        <activity android:name=".patrol.ui.PatrolTimeHandleActivity" android:launchMode="singleTask"/>
-        <activity android:name=".patrol.ui.PatrolTimeDetialActivity" android:launchMode="singleTask"/>
-        <activity android:name=".patrol.ui.PatrolDetialActivity" android:launchMode="singleTask"/>
-<!--        <activity android:name="com.einyun.app.common.pushReceiver.PopupPushActivity" android:exported="true"/>-->
-        <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity"/>
-        <activity android:name=".patrol.ui.PatrolSignInScannerActivity"/>
-        <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity"/>
-        <activity android:name=".patrol.ui.PatrolForceCloseActivity"/>
-        <activity android:name=".patrol.ui.PatrolPostPoneActivity"/>
-        <activity android:name=".patrol.ui.PatrolTimePhotoActivity"/>
+        <activity android:name=".patrol.ui.PatrolListActivity" />
+        <activity
+            android:name=".patrol.ui.PatrolHandleActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".patrol.ui.PatrolTimeHandleActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".patrol.ui.PatrolTimeDetialActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".patrol.ui.PatrolDetialActivity"
+            android:launchMode="singleTask" />
+        <!--        <activity android:name="com.einyun.app.common.pushReceiver.PopupPushActivity" android:exported="true"/>-->
+        <activity android:name=".patrol.ui.PatrolQRSignInHandleActivity" />
+        <activity android:name=".patrol.ui.PatrolSignInScannerActivity" />
+        <activity android:name=".patrol.ui.PatrolQRSignInDetialActivity" />
+        <activity android:name=".patrol.ui.PatrolForceCloseActivity" />
+        <activity android:name=".patrol.ui.PatrolPostPoneActivity" />
+        <activity android:name=".patrol.ui.PatrolTimePhotoActivity" />
         <!--巡查工单End-->
 
         <!-- 创建工单 Start-->
-        <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity"/>
-        <activity android:name="com.einyun.app.pms.create.ui.CreateClientComplainOrderViewModelActivity"/>
-        <activity android:name="com.einyun.app.pms.create.ui.CreateClientEnquiryOrderViewModelActivity"/>
-        <activity android:name="com.einyun.app.pms.create.ui.CreateClientRepairsOrderViewModelActivity"/>
-        <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity"/>
+        <activity android:name="com.einyun.app.pms.create.ui.CreateSendOrderViewModelActivity" />
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientComplainOrderViewModelActivity" />
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientEnquiryOrderViewModelActivity" />
+        <activity android:name="com.einyun.app.pms.create.ui.CreateClientRepairsOrderViewModelActivity" />
+        <activity android:name="com.einyun.app.pms.create.ui.ChooseDisposeViewModelActivity" />
         <!-- 创建工单 End-->
 
-        <activity android:name=".approval.ui.ApprovalViewModuleActivity"/>
-        <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity"/>
-        <activity android:name=".sendorder.ui.ChooseDisposeViewModelActivity"/>
-       <!-- Mine       -->
-        <activity android:name=".mine.ui.SettingViewModuleActivity"/>
-        <activity android:name=".mine.ui.AdviceFeedBackViewModuleActivity"/>
-        <activity android:name=".mine.ui.SignSetViewModuleActivity"/>
-        <activity android:name=".mine.ui.UserHeadShotViewModuleActivity"/>
-        <activity android:name=".mine.ui.UserInfoViewModuleActivity"/>
-        <activity android:name=".mine.ui.MessageCenterActivity"/>
-        <activity android:name=".create.ui.AddComplainInfoActivity"/>
-        <activity android:name=".complain.ui.CommunicationActivity"/>
-        <activity android:name=".complain.ui.ComplainActivity"/>
-       <!-- Mine end       -->
-       <!--  客户问询开始      -->
-        <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity"/>
-        <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity"/>
-        <activity android:name=".customerinquiries.ui.InquiriesDetailMsgViewModuleActivity" android:launchMode="singleTask"/>
-        <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity"/>
-        <activity android:name=".customerinquiries.ui.InquiriesOrderListActivity"/>
-        <activity android:name=".customerinquiries.ui.InquiriesOrderDetailViewModuleActivity"/>
+        <activity android:name=".approval.ui.ApprovalViewModuleActivity" />
+        <activity android:name=".approval.ui.ApprovalDetailViewModuleActivity" />
+        <activity android:name=".sendorder.ui.ChooseDisposeViewModelActivity" />
+        <!-- Mine       -->
+        <activity android:name=".mine.ui.SettingViewModuleActivity" />
+        <activity android:name=".mine.ui.AdviceFeedBackViewModuleActivity" />
+        <activity android:name=".mine.ui.SignSetViewModuleActivity" />
+        <activity android:name=".mine.ui.UserHeadShotViewModuleActivity" />
+        <activity android:name=".mine.ui.UserInfoViewModuleActivity" />
+        <activity android:name=".mine.ui.MessageCenterActivity" />
+        <activity android:name=".create.ui.AddComplainInfoActivity" />
+        <activity android:name=".complain.ui.CommunicationActivity" />
+        <activity android:name=".complain.ui.ComplainActivity" />
+        <!-- Mine end       -->
+        <!--  客户问询开始      -->
+        <activity android:name=".customerinquiries.ui.CustomerInquiriesViewModuleActivity" />
+        <activity android:name=".customerinquiries.ui.InquiriesDetailViewModuleActivity" />
+        <activity
+            android:name=".customerinquiries.ui.InquiriesDetailMsgViewModuleActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".customerinquiries.ui.FeedBackViewModuleActivity" />
+        <activity android:name=".customerinquiries.ui.InquiriesOrderListActivity" />
+        <activity android:name=".customerinquiries.ui.InquiriesOrderDetailViewModuleActivity" />
         <!--  客户问询结束      -->
         <!--  品检工单开始      -->
-        <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity"/>
-        <activity android:name=".disqualified.ui.PropertyListViewModuleActivity"/>
-        <activity android:name=".disqualified.ui.CreateDisqualifiedActivity"/>
-        <activity android:name=".disqualified.ui.DisqualifiedDetailActivity"/>
-        <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity"/>
+        <activity android:name=".disqualified.ui.DisqualifiedViewModuleActivity" />
+        <activity android:name=".disqualified.ui.PropertyListViewModuleActivity" />
+        <activity android:name=".disqualified.ui.CreateDisqualifiedActivity" />
+        <activity android:name=".disqualified.ui.DisqualifiedDetailActivity" />
+        <activity android:name=".disqualified.ui.DisqualifiedOrderListActivity" />
         <!--  品检工单结束      -->
 
         <!--  收费开始      -->
-        <activity android:name=".toll.ui.TollViewModelActivity"/>
-        <activity android:name=".toll.ui.TollBuildActivity" android:launchMode="singleTask"/>
-        <activity android:name=".toll.ui.TollUnitActivity" android:launchMode="singleTask"/>
-        <activity android:name=".toll.ui.LackDetailViewModelActivity"/>
+        <activity android:name=".toll.ui.TollViewModelActivity" />
+        <activity
+            android:name=".toll.ui.TollBuildActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".toll.ui.TollUnitActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".toll.ui.LackDetailViewModelActivity" />
         <activity android:name=".toll.ui.PaymentAdvanceActivity" />
-        <activity android:name=".toll.ui.LackListActivity"/>
-        <activity android:name=".toll.ui.FeeActivity" android:launchMode="singleTask"/>
-        <activity android:name=".toll.ui.FeeSucActivity" android:launchMode="singleTask"/>
+        <activity android:name=".toll.ui.LackListActivity" />
+        <activity
+            android:name=".toll.ui.FeeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".toll.ui.FeeSucActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".toll.ui.AddHouserActivity" />
         <activity android:name=".toll.ui.AddWorthReminderActivity" />
         <activity android:name=".toll.ui.SetSignActivity" />
@@ -218,19 +276,19 @@
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
         </receiver>
-<!--     监听用户卸载-->
-<!--        <receiver android:name="com.einyun.app.common.Receiver.AppReceiver" >-->
-<!--            <intent-filter>-->
-<!--                &lt;!&ndash; 一个新应用包已经安装在设备上，数据包括包名（监听所在的app，新安装时，不能接收到这个广播） &ndash;&gt;-->
-<!--                <action android:name="android.intent.action.PACKAGE_ADDED" />-->
-<!--                &lt;!&ndash; 一个新版本的应用安装到设备，替换之前已经存在的版本  替换时会先收到卸载的再收到替换的， 替换自身也能收到&ndash;&gt;-->
-<!--                <action android:name="android.intent.action.PACKAGE_REPLACED" />-->
-<!--                &lt;!&ndash; 一个已存在的应用程序包已经从设备上移除，包括包名（卸载监听所在的app，则无法接收到） &ndash;&gt;-->
-<!--                <action android:name="android.intent.action.PACKAGE_REMOVED" />-->
-<!--                <action android:name="android.intent.action.CONNECTIVITY_CHANGE" />-->
-<!--                <data android:scheme="package" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
+        <!--     监听用户卸载-->
+        <!--        <receiver android:name="com.einyun.app.common.Receiver.AppReceiver" >-->
+        <!--            <intent-filter>-->
+        <!--                &lt;!&ndash; 一个新应用包已经安装在设备上，数据包括包名（监听所在的app，新安装时，不能接收到这个广播） &ndash;&gt;-->
+        <!--                <action android:name="android.intent.action.PACKAGE_ADDED" />-->
+        <!--                &lt;!&ndash; 一个新版本的应用安装到设备，替换之前已经存在的版本  替换时会先收到卸载的再收到替换的， 替换自身也能收到&ndash;&gt;-->
+        <!--                <action android:name="android.intent.action.PACKAGE_REPLACED" />-->
+        <!--                &lt;!&ndash; 一个已存在的应用程序包已经从设备上移除，包括包名（卸载监听所在的app，则无法接收到） &ndash;&gt;-->
+        <!--                <action android:name="android.intent.action.PACKAGE_REMOVED" />-->
+        <!--                <action android:name="android.intent.action.CONNECTIVITY_CHANGE" />-->
+        <!--                <data android:scheme="package" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="appid=101286213" />
@@ -244,19 +302,19 @@
             android:value="xxxx" />
         <!-- 请填写您自己的vivo平台上的appId -->
 
-       <!-- <service
-            android:name="com.einyun.app.common.pushReceiver.MyMessageIntentService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
-            </intent-filter>
-        </service>-->
+        <!-- <service
+             android:name="com.einyun.app.common.pushReceiver.MyMessageIntentService"
+             android:exported="false">
+             <intent-filter>
+                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
+             </intent-filter>
+             <intent-filter>
+                 <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
+             </intent-filter>
+             <intent-filter>
+                 <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
+             </intent-filter>
+         </service>-->
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="appid=101286213" /><!-- 请填写你自己华为平台上注册的appid -->

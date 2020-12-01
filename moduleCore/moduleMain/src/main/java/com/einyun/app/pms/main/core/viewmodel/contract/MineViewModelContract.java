@@ -14,7 +14,7 @@ public interface MineViewModelContract {
     //获取工作状态
     LiveData<String> getWorkState();
     //更新工作状态
-    LiveData<List<WorkStatusModel>> updateWorkState(String status);
+    LiveData<String> updateWorkState(String status);
     //获取个人信息
     LiveData<UserInfoModel> getUserInfoByUserId();
     /**

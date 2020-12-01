@@ -12,10 +12,7 @@ import com.einyun.app.library.uc.user.model.*
 import com.einyun.app.library.uc.user.net.URLs
 import com.einyun.app.library.uc.user.net.UserServiceApi
 import com.einyun.app.library.uc.user.net.request.*
-import com.einyun.app.library.uc.user.net.response.CheckNumResponse
-import com.einyun.app.library.uc.user.net.response.LoginResponse
-import com.einyun.app.library.uc.user.net.response.TentantResponse
-import com.einyun.app.library.uc.user.net.response.UpdateAppResponse
+import com.einyun.app.library.uc.user.net.response.*
 import kotlin.math.ceil
 
 /**
@@ -96,13 +93,68 @@ class UserRepository : UCService {
         callBack: CallBack<Any>
     ): LiveData<Any> {
         val liveData = MutableLiveData<Any>()
-        serviceApi?.changePass(changePassRequest)?.compose(RxSchedulers.inIoMain<CheckNumResponse>())
+        serviceApi?.changePass(changePassRequest)
+            ?.compose(RxSchedulers.inIoMain<CheckNumResponse>())
             ?.subscribe({ response ->
                 callBack.call(response)
                 liveData.postValue(response)
             }, { error -> callBack.onFaild(error) })
         return liveData
     }
+
+    override fun getKaoQingSize(
+        orgCode: String,
+        callBack: CallBack<UserInfoModel>
+    ): LiveData<UserInfoModel> {
+        val liveData = MutableLiveData<UserInfoModel>()
+        serviceApi?.getKaoQingSize(orgCode)
+            ?.compose(RxSchedulers.inIoMain<UserResponse>())
+            ?.subscribe({ response ->
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun getOrgLocation(callBack: CallBack<List<KaoQingOrgModel>>): LiveData<List<KaoQingOrgModel>> {
+        val liveData = MutableLiveData<List<KaoQingOrgModel>>()
+        serviceApi?.getOrgLocation()
+            ?.compose(RxSchedulers.inIoMain<KaoQingOrgResponse>())
+            ?.subscribe({ response ->
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun getKaoQingHistroy(
+        getKaoQingHistoryRequest: GetKaoQingHistoryRequest,
+        callBack: CallBack<List<KaoQingHistroyModel>>
+    ): LiveData<List<KaoQingHistroyModel>> {
+        val liveData = MutableLiveData<List<KaoQingHistroyModel>>()
+        var kaoQingHistoryRequest: GetKaoQingHistoryRequest? = null;
+        serviceApi?.getKaoQingHistroy(getKaoQingHistoryRequest)
+            ?.compose(RxSchedulers.inIoMain<KaoQingHistroyResponse>())
+            ?.subscribe({ response ->
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun ifKaoQingOut(
+        account: String,
+        callBack: CallBack<List<Param>>
+    ): LiveData<List<Param>> {
+        val liveData = MutableLiveData<List<Param>>()
+        serviceApi?.ifOutKaoQing(account)
+            ?.compose(RxSchedulers.inIoMain<ParamResponse>())
+            ?.subscribe({ response ->
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            }, { error -> callBack.onFaild(error) })
+        return liveData    }
+
 
     var serviceApi: UserServiceApi? = null
 

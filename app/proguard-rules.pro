@@ -399,3 +399,10 @@ public static final int *;
 -keep class com.meizu.cloud.** {*;}
 -dontwarn com.meizu.cloud.**
 -keepattributes SourceFile,LineNumberTable
+#百度地图
+-keep class com.baidu.mapapi.** {*; }
+-keep class com.baidu.platform.** {*; }
+-keep class com.baidu.location.** {*; }
+-keep class com.baidu.vi.** {*; }
+-keep class vi.com.gdi.bgl.android.** {*; }
+

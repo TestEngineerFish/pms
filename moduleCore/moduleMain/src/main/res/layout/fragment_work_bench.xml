@@ -21,7 +21,9 @@
             name="numAdapter"
             type="android.widget.BaseAdapter" />
     </data>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.einyun.app.common.ui.widget.CustomSwipeToRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
@@ -120,4 +122,16 @@
             </RelativeLayout>
         </com.einyun.app.common.ui.component.AbScrollView>
     </com.einyun.app.common.ui.widget.CustomSwipeToRefresh>
+    <ImageView
+        android:id="@+id/kaoqing"
+        android:layout_width="@dimen/px_178"
+        android:layout_height="@dimen/px_178"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/px_85"
+        android:layout_marginRight="@dimen/px_20"
+        android:src="@mipmap/kaoqing"
+        android:onClick="@{()->callBack.kaoqing()}"
+        android:scaleType="fitXY"/>
+</RelativeLayout>
 </layout>

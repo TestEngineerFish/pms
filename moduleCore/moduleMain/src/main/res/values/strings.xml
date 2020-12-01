@@ -31,4 +31,6 @@
     <string name="tv_setting">设置</string>
     <string name="ad_change_work_status">是否设置为下班状态？</string>
     <string name="ad_change_working_status">是否设置为上班状态？</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

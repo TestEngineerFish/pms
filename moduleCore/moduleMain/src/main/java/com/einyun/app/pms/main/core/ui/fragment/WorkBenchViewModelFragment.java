@@ -55,6 +55,9 @@ import static androidx.appcompat.app.AppCompatActivity.RESULT_OK;
  * 工作台Fragment
  */
 public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWorkBenchBinding, WorkBenchViewModel> {
+    private KaoqingFragment kaoqingFragment;//考勤
+    private MapFragment mapFragment;
+
     public static WorkBenchViewModelFragment newInstance() {
         return new WorkBenchViewModelFragment();
     }
@@ -83,7 +86,10 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
     @Override
     protected void setUpData() {
         binding.setCallBack(this);
+        kaoqingFragment = new KaoqingFragment();
         onlyInitData();
+        List<String> divideCodes=userModuleService.getDivideCodes();
+        Log.d("test",divideCodes.size()+"");
     }
 
     private void onlyInitData() {
@@ -468,15 +474,15 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
             binding.itemWorkBenchFirst.tvWorkOrderPending.setVisibility(View.GONE);
         } else {
             //没有物业工单
-            if (orderTitleFirstIndex == 0){
+            if (orderTitleFirstIndex == 0) {
                 binding.itemWorkBenchFirst.tvWorkOrderTitleFirst.setVisibility(View.GONE);
-            }else{
+            } else {
                 binding.itemWorkBenchFirst.tvWorkOrderTitleFirst.setVisibility(VISIBLE);
             }
             //没有客服工单
-            if (orderTitleSecondIndex == 0){
+            if (orderTitleSecondIndex == 0) {
                 binding.itemWorkBenchFirst.tvWorkOrderTitleSecond.setVisibility(View.GONE);
-            }else{
+            } else {
                 binding.itemWorkBenchFirst.tvWorkOrderTitleSecond.setVisibility(VISIBLE);
             }
             binding.itemWorkBenchFirst.llWorkOrderList.setVisibility(VISIBLE);
@@ -677,5 +683,13 @@ public class WorkBenchViewModelFragment extends BaseViewModelFragment<FragmentWo
 
     public void goToNotice() {
         ARouter.getInstance().build(RouterUtils.ACTIVITY_NOTICE_LIST).navigation();
+    }
+
+    public void kaoqing() {
+        kaoqingFragment.show(getActivity().getSupportFragmentManager(), "");
+    }
+
+    public void showMap() {
+        mapFragment.show(getActivity().getSupportFragmentManager(), "");
     }
 }

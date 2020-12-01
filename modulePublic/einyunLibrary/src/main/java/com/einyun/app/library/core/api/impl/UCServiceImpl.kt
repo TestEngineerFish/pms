@@ -6,6 +6,7 @@ import com.einyun.app.library.core.api.UCService
 import com.einyun.app.library.core.api.proxy.UCSericeImplProxy
 import com.einyun.app.library.uc.user.model.*
 import com.einyun.app.library.uc.user.net.request.ChangePassRequest
+import com.einyun.app.library.uc.user.net.request.GetKaoQingHistoryRequest
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 
 /**
@@ -46,6 +47,31 @@ class UCServiceImpl :UCService {
     ): LiveData<Any> {
         return proxy.changePass(changePassRequest,callBack)
     }
+
+    override fun getKaoQingSize(
+        orgCode: String,
+        callBack: CallBack<UserInfoModel>
+    ): LiveData<UserInfoModel> {
+       return proxy.getKaoQingSize(orgCode,callBack)
+    }
+
+    override fun getOrgLocation(callBack: CallBack<List<KaoQingOrgModel>>): LiveData<List<KaoQingOrgModel>> {
+        return proxy.getOrgLocation(callBack)
+    }
+
+    override fun getKaoQingHistroy(
+        getKaoQingHistoryRequest: GetKaoQingHistoryRequest,
+        callBack: CallBack<List<KaoQingHistroyModel>>
+    ): LiveData<List<KaoQingHistroyModel>> {
+        return proxy.getKaoQingHistroy(getKaoQingHistoryRequest,callBack)    }
+
+    override fun ifKaoQingOut(
+        account: String,
+        callBack: CallBack<List<Param>>
+    ): LiveData<List<Param>> {
+        return proxy.ifKaoQingOut(account,callBack)
+    }
+
 
     var proxy:UCSericeImplProxy= UCSericeImplProxy()
     override fun login(username: String, password: String, callBack: CallBack<UserModel>): LiveData<UserModel> {

@@ -82,7 +82,6 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
         initData();
 
     }
-
     private void initData() {
         viewModel.getUserInfoByUserId().observe(this, userInfoModel -> {
             binding.setUserInfo(userInfoModel);
@@ -103,6 +102,17 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
             });
         });
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        viewModel.getWorkState().observe(this, status -> {
+            if (status != null) {
+                binding.ivWorkStatus.setVisibility(View.VISIBLE);
+                upWorkStatus(status);
+            }
+        });
     }
 
     @Override
@@ -246,7 +256,7 @@ public class MineViewModelFragment extends BaseViewModelFragment<FragmentMineBin
                             });
                             new AlertDialog(getActivity()).builder()
                                     .setTitle("打卡成功")
-                                    .setMsg(getTime(workStatus))
+//                                    .setMsg(getTime(workStatus))
                                     .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {

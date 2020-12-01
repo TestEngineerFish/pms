@@ -62,10 +62,13 @@ class UserCenterServiceImplProxy : UserCenterService {
         userId: String,
         userName: String,
         status: String,
-        callBack: CallBack<List<WorkStatusModel>>
-    ): LiveData<List<WorkStatusModel>> {
-        return instance?.updateWorkStatus(userId, userName, status, callBack)!!
-    }
+        parkId: String,
+        parkName: String,
+        mark: String,
+        note: String,
+        callBack: CallBack<String>
+    ): LiveData<String> {
+        return instance?.updateWorkStatus(userId, userName, status, parkId,parkName,mark,note,callBack)!!    }
 
     override fun userCenterUserList(
         userId: String,

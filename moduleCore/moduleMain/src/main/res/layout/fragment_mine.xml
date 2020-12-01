@@ -117,7 +117,6 @@
                 android:layout_marginLeft="@dimen/px_36"
                 android:layout_marginTop="@dimen/px_24"
                 android:layout_toRightOf="@id/user_head_image"
-                android:onClick="@{()->callBack.changeWorkStatus()}"
                 android:src="@mipmap/img_mine_working"
                 android:visibility="invisible" />
             <!--<TextView

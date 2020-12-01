@@ -108,6 +108,7 @@ interface UserServiceApi {
      * */
     @GET(URLs.URL_GET_PHONE_BY_ACCOUNT)
     fun getPhone(@Query("account") account: String): Flowable<BaseResponse<String>>
+
     /**
      *校验验证码
      */
@@ -120,4 +121,30 @@ interface UserServiceApi {
     @POST(URLs.URL_CHANGE_PASS)
     fun changePass(@Body changePassRequest: ChangePassRequest): Flowable<CheckNumResponse>
 
+    /**
+     * 获取考勤范围
+     */
+    @GET(URLs.URL_GET_KAOQING_SIZE)
+    fun getKaoQingSize(
+        @Query("orgCode") orgCode: String
+    ): Flowable<UserResponse>
+
+    /**
+     * 获取考勤范围
+     */
+    @POST(URLs.URL_ORG_LOCATION)
+    fun getOrgLocation(): Flowable<KaoQingOrgResponse>
+
+    /**
+     * 获取打卡历史
+     */
+    @POST(URLs.URL_KAOQING_HISTROY)
+    fun getKaoQingHistroy(@Body getKaoQingHistoryRequest: GetKaoQingHistoryRequest): Flowable<KaoQingHistroyResponse>
+
+
+    /**
+     * 是否有外勤打卡权限
+     */
+    @GET(URLs.URL_KAOQING_IF_OUT)
+    fun ifOutKaoQing(@Query("account") account: String): Flowable<ParamResponse>
 }

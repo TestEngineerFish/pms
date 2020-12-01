@@ -41,7 +41,7 @@ interface UserCenterServiceApi {
     fun getWorkStatus(@Query("userId") userId: String): Flowable<BaseResponse<String>>
 
     @GET(URLs.URL_UPDATE_WORK_STATUS)
-    fun updateWorkStatus(@Query("userId") userId: String, @Query("account") account: String, @Query("status") status: String): Flowable<BaseResponse<List<WorkStatusModel>>>
+    fun updateWorkStatus(@Query("userId") userId: String, @Query("account") account: String, @Query("status") status: String, @Query("parkId") parkId: String, @Query("parkName") parkName: String, @Query("mark") mark: String, @Query("note") note: String): Flowable<BaseResponse<String>>
 
     @GET(URLs.URL_GET_DISPOSE_PERSON)
     fun getDisposePerson(@Query("orgId") orgId: String, @Query("dimCode") dimCode: String): Flowable<BaseResponse<List<OrgModel>>>

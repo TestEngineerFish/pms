@@ -33,6 +33,7 @@ class UserCenterServiceImpl : UserCenterService {
         return proxy.getHouseByCondition(divide,id, callBack)
     }
 
+
     override fun searchUserByCondition(
         request: SearchUserRequest,
         callBack: CallBack<List<GetMappingByUserIdsResponse>>
@@ -53,18 +54,22 @@ class UserCenterServiceImpl : UserCenterService {
     ): LiveData<List<OrgModel>> {
         return proxy.getCheckedPerson(orgId, callBack)
     }
-    override fun updateWorkStatus(
-        userId: String,
-        userName: String,
-        status: String,
-        callBack: CallBack<List<WorkStatusModel>>
-    ): LiveData<List<WorkStatusModel>> {
-        return proxy.updateWorkStatus(userId, userName, status, callBack)
-    }
 
     override fun getWorkStatus(userId: String, callBack: CallBack<String>): LiveData<String> {
         return proxy.getWorkStatus(userId, callBack)
     }
+
+    override fun updateWorkStatus(
+        userId: String,
+        userName: String,
+        status: String,
+        parkId: String,
+        parkName: String,
+        mark: String,
+        note: String,
+        callBack: CallBack<String>
+    ): LiveData<String> {
+        return proxy.updateWorkStatus(userId, userName, status,parkId,parkName,mark,note, callBack)    }
 
     override fun userCenterUserList(
         userId: String,

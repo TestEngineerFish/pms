@@ -61,7 +61,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         SplashViewModelActivityPermissionsDispatcher.updateWithPermissionCheck(this);
     }
 
-    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION})
     public void update(){
         viewModel.updateApp().observe(this, updateAppModel -> {
             UpdateManager updateManager = new UpdateManager(this, new UpdateManager.UpdateListener() {
@@ -74,7 +74,7 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         });
     }
 
-    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION})
     void showRecordDenied(){
         ToastUtil.show(this,"拒绝文件权限将无法打开APP");
     }

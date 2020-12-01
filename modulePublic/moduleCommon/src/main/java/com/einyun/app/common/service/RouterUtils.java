@@ -35,6 +35,7 @@ public class RouterUtils {
     public static final String ACTIVITY_ENTER_ACCOUNT="/user/EnterAccountActivity";
     public static final String ACTIVITY_GET_SMS="/user/GetSmsCodeActivity";
     public static final String ACTIVITY_CHANGE_PASS="/user/ChangePassActivity";
+    public static final String ACTIVITY_KAOQING = "/main/KaoQingActivity";
 
     /**********************点检******************************/
     public static final String ACTIVITY_POINT_CHECK_ACTIVITY="/pointCheck/PointCheckListActivity";

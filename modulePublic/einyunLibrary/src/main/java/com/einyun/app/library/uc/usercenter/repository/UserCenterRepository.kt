@@ -123,10 +123,14 @@ class UserCenterRepository() : UserCenterService {
         userId: String,
         userName: String,
         status: String,
-        callBack: CallBack<List<WorkStatusModel>>
-    ): LiveData<List<WorkStatusModel>> {
-        val liveData = MutableLiveData<List<WorkStatusModel>>()
-        serviceApi?.updateWorkStatus(userId, userName, status)?.compose(RxSchedulers.inIoMain())
+        parkId: String,
+        parkName: String,
+        mark: String,
+        note: String,
+        callBack: CallBack<String>
+    ): LiveData<String> {
+        val liveData = MutableLiveData<String>()
+        serviceApi?.updateWorkStatus(userId, userName, status,parkId,parkName,mark,note)?.compose(RxSchedulers.inIoMain())
             ?.subscribe({ response ->
                 if (response.isState()) {
                     callBack.call(response.data)

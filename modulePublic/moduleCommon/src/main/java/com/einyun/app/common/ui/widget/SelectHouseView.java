@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,6 +149,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
     }
 
     private List<HouseModel> InitSort(List<HouseModel> model) {
+        Log.d("Test", model.toArray().toString());
         Collections.sort(model, new Comparator<HouseModel>() {
             @Override
             public int compare(HouseModel o2, HouseModel o1) {
@@ -158,7 +160,12 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
                     String s2 = split2[split2.length - 1];
                     if (isInteger(s1) && isInteger(s2)) {
                         return Integer.parseInt(s2) - Integer.parseInt(s1);//顺序
-                    } else {
+                    } else if (isInteger(s1) && !isInteger(s2)) {
+                        return 1;
+                    } else if (!isInteger(s1) && isInteger(s2)) {
+                        return -1;
+                    }else
+                    {
                         return HanziToPinyin.getStr(o2.getName()).compareTo(HanziToPinyin.getStr(o1.getName()));//顺序
                     }
 
@@ -234,7 +241,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
     }
 
     public void switchOrgTag(HouseModel model) {
-        if ("请选择楼栋".equals(model.getName()) ||"请选择单元".equals(model.getName())||"请选择房屋".equals(model.getName())){
+        if ("请选择楼栋".equals(model.getName()) || "请选择单元".equals(model.getName()) || "请选择房屋".equals(model.getName())) {
             return;
         }
         selectOrgs.remove(selectOrgs.get(selectOrgs.size() - 1));
@@ -261,10 +268,12 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         }
         loadTags();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void sortHouseModel(List<HouseModel> list) {
-            ChineseSortHouse.transferListBuildDown(list);
+        ChineseSortHouse.transferListBuildDown(list);
     }
+
     /**
      * 是否为纯数字
      */
@@ -272,10 +281,11 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+
     /**
      * 排序
      */
-    public List<HouseModel>  sort(List<HouseModel> modelList){
+    public List<HouseModel> sort(List<HouseModel> modelList) {
 
         Collections.sort(modelList, new Comparator<HouseModel>() {
             @Override
@@ -286,7 +296,7 @@ public class SelectHouseView extends DialogFragment implements ItemClickListener
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             sortHouseModel(modelList);
             return modelList;
-        }else {
+        } else {
             return modelList;
         }
 

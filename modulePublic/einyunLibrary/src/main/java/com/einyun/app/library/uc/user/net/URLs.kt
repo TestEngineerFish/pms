@@ -102,4 +102,24 @@ object URLs {
      * 修改密码
      * */
     const val URL_CHANGE_PASS= "/user-center/api/usercenter/v1/ucUser/updatePwd"
+
+    /**
+     * 修改密码
+     * */
+    const val URL_GET_KAOQING_SIZE= "uc/api/org/v1/orgParam/getOrgParams"
+
+    /**
+     * 获取所在产业园所有坐标
+     * */
+    const val URL_ORG_LOCATION= "user-center/api/usercenter/v1/ucOrg/getUserCyyzb"
+
+    /**
+     * 获取打卡记录
+     * */
+    const val URL_KAOQING_HISTROY= "user-center/api/usercenter/v1/ucWorkHistory/getRecordList"
+
+    /**
+     * 是否有外勤打卡权限
+     * */
+    const val URL_KAOQING_IF_OUT= "uc/api/user/v1/user/getUserParams"
 }

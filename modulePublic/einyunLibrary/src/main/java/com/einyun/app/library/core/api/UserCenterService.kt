@@ -46,8 +46,12 @@ interface UserCenterService : EinyunService {
         userId: String,
         userName: String,
         status: String,
-        callBack: CallBack<List<WorkStatusModel>>
-    ): LiveData<List<WorkStatusModel>>
+        parkId: String,
+        parkName: String,
+        mark: String,
+        note: String,
+        callBack: CallBack<String>
+    ): LiveData<String>
 
     fun searchUserByCondition(
         request: SearchUserRequest,
@@ -59,4 +63,5 @@ interface UserCenterService : EinyunService {
         id: String?,
         callBack: CallBack<List<HouseModel>>
     ): LiveData<List<HouseModel>>
+
 }

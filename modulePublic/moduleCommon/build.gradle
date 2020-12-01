@@ -64,13 +64,13 @@ android {
     sourceSets {
         main {
             res.srcDirs = ['src/main/res', 'src/main/res-night']
+//            jniLibs.srcDirs = ['libs']
         }
     }
 
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(deps.project.einyun_library)
     api project(deps.project.module_db)
     api project(deps.project.module_base)
@@ -98,12 +98,14 @@ dependencies {
     api deps.mpchat        //图表
     api deps.pickerview    //菜单选择
     api deps.x5            //腾讯x5浏览器内核
-    api deps.picker //选择器
+    api deps.picker
+    api files('src/main/libs/BaiduLBS_Android.jar') //选择器
     //页面路由ARouter
     implementation(deps.arouter_api) {
         exclude group: 'com.android.support'
     }
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api fileTree(dir: 'src/main/libs', include: ['*.aar', '*.jar'], exclude: [])
     annotationProcessor deps.arouter_compiler
     implementation 'com.tencent.bugly:crashreport:latest.release'
 

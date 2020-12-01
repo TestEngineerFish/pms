@@ -64,10 +64,10 @@ public class MineViewModel extends BasePageListViewModel<ScanResItemModel> imple
     }
 
     @Override
-    public LiveData<List<WorkStatusModel>> updateWorkState(String status) {
-        return userCenterService.updateWorkStatus(getUserId(), userModuleService.getUserName(), status, new CallBack<List<WorkStatusModel>>() {
+    public LiveData<String> updateWorkState(String status) {
+        return userCenterService.updateWorkStatus(getUserId(), userModuleService.getUserName(), status,"","","","",new CallBack<String>() {
             @Override
-            public void call(List<WorkStatusModel> data) {
+            public void call(String data) {
 
             }
 

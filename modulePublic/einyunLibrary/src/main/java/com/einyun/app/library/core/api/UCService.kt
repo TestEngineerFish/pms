@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.einyun.app.base.event.CallBack
 import com.einyun.app.library.uc.user.model.*
 import com.einyun.app.library.uc.user.net.request.ChangePassRequest
+import com.einyun.app.library.uc.user.net.request.GetKaoQingHistoryRequest
 import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
 
 /**
@@ -19,7 +20,7 @@ import com.einyun.app.library.uc.user.net.request.UpdateUserRequest
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-interface UCService :EinyunService{
+interface UCService : EinyunService {
     fun getTenantId(code: String, callBack: CallBack<TenantModel>): LiveData<TenantModel>
 
     /**
@@ -27,7 +28,11 @@ interface UCService :EinyunService{
      *
      * @return
      */
-    fun login(username: String, password: String, callBack: CallBack<UserModel>): LiveData<UserModel>
+    fun login(
+        username: String,
+        password: String,
+        callBack: CallBack<UserModel>
+    ): LiveData<UserModel>
 
     /**
      * 根据账号获取用户信息
@@ -37,7 +42,11 @@ interface UCService :EinyunService{
     /**
      * 根据账号获取用户信息
      */
-    fun getUser(account: String, userNumber: String?, callBack: CallBack<UserInfoModel>): LiveData<UserInfoModel>
+    fun getUser(
+        account: String,
+        userNumber: String?,
+        callBack: CallBack<UserInfoModel>
+    ): LiveData<UserInfoModel>
 
     /**
      * 根据用户ID获取用户信息
@@ -62,31 +71,60 @@ interface UCService :EinyunService{
     /**
      * 判断账户是否存在
      */
-    fun userNumberExist(account: String, userNumber: String?, callBack: CallBack<Boolean>): LiveData<Boolean>
+    fun userNumberExist(
+        account: String,
+        userNumber: String?,
+        callBack: CallBack<Boolean>
+    ): LiveData<Boolean>
 
     /**
      * 更新用户信息
      */
     fun updateUser(request: UpdateUserRequest, callBack: CallBack<Boolean>): LiveData<Boolean>
 
-    fun updateApp(callBack: CallBack<UpdateAppModel>):LiveData<UpdateAppModel>
+    fun updateApp(callBack: CallBack<UpdateAppModel>): LiveData<UpdateAppModel>
 
     /**
      * 获取短信验证码
      * */
-    fun getCheckNum(phone:String,callBack: CallBack<Any>):LiveData<Any>
+    fun getCheckNum(phone: String, callBack: CallBack<Any>): LiveData<Any>
 
     /**
      * 根据账号获取手机号
      * */
-    fun getPhone(account: String,callBack: CallBack<String>):LiveData<String>
+    fun getPhone(account: String, callBack: CallBack<String>): LiveData<String>
 
     /**
      * 校验短信验证码
      * */
-    fun checkkNum(phone:String,code: String,callBack: CallBack<Any>):LiveData<Any>
+    fun checkkNum(phone: String, code: String, callBack: CallBack<Any>): LiveData<Any>
+
     /**
      * 修改密码
      * */
-    fun changePass(changePassRequest: ChangePassRequest,callBack: CallBack<Any>):LiveData<Any>
+    fun changePass(changePassRequest: ChangePassRequest, callBack: CallBack<Any>): LiveData<Any>
+
+    /**
+     * 获取考勤范围
+     */
+    fun getKaoQingSize(orgCode: String, callBack: CallBack<UserInfoModel>): LiveData<UserInfoModel>
+
+    /**
+     * 获取所在产业园坐标
+     */
+    fun getOrgLocation(callBack: CallBack<List<KaoQingOrgModel>>): LiveData<List<KaoQingOrgModel>>
+
+    /**
+     * 获取考情历史
+     */
+    fun getKaoQingHistroy(
+        getKaoQingHistoryRequest: GetKaoQingHistoryRequest,
+        callBack: CallBack<List<KaoQingHistroyModel>>
+    ): LiveData<List<KaoQingHistroyModel>>
+
+    /**
+     * 是否有外勤打卡权限
+     */
+    fun ifKaoQingOut(account: String,callBack: CallBack<List<Param>>): LiveData<List<Param>>
+
 }
