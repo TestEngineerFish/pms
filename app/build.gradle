@@ -5,8 +5,8 @@ android {
         applicationId "com.sf.fti" //property management system
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode 102
-        versionName "1.0.2"
+        versionCode 103
+        versionName "1.0.3"
         multiDexEnabled true
         flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
