@@ -31,6 +31,8 @@ interface UCService : EinyunService {
     fun login(
         username: String,
         password: String,
+        code: String,
+        uuid: String,
         callBack: CallBack<UserModel>
     ): LiveData<UserModel>
 
@@ -126,5 +128,15 @@ interface UCService : EinyunService {
      * 是否有外勤打卡权限
      */
     fun ifKaoQingOut(account: String,callBack: CallBack<List<Param>>): LiveData<List<Param>>
+
+    /**
+     * 获取图片验证码
+     */
+    fun getImgVerify(callBack: CallBack<ImgVerifyModel>): LiveData<ImgVerifyModel>
+
+    /**
+     * 刷新token
+     */
+    fun updateToken(password: String,callBack: CallBack<UserModel>): LiveData<UserModel>
 
 }

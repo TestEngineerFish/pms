@@ -21,7 +21,7 @@ public interface UserViewModelContract {
      * @param password
      * @return
      */
-    LiveData<UserModel> login(String username, String password, boolean isShowLoading);
+    LiveData<UserModel> login(String username, String password, String code,String uuid,boolean isShowLoading);
 
     LiveData<TenantModel> getTenantId(String code, boolean splash);
 

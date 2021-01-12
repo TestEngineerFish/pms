@@ -19,7 +19,7 @@ class UserModel {
     var phone: String? = null
     var userId: String? = null
     var password: String? = null
-
+    var prop: Prop? = null
     constructor(token: String, userId: String, account: String, username: String) {
         this.token = token
         this.userId = userId
@@ -57,5 +57,13 @@ class UserModel {
         this.password = password
     }
 
+class Prop{
+    var code: String? = null
+    var uuid: String? = null
 
+    constructor(code: String?, uuid: String?) {
+        this.code = code
+        this.uuid = uuid
+    }
+}
 }

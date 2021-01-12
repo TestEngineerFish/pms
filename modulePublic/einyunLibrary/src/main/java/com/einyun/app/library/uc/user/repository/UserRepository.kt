@@ -155,6 +155,27 @@ class UserRepository : UCService {
             }, { error -> callBack.onFaild(error) })
         return liveData    }
 
+    override fun getImgVerify(callBack: CallBack<ImgVerifyModel>): LiveData<ImgVerifyModel> {
+        val liveData = MutableLiveData<ImgVerifyModel>()
+        serviceApi?.getImgVerify()
+            ?.compose(RxSchedulers.inIoMain<BaseResponse<ImgVerifyModel>>())
+            ?.subscribe({ response ->
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            }, { error -> callBack.onFaild(error) })
+        return liveData
+    }
+
+    override fun updateToken(password: String,callBack: CallBack<UserModel>): LiveData<UserModel> {
+        val liveData = MutableLiveData<UserModel>()
+        serviceApi?.updateToken(password)
+            ?.compose(RxSchedulers.inIoMain<BaseResponse<UserModel>>())
+            ?.subscribe({ response ->
+                callBack.call(response.data)
+                liveData.postValue(response.data)
+            }, { error -> callBack.onFaild(error) })
+        return liveData    }
+
 
     var serviceApi: UserServiceApi? = null
 
@@ -187,12 +208,17 @@ class UserRepository : UCService {
     override fun login(
         username: String,
         password: String,
+        code: String,
+        uuid: String,
         callBack: CallBack<UserModel>
     ): LiveData<UserModel> {
         val user = MutableLiveData<UserModel>()
         val request = LoginRequest()
         request.setUsername(username)
         request.setPassword(password)
+        val prop=request.prop;
+        prop.code=code;
+        prop.uuid=uuid
         serviceApi?.login(request)
             ?.compose(RxSchedulers.inIoMain<LoginResponse>())
             ?.subscribe({ loginResponse: LoginResponse ->

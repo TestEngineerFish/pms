@@ -2,11 +2,14 @@ package com.einyun.app.pms.user.core.ui;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -60,6 +63,8 @@ import com.einyun.app.pms.user.databinding.ActivityLoginBinding;
 @Route(path = RouterUtils.ACTIVITY_USER_LOGIN)
 public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLoginBinding, UserViewModel> {
 
+    private String uuid;
+
     @Override
     protected UserViewModel initViewModel() {
         return new ViewModelProvider(this, new UserViewModelFactory()).get(UserViewModel.class);
@@ -110,6 +115,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         setUserList();
         CommonApplication.getInstance().unbindAccount();
         initEvent();
+        getImgVerify();
     }
 
     @Override
@@ -203,15 +209,47 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
 
             }
         });
+        binding.etVerify.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkData();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void checkData() {
         if (StringUtil.isNullStr(binding.etUser.getText().toString())
-                && StringUtil.isNullStr(binding.etPassword.getText().toString())) {
+                && StringUtil.isNullStr(binding.etPassword.getText().toString())&&StringUtil.isNullStr(binding.etVerify.getText().toString())) {
             binding.btLogin.setEnabled(true);
         } else {
             binding.btLogin.setEnabled(false);
         }
+    }
+
+    /**
+     * 获取图片验证码
+     */
+    public void getImgVerify() {
+        CommonHttpService.getInstance().tenantId("-1");
+        viewModel.getImgVerify().observe(this, data -> {
+            if (data != null) {
+                uuid=data.getUuid();
+                byte[] decodedString = Base64.decode(data.getImg(), Base64.DEFAULT);
+                binding.ivVerify.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
+            } else {
+                ToastUtil.show(this, "验证码获取失败");
+            }
+        });
     }
 
     /**
@@ -236,8 +274,8 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
 
     /**
      * 忘记密码页面
-     * */
-    public void enterAccount(){
+     */
+    public void enterAccount() {
         CommonHttpService.getInstance().tenantId("-1");
         ARouter.getInstance().build(RouterUtils.ACTIVITY_ENTER_ACCOUNT).navigation();
     }
@@ -256,6 +294,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
         SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, "-1");
         SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_ID, "-1");
         UserModel model = binding.getUserModel();
+        model.setProp(new UserModel.Prop(binding.etVerify.getText().toString().trim(),uuid));
                    /* //判断用户名是否为空
                     if (!StringUtil.isNullStr(binding.etOrgCode.getText().toString().trim())) {
                         ToastUtil.show(this, "请输入企业编码");
@@ -271,14 +310,14 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
             ToastUtil.show(this, R.string.login_password_null_tip);
             return;
         }
-        viewModel.login(binding.etUser.getText().toString().trim(), model.getPassword(), true)
+        viewModel.login(binding.etUser.getText().toString().trim(), model.getPassword(),model.getProp().getCode(),uuid, true)
                 .observe(LoginViewModelActivity.this,
                         user -> {
                             getPersonInfo(user.getAccount());
                             CommonApplication.getInstance().bindAccount(user.getUserId().replace("-", ""));
                             SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
                             SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT, binding.etUser.getText().toString());
-                            SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, binding.etOrgCode.getText().toString());
+                            SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, "-1");
                             if (StringUtil.isNullStr(path)) {
                                 ARouter.getInstance()
                                         .build(path).with(getIntent().getExtras())

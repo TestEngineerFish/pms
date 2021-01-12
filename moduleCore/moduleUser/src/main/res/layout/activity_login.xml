@@ -177,17 +177,60 @@
                     android:layout_below="@id/ll_password" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_verify"
+                    style="@style/login_input_ll">
+
+                    <ImageView
+                        style="@style/login_input_ll_img"
+                        android:src="@mipmap/verify" />
+
+                    <com.einyun.app.common.ui.widget.NoMenuEditText
+                        android:id="@+id/et_verify"
+                        style="@style/login_input_ll_edit"
+                        android:hint="请输入验证码"
+                        android:inputType="textPassword" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_update"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px_60"
+                    android:onClick="@{()->callBack.getImgVerify()}"
+                    android:src="@mipmap/update"
+                    />
+                <ImageView
+                    android:id="@+id/iv_verify"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_toLeftOf="@id/iv_update"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px_10"
+                    />
+                <View
+                    style="@style/login_input_ll_underline"
+                    android:layout_below="@id/ll_verify" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/forget_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_60"
-                android:padding="@dimen/px_10"
                 android:layout_marginTop="@dimen/px_10"
-                android:textSize="@dimen/font_size14"
-                android:textColor="@color/hint_text_color"
+                android:onClick="@{()->callBack.enterAccount()}"
+                android:padding="@dimen/px_10"
                 android:text="忘记密码"
-                android:onClick="@{()->callBack.enterAccount()}"/>
+                android:textColor="@color/hint_text_color"
+                android:textSize="@dimen/font_size14" />
 
             <Button
                 android:id="@+id/bt_login"

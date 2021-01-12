@@ -15,7 +15,15 @@ package com.einyun.app.library.uc.user.net.request;
 public class LoginRequest {
     private String username;
     private String password;
+    private Prop prop=new Prop();
 
+    public Prop getProp() {
+        return prop;
+    }
+
+    public void setProp(Prop prop) {
+        this.prop = prop;
+    }
 
     public String getUsername() {
         return username;
@@ -32,4 +40,26 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+   public class Prop {
+        private String code;
+        private String uuid;
+
+       public String getCode() {
+           return code;
+       }
+
+       public void setCode(String code) {
+           this.code = code;
+       }
+
+       public String getUuid() {
+           return uuid;
+       }
+
+       public void setUuid(String uuid) {
+           this.uuid = uuid;
+       }
+   }
+
 }

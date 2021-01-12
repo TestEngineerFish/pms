@@ -74,6 +74,12 @@ class UCSericeImplProxy : UCService {
         return instance?.ifKaoQingOut(account, callBack)!!
     }
 
+    override fun getImgVerify(callBack: CallBack<ImgVerifyModel>): LiveData<ImgVerifyModel> {
+        return instance?.getImgVerify(callBack)!!    }
+
+    override fun updateToken(password: String,callBack: CallBack<UserModel>): LiveData<UserModel> {
+        return instance?.updateToken(password,callBack)!!    }
+
     private var instance: UCService? = null
 
     constructor() {
@@ -92,9 +98,11 @@ class UCSericeImplProxy : UCService {
     override fun login(
         username: String,
         password: String,
+        code: String,
+        uuid: String,
         callBack: CallBack<UserModel>
     ): LiveData<UserModel> {
-        return instance?.login(username, password, callBack)!!
+        return instance?.login(username, password,code,uuid, callBack)!!
     }
 
     override fun userAccount(

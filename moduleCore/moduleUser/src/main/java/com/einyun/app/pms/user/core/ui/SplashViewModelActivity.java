@@ -15,18 +15,22 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.einyun.app.base.BaseActivity;
 import com.einyun.app.base.BaseViewModelActivity;
+import com.einyun.app.base.BasicApplication;
 import com.einyun.app.base.db.entity.User;
 import com.einyun.app.base.util.ActivityUtil;
 import com.einyun.app.base.util.SPUtils;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.application.CommonApplication;
+import com.einyun.app.common.constants.SPKey;
+import com.einyun.app.common.net.CommonHttpService;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.ui.activity.BaseSkinViewModelActivity;
 import com.einyun.app.common.utils.UpdateManager;
 import com.einyun.app.library.uc.user.model.UserModel;
 import com.einyun.app.pms.user.R;
 import com.einyun.app.pms.user.core.Constants;
+import com.einyun.app.pms.user.core.UserServiceManager;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModel;
 import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
 import com.einyun.app.pms.user.databinding.ActivitySplashBinding;
@@ -61,8 +65,8 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         SplashViewModelActivityPermissionsDispatcher.updateWithPermissionCheck(this);
     }
 
-    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION})
-    public void update(){
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void update() {
         viewModel.updateApp().observe(this, updateAppModel -> {
             UpdateManager updateManager = new UpdateManager(this, new UpdateManager.UpdateListener() {
                 @Override
@@ -74,15 +78,15 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
         });
     }
 
-    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION})
-    void showRecordDenied(){
-        ToastUtil.show(this,"拒绝文件权限将无法打开APP");
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION})
+    void showRecordDenied() {
+        ToastUtil.show(this, "拒绝文件权限将无法打开APP");
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        SplashViewModelActivityPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+        SplashViewModelActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     private void login() {
@@ -99,24 +103,39 @@ public class SplashViewModelActivity extends BaseSkinViewModelActivity<ActivityS
                 finish();
                 return;
             }
-            //企业编码校验
-            viewModel.getTenantId(SPUtils.get(this, Constants.SP_KEY_TENANT_CODE, "").toString().trim(), true).observe(this,
-                    tenantModel -> {
 //                        ToastUtil.show(this,"tenantid->"+tenantModel.getCode());
-                        //拿取最后一个user登陆
-                        viewModel.login(userModel.getUsername().trim(), userModel.getPassword(), false)
-                                .observe(this,
-                                        currentUserModel -> {
-                                            CommonApplication.getInstance().bindAccount(currentUserModel.getUserId().replace("-", ""));
-                                            ARouter.getInstance()
-                                                    .build(RouterUtils.ACTIVITY_MAIN_HOME)
-                                                    .navigation();
-                                            finish();
-                                        });
-                    });
+            //拿取最后一个user登陆
+            CommonHttpService.getInstance().tenantId("-1");
+            String token=SPUtils.get(this,Constants.SP_KEY_TOKEN,"").toString();
+            Log.d("Test",token);
+            CommonHttpService.getInstance().authorToken(SPUtils.get(this,Constants.SP_KEY_TOKEN,"").toString());
+            viewModel.updateToken(userModel.getPassword(), false)
+                    .observe(this,
+                            currentUserModel -> {
+                                getPersonInfo(currentUserModel.getAccount());
+                                CommonApplication.getInstance().bindAccount(currentUserModel.getUserId().replace("-", ""));
+                                SPUtils.put(BasicApplication.getInstance(), "SIGN_LOGIN", "SIGN_LOGIN");
+                                SPUtils.put(BasicApplication.getInstance(), SPKey.KEY_ACCOUNT,currentUserModel.getUsername());
+                                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TENANT_CODE, "-1");
+                                ARouter.getInstance()
+                                        .build(RouterUtils.ACTIVITY_MAIN_HOME)
+                                        .navigation();
+                                finish();
+                            });
         });
     }
-
+    /**
+     * 获取个人信息
+     */
+    private void getPersonInfo(String account) {
+        viewModel.getUserByccountBeanLiveData(account).observe(this, model -> {
+            if (model != null) {
+                if (model.getMobile() != null) {
+                    UserServiceManager.getInstance().getCurrentUserModel().setPhone(model.getMobile());
+                }
+            }
+        });
+    }
     @Override
     protected int getColorPrimary() {
         return Color.TRANSPARENT;

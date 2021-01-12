@@ -2,6 +2,7 @@ package com.einyun.app.pms.user.core.viewmodel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
@@ -22,6 +23,7 @@ import com.einyun.app.library.core.api.ServiceManager;
 import com.einyun.app.library.core.api.UCService;
 import com.einyun.app.library.core.net.EinyunHttpService;
 import com.einyun.app.library.uc.user.model.CheckNumModel;
+import com.einyun.app.library.uc.user.model.ImgVerifyModel;
 import com.einyun.app.library.uc.user.model.TenantModel;
 import com.einyun.app.library.uc.user.model.UpdateAppModel;
 import com.einyun.app.library.uc.user.model.UserInfoModel;
@@ -50,6 +52,7 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
     private LiveData<UserModel> mUserModel;
     private LiveData<Object> checkNumModelLiveData;
     private LiveData<String> phoneLiveData;
+    private LiveData<ImgVerifyModel> imgVerifyModelLiveData;
     FeedBackRepository repository = new FeedBackRepository();
 
     public UserViewModel() {
@@ -75,12 +78,12 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
      * @return
      */
     @Override
-    public LiveData<UserModel> login(String username, String password, boolean isShowLoading) {
+    public LiveData<UserModel> login(String username, String password,String code,String uuid, boolean isShowLoading) {
         //网络数据交互，显示Loading
         if (isShowLoading) {
             showLoading();
         }
-        mUserModel = mUCService.login(username, password, new CallBack<UserModel>() {
+        mUserModel = mUCService.login(username, password,code,uuid, new CallBack<UserModel>() {
             @Override
             public void call(UserModel data) {
                 if (isShowLoading) {
@@ -94,6 +97,49 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
                 SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_NAME, data.getAccount());
                 SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_ID, data.getUserId());
 
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                if (isShowLoading) {
+                    //关闭Loading
+                    hideLoading();
+                } else {
+                    ARouter.getInstance().build(RouterUtils.ACTIVITY_USER_LOGIN).navigation();
+                    ActivityUtil.getActivityList().get(0).finish();
+                }
+                ThrowableParser.onFailed(throwable);
+            }
+        });//数据获取
+        return mUserModel;
+    }
+
+/**
+ * 刷新token，并且登录
+ * */
+    public LiveData<UserModel> updateToken(String password, boolean isShowLoading) {
+        //网络数据交互，显示Loading
+        if (isShowLoading) {
+            showLoading();
+        }
+        mUserModel = mUCService.updateToken( password, new CallBack<UserModel>() {
+            @Override
+            public void call(UserModel data) {
+                if (isShowLoading) {
+                    //关闭Loading
+                    hideLoading();
+                }
+                UserServiceManager.getInstance().saveUserModel(data);
+                CommonHttpService.getInstance().authorToken(data.getToken());
+                mUsersRepo.saveOrUpdateUser(new UserModel("", data.getUserId(), "", data.getAccount(), password));
+                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TOKEN, data.getToken());
+                SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_NAME, data.getAccount());
+                SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_ID, data.getUserId());
+//                UserServiceManager.getInstance().saveToken(data.getToken());
+//                CommonHttpService.getInstance().authorToken(data.getToken());
+//                Log.d("test",UserServiceManager.getInstance().getCurrentUserModel().getAccount());
+//                SPUtils.put(BasicApplication.getInstance(), Constants.SP_KEY_TOKEN, data.getToken());
+//                SPUtils.put(BasicApplication.getInstance(), com.einyun.app.common.Constants.SP_KEY_USER_NAME, data.getAccount());
             }
 
             @Override
@@ -317,6 +363,30 @@ public class UserViewModel extends BaseViewModel implements UserViewModelContrac
             public void onFaild(Throwable throwable) {
                 hideLoading();
                 liveData.postValue("");
+                ThrowableParser.onFailed(throwable);
+            }
+        });
+        return liveData;
+    }
+
+    /**
+     * 获取图片验证码
+     */
+    public LiveData<ImgVerifyModel> getImgVerify() {
+        showLoading();
+        MutableLiveData<ImgVerifyModel> liveData = new MutableLiveData<>();
+        imgVerifyModelLiveData = mUCService.getImgVerify( new CallBack<ImgVerifyModel>() {
+
+            @Override
+            public void call(ImgVerifyModel data) {
+                hideLoading();
+                liveData.postValue(data);
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                hideLoading();
+                liveData.postValue(null);
                 ThrowableParser.onFailed(throwable);
             }
         });

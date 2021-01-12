@@ -1,6 +1,9 @@
 package com.einyun.app.library.uc.user.net
 
 import com.einyun.app.base.http.BaseResponse
+import com.einyun.app.library.uc.user.model.ImgVerifyModel
+import com.einyun.app.library.uc.user.model.UserInfoModel
+import com.einyun.app.library.uc.user.model.UserModel
 import com.einyun.app.library.uc.user.net.request.*
 import com.einyun.app.library.uc.user.net.response.*
 import io.reactivex.Flowable
@@ -147,4 +150,16 @@ interface UserServiceApi {
      */
     @GET(URLs.URL_KAOQING_IF_OUT)
     fun ifOutKaoQing(@Query("account") account: String): Flowable<ParamResponse>
+
+    /**
+     * 获取图片验证码
+     */
+    @GET(URLs.URL_GET_IMG_VERIFY)
+    fun getImgVerify(): Flowable<BaseResponse<ImgVerifyModel>>
+
+    /**
+     * 刷新token
+     */
+    @GET(URLs.URL_UPDATE_TOKEN)
+    fun updateToken(@Query("passwd") account: String): Flowable<BaseResponse<UserModel>>
 }

@@ -122,4 +122,13 @@ object URLs {
      * 是否有外勤打卡权限
      * */
     const val URL_KAOQING_IF_OUT= "uc/api/user/v1/user/getUserParams"
+
+    /**
+     * 获取图片验证码
+     * */
+    const val URL_GET_IMG_VERIFY= "/uc/base/checkCode/captchaImage"
+    /**
+     * 刷新token
+     * */
+    const val URL_UPDATE_TOKEN= "/uc/msso/refreshTokens"
 }

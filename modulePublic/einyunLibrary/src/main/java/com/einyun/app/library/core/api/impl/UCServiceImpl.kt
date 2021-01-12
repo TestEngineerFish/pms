@@ -72,10 +72,16 @@ class UCServiceImpl :UCService {
         return proxy.ifKaoQingOut(account,callBack)
     }
 
+    override fun getImgVerify(callBack: CallBack<ImgVerifyModel>): LiveData<ImgVerifyModel> {
+        return proxy.getImgVerify(callBack)    }
+
+    override fun updateToken(password: String,callBack: CallBack<UserModel>): LiveData<UserModel> {
+        return proxy.updateToken(password,callBack)    }
+
 
     var proxy:UCSericeImplProxy= UCSericeImplProxy()
-    override fun login(username: String, password: String, callBack: CallBack<UserModel>): LiveData<UserModel> {
-        return proxy.login(username,password,callBack)
+    override fun login(username: String, password: String,code: String,uuid: String, callBack: CallBack<UserModel>): LiveData<UserModel> {
+        return proxy.login(username,password,code,uuid,callBack)
     }
 
     override fun userAccount(account: String, callBack: CallBack<UserInfoModel>): LiveData<UserInfoModel> {
