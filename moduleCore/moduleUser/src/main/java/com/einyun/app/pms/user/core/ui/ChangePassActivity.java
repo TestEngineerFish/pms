@@ -19,6 +19,8 @@ import com.einyun.app.pms.user.core.viewmodel.UserViewModelFactory;
 import com.einyun.app.pms.user.databinding.ActivityChangePassBinding;
 import com.einyun.app.pms.user.databinding.ActivityEnterAccountBinding;
 
+import java.util.regex.Pattern;
+
 @Route(path = RouterUtils.ACTIVITY_CHANGE_PASS)
 public class ChangePassActivity extends BaseHeadViewModelActivity<ActivityChangePassBinding, UserViewModel> {
     @Autowired(name = "phone")
@@ -55,8 +57,8 @@ public class ChangePassActivity extends BaseHeadViewModelActivity<ActivityChange
     public void changePass() {
         if (TextUtils.isEmpty(binding.etAccount.getText().toString().trim())) {
             ToastUtil.show(this, "请输入新密码");
-        }else if (binding.etAccount.getText().toString().trim().length()<6){
-            ToastUtil.show(this, "密码必须大于6个字符");
+        }else if (!checkPass(binding.etAccount.getText().toString().trim())){
+            ToastUtil.show(this, "密码必须包含数字字母和特殊符号，长度不小于6位！");
         } else {
             viewModel.changePass(phone,code,account,binding.etAccount.getText().toString().trim()).observe(this, data -> {
                 if (data!=null&&data.isState()){
@@ -67,5 +69,13 @@ public class ChangePassActivity extends BaseHeadViewModelActivity<ActivityChange
                 }
             });
         }
+    }
+
+    /**
+     * 校验密码格式
+     * */
+    private boolean checkPass(String pass){
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\\%\\^\\&\\*\\(\\)])[0-9a-zA-Z!@#$\\%\\^\\&\\*\\(\\)]{6,16}$");
+        return pattern.matcher(pass).find();
     }
 }

@@ -194,7 +194,7 @@
                         android:id="@+id/et_verify"
                         style="@style/login_input_ll_edit"
                         android:hint="请输入验证码"
-                        android:inputType="textPassword" />
+                        />
                 </LinearLayout>
 
                 <ImageView

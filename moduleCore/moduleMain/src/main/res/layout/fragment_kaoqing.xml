@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="正在定位..."
+                    android:text="正在定位"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size20" />
 
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/px_10"
                 android:textSize="@dimen/font_size14"
-                android:text="考勤范围:" />
+                android:text="" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="@dimen/px_400"

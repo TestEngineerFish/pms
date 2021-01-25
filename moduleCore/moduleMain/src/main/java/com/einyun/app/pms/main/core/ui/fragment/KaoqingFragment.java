@@ -1,13 +1,17 @@
 package com.einyun.app.pms.main.core.ui.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -64,15 +68,22 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
     RVBindingAdapter<ItemKaoqingBinding, KaoQingHistroyModel> adapter;
     private String ifOut = "0";//默认不可外勤打卡
     private String workStatus;
+    LocationManager lm;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        getActivity().getContentResolver()
+                .registerContentObserver(
+                        Settings.Secure
+                                .getUriFor(Settings.System.LOCATION_PROVIDERS_ALLOWED),
+                        false, mGpsMonitor);
         Dialog dialog = getDialog();
         Window window;
         if (dialog != null && (window = dialog.getWindow()) != null) {
@@ -104,13 +115,7 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
                 KaoqingFragment.this.dismiss();
             }
         });
-        binding.kaoqingSize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapFragment.mDestinationOrg = mDestinationOrg;
-                mapFragment.show(getActivity().getSupportFragmentManager(), "");
-            }
-        });
+        binding.kaoqingSize.setOnClickListener(unableListener);
     }
 
     @Override
@@ -127,9 +132,9 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
                     } else {
                         binding.outCard.setVisibility(View.VISIBLE);
                     }
-                    if (model.getStatus().equals("1")){
+                    if (model.getStatus().equals("1")) {
                         binding.cardStatus.setText("下班打卡");
-                    }else {
+                    } else {
                         binding.cardStatus.setText("上班打卡");
                     }
                 }
@@ -183,8 +188,8 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
                 model.setLatitude(model.getCyyzb().split("，")[0]);
                 model.setLongtitude(model.getCyyzb().split("，")[1]);
             }
-        }catch (Exception e){
-            ToastUtil.show(getActivity(),"请配置考勤参数");
+        } catch (Exception e) {
+            ToastUtil.show(getActivity(), "请配置考勤参数");
         }
 
     }
@@ -253,8 +258,9 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
         @Override
         public void onReceiveLocation(BDLocation location) {
 
-            if ("4.9E-324".equals(location.getLatitude() + "")) {
+            if ("4.9E-324".equals(location.getLatitude() + "") || !isGpsOpen()) {
                 ToastUtil.show(getActivity(), "定位失败,请查看手机是否开启了定位权限");
+                showUnnableUi();
             } else {
                 //更改UI
                 Message message = new Message();
@@ -278,6 +284,7 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
             //计算两点距离,单位：米
             mDistance = DistanceUtil.getDistance(mDestinationPoint, LocationPoint);
             binding.kaoqingRange.setText(mDestinationOrg.getOrgName());
+            binding.kaoqingSize.setOnClickListener(enableListener);
             binding.kaoqingStatusImg.setEnabled(true);
             binding.kaoqingStatusImg.setVisibility(View.VISIBLE);
             if (mDistance <= mDestinationOrg.getKqbj()) {
@@ -298,18 +305,41 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
         }
     };
 
-    private void setKaoQingText(){
-        if (workStatus.equals("1")){
+    private void setKaoQingText() {
+        if (workStatus.equals("1")) {
             binding.kaoqingTxt.setText("上班打卡");
-        }else {
+        } else {
             binding.kaoqingTxt.setText("下班打卡");
         }
 
     }
+
+    View.OnClickListener enableListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mapFragment.mDestinationOrg = mDestinationOrg;
+            mapFragment.show(getActivity().getSupportFragmentManager(), "");
+            binding.kaoqingSize.setEnabled(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    binding.kaoqingSize.setEnabled(true);
+                }
+            }, 1000);
+        }
+    };
+    View.OnClickListener unableListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ToastUtil.show(getActivity(), "定位失败,请查看手机是否开启了定位权限");
+
+        }
+    };
+
     /**
      * 打卡
-     * */
-    private void kaoqing(){
+     */
+    private void kaoqing() {
         binding.kaoqingStatusImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,11 +351,11 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
                 viewModel.kaoQing(mDestinationOrg).observe(getActivity(), data -> {
                     if (data != null) {
                         {
-                            if (data.equals("0")||data.equals("1")){
-                                workStatus=data;
+                            if (data.equals("0") || data.equals("1")) {
+                                workStatus = data;
                                 ToastUtil.show(getActivity(), "打卡成功");
                                 setKaoQingText();
-                            }else {
+                            } else {
                                 ToastUtil.show(getActivity(), "请勿重复打卡");
                             }
                         }
@@ -390,6 +420,38 @@ public class KaoqingFragment extends BaseViewModelDialogFragment<FragmentKaoqing
     public void onStop() {
         super.onStop();
         //取消注册传感器监听
+        getActivity().getContentResolver().unregisterContentObserver(mGpsMonitor);
     }
+
+    /**
+     * 判断gps有么有打开
+     **/
+    private boolean isGpsOpen() {
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return gpsEnabled;
+    }
+
+    /**
+     * 监听gps开关
+     */
+    private final ContentObserver mGpsMonitor = new ContentObserver(null) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            boolean enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            client.restart();
+        }
+    };
+/**
+ * 定位失败后界面展示
+ * */
+private void showUnnableUi(){
+    binding.kaoqingSize.setOnClickListener(unableListener);
+    binding.kaoqingStatusImg.setImageResource(R.drawable.unable_kaoqing);
+    binding.kaoqingStatusImg.setEnabled(false);
+    binding.kaoqingTxt.setText("正在定位");
+}
+
 
 }
