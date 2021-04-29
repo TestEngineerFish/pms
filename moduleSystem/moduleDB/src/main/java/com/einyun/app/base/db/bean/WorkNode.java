@@ -1,19 +1,25 @@
 package com.einyun.app.base.db.bean;
 
+import android.net.Uri;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkNode implements Serializable {
     private int pos;
     private int id;
-    public  String number;
-    public  String workThings;
-    public  String workNode;
+    public String number;
+    public String workThings;
+    public String workNode;
     // 结果可以修改
     public String result;
-
+    //检查结果
+    public String F_CHECK_RESULT;
+    public String F_NODE_PICTURE;//节点照片
+    public List<String> selectImgs=new ArrayList<>();//选择照片路径集合
+    public List<Uri> selectImgsUri=new ArrayList<>();//选择照片uri集合
     /**
      * 巡更更新字段
      */
@@ -21,16 +27,60 @@ public class WorkNode implements Serializable {
     public String tenant_id;
     public String pic_example_url;
     public String patrol_items;
+
+    public List<Uri> getSelectImgsUri() {
+        return selectImgsUri;
+    }
+
+    public void setSelectImgsUri(List<Uri> selectImgsUri) {
+        this.selectImgsUri = selectImgsUri;
+    }
+
     public String sign_type;
     public int sort;
     public String patrol_point_id;
     public String pic_url;
     public int sign_result;
     public String sign_time;
+
+    public String getF_CHECK_RESULT() {
+        return F_CHECK_RESULT;
+    }
+
+    public void setF_CHECK_RESULT(String f_CHECK_RESULT) {
+        F_CHECK_RESULT = f_CHECK_RESULT;
+    }
+
+    public String getF_NODE_PICTURE() {
+        return F_NODE_PICTURE;
+    }
+
+    public void setF_NODE_PICTURE(String f_NODE_PICTURE) {
+        F_NODE_PICTURE = f_NODE_PICTURE;
+    }
+
+    public List<String> getSelectImgs() {
+        return selectImgs;
+    }
+
+    public void setSelectImgs(List<String> selectImgs) {
+        this.selectImgs = selectImgs;
+    }
+
     private List<String> cachedImages;
     private int F_WK_RESULT;
 
-    public WorkNode(){}
+    public WorkNode() {
+    }
+
+    public WorkNode(String number, String workThings, String workNode, String result, String f_CHECK_RESULT, String f_NODE_PICTURE) {
+        this.number = number;
+        this.workThings = workThings;
+        this.workNode = workNode;
+        this.result = result;
+        F_CHECK_RESULT = f_CHECK_RESULT;
+        F_NODE_PICTURE = f_NODE_PICTURE;
+    }
 
     public WorkNode(String number, String workThings, String workNode, String result) {
         this.number = number;
@@ -39,20 +89,20 @@ public class WorkNode implements Serializable {
         this.result = result;
     }
 
-    public WorkNode(String number, String workThings, String workNode,String sign_type,int sign_result,int is_photo,String result,String sign_time,int sort,String patrol_point_id,String pic_example_url,String patrol_items,String picUrl) {
+    public WorkNode(String number, String workThings, String workNode, String sign_type, int sign_result, int is_photo, String result, String sign_time, int sort, String patrol_point_id, String pic_example_url, String patrol_items, String picUrl) {
         this.number = number;
         this.workThings = workThings;
         this.workNode = workNode;
-        this.sign_type=sign_type;
-        this.sign_result=sign_result;
-        this.is_photo=is_photo;
+        this.sign_type = sign_type;
+        this.sign_result = sign_result;
+        this.is_photo = is_photo;
         this.result = result;
-        this.sign_time=sign_time;
-        this.sort=sort;
-        this.patrol_point_id=patrol_point_id;
-        this.pic_example_url=pic_example_url;
-        this.patrol_items=patrol_items;
-        this.pic_url=picUrl;
+        this.sign_time = sign_time;
+        this.sort = sort;
+        this.patrol_point_id = patrol_point_id;
+        this.pic_example_url = pic_example_url;
+        this.patrol_items = patrol_items;
+        this.pic_url = picUrl;
     }
 
     public List<String> getCachedImages() {

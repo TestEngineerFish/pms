@@ -882,6 +882,24 @@ public class PlanInfo {
                 private String F_WK_NODE;
                 private String F_WK_RESULT;
                 private String proc_inst_id_;
+                private String F_CHECK_RESULT;
+                private String F_NODE_PICTURE;
+
+                public String getF_CHECK_RESULT() {
+                    return F_CHECK_RESULT;
+                }
+
+                public void setF_CHECK_RESULT(String f_CHECK_RESULT) {
+                    F_CHECK_RESULT = f_CHECK_RESULT;
+                }
+
+                public String getF_NODE_PICTURE() {
+                    return F_NODE_PICTURE;
+                }
+
+                public void setF_NODE_PICTURE(String f_NODE_PICTURE) {
+                    F_NODE_PICTURE = f_NODE_PICTURE;
+                }
 
                 public String getTenant_id() {
                     return tenant_id;

@@ -200,7 +200,9 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
                         index.getF_WK_ID(),
                         index.getF_WK_CONTENT(),
                         index.getF_WK_NODE(),
-                        index.getF_WK_RESULT()))
+                        index.getF_WK_RESULT(),
+                        index.getF_CHECK_RESULT(),
+                        index.getF_NODE_PICTURE()))
                 .toList()
                 .blockingGet();
         Collections.sort(nodes, (o1, o2) -> {

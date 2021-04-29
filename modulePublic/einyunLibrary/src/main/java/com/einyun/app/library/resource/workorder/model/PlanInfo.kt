@@ -45,7 +45,8 @@ class Sub_jhgdgzjdb {
     var F_WK_NODE: String? = null
     var F_WK_RESULT: String? = null
     var proc_inst_id_: String? = null
-
+    var F_CHECK_RESULT: String? = null
+    var F_NODE_PICTURE: String? = null
 }
 
 class Sub_jhgdzyb {

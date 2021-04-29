@@ -79,6 +79,7 @@
             </LinearLayout>
 
             <TextView
+                android:visibility="gone"
                 style="@style/detail_item_ll"
                 android:text="处理后图片"
                 android:textColor="@color/normal_main_text_icon_color"
@@ -86,6 +87,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/img_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

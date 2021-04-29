@@ -13,10 +13,13 @@ import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.databinding.adapters.TextViewBindingAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -87,6 +90,7 @@ import com.einyun.app.pms.plan.convert.ExtensionApplicationPlanDBToWokerConvert;
 import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanResouceBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeBinding;
+import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeNewBinding;
 import com.einyun.app.pms.plan.model.PlanOrderResLineModel;
 import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderDetailViewModel;
@@ -117,7 +121,7 @@ import static com.einyun.app.library.resource.workorder.net.URLs.URL_RESOURCE_WO
 
 @Route(path = RouterUtils.ACTIVITY_PLAN_ORDER_DETAIL)
 public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityPlanOrderDetailBinding, PlanOrderDetailViewModel> {
-    RVBindingAdapter<ItemPlanWorkNodeBinding, WorkNode> nodesAdapter;
+    RVBindingAdapter<ItemPlanWorkNodeNewBinding, WorkNode> nodesAdapter;
     RVBindingAdapter<ItemPlanResouceBinding, PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> resourceAdapter;
     //    RVBindingAdapter<ItemPlanMaterialBinding, WorkNode> materialAdapter;
     @Autowired
@@ -150,6 +154,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private List<PlanOrderResLineModel> mPlanResLines = new ArrayList<>();
     private PlanLocal planLocal;
     private String f_status;
+    private int addImgPosition = 0;//点击添加图片的item的position
 
     @Override
     protected PlanOrderDetailViewModel initViewModel() {
@@ -194,12 +199,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         binding.itemApplyLateInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
         binding.itemAlreadyResult.imgList.addItemDecoration(new SpacesItemDecoration(18));
         binding.itemCloseOrderInfo.imgList.addItemDecoration(new SpacesItemDecoration(18));
+        binding.rvNodes.setLayoutManager(new LinearLayoutManager(
+                this,
+                LinearLayoutManager.VERTICAL,
+                false));
         viewModel.isClosedLiveData.observe(this, isClosedState -> {
             if (isClosedState != null) {
                 if (isClosedState.isClosed()) {
                     if (isClosedState.getType().equals(WorkOrder.POSTPONED_PLAN)) {
 
-                        ExtensionApplicationPlanDBToWokerConvert ss=new ExtensionApplicationPlanDBToWokerConvert();
+                        ExtensionApplicationPlanDBToWokerConvert ss = new ExtensionApplicationPlanDBToWokerConvert();
                         List<ExtensionApplication> extensionApplications = ss.stringToSomeObjectList(new Gson().toJson(planInfo.getExtensionApplication()));
                         //还需要传入参数
                         ARouter.getInstance()
@@ -290,8 +299,134 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 false));//设置横向
         binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration(18));
         binding.pointCkImglist.setAdapter(photoSelectAdapter);
+//工作节点适配修改
+        if (nodesAdapter == null) {
+            nodesAdapter = new RVBindingAdapter<ItemPlanWorkNodeNewBinding, WorkNode>(this, BR.node) {
+                @Override
+                public void onBindItem(ItemPlanWorkNodeNewBinding binding, WorkNode model, int position) {
+                    if (position==nodesAdapter.getDataList().size()-1){
+                        binding.bottomView.setVisibility(View.GONE);
+                    }else {
+                        binding.bottomView.setVisibility(View.VISIBLE);
+                    }
+                    int dex=position+1;
+                    binding.nodePosition.setText("[节点"+dex+"]");
+                    binding.imgList.addItemDecoration(new SpacesItemDecoration(18));
+                    binding.emptyViewResult.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return true;
+                        }
+                    });
+                    binding.emptyViewImg.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return true;
+                        }
+                    });
+                    if (model.getResult() != null) {
+                        if (model.getResult().equals(ResultState.RESULT_SUCCESS)) {
+                            binding.nodeResultYes.setChecked(true);
+                        } else if (model.getResult().equals(ResultState.RESULT_FAILD)) {
+                            binding.nodeResultNo.setChecked(false);
+                        }
+                    }
+                    //结果
+                    binding.nodeResult.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            if (checkedId == R.id.node_result_yes) {
+                                model.setResult(ResultState.RESULT_SUCCESS);
+                            } else if (checkedId == R.id.node_result_no) {
+                                model.setResult(ResultState.RESULT_FAILD);
+                            }
+                        }
+                    });
+                    //检查结果
+                    binding.checkResult.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        //工作节点适配
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            model.setF_CHECK_RESULT(s.toString());
+                        }
+                    });
+                    String f_status = planInfo.getData().getZyjhgd().getF_STATUS();
+                    if (FRAGMENT_PLAN_OWRKORDER_DONE.equals(fragmentTag) || !isCloseClose || "5".equals(f_status) || "6".equals(f_status)) {//接单模式在并上一个接单的状态
+                        binding.emptyViewResult.setVisibility(View.VISIBLE);
+                        binding.emptyViewImg.setVisibility(View.VISIBLE);
+                        binding.checkResult.setEnabled(false);
+                    } else {
+                        binding.emptyViewResult.setVisibility(View.GONE);
+                        binding.emptyViewImg.setVisibility(View.GONE);
+                        binding.checkResult.setEnabled(true);
+                    }
+
+
+                    PhotoSelectAdapter photoSelectAdapter = new PhotoSelectAdapter(PlanOrderDetailActivity.this);
+                    List<Uri> uris = new ArrayList<>();
+                    for (String path : model.getSelectImgs()) {
+                        uris.add(Uri.parse(path));
+                    }
+                    photoSelectAdapter.setSelectedPhotos(uris);
+                    photoSelectAdapter.setItemChangeListener(new PhotoSelectAdapter.ItemChangeListener() {
+                        @Override
+                        public void onChange(List<Uri> urs) {
+                            List<String> pathList = new ArrayList<>();
+                            for (Uri uri : urs) {
+                                pathList.add(uri + "");
+                            }
+                            model.setSelectImgs(pathList);
+                        }
+                    });
+                    photoSelectAdapter.setAddListener(selectedSize -> {
+                        addImgPosition = position;//复制给全局变量
+                        if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
+                            ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
+                            return;
+                        }
+//            imageFile = CaptureUtils.startCapture(this);//只能拍照
+                        Matisse.from(PlanOrderDetailActivity.this) //加号添加图片  拍照本地都可以选择
+                                .choose(MimeType.ofImage())
+                                .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
+                                .capture(true)
+                                .countable(true)
+                                .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
+                                //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
+                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                                .thumbnailScale(0.85f)
+                                .imageEngine(new Glide4Engine())
+                                .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+                    }, PlanOrderDetailActivity.this);
+                    binding.imgList.setLayoutManager(new LinearLayoutManager(
+                            PlanOrderDetailActivity.this,
+                            LinearLayoutManager.HORIZONTAL,
+                            false));
+                    binding.imgList.setAdapter(photoSelectAdapter);
+                    if (model.getF_NODE_PICTURE()!=null&&model.getF_NODE_PICTURE().length()>0){
+                        binding.emptyViewImg.setVisibility(View.GONE);
+                        PhotoListAdapter adapter = new PhotoListAdapter(PlanOrderDetailActivity.this);
+                    binding.imgList.setAdapter(adapter);
+                    PicUrlModelConvert convert = new PicUrlModelConvert();
+                    List<PicUrlModel> modelList = convert.stringToSomeObjectList(model.getF_NODE_PICTURE());
+                    adapter.updateList(modelList);}
+                }
+
+                @Override
+                public int getLayoutId() {
+                    return R.layout.item_plan_work_node_new;
+                }
+            };
+        }
+        /*//工作节点适配
         if (nodesAdapter == null) {
             nodesAdapter = new RVBindingAdapter<ItemPlanWorkNodeBinding, WorkNode>(this, BR.node) {
                 @Override
@@ -402,7 +537,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                     return R.layout.item_plan_work_node;
                 }
             };
-        }
+        }*/
         binding.rvNodes.setAdapter(nodesAdapter);
 
         //资源适配
@@ -539,11 +674,12 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         }
         planLocal.setImages(images);
         planLocal.setNote(binding.limitInput.getString());
-        List<WorkNode> workNodes = viewModel.loadNodes(planInfo);
-        workNodes.add(0, new WorkNode());
+//        List<WorkNode> workNodes = viewModel.loadNodes(planInfo);
+//        workNodes.add(0, new WorkNode());
         List<WorkNode> dataList = nodesAdapter.getDataList();
-
-        if (workNodes.size() == dataList.size()) {
+//        dataList.addAll(dataList);
+        planLocal.setNodes(dataList);
+        /*if (workNodes.size() == dataList.size()) {
 
             planLocal.setNodes(nodesAdapter.getDataList());
         } else {
@@ -554,7 +690,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         planLocal.setResources(resourceAdapter.getDataList());
 
         planLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());
@@ -597,10 +733,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (planInfo == null || planInfo.getData() == null) {
                 return;
             }
-           projectId= planInfo.getData().zyjhgd.getF_PROJECT_ID();
-           divideId= planInfo.getData().zyjhgd.getF_DIVIDE_ID();
+            projectId = planInfo.getData().zyjhgd.getF_PROJECT_ID();
+            divideId = planInfo.getData().zyjhgd.getF_DIVIDE_ID();
             f_status = planInfo.getData().getZyjhgd().getF_STATUS();
-            Log.e(TAG, "requestData: "+f_status );
+            Log.e(TAG, "requestData: " + f_status);
             updateUI(planInfo);
             updateElapsedTime(planInfo);
             if (planInfo != null && planInfo.getData() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb() != null && planInfo.getData().getZyjhgd().getSub_jhgdzyb().size() != 0) {
@@ -623,7 +759,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 planLocal = local;
                 if (String.valueOf(OrderState.CLOSED.getState()).equals(f_status)) {
 
-                }else {
+                } else {
 
                     updateLocalData(local);
                 }
@@ -700,7 +836,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         showForceClose();
         if (nodes.size() < 1) {
             nodes = viewModel.loadNodes(planInfo);
-            nodes.add(0, new WorkNode());
+//            nodes.add(0, new WorkNode());
             nodesAdapter.setDataList(nodes);
         }
 
@@ -838,7 +974,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
 
     /**
-     *转单
+     * 转单
      */
     public void resendOrder() {
         if (!NetWorkUtils.isNetworkConnected(CommonApplication.getInstance())) {
@@ -865,8 +1001,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     private boolean validateFormData() {
         List<WorkNode> data = getWorkNodes();
         for (int i = 0; i < data.size(); i++) {
-            if (TextUtils.isEmpty(data.get(i).result)) {
+            if (data.get(i).result == null || TextUtils.isEmpty(data.get(i).result)) {
                 ToastUtil.show(this, String.format(getResources().getString(R.string.text_alert_handle_node), data.get(i).number));
+                return false;
+            }
+            if (data.get(i).getF_CHECK_RESULT() == null || TextUtils.isEmpty(data.get(i).getF_CHECK_RESULT())) {
+                ToastUtil.show(this, String.format(getResources().getString(R.string.text_alert_check_node), data.get(i).number));
+                return false;
+            }
+            if (data.get(i).getSelectImgs().size() <= 0) {
+                ToastUtil.show(this, String.format(getResources().getString(R.string.text_alert_check_img), data.get(i).number));
                 return false;
             }
         }
@@ -876,10 +1020,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             return false;
         }
 
-        if (photoSelectAdapter.getSelectedPhotos().size() <= 0) {
+       /* if (photoSelectAdapter.getSelectedPhotos().size() <= 0) {
             ToastUtil.show(this, R.string.text_alert_photo_empty);
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -891,27 +1035,45 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @NotNull
     protected List<WorkNode> getWorkNodes() {
         List<WorkNode> all = nodesAdapter.getDataList();
-        return all.subList(1, all.size());
+//        return all.subList(1, all.size());
+        return all;
     }
 
+
     /**
-     * 上传图片
+     * 上传所有节点的图片
      *
      * @param planInfo
      */
-    private void uploadImages(PlanInfo planInfo) {
+    private void uploadImagesByList(PlanInfo planInfo) {
+        int imgIndex = -1;
         if (planInfo == null) {
             return;
+        }
+        for (WorkNode workNode : nodesAdapter.getDataList()) {
+            for (String path : workNode.getSelectImgs()) {
+                workNode.getSelectImgsUri().add(Uri.parse(path));
+            }
         }
         if (!NetWorkUtils.isNetworkConnected(PlanOrderDetailActivity.this)) {
             ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
-        viewModel.uploadImages(photoSelectAdapter.getSelectedPhotos()).observe(this, picUrls -> {
-            wrapFormData(planInfo, picUrls);
-            acceptForm(planInfo);
-        });
+        uploadImagesList(planInfo,imgIndex);
 
+    }
+
+    private void uploadImagesList(PlanInfo planInfo, int imgIndex) {
+        imgIndex++;
+        int i = imgIndex;
+        viewModel.uploadImages(nodesAdapter.getDataList().get(i).getSelectImgsUri()).observe(this, picUrls -> {
+        wrapFormData(planInfo, picUrls,i);
+            if (i < nodesAdapter.getDataList().size() - 1) {
+                uploadImagesList(planInfo, i);
+            }else {
+                acceptForm(planInfo);
+            }
+        });
     }
 
 
@@ -922,13 +1084,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * @param picUrls
      * @return
      */
-    private void wrapFormData(PlanInfo patrol, List<PicUrl> picUrls) {
+    private void wrapFormData(PlanInfo patrol, List<PicUrl> picUrls, int index) {
         GetUploadJson getUploadJsonStr = new GetUploadJson(picUrls).invoke();
         Gson gson = getUploadJsonStr.getGson();
         List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
         patrol.getData().getZyjhgd().setF_STATUS(String.valueOf(OrderState.CLOSED.getState()));
-        patrol.getData().getZyjhgd().setF_FILES(gson.toJson(picUrlModels));//包装上传图片信息
+//        patrol.getData().getZyjhgd().setF_FILES(gson.toJson(picUrlModels));//包装上传图片信息
         patrol.getData().getZyjhgd().setF_CONTENT(binding.limitInput.getString());//包装节点选择信息
+        nodesAdapter.getDataList().get(index).setF_NODE_PICTURE(gson.toJson(picUrlModels));
     }
 
     private boolean hasException() {
@@ -937,6 +1100,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             for (WorkNode workNode : getWorkNodes()) {
                 if (node.getF_WK_ID().equals(workNode.number)) {
                     node.setF_WK_RESULT(workNode.getResult());
+                    node.setF_CHECK_RESULT(workNode.getF_CHECK_RESULT());
+                    node.setF_NODE_PICTURE(workNode.getF_NODE_PICTURE());
                     if (workNode.result.equals("0")) index++;
                 }
             }
@@ -1024,6 +1189,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             alertDialog.show();
         }
     }
+
     private void goPaiGongDan() {
         ARouter.getInstance()
                 .build(RouterUtils.ACTIVITY_CREATE_SEND_ORDER)
@@ -1107,12 +1273,13 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             }
             if (validateForceScan()) return;
 
-            uploadImages(planInfo);
+//            uploadImages(planInfo);
+            uploadImagesByList(planInfo);
         }
     }
 
     private boolean validateForceScan() {
-        List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb =resourceAdapter.getDataList();
+        List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb = resourceAdapter.getDataList();
         if (sub_jhgdzyb != null && sub_jhgdzyb.size() > 0) {
 
             for (PlanInfo.Data.Zyjhgd.Sub_jhgdzyb dzyb : sub_jhgdzyb) {
@@ -1170,7 +1337,13 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         //本地和拍照都有
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK) {
             if (data == null) return;
+            List<String> paths = new ArrayList<>();
             List<Uri> uris = Matisse.obtainResult(data);
+            for (Uri uri : uris) {
+                paths.add(uri + "");
+            }
+            nodesAdapter.getDataList().get(addImgPosition).getSelectImgs().addAll(paths);
+            nodesAdapter.notifyDataSetChanged();
             if (uris != null && uris.size() > 0) {
                 photoSelectAdapter.addPhotos(uris);
 //                cachePhoto(photoSelectAdapter.getSelectedPhotos());
@@ -1198,18 +1371,18 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
                 List<PlanInfo.Data.Zyjhgd.Sub_jhgdzyb> sub_jhgdzyb = planInfo.getData().getZyjhgd().getSub_jhgdzyb();
-                if (sub_jhgdzyb!=null) {
-                        if (stringExtra.equals(sub_jhgdzyb.get(mClickPosition).getF_RES_QRCODE())) {
-                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
-                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
-                            resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-                            ToastUtil.show(CommonApplication.getInstance(), "扫码成功");
-                        }else {
-                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
-                            planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
-                            resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
-                            ToastUtil.show(CommonApplication.getInstance(), "二维码不正确");
-                        }
+                if (sub_jhgdzyb != null) {
+                    if (stringExtra.equals(sub_jhgdzyb.get(mClickPosition).getF_RES_QRCODE())) {
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(1);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("1");
+                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                        ToastUtil.show(CommonApplication.getInstance(), "扫码成功");
+                    } else {
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setIs_suc(0);
+                        planInfo.getData().getZyjhgd().getSub_jhgdzyb().get(mClickPosition).setScan_result("0");
+                        resourceAdapter.setDataList(planInfo.getData().getZyjhgd().getSub_jhgdzyb());
+                        ToastUtil.show(CommonApplication.getInstance(), "二维码不正确");
+                    }
                 }
             }
         }

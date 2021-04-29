@@ -323,10 +323,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/px_20"
-                            android:layout_marginTop="@dimen/px_20"
                             android:layout_marginRight="@dimen/px_20"
                             android:layout_marginBottom="@dimen/px_30"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                            android:background="@color/activity_bg_color"
+                            ></androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -426,6 +426,7 @@
                             app:maxNumber="300" />
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/px_20"
@@ -454,6 +455,7 @@
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:visibility="gone"
                             android:id="@+id/point_ck_imglist"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
