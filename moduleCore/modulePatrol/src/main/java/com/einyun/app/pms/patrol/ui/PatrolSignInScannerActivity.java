@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
 import com.einyun.app.common.service.RouterUtils;
@@ -41,17 +42,22 @@ public class PatrolSignInScannerActivity extends ScannerActivity {
         }
         lock.lock();
         Logger.d("qrCode->" + qrId + ":" + result);
-        String allCode=result;
-        String subCode = result.substring(2, allCode.length());
-        //比对二维码是否一致，判断是否签到成功
-        if (qrId.equals(subCode)) {
-            scanResult = true;
-            showSuccess();
-            stopCameraPreview();
-        } else {
-            scanResult = false;
-            showFaild();
+        try {
+            String allCode = result;
+            String subCode = result.substring(2, allCode.length());
+            //比对二维码是否一致，判断是否签到成功
+            if (qrId.equals(subCode)) {
+                scanResult = true;
+                showSuccess();
+                stopCameraPreview();
+            } else {
+                scanResult = false;
+                showFaild();
+            }
+        }catch(Exception exception){
+            ToastUtil.show(this,"二维码格式不正确，请联系管理员");
         }
+
         /**
          * 3秒自动退出扫码
          */

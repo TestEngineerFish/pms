@@ -91,6 +91,7 @@ import com.einyun.app.pms.plan.databinding.ActivityPlanOrderDetailBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanResouceBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeBinding;
 import com.einyun.app.pms.plan.databinding.ItemPlanWorkNodeNewBinding;
+import com.einyun.app.pms.plan.model.NodeImgs;
 import com.einyun.app.pms.plan.model.PlanOrderResLineModel;
 import com.einyun.app.pms.plan.viewmodel.PlanOdViewModelFactory;
 import com.einyun.app.pms.plan.viewmodel.PlanOrderDetailViewModel;
@@ -328,7 +329,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                         if (model.getResult().equals(ResultState.RESULT_SUCCESS)) {
                             binding.nodeResultYes.setChecked(true);
                         } else if (model.getResult().equals(ResultState.RESULT_FAILD)) {
-                            binding.nodeResultNo.setChecked(false);
+                            binding.nodeResultNo.setChecked(true);
                         }
                     }
                     //结果
@@ -719,6 +720,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             }
             if (local.getNodes() != null) {
                 nodesAdapter.setDataList(local.getNodes());
+                binding.rvNodes.setAdapter(nodesAdapter);
             }
             if (local.getResources() != null) {
                 resourceAdapter.setDataList(local.getResources());
@@ -1046,30 +1048,33 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
      * @param planInfo
      */
     private void uploadImagesByList(PlanInfo planInfo) {
+        List<NodeImgs> nodeImgsList=new ArrayList<>();
         int imgIndex = -1;
         if (planInfo == null) {
             return;
         }
         for (WorkNode workNode : nodesAdapter.getDataList()) {
+            NodeImgs nodeImgs=new NodeImgs();
             for (String path : workNode.getSelectImgs()) {
-                workNode.getSelectImgsUri().add(Uri.parse(path));
+                nodeImgs.getImgUris().add(Uri.parse(path));
             }
+            nodeImgsList.add(nodeImgs);
         }
         if (!NetWorkUtils.isNetworkConnected(PlanOrderDetailActivity.this)) {
             ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
-        uploadImagesList(planInfo,imgIndex);
+        uploadImagesList(planInfo,nodeImgsList,imgIndex);
 
     }
 
-    private void uploadImagesList(PlanInfo planInfo, int imgIndex) {
+    private void uploadImagesList(PlanInfo planInfo,List<NodeImgs> nodeImgsList, int imgIndex) {
         imgIndex++;
         int i = imgIndex;
-        viewModel.uploadImages(nodesAdapter.getDataList().get(i).getSelectImgsUri()).observe(this, picUrls -> {
+        viewModel.uploadImages(nodeImgsList.get(i).getImgUris()).observe(this, picUrls -> {
         wrapFormData(planInfo, picUrls,i);
             if (i < nodesAdapter.getDataList().size() - 1) {
-                uploadImagesList(planInfo, i);
+                uploadImagesList(planInfo,nodeImgsList,i);
             }else {
                 acceptForm(planInfo);
             }
@@ -1343,7 +1348,8 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                 paths.add(uri + "");
             }
             nodesAdapter.getDataList().get(addImgPosition).getSelectImgs().addAll(paths);
-            nodesAdapter.notifyDataSetChanged();
+//            nodesAdapter.notifyDataSetChanged();
+            binding.rvNodes.setAdapter(nodesAdapter);
             if (uris != null && uris.size() > 0) {
                 photoSelectAdapter.addPhotos(uris);
 //                cachePhoto(photoSelectAdapter.getSelectedPhotos());

@@ -25,7 +25,8 @@
             android:layout_marginTop="@dimen/px_10"
             android:layout_marginBottom="@dimen/px_10"
             android:textColor="@color/blue_36"
-            android:textSize="@dimen/font_size20" />
+            android:textSize="@dimen/font_size22"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                 android:text="工作事项/节点"
                 android:textColor="@color/txt_black_order"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                 />
 
             <LinearLayout
                 android:id="@+id/ll_content"
@@ -125,7 +126,7 @@
                         android:text="检查结果"
                         android:textColor="@color/txt_black_order"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                         />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -185,9 +186,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:gravity="center"
+                        android:gravity="top"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
+                        android:paddingLeft="@dimen/px_5"
                         android:text="*"
                         android:textColor="@color/redTextColor"
                         android:textSize="14sp"
@@ -203,7 +205,7 @@
                         android:text="图片上传(最多4张)"
                         android:textColor="@color/txt_black_order"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                         />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -216,18 +218,17 @@
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/px_75"
                 android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingTop="8dp"
                 android:paddingRight="5dp"
-                android:paddingBottom="8dp">
+                >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/img_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_20"
-
-                    android:layout_marginRight="@dimen/px_20"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:layout_marginRight="@dimen/px_10"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     >
                 </androidx.recyclerview.widget.RecyclerView>
                 <View
@@ -283,7 +284,7 @@
                         android:text="结果"
                         android:textColor="@color/txt_black_order"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                         />
                 </LinearLayout>
             </RelativeLayout>
 

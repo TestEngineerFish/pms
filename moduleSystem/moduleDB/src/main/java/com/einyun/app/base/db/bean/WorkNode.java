@@ -19,7 +19,6 @@ public class WorkNode implements Serializable {
     public String F_CHECK_RESULT;
     public String F_NODE_PICTURE;//节点照片
     public List<String> selectImgs=new ArrayList<>();//选择照片路径集合
-    public List<Uri> selectImgsUri=new ArrayList<>();//选择照片uri集合
     /**
      * 巡更更新字段
      */
@@ -28,13 +27,6 @@ public class WorkNode implements Serializable {
     public String pic_example_url;
     public String patrol_items;
 
-    public List<Uri> getSelectImgsUri() {
-        return selectImgsUri;
-    }
-
-    public void setSelectImgsUri(List<Uri> selectImgsUri) {
-        this.selectImgsUri = selectImgsUri;
-    }
 
     public String sign_type;
     public int sort;
