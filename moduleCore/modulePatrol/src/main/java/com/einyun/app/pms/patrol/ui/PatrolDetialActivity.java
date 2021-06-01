@@ -26,6 +26,7 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.util.BitmapUtil;
+import com.einyun.app.base.util.NetWorkUtil;
 import com.einyun.app.base.util.StringUtil;
 import com.einyun.app.base.util.TimeUtil;
 import com.einyun.app.base.util.ToastUtil;
@@ -613,46 +614,63 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
      * 保存本地数据
      */
     protected void saveLocalUserData() {
-        if (mPatrolInfo==null) {
+        if (mPatrolInfo != null) {
+            List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
+            List<String> images = new ArrayList<>();
+            for (Uri uri : uris) {
+                images.add(uri.toString());
+            }
+            if (patrolLocal == null) {
+                patrolLocal = new PatrolLocal();
+                patrolLocal.setOrderId(orderId);
+            }
+            patrolLocal.setImages(images);
+            patrolLocal.setNote(binding.limitInput.getString());
+            List<WorkNode> workNodes;
+            if (patrolLocal.getNodes() == null) {
 
-            return;
+                workNodes = viewModel.loadNodes(patrolInfo);
+                workNodes.add(0, new WorkNode());
+            } else {
+                workNodes = patrolLocal.getNodes();
+            }
+            List<WorkNode> adapterDataList = nodesAdapter.getDataList();
+            List<WorkNode> dataList = new ArrayList<>();
+            for (WorkNode node2 : adapterDataList) {
+                dataList.add(node2);
+            }
+            if (workNodes.size() == dataList.size()) {
 
-        }
-        if (mPatrolInfo.getExtensionApplication() != null) {
+                patrolLocal.setNodes(nodesAdapter.getDataList());
+            } else {
+                try {
+                    List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
+                    dataList.addAll(workNodes1);
+                    patrolLocal.setNodes(dataList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-            return;
-        }
-        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
-        List<String> images = new ArrayList<>();
-        for (Uri uri : uris) {
-            images.add(uri.toString());
-        }
-        if (patrolLocal == null) {
-            patrolLocal = new PatrolLocal();
-            patrolLocal.setOrderId(orderId);
-        }
-        patrolLocal.setImages(images);
-        patrolLocal.setNote(binding.limitInput.getString());
-        List<WorkNode> workNodes = viewModel.loadNodes(patrolInfo);
-        workNodes.add(0, new WorkNode());
-        List<WorkNode> dataList = nodesAdapter.getDataList();
-
-        if (workNodes.size() == dataList.size()) {
-
-            patrolLocal.setNodes(nodesAdapter.getDataList());
+            patrolLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());
+            patrolLocal.setRemark(binding.sendOrder.repairSendReason.getString());
+            viewModel.saveLocal(patrolLocal);
         } else {
-            try {
-                List<WorkNode> workNodes1 = workNodes.subList(dataList.size(), workNodes.size());
-                dataList.addAll(workNodes1);
-                patrolLocal.setNodes(dataList);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!NetWorkUtil.isNetConnected(CommonApplication.getInstance())) {
+                List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
+                List<String> images = new ArrayList<>();
+                for (Uri uri : uris) {
+                    images.add(uri.toString());
+                }
+                if (patrolLocal == null) {
+                    patrolLocal = new PatrolLocal();
+                    patrolLocal.setOrderId(orderId);
+                }
+                patrolLocal.setImages(images);
+                patrolLocal.setRemark(binding.sendOrder.repairSendReason.getString());
+                viewModel.saveLocal(patrolLocal);
             }
         }
-
-        patrolLocal.setDesignatePerson(binding.sendOrder.repairSelectedPepple.getText().toString().trim());
-        patrolLocal.setRemark(binding.sendOrder.repairSendReason.getString());
-        viewModel.saveLocal(patrolLocal);
     }
 
     @Override

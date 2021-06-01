@@ -419,9 +419,11 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
     private boolean hasNodeHandled(WorkNode workNode) {
         if (SignInType.QR.equals(workNode.sign_type)) {
-            if (workNode.getSign_result() != SignCheckResult.SIGN_IN_SUCCESS) {
+            if (workNode.getSign_result() != SignCheckResult.SIGN_IN_SUCCESS||workNode.getSign_time()==null) {
+                workNode.setSign_result(0);
                 String msg = String.format(getString(R.string.text_lose_node_signin), workNode.getPos());
                 ToastUtil.show(this, msg);
+                nodesAdapter.notifyDataSetChanged();
                 return false;
             }
         }
