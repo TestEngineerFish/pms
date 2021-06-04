@@ -274,7 +274,11 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
             }
             Observable.just(imageFile).subscribeOn(Schedulers.io())
                     .subscribe(file -> {
-                        BitmapUtil.AddTimeWatermark(file);
+                        try {
+                            BitmapUtil.AddTimeWatermark(file);
+                        }catch (Exception e){
+                            ToastUtil.show(PatrolQRSignInDetialActivity.this,"内存不足，水印添加失败");
+                        }
                         runOnUiThread(() -> {
                             if (uri != null) {
                                 photoSelectAdapter.addPhotos(Arrays.asList(uri));

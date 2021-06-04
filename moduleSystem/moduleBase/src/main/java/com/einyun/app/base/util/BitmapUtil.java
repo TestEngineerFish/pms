@@ -437,6 +437,8 @@ public class BitmapUtil {
             os.flush();
             os.close();
             saved = true;
+            bitmap.recycle();
+            bitmap = null;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -446,8 +448,9 @@ public class BitmapUtil {
     }
 
     public static void AddTimeWatermark(File imageFile){
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-        bitmap=AddTimeWatermark(bitmap);
-        saveBitmapAsFile(imageFile,bitmap);
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            bitmap=AddTimeWatermark(bitmap);
+            saveBitmapAsFile(imageFile,bitmap);
+
     }
 }

@@ -181,7 +181,11 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
             showLoading();
             Observable.just(imageFile).subscribeOn(Schedulers.io())
                     .subscribe(file -> {
-                        BitmapUtil.AddTimeWatermark(file);
+                        try {
+                            BitmapUtil.AddTimeWatermark(file);
+                        }catch (Exception e){
+                            ToastUtil.show(PatrolTimePhotoActivity.this,"内存不足，水印添加失败");
+                        }
                         runOnUiThread(() -> {
                             if (uri != null) {
                                 photoSelectAdapter.addPhotos(Arrays.asList(uri));
@@ -189,6 +193,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                             }
                             hideLoading();
                         });
+
                     });
         }
     }
