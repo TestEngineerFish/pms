@@ -14,10 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.db.bean.WorkNode;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.GetUploadJson;
+import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
@@ -28,6 +31,7 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.CaptureUtils;
+import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolPhotoBinding;
 import com.einyun.app.pms.patrol.viewmodel.PatrolSignInViewModel;
@@ -206,7 +210,45 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
      * 提交
      */
     public void onSubmitClick(){
+        uploadImages();
         cacheCaptures();
         finish();
     }
+    /**
+     *上传图片
+     */
+    public void uploadImages() {
+        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();//取出本地缓存图片，开始上传
+        ImageUploadManager manager = new ImageUploadManager();
+        manager.upload(uris, new CallBack<List<PicUrl>>() {
+            @Override
+            public void call(List<PicUrl> data) {
+                //图片上传成功
+                GetUploadJson getUploadJsonStr = new GetUploadJson(data).invoke();
+                List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+                String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
+                workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+
+            }
+        });
+    }
+
+    /**
+     * 转化本地图片String 2 Uri
+     * @param images
+     * @return
+     */
+    private List<Uri> convertUris(List<String> images){
+        List<Uri> uris=new ArrayList<>();
+        for(String path:images){
+            Uri uri=Uri.parse(path);
+            uris.add(uri);
+        }
+        return uris;
+    }
+
 }
