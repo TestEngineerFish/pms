@@ -203,7 +203,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     }
 
     protected void cacheCaptures(){
-        viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos());
+        viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos(),this);
     }
 
     /**
@@ -211,8 +211,6 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
      */
     public void onSubmitClick(){
         uploadImages();
-        cacheCaptures();
-        finish();
     }
     /**
      *上传图片
@@ -228,11 +226,13 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                 List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
                 String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
                 workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
+                ToastUtil.show(getApplicationContext(),"图片上传成功");
+                cacheCaptures();
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-
+                ToastUtil.show(getApplicationContext(),"图片上传失败");
             }
         });
     }

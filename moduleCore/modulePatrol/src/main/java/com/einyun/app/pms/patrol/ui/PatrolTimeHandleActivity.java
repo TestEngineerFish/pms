@@ -482,7 +482,8 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             ToastUtil.show(CommonApplication.getInstance(), "请连接网络后，进行处理");
             return;
         }
-        viewModel.uploadWorkNodesImages(nodes).observe(this, nodes1 -> submitForm(nodes1));
+        submitForm(nodes);
+//        viewModel.uploadWorkNodesImages(nodes).observe(this, nodes1 -> submitForm(nodes1));
     }
 
     private void submitForm(List<WorkNode> nodes) {

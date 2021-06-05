@@ -1,5 +1,6 @@
 package com.einyun.app.pms.patrol.viewmodel;
 
+import android.app.Activity;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
@@ -11,6 +12,8 @@ import com.einyun.app.base.db.bean.WorkNode;
 import com.einyun.app.base.db.entity.PatrolInfo;
 import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.base.util.ActivityUtil;
+import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.pms.patrol.repository.PatrolRepo;
@@ -32,7 +35,7 @@ public class PatrolSignInViewModel extends PatrolViewModel {
      * @param orderId
      * @param uris
      */
-    public void cachePhotos(WorkNode workNode,String orderId,List<Uri> uris){
+    public void cachePhotos(WorkNode workNode, String orderId, List<Uri> uris, Activity activity){
         repo.loadLocalUserData(orderId, userService.getUserId(), new CallBack<PatrolLocal>() {
             @Override
             public void call(PatrolLocal data) {
@@ -44,6 +47,7 @@ public class PatrolSignInViewModel extends PatrolViewModel {
                         repo.saveLocalData(data);
                     }
                 }
+                activity.finish();
             }
 
             @Override
