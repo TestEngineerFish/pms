@@ -290,7 +290,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
     }
 
     protected void cacheCaptures(){
-        viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos());
+        viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos(),this);
     }
 
     /**
