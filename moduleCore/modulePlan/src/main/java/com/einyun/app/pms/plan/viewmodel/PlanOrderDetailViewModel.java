@@ -90,6 +90,7 @@ public class PlanOrderDetailViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                com.einyun.app.common.utils.ToastUtil.show(CommonApplication.getInstance(),"工单处理失败"+throwable.getMessage());
                 hideLoading();
                 ThrowableParser.onFailed(throwable);
             }

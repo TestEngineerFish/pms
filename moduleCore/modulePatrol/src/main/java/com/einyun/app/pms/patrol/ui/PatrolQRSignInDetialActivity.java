@@ -17,10 +17,13 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.einyun.app.base.adapter.RVBindingAdapter;
 import com.einyun.app.base.db.bean.WorkNode;
+import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.util.BitmapUtil;
 import com.einyun.app.base.util.ToastUtil;
 import com.einyun.app.common.constants.DataConstants;
 import com.einyun.app.common.constants.RouteKey;
+import com.einyun.app.common.manager.GetUploadJson;
+import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.model.PicUrlModel;
 import com.einyun.app.common.model.convert.PicUrlModelConvert;
 import com.einyun.app.common.service.RouterUtils;
@@ -32,6 +35,7 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.CaptureUtils;
+import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolTimeSigninBinding;
 import com.einyun.app.pms.patrol.databinding.ItemPatrolTimeCheckNodeBinding;
@@ -282,7 +286,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                         runOnUiThread(() -> {
                             if (uri != null) {
                                 photoSelectAdapter.addPhotos(Arrays.asList(uri));
-                                cacheCaptures();
+//                                cacheCaptures();
                             }
                         });
                     });
@@ -297,7 +301,32 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
      * 提交
      */
     public void onSubmitClick(){
-        cacheCaptures();
-        finish();
+        uploadImages();
     }
+
+    /**
+     *上传图片
+     */
+    public void uploadImages() {
+        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();//取出本地缓存图片，开始上传
+        ImageUploadManager manager = new ImageUploadManager();
+        manager.upload(uris, new CallBack<List<PicUrl>>() {
+            @Override
+            public void call(List<PicUrl> data) {
+                //图片上传成功
+                GetUploadJson getUploadJsonStr = new GetUploadJson(data).invoke();
+                List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+                String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
+                workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
+                ToastUtil.show(getApplicationContext(),"图片上传成功");
+                cacheCaptures();
+            }
+
+            @Override
+            public void onFaild(Throwable throwable) {
+                ToastUtil.show(getApplicationContext(),"图片上传失败");
+            }
+        });
+    }
+
 }

@@ -9,10 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.einyun.app.base.BaseViewModel;
 import com.einyun.app.base.event.CallBack;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.manager.ImageUploadManager;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
+import com.einyun.app.common.utils.ToastUtil;
 import com.einyun.app.library.upload.model.PicUrl;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,6 +87,7 @@ public class BaseUploadViewModel extends BaseViewModel {
 
                 @Override
                 public void onFaild(Throwable throwable) {
+                    ToastUtil.show(CommonApplication.getInstance(),"图片上传失败"+throwable.getMessage());
                     ThrowableParser.onFailed(throwable);
                     uploadState.postValue(null);
                     hideLoading();

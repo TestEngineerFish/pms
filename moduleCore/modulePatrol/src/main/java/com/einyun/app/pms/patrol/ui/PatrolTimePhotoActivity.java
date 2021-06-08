@@ -172,7 +172,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
-            if (data==null||imageFile==null){
+            if (imageFile==null){
                 return;
             }
 
@@ -193,7 +193,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                         runOnUiThread(() -> {
                             if (uri != null) {
                                 photoSelectAdapter.addPhotos(Arrays.asList(uri));
-                                cacheCaptures();
+//                                cacheCaptures();
                             }
                             hideLoading();
                         });

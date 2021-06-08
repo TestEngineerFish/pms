@@ -14,6 +14,7 @@ import com.einyun.app.base.db.entity.PatrolLocal;
 import com.einyun.app.base.event.CallBack;
 import com.einyun.app.base.http.BaseResponse;
 import com.einyun.app.base.util.TimeUtil;
+import com.einyun.app.common.application.CommonApplication;
 import com.einyun.app.common.application.ThrowableParser;
 import com.einyun.app.common.constants.URLS;
 import com.einyun.app.common.manager.GetUploadJson;
@@ -25,6 +26,7 @@ import com.einyun.app.common.model.WorkOrderType;
 import com.einyun.app.common.service.RouterUtils;
 import com.einyun.app.common.service.user.IUserModuleService;
 import com.einyun.app.common.utils.LiveDataBusUtils;
+import com.einyun.app.common.utils.ToastUtil;
 import com.einyun.app.common.viewmodel.BaseUploadViewModel;
 import com.einyun.app.common.viewmodel.BaseWorkOrderHandelViewModel;
 import com.einyun.app.library.core.api.ResourceWorkOrderService;
@@ -295,6 +297,7 @@ public class PatrolViewModel extends BaseWorkOrderHandelViewModel {
 
             @Override
             public void onFaild(Throwable throwable) {
+                ToastUtil.show(CommonApplication.getInstance(),"工单处理失败"+throwable.getMessage());
                 liveData.postValue(false);
             }
         });

@@ -44,6 +44,7 @@ public class PatrolSignInViewModel extends PatrolViewModel {
                     if(workNode.patrol_point_id.equals(node.patrol_point_id)){
                         List<String> images=getImageList(uris);
                         node.setCachedImages(images);
+                        node.setPic_url(workNode.getPic_url());
                         repo.saveLocalData(data);
                     }
                 }
