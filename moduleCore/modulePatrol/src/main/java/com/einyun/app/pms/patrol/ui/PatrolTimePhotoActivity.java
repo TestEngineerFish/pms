@@ -44,11 +44,12 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+
 /**
  * 巡更现场图片
  */
 @Route(path = RouterUtils.ACTIVITY_PATROL_PHOTO)
-public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<ActivityPatrolPhotoBinding, PatrolSignInViewModel> {
+public class PatrolTimePhotoActivity extends BaseHeadViewModelActivity<ActivityPatrolPhotoBinding, PatrolSignInViewModel> {
     protected PhotoListAdapter photoListAdapter; //网络sample
     protected PhotoListAdapter photoListAdapterUpload; //网络用户上传对比照片(详情用)
     protected PhotoSelectAdapter photoSelectAdapter; //签到处理-用户上传图片(处理页面用)
@@ -84,7 +85,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     protected void initData() {
         super.initData();
         updateUI();
-        viewModel.loadCachedImageList(workNode,orderId).observe(this, strings -> {
+        viewModel.loadCachedImageList(workNode, orderId).observe(this, strings -> {
             workNode.setCachedImages(strings);
             updateCapturePic();
         });
@@ -93,7 +94,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     @Override
     protected void initListener() {
         super.initListener();
-        if(photoSelectAdapter!=null){
+        if (photoSelectAdapter != null) {
             photoSelectAdapter.setAddListener(selectedSize -> {
                 if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
                     ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
@@ -145,11 +146,11 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
         }
     }
 
-    protected void updateCapturePic(){
-        List<String> iamgePaths=workNode.getCachedImages();
-        if (iamgePaths!= null && iamgePaths.size() > 0) {
+    protected void updateCapturePic() {
+        List<String> iamgePaths = workNode.getCachedImages();
+        if (iamgePaths != null && iamgePaths.size() > 0) {
             List<Uri> uris = new ArrayList<>();
-            for (String imgeUrl :iamgePaths) {
+            for (String imgeUrl : iamgePaths) {
                 Uri uri = Uri.parse(imgeUrl);
                 uris.add(uri);
             }
@@ -159,6 +160,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
 
     /**
      * 显示网络图片
+     *
      * @param pic_url
      * @param photoListAdapterUpload
      */
@@ -172,7 +174,7 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
-            if (imageFile==null){
+            if (imageFile == null) {
                 return;
             }
 
@@ -187,8 +189,8 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
                     .subscribe(file -> {
                         try {
                             BitmapUtil.AddTimeWatermark(file);
-                        }catch (Exception e){
-                            ToastUtil.show(PatrolTimePhotoActivity.this,"内存不足，水印添加失败");
+                        } catch (Exception e) {
+                            ToastUtil.show(PatrolTimePhotoActivity.this, "内存不足，水印添加失败");
                         }
                         runOnUiThread(() -> {
                             if (uri != null) {
@@ -202,18 +204,19 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
         }
     }
 
-    protected void cacheCaptures(){
-        viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos(),this);
+    protected void cacheCaptures() {
+        viewModel.cachePhotos(workNode, orderId, photoSelectAdapter.getSelectedPhotos(), this);
     }
 
     /**
      * 提交
      */
-    public void onSubmitClick(){
+    public void onSubmitClick() {
         uploadImages();
     }
+
     /**
-     *上传图片
+     * 上传图片
      */
     public void uploadImages() {
         List<Uri> uris = photoSelectAdapter.getSelectedPhotos();//取出本地缓存图片，开始上传
@@ -222,30 +225,35 @@ public class PatrolTimePhotoActivity  extends BaseHeadViewModelActivity<Activity
             @Override
             public void call(List<PicUrl> data) {
                 //图片上传成功
-                GetUploadJson getUploadJsonStr = new GetUploadJson(data).invoke();
-                List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
-                String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
-                workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
-                ToastUtil.show(getApplicationContext(),"图片上传成功");
-                cacheCaptures();
+                if (data.size() > 0) {
+                    GetUploadJson getUploadJsonStr = new GetUploadJson(data).invoke();
+                    List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+                    String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
+                    workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
+                    ToastUtil.show(getApplicationContext(), "图片上传成功");
+                    cacheCaptures();
+                } else {
+                    ToastUtil.show(getApplicationContext(), "图片上传失败");
+                }
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ToastUtil.show(getApplicationContext(),"图片上传失败");
+                ToastUtil.show(getApplicationContext(), "图片上传失败");
             }
         });
     }
 
     /**
      * 转化本地图片String 2 Uri
+     *
      * @param images
      * @return
      */
-    private List<Uri> convertUris(List<String> images){
-        List<Uri> uris=new ArrayList<>();
-        for(String path:images){
-            Uri uri=Uri.parse(path);
+    private List<Uri> convertUris(List<String> images) {
+        List<Uri> uris = new ArrayList<>();
+        for (String path : images) {
+            Uri uri = Uri.parse(path);
             uris.add(uri);
         }
         return uris;

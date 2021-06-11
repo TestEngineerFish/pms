@@ -105,7 +105,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
     protected void initData() {
         super.initData();
         updateUI();
-        viewModel.loadCachedImageList(workNode,orderId).observe(this, strings -> {
+        viewModel.loadCachedImageList(workNode, orderId).observe(this, strings -> {
             workNode.setCachedImages(strings);
             updateCapturePic();
         });
@@ -180,10 +180,10 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
         workNode = (WorkNode) bundle.get(RouteKey.KEY_PATROL_TIME_WORKNODE);
         binding.frameSpace.setVisibility(View.GONE);
         binding.setNode(workNode);
-        if(SignCheckResult.SIGN_IN_SUCCESS!=workNode.getSign_result()){
+        if (SignCheckResult.SIGN_IN_SUCCESS != workNode.getSign_result()) {
             binding.llPatrolSigninTime.setVisibility(View.GONE);
             binding.llPatrolSigninResult.setVisibility(View.GONE);
-        }else{
+        } else {
             binding.llPatrolSigninTime.setVisibility(View.VISIBLE);
         }
         updateSamplePic();
@@ -206,10 +206,10 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
         }
     }
 
-    protected void updateCapturePic(){
-        if(!TextUtils.isEmpty(workNode.getPic_url())){
+    protected void updateCapturePic() {
+        if (!TextUtils.isEmpty(workNode.getPic_url())) {
             updateNetPhoto(workNode.getPic_url(), photoListAdapterUpload);
-        }else {
+        } else {
             updateLocalPhoto();
         }
     }
@@ -222,27 +222,28 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                 this,
                 LinearLayoutManager.HORIZONTAL,
                 false));//设置横向
-        if(photoLocalListAdapter==null){
-            photoLocalListAdapter=new PhotoLocalListAdapter(this);
+        if (photoLocalListAdapter == null) {
+            photoLocalListAdapter = new PhotoLocalListAdapter(this);
         }
         binding.rvCaptureImages.addItemDecoration(new SpacesItemDecoration());
         binding.rvCaptureImages.setAdapter(photoLocalListAdapter);
-        List<String> iamgePaths=workNode.getCachedImages();
-        if (iamgePaths!= null && iamgePaths.size() > 0) {
+        List<String> iamgePaths = workNode.getCachedImages();
+        if (iamgePaths != null && iamgePaths.size() > 0) {
             List<Uri> uris = new ArrayList<>();
-            for (String imgeUrl :iamgePaths) {
+            for (String imgeUrl : iamgePaths) {
                 Uri uri = Uri.parse(imgeUrl);
                 uris.add(uri);
             }
             photoLocalListAdapter.updateList(uris);
             photoLocalListAdapter.setOnItemListener((v, position) -> {
-                PhotoShowActivity.start(this,position, (ArrayList<String>) photoLocalListAdapter.getImagePaths());
+                PhotoShowActivity.start(this, position, (ArrayList<String>) photoLocalListAdapter.getImagePaths());
             });
         }
     }
 
     /**
      * 显示网络图片
+     *
      * @param pic_url
      * @param photoListAdapterUpload
      */
@@ -255,7 +256,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
     @Override
     protected void initListener() {
         super.initListener();
-        if(photoSelectAdapter!=null){
+        if (photoSelectAdapter != null) {
             photoSelectAdapter.setAddListener(selectedSize -> {
                 if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
                     ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
@@ -280,8 +281,8 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                     .subscribe(file -> {
                         try {
                             BitmapUtil.AddTimeWatermark(file);
-                        }catch (Exception e){
-                            ToastUtil.show(PatrolQRSignInDetialActivity.this,"内存不足，水印添加失败");
+                        } catch (Exception e) {
+                            ToastUtil.show(PatrolQRSignInDetialActivity.this, "内存不足，水印添加失败");
                         }
                         runOnUiThread(() -> {
                             if (uri != null) {
@@ -293,19 +294,19 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
         }
     }
 
-    protected void cacheCaptures(){
-        viewModel.cachePhotos(workNode,orderId,photoSelectAdapter.getSelectedPhotos(),this);
+    protected void cacheCaptures() {
+        viewModel.cachePhotos(workNode, orderId, photoSelectAdapter.getSelectedPhotos(), this);
     }
 
     /**
      * 提交
      */
-    public void onSubmitClick(){
+    public void onSubmitClick() {
         uploadImages();
     }
 
     /**
-     *上传图片
+     * 上传图片
      */
     public void uploadImages() {
         List<Uri> uris = photoSelectAdapter.getSelectedPhotos();//取出本地缓存图片，开始上传
@@ -314,17 +315,21 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
             @Override
             public void call(List<PicUrl> data) {
                 //图片上传成功
-                GetUploadJson getUploadJsonStr = new GetUploadJson(data).invoke();
-                List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
-                String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
-                workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
-                ToastUtil.show(getApplicationContext(),"图片上传成功");
-                cacheCaptures();
+                if (data.size() > 0) {
+                    GetUploadJson getUploadJsonStr = new GetUploadJson(data).invoke();
+                    List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
+                    String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
+                    workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
+                    ToastUtil.show(getApplicationContext(), "图片上传成功");
+                    cacheCaptures();
+                } else {
+                    ToastUtil.show(getApplicationContext(), "图片上传失败");
+                }
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ToastUtil.show(getApplicationContext(),"图片上传失败");
+                ToastUtil.show(getApplicationContext(), "图片上传失败");
             }
         });
     }

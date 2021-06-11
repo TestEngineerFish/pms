@@ -85,7 +85,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
     }
 
     /**
-     *转单
+     * 转单
      */
     public void resendOrder() {
         ARouter.getInstance()
@@ -98,6 +98,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 .withString(RouteKey.KEY_CUSTOMER_RESEND_ORDER, RouteKey.KEY_CUSTOMER_RESEND_ORDER)
                 .navigation();
     }
+
     @Override
     protected void switchStateUI(int plan_work_order_state) {//TODO 根据f_plan_work_order_state判断当前状态 显示隐藏处理布局，显示隐藏接单跟派单
         super.switchStateUI(f_plan_work_order_state);
@@ -107,15 +108,15 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         binding.panelApplyForceCloseAndPostpone.setVisibility(View.VISIBLE);
         binding.llPatrolRoadName.setVisibility(View.VISIBLE);
         binding.llPatrolRoadDuration.setVisibility(View.VISIBLE);
-        if (f_plan_work_order_state==5) {
+        if (f_plan_work_order_state == 5) {
             binding.btnSubmit.setText("接单");
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
             binding.panelHandleForm.setVisibility(View.GONE);
-        }else if (f_plan_work_order_state==6){
+        } else if (f_plan_work_order_state == 6) {
             binding.btnSubmit.setText("派单");
             binding.panelApplyForceCloseAndPostpone.setVisibility(View.GONE);
             binding.panelHandleForm.setVisibility(View.GONE);
-        }else {
+        } else {
             binding.btnSubmit.setText("提交");
         }
 
@@ -198,7 +199,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
                             binding.llSignComplete.setVisibility(View.GONE);
                         }
-                    }else {
+                    } else {
                         if (SignInType.NONE.equals(model.sign_type) || TextUtils.isEmpty(model.sign_type)) {
                             binding.llSign.setVisibility(View.GONE);
                             binding.llSignComplete.setVisibility(View.GONE);
@@ -419,7 +420,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
 
     private boolean hasNodeHandled(WorkNode workNode) {
         if (SignInType.QR.equals(workNode.sign_type)) {
-            if (workNode.getSign_result() != SignCheckResult.SIGN_IN_SUCCESS||workNode.getSign_time()==null) {
+            if (workNode.getSign_result() != SignCheckResult.SIGN_IN_SUCCESS || workNode.getSign_time() == null) {
                 workNode.setSign_result(0);
                 String msg = String.format(getString(R.string.text_lose_node_signin), workNode.getPos());
                 ToastUtil.show(this, msg);
@@ -443,7 +444,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
      * @return
      */
     private boolean validateWorkNodes() {
-        List<WorkNode> nodes = nodesAdapter.getDataList();
+        List<WorkNode> nodes = patrolLocal.getNodes();
         for (WorkNode workNode : nodes) {
             if (!hasNodeHandled(workNode)) {
                 return false;
@@ -458,6 +459,10 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
      * @return
      */
     private boolean validateForm() {
+        if (patrolLocal.getNodes() == null || patrolLocal.getNodes().size() == 0) {
+            ToastUtil.show(PatrolTimeHandleActivity.this, "第1个巡更节点还未签到");
+            return false;
+        }
         if (TextUtils.isEmpty(binding.limitInput.getString())) {
             ToastUtil.show(this, R.string.text_alert_handle_content);
             binding.limitInput.requestFocus();
@@ -527,13 +532,13 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
             Log.e("传参  patrol  为", JsonUtil.toJson(patrolInfo));
             String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
             PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
-            viewModel.receiceOrder(request).observe(this,model->{
+            viewModel.receiceOrder(request).observe(this, model -> {
 
                 if (model.isState()) {
                     initSendDialog("接单成功");
-                }else {
+                } else {
                     patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.PENDING.getState());
-                    ToastUtil.show(PatrolTimeHandleActivity.this,model.getMsg());
+                    ToastUtil.show(PatrolTimeHandleActivity.this, model.getMsg());
                 }
             });
 
@@ -544,20 +549,20 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
                 patrolInfo.getData().getZyxcgd().setF_SEND_REMARK(binding.sendOrder.repairSendReason.getString());
                 String base64 = Base64Util.encodeBase64(new Gson().toJson(patrolInfo.getData()));
                 String f_send_remark = binding.sendOrder.repairSendReason.getString();
-                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId,f_send_remark, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
-                viewModel.assignOrder(request).observe(this,model->{
+                PatrolSubmitRequest request = new PatrolSubmitRequest(taskId, f_send_remark, PatrolSubmitRequest.ACTION_AGREE, base64, patrolInfo.getData().getZyxcgd().getId_());
+                viewModel.assignOrder(request).observe(this, model -> {
 
                     if (model.isState()) {
-                       initSendDialog("派单成功");
-                    }else {
+                        initSendDialog("派单成功");
+                    } else {
                         patrolInfo.getData().getZyxcgd().setF_plan_work_order_state(OrderState.OVER_DUE.getState());
-                        ToastUtil.show(PatrolTimeHandleActivity.this,model.getMsg());
+                        ToastUtil.show(PatrolTimeHandleActivity.this, model.getMsg());
                     }
                 });
-            }else {
-                ToastUtil.show(PatrolTimeHandleActivity.this,"请选择指派人");
+            } else {
+                ToastUtil.show(PatrolTimeHandleActivity.this, "请选择指派人");
             }
-        }else {
+        } else {
 
             if (validateForm()) {
                     uploadImage(patrolLocal.getNodes());
