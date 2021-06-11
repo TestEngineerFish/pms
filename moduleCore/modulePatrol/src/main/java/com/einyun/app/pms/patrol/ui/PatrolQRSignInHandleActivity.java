@@ -111,13 +111,13 @@ public class PatrolQRSignInHandleActivity extends PatrolQRSignInDetialActivity {
                 .navigation(this, RouterUtils.ACTIVITY_REQUEST_SCANNER);
     }
 
-    /**
+   /* *//**
      * 提交
-     */
+     *//*
     public void onSubmitClick(){
         cacheCaptures();
         finish();
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

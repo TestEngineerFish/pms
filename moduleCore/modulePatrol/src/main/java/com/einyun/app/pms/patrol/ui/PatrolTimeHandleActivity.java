@@ -560,9 +560,7 @@ public class PatrolTimeHandleActivity extends PatrolTimeDetialActivity {
         }else {
 
             if (validateForm()) {
-                if (nodesAdapter != null) {
-                    uploadImage(nodesAdapter.getDataList());
-                }
+                    uploadImage(patrolLocal.getNodes());
             }
         }
     }
