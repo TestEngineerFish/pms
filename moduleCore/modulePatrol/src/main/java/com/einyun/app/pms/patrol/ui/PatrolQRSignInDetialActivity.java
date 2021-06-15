@@ -35,6 +35,7 @@ import com.einyun.app.common.ui.component.photo.PhotoSelectAdapter;
 import com.einyun.app.common.ui.component.photo.PhotoShowActivity;
 import com.einyun.app.common.ui.widget.SpacesItemDecoration;
 import com.einyun.app.common.utils.CaptureUtils;
+import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.library.upload.model.PicUrl;
 import com.einyun.app.pms.patrol.R;
 import com.einyun.app.pms.patrol.databinding.ActivityPatrolTimeSigninBinding;
@@ -302,7 +303,9 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
      * 提交
      */
     public void onSubmitClick() {
-        uploadImages();
+        if (IsFastClick.isFastDoubleClick()) {
+            uploadImages();
+        }
     }
 
     /**
@@ -323,13 +326,13 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                     ToastUtil.show(getApplicationContext(), "图片上传成功");
                     cacheCaptures();
                 } else {
-                    ToastUtil.show(getApplicationContext(), "图片上传失败");
+                    ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
                 }
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ToastUtil.show(getApplicationContext(), "图片上传失败");
+                ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
             }
         });
     }

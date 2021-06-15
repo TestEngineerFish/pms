@@ -233,13 +233,13 @@ public class PatrolTimePhotoActivity extends BaseHeadViewModelActivity<ActivityP
                     ToastUtil.show(getApplicationContext(), "图片上传成功");
                     cacheCaptures();
                 } else {
-                    ToastUtil.show(getApplicationContext(), "图片上传失败");
+                    ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
                 }
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ToastUtil.show(getApplicationContext(), "图片上传失败");
+                ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
             }
         });
     }
