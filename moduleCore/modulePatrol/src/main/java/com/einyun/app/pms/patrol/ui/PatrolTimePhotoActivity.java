@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
@@ -61,6 +63,7 @@ public class PatrolTimePhotoActivity extends BaseHeadViewModelActivity<ActivityP
     protected String orderId;
     protected final int MAX_PHOTO_SIZE = 4;
     protected File imageFile;
+    private Handler mHandler;
 
     @Override
     protected PatrolSignInViewModel initViewModel() {
@@ -89,6 +92,12 @@ public class PatrolTimePhotoActivity extends BaseHeadViewModelActivity<ActivityP
             workNode.setCachedImages(strings);
             updateCapturePic();
         });
+        mHandler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                ToastUtil.show(PatrolTimePhotoActivity.this,msg.obj.toString());
+            }
+        };
     }
 
     @Override
@@ -220,6 +229,10 @@ public class PatrolTimePhotoActivity extends BaseHeadViewModelActivity<ActivityP
      */
     public void uploadImages() {
         List<Uri> uris = photoSelectAdapter.getSelectedPhotos();//取出本地缓存图片，开始上传
+        if (uris==null||uris.size()==0){
+            ToastUtil.show(getApplicationContext(),"请拍摄照片");
+            return;
+        }
         ImageUploadManager manager = new ImageUploadManager();
         manager.upload(uris, new CallBack<List<PicUrl>>() {
             @Override
@@ -230,16 +243,22 @@ public class PatrolTimePhotoActivity extends BaseHeadViewModelActivity<ActivityP
                     List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
                     String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
                     workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
-                    ToastUtil.show(getApplicationContext(), "图片上传成功");
+                    Message message=new Message();
+                    message.obj="图片上传成功";
+                    mHandler.sendMessage(message);
                     cacheCaptures();
                 } else {
-                    ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
+                    Message message=new Message();
+                    message.obj="网络异常，图片上传失败";
+                    mHandler.sendMessage(message);
                 }
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
+                Message message=new Message();
+                message.obj="网络异常，图片上传失败";
+                mHandler.sendMessage(message);
             }
         });
     }

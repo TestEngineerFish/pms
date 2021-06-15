@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -72,7 +74,7 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
     protected String orderId;
     protected final int MAX_PHOTO_SIZE = 4;
     protected File imageFile;
-
+    private Handler mHandler;
 
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
@@ -110,6 +112,12 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
             workNode.setCachedImages(strings);
             updateCapturePic();
         });
+        mHandler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                ToastUtil.show(PatrolQRSignInDetialActivity.this,msg.obj.toString());
+            }
+        };
     }
 
     //参考标准图片
@@ -313,6 +321,10 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
      */
     public void uploadImages() {
         List<Uri> uris = photoSelectAdapter.getSelectedPhotos();//取出本地缓存图片，开始上传
+        if (uris==null||uris.size()==0){
+            ToastUtil.show(getApplicationContext(),"请拍摄照片");
+            return;
+        }
         ImageUploadManager manager = new ImageUploadManager();
         manager.upload(uris, new CallBack<List<PicUrl>>() {
             @Override
@@ -323,16 +335,22 @@ public class PatrolQRSignInDetialActivity extends BaseHeadViewModelActivity<Acti
                     List<PicUrlModel> picUrlModels = getUploadJsonStr.getPicUrlModels();
                     String picsJson = getUploadJsonStr.getGson().toJson(picUrlModels);
                     workNode.setPic_url(picsJson);//回填服务器返回上传图片结果信息
-                    ToastUtil.show(getApplicationContext(), "图片上传成功");
+                    Message message=new Message();
+                    message.obj="图片上传成功";
+                    mHandler.sendMessage(message);
                     cacheCaptures();
                 } else {
-                    ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
+                    Message message=new Message();
+                    message.obj="网络异常，图片上传失败";
+                    mHandler.sendMessage(message);
                 }
             }
 
             @Override
             public void onFaild(Throwable throwable) {
-                ToastUtil.show(getApplicationContext(), "网络异常，图片上传失败");
+                Message message=new Message();
+                message.obj="网络异常，图片上传失败";
+                mHandler.sendMessage(message);
             }
         });
     }
