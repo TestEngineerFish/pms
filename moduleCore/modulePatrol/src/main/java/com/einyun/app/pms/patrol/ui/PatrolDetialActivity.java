@@ -712,7 +712,7 @@ public class PatrolDetialActivity extends BaseHeadViewModelActivity<ActivityPatr
                 uri = FileProvider.getUriForFile(this, DataConstants.DATA_PROVIDER_NAME, imageFile);
             } else {
                 uri = Uri.fromFile(imageFile);
-            }
+            } 
             Observable.just(imageFile).subscribeOn(Schedulers.io())
                     .subscribe(file -> {
                         try {

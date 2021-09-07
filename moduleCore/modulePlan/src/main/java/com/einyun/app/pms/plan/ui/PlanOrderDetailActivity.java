@@ -293,13 +293,13 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     protected void initData() {
         super.initData();
         //图片选择适配器
-        photoSelectAdapter = new PhotoSelectAdapter(this);
-        binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
-                this,
-                LinearLayoutManager.HORIZONTAL,
-                false));//设置横向
-        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration(18));
-        binding.pointCkImglist.setAdapter(photoSelectAdapter);
+//        photoSelectAdapter = new PhotoSelectAdapter(this);
+//        binding.pointCkImglist.setLayoutManager(new LinearLayoutManager(
+//                this,
+//                LinearLayoutManager.HORIZONTAL,
+//                false));//设置横向
+//        binding.pointCkImglist.addItemDecoration(new SpacesItemDecoration(18));
+//        binding.pointCkImglist.setAdapter(photoSelectAdapter);
 //工作节点适配修改
         if (nodesAdapter == null) {
             nodesAdapter = new RVBindingAdapter<ItemPlanWorkNodeNewBinding, WorkNode>(this, BR.node) {
@@ -664,16 +664,16 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 //
 //            return;
 //        }
-        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
-        List<String> images = new ArrayList<>();
-        for (Uri uri : uris) {
-            images.add(uri.toString());
-        }
+//        List<Uri> uris = photoSelectAdapter.getSelectedPhotos();
+//        List<String> images = new ArrayList<>();
+//        for (Uri uri : uris) {
+//            images.add(uri.toString());
+//        }
         if (planLocal == null) {
             planLocal = new PlanLocal();
             planLocal.setOrderId(id);
         }
-        planLocal.setImages(images);
+//        planLocal.setImages(images);
         planLocal.setNote(binding.limitInput.getString());
 //        List<WorkNode> workNodes = viewModel.loadNodes(planInfo);
 //        workNodes.add(0, new WorkNode());
@@ -701,14 +701,14 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
 
     protected void updateLocalData(PlanLocal local) {
         if (local != null) {
-            if (local.getImages() != null && local.getImages().size() > 0) {
-                List<Uri> uris = new ArrayList<>();
-                for (String imgeUrl : local.getImages()) {
-                    Uri uri = Uri.parse(imgeUrl);
-                    uris.add(uri);
-                }
-                photoSelectAdapter.setSelectedPhotos(uris);
-            }
+//            if (local.getImages() != null && local.getImages().size() > 0) {
+//                List<Uri> uris = new ArrayList<>();
+//                for (String imgeUrl : local.getImages()) {
+//                    Uri uri = Uri.parse(imgeUrl);
+//                    uris.add(uri);
+//                }
+//                photoSelectAdapter.setSelectedPhotos(uris);
+//            }
             if (local.getDesignatePerson() != null) {//被指派人
                 binding.sendOrder.repairSelectedPepple.setText(local.getDesignatePerson());
             }
@@ -804,24 +804,24 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
     @Override
     protected void initListener() {
         super.initListener();
-        photoSelectAdapter.setAddListener(selectedSize -> {
-            if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
-                ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
-                return;
-            }
-//            imageFile = CaptureUtils.startCapture(this);//只能拍照
-            Matisse.from(this) //加号添加图片  拍照本地都可以选择
-                    .choose(MimeType.ofImage())
-                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
-                    .capture(true)
-                    .countable(true)
-                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
-                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                    .thumbnailScale(0.85f)
-                    .imageEngine(new Glide4Engine())
-                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
-        }, this);
+//        photoSelectAdapter.setAddListener(selectedSize -> {
+//            if (photoSelectAdapter.getSelectedPhotos().size() >= MAX_PHOTO_SIZE) {
+//                ToastUtil.show(getApplicationContext(), R.string.upload_pic_max);
+//                return;
+//            }
+////            imageFile = CaptureUtils.startCapture(this);//只能拍照
+//            Matisse.from(this) //加号添加图片  拍照本地都可以选择
+//                    .choose(MimeType.ofImage())
+//                    .captureStrategy(new CaptureStrategy(true, DataConstants.DATA_PROVIDER_NAME))
+//                    .capture(true)
+//                    .countable(true)
+//                    .maxSelectable(MAX_PHOTO_SIZE - photoSelectAdapter.getSelectedPhotos().size())
+//                    //                .maxSelectable(4 - (photoSelectAdapter.getItemCount() - 1))
+//                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+//                    .thumbnailScale(0.85f)
+//                    .imageEngine(new Glide4Engine())
+//                    .forResult(RouterUtils.ACTIVITY_REQUEST_REQUEST_PIC_PICK);
+//        }, this);
     }
 
     List<WorkNode> nodes = new ArrayList<>();
@@ -1350,33 +1350,33 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
             nodesAdapter.getDataList().get(addImgPosition).getSelectImgs().addAll(paths);
 //            nodesAdapter.notifyDataSetChanged();
             binding.rvNodes.setAdapter(nodesAdapter);
-            if (uris != null && uris.size() > 0) {
-                photoSelectAdapter.addPhotos(uris);
-//                cachePhoto(photoSelectAdapter.getSelectedPhotos());
-            }
+//            if (uris != null && uris.size() > 0) {
+//                photoSelectAdapter.addPhotos(uris);
+////                cachePhoto(photoSelectAdapter.getSelectedPhotos());
+//            }
         }
         //原来只能拍照得
-        if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
-            Uri uri;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile(this, DataConstants.DATA_PROVIDER_NAME, imageFile);
-            } else {
-                uri = Uri.fromFile(imageFile);
-            }
-            Observable.just(imageFile).subscribeOn(Schedulers.io())
-                    .subscribe(file -> {
-                        try {
-                            BitmapUtil.AddTimeWatermark(file);
-                        }catch (Exception e){
-                            ToastUtil.show(PlanOrderDetailActivity.this,"内存不足，水印添加失败");
-                        }
-                        runOnUiThread(() -> {
-                            if (uri != null) {
-                                photoSelectAdapter.addPhotos(Arrays.asList(uri));
-                            }
-                        });
-                    });
-        }
+//        if (requestCode == RouterUtils.ACTIVITY_REQUEST_CAMERA_OK && resultCode == RESULT_OK) {
+//            Uri uri;
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                uri = FileProvider.getUriForFile(this, DataConstants.DATA_PROVIDER_NAME, imageFile);
+//            } else {
+//                uri = Uri.fromFile(imageFile);
+//            }
+//            Observable.just(imageFile).subscribeOn(Schedulers.io())
+//                    .subscribe(file -> {
+//                        try {
+//                            BitmapUtil.AddTimeWatermark(file);
+//                        }catch (Exception e){
+//                            ToastUtil.show(PlanOrderDetailActivity.this,"内存不足，水印添加失败");
+//                        }
+//                        runOnUiThread(() -> {
+//                            if (uri != null) {
+//                                photoSelectAdapter.addPhotos(Arrays.asList(uri));
+//                            }
+//                        });
+//                    });
+//        }
         if (resultCode == RESULT_OK) {
             if (requestCode == RouterUtils.ACTIVITY_REQUEST_SCANNER) {
                 String stringExtra = data.getStringExtra(DataConstants.KEY_SCANNER_CONTENT);//校验code是不是正确的
