@@ -2,6 +2,7 @@ package com.einyun.app.common.viewmodel;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -77,9 +78,14 @@ public class BaseUploadViewModel extends BaseViewModel {
                 @Override
                 public void call(List<PicUrl> data) {
                     for (PicUrl picUrl : data) {
-                        if (TextUtils.isEmpty(picUrl.getOriginUrl())) {
-                            uploadedImages.put(picUrl.getOriginUrl(), picUrl.getUploaded());
+                        try {
+                            if (TextUtils.isEmpty(picUrl.getOriginUrl())) {
+                                uploadedImages.put(picUrl.getOriginUrl(), picUrl.getUploaded());
+                            }
+                        }catch (Exception e){
+                            Log.e("exception",e.toString());
                         }
+
                     }
                     hideLoading();
                     uploadState.postValue(data);

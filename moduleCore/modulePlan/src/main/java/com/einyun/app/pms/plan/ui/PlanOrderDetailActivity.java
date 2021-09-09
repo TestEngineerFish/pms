@@ -412,7 +412,7 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
                             LinearLayoutManager.HORIZONTAL,
                             false));
                     binding.imgList.setAdapter(photoSelectAdapter);
-                    if (model.getF_NODE_PICTURE()!=null&&model.getF_NODE_PICTURE().length()>0){
+                    if (model.getF_NODE_PICTURE()!=null&&model.getF_NODE_PICTURE().length()>8){
                         binding.emptyViewImg.setVisibility(View.GONE);
                         PhotoListAdapter adapter = new PhotoListAdapter(PlanOrderDetailActivity.this);
                     binding.imgList.setAdapter(adapter);
@@ -1072,6 +1072,10 @@ public class PlanOrderDetailActivity extends BaseHeadViewModelActivity<ActivityP
         imgIndex++;
         int i = imgIndex;
         viewModel.uploadImages(nodeImgsList.get(i).getImgUris()).observe(this, picUrls -> {
+            if (picUrls==null||picUrls.size()==0){
+                ToastUtil.show(this,"图片上传失败");
+                return;
+            }
         wrapFormData(planInfo, picUrls,i);
             if (i < nodesAdapter.getDataList().size() - 1) {
                 uploadImagesList(planInfo,nodeImgsList,i);
