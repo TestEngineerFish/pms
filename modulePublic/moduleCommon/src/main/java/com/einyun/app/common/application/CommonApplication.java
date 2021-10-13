@@ -28,6 +28,7 @@ import com.einyun.app.common.utils.IsFastClick;
 import com.einyun.app.common.utils.MsgUtils;
 import com.einyun.app.common.utils.whitecrash.CrashWhiteListManager;
 import com.einyun.app.library.EinyunSDK;
+import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -97,6 +98,7 @@ public class CommonApplication extends BasicApplication {
         initBaiduMap();
         initAppStatus();
         System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+        inStetho();
     }
 
     /**
@@ -265,5 +267,16 @@ public class CommonApplication extends BasicApplication {
 
     public static CommonApplication getInstance() {
         return app;
+    }
+
+    /**
+     * 调试Android数据库
+     */
+    private void inStetho(){
+        Stetho.initialize(Stetho
+                .newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(
+                        Stetho.defaultInspectorModulesProvider(this)).build());
     }
 }

@@ -100,6 +100,7 @@ dependencies {
     api deps.x5            //腾讯x5浏览器内核
     api deps.picker
     api files('src/main/libs/BaiduLBS_Android.jar') //选择器
+    api deps.stetho //调试Android数据库
     //页面路由ARouter
     implementation(deps.arouter_api) {
         exclude group: 'com.android.support'

@@ -69,7 +69,7 @@ versions.live_event_bus ="1.5.7"
 versions.multidex      ="2.0.1"
 versions.photo_view    ="2.0.0"
 versions.smartrefresh  ="1.1.0"
-versions.matisse       ="0.5.2"
+versions.matisse       ="0.5.3-beta3"
 versions.mpchat        ="v3.0.3"
 versions.einyun_http   ="1.0.1"
 versions.einyun_db   ="1.0.1"
@@ -83,6 +83,7 @@ versions.permission_dispatcher_processor ="4.6.0"
 versions.skin ="4.0.4"
 versions.luban ="1.1.8"
 versions.picker = "4.1.9"
+versions.stetho = "1.5.1"
 //versions.leakcanary="1.5.4"
 ext.versions = versions
 
@@ -222,6 +223,7 @@ deps.permission_dispatcher_processor ="org.permissionsdispatcher:permissionsdisp
 //图片压缩
 deps.luban            ="top.zibin:Luban:$versions.luban"
 deps.picker ="com.contrarywind:Android-PickerView:$versions.picker"
+deps.stetho ="com.facebook.stetho:stetho:$versions.stetho"
 ext.deps = deps
 
 def build_versions = [:]
