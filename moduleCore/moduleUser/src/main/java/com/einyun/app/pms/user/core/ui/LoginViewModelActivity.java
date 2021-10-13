@@ -242,7 +242,7 @@ public class LoginViewModelActivity extends BaseSkinViewModelActivity<ActivityLo
     public void getImgVerify() {
         CommonHttpService.getInstance().tenantId("-1");
         viewModel.getImgVerify().observe(this, data -> {
-            if (data != null) {
+            if (data != null && data.getImg() != null) {
                 uuid=data.getUuid();
                 byte[] decodedString = Base64.decode(data.getImg(), Base64.DEFAULT);
                 binding.ivVerify.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
